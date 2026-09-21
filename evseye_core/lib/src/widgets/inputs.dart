@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pinput/pinput.dart';
 
 import '../theme/app_colors.dart';
 import '../theme/app_dimens.dart';
@@ -321,7 +322,7 @@ class AppPickerField extends StatelessWidget {
   }
 }
 
-class OtpInput extends StatefulWidget {
+class OtpInput extends StatelessWidget {
   const OtpInput({
     this.length = 6,
     this.onCompleted,
@@ -337,123 +338,83 @@ class OtpInput extends StatefulWidget {
   final bool hasError;
   final bool autofocus;
 
-  @override
-  State<OtpInput> createState() => _OtpInputState();
-}
+  static const double _gap = Insets.sm;
+  static const double _maxCell = 54;
 
-class _OtpInputState extends State<OtpInput> {
-  late final List<TextEditingController> _controllers =
-      List.generate(widget.length, (_) => TextEditingController());
-  late final List<FocusNode> _nodes = List.generate(widget.length, (_) => FocusNode());
-
-  String get _value => _controllers.map((c) => c.text).join();
-
-  @override
-  void initState() {
-    super.initState();
-    for (final n in _nodes) {
-      n.addListener(() => setState(() {}));
-    }
-  }
-
-  @override
-  void dispose() {
-    for (final c in _controllers) {
-      c.dispose();
-    }
-    for (final n in _nodes) {
-      n.dispose();
-    }
-    super.dispose();
-  }
-
-  void _onChanged(int index, String text) {
-    if (text.length > 1) {
-      final String digits = text.replaceAll(RegExp(r'\D'), '');
-      for (var i = 0; i < widget.length; i++) {
-        _controllers[i].text = i < digits.length ? digits[i] : '';
-      }
-      _nodes[(digits.length.clamp(1, widget.length)) - 1].requestFocus();
-    } else if (text.isNotEmpty && index < widget.length - 1) {
-      _nodes[index + 1].requestFocus();
-    }
-    setState(() {});
-    widget.onChanged?.call(_value);
-    if (_value.length == widget.length) {
-      FocusScope.of(context).unfocus();
-      widget.onCompleted?.call(_value);
-    }
-  }
-
-  void _onKey(int index, KeyEvent event) {
-    if (event is KeyDownEvent &&
-        event.logicalKey == LogicalKeyboardKey.backspace &&
-        _controllers[index].text.isEmpty &&
-        index > 0) {
-      _controllers[index - 1].clear();
-      _nodes[index - 1].requestFocus();
-      setState(() {});
-    }
-  }
+  PinTheme _cell(
+    double size, {
+    Color? fill,
+    Color border = AppColors.stroke,
+    double width = 1,
+  }) =>
+      PinTheme(
+        width: size,
+        height: size * 1.12,
+        textStyle: AppText.numeric.copyWith(
+          fontSize: size * 0.46,
+          color: AppColors.textPrimary,
+        ),
+        decoration: BoxDecoration(
+          color: fill ?? AppColors.surface,
+          borderRadius: Corners.brMd,
+          border: Border.all(color: border, width: width),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: List.generate(widget.length, (i) {
-        final bool focused = _nodes[i].hasFocus;
-        final bool filled = _controllers[i].text.isNotEmpty;
-        final Color border = widget.hasError
-            ? AppColors.danger
-            : focused
-                ? AppColors.primary
-                : filled
-                    ? AppColors.strokeStrong
-                    : AppColors.stroke;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double available = constraints.maxWidth.isFinite
+            ? constraints.maxWidth
+            : MediaQuery.sizeOf(context).width;
+        final double cell =
+            ((available - _gap * (length - 1)) / length).clamp(34.0, _maxCell);
 
-        return Flexible(
-          child: Padding(
-            padding: EdgeInsets.only(right: i == widget.length - 1 ? 0 : Insets.sm + 2),
-            child: AspectRatio(
-              aspectRatio: 0.82,
-              child: KeyboardListener(
-                focusNode: FocusNode(skipTraversal: true),
-                onKeyEvent: (e) => _onKey(i, e),
-                child: AnimatedContainer(
-                  duration: Motion.fast,
-                  decoration: BoxDecoration(
-                    color: filled ? AppColors.primaryWash : AppColors.surface,
-                    borderRadius: Corners.brMd,
-                    border: Border.all(color: border, width: focused || filled ? 1.4 : 1),
-                  ),
-                  child: Center(
-                    child: TextField(
-                      controller: _controllers[i],
-                      focusNode: _nodes[i],
-                      autofocus: widget.autofocus && i == 0,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      maxLength: 1,
-                      showCursor: false,
-                      style: AppText.numeric.copyWith(fontSize: 24),
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      onChanged: (v) => _onChanged(i, v),
-                      decoration: const InputDecoration(
-                        counterText: '',
-                        filled: false,
-                        border: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        contentPadding: EdgeInsets.zero,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+        return Pinput(
+          length: length,
+          autofocus: autofocus,
+          closeKeyboardWhenCompleted: true,
+          keyboardType: TextInputType.number,
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          autofillHints: const [AutofillHints.oneTimeCode],
+          hapticFeedbackType: HapticFeedbackType.lightImpact,
+          mainAxisAlignment: MainAxisAlignment.center,
+          defaultPinTheme: _cell(
+            cell,
+            border: hasError ? AppColors.danger : AppColors.stroke,
+          ),
+          focusedPinTheme: _cell(
+            cell,
+            border: hasError ? AppColors.danger : AppColors.primary,
+            width: 1.4,
+          ),
+          submittedPinTheme: _cell(
+            cell,
+            fill: AppColors.primaryWash,
+            border: hasError ? AppColors.danger : AppColors.strokeStrong,
+            width: 1.4,
+          ),
+          errorPinTheme: _cell(
+            cell,
+            fill: AppColors.dangerWash,
+            border: AppColors.danger,
+            width: 1.4,
+          ),
+          forceErrorState: hasError,
+          separatorBuilder: (_) => const SizedBox(width: _gap),
+          onChanged: onChanged,
+          onCompleted: onCompleted,
+          cursor: Container(
+            width: 2,
+            height: cell * 0.46,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(1),
             ),
           ),
         );
-      }),
+      },
     );
   }
 }
