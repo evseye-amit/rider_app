@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
     final SessionController session = sl<SessionController>();
     return BlocProvider(
       create: (_) =>
-          HubCubit(GetHubSummary(sl()), GetHubProfile(sl()))..load(session.hubCode),
+          HubCubit(GetHubSummary(sl()), GetHubProfile(sl()))..loadAll(session.activeHubCodes),
       child: const _HomeView(),
     );
   }
@@ -81,16 +81,16 @@ class _HomeView extends StatelessWidget {
         profile: profile,
         summary: summary,
         hubs: session.hubs,
-        selectedIndex: session.hubIndex,
-        onHubChanged: (index) {
-          session.selectHub(index);
-          context.read<HubCubit>().load(session.hubCode);
+        selectedIndexes: session.activeHubIndexes,
+        onSelectionChanged: (indexes) {
+          session.setHubSelection(indexes);
+          context.read<HubCubit>().loadAll(session.activeHubCodes);
         },
       ),
       const Gap.lg(),
 
       ModuleCard(
-        title: 'Today at a glance',
+        title: 'Yesterday at a glance',
         padding: const EdgeInsets.all(Insets.md),
         child: GridView(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -158,6 +158,14 @@ class _Band extends StatelessWidget {
     return 'Working late';
   }
 
+
+  void _markAttendance(BuildContext context, SessionController session, bool next) {
+    session.setAttendance(next);
+    next
+        ? AppSnack.success(context, 'Marked present. Your shift has started.')
+        : AppSnack.info(context, 'Marked absent. Your shift is closed.');
+  }
+
   @override
   Widget build(BuildContext context) {
     final String firstName = session.managerName.split(' ').first;
@@ -204,6 +212,11 @@ class _Band extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+            const SizedBox(width: Insets.sm),
+            AttendanceToggle(
+              present: session.present,
+              onChanged: (next) => _markAttendance(context, session, next),
             ),
           ],
         ),

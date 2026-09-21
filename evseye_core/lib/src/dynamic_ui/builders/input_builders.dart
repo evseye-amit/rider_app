@@ -5,6 +5,7 @@ import '../../theme/app_colors.dart';
 import '../../theme/app_dimens.dart';
 import '../../theme/app_typography.dart';
 import '../../widgets/capture_tiles.dart';
+import '../../widgets/date_wheel.dart';
 import '../../widgets/feedback.dart';
 import '../../widgets/inputs.dart';
 import '../models/ui_action.dart';
@@ -68,25 +69,24 @@ Map<String, NodeBuilder> inputBuilders(WidgetRegistry r) => {
               enabled: enabled,
               required: _isRequired(node),
               icon: Icons.calendar_today_rounded,
-              prefixIcon: Icons.cake_rounded,
+              prefixIcon: _dateIcon(node),
               onTap: () async {
                 final DateTime now = DateTime.now();
-                final DateTime? picked = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.tryParse(value ?? '') ??
-                      DateTime(now.year - 22, now.month, now.day),
-                  firstDate: DateTime(now.year - 80),
-                  lastDate: now,
-                  builder: (context, child) => Theme(
-                    data: Theme.of(context).copyWith(
-                      datePickerTheme: const DatePickerThemeData(
-                        backgroundColor: AppColors.surface,
-                        headerBackgroundColor: AppColors.primaryDeep,
-                        headerForegroundColor: Colors.white,
-                      ),
-                    ),
-                    child: child!,
-                  ),
+                final DateTime today = DateTime(now.year, now.month, now.day);
+                final bool future = node.props['future'] == true;
+                final DateTime first = _dateProp(node, 'minDate') ??
+                    (future ? today.add(const Duration(days: 1)) : DateTime(now.year - 80));
+                final DateTime last = _dateProp(node, 'maxDate') ??
+                    (future ? DateTime(now.year + 30) : today);
+                final DateTime? picked = await AppDateWheel.show(
+                  context,
+                  first: first,
+                  last: last,
+                  initial: DateTime.tryParse(value ?? '') ??
+                      (future ? first : DateTime(now.year - 22, now.month, now.day)),
+                  title: node.text(scope, 'label').isEmpty
+                      ? 'Select a date'
+                      : node.text(scope, 'label'),
                 );
                 if (picked != null) {
                   scope.form.setValue(key, picked.toIso8601String().split('T').first);
@@ -251,6 +251,15 @@ Map<String, NodeBuilder> inputBuilders(WidgetRegistry r) => {
         );
       },
     };
+
+
+DateTime? _dateProp(UiNode node, String key) {
+  final Object? raw = node.props[key];
+  return raw == null ? null : DateTime.tryParse(raw.toString());
+}
+
+IconData _dateIcon(UiNode node) =>
+    node.props['future'] == true ? Icons.event_available_rounded : Icons.cake_rounded;
 
 class _Field extends StatelessWidget {
   const _Field({required this.node, required this.scope, required this.builder});

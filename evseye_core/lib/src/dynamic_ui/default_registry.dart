@@ -1,3 +1,4 @@
+import 'builders/composite_builders.dart';
 import 'builders/content_builders.dart';
 import 'builders/input_builders.dart';
 import 'builders/layout_builders.dart';
@@ -8,5 +9,6 @@ void registerDefaultWidgets([WidgetRegistry? registry]) {
   r
     ..registerAll(layoutBuilders(r))
     ..registerAll(contentBuilders(r))
-    ..registerAll(inputBuilders(r));
+    ..registerAll(inputBuilders(r))
+    ..registerAll(compositeBuilders());
 }

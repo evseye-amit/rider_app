@@ -9,8 +9,8 @@ class HubCard extends StatelessWidget {
     required this.profile,
     required this.summary,
     required this.hubs,
-    required this.selectedIndex,
-    required this.onHubChanged,
+    required this.selectedIndexes,
+    required this.onSelectionChanged,
     super.key,
   });
 
@@ -19,8 +19,8 @@ class HubCard extends StatelessWidget {
 
   final List<HubProfile> hubs;
 
-  final int selectedIndex;
-  final ValueChanged<int> onHubChanged;
+  final List<int> selectedIndexes;
+  final ValueChanged<List<int>> onSelectionChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +71,8 @@ class HubCard extends StatelessWidget {
             const Gap.lg(),
             _HubPicker(
               hubs: hubs,
-              selectedIndex: selectedIndex,
-              onChanged: onHubChanged,
+              selectedIndexes: selectedIndexes,
+              onChanged: onSelectionChanged,
             ),
           ],
 
@@ -108,13 +108,13 @@ class HubCard extends StatelessWidget {
 class _HubPicker extends StatelessWidget {
   const _HubPicker({
     required this.hubs,
-    required this.selectedIndex,
+    required this.selectedIndexes,
     required this.onChanged,
   });
 
   final List<HubProfile> hubs;
-  final int selectedIndex;
-  final ValueChanged<int> onChanged;
+  final List<int> selectedIndexes;
+  final ValueChanged<List<int>> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +137,9 @@ class _HubPicker extends StatelessWidget {
             const SizedBox(width: Insets.sm),
             Expanded(
               child: Text(
-                'Switch hub · ${hubs.length} assigned',
+                selectedIndexes.length > 1
+                    ? '${selectedIndexes.length} hubs combined · tap to change'
+                    : 'Switch hub · ${hubs.length} assigned',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.bodySmall.copyWith(
@@ -159,29 +161,45 @@ class _HubPicker extends StatelessWidget {
   }
 
   Future<void> _open(BuildContext context) async {
-    final int? picked = await AppSheet.show<int>(
+    final Set<int> picked = {...selectedIndexes};
+
+    final List<int>? result = await AppSheet.show<List<int>>(
       context,
       title: 'Your hubs',
-      subtitle: 'Everything in the app follows the hub you pick',
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (int i = 0; i < hubs.length; i++)
-            Padding(
-              padding: const EdgeInsets.only(bottom: Insets.sm),
-              child: _HubOption(
-                name: hubs[i].name,
-                code: hubs[i].code,
-                city: hubs[i].city,
-                selected: i == selectedIndex,
-                onTap: () => Navigator.of(context).pop(i),
+      subtitle: 'Pick one, or several to see their numbers combined',
+      child: StatefulBuilder(
+        builder: (context, setSheetState) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (int i = 0; i < hubs.length; i++)
+              Padding(
+                padding: const EdgeInsets.only(bottom: Insets.sm),
+                child: _HubOption(
+                  name: hubs[i].name,
+                  code: hubs[i].code,
+                  city: hubs[i].city,
+                  selected: picked.contains(i),
+                  onTap: () => setSheetState(() {
+                    if (picked.contains(i)) {
+                      if (picked.length > 1) picked.remove(i);
+                    } else {
+                      picked.add(i);
+                    }
+                  }),
+                ),
               ),
+            const Gap.sm(),
+            PrimaryButton(
+              label: picked.length > 1 ? 'Show ${picked.length} hubs combined' : 'Show this hub',
+              icon: Icons.check_rounded,
+              onPressed: () => Navigator.of(context).pop(picked.toList()..sort()),
             ),
-          const Gap.sm(),
-        ],
+            const Gap.sm(),
+          ],
+        ),
       ),
     );
-    if (picked != null) onChanged(picked);
+    if (result != null && result.isNotEmpty) onChanged(result);
   }
 }
 

@@ -45,6 +45,8 @@ String? validateValue(
       'max' when _num(value) != null && _num(value)! > _num(rule.value)! =>
         '$name must be at most ${rule.value}',
       'minAge' => _minAge(text, _int(rule.value)),
+      'futureDate' => _futureDate(text),
+      'pastDate' => _pastDate(text),
       'match' when lookup != null && text != (lookup(rule.value.toString())?.toString() ?? '') =>
         '$name does not match',
       _ => null,
@@ -52,6 +54,24 @@ String? validateValue(
     if (message != null) return rule.message ?? message;
   }
   return null;
+}
+
+String? _futureDate(String text) {
+  if (text.isEmpty) return null;
+  final DateTime? date = DateTime.tryParse(text);
+  if (date == null) return null;
+  final DateTime now = DateTime.now();
+  final DateTime today = DateTime(now.year, now.month, now.day);
+  return date.isAfter(today) ? null : 'Enter a date later than today';
+}
+
+String? _pastDate(String text) {
+  if (text.isEmpty) return null;
+  final DateTime? date = DateTime.tryParse(text);
+  if (date == null) return null;
+  final DateTime now = DateTime.now();
+  final DateTime today = DateTime(now.year, now.month, now.day);
+  return date.isAfter(today) ? 'Enter a date on or before today' : null;
 }
 
 String? _minAge(String text, int min) {

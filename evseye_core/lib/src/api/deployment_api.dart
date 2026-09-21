@@ -164,6 +164,13 @@ class DeploymentFleet {
     this.iotDeviceNumber,
     this.iotLastHeartbeatAt,
     this.odometerKm,
+    this.vinNumber,
+    this.motorNumber,
+    this.controllerNumber,
+    this.batteryType,
+    this.batterySerial,
+    this.homeHubName,
+    this.currentHubName,
   });
 
   factory DeploymentFleet.fromJson(Map<String, dynamic> json) {
@@ -182,7 +189,20 @@ class DeploymentFleet {
       iotDeviceNumber: device?['deviceNumber']?.toString(),
       iotLastHeartbeatAt: _date(device?['lastHeartbeatAt']),
       odometerKm: _num(json['odometerKm']),
+      vinNumber: json['vinNumber']?.toString(),
+      motorNumber: json['motorNumber']?.toString(),
+      controllerNumber: _first(json['controllerHistory'])?['controller']?['controllerNumber']?.toString(),
+      batteryType: _first(json['batteryHistory'])?['battery']?['batteryType']?.toString(),
+      batterySerial: _first(json['batteryHistory'])?['battery']?['serialNumber']?.toString(),
+      homeHubName: (json['homeHub'] as Map?)?['name']?.toString(),
+      currentHubName: (json['currentHub'] as Map?)?['name']?.toString(),
     );
+  }
+
+  static Map<String, dynamic>? _first(Object? raw) {
+    if (raw is! List || raw.isEmpty) return null;
+    final Object? row = raw.first;
+    return row is Map ? Map<String, dynamic>.from(row) : null;
   }
 
   final String id;
@@ -197,6 +217,13 @@ class DeploymentFleet {
   final String? iotDeviceNumber;
   final DateTime? iotLastHeartbeatAt;
   final num? odometerKm;
+  final String? vinNumber;
+  final String? motorNumber;
+  final String? controllerNumber;
+  final String? batteryType;
+  final String? batterySerial;
+  final String? homeHubName;
+  final String? currentHubName;
 }
 
 class DeploymentRider {
@@ -208,6 +235,7 @@ class DeploymentRider {
     this.riderCode,
     this.city,
     this.joiningDate,
+    this.teamLeadName,
   });
 
   factory DeploymentRider.fromJson(Map<String, dynamic> json) => DeploymentRider(
@@ -218,7 +246,18 @@ class DeploymentRider {
         riderCode: json['riderCode']?.toString(),
         city: json['city']?.toString(),
         joiningDate: _date(json['joiningDate']),
+        teamLeadName: _teamLead(json['teamLeaders']),
       );
+
+  static String? _teamLead(Object? raw) {
+    if (raw is! List || raw.isEmpty) return null;
+    final Object? row = raw.first;
+    if (row is! Map) return null;
+    final Map? lead = row['teamLeader'] as Map?;
+    final Map? user = lead?['user'] as Map?;
+    final String? name = user?['name']?.toString();
+    return name == null || name.isEmpty ? null : name;
+  }
 
   final String id;
   final String name;
@@ -227,6 +266,7 @@ class DeploymentRider {
   final String? riderCode;
   final String? city;
   final DateTime? joiningDate;
+  final String? teamLeadName;
 }
 
 class DeploymentAllocation {

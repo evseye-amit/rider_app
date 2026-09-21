@@ -118,6 +118,33 @@ class _SupportView extends StatelessWidget {
                         height: 1,
                       ),
                   ],
+                  if (overview.totalRepairCost > 0) ...[
+                    const Gap.lg(),
+                    Container(
+                      padding: const EdgeInsets.all(Insets.md),
+                      decoration: BoxDecoration(
+                        color: AppColors.surfaceMuted,
+                        borderRadius: Corners.brMd,
+                        border: Border.all(color: AppColors.stroke),
+                      ),
+                      child: Column(
+                        children: [
+                          KeyValueRow(
+                            label: 'Repairs across your tickets',
+                            value: Fmt.money(overview.totalRepairCost),
+                            icon: Icons.build_rounded,
+                          ),
+                          KeyValueRow(
+                            label: 'Borne by you',
+                            value: Fmt.money(overview.riderBorneCost),
+                            icon: Icons.account_balance_wallet_rounded,
+                            valueColor:
+                                overview.riderBorneCost > 0 ? AppColors.danger : AppColors.success,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ],
               ),
       ),
@@ -304,6 +331,32 @@ class _TicketRow extends StatelessWidget {
                     '$categoryLabel · updated ${Fmt.relative(ticket.updatedAt)}',
                     style: AppText.bodySmall.copyWith(fontSize: 11),
                   ),
+                  if (ticket.repairCost > 0) ...[
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.currency_rupee_rounded,
+                          size: 13,
+                          color: ticket.costBorneByRider ? AppColors.danger : AppColors.success,
+                        ),
+                        const SizedBox(width: 2),
+                        Flexible(
+                          child: Text(
+                            '${Fmt.money(ticket.repairCost)} to fix · '
+                            '${ticket.costBorneByRider ? 'you paid' : 'operator paid'}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppText.bodySmall.copyWith(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w700,
+                              color: ticket.costBorneByRider ? AppColors.danger : AppColors.success,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ],
               ),
             ),

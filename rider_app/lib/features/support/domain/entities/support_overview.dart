@@ -65,6 +65,11 @@ class SupportOverview extends Equatable {
   final List<SupportTicket> tickets;
   final List<SupportFaq> faqs;
 
+  num get totalRepairCost => tickets.fold<num>(0, (sum, t) => sum + t.repairCost);
+
+  num get riderBorneCost =>
+      tickets.where((t) => t.costBorneByRider).fold<num>(0, (sum, t) => sum + t.repairCost);
+
   List<SupportTicket> get openTickets => tickets
       .where((t) => t.status == TicketStatus.open)
       .toList(growable: false);

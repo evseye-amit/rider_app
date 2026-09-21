@@ -13,6 +13,8 @@ export 'src/widgets/brand.dart';
 export 'src/widgets/brand_photo.dart';
 export 'src/widgets/buttons.dart';
 export 'src/widgets/capture_tiles.dart';
+export 'src/dynamic_ui/builders/composite_builders.dart';
+export 'src/widgets/date_wheel.dart';
 export 'src/widgets/empty_state.dart';
 export 'src/widgets/feedback.dart';
 export 'src/widgets/gauges.dart';

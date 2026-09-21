@@ -50,10 +50,15 @@ class HubCubit extends Cubit<HubState> {
   final GetHubSummary _getSummary;
   final GetHubProfile _getProfile;
 
-  String _hubCode = '';
+  List<String> _hubCodes = const [];
 
-  Future<void> load(String hubCode) async {
-    _hubCode = hubCode;
+  Future<void> load(String hubCode) => loadAll([hubCode]);
+
+  Future<void> loadAll(List<String> hubCodes) async {
+    if (hubCodes.isEmpty) return;
+    _hubCodes = hubCodes;
+    if (hubCodes.length > 1) return _loadCombined(hubCodes);
+    final String hubCode = hubCodes.first;
     emit(state.copyWith(status: HubStatus.loading));
 
     final List<Object> results =
@@ -82,5 +87,35 @@ class HubCubit extends Cubit<HubState> {
     );
   }
 
-  Future<void> refresh() => load(_hubCode);
+  Future<void> _loadCombined(List<String> hubCodes) async {
+    emit(state.copyWith(status: HubStatus.loading));
+
+    final List<Result<HubSummary>> summaries =
+        await Future.wait([for (final code in hubCodes) _getSummary(code)]);
+    final Result<HubProfile> profile = await _getProfile(hubCodes.first);
+
+    final Result<HubSummary>? failed =
+        summaries.where((r) => r.isErr).cast<Result<HubSummary>?>().firstWhere((_) => true, orElse: () => null);
+    if (failed != null || profile.isErr) {
+      emit(
+        state.copyWith(
+          status: HubStatus.failure,
+          message: failed?.failureOrNull?.message ??
+              profile.failureOrNull?.message ??
+              'Something went wrong.',
+        ),
+      );
+      return;
+    }
+
+    emit(
+      state.copyWith(
+        status: HubStatus.ready,
+        summary: HubSummary.combine([for (final r in summaries) r.valueOrNull!]),
+        profile: profile.valueOrNull,
+      ),
+    );
+  }
+
+  Future<void> refresh() => loadAll(_hubCodes);
 }

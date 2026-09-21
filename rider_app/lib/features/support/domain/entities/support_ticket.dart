@@ -11,6 +11,8 @@ class SupportTicket extends Equatable {
     required this.createdAt,
     required this.updatedAt,
     required this.messageCount,
+    this.repairCost = 0,
+    this.costBorneByRider = false,
   });
 
   final String id;
@@ -20,6 +22,8 @@ class SupportTicket extends Equatable {
   final DateTime createdAt;
   final DateTime updatedAt;
   final int messageCount;
+  final num repairCost;
+  final bool costBorneByRider;
 
   SupportTicket copyWith({
     TicketStatus? status,
@@ -33,6 +37,8 @@ class SupportTicket extends Equatable {
     createdAt: createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
     messageCount: messageCount ?? this.messageCount,
+    repairCost: repairCost,
+    costBorneByRider: costBorneByRider,
   );
 
   @override
@@ -44,5 +50,7 @@ class SupportTicket extends Equatable {
     createdAt,
     updatedAt,
     messageCount,
+    repairCost,
+    costBorneByRider,
   ];
 }

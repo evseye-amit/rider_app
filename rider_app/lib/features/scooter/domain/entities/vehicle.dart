@@ -107,6 +107,14 @@ class Vehicle extends Equatable {
     required this.documents,
     required this.accessories,
     required this.recentTrips,
+    this.motorNumber,
+    this.controllerNumber,
+    this.batteryType,
+    this.batterySerial,
+    this.homeHubName,
+    this.currentHubName,
+    this.teamLeadName,
+    this.clusterManagerName,
   });
 
   final String vehicleNumber;
@@ -127,6 +135,14 @@ class Vehicle extends Equatable {
   final List<VehicleDocument> documents;
   final List<VehicleAccessory> accessories;
   final List<VehicleTrip> recentTrips;
+  final String? motorNumber;
+  final String? controllerNumber;
+  final String? batteryType;
+  final String? batterySerial;
+  final String? homeHubName;
+  final String? currentHubName;
+  final String? teamLeadName;
+  final String? clusterManagerName;
 
   int get kmToNextService =>
       (nextServiceKm - odometerKm).clamp(0, nextServiceKm);

@@ -32,6 +32,8 @@ class AppTextField extends StatefulWidget {
     this.autofocus = false,
     this.onTap,
     this.style,
+    this.suffixText,
+    this.blockClipboard = false,
     super.key,
   });
 
@@ -58,6 +60,8 @@ class AppTextField extends StatefulWidget {
   final bool autofocus;
   final VoidCallback? onTap;
   final TextStyle? style;
+  final String? suffixText;
+  final bool blockClipboard;
 
   @override
   State<AppTextField> createState() => _AppTextFieldState();
@@ -146,6 +150,9 @@ class _AppTextFieldState extends State<AppTextField> {
                   maxLength: widget.maxLength,
                   onChanged: widget.onChanged,
                   onSubmitted: widget.onSubmitted,
+                  enableInteractiveSelection: !widget.blockClipboard,
+                  contextMenuBuilder:
+                      widget.blockClipboard ? (_, __) => const SizedBox.shrink() : null,
                   cursorColor: AppColors.cyan,
                   style: widget.style ??
                       AppText.bodyLarge.copyWith(
@@ -157,6 +164,8 @@ class _AppTextFieldState extends State<AppTextField> {
                     counterText: '',
                     filled: false,
                     isDense: true,
+                    suffixText: widget.suffixText,
+                    suffixStyle: AppText.bodyLarge.copyWith(color: AppColors.textMuted),
                     border: InputBorder.none,
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,

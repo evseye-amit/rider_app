@@ -95,7 +95,7 @@ class RiderDrawer extends StatelessWidget {
                     const EvseyeLogo(markSize: 26, wordSize: 17, inline: true),
                     const SizedBox(height: Insets.sm),
                     Text(
-                      'Version 1.0.0 · ${session.clientCode}',
+                      'Version 1.0.0',
                       style: AppText.bodySmall.copyWith(fontSize: 11, color: AppColors.textMuted),
                     ),
                   ],

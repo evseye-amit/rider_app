@@ -46,18 +46,53 @@ class SessionController extends ChangeNotifier {
 
   List<HubProfile> get hubs => _hubs;
 
-  int _hubIndex = 0;
+  final Set<int> _hubSelection = {0};
 
-  int get hubIndex => _hubIndex;
+  int get hubIndex => activeHubIndexes.isEmpty ? 0 : activeHubIndexes.first;
+
+  List<int> get activeHubIndexes {
+    final List<int> valid = _hubSelection.where((i) => i >= 0 && i < _hubs.length).toList()..sort();
+    return valid.isEmpty && _hubs.isNotEmpty ? [0] : valid;
+  }
+
+  List<HubProfile> get activeHubs => [for (final i in activeHubIndexes) _hubs[i]];
+
+  List<String> get activeHubCodes => [for (final h in activeHubs) h.code];
+
+  bool get isMultiHub => activeHubIndexes.length > 1;
+
+  bool isHubSelected(int index) => activeHubIndexes.contains(index);
 
   void selectHub(int index) {
-    if (index == _hubIndex || index < 0 || index >= hubs.length) return;
-    _hubIndex = index;
+    if (index < 0 || index >= hubs.length) return;
+    if (_hubSelection.length == 1 && _hubSelection.contains(index)) return;
+    _hubSelection
+      ..clear()
+      ..add(index);
     notifyListeners();
   }
 
-  HubProfile? get hub =>
-      _hubs.isEmpty ? null : _hubs[_hubIndex.clamp(0, _hubs.length - 1)];
+  void setHubSelection(Iterable<int> indexes) {
+    final Set<int> next = indexes.where((i) => i >= 0 && i < _hubs.length).toSet();
+    if (next.isEmpty) return;
+    if (next.length == _hubSelection.length && next.every(_hubSelection.contains)) return;
+    _hubSelection
+      ..clear()
+      ..addAll(next);
+    notifyListeners();
+  }
+
+  HubProfile? get hub => activeHubs.isEmpty ? null : activeHubs.first;
+
+  bool _present = false;
+
+  bool get present => _present;
+
+  void setAttendance(bool present) {
+    if (_present == present) return;
+    _present = present;
+    notifyListeners();
+  }
 
   String get managerName => 'Manager';
 
@@ -107,14 +142,17 @@ class SessionController extends ChangeNotifier {
     final Result<List<HubProfile>> result = await _listHubs(const NoParams());
     if (result case Ok<List<HubProfile>>(:final value)) {
       _hubs = value;
-      if (_hubIndex >= _hubs.length) _hubIndex = 0;
+      _hubSelection.removeWhere((i) => i >= _hubs.length);
+      if (_hubSelection.isEmpty) _hubSelection.add(0);
     }
   }
 
   Future<void> signOut() async {
     await _signOut();
     _signedIn = false;
-    _hubIndex = 0;
+    _hubSelection
+      ..clear()
+      ..add(0);
     _mobile = '';
     _user = null;
     _hubs = const [];

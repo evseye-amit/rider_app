@@ -66,6 +66,15 @@ abstract final class OnboardingFlowBuilder {
     );
   }
 
+
+  static bool _expectsFutureDate(String code) {
+    final String c = code.toUpperCase();
+    return c.contains('EXPIR') ||
+        c.contains('VALID') ||
+        c.contains('RENEW') ||
+        c.contains('DUE');
+  }
+
   static UiNode _input(OnboardingFieldConfig f) {
     final List<ValidationRule> rules = _rules(f);
     final Map<String, dynamic> props = {
@@ -76,6 +85,27 @@ abstract final class OnboardingFlowBuilder {
     };
 
     switch (f.fieldType) {
+      case 'BANK_ACCOUNT':
+        return UiNode(
+          type: 'bankAccountField',
+          id: f.fieldCode,
+          props: {...props},
+          validations: rules,
+        );
+      case 'REFERENCE':
+        return UiNode(
+          type: 'referenceField',
+          id: f.fieldCode,
+          props: {...props, 'minCount': 1, 'maxCount': 3},
+          validations: rules,
+        );
+      case 'NOMINEE':
+        return UiNode(
+          type: 'nomineeField',
+          id: f.fieldCode,
+          props: {...props, 'maxCount': 4},
+          validations: rules,
+        );
       case 'MOBILE':
         return UiNode(
           type: 'textField',
@@ -86,12 +116,20 @@ abstract final class OnboardingFlowBuilder {
           validations: rules,
         );
       case 'DATE':
+        final bool future = _expectsFutureDate(f.fieldCode);
         return UiNode(
           type: 'dateField',
           id: f.fieldCode,
-          props: {...props, 'hint': 'DD / MM / YYYY'},
+          props: {...props, 'hint': 'DD / MM / YYYY', if (future) 'future': true},
           enabledWhen: f.isEnabled ? null : const UiCondition(flag: '__NEVER__'),
-          validations: rules,
+          validations: [
+            ...rules,
+            if (future && !rules.any((r) => r.type == 'futureDate'))
+              const ValidationRule(
+                type: 'futureDate',
+                message: 'This document has expired. Enter a date later than today.',
+              ),
+          ],
         );
       case 'TEXTAREA':
         return UiNode(

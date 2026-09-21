@@ -53,8 +53,8 @@ class RiderShell extends StatelessWidget {
 enum RiderTab {
   home('Home', Icons.dashboard_rounded, Icons.dashboard_outlined),
   scooter('Scooter', Icons.electric_scooter_rounded, Icons.electric_scooter_outlined),
-  support('Support', Icons.support_agent_rounded, Icons.support_agent_outlined),
-  wallet('Wallet', Icons.account_balance_wallet_rounded, Icons.account_balance_wallet_outlined);
+  wallet('Wallet', Icons.account_balance_wallet_rounded, Icons.account_balance_wallet_outlined),
+  support('Support', Icons.support_agent_rounded, Icons.support_agent_outlined);
 
   const RiderTab(this.label, this.activeIcon, this.icon);
 

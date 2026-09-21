@@ -104,6 +104,7 @@ class SupportRepositoryImpl implements SupportRepository {
           createdAt: Demo.daysAgo(1),
           updatedAt: Demo.hoursAgo(5),
           messageCount: 4,
+          repairCost: 0,
         ),
         SupportTicket(
           id: 'TKT-4462',
@@ -113,6 +114,7 @@ class SupportRepositoryImpl implements SupportRepository {
           createdAt: Demo.daysAgo(3),
           updatedAt: Demo.daysAgo(2),
           messageCount: 2,
+          repairCost: 0,
         ),
         SupportTicket(
           id: 'TKT-4398',
@@ -122,6 +124,7 @@ class SupportRepositoryImpl implements SupportRepository {
           createdAt: Demo.daysAgo(12),
           updatedAt: Demo.daysAgo(10),
           messageCount: 6,
+          repairCost: 0,
         ),
         SupportTicket(
           id: 'TKT-4310',
@@ -131,6 +134,8 @@ class SupportRepositoryImpl implements SupportRepository {
           createdAt: Demo.daysAgo(21),
           updatedAt: Demo.daysAgo(21),
           messageCount: 3,
+          repairCost: 450,
+          costBorneByRider: true,
         ),
       ];
 

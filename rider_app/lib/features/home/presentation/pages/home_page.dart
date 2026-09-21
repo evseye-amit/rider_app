@@ -89,7 +89,7 @@ class _HomeView extends StatelessWidget {
       const Gap.lg(),
 
       ModuleCard(
-        title: 'Today at a glance',
+        title: 'Yesterday at a glance',
 
         padding: const EdgeInsets.all(Insets.md),
         child: GridView(

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/di/injector.dart';
 import '../../domain/entities/vehicle.dart';
+import 'scooter_details_page.dart';
 import '../../domain/usecases/get_vehicle.dart';
 import '../cubit/scooter_cubit.dart';
 import '../widgets/scooter_widgets.dart';
@@ -93,54 +94,73 @@ class _VehicleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(Insets.lg),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: Corners.brXl,
-        boxShadow: Shadows.card,
-      ),
-      child: Row(
-        children: [
-          const BrandIllustration(art: BrandArt.scooter, size: 84),
-          const SizedBox(width: Insets.lg),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                StatusChip(
-                  label: vehicle.charging ? 'Charging' : 'On road',
-                  tone: vehicle.charging ? StatusTone.info : StatusTone.success,
-                  dense: true,
-                ),
-                const SizedBox(height: Insets.sm + 2),
-                Text(
-                  vehicle.vehicleNumber,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.titleLarge.copyWith(fontSize: 18),
-                ),
-                const SizedBox(height: 3),
-                Text(
-                  vehicle.model,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.bodySmall.copyWith(fontSize: 12.5),
-                ),
-                Text(
-                  vehicle.colour,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.bodySmall.copyWith(
-                    fontSize: 12,
-                    color: AppColors.textMuted,
+    return Pressable(
+      onTap: () => ScooterDetailsPage.open(context, vehicle),
+      scale: 0.99,
+      child: Container(
+        padding: const EdgeInsets.all(Insets.lg),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: Corners.brXl,
+          boxShadow: Shadows.card,
+        ),
+        child: Row(
+          children: [
+            const BrandIllustration(art: BrandArt.scooter, size: 84),
+            const SizedBox(width: Insets.lg),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  StatusChip(
+                    label: vehicle.charging ? 'Charging' : 'On road',
+                    tone: vehicle.charging ? StatusTone.info : StatusTone.success,
+                    dense: true,
                   ),
-                ),
-              ],
+                  const SizedBox(height: Insets.sm + 2),
+                  Text(
+                    vehicle.vehicleNumber,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.titleLarge.copyWith(fontSize: 18),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    vehicle.model,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.bodySmall.copyWith(fontSize: 12.5),
+                  ),
+                  Text(
+                    vehicle.colour,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.bodySmall.copyWith(
+                      fontSize: 12,
+                      color: AppColors.textMuted,
+                    ),
+                  ),
+                  const SizedBox(height: Insets.sm),
+                  Row(
+                    children: [
+                      Text(
+                        'View full details',
+                        style: AppText.bodySmall.copyWith(
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                      const SizedBox(width: 2),
+                      const Icon(Icons.chevron_right_rounded, size: 16, color: AppColors.primary),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
