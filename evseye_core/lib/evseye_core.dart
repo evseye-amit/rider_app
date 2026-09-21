@@ -1,0 +1,61 @@
+library;
+
+export 'src/theme/app_colors.dart';
+export 'src/theme/app_dimens.dart';
+export 'src/theme/app_gradients.dart';
+export 'src/theme/app_theme.dart';
+export 'src/theme/app_typography.dart';
+
+export 'src/widgets/app_scaffold.dart';
+export 'src/widgets/auth_sheet.dart';
+export 'src/widgets/attendance_toggle.dart';
+export 'src/widgets/brand.dart';
+export 'src/widgets/brand_photo.dart';
+export 'src/widgets/buttons.dart';
+export 'src/widgets/capture_tiles.dart';
+export 'src/widgets/empty_state.dart';
+export 'src/widgets/feedback.dart';
+export 'src/widgets/gauges.dart';
+export 'src/widgets/glass_card.dart';
+export 'src/widgets/gradient_background.dart';
+export 'src/widgets/hero_band.dart';
+export 'src/widgets/illustrations.dart';
+export 'src/widgets/inputs.dart';
+export 'src/widgets/list_tiles.dart';
+export 'src/widgets/modules.dart';
+export 'src/widgets/photo_source_sheet.dart';
+export 'src/widgets/pressable.dart';
+export 'src/widgets/section_header.dart';
+export 'src/widgets/splash_artwork.dart';
+export 'src/widgets/segmented_tabs.dart';
+export 'src/widgets/stat_card.dart';
+export 'src/widgets/status_chip.dart';
+export 'src/widgets/step_progress.dart';
+export 'src/widgets/timeline.dart';
+
+export 'src/api/api_client.dart';
+export 'src/api/api_env.dart';
+export 'src/api/auth_api.dart';
+export 'src/api/config_api.dart';
+export 'src/api/deployment_api.dart';
+export 'src/api/media_api.dart';
+export 'src/api/rider_app_api.dart';
+export 'src/api/token_store.dart';
+
+export 'src/config/feature_flags.dart';
+export 'src/config/ui_config_service.dart';
+export 'src/dynamic_ui/builders/node_utils.dart';
+export 'src/dynamic_ui/default_registry.dart';
+export 'src/dynamic_ui/dynamic_screen.dart';
+export 'src/dynamic_ui/models/ui_action.dart';
+export 'src/dynamic_ui/models/ui_condition.dart';
+export 'src/dynamic_ui/models/ui_node.dart';
+export 'src/dynamic_ui/models/ui_screen_config.dart';
+export 'src/dynamic_ui/models/validation_rule.dart';
+export 'src/dynamic_ui/registry/dynamic_form_controller.dart';
+export 'src/dynamic_ui/registry/dynamic_ui_scope.dart';
+export 'src/dynamic_ui/registry/validators.dart';
+export 'src/dynamic_ui/registry/widget_registry.dart';
+
+export 'src/utils/formatters.dart';
+export 'src/utils/result.dart';

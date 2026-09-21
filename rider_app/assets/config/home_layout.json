@@ -1,0 +1,19 @@
+{
+  "id": "rider_home",
+  "version": 4,
+  "meta": {
+    "greetingByHour": { "5": "Good morning", "12": "Good afternoon", "17": "Good evening", "21": "Riding late" }
+  },
+  "quickActions": [
+    { "key": "swap", "label": "Battery swap", "icon": "battery", "tone": "mint", "route": "/scooter" },
+    { "key": "service", "label": "Book service", "icon": "build", "tone": "cyan", "route": "/support" },
+    { "key": "sos", "label": "Roadside SOS", "icon": "support", "tone": "danger", "route": "/support" },
+    { "key": "docs", "label": "My documents", "icon": "document", "tone": "primary", "route": "/documents" }
+  ],
+  "stats": [
+    { "key": "earnings", "label": "Today's earnings", "icon": "rupee", "tone": "mint", "route": "/earnings" },
+    { "key": "incentive", "label": "Incentive earned", "icon": "trophy", "tone": "warning", "route": "/incentives" },
+    { "key": "rent", "label": "Rent due", "icon": "receipt", "tone": "cyan", "route": "/rentals" },
+    { "key": "wallet", "label": "Wallet balance", "icon": "wallet", "tone": "primary", "route": "/wallet" }
+  ]
+}

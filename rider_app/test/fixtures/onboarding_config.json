@@ -1,0 +1,671 @@
+{
+  "package": {
+    "id": "16a16cc8-6893-457c-a4b3-c19f462147ce",
+    "code": "BASIC",
+    "name": "Basic"
+  },
+  "onboarding": {
+    "category": "RIDER_ONBOARDING",
+    "steps": [
+      {
+        "stepId": "c8b17b1e-8cc5-52f5-817b-5c574e5e7702",
+        "stepCode": "RIDER_PERSONAL_PROFILE",
+        "stepName": "Personal Profile",
+        "description": "Captures the rider's basic personal information including name, mobile number, date of birth, address, referral details, and profile photo.",
+        "parentId": "b3998f75-a3eb-5ea7-b481-5c120dcb646d",
+        "sequence": 1,
+        "active": true,
+        "enabled": true,
+        "fields": [
+          {
+            "fieldId": "16aba81c-0010-4030-bffd-da56837f27e8",
+            "featureId": "16aba81c-0010-4030-bffd-da56837f27e8",
+            "featureCode": "CAPTURE_FULL_NAME",
+            "fieldCode": "FULL_NAME",
+            "storageKey": "name",
+            "fieldName": "Capture Full Name",
+            "label": "Full Name",
+            "description": "Capture the Rider full name.",
+            "fieldType": "TEXT",
+            "dataType": "STRING",
+            "required": true,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": true,
+            "billingUnit": "LIFE_TIME",
+            "isUpload": false,
+            "sequence": 5,
+            "validation": {
+              "maxLength": 120
+            },
+            "configuration": {
+              "label": "Full Name",
+              "dataType": "STRING",
+              "editable": true,
+              "required": true,
+              "fieldCode": "FULL_NAME",
+              "fieldType": "TEXT",
+              "importable": true,
+              "storageKey": "name",
+              "validation": {
+                "maxLength": 120
+              }
+            }
+          },
+          {
+            "fieldId": "51bbf7e6-5369-4a38-a965-58faf1e296a4",
+            "featureId": "51bbf7e6-5369-4a38-a965-58faf1e296a4",
+            "featureCode": "SHOW_MOBILE_NUMBER",
+            "fieldCode": "MOBILE_NUMBER",
+            "storageKey": "mobile",
+            "fieldName": "Show Mobile Number",
+            "label": "Mobile Number",
+            "description": "Capture the Rider mobile number.",
+            "fieldType": "MOBILE",
+            "dataType": "STRING",
+            "required": true,
+            "readOnly": false,
+            "disabled": false,
+            "editable": false,
+            "importable": true,
+            "billingUnit": "LIFE_TIME",
+            "isUpload": false,
+            "sequence": 6,
+            "validation": {
+              "pattern": "^[6-9][0-9]{9}$"
+            },
+            "configuration": {
+              "label": "Mobile Number",
+              "enabled": true,
+              "dataType": "STRING",
+              "editable": false,
+              "required": true,
+              "fieldCode": "MOBILE_NUMBER",
+              "fieldType": "MOBILE",
+              "importable": true,
+              "storageKey": "mobile",
+              "validation": {
+                "pattern": "^[6-9][0-9]{9}$"
+              }
+            }
+          },
+          {
+            "fieldId": "222bb7d9-ed25-4bf1-a8b1-5a97755595d3",
+            "featureId": "222bb7d9-ed25-4bf1-a8b1-5a97755595d3",
+            "featureCode": "CAPTURE_AGE",
+            "fieldCode": "DATE_OF_BIRTH",
+            "storageKey": "dateOfBirth",
+            "fieldName": "Capture Age",
+            "label": "Date of Birth",
+            "description": "Capture the Date of Birth of user",
+            "fieldType": "DATE",
+            "dataType": "DATE",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": true,
+            "billingUnit": "LIFE_TIME",
+            "isUpload": false,
+            "sequence": 40,
+            "validation": {},
+            "configuration": {
+              "label": "Date of Birth",
+              "dataType": "DATE",
+              "editable": true,
+              "required": false,
+              "fieldCode": "DATE_OF_BIRTH",
+              "fieldType": "DATE",
+              "dateFormat": "DD/MM/YYYY",
+              "importable": true,
+              "pickerType": "WHEEL",
+              "storageKey": "dateOfBirth",
+              "validation": {}
+            }
+          },
+          {
+            "fieldId": "9be68d79-748a-4708-b564-f24eeeee2cf4",
+            "featureId": "9be68d79-748a-4708-b564-f24eeeee2cf4",
+            "featureCode": "CAPTURE_ADDRESS",
+            "fieldCode": "ADDRESS",
+            "storageKey": "address",
+            "fieldName": "Capture Address",
+            "label": "Address",
+            "description": "Capture the address of the user",
+            "fieldType": "TEXTAREA",
+            "dataType": "STRING",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": true,
+            "billingUnit": "LIFE_TIME",
+            "isUpload": false,
+            "sequence": 50,
+            "validation": {
+              "maxLength": 500
+            },
+            "configuration": {
+              "label": "Address",
+              "dataType": "STRING",
+              "editable": true,
+              "required": false,
+              "fieldCode": "ADDRESS",
+              "fieldType": "TEXTAREA",
+              "importable": true,
+              "storageKey": "address",
+              "validation": {
+                "maxLength": 500
+              }
+            }
+          },
+          {
+            "fieldId": "a7cf5630-eeb9-401a-9bf5-4263b0d54c71",
+            "featureId": "a7cf5630-eeb9-401a-9bf5-4263b0d54c71",
+            "featureCode": "ADDRESS_PROOF_DOCUMENT",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "Address Proof Document Upload",
+            "label": "Address Proof Document Upload",
+            "description": "Address Proof Document Upload capability for the Evs Eye platform.",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "UPLOAD",
+            "isUpload": true,
+            "sequence": 60,
+            "validation": {},
+            "configuration": {
+              "maxFiles": 1,
+              "minFiles": 1,
+              "maxFileSizeMB": 2,
+              "allowedFileTypes": [
+                "PDF",
+                "JPG",
+                "JPEG",
+                "PNG"
+              ],
+              "validation": {}
+            }
+          },
+          {
+            "fieldId": "d497b09a-2d78-4fa2-bcae-19fded99e419",
+            "featureId": "d497b09a-2d78-4fa2-bcae-19fded99e419",
+            "featureCode": "UPLOAD_PROFILE_PHOTO",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "Profile Photo",
+            "label": "Profile Photo",
+            "description": "Profile Photo Upload capability for the Evs Eye platform.",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "UPLOAD",
+            "isUpload": true,
+            "sequence": 70,
+            "validation": {},
+            "configuration": {
+              "validation": {}
+            }
+          }
+        ]
+      },
+      {
+        "stepId": "f54905a5-960c-53ae-b217-ac729b5d832e",
+        "stepCode": "RIDER_KYC",
+        "stepName": "Identity & KYC",
+        "description": "Captures and verifies the rider's identity and KYC information including Aadhaar and PAN details.",
+        "parentId": "b3998f75-a3eb-5ea7-b481-5c120dcb646d",
+        "sequence": 2,
+        "active": true,
+        "enabled": true,
+        "fields": [
+          {
+            "fieldId": "46f0c319-c60d-409c-9880-8dc405f08b7a",
+            "featureId": "46f0c319-c60d-409c-9880-8dc405f08b7a",
+            "featureCode": "CAPTURE_AADHAAR",
+            "fieldCode": "AADHAAR_NUMBER",
+            "storageKey": "metadata.aadhaarNumber",
+            "fieldName": "Capture Aadhar number",
+            "label": "Aadhaar Number",
+            "description": "Capture Aadhar number",
+            "fieldType": "TEXT",
+            "dataType": "STRING",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": true,
+            "billingUnit": "LIFE_TIME",
+            "isUpload": false,
+            "sequence": 80,
+            "validation": {
+              "pattern": "^[0-9]{12}$"
+            },
+            "configuration": {
+              "label": "Aadhaar Number",
+              "dataType": "STRING",
+              "editable": true,
+              "required": false,
+              "fieldCode": "AADHAAR_NUMBER",
+              "fieldType": "TEXT",
+              "importable": true,
+              "storageKey": "metadata.aadhaarNumber",
+              "validation": {
+                "pattern": "^[0-9]{12}$"
+              }
+            }
+          },
+          {
+            "fieldId": "1f27ac16-3de2-4f7a-9477-0b9c703060fd",
+            "featureId": "1f27ac16-3de2-4f7a-9477-0b9c703060fd",
+            "featureCode": "AADHAR_PROOF_DOCUMENT",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "Aadhar Proof Document Upload",
+            "label": "Aadhar Proof Document Upload",
+            "description": "Aadhar Proof Document Upload capability for the Evs Eye platform.",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "UPLOAD",
+            "isUpload": true,
+            "sequence": 90,
+            "validation": {},
+            "configuration": {
+              "maxFiles": 2,
+              "minFiles": 2,
+              "maxFileSizeMB": 2,
+              "allowedFileTypes": [
+                "JPG",
+                "JPEG",
+                "PNG"
+              ],
+              "validation": {}
+            }
+          },
+          {
+            "fieldId": "b7f20dbb-8932-4653-932a-d4a17b9768df",
+            "featureId": "b7f20dbb-8932-4653-932a-d4a17b9768df",
+            "featureCode": "CAPTURE_PAN",
+            "fieldCode": "PAN_NUMBER",
+            "storageKey": "metadata.panNumber",
+            "fieldName": "Capture PAN",
+            "label": "PAN Number",
+            "description": "Capture PAN",
+            "fieldType": "TEXT",
+            "dataType": "STRING",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": true,
+            "billingUnit": "LIFE_TIME",
+            "isUpload": false,
+            "sequence": 100,
+            "validation": {
+              "pattern": "^[A-Z]{5}[0-9]{4}[A-Z]$"
+            },
+            "configuration": {
+              "label": "PAN Number",
+              "dataType": "STRING",
+              "editable": true,
+              "required": false,
+              "fieldCode": "PAN_NUMBER",
+              "fieldType": "TEXT",
+              "importable": true,
+              "storageKey": "metadata.panNumber",
+              "validation": {
+                "pattern": "^[A-Z]{5}[0-9]{4}[A-Z]$"
+              }
+            }
+          },
+          {
+            "fieldId": "899d4a82-7511-4ca9-83a4-ede7a09e8cbc",
+            "featureId": "899d4a82-7511-4ca9-83a4-ede7a09e8cbc",
+            "featureCode": "PAN_PROOF_DOCUMENT",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "PAN Proof Document Upload",
+            "label": "PAN Proof Document Upload",
+            "description": "PAN Proof Document Upload capability for the Evs Eye platform.",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "UPLOAD",
+            "isUpload": true,
+            "sequence": 110,
+            "validation": {},
+            "configuration": {
+              "maxFiles": 1,
+              "minFiles": 1,
+              "maxFileSizeMB": 2,
+              "allowedFileTypes": [
+                "PDF",
+                "JPG",
+                "JPEG",
+                "PNG"
+              ],
+              "validation": {}
+            }
+          }
+        ]
+      },
+      {
+        "stepId": "b8873752-e220-5a67-af19-6370f4e3a7e3",
+        "stepCode": "RIDER_COMPLIANCE_ELIGIBILITY",
+        "stepName": "Compliance & Eligibility",
+        "description": "Validates rider eligibility and compliance requirements including driving licence, age eligibility, references, emergency contact, and medical declaration.",
+        "parentId": "b3998f75-a3eb-5ea7-b481-5c120dcb646d",
+        "sequence": 3,
+        "active": true,
+        "enabled": true,
+        "fields": [
+          {
+            "fieldId": "fb8e4071-137a-4e55-b7ca-54923588a815",
+            "featureId": "fb8e4071-137a-4e55-b7ca-54923588a815",
+            "featureCode": "CAPTURE_DRIVING_LICENSE",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "Capture Driving License",
+            "label": "Capture Driving License",
+            "description": "Capture Driving License",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "LIFE_TIME",
+            "isUpload": false,
+            "sequence": 120,
+            "validation": {},
+            "configuration": {
+              "validation": {}
+            }
+          },
+          {
+            "fieldId": "220d288d-5de9-4253-90c8-13331a8806ef",
+            "featureId": "220d288d-5de9-4253-90c8-13331a8806ef",
+            "featureCode": "DRIVING_LICENCE_PROOF_DOCUMENT",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "Driving License Proof Document Upload",
+            "label": "Driving License Proof Document Upload",
+            "description": "Driving License Proof Document Upload capability for the Evs Eye platform.",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "UPLOAD",
+            "isUpload": true,
+            "sequence": 130,
+            "validation": {},
+            "configuration": {
+              "maxFiles": 2,
+              "minFiles": 2,
+              "maxFileSizeMB": 2,
+              "allowedFileTypes": [
+                "JPG",
+                "JPEG",
+                "PNG"
+              ],
+              "validation": {}
+            }
+          },
+          {
+            "fieldId": "8ed54b13-582b-491f-a2d0-a728e2c30a87",
+            "featureId": "8ed54b13-582b-491f-a2d0-a728e2c30a87",
+            "featureCode": "AGE_VERIFICATION",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "Age Verification",
+            "label": "Age Verification",
+            "description": "User age verification for the Evs Eye platform.",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "VERIFICATION",
+            "isUpload": false,
+            "sequence": 140,
+            "validation": {},
+            "configuration": {
+              "dataCollection": {
+                "dateOfBirth": {
+                  "required": true,
+                  "validation": "NONE"
+                }
+              },
+              "validation": {}
+            }
+          },
+          {
+            "fieldId": "8f28beb1-c1e7-4196-af11-35d1e576f4d2",
+            "featureId": "8f28beb1-c1e7-4196-af11-35d1e576f4d2",
+            "featureCode": "CAPTURE_REFERENCE",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "Capture Reference",
+            "label": "Capture Reference",
+            "description": "Capture Reference of the rider for vehicle safety",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "LIFE_TIME",
+            "isUpload": false,
+            "sequence": 150,
+            "validation": {},
+            "configuration": {
+              "allowAdd": true,
+              "allowRemove": true,
+              "maxReferences": 2,
+              "minReferences": 1,
+              "validation": {}
+            }
+          }
+        ]
+      },
+      {
+        "stepId": "c93c138c-e093-574c-8ca4-96c0ee52b027",
+        "stepCode": "RIDER_COMMERCIALS",
+        "stepName": "Commercial & Payment Details",
+        "description": "Captures commercial and payment-related information including bank account, UPI, e-mandate, security deposit, onboarding fee, rental plan, and insurance nominee.",
+        "parentId": "b3998f75-a3eb-5ea7-b481-5c120dcb646d",
+        "sequence": 4,
+        "active": true,
+        "enabled": true,
+        "fields": [
+          {
+            "fieldId": "abf6600e-f791-4027-9a66-96d4bc6c30c6",
+            "featureId": "abf6600e-f791-4027-9a66-96d4bc6c30c6",
+            "featureCode": "CAPTURE_BANK_ACCOUNT",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "Capture Bank Account Information",
+            "label": "Capture Bank Account Information",
+            "description": "Capture Bank Account Information",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "LIFE_TIME",
+            "isUpload": false,
+            "sequence": 160,
+            "validation": {},
+            "configuration": {
+              "validation": {}
+            }
+          },
+          {
+            "fieldId": "28ab83d0-6eb1-4a38-95a6-1d5e8f5b9e0b",
+            "featureId": "28ab83d0-6eb1-4a38-95a6-1d5e8f5b9e0b",
+            "featureCode": "BANK_VERIFICATION",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "Bank Verification",
+            "label": "Bank Verification",
+            "description": "User Bank verification for the Evs Eye platform.",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "VERIFICATION",
+            "isUpload": false,
+            "sequence": 170,
+            "validation": {},
+            "configuration": {
+              "validation": {}
+            }
+          },
+          {
+            "fieldId": "1b879cfa-cbf1-48c3-9cc5-388f7b040d18",
+            "featureId": "1b879cfa-cbf1-48c3-9cc5-388f7b040d18",
+            "featureCode": "BANK_PROOF_DOCUMENT",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "BANK Proof Document Upload",
+            "label": "BANK Proof Document Upload",
+            "description": "BANK Proof Document Upload capability for the Evs Eye platform.",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "UPLOAD",
+            "isUpload": true,
+            "sequence": 180,
+            "validation": {},
+            "configuration": {
+              "maxFiles": 1,
+              "minFiles": 1,
+              "maxFileSizeMB": 2,
+              "allowedFileTypes": [
+                "PDF",
+                "JPG",
+                "JPEG",
+                "PNG"
+              ],
+              "validation": {}
+            }
+          }
+        ]
+      },
+      {
+        "stepId": "6f4b8d25-257e-5cce-bcd2-750a2cce296a",
+        "stepCode": "RIDER_TRAINING",
+        "stepName": "Training",
+        "description": "Manages mandatory or optional rider training requirements before onboarding completion.",
+        "parentId": "b3998f75-a3eb-5ea7-b481-5c120dcb646d",
+        "sequence": 5,
+        "active": true,
+        "enabled": true,
+        "fields": [
+          {
+            "fieldId": "8359b460-7183-4099-9fe4-203a814cbea0",
+            "featureId": "8359b460-7183-4099-9fe4-203a814cbea0",
+            "featureCode": "SHOW_TRAINING",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "Training Module",
+            "label": "Training Module",
+            "description": "Training capability for the Evs Eye platform.",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "LIFE_TIME",
+            "isUpload": false,
+            "sequence": 195,
+            "validation": {},
+            "configuration": {
+              "skippable": true,
+              "validation": {}
+            }
+          }
+        ]
+      },
+      {
+        "stepId": "561efbc2-bfa4-587a-8196-3e7b5f99aa85",
+        "stepCode": "RIDER_AGREEMENT_ESIGN",
+        "stepName": "Agreement & E-Sign",
+        "description": "Presents the applicable rider agreement and manages electronic acceptance and e-signature.",
+        "parentId": "b3998f75-a3eb-5ea7-b481-5c120dcb646d",
+        "sequence": 6,
+        "active": true,
+        "enabled": true,
+        "fields": [
+          {
+            "fieldId": "c8659bd9-aec7-440b-b39e-fa0288c74163",
+            "featureId": "c8659bd9-aec7-440b-b39e-fa0288c74163",
+            "featureCode": "SHOW_AGREEMENT_E_SIGN",
+            "fieldCode": "",
+            "storageKey": "",
+            "fieldName": "E-Sign the agreement",
+            "label": "E-Sign the agreement",
+            "description": "Agreement E-sign capability for the Evs Eye platform.",
+            "fieldType": "TEXT",
+            "required": false,
+            "readOnly": false,
+            "disabled": false,
+            "editable": true,
+            "importable": false,
+            "billingUnit": "USER",
+            "isUpload": false,
+            "sequence": 190,
+            "validation": {},
+            "configuration": {
+              "validation": {}
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "progress": {
+    "currentStepId": "561efbc2-bfa4-587a-8196-3e7b5f99aa85",
+    "completedStepIds": [
+      "c8b17b1e-8cc5-52f5-817b-5c574e5e7702",
+      "f54905a5-960c-53ae-b217-ac729b5d832e",
+      "b8873752-e220-5a67-af19-6370f4e3a7e3",
+      "c93c138c-e093-574c-8ca4-96c0ee52b027",
+      "6f4b8d25-257e-5cce-bcd2-750a2cce296a"
+    ],
+    "skippedStepIds": [],
+    "values": {
+      "FULL_NAME": "Ravi Kumar",
+      "PAN_NUMBER": "ABCDE1234F",
+      "DATE_OF_BIRTH": "2004-09-15",
+      "MOBILE_NUMBER": "9876543299",
+      "AADHAAR_NUMBER": "234567890123"
+    },
+    "completed": false
+  }
+}

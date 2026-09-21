@@ -1,0 +1,32 @@
+{
+  "id": "rider_intro",
+  "version": 3,
+  "meta": {
+    "slides": [
+      {
+        "key": "earn",
+        "icon": "rupee",
+        "tone": "mint",
+        "title": "Earn more,\nride cleaner",
+        "body": "Daily payouts, transparent incentives and a rental plan that fits how much you actually ride.",
+        "highlights": ["Same-day settlement", "No hidden deductions"]
+      },
+      {
+        "key": "vehicle",
+        "icon": "scooter",
+        "tone": "cyan",
+        "title": "Your scooter,\nfully connected",
+        "body": "Live battery, range and health from the onboard IoT unit. Unlock and start your shift from the app.",
+        "highlights": ["Live telemetry", "One-tap start"]
+      },
+      {
+        "key": "support",
+        "icon": "support",
+        "tone": "primary",
+        "title": "Help that\nshows up",
+        "body": "Roadside assistance, service booking and a team lead who can see exactly what you see.",
+        "highlights": ["24x7 roadside help", "Service at your hub"]
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "clientCode": "EVS-DEL-01",
+  "packageName": "Premium",
+  "version": 7,
+  "settings": {
+    "photoMinimum": 4,
+    "otpLength": 6,
+    "supportPhone": "1800 200 4040"
+  },
+  "features": {
+    "VENDOR_MAPPING": true,
+    "PHOTO_LEFT": true,
+    "PHOTO_RIGHT": true,
+    "PHOTO_FRONT": true,
+    "PHOTO_BACK": true,
+    "PHOTO_WITH_RIDER": true,
+    "PHOTO_IOT": true,
+    "PHOTO_BATTERY": true,
+    "PHOTO_ACCESSORIES": true,
+    "IOT_PAIRING": true,
+    "BATTERY_MAPPING": true,
+    "ACCESSORY_CHECKLIST": true,
+    "RIDER_OTP": true,
+    "TEAM_LEAD_OTP": true,
+    "ODOMETER_CAPTURE": true,
+    "DAMAGE_ASSESSMENT": true,
+    "MAINTENANCE": true,
+    "FLEET_STATUS_UPDATE": true
+  }
+}

@@ -1,0 +1,302 @@
+{
+  "id": "vehicle_deallocation",
+  "title": "De-allocate vehicle",
+  "meta": {
+    "note": "Two OTPs close this flow — one from the rider and one from the team lead — so a vehicle can never be taken back on one person's word alone."
+  },
+  "steps": [
+    {
+      "key": "photos",
+      "label": "Return photos",
+      "shortLabel": "Photos",
+      "icon": "camera",
+      "screen": {
+        "id": "deallocation_photos",
+        "title": "Return condition",
+        "subtitle": "Photograph the vehicle exactly as it came back",
+        "body": [
+          {
+            "type": "banner",
+            "props": {
+              "tone": "warning",
+              "icon": "warning",
+              "title": "Compare against the handover set",
+              "message": "Any new damage you record here is assessed against the rider's security deposit, so capture it clearly."
+            }
+          },
+          {
+            "type": "group",
+            "props": { "title": "Vehicle angles", "icon": "camera", "gap": 16 },
+            "children": [
+              {
+                "type": "photoGrid",
+                "id": "returnPhotos",
+                "props": {
+                  "key": "returnPhotos",
+                  "columns": 2,
+                  "slots": [
+                    { "value": "left", "label": "Left side", "icon": "camera" },
+                    { "value": "right", "label": "Right side", "icon": "camera" },
+                    { "value": "front", "label": "Front", "icon": "camera" },
+                    { "value": "back", "label": "Back", "icon": "camera" }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": { "title": "Components", "icon": "iot", "gap": 16 },
+            "children": [
+              {
+                "type": "photoGrid",
+                "id": "componentPhotos",
+                "props": {
+                  "key": "componentPhotos",
+                  "columns": 2,
+                  "slots": [
+                    { "value": "iot", "label": "IoT unit", "icon": "iot" },
+                    { "value": "battery", "label": "Battery", "icon": "battery" }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "type": "textField",
+            "id": "returnOdometer",
+            "props": {
+              "key": "returnOdometer",
+              "label": "Odometer at return",
+              "hint": "14880",
+              "keyboard": "number",
+              "icon": "speed"
+            },
+            "visibleWhen": { "flag": "ODOMETER_CAPTURE" },
+            "validations": [{ "type": "required", "message": "Enter the closing odometer" }]
+          }
+        ],
+        "footer": [
+          {
+            "type": "primaryButton",
+            "props": { "label": "Continue to assessment", "icon": "assignment" },
+            "action": { "type": "next" }
+          }
+        ]
+      }
+    },
+    {
+      "key": "assessment",
+      "label": "Assessment",
+      "shortLabel": "Damage",
+      "icon": "build",
+      "screen": {
+        "id": "deallocation_assessment",
+        "title": "Condition assessment",
+        "subtitle": "Record what comes back and what is missing",
+        "body": [
+          {
+            "type": "group",
+            "props": { "title": "Vehicle condition", "icon": "build", "gap": 16 },
+            "visibleWhen": { "flag": "DAMAGE_ASSESSMENT" },
+            "children": [
+              {
+                "type": "radioGroup",
+                "id": "condition",
+                "props": {
+                  "key": "condition",
+                  "options": [
+                    { "value": "excellent", "label": "Excellent", "subtitle": "No damage beyond normal wear" },
+                    { "value": "good", "label": "Good", "subtitle": "Minor scuffs, nothing to recover" },
+                    { "value": "damaged", "label": "Damaged", "subtitle": "Recoverable damage — raise a maintenance job" }
+                  ]
+                },
+                "validations": [{ "type": "required", "message": "Record the vehicle condition" }]
+              },
+              {
+                "type": "textField",
+                "id": "damageNotes",
+                "props": {
+                  "key": "damageNotes",
+                  "label": "Damage description",
+                  "hint": "What is damaged, and how badly",
+                  "maxLines": 4,
+                  "keyboard": "multiline"
+                },
+                "visibleWhen": { "field": "condition", "equals": "damaged" },
+                "validations": [{ "type": "required", "message": "Describe the damage" }]
+              },
+              {
+                "type": "textField",
+                "id": "recoveryAmount",
+                "props": {
+                  "key": "recoveryAmount",
+                  "label": "Estimated recovery",
+                  "hint": "2500",
+                  "keyboard": "number",
+                  "icon": "rupee",
+                  "helper": "Deducted from the rider's security deposit after review."
+                },
+                "visibleWhen": { "field": "condition", "equals": "damaged" },
+                "validations": [{ "type": "required" }]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": { "title": "Accessories returned", "icon": "assignment", "gap": 12 },
+            "children": [
+              { "type": "checkbox", "id": "retHelmet", "props": { "key": "retHelmet", "label": "Helmet" } },
+              { "type": "checkbox", "id": "retBox", "props": { "key": "retBox", "label": "Delivery box" } },
+              { "type": "checkbox", "id": "retCharger", "props": { "key": "retCharger", "label": "Charger & cable" } },
+              { "type": "checkbox", "id": "retDocs", "props": { "key": "retDocs", "label": "RC, insurance and PUC" } }
+            ]
+          },
+          {
+            "type": "group",
+            "props": { "title": "Battery", "icon": "battery", "gap": 16 },
+            "visibleWhen": { "flag": "BATTERY_MAPPING" },
+            "children": [
+              {
+                "type": "textField",
+                "id": "batteryReturnPercent",
+                "props": {
+                  "key": "batteryReturnPercent",
+                  "label": "Charge at return",
+                  "hint": "12",
+                  "keyboard": "number",
+                  "maxLength": 3,
+                  "icon": "battery"
+                },
+                "validations": [{ "type": "required" }, { "type": "max", "value": 100 }]
+              },
+              {
+                "type": "switchTile",
+                "id": "batteryReturned",
+                "props": {
+                  "key": "batteryReturned",
+                  "label": "Battery returned to the hub",
+                  "subtitle": "Logged back into the charging bay inventory."
+                },
+                "validations": [{ "type": "required", "message": "Confirm the battery is back" }]
+              }
+            ]
+          }
+        ],
+        "footer": [
+          {
+            "type": "primaryButton",
+            "props": { "label": "Continue to verification", "icon": "lock" },
+            "action": { "type": "next" }
+          }
+        ]
+      }
+    },
+    {
+      "key": "verification",
+      "label": "Verification",
+      "shortLabel": "OTP",
+      "icon": "lock",
+      "screen": {
+        "id": "deallocation_verification",
+        "title": "Two-party verification",
+        "subtitle": "Both the rider and the team lead must confirm",
+        "body": [
+          {
+            "type": "banner",
+            "props": {
+              "tone": "brand",
+              "icon": "shield",
+              "message": "Codes are valid for 10 minutes. Ask each person to read theirs out — do not take their phone."
+            }
+          },
+          {
+            "type": "group",
+            "props": { "title": "Rider confirmation", "icon": "person", "gap": 16 },
+            "visibleWhen": { "flag": "RIDER_OTP" },
+            "children": [
+              {
+                "type": "text",
+                "props": {
+                  "text": "Code sent to the rider's registered mobile",
+                  "style": "bodySmall"
+                }
+              },
+              {
+                "type": "otpField",
+                "id": "riderOtp",
+                "props": { "key": "riderOtp", "length": 6 },
+                "validations": [
+                  { "type": "required", "message": "Enter the rider's code" },
+                  { "type": "minLength", "value": 6, "message": "Enter all 6 digits" }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": { "title": "Team lead confirmation", "icon": "badge", "gap": 16 },
+            "visibleWhen": { "flag": "TEAM_LEAD_OTP" },
+            "children": [
+              {
+                "type": "text",
+                "props": {
+                  "text": "Code sent to the team lead on record for this rider",
+                  "style": "bodySmall"
+                }
+              },
+              {
+                "type": "otpField",
+                "id": "teamLeadOtp",
+                "props": { "key": "teamLeadOtp", "length": 6 },
+                "validations": [
+                  { "type": "required", "message": "Enter the team lead's code" },
+                  { "type": "minLength", "value": 6, "message": "Enter all 6 digits" }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": { "title": "Close the ride", "icon": "route", "gap": 12 },
+            "children": [
+              {
+                "type": "checkbox",
+                "id": "rideEnded",
+                "props": {
+                  "key": "rideEnded",
+                  "label": "End the rider's active ride",
+                  "subtitle": "Stops telemetry, closes the shift and settles the final trip."
+                },
+                "validations": [{ "type": "required", "message": "End the ride to continue" }]
+              },
+              {
+                "type": "pickerField",
+                "id": "fleetStatus",
+                "props": {
+                  "key": "fleetStatus",
+                  "label": "Set fleet status",
+                  "icon": "scooter",
+                  "options": [
+                    { "value": "available", "label": "Available", "subtitle": "Ready to allocate to another rider" },
+                    { "value": "service", "label": "In service", "subtitle": "Send to the workshop first" },
+                    { "value": "offroad", "label": "Off road", "subtitle": "Not usable until further notice" }
+                  ]
+                },
+                "visibleWhen": { "flag": "FLEET_STATUS_UPDATE" },
+                "validations": [{ "type": "required", "message": "Set the fleet status" }]
+              }
+            ]
+          }
+        ],
+        "footer": [
+          {
+            "type": "primaryButton",
+            "props": { "label": "Complete de-allocation", "icon": "check" },
+            "action": { "type": "next" }
+          }
+        ]
+      }
+    }
+  ]
+}

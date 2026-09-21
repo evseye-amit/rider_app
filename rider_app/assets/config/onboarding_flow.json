@@ -1,0 +1,1407 @@
+{
+  "id": "rider_onboarding",
+  "title": "Rider onboarding",
+  "meta": {
+    "submitLabel": "Submit for review",
+    "note": "Every field below is gated by a package feature flag. Turning a flag off in the client package removes the field, its validation and its step from this flow without an app release."
+  },
+  "steps": [
+    {
+      "key": "profile",
+      "label": "Profile",
+      "shortLabel": "Profile",
+      "icon": "person",
+      "screen": {
+        "id": "onboarding_profile",
+        "title": "Your profile",
+        "subtitle": "As printed on your Aadhaar",
+        "body": [
+          {
+            "type": "group",
+            "props": {
+              "title": "Personal details",
+              "icon": "person",
+              "gap": 18
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "fullName",
+                "props": {
+                  "key": "fullName",
+                  "label": "Full name as per Aadhaar",
+                  "hint": "Arjun Mehta",
+                  "icon": "person",
+                  "keyboard": "name"
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Enter your full name"
+                  },
+                  {
+                    "type": "minLength",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "type": "textField",
+                "id": "mobile",
+                "props": {
+                  "key": "mobile",
+                  "label": "Mobile number",
+                  "prefixText": "+91",
+                  "keyboard": "phone",
+                  "maxLength": 10,
+                  "helper": "Verified during sign in. Contact your team lead to change it."
+                },
+                "enabledWhen": {
+                  "flag": "__NEVER__"
+                }
+              },
+              {
+                "type": "dateField",
+                "id": "dateOfBirth",
+                "props": {
+                  "key": "dateOfBirth",
+                  "label": "Date of birth",
+                  "helper": "You must be at least 18 years old to ride."
+                },
+                "visibleWhen": {
+                  "flag": "AGE_VERIFICATION"
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Select your date of birth"
+                  },
+                  {
+                    "type": "minAge",
+                    "value": 18
+                  }
+                ]
+              },
+              {
+                "type": "upload",
+                "id": "ageProof",
+                "props": {
+                  "key": "ageProof",
+                  "label": "Age proof document",
+                  "hint": "Birth certificate or school leaving certificate"
+                },
+                "visibleWhen": {
+                  "flag": "AGE_PROOF_DOCUMENT"
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Upload your age proof"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "Current address",
+              "icon": "location",
+              "gap": 18
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "addressLine",
+                "props": {
+                  "key": "addressLine",
+                  "label": "Address",
+                  "hint": "House / street / locality",
+                  "maxLines": 3,
+                  "keyboard": "multiline"
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Enter your current address"
+                  }
+                ]
+              },
+              {
+                "type": "row",
+                "props": {
+                  "gap": 12
+                },
+                "children": [
+                  {
+                    "type": "textField",
+                    "id": "city",
+                    "style": {
+                      "flex": 1
+                    },
+                    "props": {
+                      "key": "city",
+                      "label": "City",
+                      "hint": "New Delhi"
+                    },
+                    "validations": [
+                      {
+                        "type": "required"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "textField",
+                    "id": "pincode",
+                    "style": {
+                      "flex": 1
+                    },
+                    "props": {
+                      "key": "pincode",
+                      "label": "PIN code",
+                      "hint": "110020",
+                      "keyboard": "number",
+                      "maxLength": 6
+                    },
+                    "validations": [
+                      {
+                        "type": "required"
+                      },
+                      {
+                        "type": "minLength",
+                        "value": 6,
+                        "message": "Enter a valid 6-digit PIN"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "upload",
+                "id": "addressProof",
+                "props": {
+                  "key": "addressProof",
+                  "label": "Address proof",
+                  "hint": "Electricity bill, rent agreement or passport"
+                },
+                "visibleWhen": {
+                  "flag": "ADDRESS_PROOF_DOCUMENT"
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Upload an address proof"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "Photo",
+              "icon": "camera",
+              "gap": 16
+            },
+            "visibleWhen": {
+              "flag": "PROFILE_PHOTO"
+            },
+            "children": [
+              {
+                "type": "upload",
+                "id": "profilePhoto",
+                "props": {
+                  "key": "profilePhoto",
+                  "label": "Profile photo",
+                  "hint": "Clear, front-facing, no headgear"
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Add a profile photo"
+                  }
+                ]
+              },
+              {
+                "type": "banner",
+                "props": {
+                  "tone": "info",
+                  "icon": "face",
+                  "title": "Live face check required",
+                  "message": "After you submit, you will be asked to blink and turn your head so we can match your photo."
+                },
+                "visibleWhen": {
+                  "flag": "FACE_LIVENESS_CHECK"
+                }
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "Referral",
+              "icon": "gift",
+              "gap": 16
+            },
+            "visibleWhen": {
+              "flag": "REFERRAL_BENEFIT"
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "referredBy",
+                "props": {
+                  "key": "referredBy",
+                  "label": "Referred by",
+                  "hint": "Rider code of the person who referred you",
+                  "icon": "gift",
+                  "caps": true,
+                  "helper": "Optional. Both of you earn a joining bonus once you complete 50 trips."
+                }
+              }
+            ]
+          }
+        ],
+        "footer": [
+          {
+            "type": "primaryButton",
+            "props": {
+              "label": "Continue to KYC",
+              "icon": "shield"
+            },
+            "action": {
+              "type": "next"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "kyc",
+      "label": "KYC",
+      "shortLabel": "KYC",
+      "icon": "shield",
+      "screen": {
+        "id": "onboarding_kyc",
+        "title": "Identity check",
+        "subtitle": "We verify these directly with the issuing authority",
+        "body": [
+          {
+            "type": "banner",
+            "props": {
+              "tone": "brand",
+              "icon": "lock",
+              "title": "Your documents stay encrypted",
+              "message": "Numbers are masked everywhere in the app after verification and are never shared with other riders."
+            }
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "Aadhaar",
+              "icon": "badge",
+              "gap": 18
+            },
+            "visibleWhen": {
+              "flag": "AADHAR_VERIFICATION"
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "aadhaarNumber",
+                "props": {
+                  "key": "aadhaarNumber",
+                  "label": "Aadhaar number",
+                  "hint": "1234 5678 9012",
+                  "keyboard": "number",
+                  "maxLength": 12,
+                  "icon": "badge"
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Enter your Aadhaar number"
+                  },
+                  {
+                    "type": "aadhaar"
+                  }
+                ]
+              },
+              {
+                "type": "upload",
+                "id": "aadhaarDocument",
+                "props": {
+                  "key": "aadhaarDocument",
+                  "label": "Aadhaar card",
+                  "hint": "Front and back in a single PDF, or two images"
+                },
+                "visibleWhen": {
+                  "flag": "AADHAR_PROOF_DOCUMENT"
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Upload your Aadhaar"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "PAN",
+              "icon": "card",
+              "gap": 18
+            },
+            "visibleWhen": {
+              "flag": "PAN_VERIFICATION"
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "panNumber",
+                "props": {
+                  "key": "panNumber",
+                  "label": "PAN",
+                  "hint": "ABCDE1234F",
+                  "caps": true,
+                  "maxLength": 10,
+                  "icon": "card"
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Enter your PAN"
+                  },
+                  {
+                    "type": "pan"
+                  }
+                ]
+              },
+              {
+                "type": "upload",
+                "id": "panDocument",
+                "props": {
+                  "key": "panDocument",
+                  "label": "PAN card"
+                },
+                "visibleWhen": {
+                  "flag": "PAN_PROOF_DOCUMENT"
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "footer": [
+          {
+            "type": "primaryButton",
+            "props": {
+              "label": "Continue",
+              "icon": "assignment"
+            },
+            "action": {
+              "type": "next"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "compliance",
+      "label": "Eligibility",
+      "shortLabel": "Eligibility",
+      "icon": "assignment",
+      "screen": {
+        "id": "onboarding_compliance",
+        "title": "Compliance & eligibility",
+        "subtitle": "Licence, references and emergency contacts",
+        "body": [
+          {
+            "type": "group",
+            "props": {
+              "title": "Driving licence",
+              "icon": "card",
+              "gap": 18
+            },
+            "visibleWhen": {
+              "flag": "DRIVING_LICENCE_VERIFICATION"
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "dlNumber",
+                "props": {
+                  "key": "dlNumber",
+                  "label": "Licence number",
+                  "hint": "DL-0420110149646",
+                  "caps": true,
+                  "icon": "card"
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Enter your licence number"
+                  },
+                  {
+                    "type": "minLength",
+                    "value": 8
+                  }
+                ]
+              },
+              {
+                "type": "dateField",
+                "id": "dlValidTill",
+                "props": {
+                  "key": "dlValidTill",
+                  "label": "Valid till"
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  }
+                ]
+              },
+              {
+                "type": "upload",
+                "id": "dlDocument",
+                "props": {
+                  "key": "dlDocument",
+                  "label": "Licence copy",
+                  "hint": "Both sides"
+                },
+                "visibleWhen": {
+                  "flag": "DRIVING_LICENCE_PROOF_DOCUMENT"
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "Reference 1",
+              "icon": "group",
+              "gap": 18
+            },
+            "visibleWhen": {
+              "flag": "REFERENCE_CHECK"
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "ref1Name",
+                "props": {
+                  "key": "ref1Name",
+                  "label": "Name",
+                  "keyboard": "name"
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  }
+                ]
+              },
+              {
+                "type": "row",
+                "props": {
+                  "gap": 12
+                },
+                "children": [
+                  {
+                    "type": "textField",
+                    "id": "ref1Mobile",
+                    "style": {
+                      "flex": 1
+                    },
+                    "props": {
+                      "key": "ref1Mobile",
+                      "label": "Mobile",
+                      "keyboard": "phone",
+                      "maxLength": 10,
+                      "prefixText": "+91"
+                    },
+                    "validations": [
+                      {
+                        "type": "required"
+                      },
+                      {
+                        "type": "mobile"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "pickerField",
+                    "id": "ref1Relation",
+                    "style": {
+                      "flex": 1
+                    },
+                    "props": {
+                      "key": "ref1Relation",
+                      "label": "Relation",
+                      "options": [
+                        {
+                          "value": "father",
+                          "label": "Father"
+                        },
+                        {
+                          "value": "mother",
+                          "label": "Mother"
+                        },
+                        {
+                          "value": "spouse",
+                          "label": "Spouse"
+                        },
+                        {
+                          "value": "sibling",
+                          "label": "Sibling"
+                        },
+                        {
+                          "value": "friend",
+                          "label": "Friend"
+                        },
+                        {
+                          "value": "colleague",
+                          "label": "Colleague"
+                        }
+                      ]
+                    },
+                    "validations": [
+                      {
+                        "type": "required"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "Reference 2",
+              "icon": "group",
+              "gap": 18
+            },
+            "visibleWhen": {
+              "flag": "REFERENCE_CHECK"
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "ref2Name",
+                "props": {
+                  "key": "ref2Name",
+                  "label": "Name",
+                  "keyboard": "name"
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  }
+                ]
+              },
+              {
+                "type": "row",
+                "props": {
+                  "gap": 12
+                },
+                "children": [
+                  {
+                    "type": "textField",
+                    "id": "ref2Mobile",
+                    "style": {
+                      "flex": 1
+                    },
+                    "props": {
+                      "key": "ref2Mobile",
+                      "label": "Mobile",
+                      "keyboard": "phone",
+                      "maxLength": 10,
+                      "prefixText": "+91"
+                    },
+                    "validations": [
+                      {
+                        "type": "required"
+                      },
+                      {
+                        "type": "mobile"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "pickerField",
+                    "id": "ref2Relation",
+                    "style": {
+                      "flex": 1
+                    },
+                    "props": {
+                      "key": "ref2Relation",
+                      "label": "Relation",
+                      "options": [
+                        {
+                          "value": "father",
+                          "label": "Father"
+                        },
+                        {
+                          "value": "mother",
+                          "label": "Mother"
+                        },
+                        {
+                          "value": "spouse",
+                          "label": "Spouse"
+                        },
+                        {
+                          "value": "sibling",
+                          "label": "Sibling"
+                        },
+                        {
+                          "value": "friend",
+                          "label": "Friend"
+                        },
+                        {
+                          "value": "colleague",
+                          "label": "Colleague"
+                        }
+                      ]
+                    },
+                    "validations": [
+                      {
+                        "type": "required"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "Emergency contact",
+              "icon": "family",
+              "gap": 18
+            },
+            "visibleWhen": {
+              "flag": "EMERGENCY_CONTACT"
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "emergencyName",
+                "props": {
+                  "key": "emergencyName",
+                  "label": "Name",
+                  "keyboard": "name"
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  }
+                ]
+              },
+              {
+                "type": "row",
+                "props": {
+                  "gap": 12
+                },
+                "children": [
+                  {
+                    "type": "textField",
+                    "id": "emergencyMobile",
+                    "style": {
+                      "flex": 1
+                    },
+                    "props": {
+                      "key": "emergencyMobile",
+                      "label": "Mobile",
+                      "keyboard": "phone",
+                      "maxLength": 10,
+                      "prefixText": "+91"
+                    },
+                    "validations": [
+                      {
+                        "type": "required"
+                      },
+                      {
+                        "type": "mobile"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "pickerField",
+                    "id": "emergencyRelation",
+                    "style": {
+                      "flex": 1
+                    },
+                    "props": {
+                      "key": "emergencyRelation",
+                      "label": "Relation",
+                      "options": [
+                        {
+                          "value": "father",
+                          "label": "Father"
+                        },
+                        {
+                          "value": "mother",
+                          "label": "Mother"
+                        },
+                        {
+                          "value": "spouse",
+                          "label": "Spouse"
+                        },
+                        {
+                          "value": "sibling",
+                          "label": "Sibling"
+                        },
+                        {
+                          "value": "guardian",
+                          "label": "Guardian"
+                        }
+                      ]
+                    },
+                    "validations": [
+                      {
+                        "type": "required"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "Medical declaration",
+              "icon": "medical",
+              "gap": 16
+            },
+            "visibleWhen": {
+              "flag": "MEDICAL_DECLARATION"
+            },
+            "children": [
+              {
+                "type": "termsBlock",
+                "props": {
+                  "maxHeight": 180,
+                  "body": "I declare that I am physically and mentally fit to operate a two-wheeler electric vehicle in city traffic.\n\nI am not currently under treatment for any condition that causes seizures, blackouts, sudden loss of consciousness, uncorrected vision impairment, or any other condition that would make riding unsafe for me or for others.\n\nI am not under the influence of alcohol or any narcotic substance while on duty, and I understand that riding under the influence terminates this agreement immediately.\n\nI will report any change in my medical condition that affects my ability to ride to my team lead within 24 hours of becoming aware of it.\n\nI understand that EVSEYE and the fleet operator may require a medical re-assessment at any time, and that refusing one suspends my allocation until it is completed."
+                }
+              },
+              {
+                "type": "checkbox",
+                "id": "medicalAccepted",
+                "props": {
+                  "key": "medicalAccepted",
+                  "label": "I have read and accept the medical declaration",
+                  "subtitle": "Submitting a false declaration voids your insurance cover."
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "You must accept the medical declaration"
+                  }
+                ]
+              },
+              {
+                "type": "upload",
+                "id": "medicalDocument",
+                "props": {
+                  "key": "medicalDocument",
+                  "label": "Medical certificate",
+                  "hint": "Issued within the last 6 months"
+                },
+                "visibleWhen": {
+                  "flag": "MEDICAL_PROOF_DOCUMENT"
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "footer": [
+          {
+            "type": "primaryButton",
+            "props": {
+              "label": "Continue",
+              "icon": "rupee"
+            },
+            "action": {
+              "type": "next"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "commercials",
+      "label": "Commercials",
+      "shortLabel": "Money",
+      "icon": "rupee",
+      "screen": {
+        "id": "onboarding_commercials",
+        "title": "Payouts & plan",
+        "subtitle": "Where your earnings land and what you pay for the scooter",
+        "body": [
+          {
+            "type": "group",
+            "props": {
+              "title": "Bank account",
+              "icon": "bank",
+              "gap": 18
+            },
+            "visibleWhen": {
+              "flag": "BANK_VERIFICATION"
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "accountHolder",
+                "props": {
+                  "key": "accountHolder",
+                  "label": "Account holder name",
+                  "keyboard": "name",
+                  "helper": "Must match your Aadhaar name exactly."
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  }
+                ]
+              },
+              {
+                "type": "textField",
+                "id": "accountNumber",
+                "props": {
+                  "key": "accountNumber",
+                  "label": "Account number",
+                  "keyboard": "number",
+                  "icon": "bank"
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  },
+                  {
+                    "type": "minLength",
+                    "value": 9,
+                    "message": "Enter a valid account number"
+                  }
+                ]
+              },
+              {
+                "type": "textField",
+                "id": "ifsc",
+                "props": {
+                  "key": "ifsc",
+                  "label": "IFSC code",
+                  "hint": "HDFC0001234",
+                  "caps": true,
+                  "maxLength": 11
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  },
+                  {
+                    "type": "ifsc"
+                  }
+                ]
+              },
+              {
+                "type": "upload",
+                "id": "bankDocument",
+                "props": {
+                  "key": "bankDocument",
+                  "label": "Cancelled cheque or passbook",
+                  "hint": "Name, account number and IFSC must be readable"
+                },
+                "visibleWhen": {
+                  "flag": "BANK_PROOF_DOCUMENT"
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "UPI",
+              "icon": "rupee",
+              "gap": 16
+            },
+            "visibleWhen": {
+              "flag": "UPI_CAPTURE"
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "upiId",
+                "props": {
+                  "key": "upiId",
+                  "label": "UPI ID",
+                  "hint": "yourname@bank",
+                  "helper": "Used for instant payouts. Bank transfer stays as the fallback."
+                },
+                "validations": [
+                  {
+                    "type": "upi"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "Rental plan",
+              "icon": "scooter",
+              "gap": 16
+            },
+            "visibleWhen": {
+              "flag": "PLAN_SELECTION"
+            },
+            "children": [
+              {
+                "type": "radioGroup",
+                "id": "rentalPlan",
+                "props": {
+                  "key": "rentalPlan",
+                  "options": [
+                    {
+                      "value": "daily",
+                      "label": "Daily Flex",
+                      "subtitle": "Pay only for the days you ride. Cancel any day.",
+                      "trailing": "₹229"
+                    },
+                    {
+                      "value": "weekly",
+                      "label": "Weekly Saver",
+                      "subtitle": "7 days of unlimited riding with free battery swaps.",
+                      "trailing": "₹1,190",
+                      "badge": "Popular"
+                    },
+                    {
+                      "value": "monthly",
+                      "label": "Monthly Pro",
+                      "subtitle": "Lowest daily rate, free service and priority roadside help.",
+                      "trailing": "₹4,290",
+                      "badge": "Best value"
+                    }
+                  ]
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Choose a rental plan"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "One-time charges",
+              "icon": "receipt",
+              "gap": 16
+            },
+            "visibleWhen": {
+              "anyOf": [
+                {
+                  "flag": "SECURITY_DEPOSIT"
+                },
+                {
+                  "flag": "ON_BOARDING_FEES"
+                }
+              ]
+            },
+            "children": [
+              {
+                "type": "card",
+                "props": {
+                  "gap": 4
+                },
+                "children": [
+                  {
+                    "type": "keyValue",
+                    "props": {
+                      "label": "Refundable security deposit",
+                      "value": "₹3,000"
+                    },
+                    "visibleWhen": {
+                      "flag": "SECURITY_DEPOSIT"
+                    }
+                  },
+                  {
+                    "type": "keyValue",
+                    "props": {
+                      "label": "One-time onboarding fee",
+                      "value": "₹499"
+                    },
+                    "visibleWhen": {
+                      "flag": "ON_BOARDING_FEES"
+                    }
+                  },
+                  {
+                    "type": "divider",
+                    "props": {
+                      "space": 20
+                    }
+                  },
+                  {
+                    "type": "keyValue",
+                    "props": {
+                      "label": "Payable today",
+                      "value": "₹3,499",
+                      "valueColor": "mint"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "banner",
+                "props": {
+                  "tone": "info",
+                  "icon": "info",
+                  "message": "The deposit is refunded in full within 7 working days of returning the scooter in working condition."
+                },
+                "visibleWhen": {
+                  "flag": "SECURITY_DEPOSIT"
+                }
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "Auto-debit mandate",
+              "icon": "lock",
+              "gap": 16
+            },
+            "visibleWhen": {
+              "flag": "NACH_EMANDATE"
+            },
+            "children": [
+              {
+                "type": "checkbox",
+                "id": "eMandateAccepted",
+                "props": {
+                  "key": "eMandateAccepted",
+                  "label": "Set up NACH e-mandate",
+                  "subtitle": "Authorises the weekly rent to be debited automatically. You can cancel it any time from Settings."
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "The e-mandate is required for this package"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "props": {
+              "title": "Insurance nominee",
+              "icon": "shield",
+              "gap": 18
+            },
+            "visibleWhen": {
+              "flag": "INSURANCE_NOMINEE"
+            },
+            "children": [
+              {
+                "type": "textField",
+                "id": "nomineeName",
+                "props": {
+                  "key": "nomineeName",
+                  "label": "Nominee name",
+                  "keyboard": "name"
+                },
+                "validations": [
+                  {
+                    "type": "required"
+                  }
+                ]
+              },
+              {
+                "type": "row",
+                "props": {
+                  "gap": 12
+                },
+                "children": [
+                  {
+                    "type": "pickerField",
+                    "id": "nomineeRelation",
+                    "style": {
+                      "flex": 3
+                    },
+                    "props": {
+                      "key": "nomineeRelation",
+                      "label": "Relation",
+                      "options": [
+                        {
+                          "value": "spouse",
+                          "label": "Spouse"
+                        },
+                        {
+                          "value": "father",
+                          "label": "Father"
+                        },
+                        {
+                          "value": "mother",
+                          "label": "Mother"
+                        },
+                        {
+                          "value": "son",
+                          "label": "Son"
+                        },
+                        {
+                          "value": "daughter",
+                          "label": "Daughter"
+                        },
+                        {
+                          "value": "sibling",
+                          "label": "Sibling"
+                        }
+                      ]
+                    },
+                    "validations": [
+                      {
+                        "type": "required"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "textField",
+                    "id": "nomineeShare",
+                    "style": {
+                      "flex": 2
+                    },
+                    "props": {
+                      "key": "nomineeShare",
+                      "label": "Share",
+                      "hint": "100",
+                      "keyboard": "number",
+                      "maxLength": 3
+                    },
+                    "validations": [
+                      {
+                        "type": "required"
+                      },
+                      {
+                        "type": "max",
+                        "value": 100,
+                        "message": "Cannot exceed 100%"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "footer": [
+          {
+            "type": "primaryButton",
+            "props": {
+              "label": "Continue",
+              "icon": "school"
+            },
+            "action": {
+              "type": "next"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "training",
+      "label": "Training",
+      "shortLabel": "Training",
+      "icon": "school",
+      "screen": {
+        "id": "onboarding_training",
+        "title": "Safety training",
+        "subtitle": "A short module on riding an electric two-wheeler in city traffic",
+        "body": [
+          {
+            "type": "group",
+            "props": {
+              "title": "Safety training",
+              "icon": "school",
+              "gap": 16
+            },
+            "visibleWhen": {
+              "flag": "TRAINING"
+            },
+            "children": [
+              {
+                "type": "card",
+                "props": {
+                  "gap": 14
+                },
+                "children": [
+                  {
+                    "type": "row",
+                    "props": {
+                      "gap": 14
+                    },
+                    "children": [
+                      {
+                        "type": "icon",
+                        "props": {
+                          "icon": "school",
+                          "size": 26,
+                          "color": "cyan"
+                        }
+                      },
+                      {
+                        "type": "column",
+                        "style": {
+                          "flex": 1
+                        },
+                        "props": {
+                          "gap": 3
+                        },
+                        "children": [
+                          {
+                            "type": "text",
+                            "props": {
+                              "text": "Rider safety module",
+                              "style": "titleMedium"
+                            }
+                          },
+                          {
+                            "type": "text",
+                            "props": {
+                              "text": "4 short videos · about 18 minutes",
+                              "style": "bodySmall"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "progress",
+                    "props": {
+                      "value": 0.0,
+                      "label": "Progress",
+                      "trailingLabel": "0 of 4"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "checkbox",
+                "id": "trainingCompleted",
+                "props": {
+                  "key": "trainingCompleted",
+                  "label": "I have completed the safety training",
+                  "subtitle": "Your team lead can verify this at the hub."
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "Complete the training to continue"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "footer": [
+          {
+            "type": "primaryButton",
+            "props": {
+              "label": "Continue",
+              "icon": "signature"
+            },
+            "action": {
+              "type": "next"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "key": "agreement",
+      "label": "Agreement",
+      "shortLabel": "Agreement",
+      "icon": "signature",
+      "screen": {
+        "id": "onboarding_agreement",
+        "title": "Rider agreement",
+        "subtitle": "The last step before we send your file for review",
+        "body": [
+          {
+            "type": "group",
+            "props": {
+              "title": "Rider agreement",
+              "icon": "signature",
+              "gap": 16
+            },
+            "visibleWhen": {
+              "flag": "AGREEMENT_E_SIGN"
+            },
+            "children": [
+              {
+                "type": "termsBlock",
+                "props": {
+                  "maxHeight": 360,
+                  "body": "This agreement is between you (the Rider) and the fleet operator, facilitated on the EVSEYE platform.\n\n1. Vehicle. The scooter allocated to you remains the property of the fleet operator at all times. You have the right to use it for the duration of your active rental plan and for no other purpose.\n\n2. Rent. Rent is charged according to the plan you selected and is debited on the schedule shown at the time of selection. Rent continues to accrue on days you do not ride unless your plan is a daily plan and you have marked yourself absent before the shift cut-off.\n\n3. Condition. You will return the scooter in the same condition it was allocated to you, allowing for fair wear and tear. Damage caused by negligence, misuse or riding under the influence is recoverable from your security deposit and, if that is insufficient, from your earnings.\n\n4. Insurance. The vehicle carries third-party insurance. Personal accident cover applies only while you are marked present and on an active shift. Your nominee, as declared in this application, is the beneficiary.\n\n5. Traffic offences. Challans issued against the vehicle while it is allocated to you are your responsibility and are deducted from your wallet.\n\n6. Termination. Either party may terminate with 7 days notice. The security deposit is refunded within 7 working days of the vehicle being returned and inspected.\n\n7. Data. Location and telemetry are recorded while the vehicle is switched on, for safety, theft recovery and service scheduling."
+                }
+              },
+              {
+                "type": "checkbox",
+                "id": "agreementAccepted",
+                "props": {
+                  "key": "agreementAccepted",
+                  "label": "I have read and agree to the rider agreement",
+                  "subtitle": "An Aadhaar OTP e-sign request will be sent to your registered mobile."
+                },
+                "validations": [
+                  {
+                    "type": "required",
+                    "message": "You must accept the agreement to continue"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "footer": [
+          {
+            "type": "primaryButton",
+            "props": {
+              "label": "Review application",
+              "icon": "eye"
+            },
+            "action": {
+              "type": "next"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
