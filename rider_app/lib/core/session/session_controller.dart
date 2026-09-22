@@ -25,6 +25,7 @@ class SessionController extends ChangeNotifier {
     required GetOnboarding getOnboarding,
     required GetCurrentDeployment getCurrentDeployment,
     required UploadOnboardingDocument uploadDocument,
+    required TokenStore tokens,
   })  : _config = config,
         _enrollRider = enrollRider,
         _requestOtp = requestOtp,
@@ -33,9 +34,11 @@ class SessionController extends ChangeNotifier {
         _signOut = signOut,
         _getOnboarding = getOnboarding,
         _getCurrentDeployment = getCurrentDeployment,
-        _uploadDocument = uploadDocument;
+        _uploadDocument = uploadDocument,
+        _tokens = tokens;
 
   final UiConfigService _config;
+  final TokenStore _tokens;
   final EnrollRider _enrollRider;
   final RequestOtp _requestOtp;
   final VerifyOtp _verifyOtp;
@@ -122,6 +125,7 @@ class SessionController extends ChangeNotifier {
   }
 
   Future<Result<AuthUser>> verifyOtp({required String otpRequestId, required String code}) async {
+    if (_mobile.isNotEmpty) await _tokens.saveMobile(_mobile);
     final Result<AuthUser> result = await _verifyOtp(VerifyOtpParams(otpRequestId: otpRequestId, code: code));
     if (result case Ok<AuthUser>(:final value)) {
       _user = value;
@@ -137,6 +141,11 @@ class SessionController extends ChangeNotifier {
       case Ok<RiderDeployment>(:final value):
         _deployment = value;
         _stage = riderStageFrom(value.screen);
+        if (_mobile.isEmpty) _mobile = _tokens.mobile ?? '';
+        final String? allocated = value.allocation?.rider?.mobile;
+        if (_mobile.isEmpty && allocated != null && allocated.isNotEmpty) {
+          _mobile = allocated;
+        }
 
         if (value.screen == RiderScreen.onboarding || _onboarding == null) {
           await loadOnboarding();
@@ -161,6 +170,8 @@ class SessionController extends ChangeNotifier {
     final Result<RiderOnboardingConfig> result = await _getOnboarding(const NoParams());
     if (result case Ok<RiderOnboardingConfig>(:final value)) {
       _onboarding = value;
+      final String? saved = value.value('MOBILE_NUMBER');
+      if (_mobile.isEmpty && saved != null && saved.isNotEmpty) _mobile = saved;
       _profile = _buildProfile();
       notifyListeners();
     }

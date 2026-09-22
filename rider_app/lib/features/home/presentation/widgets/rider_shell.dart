@@ -125,14 +125,14 @@ class RiderBottomBar extends StatelessWidget {
                   ),
                   const SizedBox(width: _powerSize + 16),
                   _BarItem(
-                    tab: RiderTab.support,
-                    active: currentIndex == 2,
-                    onTap: () => onTap(2),
-                  ),
-                  _BarItem(
                     tab: RiderTab.wallet,
                     active: currentIndex == 3,
                     onTap: () => onTap(3),
+                  ),
+                  _BarItem(
+                    tab: RiderTab.support,
+                    active: currentIndex == 2,
+                    onTap: () => onTap(2),
                   ),
                 ],
               ),

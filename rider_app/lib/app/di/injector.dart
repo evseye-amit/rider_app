@@ -69,6 +69,7 @@ Future<void> configureDependencies() async {
       getOnboarding: GetOnboarding(sl()),
       getCurrentDeployment: GetCurrentDeployment(sl()),
       uploadDocument: UploadOnboardingDocument(sl()),
+      tokens: sl<TokenStore>(),
     ),
   );
 

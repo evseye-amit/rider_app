@@ -15,6 +15,16 @@ class ScooterDetailsPage extends StatelessWidget {
 
   String _or(String? value) => (value == null || value.trim().isEmpty) ? '—' : value.trim();
 
+  String _pretty(String? value) {
+    final String raw = (value ?? '').trim();
+    if (raw.isEmpty) return '—';
+    return raw
+        .split(RegExp(r'[_\s]+'))
+        .where((w) => w.isNotEmpty)
+        .map((w) => w[0].toUpperCase() + w.substring(1).toLowerCase())
+        .join(' ');
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -46,7 +56,7 @@ class ScooterDetailsPage extends StatelessWidget {
               children: [
                 KeyValueRow(
                   label: 'Battery type',
-                  value: _or(vehicle.batteryType),
+                  value: _pretty(vehicle.batteryType),
                   icon: Icons.battery_charging_full_rounded,
                 ),
                 KeyValueRow(

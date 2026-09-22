@@ -35,7 +35,9 @@ class _HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final SessionController session = sl<SessionController>();
 
-    return BlocBuilder<HubCubit, HubState>(
+    return ListenableBuilder(
+      listenable: session,
+      builder: (context, _) => BlocBuilder<HubCubit, HubState>(
       builder: (context, state) {
         if (state.status == HubStatus.failure) {
           return Scaffold(
@@ -67,6 +69,7 @@ class _HomeView extends StatelessWidget {
               : _content(context, session, summary, profile),
         );
       },
+      ),
     );
   }
 

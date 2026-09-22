@@ -201,10 +201,13 @@ abstract final class OnboardingFlowBuilder {
         'label': f.label,
         if (hint.isNotEmpty) 'hint': hint,
         'featureCode': f.featureCode,
-        'required': true,
+        'required': f.required,
       },
       action: const UiAction(type: 'pickFile'),
-      validations: [ValidationRule(type: 'required', message: 'Add your ${f.label.toLowerCase()}')],
+      validations: [
+        if (f.required)
+          ValidationRule(type: 'required', message: 'Add your ${f.label.toLowerCase()}'),
+      ],
     );
   }
 
