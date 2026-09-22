@@ -9,7 +9,6 @@ import '../../features/auth/domain/usecases/verify_otp.dart';
 import '../../features/deployment/domain/usecases/get_current_deployment.dart';
 import '../../features/onboarding/domain/onboarding_draft.dart';
 import '../../features/onboarding/domain/usecases/get_onboarding.dart';
-import '../../features/onboarding/domain/usecases/upload_onboarding_document.dart';
 import 'rider_stage.dart';
 
 export 'rider_stage.dart';
@@ -24,7 +23,6 @@ class SessionController extends ChangeNotifier {
     required SignOut signOut,
     required GetOnboarding getOnboarding,
     required GetCurrentDeployment getCurrentDeployment,
-    required UploadOnboardingDocument uploadDocument,
     required TokenStore tokens,
   })  : _config = config,
         _enrollRider = enrollRider,
@@ -34,7 +32,6 @@ class SessionController extends ChangeNotifier {
         _signOut = signOut,
         _getOnboarding = getOnboarding,
         _getCurrentDeployment = getCurrentDeployment,
-        _uploadDocument = uploadDocument,
         _tokens = tokens;
 
   final UiConfigService _config;
@@ -46,7 +43,6 @@ class SessionController extends ChangeNotifier {
   final SignOut _signOut;
   final GetOnboarding _getOnboarding;
   final GetCurrentDeployment _getCurrentDeployment;
-  final UploadOnboardingDocument _uploadDocument;
 
   AuthUser? _user;
 
@@ -150,9 +146,7 @@ class SessionController extends ChangeNotifier {
         if (value.screen == RiderScreen.onboarding || _onboarding == null) {
           await loadOnboarding();
         }
-        if (value.screen != RiderScreen.onboarding) {
-          await flushDocumentUploads();
-        }
+        _stage = _resolveStage(value);
       case Err<RiderDeployment>(:final failure):
         if (failure is UnauthorizedFailure || failure is AuthFailure) {
           _clearSession();
@@ -164,6 +158,15 @@ class SessionController extends ChangeNotifier {
     _profile = _buildProfile();
     notifyListeners();
     return result;
+  }
+
+
+  RiderStage _resolveStage(RiderDeployment deployment) {
+    final RiderOnboardingConfig? config = _onboarding;
+    if (config == null) return riderStageFrom(deployment.screen);
+    if (!config.isComplete) return RiderStage.onboarding;
+    if (deployment.allocation != null) return riderStageFrom(deployment.screen);
+    return riderStageFrom(RiderScreen.parse(config.screen));
   }
 
   Future<Result<RiderOnboardingConfig>> loadOnboarding() async {
@@ -183,17 +186,6 @@ class SessionController extends ChangeNotifier {
     _profile = _buildProfile();
     notifyListeners();
     if (config.isComplete) await refreshState();
-  }
-
-  Future<void> flushDocumentUploads() async {
-    final String? id = riderId;
-    if (id == null || OnboardingDraft.instance.pendingUploads.isEmpty) return;
-    for (final entry in Map.of(OnboardingDraft.instance.pendingUploads).entries) {
-      final String photoType = entry.key.startsWith('upload:') ? entry.key.substring('upload:'.length) : entry.key;
-      final Result<RemotePhoto> result =
-          await _uploadDocument(UploadDocumentParams(riderId: id, photoType: photoType, file: entry.value));
-      if (result.isOk) OnboardingDraft.instance.detach(entry.key);
-    }
   }
 
   void seedProfile(Map<String, Object?> profile) {

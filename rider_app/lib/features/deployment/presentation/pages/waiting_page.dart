@@ -69,11 +69,11 @@ class _WaitingViewState extends State<_WaitingView> with SingleTickerProviderSta
         ),
       DeploymentStatus.riderWaiting => (
           title: '$vehicle is reserved for you',
-          message: 'Your fleet manager is preparing the vehicle and its IoT unit. The next step — payment details — appears here once they request it.',
+          message: 'Your fleet manager is preparing the vehicle and its IoT unit. Your payment details appear here as soon as they are ready.',
           art: BrandArt.scooter,
         ),
       DeploymentStatus.fleetRequested => (
-          title: 'Vehicle requested',
+          title: '$vehicle is reserved for you',
           message: 'Your fleet manager is putting together your payment details. You will be asked to pay in a moment.',
           art: BrandArt.wallet,
         ),
@@ -189,7 +189,6 @@ class _Steps extends StatelessWidget {
 
   static const List<(DeploymentStatus, String)> _labels = [
     (DeploymentStatus.riderWaiting, 'Scooter reserved'),
-    (DeploymentStatus.fleetRequested, 'Vehicle requested'),
     (DeploymentStatus.paymentPending, 'Payment'),
     (DeploymentStatus.pdiPendingRider, 'Inspection'),
     (DeploymentStatus.trainingPending, 'Training'),

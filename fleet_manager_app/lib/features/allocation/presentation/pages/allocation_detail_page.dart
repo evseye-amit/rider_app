@@ -249,7 +249,7 @@ class _Band extends StatelessWidget {
 }
 
 String _nextActionLabel(DeploymentStatus status) => switch (status) {
-      DeploymentStatus.riderWaiting => 'Request vehicle',
+      DeploymentStatus.riderWaiting => 'Ask for payment',
       DeploymentStatus.fleetRequested => 'Ask for payment',
       DeploymentStatus.paymentPending => 'Verify payment',
       DeploymentStatus.paymentPaid => 'Submit inspection',
@@ -371,15 +371,12 @@ class _Footer extends StatelessWidget {
 
   final DeploymentDetailState state;
 
-  Future<void> _requestFleet(BuildContext context) async {
-    final bool ok = await context.read<DeploymentDetailCubit>().requestFleet();
-    if (ok && context.mounted) AppSnack.success(context, 'Vehicle requested — now ask for payment');
-  }
-
   Future<void> _askPayment(BuildContext context) async {
     final List<PaymentLineItem>? items = await _PaymentSheet.show(context);
     if (items == null || !context.mounted) return;
-    final bool ok = await context.read<DeploymentDetailCubit>().askPayment(items);
+    final DeploymentDetailCubit cubit = context.read<DeploymentDetailCubit>();
+    if (state.deployment == DeploymentStatus.riderWaiting && !await cubit.requestFleet()) return;
+    final bool ok = await cubit.askPayment(items);
     if (ok && context.mounted) AppSnack.success(context, 'Payment requested — the rider sees it now');
   }
 
@@ -445,7 +442,7 @@ class _Footer extends StatelessWidget {
     final bool evidenceReady = state.evidence == null || state.evidence!.isComplete;
 
     final (String label, IconData icon, VoidCallback? onPressed) = switch (status) {
-      DeploymentStatus.riderWaiting => ('Request vehicle', Icons.electric_scooter_rounded, () => _requestFleet(context)),
+      DeploymentStatus.riderWaiting => ('Ask for payment', Icons.receipt_long_rounded, () => _askPayment(context)),
       DeploymentStatus.fleetRequested => ('Ask for payment', Icons.receipt_long_rounded, () => _askPayment(context)),
       DeploymentStatus.paymentPending => ('Verify payment', Icons.payments_rounded, () => _verifyPayment(context)),
       DeploymentStatus.paymentPaid => (
@@ -493,6 +490,7 @@ class _PaymentSheet extends StatefulWidget {
 
 class _PaymentSheetState extends State<_PaymentSheet> {
   final List<(TextEditingController, TextEditingController)> _rows = [
+    (TextEditingController(text: 'Rental fee (week)'), TextEditingController(text: '700')),
     (TextEditingController(text: 'Security deposit'), TextEditingController(text: '3000')),
     (TextEditingController(text: 'Onboarding fee'), TextEditingController(text: '500')),
   ];

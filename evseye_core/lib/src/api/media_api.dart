@@ -132,6 +132,60 @@ class MediaApi {
     final String uploadUrl = payload['uploadUrl'] as String;
     final String photoId = photoJson['id'] as String;
 
+    final Result<bool> sent = await _putObject(uploadUrl, bytes, mimeType, onProgress);
+    if (sent case Err<bool>(:final failure)) return Result.err(failure);
+
+    return _client.post<RemotePhoto>(
+      '/media/$photoId/complete',
+      parse: (data) => RemotePhoto.fromJson(Map<String, dynamic>.from(data as Map)),
+    );
+  }
+
+  Future<Result<RemotePhoto>> uploadOnboardingDocument({
+    required String fieldCode,
+    required File file,
+    String mimeType = 'image/jpeg',
+    void Function(double progress)? onProgress,
+  }) async {
+    final Uint8List bytes = await file.readAsBytes();
+    final String fileName = _fileNameFor(fieldCode, mimeType);
+
+    final Result<Map<String, dynamic>> intent = await _client.post<Map<String, dynamic>>(
+      '/rider-app/onboarding/documents/upload-intent',
+      body: {
+        'fieldCode': fieldCode,
+        'mimeType': mimeType,
+        'fileName': fileName,
+        'sizeBytes': bytes.length,
+      },
+      parse: (data) => Map<String, dynamic>.from(data as Map),
+    );
+    if (intent case Err<Map<String, dynamic>>(:final failure)) return Result.err(failure);
+
+    final Map<String, dynamic> payload = (intent as Ok<Map<String, dynamic>>).value;
+    final Map<String, dynamic> photoJson = Map<String, dynamic>.from(payload['photo'] as Map);
+    final String uploadUrl = payload['uploadUrl'] as String;
+    final String photoId = photoJson['id'] as String;
+
+    final Result<bool> sent = await _putObject(uploadUrl, bytes, mimeType, onProgress);
+    if (sent case Err<bool>(:final failure)) return Result.err(failure);
+
+    return _client.post<RemotePhoto>(
+      '/rider-app/onboarding/documents/$photoId/complete',
+      parse: (data) {
+        final Map<String, dynamic> map = Map<String, dynamic>.from(data as Map);
+        final Object? photo = map['photo'];
+        return RemotePhoto.fromJson(photo is Map ? Map<String, dynamic>.from(photo) : map);
+      },
+    );
+  }
+
+  Future<Result<bool>> _putObject(
+    String uploadUrl,
+    Uint8List bytes,
+    String mimeType,
+    void Function(double progress)? onProgress,
+  ) async {
     try {
       final Dio plain = Dio();
       final Response<dynamic> put = await plain.put<dynamic>(
@@ -141,22 +195,18 @@ class MediaApi {
           headers: _signedHeaders(uploadUrl, mimeType, bytes.length),
           validateStatus: (_) => true,
         ),
-        onSendProgress: (sent, total) {
-          if (total > 0) onProgress?.call(sent / total);
+        onSendProgress: (sentBytes, total) {
+          if (total > 0) onProgress?.call(sentBytes / total);
         },
       );
       final int status = put.statusCode ?? 0;
       if (status < 200 || status >= 300) {
         return Result.err(ServerFailure('Upload failed (${put.statusCode}).', status));
       }
+      return const Result.ok(true);
     } on DioException catch (e) {
       return Result.err(NetworkFailure('Could not upload the photo. (${e.message})'));
     }
-
-    return _client.post<RemotePhoto>(
-      '/media/$photoId/complete',
-      parse: (data) => RemotePhoto.fromJson(Map<String, dynamic>.from(data as Map)),
-    );
   }
 
   Future<Result<String>> downloadUrl(String photoId) {

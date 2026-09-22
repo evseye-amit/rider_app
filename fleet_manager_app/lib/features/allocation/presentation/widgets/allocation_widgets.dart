@@ -246,7 +246,6 @@ class DeploymentTimeline extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<(DeploymentStatus, String, DateTime?)> rows = [
       (DeploymentStatus.riderWaiting, 'Vehicle reserved', workflow?.createdAt),
-      (DeploymentStatus.fleetRequested, 'Vehicle requested', null),
       (DeploymentStatus.paymentPending, 'Payment requested', null),
       (DeploymentStatus.paymentPaid, 'Payment verified', workflow?.paymentPaidAt),
       (DeploymentStatus.pdiPendingRider, 'Inspection sent to rider', null),

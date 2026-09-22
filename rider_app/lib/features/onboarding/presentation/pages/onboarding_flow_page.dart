@@ -10,6 +10,7 @@ import '../../../../core/session/session_controller.dart';
 import '../../domain/onboarding_draft.dart';
 import '../../domain/onboarding_flow_builder.dart';
 import '../../domain/usecases/save_onboarding_step.dart';
+import '../../domain/usecases/upload_onboarding_document.dart';
 
 class OnboardingFlowPage extends StatefulWidget {
   const OnboardingFlowPage({super.key});
@@ -28,7 +29,10 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
   bool _saving = false;
   String? _loadError;
 
-  DynamicUiScope get _scope => _session.scope(form: _form, onAction: _handleAction);
+  final Set<String> _uploading = <String>{};
+
+  DynamicUiScope get _scope =>
+      _session.scope(form: _form, onAction: _handleAction, busyFields: _uploading);
 
   SessionController get _session => sl<SessionController>();
 
@@ -70,10 +74,6 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
     if (config.fieldCodes.contains('FULL_NAME') && _form.valueOf('FULL_NAME') == null) {
       final Object? name = _session.profile['name'];
       if (name != null) _form.setValue('FULL_NAME', name, markTouched: false);
-    }
-
-    for (final entry in OnboardingDraft.instance.pendingUploads.entries) {
-      _form.setValue(entry.key, entry.value.uri.pathSegments.last, markTouched: false);
     }
 
     final int resume = jumpTo ?? config.resumeIndex;
@@ -204,15 +204,30 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
     }
   }
 
-  Future<void> _capture(BuildContext context, String key) async {
+  Future<void> _capture(BuildContext context, UiNode node) async {
+    final String key = node.fieldKey;
+    final String fieldCode = (node.props['fieldCode'] ?? node.props['featureCode'] ?? '').toString();
+    if (fieldCode.isEmpty) return;
+
     final File? file = await PhotoSourceSheet.pick(
       context,
       subtitle: 'Take a photo of the document, or choose one you already have',
     );
     if (file == null || !mounted) return;
-    OnboardingDraft.instance.attach(key, file);
-    _form.setValue(key, file.uri.pathSegments.last);
-    AppSnack.success(this.context, 'Attached — it uploads with your application');
+
+    setState(() => _uploading.add(key));
+    final Result<RemotePhoto> result =
+        await UploadOnboardingDocument(sl())(UploadDocumentParams(fieldCode: fieldCode, file: file));
+    if (!mounted) return;
+    setState(() => _uploading.remove(key));
+
+    switch (result) {
+      case Ok<RemotePhoto>():
+        _form.setValue(key, file.uri.pathSegments.last);
+        AppSnack.success(this.context, 'Uploaded');
+      case Err<RemotePhoto>(:final failure):
+        AppSnack.error(this.context, failure.message);
+    }
   }
 
   void _handleAction(BuildContext context, UiAction action, UiNode node) {
@@ -225,7 +240,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
         _back();
         break;
       case 'pickFile':
-        _capture(context, node.fieldKey);
+        _capture(context, node);
         break;
       case 'navigate':
         if (action.target != null) context.push(action.target!);

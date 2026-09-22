@@ -17,6 +17,7 @@ enum RiderScreen {
         'TRAINING' => RiderScreen.training,
         'DEVICE_PAIRING' => RiderScreen.devicePairing,
         'HOME' => RiderScreen.home,
+        'WAITING' || 'WAITING_FOR_FLEET' => RiderScreen.waiting,
         _ => RiderScreen.waiting,
       };
 }
@@ -49,8 +50,8 @@ enum DeploymentStatus {
       };
 
   String get label => switch (this) {
-        riderWaiting => 'Waiting for vehicle request',
-        fleetRequested => 'Vehicle requested',
+        riderWaiting => 'Vehicle reserved',
+        fleetRequested => 'Vehicle reserved',
         paymentPending => 'Payment pending',
         paymentPaid => 'Payment received',
         pdiPendingRider => 'Inspection with rider',
@@ -391,9 +392,7 @@ class RiderDeployment {
   const RiderDeployment({required this.screen, this.allocation, this.workflow, this.payment});
 
   factory RiderDeployment.fromJson(Map<String, dynamic> json) => RiderDeployment(
-        screen: json.isEmpty
-            ? RiderScreen.onboarding
-            : RiderScreen.parse(json['screen']?.toString()),
+        screen: RiderScreen.parse(json['screen']?.toString()),
         allocation: json['allocation'] is Map
             ? DeploymentAllocation.fromJson(Map<String, dynamic>.from(json['allocation'] as Map))
             : null,

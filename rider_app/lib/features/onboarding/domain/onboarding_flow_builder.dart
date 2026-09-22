@@ -200,6 +200,7 @@ abstract final class OnboardingFlowBuilder {
         'label': f.label,
         if (hint.isNotEmpty) 'hint': hint,
         'featureCode': f.featureCode,
+        'fieldCode': f.fieldCode.isEmpty ? f.featureCode : f.fieldCode,
         'required': f.required,
       },
       action: const UiAction(type: 'pickFile'),

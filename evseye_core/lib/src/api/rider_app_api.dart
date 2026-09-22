@@ -123,7 +123,7 @@ class OnboardingStepConfig {
   final bool enabled;
   final List<OnboardingFieldConfig> fields;
 
-  Iterable<OnboardingFieldConfig> get inputs => fields.where((f) => f.isInput);
+  Iterable<OnboardingFieldConfig> get inputs => fields.where((f) => f.isInput && !f.isUpload);
   Iterable<OnboardingFieldConfig> get uploads => fields.where((f) => f.isUpload);
   Iterable<OnboardingFieldConfig> get capabilities => fields.where((f) => f.isCapability);
 }
@@ -173,6 +173,7 @@ class RiderOnboardingConfig {
     required this.packageName,
     required this.steps,
     required this.progress,
+    this.screen,
   });
 
   factory RiderOnboardingConfig.fromJson(Map<String, dynamic> json) {
@@ -192,6 +193,7 @@ class RiderOnboardingConfig {
       progress: json['progress'] == null
           ? OnboardingProgress.empty
           : OnboardingProgress.fromJson(Map<String, dynamic>.from(json['progress'] as Map)),
+      screen: json['screen']?.toString(),
     );
   }
 
@@ -200,6 +202,8 @@ class RiderOnboardingConfig {
   final String packageName;
   final List<OnboardingStepConfig> steps;
   final OnboardingProgress progress;
+
+  final String? screen;
 
   bool get isComplete => progress.completed;
 

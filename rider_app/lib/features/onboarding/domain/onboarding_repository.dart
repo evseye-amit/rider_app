@@ -8,8 +8,7 @@ abstract interface class OnboardingRepository {
   Future<Result<RiderOnboardingConfig>> saveStep(String stepId, Map<String, Object?> values);
 
   Future<Result<RemotePhoto>> uploadDocument({
-    required String riderId,
-    required String photoType,
+    required String fieldCode,
     required File file,
   });
 }

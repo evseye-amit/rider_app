@@ -19,7 +19,6 @@ import '../../features/home/domain/home_repository.dart';
 import '../../features/onboarding/data/onboarding_repository_impl.dart';
 import '../../features/onboarding/domain/onboarding_repository.dart';
 import '../../features/onboarding/domain/usecases/get_onboarding.dart';
-import '../../features/onboarding/domain/usecases/upload_onboarding_document.dart';
 import '../../features/onboarding_intro/data/intro_repository_impl.dart';
 import '../../features/onboarding_intro/domain/intro_repository.dart';
 import '../../features/rentals/data/rentals_repository_impl.dart';
@@ -68,7 +67,6 @@ Future<void> configureDependencies() async {
       signOut: SignOut(sl()),
       getOnboarding: GetOnboarding(sl()),
       getCurrentDeployment: GetCurrentDeployment(sl()),
-      uploadDocument: UploadOnboardingDocument(sl()),
       tokens: sl<TokenStore>(),
     ),
   );

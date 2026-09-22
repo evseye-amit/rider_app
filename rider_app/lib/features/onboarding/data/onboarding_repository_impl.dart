@@ -19,8 +19,7 @@ class OnboardingRepositoryImpl implements OnboardingRepository {
 
   @override
   Future<Result<RemotePhoto>> uploadDocument({
-    required String riderId,
-    required String photoType,
+    required String fieldCode,
     required File file,
   }) {
     final String name = file.path.toLowerCase();
@@ -31,10 +30,8 @@ class OnboardingRepositoryImpl implements OnboardingRepository {
             : name.endsWith('.webp')
                 ? 'image/webp'
                 : 'image/jpeg';
-    return _media.upload(
-      entity: PhotoEntity.rider,
-      entityId: riderId,
-      photoType: photoType,
+    return _media.uploadOnboardingDocument(
+      fieldCode: fieldCode,
       file: file,
       mimeType: mime,
     );
