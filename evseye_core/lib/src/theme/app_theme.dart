@@ -159,7 +159,7 @@ abstract final class AppTheme {
         fillColor: WidgetStateProperty.resolveWith(
           (s) => s.contains(WidgetState.selected) ? AppColors.primary : Colors.transparent,
         ),
-        checkColor: const WidgetStatePropertyAll(Colors.white),
+        checkColor: const WidgetStatePropertyAll(AppColors.textOnPrimary),
         side: const BorderSide(color: AppColors.strokeStrong, width: 1.5),
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(6))),
       ),
@@ -172,7 +172,7 @@ abstract final class AppTheme {
         activeTrackColor: AppColors.primary,
         inactiveTrackColor: AppColors.surfaceSunken,
         thumbColor: Colors.white,
-        overlayColor: Color(0x1FC21784),
+        overlayColor: Color(0x1FF475D0),
       ),
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.primary,
@@ -199,7 +199,7 @@ abstract final class AppTheme {
       ),
       textSelectionTheme: const TextSelectionThemeData(
         cursorColor: AppColors.primary,
-        selectionColor: Color(0x33C21784),
+        selectionColor: Color(0x33F475D0),
         selectionHandleColor: AppColors.primary,
       ),
     );

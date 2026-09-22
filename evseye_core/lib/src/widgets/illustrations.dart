@@ -110,7 +110,7 @@ class IconTile extends StatelessWidget {
               ]
             : null,
       ),
-      child: Icon(icon, size: size * 0.48, color: solid ? Colors.white : tone),
+      child: Icon(icon, size: size * 0.48, color: solid ? AppColors.onInkTone(tone) : tone),
     );
   }
 }

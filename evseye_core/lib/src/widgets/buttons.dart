@@ -75,7 +75,7 @@ class PrimaryButton extends StatelessWidget {
                     key: ValueKey('loading'),
                     width: 20,
                     height: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2.2, color: Colors.white),
+                    child: CircularProgressIndicator(strokeWidth: 2.2, color: AppColors.textOnPrimary),
                   )
                 : Row(
                     key: const ValueKey('label'),
@@ -107,7 +107,7 @@ class PrimaryButton extends StatelessWidget {
     );
   }
 
-  static Color _ink(bool disabled) => disabled ? AppColors.textMuted : Colors.white;
+  static Color _ink(bool disabled) => disabled ? AppColors.textMuted : AppColors.textOnPrimary;
 }
 
 class SecondaryButton extends StatelessWidget {

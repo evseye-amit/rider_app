@@ -28,6 +28,8 @@ import 'package:rider_app/features/onboarding/presentation/pages/onboarding_prev
 import 'package:rider_app/features/onboarding_intro/presentation/pages/intro_page.dart';
 import 'package:rider_app/features/profile/presentation/pages/profile_page.dart';
 import 'package:rider_app/features/rentals/presentation/pages/rentals_page.dart';
+import 'package:rider_app/features/scooter/domain/entities/vehicle.dart';
+import 'package:rider_app/features/scooter/presentation/pages/scooter_details_page.dart';
 import 'package:rider_app/features/scooter/presentation/pages/scooter_page.dart';
 import 'package:rider_app/features/home/presentation/widgets/rider_drawer.dart';
 import 'package:rider_app/features/home/presentation/widgets/rider_shell.dart';
@@ -96,6 +98,41 @@ void main() {
     '05e_deployment_pairing': PairingPage.new,
     '07_home': HomePage.new,
     '08_scooter': ScooterPage.new,
+    '08b_scooter_details': () => ScooterDetailsPage(
+          vehicle: Vehicle(
+            vehicleNumber: 'DL 1S CD 9012',
+            model: 'Ather 450X Gen 3',
+            vin: 'CHS100005',
+            colour: 'Space Grey',
+            allocatedOn: DateTime(2026, 9, 22),
+            batteryPercent: 68,
+            charging: false,
+            rangeKm: 61,
+            odometerKm: 2440,
+            healthPercent: 94,
+            lastServiceKm: 0,
+            nextServiceKm: 5000,
+            tyrePressureFront: 30,
+            tyrePressureRear: 32,
+            iot: const VehicleIot(
+              deviceId: 'EVS-IOT-0005',
+              online: true,
+              signal: 3,
+              lastPing: 'a moment ago',
+              firmware: '—',
+            ),
+            documents: const [],
+            accessories: const [],
+            recentTrips: const [],
+            motorNumber: 'MOT-9012',
+            controllerNumber: 'CTRL-0004',
+            batteryType: 'FIXED_DOUBLE',
+            batterySerial: 'BAT-0004',
+            homeHubName: 'Okhla Phase II Hub',
+            currentHubName: 'Okhla Phase II Hub',
+            teamLeadName: 'Rohit Sharma',
+          ),
+        ),
     '09_wallet': WalletPage.new,
     '10_support': SupportPage.new,
     '11_raise_ticket': () => const RaiseTicketPage(categoryKey: 'battery'),

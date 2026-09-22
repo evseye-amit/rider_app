@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppColors {
-  static const Color primary = Color(0xFFC21784);
-  static const Color primaryBright = Color(0xFFF00AA3);
-  static const Color primaryDeep = Color(0xFF5D0B3D);
+  static const Color primary = Color(0xFFF475D0);
+  static const Color primaryBright = Color(0xFFF475D0);
+  static const Color primaryDeep = Color(0xFFF475D0);
 
-  static const Color primaryWash = Color(0xFFFEE6F5);
+  static const Color primaryWash = Color(0xFFFDECF8);
 
-  static const Color primaryInk = Color(0xFF3F0528);
+  static const Color primaryInk = Color(0xFF3D0A2C);
 
   static const Color cyan = Color(0xFF00A3C4);
   static const Color cyanWash = Color(0xFFE1F5FA);
@@ -27,21 +27,21 @@ abstract final class AppColors {
   static const Color teal = Color(0xFF00B8D9);
   static const Color tealWash = Color(0xFFE1F7FB);
 
-  static const Color ink = Color(0xFF6F0E4C);
-  static const Color inkSoft = Color(0xFF8A135E);
-  static const Color inkDeep = Color(0xFF46072E);
+  static const Color ink = Color(0xFFF475D0);
+  static const Color inkSoft = Color(0xFFF475D0);
+  static const Color inkDeep = Color(0xFFF475D0);
 
-  static const Color onInk = Color(0xFFFFFFFF);
-  static const Color onInkSecondary = Color(0xFFFAC0E6);
-  static const Color onInkMuted = Color(0xFFF59FD9);
+  static const Color onInk = Color(0xFF3D0A2C);
+  static const Color onInkSecondary = Color(0xFF6B2453);
+  static const Color onInkMuted = Color(0xFF854070);
 
-  static const Color onInkAccent = Color(0xFFFF8DD9);
+  static const Color onInkAccent = Color(0xFF3D0A2C);
 
-  static const Color onInkMint = Color(0xFF5FE9C0);
-  static const Color onInkAmber = Color(0xFFFFC978);
-  static const Color onInkCoral = Color(0xFFFF9FA6);
+  static const Color onInkMint = Color(0xFF0A5C3E);
+  static const Color onInkAmber = Color(0xFF6B4405);
+  static const Color onInkCoral = Color(0xFF7A1720);
 
-  static const Color inkStroke = Color(0x1FFFFFFF);
+  static const Color inkStroke = Color(0x29000000);
 
   static const Color canvas = Color(0xFFF4F6FA);
 
@@ -58,7 +58,7 @@ abstract final class AppColors {
   static const Color textPrimary = Color(0xFF11202F);
   static const Color textSecondary = Color(0xFF5B6B7C);
   static const Color textMuted = Color(0xFF8B9AAA);
-  static const Color textOnPrimary = Color(0xFFFFFFFF);
+  static const Color textOnPrimary = Color(0xFF3D0A2C);
 
   static const Color success = Color(0xFF12A05F);
   static const Color successWash = Color(0xFFE6F6EE);
@@ -76,7 +76,7 @@ abstract final class AppColors {
         mint || success => onInkMint,
         warning || amber => onInkAmber,
         danger || coral => onInkCoral,
-        cyan || teal || violet || primary || primaryBright => onInkAccent,
+        cyan || teal || violet || primary => onInkAccent,
         _ => onInk,
       };
 
