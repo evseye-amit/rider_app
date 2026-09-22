@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../core/session/session_controller.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_page.dart';
-import '../../features/deployment/presentation/pages/pairing_page.dart';
 import '../../features/deployment/presentation/pages/payment_page.dart';
 import '../../features/deployment/presentation/pages/pdi_page.dart';
 import '../../features/deployment/presentation/pages/training_page.dart';
@@ -71,7 +70,6 @@ class AppRouter {
       GoRoute(path: Routes.deploymentPayment, name: 'deploymentPayment', builder: (context, state) => const PaymentPage()),
       GoRoute(path: Routes.deploymentPdi, name: 'deploymentPdi', builder: (context, state) => const PdiPage()),
       GoRoute(path: Routes.deploymentTraining, name: 'deploymentTraining', builder: (context, state) => const TrainingPage()),
-      GoRoute(path: Routes.deploymentPairing, name: 'deploymentPairing', builder: (context, state) => const PairingPage()),
 
       StatefulShellRoute.indexedStack(
         parentNavigatorKey: _rootKey,
@@ -128,9 +126,9 @@ class AppRouter {
       RiderStage.waiting ||
       RiderStage.payment ||
       RiderStage.pdi ||
-      RiderStage.training ||
-      RiderStage.devicePairing =>
+      RiderStage.training =>
         path == stage.route ? null : stage.route,
+      RiderStage.devicePairing ||
       RiderStage.active =>
         path.startsWith(Routes.onboarding) || path.startsWith('/deployment') ? Routes.home : null,
     };

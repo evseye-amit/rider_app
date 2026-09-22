@@ -10,6 +10,7 @@ import '../../features/deployment/domain/usecases/get_current_deployment.dart';
 import '../../features/onboarding/domain/onboarding_draft.dart';
 import '../../features/onboarding/domain/usecases/get_onboarding.dart';
 import 'rider_stage.dart';
+import 'scooter_power_store.dart';
 
 export 'rider_stage.dart';
 
@@ -76,6 +77,12 @@ class SessionController extends ChangeNotifier {
 
   bool _vehicleOn = false;
   bool get vehicleOn => _vehicleOn;
+
+  bool _scooterPaired = false;
+  bool get scooterPaired => _scooterPaired;
+
+  bool _pairing = false;
+  bool get pairing => _pairing;
 
   DateTime? _shiftStartedAt;
   DateTime? get shiftStartedAt => _shiftStartedAt;
@@ -214,6 +221,25 @@ class SessionController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> loadPairing() async {
+    final ScooterPowerStore store = ScooterPowerStore.instance;
+    if (!store.loaded) await store.load();
+    _scooterPaired = store.paired;
+    notifyListeners();
+  }
+
+  void setPairing(bool value) {
+    _pairing = value;
+    notifyListeners();
+  }
+
+  Future<void> markPaired() async {
+    await ScooterPowerStore.instance.setPaired(true);
+    _scooterPaired = true;
+    _pairing = false;
+    notifyListeners();
+  }
+
   Future<void> signOut() async {
     await _signOut();
     _clearSession();
@@ -235,6 +261,9 @@ class SessionController extends ChangeNotifier {
     _onboarding = null;
     _deployment = null;
     _profile = _buildProfile();
+    _scooterPaired = false;
+    _pairing = false;
+    ScooterPowerStore.instance.reset();
     OnboardingDraft.instance.clear();
   }
 

@@ -4,17 +4,30 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/di/injector.dart';
+import '../../../ride/presentation/widgets/pairing_flash.dart';
 import '../../../ride/presentation/widgets/vehicle_power_flash.dart';
 import '../../../../core/session/session_controller.dart';
 
-class RiderShell extends StatelessWidget {
+class RiderShell extends StatefulWidget {
   const RiderShell({required this.navigationShell, super.key});
 
   final StatefulNavigationShell navigationShell;
 
   @override
+  State<RiderShell> createState() => _RiderShellState();
+}
+
+class _RiderShellState extends State<RiderShell> {
+  @override
+  void initState() {
+    super.initState();
+    sl<SessionController>().loadPairing();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final SessionController session = sl<SessionController>();
+    final StatefulNavigationShell navigationShell = widget.navigationShell;
 
     return Scaffold(
       backgroundColor: AppColors.canvas,
@@ -26,11 +39,21 @@ class RiderShell extends StatelessWidget {
           currentIndex: navigationShell.currentIndex,
           vehicleOn: session.vehicleOn,
           canRide: session.present,
+          paired: session.scooterPaired,
+          pairing: session.pairing,
           onTap: (index) => navigationShell.goBranch(
             index,
             initialLocation: index == navigationShell.currentIndex,
           ),
           onPowerTap: () {
+            if (session.pairing) return;
+
+            if (!session.scooterPaired) {
+              session.setPairing(true);
+              PairingFlash.show(context, onPaired: session.markPaired);
+              return;
+            }
+
             HapticFeedback.mediumImpact();
 
             if (!session.present) {
@@ -70,6 +93,8 @@ class RiderBottomBar extends StatelessWidget {
     required this.onPowerTap,
     this.vehicleOn = false,
     this.canRide = false,
+    this.paired = false,
+    this.pairing = false,
     super.key,
   });
 
@@ -78,6 +103,8 @@ class RiderBottomBar extends StatelessWidget {
   final VoidCallback onPowerTap;
   final bool vehicleOn;
   final bool canRide;
+  final bool paired;
+  final bool pairing;
 
   static const double _barHeight = 68;
   static const double _powerSize = 62;
@@ -144,6 +171,8 @@ class RiderBottomBar extends StatelessWidget {
             child: _PowerButton(
               on: vehicleOn,
               enabled: canRide,
+              paired: paired,
+              pairing: pairing,
               size: _powerSize,
               onTap: onPowerTap,
             ),
@@ -212,12 +241,16 @@ class _PowerButton extends StatefulWidget {
   const _PowerButton({
     required this.on,
     required this.enabled,
+    required this.paired,
+    required this.pairing,
     required this.size,
     required this.onTap,
   });
 
   final bool on;
   final bool enabled;
+  final bool paired;
+  final bool pairing;
   final double size;
   final VoidCallback onTap;
 
@@ -231,18 +264,20 @@ class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderSta
     duration: const Duration(milliseconds: 1800),
   );
 
+  bool get _live => widget.on || widget.pairing;
+
   @override
   void initState() {
     super.initState();
-    if (widget.on) _pulse.repeat(reverse: true);
+    if (_live) _pulse.repeat(reverse: true);
   }
 
   @override
   void didUpdateWidget(_PowerButton oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.on && !_pulse.isAnimating) {
+    if (_live && !_pulse.isAnimating) {
       _pulse.repeat(reverse: true);
-    } else if (!widget.on && _pulse.isAnimating) {
+    } else if (!_live && _pulse.isAnimating) {
       _pulse
         ..stop()
         ..value = 0;
@@ -255,8 +290,20 @@ class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderSta
     super.dispose();
   }
 
+  IconData get _icon {
+    if (!widget.paired) return widget.pairing ? Icons.bolt_rounded : Icons.bluetooth_searching_rounded;
+    return Icons.power_settings_new_rounded;
+  }
+
+  String get _label {
+    if (!widget.paired) return widget.pairing ? 'LINK' : 'PAIR';
+    return widget.on ? 'ON' : 'OFF';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bool filled = widget.on || widget.pairing;
+    final Color fill = widget.on ? AppColors.mint : AppColors.primary;
     final Color tone = widget.on ? AppColors.mint : AppColors.primary;
 
     return Pressable(
@@ -265,7 +312,7 @@ class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderSta
       child: AnimatedBuilder(
         animation: _pulse,
         builder: (context, child) {
-          final double halo = widget.on ? 0.18 + _pulse.value * 0.14 : 0.14;
+          final double halo = _live ? 0.18 + _pulse.value * 0.16 : 0.14;
           return Container(
             width: widget.size + 12,
             height: widget.size + 12,
@@ -285,15 +332,16 @@ class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderSta
             child: child,
           );
         },
-        child: Container(
+        child: AnimatedContainer(
+          duration: Motion.normal,
           width: widget.size,
           height: widget.size,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
 
-            color: widget.on ? AppColors.mint : AppColors.surface,
+            color: filled ? fill : AppColors.surface,
             border: Border.all(
-              color: widget.on ? AppColors.mint : AppColors.strokeStrong,
+              color: filled ? fill : AppColors.strokeStrong,
               width: 1.4,
             ),
           ),
@@ -301,17 +349,17 @@ class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderSta
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.power_settings_new_rounded,
+                _icon,
                 size: 23,
-                color: widget.on ? Colors.white : AppColors.primary,
+                color: filled ? Colors.white : AppColors.primary,
               ),
               const SizedBox(height: 1),
               Text(
-                widget.on ? 'ON' : 'OFF',
+                _label,
                 style: AppText.overline.copyWith(
                   fontSize: 8.5,
                   letterSpacing: 1.1,
-                  color: widget.on ? Colors.white : AppColors.textMuted,
+                  color: filled ? Colors.white : AppColors.textMuted,
                 ),
               ),
             ],

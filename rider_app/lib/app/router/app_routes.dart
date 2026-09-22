@@ -11,7 +11,6 @@ abstract final class Routes {
   static const String deploymentPayment = '/deployment/payment';
   static const String deploymentPdi = '/deployment/pdi';
   static const String deploymentTraining = '/deployment/training';
-  static const String deploymentPairing = '/deployment/pairing';
 
   static const String home = '/home';
   static const String scooter = '/scooter';

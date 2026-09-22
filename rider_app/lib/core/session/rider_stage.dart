@@ -19,12 +19,12 @@ enum RiderStage {
         payment => Routes.deploymentPayment,
         pdi => Routes.deploymentPdi,
         training => Routes.deploymentTraining,
-        devicePairing => Routes.deploymentPairing,
+        devicePairing => Routes.home,
         active => Routes.home,
       };
 
   bool get isDeploying => switch (this) {
-        waiting || payment || pdi || training || devicePairing => true,
+        waiting || payment || pdi || training => true,
         _ => false,
       };
 }
