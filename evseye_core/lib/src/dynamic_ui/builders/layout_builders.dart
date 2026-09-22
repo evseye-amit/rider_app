@@ -104,18 +104,23 @@ Map<String, NodeBuilder> layoutBuilders(WidgetRegistry r) => {
               ...spaced(r.buildAll(context, node.children, scope), gapOf(node)),
             ],
           ),
-      'group': (context, node, scope) => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
+      'group': (context, node, scope) {
+        final String title = node.text(scope, 'title');
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (title.isNotEmpty) ...[
               GroupLabel(
-                node.text(scope, 'title'),
+                title,
                 icon: node.props['icon'] == null
                     ? null
                     : NodeTokens.icon(node.props['icon'] as String?),
               ),
               const SizedBox(height: Insets.lg),
-              ...spaced(r.buildAll(context, node.children, scope), gapOf(node, Insets.lg)),
             ],
-          ),
+            ...spaced(r.buildAll(context, node.children, scope), gapOf(node, Insets.lg)),
+          ],
+        );
+      },
     };

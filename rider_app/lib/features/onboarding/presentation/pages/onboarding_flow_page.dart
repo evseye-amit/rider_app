@@ -116,6 +116,55 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
             f.fieldCode: _form.valueOf(f.fieldCode).toString().trim(),
       };
 
+
+  static const int _defaultMinAge = 18;
+
+  String? _ageCheck(OnboardingStepConfig step) {
+    OnboardingFieldConfig? gate;
+    for (final f in step.fields) {
+      if (f.featureCode.toUpperCase().contains('AGE_VERIFICATION')) {
+        gate = f;
+        break;
+      }
+    }
+    if (gate == null) return null;
+
+    final int minAge = _minAgeOf(gate);
+    final String dob = (_form.valueOf('DATE_OF_BIRTH') ??
+            _config?.value('DATE_OF_BIRTH') ??
+            '')
+        .toString()
+        .trim();
+    if (dob.isEmpty) {
+      return 'Add your date of birth on the first step before continuing';
+    }
+    final DateTime? born = DateTime.tryParse(dob);
+    if (born == null) return 'That date of birth is not valid';
+
+    final DateTime now = DateTime.now();
+    int age = now.year - born.year;
+    if (now.month < born.month || (now.month == born.month && now.day < born.day)) age--;
+    return age < minAge ? 'You must be at least $minAge years old to ride' : null;
+  }
+
+  int _minAgeOf(OnboardingFieldConfig field) {
+    for (final key in const ['minAge', 'minimumAge']) {
+      final Object? direct = field.configuration[key] ?? field.validation[key];
+      final int? parsed = direct is int ? direct : int.tryParse(direct?.toString() ?? '');
+      if (parsed != null && parsed > 0) return parsed;
+    }
+    final Object? collection = field.configuration['dataCollection'];
+    if (collection is Map) {
+      final Object? dob = collection['dateOfBirth'];
+      if (dob is Map) {
+        final Object? raw = dob['minAge'] ?? dob['minimumAge'];
+        final int? parsed = raw is int ? raw : int.tryParse(raw?.toString() ?? '');
+        if (parsed != null && parsed > 0) return parsed;
+      }
+    }
+    return _defaultMinAge;
+  }
+
   Future<void> _advance(BuildContext context) async {
     if (_saving) return;
     final RiderOnboardingConfig config = _config!;
@@ -123,6 +172,12 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
     final bool ok = _form.validateNodes(step.screen.body, isVisible: _scope.isVisible);
     if (!ok) {
       AppSnack.error(context, 'Please fix the highlighted fields before continuing');
+      return;
+    }
+
+    final String? ageProblem = _ageCheck(config.steps[_stepIndex]);
+    if (ageProblem != null) {
+      AppSnack.error(context, ageProblem);
       return;
     }
     _persist();

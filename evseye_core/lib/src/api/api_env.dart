@@ -1,12 +1,12 @@
 abstract final class ApiEnv {
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://localhost:3100/api/v1',
+    defaultValue: 'http://localhost:3000/api/v1',
   );
 
   static const String companyCode = String.fromEnvironment(
     'COMPANY_CODE',
-    defaultValue: 'demo',
+    defaultValue: 'yogmaya',
   );
 
   static String get healthUrl {

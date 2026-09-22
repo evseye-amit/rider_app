@@ -391,7 +391,9 @@ class RiderDeployment {
   const RiderDeployment({required this.screen, this.allocation, this.workflow, this.payment});
 
   factory RiderDeployment.fromJson(Map<String, dynamic> json) => RiderDeployment(
-        screen: RiderScreen.parse(json['screen']?.toString()),
+        screen: json.isEmpty
+            ? RiderScreen.onboarding
+            : RiderScreen.parse(json['screen']?.toString()),
         allocation: json['allocation'] is Map
             ? DeploymentAllocation.fromJson(Map<String, dynamic>.from(json['allocation'] as Map))
             : null,

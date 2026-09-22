@@ -20,7 +20,7 @@ abstract final class OnboardingFlowBuilder {
 
     final List<UiNode> inputs = [for (final f in step.inputs) _input(f)];
     if (inputs.isNotEmpty) {
-      body.add(UiNode(type: 'group', props: {'title': 'Your details', 'icon': _icon(step.stepCode), 'gap': 18}, children: inputs));
+      body.add(UiNode(type: 'group', props: {'gap': 18}, children: inputs));
     }
 
     final List<UiNode> uploads = [for (final f in step.uploads) _upload(f)];
@@ -30,7 +30,7 @@ abstract final class OnboardingFlowBuilder {
 
     final List<UiNode> capabilities = [for (final f in step.capabilities) ..._capability(f)];
     if (capabilities.isNotEmpty) {
-      body.add(UiNode(type: 'group', props: {'title': _capabilityTitle(step.stepCode), 'icon': 'verified', 'gap': 14}, children: capabilities));
+      body.add(UiNode(type: 'group', props: {'gap': 14}, children: capabilities));
     }
 
     if (body.isEmpty) {
@@ -81,7 +81,6 @@ abstract final class OnboardingFlowBuilder {
       'key': f.fieldCode,
       'label': f.label,
       if (f.placeholder != null) 'hint': f.placeholder,
-      if (f.description != null && f.description!.isNotEmpty) 'helper': f.description,
     };
 
     switch (f.fieldType) {
@@ -234,48 +233,7 @@ abstract final class OnboardingFlowBuilder {
         ),
       ];
     }
-    if (code.contains('TRAINING')) {
-      return [
-        UiNode(
-          type: 'banner',
-          props: {
-            'title': f.label,
-            'message': 'Your safety training opens once a scooter has been allocated to you. '
-                'You will watch it in the app before the handover is completed.',
-            'tone': 'info',
-            'icon': 'school',
-          },
-        ),
-      ];
-    }
-    if (code.contains('VERIFICATION')) {
-      return [
-        UiNode(
-          type: 'banner',
-          props: {
-            'title': f.label,
-            'message': f.description?.isNotEmpty == true
-                ? f.description
-                : 'Verified by your fleet operator against the details and documents you provide.',
-            'tone': 'success',
-            'icon': 'verified',
-          },
-        ),
-      ];
-    }
-    return [
-      UiNode(
-        type: 'banner',
-        props: {
-          'title': f.label,
-          'message': f.description?.isNotEmpty == true
-              ? f.description
-              : 'Collected by your team lead at the hub when you come in for your scooter.',
-          'tone': 'info',
-          'icon': _inputIcon(code),
-        },
-      ),
-    ];
+    return const [];
   }
 
   static String _shortLabel(String stepCode, String name) => switch (stepCode) {
@@ -299,11 +257,6 @@ abstract final class OnboardingFlowBuilder {
         _ => 'checklist',
       };
 
-  static String _capabilityTitle(String stepCode) => switch (stepCode) {
-        'RIDER_AGREEMENT_ESIGN' => 'Rider agreement',
-        'RIDER_TRAINING' => 'Training',
-        _ => 'Also part of this step',
-      };
 
   static String _inputIcon(String code) {
     final String c = code.toUpperCase();
