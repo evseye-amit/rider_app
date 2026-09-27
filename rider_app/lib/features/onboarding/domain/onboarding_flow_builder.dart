@@ -213,6 +213,28 @@ abstract final class OnboardingFlowBuilder {
 
   static List<UiNode> _capability(OnboardingFieldConfig f) {
     final String code = f.featureCode;
+
+    if (code.contains('CAPTURE_REFERENCE')) {
+      final int minCount = (f.configuration['minReferences'] as num?)?.toInt() ?? 1;
+      final int configured = (f.configuration['maxReferences'] as num?)?.toInt() ?? 3;
+      return [
+        UiNode(
+          type: 'referenceField',
+          id: f.formKey,
+          props: {
+            'key': f.formKey,
+            'label': f.configuration['label']?.toString() ?? 'References',
+            'minCount': minCount,
+            'maxCount': configured < minCount ? minCount : configured,
+          },
+          validations: [
+            if (f.required)
+              const ValidationRule(type: 'required', message: 'Add at least one reference'),
+          ],
+        ),
+      ];
+    }
+
     if (code.contains('AGREEMENT') || code.contains('E_SIGN')) {
       return [
         const UiNode(

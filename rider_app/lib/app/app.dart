@@ -17,7 +17,7 @@ class _RiderAppState extends State<RiderApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'EVSEYE Rider',
+      title: 'Pink Rides Rental',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.light,

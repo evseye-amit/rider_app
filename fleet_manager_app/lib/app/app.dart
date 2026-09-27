@@ -17,7 +17,7 @@ class _FleetManagerAppState extends State<FleetManagerApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'EVSEYE Fleet',
+      title: 'Pink Rides Ops',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.light,
