@@ -190,7 +190,7 @@ class _HubPicker extends StatelessWidget {
               ),
             const Gap.sm(),
             PrimaryButton(
-              label: picked.length > 1 ? 'Show ${picked.length} hubs combined' : 'Show this hub',
+              label: picked.length > 1 ? 'Show ${picked.length} hubs combined' : context.l10n.hubShowThisHub,
               icon: Icons.check_rounded,
               onPressed: () => Navigator.of(context).pop(picked.toList()..sort()),
             ),

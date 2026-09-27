@@ -7,6 +7,7 @@ import '../api/config_api.dart';
 import '../utils/result.dart';
 import 'feature_flags.dart';
 
+import '../l10n/config_messages.dart';
 class UiConfigService {
   UiConfigService({AssetBundle? bundle, this.basePath = 'assets/config'})
       : _bundle = bundle ?? rootBundle;
@@ -53,7 +54,9 @@ class UiConfigService {
   Future<UiScreenConfig> loadScreen(String name) async =>
       UiScreenConfig.fromJson(await _load(name));
 
-  Future<UiFlowConfig> loadFlow(String name) async => UiFlowConfig.fromJson(await _load(name));
+  Future<UiFlowConfig> loadFlow(String name) async => UiFlowConfig.fromJson(
+        Map<String, dynamic>.from(resolveConfigMessages(await _load(name))! as Map),
+      );
 
   Future<Map<String, dynamic>> loadRaw(String name) => _load(name);
 

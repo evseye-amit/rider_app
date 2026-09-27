@@ -168,7 +168,7 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
               : PageBody(
                   children: [
                     ModuleCard(
-                      title: "What's the issue",
+                      title: context.l10n.supportWhatsTheIssue,
                       leading: IconTile(
                         icon: selected == null
                             ? Icons.category_rounded

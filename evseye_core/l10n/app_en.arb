@@ -348,10 +348,6 @@
   "@appPinkRidesRental": {
     "description": "Pink Rides Rental"
   },
-  "authByContinuingAgreeOur": "By continuing you agree to our ",
-  "@authByContinuingAgreeOur": {
-    "description": "By continuing you agree to our "
-  },
   "authChangeNumber": "Change number",
   "@authChangeNumber": {
     "description": "Change number"
@@ -3078,5 +3074,350 @@
   "commonSon": "Son",
   "@commonSon": {
     "description": "Son"
+  },
+  "commonAnd": " and ",
+  "@commonAnd": {
+    "description": "Connector between the two legal links"
+  },
+  "authVerifiedOperators": "Verified\noperators",
+  "@authVerifiedOperators": {
+    "description": "Verified operators"
+  },
+  "authSameDayPayouts": "Same-day\npayouts",
+  "@authSameDayPayouts": {
+    "description": "Same-day payouts"
+  },
+  "authRoadsideHelp": "24x7\nroadside help",
+  "@authRoadsideHelp": {
+    "description": "24x7 roadside help"
+  },
+  "authVerifiedHubNetwork": "Verified\nhub network",
+  "@authVerifiedHubNetwork": {
+    "description": "Verified hub network"
+  },
+  "authLiveFleetVisibility": "Live fleet\nvisibility",
+  "@authLiveFleetVisibility": {
+    "description": "Live fleet visibility"
+  },
+  "authOpsSupport": "24x7 ops\nsupport",
+  "@authOpsSupport": {
+    "description": "24x7 ops support"
+  },
+  "allocationNoIotDevice": "No IoT device",
+  "@allocationNoIotDevice": {
+    "description": "No IoT device"
+  },
+  "hubShowThisHub": "Show this hub",
+  "@hubShowThisHub": {
+    "description": "Show this hub"
+  },
+  "deploymentAllSetUp": "You're all set up",
+  "@deploymentAllSetUp": {
+    "description": "You're all set up"
+  },
+  "allocationConfirmsPhotosAndIot": "Confirms the vehicle's photos are on file and its IoT unit is online.",
+  "@allocationConfirmsPhotosAndIot": {
+    "description": "Confirms the vehicle's photos are on file and its IoT unit is online."
+  },
+  "allocationBypassExplainer": "Use this when the IoT unit cannot be paired at the hub. The unit's current health is recorded with your reason.",
+  "@allocationBypassExplainer": {
+    "description": "Use this when the IoT unit cannot be paired at the hub. The unit's current health is recorded with your reason."
+  },
+  "onboardingAgreementBody": "This agreement is between you and your fleet operator. It covers the vehicle you are handed, how it may be used, your responsibility for its care, the deposits and fees on your plan, and how the arrangement ends. Read it fully before you accept. By ticking the box below you confirm that you have read and agree to be bound by the rider agreement and the operator's rider policies.",
+  "@onboardingAgreementBody": {
+    "description": "This agreement is between you and your fleet operator. It covers the vehicle you are handed, how it may be used, your responsibility for its care, the deposits and fees on your plan, and how the arrangement ends. Read it fully before you accept. By ticking the box below you confirm that you have read and agree to be bound by the rider agreement and the operator's rider policies."
+  },
+  "authResendCodeIn": "Resend code in {seconds}",
+  "@authResendCodeIn": {
+    "description": "Countdown before the OTP can be resent",
+    "placeholders": {
+      "seconds": {
+        "type": "String"
+      }
+    }
+  },
+  "homeTodaysEarnings": "Today's earnings",
+  "@homeTodaysEarnings": {
+    "description": "Today's earnings"
+  },
+  "supportWhatsTheIssue": "What's the issue",
+  "@supportWhatsTheIssue": {
+    "description": "What's the issue"
+  },
+  "introEarnTitle": "Earn more,\nride cleaner",
+  "@introEarnTitle": {
+    "description": "Earn more, ride cleaner"
+  },
+  "introEarnBody": "Daily payouts, transparent incentives and a rental plan that fits how much you actually ride.",
+  "@introEarnBody": {
+    "description": "Daily payouts, transparent incentives and a rental plan that fits how much you actually ride."
+  },
+  "introEarnHighlight1": "Same-day settlement",
+  "@introEarnHighlight1": {
+    "description": "Same-day settlement"
+  },
+  "introEarnHighlight2": "No hidden deductions",
+  "@introEarnHighlight2": {
+    "description": "No hidden deductions"
+  },
+  "introVehicleTitle": "Your scooter,\nfully connected",
+  "@introVehicleTitle": {
+    "description": "Your scooter, fully connected"
+  },
+  "introVehicleBody": "Live battery, range and health from the onboard IoT unit. Unlock and start your shift from the app.",
+  "@introVehicleBody": {
+    "description": "Live battery, range and health from the onboard IoT unit. Unlock and start your shift from the app."
+  },
+  "introVehicleHighlight1": "Live telemetry",
+  "@introVehicleHighlight1": {
+    "description": "Live telemetry"
+  },
+  "introVehicleHighlight2": "One-tap start",
+  "@introVehicleHighlight2": {
+    "description": "One-tap start"
+  },
+  "introSupportTitle": "Help that\nshows up",
+  "@introSupportTitle": {
+    "description": "Help that shows up"
+  },
+  "introSupportBody": "Roadside assistance, service booking and a team lead who can see exactly what you see.",
+  "@introSupportBody": {
+    "description": "Roadside assistance, service booking and a team lead who can see exactly what you see."
+  },
+  "introSupportHighlight1": "24x7 roadside help",
+  "@introSupportHighlight1": {
+    "description": "24x7 roadside help"
+  },
+  "introSupportHighlight2": "Service at your hub",
+  "@introSupportHighlight2": {
+    "description": "Service at your hub"
+  },
+  "introCouldNotLoad": "Could not load the intro slides.",
+  "@introCouldNotLoad": {
+    "description": "Could not load the intro slides."
+  },
+  "deallocReturnPhotos": "Return photos",
+  "@deallocReturnPhotos": {
+    "description": "Return photos"
+  },
+  "deallocReturnCondition": "Return condition",
+  "@deallocReturnCondition": {
+    "description": "Return condition"
+  },
+  "deallocPhotographVehicleExactlyAsCame": "Photograph the vehicle exactly as it came back",
+  "@deallocPhotographVehicleExactlyAsCame": {
+    "description": "Photograph the vehicle exactly as it came back"
+  },
+  "deallocCompareAgainstHandoverSet": "Compare against the handover set",
+  "@deallocCompareAgainstHandoverSet": {
+    "description": "Compare against the handover set"
+  },
+  "deallocAnyNewDamageRecordHere": "Any new damage you record here is assessed against the rider's security deposit, so capture it clearly.",
+  "@deallocAnyNewDamageRecordHere": {
+    "description": "Any new damage you record here is assessed against the rider's security deposit, so capture it clearly."
+  },
+  "deallocVehicleAngles": "Vehicle angles",
+  "@deallocVehicleAngles": {
+    "description": "Vehicle angles"
+  },
+  "deallocComponents": "Components",
+  "@deallocComponents": {
+    "description": "Components"
+  },
+  "deallocOdometerReturn": "Odometer at return",
+  "@deallocOdometerReturn": {
+    "description": "Odometer at return"
+  },
+  "deallocEnterClosingOdometer": "Enter the closing odometer",
+  "@deallocEnterClosingOdometer": {
+    "description": "Enter the closing odometer"
+  },
+  "deallocContinueAssessment": "Continue to assessment",
+  "@deallocContinueAssessment": {
+    "description": "Continue to assessment"
+  },
+  "deallocAssessment": "Assessment",
+  "@deallocAssessment": {
+    "description": "Assessment"
+  },
+  "deallocConditionAssessment": "Condition assessment",
+  "@deallocConditionAssessment": {
+    "description": "Condition assessment"
+  },
+  "deallocRecordWhatComesBackWhat": "Record what comes back and what is missing",
+  "@deallocRecordWhatComesBackWhat": {
+    "description": "Record what comes back and what is missing"
+  },
+  "deallocVehicleCondition": "Vehicle condition",
+  "@deallocVehicleCondition": {
+    "description": "Vehicle condition"
+  },
+  "deallocExcellent": "Excellent",
+  "@deallocExcellent": {
+    "description": "Excellent"
+  },
+  "deallocNoDamageBeyondNormalWear": "No damage beyond normal wear",
+  "@deallocNoDamageBeyondNormalWear": {
+    "description": "No damage beyond normal wear"
+  },
+  "deallocGood": "Good",
+  "@deallocGood": {
+    "description": "Good"
+  },
+  "deallocMinorScuffsNothingRecover": "Minor scuffs, nothing to recover",
+  "@deallocMinorScuffsNothingRecover": {
+    "description": "Minor scuffs, nothing to recover"
+  },
+  "deallocDamaged": "Damaged",
+  "@deallocDamaged": {
+    "description": "Damaged"
+  },
+  "deallocRecoverableDamageRaiseMaintenanceJob": "Recoverable damage — raise a maintenance job",
+  "@deallocRecoverableDamageRaiseMaintenanceJob": {
+    "description": "Recoverable damage — raise a maintenance job"
+  },
+  "deallocRecordVehicleCondition": "Record the vehicle condition",
+  "@deallocRecordVehicleCondition": {
+    "description": "Record the vehicle condition"
+  },
+  "deallocDamageDescription": "Damage description",
+  "@deallocDamageDescription": {
+    "description": "Damage description"
+  },
+  "deallocWhatDamagedHowBadly": "What is damaged, and how badly",
+  "@deallocWhatDamagedHowBadly": {
+    "description": "What is damaged, and how badly"
+  },
+  "deallocDescribeDamage": "Describe the damage",
+  "@deallocDescribeDamage": {
+    "description": "Describe the damage"
+  },
+  "deallocEstimatedRecovery": "Estimated recovery",
+  "@deallocEstimatedRecovery": {
+    "description": "Estimated recovery"
+  },
+  "deallocDeductedFromRidersSecurityDeposit": "Deducted from the rider's security deposit after review.",
+  "@deallocDeductedFromRidersSecurityDeposit": {
+    "description": "Deducted from the rider's security deposit after review."
+  },
+  "deallocAccessoriesReturned": "Accessories returned",
+  "@deallocAccessoriesReturned": {
+    "description": "Accessories returned"
+  },
+  "deallocChargerCable": "Charger & cable",
+  "@deallocChargerCable": {
+    "description": "Charger & cable"
+  },
+  "deallocRcInsurancePuc": "RC, insurance and PUC",
+  "@deallocRcInsurancePuc": {
+    "description": "RC, insurance and PUC"
+  },
+  "deallocChargeReturn": "Charge at return",
+  "@deallocChargeReturn": {
+    "description": "Charge at return"
+  },
+  "deallocBatteryReturnedHub": "Battery returned to the hub",
+  "@deallocBatteryReturnedHub": {
+    "description": "Battery returned to the hub"
+  },
+  "deallocLoggedBackIntoChargingBay": "Logged back into the charging bay inventory.",
+  "@deallocLoggedBackIntoChargingBay": {
+    "description": "Logged back into the charging bay inventory."
+  },
+  "deallocConfirmBatteryBack": "Confirm the battery is back",
+  "@deallocConfirmBatteryBack": {
+    "description": "Confirm the battery is back"
+  },
+  "deallocContinueVerification": "Continue to verification",
+  "@deallocContinueVerification": {
+    "description": "Continue to verification"
+  },
+  "deallocVerification": "Verification",
+  "@deallocVerification": {
+    "description": "Verification"
+  },
+  "deallocTwoPartyVerification": "Two-party verification",
+  "@deallocTwoPartyVerification": {
+    "description": "Two-party verification"
+  },
+  "deallocBothRiderTeamLeadMust": "Both the rider and the team lead must confirm",
+  "@deallocBothRiderTeamLeadMust": {
+    "description": "Both the rider and the team lead must confirm"
+  },
+  "deallocCodesValid10MinutesAsk": "Codes are valid for 10 minutes. Ask each person to read theirs out — do not take their phone.",
+  "@deallocCodesValid10MinutesAsk": {
+    "description": "Codes are valid for 10 minutes. Ask each person to read theirs out — do not take their phone."
+  },
+  "deallocRiderConfirmation": "Rider confirmation",
+  "@deallocRiderConfirmation": {
+    "description": "Rider confirmation"
+  },
+  "deallocEnterRidersCode": "Enter the rider's code",
+  "@deallocEnterRidersCode": {
+    "description": "Enter the rider's code"
+  },
+  "deallocEnterAll6Digits": "Enter all 6 digits",
+  "@deallocEnterAll6Digits": {
+    "description": "Enter all 6 digits"
+  },
+  "deallocTeamLeadConfirmation": "Team lead confirmation",
+  "@deallocTeamLeadConfirmation": {
+    "description": "Team lead confirmation"
+  },
+  "deallocEnterTeamLeadsCode": "Enter the team lead's code",
+  "@deallocEnterTeamLeadsCode": {
+    "description": "Enter the team lead's code"
+  },
+  "deallocCloseRide": "Close the ride",
+  "@deallocCloseRide": {
+    "description": "Close the ride"
+  },
+  "deallocEndRidersActiveRide": "End the rider's active ride",
+  "@deallocEndRidersActiveRide": {
+    "description": "End the rider's active ride"
+  },
+  "deallocStopsTelemetryClosesShiftSettles": "Stops telemetry, closes the shift and settles the final trip.",
+  "@deallocStopsTelemetryClosesShiftSettles": {
+    "description": "Stops telemetry, closes the shift and settles the final trip."
+  },
+  "deallocEndRideContinue": "End the ride to continue",
+  "@deallocEndRideContinue": {
+    "description": "End the ride to continue"
+  },
+  "deallocSetFleetStatus": "Set fleet status",
+  "@deallocSetFleetStatus": {
+    "description": "Set fleet status"
+  },
+  "deallocAvailable": "Available",
+  "@deallocAvailable": {
+    "description": "Available"
+  },
+  "deallocReadyAllocateAnotherRider": "Ready to allocate to another rider",
+  "@deallocReadyAllocateAnotherRider": {
+    "description": "Ready to allocate to another rider"
+  },
+  "deallocService": "In service",
+  "@deallocService": {
+    "description": "In service"
+  },
+  "deallocSendWorkshopFirst": "Send to the workshop first",
+  "@deallocSendWorkshopFirst": {
+    "description": "Send to the workshop first"
+  },
+  "deallocOffRoad": "Off road",
+  "@deallocOffRoad": {
+    "description": "Off road"
+  },
+  "deallocNotUsableUntilFurtherNotice": "Not usable until further notice",
+  "@deallocNotUsableUntilFurtherNotice": {
+    "description": "Not usable until further notice"
+  },
+  "deallocSetFleetStatus2": "Set the fleet status",
+  "@deallocSetFleetStatus2": {
+    "description": "Set the fleet status"
+  },
+  "deallocCompleteDeAllocation": "Complete de-allocation",
+  "@deallocCompleteDeAllocation": {
+    "description": "Complete de-allocation"
   }
 }

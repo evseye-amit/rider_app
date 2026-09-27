@@ -173,12 +173,12 @@ class _Slide extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        slide.title,
+                        slide.titleFor(context.l10n),
                         style: AppText.displayLarge.copyWith(fontSize: 31, height: 1.12),
                       ),
                       const Gap.md(),
                       Text(
-                        slide.body,
+                        slide.bodyFor(context.l10n),
                         style: AppText.bodyLarge.copyWith(
                           fontSize: 14.5,
                           height: 1.6,
@@ -190,7 +190,7 @@ class _Slide extends StatelessWidget {
                         spacing: Insets.sm,
                         runSpacing: Insets.sm,
                         children: [
-                          for (final h in slide.highlights)
+                          for (final h in slide.highlightsFor(context.l10n))
                             _HighlightChip(label: h),
                         ],
                       ),

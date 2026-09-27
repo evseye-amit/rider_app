@@ -200,7 +200,7 @@ class _Band extends StatelessWidget {
         const Gap.xxl(),
 
         Text(
-          "Today's earnings",
+          context.l10n.homeTodaysEarnings,
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),

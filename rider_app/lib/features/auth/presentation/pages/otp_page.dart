@@ -152,7 +152,7 @@ class _OtpPageState extends State<OtpPage> {
                 key: const ValueKey('idle'),
                 child: _remaining > 0
                     ? Text(
-                        'Resend code in 0:${_remaining.toString().padLeft(2, '0')}',
+                        context.l10n.authResendCodeIn('0:${_remaining.toString().padLeft(2, "0")}'),
                         style: AppText.bodySmall,
                       )
                     : GhostButton(

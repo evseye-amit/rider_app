@@ -33,7 +33,7 @@ class IntroRepositoryImpl implements IntroRepository {
 
       return Result.ok(slides);
     } on Object catch (e) {
-      return Result.err(ServerFailure('Could not load the intro slides. ($e)'));
+      return Result.err(ServerFailure('${LocaleController.strings.introCouldNotLoad} ($e)'));
     }
   }
 }

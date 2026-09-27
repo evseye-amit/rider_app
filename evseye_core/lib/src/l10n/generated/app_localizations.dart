@@ -623,12 +623,6 @@ abstract class AppL10n {
   /// **'Pink Rides Rental'**
   String get appPinkRidesRental;
 
-  /// By continuing you agree to our
-  ///
-  /// In en, this message translates to:
-  /// **'By continuing you agree to our '**
-  String get authByContinuingAgreeOur;
-
   /// Change number
   ///
   /// In en, this message translates to:
@@ -4666,6 +4660,516 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Son'**
   String get commonSon;
+
+  /// Connector between the two legal links
+  ///
+  /// In en, this message translates to:
+  /// **' and '**
+  String get commonAnd;
+
+  /// Verified operators
+  ///
+  /// In en, this message translates to:
+  /// **'Verified\noperators'**
+  String get authVerifiedOperators;
+
+  /// Same-day payouts
+  ///
+  /// In en, this message translates to:
+  /// **'Same-day\npayouts'**
+  String get authSameDayPayouts;
+
+  /// 24x7 roadside help
+  ///
+  /// In en, this message translates to:
+  /// **'24x7\nroadside help'**
+  String get authRoadsideHelp;
+
+  /// Verified hub network
+  ///
+  /// In en, this message translates to:
+  /// **'Verified\nhub network'**
+  String get authVerifiedHubNetwork;
+
+  /// Live fleet visibility
+  ///
+  /// In en, this message translates to:
+  /// **'Live fleet\nvisibility'**
+  String get authLiveFleetVisibility;
+
+  /// 24x7 ops support
+  ///
+  /// In en, this message translates to:
+  /// **'24x7 ops\nsupport'**
+  String get authOpsSupport;
+
+  /// No IoT device
+  ///
+  /// In en, this message translates to:
+  /// **'No IoT device'**
+  String get allocationNoIotDevice;
+
+  /// Show this hub
+  ///
+  /// In en, this message translates to:
+  /// **'Show this hub'**
+  String get hubShowThisHub;
+
+  /// You're all set up
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all set up'**
+  String get deploymentAllSetUp;
+
+  /// Confirms the vehicle's photos are on file and its IoT unit is online.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirms the vehicle\'s photos are on file and its IoT unit is online.'**
+  String get allocationConfirmsPhotosAndIot;
+
+  /// Use this when the IoT unit cannot be paired at the hub. The unit's current health is recorded with your reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Use this when the IoT unit cannot be paired at the hub. The unit\'s current health is recorded with your reason.'**
+  String get allocationBypassExplainer;
+
+  /// This agreement is between you and your fleet operator. It covers the vehicle you are handed, how it may be used, your responsibility for its care, the deposits and fees on your plan, and how the arrangement ends. Read it fully before you accept. By ticking the box below you confirm that you have read and agree to be bound by the rider agreement and the operator's rider policies.
+  ///
+  /// In en, this message translates to:
+  /// **'This agreement is between you and your fleet operator. It covers the vehicle you are handed, how it may be used, your responsibility for its care, the deposits and fees on your plan, and how the arrangement ends. Read it fully before you accept. By ticking the box below you confirm that you have read and agree to be bound by the rider agreement and the operator\'s rider policies.'**
+  String get onboardingAgreementBody;
+
+  /// Countdown before the OTP can be resent
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code in {seconds}'**
+  String authResendCodeIn(String seconds);
+
+  /// Today's earnings
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s earnings'**
+  String get homeTodaysEarnings;
+
+  /// What's the issue
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s the issue'**
+  String get supportWhatsTheIssue;
+
+  /// Earn more, ride cleaner
+  ///
+  /// In en, this message translates to:
+  /// **'Earn more,\nride cleaner'**
+  String get introEarnTitle;
+
+  /// Daily payouts, transparent incentives and a rental plan that fits how much you actually ride.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily payouts, transparent incentives and a rental plan that fits how much you actually ride.'**
+  String get introEarnBody;
+
+  /// Same-day settlement
+  ///
+  /// In en, this message translates to:
+  /// **'Same-day settlement'**
+  String get introEarnHighlight1;
+
+  /// No hidden deductions
+  ///
+  /// In en, this message translates to:
+  /// **'No hidden deductions'**
+  String get introEarnHighlight2;
+
+  /// Your scooter, fully connected
+  ///
+  /// In en, this message translates to:
+  /// **'Your scooter,\nfully connected'**
+  String get introVehicleTitle;
+
+  /// Live battery, range and health from the onboard IoT unit. Unlock and start your shift from the app.
+  ///
+  /// In en, this message translates to:
+  /// **'Live battery, range and health from the onboard IoT unit. Unlock and start your shift from the app.'**
+  String get introVehicleBody;
+
+  /// Live telemetry
+  ///
+  /// In en, this message translates to:
+  /// **'Live telemetry'**
+  String get introVehicleHighlight1;
+
+  /// One-tap start
+  ///
+  /// In en, this message translates to:
+  /// **'One-tap start'**
+  String get introVehicleHighlight2;
+
+  /// Help that shows up
+  ///
+  /// In en, this message translates to:
+  /// **'Help that\nshows up'**
+  String get introSupportTitle;
+
+  /// Roadside assistance, service booking and a team lead who can see exactly what you see.
+  ///
+  /// In en, this message translates to:
+  /// **'Roadside assistance, service booking and a team lead who can see exactly what you see.'**
+  String get introSupportBody;
+
+  /// 24x7 roadside help
+  ///
+  /// In en, this message translates to:
+  /// **'24x7 roadside help'**
+  String get introSupportHighlight1;
+
+  /// Service at your hub
+  ///
+  /// In en, this message translates to:
+  /// **'Service at your hub'**
+  String get introSupportHighlight2;
+
+  /// Could not load the intro slides.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load the intro slides.'**
+  String get introCouldNotLoad;
+
+  /// Return photos
+  ///
+  /// In en, this message translates to:
+  /// **'Return photos'**
+  String get deallocReturnPhotos;
+
+  /// Return condition
+  ///
+  /// In en, this message translates to:
+  /// **'Return condition'**
+  String get deallocReturnCondition;
+
+  /// Photograph the vehicle exactly as it came back
+  ///
+  /// In en, this message translates to:
+  /// **'Photograph the vehicle exactly as it came back'**
+  String get deallocPhotographVehicleExactlyAsCame;
+
+  /// Compare against the handover set
+  ///
+  /// In en, this message translates to:
+  /// **'Compare against the handover set'**
+  String get deallocCompareAgainstHandoverSet;
+
+  /// Any new damage you record here is assessed against the rider's security deposit, so capture it clearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Any new damage you record here is assessed against the rider\'s security deposit, so capture it clearly.'**
+  String get deallocAnyNewDamageRecordHere;
+
+  /// Vehicle angles
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle angles'**
+  String get deallocVehicleAngles;
+
+  /// Components
+  ///
+  /// In en, this message translates to:
+  /// **'Components'**
+  String get deallocComponents;
+
+  /// Odometer at return
+  ///
+  /// In en, this message translates to:
+  /// **'Odometer at return'**
+  String get deallocOdometerReturn;
+
+  /// Enter the closing odometer
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the closing odometer'**
+  String get deallocEnterClosingOdometer;
+
+  /// Continue to assessment
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to assessment'**
+  String get deallocContinueAssessment;
+
+  /// Assessment
+  ///
+  /// In en, this message translates to:
+  /// **'Assessment'**
+  String get deallocAssessment;
+
+  /// Condition assessment
+  ///
+  /// In en, this message translates to:
+  /// **'Condition assessment'**
+  String get deallocConditionAssessment;
+
+  /// Record what comes back and what is missing
+  ///
+  /// In en, this message translates to:
+  /// **'Record what comes back and what is missing'**
+  String get deallocRecordWhatComesBackWhat;
+
+  /// Vehicle condition
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle condition'**
+  String get deallocVehicleCondition;
+
+  /// Excellent
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent'**
+  String get deallocExcellent;
+
+  /// No damage beyond normal wear
+  ///
+  /// In en, this message translates to:
+  /// **'No damage beyond normal wear'**
+  String get deallocNoDamageBeyondNormalWear;
+
+  /// Good
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get deallocGood;
+
+  /// Minor scuffs, nothing to recover
+  ///
+  /// In en, this message translates to:
+  /// **'Minor scuffs, nothing to recover'**
+  String get deallocMinorScuffsNothingRecover;
+
+  /// Damaged
+  ///
+  /// In en, this message translates to:
+  /// **'Damaged'**
+  String get deallocDamaged;
+
+  /// Recoverable damage — raise a maintenance job
+  ///
+  /// In en, this message translates to:
+  /// **'Recoverable damage — raise a maintenance job'**
+  String get deallocRecoverableDamageRaiseMaintenanceJob;
+
+  /// Record the vehicle condition
+  ///
+  /// In en, this message translates to:
+  /// **'Record the vehicle condition'**
+  String get deallocRecordVehicleCondition;
+
+  /// Damage description
+  ///
+  /// In en, this message translates to:
+  /// **'Damage description'**
+  String get deallocDamageDescription;
+
+  /// What is damaged, and how badly
+  ///
+  /// In en, this message translates to:
+  /// **'What is damaged, and how badly'**
+  String get deallocWhatDamagedHowBadly;
+
+  /// Describe the damage
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the damage'**
+  String get deallocDescribeDamage;
+
+  /// Estimated recovery
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated recovery'**
+  String get deallocEstimatedRecovery;
+
+  /// Deducted from the rider's security deposit after review.
+  ///
+  /// In en, this message translates to:
+  /// **'Deducted from the rider\'s security deposit after review.'**
+  String get deallocDeductedFromRidersSecurityDeposit;
+
+  /// Accessories returned
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories returned'**
+  String get deallocAccessoriesReturned;
+
+  /// Charger & cable
+  ///
+  /// In en, this message translates to:
+  /// **'Charger & cable'**
+  String get deallocChargerCable;
+
+  /// RC, insurance and PUC
+  ///
+  /// In en, this message translates to:
+  /// **'RC, insurance and PUC'**
+  String get deallocRcInsurancePuc;
+
+  /// Charge at return
+  ///
+  /// In en, this message translates to:
+  /// **'Charge at return'**
+  String get deallocChargeReturn;
+
+  /// Battery returned to the hub
+  ///
+  /// In en, this message translates to:
+  /// **'Battery returned to the hub'**
+  String get deallocBatteryReturnedHub;
+
+  /// Logged back into the charging bay inventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged back into the charging bay inventory.'**
+  String get deallocLoggedBackIntoChargingBay;
+
+  /// Confirm the battery is back
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the battery is back'**
+  String get deallocConfirmBatteryBack;
+
+  /// Continue to verification
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to verification'**
+  String get deallocContinueVerification;
+
+  /// Verification
+  ///
+  /// In en, this message translates to:
+  /// **'Verification'**
+  String get deallocVerification;
+
+  /// Two-party verification
+  ///
+  /// In en, this message translates to:
+  /// **'Two-party verification'**
+  String get deallocTwoPartyVerification;
+
+  /// Both the rider and the team lead must confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Both the rider and the team lead must confirm'**
+  String get deallocBothRiderTeamLeadMust;
+
+  /// Codes are valid for 10 minutes. Ask each person to read theirs out — do not take their phone.
+  ///
+  /// In en, this message translates to:
+  /// **'Codes are valid for 10 minutes. Ask each person to read theirs out — do not take their phone.'**
+  String get deallocCodesValid10MinutesAsk;
+
+  /// Rider confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Rider confirmation'**
+  String get deallocRiderConfirmation;
+
+  /// Enter the rider's code
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the rider\'s code'**
+  String get deallocEnterRidersCode;
+
+  /// Enter all 6 digits
+  ///
+  /// In en, this message translates to:
+  /// **'Enter all 6 digits'**
+  String get deallocEnterAll6Digits;
+
+  /// Team lead confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Team lead confirmation'**
+  String get deallocTeamLeadConfirmation;
+
+  /// Enter the team lead's code
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the team lead\'s code'**
+  String get deallocEnterTeamLeadsCode;
+
+  /// Close the ride
+  ///
+  /// In en, this message translates to:
+  /// **'Close the ride'**
+  String get deallocCloseRide;
+
+  /// End the rider's active ride
+  ///
+  /// In en, this message translates to:
+  /// **'End the rider\'s active ride'**
+  String get deallocEndRidersActiveRide;
+
+  /// Stops telemetry, closes the shift and settles the final trip.
+  ///
+  /// In en, this message translates to:
+  /// **'Stops telemetry, closes the shift and settles the final trip.'**
+  String get deallocStopsTelemetryClosesShiftSettles;
+
+  /// End the ride to continue
+  ///
+  /// In en, this message translates to:
+  /// **'End the ride to continue'**
+  String get deallocEndRideContinue;
+
+  /// Set fleet status
+  ///
+  /// In en, this message translates to:
+  /// **'Set fleet status'**
+  String get deallocSetFleetStatus;
+
+  /// Available
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get deallocAvailable;
+
+  /// Ready to allocate to another rider
+  ///
+  /// In en, this message translates to:
+  /// **'Ready to allocate to another rider'**
+  String get deallocReadyAllocateAnotherRider;
+
+  /// In service
+  ///
+  /// In en, this message translates to:
+  /// **'In service'**
+  String get deallocService;
+
+  /// Send to the workshop first
+  ///
+  /// In en, this message translates to:
+  /// **'Send to the workshop first'**
+  String get deallocSendWorkshopFirst;
+
+  /// Off road
+  ///
+  /// In en, this message translates to:
+  /// **'Off road'**
+  String get deallocOffRoad;
+
+  /// Not usable until further notice
+  ///
+  /// In en, this message translates to:
+  /// **'Not usable until further notice'**
+  String get deallocNotUsableUntilFurtherNotice;
+
+  /// Set the fleet status
+  ///
+  /// In en, this message translates to:
+  /// **'Set the fleet status'**
+  String get deallocSetFleetStatus2;
+
+  /// Complete de-allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Complete de-allocation'**
+  String get deallocCompleteDeAllocation;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

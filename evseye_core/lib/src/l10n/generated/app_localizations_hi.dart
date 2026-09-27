@@ -287,9 +287,6 @@ class AppL10nHi extends AppL10n {
   String get appPinkRidesRental => 'Pink Rides Rental';
 
   @override
-  String get authByContinuingAgreeOur => 'आगे बढ़ने पर आप सहमत होते हैं हमारी ';
-
-  @override
   String get authChangeNumber => 'नंबर बदलें';
 
   @override
@@ -2461,4 +2458,280 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get commonSon => 'बेटा';
+
+  @override
+  String get commonAnd => ' और ';
+
+  @override
+  String get authVerifiedOperators => 'जांचे हुए\nऑपरेटर';
+
+  @override
+  String get authSameDayPayouts => 'उसी दिन\nभुगतान';
+
+  @override
+  String get authRoadsideHelp => '24x7\nसड़क पर मदद';
+
+  @override
+  String get authVerifiedHubNetwork => 'जांचा हुआ\nहब नेटवर्क';
+
+  @override
+  String get authLiveFleetVisibility => 'फ़्लीट की\nलाइव जानकारी';
+
+  @override
+  String get authOpsSupport => '24x7 ऑपरेशन\nसहायता';
+
+  @override
+  String get allocationNoIotDevice => 'कोई डिवाइस नहीं';
+
+  @override
+  String get hubShowThisHub => 'यह हब दिखाएं';
+
+  @override
+  String get deploymentAllSetUp => 'आप पूरी तरह तैयार हैं';
+
+  @override
+  String get allocationConfirmsPhotosAndIot =>
+      'पक्का करता है कि गाड़ी की फ़ोटो दर्ज हैं और उसका डिवाइस ऑनलाइन है।';
+
+  @override
+  String get allocationBypassExplainer =>
+      'जब डिवाइस हब पर नहीं जुड़ पा रहा हो तब इसका इस्तेमाल करें। डिवाइस की मौजूदा स्थिति आपके कारण के साथ दर्ज हो जाती है।';
+
+  @override
+  String get onboardingAgreementBody =>
+      'यह अनुबंध आपके और आपके फ़्लीट ऑपरेटर के बीच है। इसमें आपको सौंपी गई गाड़ी, उसका इस्तेमाल कैसे किया जा सकता है, उसकी देखभाल की आपकी ज़िम्मेदारी, आपके प्लान की जमा राशि और शुल्क, और यह व्यवस्था कैसे ख़त्म होती है, सब शामिल है। स्वीकार करने से पहले इसे पूरा पढ़ें। नीचे बॉक्स पर निशान लगाकर आप पक्का करते हैं कि आपने राइडर अनुबंध और ऑपरेटर की राइडर नीतियां पढ़ ली हैं और उनसे बंधे रहने को सहमत हैं।';
+
+  @override
+  String authResendCodeIn(String seconds) {
+    return '$seconds में कोड दोबारा भेजें';
+  }
+
+  @override
+  String get homeTodaysEarnings => 'आज की कमाई';
+
+  @override
+  String get supportWhatsTheIssue => 'क्या समस्या है';
+
+  @override
+  String get introEarnTitle => 'ज़्यादा कमाएं,\nसाफ़ सवारी करें';
+
+  @override
+  String get introEarnBody =>
+      'रोज़ भुगतान, साफ़-साफ़ इनाम और ऐसा किराया प्लान जो आपकी असल सवारी के हिसाब से हो।';
+
+  @override
+  String get introEarnHighlight1 => 'उसी दिन निपटान';
+
+  @override
+  String get introEarnHighlight2 => 'कोई छिपी कटौती नहीं';
+
+  @override
+  String get introVehicleTitle => 'आपका स्कूटर,\nपूरी तरह जुड़ा हुआ';
+
+  @override
+  String get introVehicleBody =>
+      'गाड़ी के डिवाइस से बैटरी, रेंज और स्थिति की लाइव जानकारी। ऐप से ही अनलॉक करें और शिफ़्ट शुरू करें।';
+
+  @override
+  String get introVehicleHighlight1 => 'लाइव जानकारी';
+
+  @override
+  String get introVehicleHighlight2 => 'एक दबाव में शुरू';
+
+  @override
+  String get introSupportTitle => 'मदद जो\nवाक़ई पहुंचे';
+
+  @override
+  String get introSupportBody =>
+      'सड़क पर मदद, सर्विस बुकिंग और एक टीम लीड जो वही देख सकता है जो आप देखते हैं।';
+
+  @override
+  String get introSupportHighlight1 => '24x7 सड़क पर मदद';
+
+  @override
+  String get introSupportHighlight2 => 'आपके हब पर सर्विस';
+
+  @override
+  String get introCouldNotLoad => 'परिचय स्लाइड नहीं खुल पाईं।';
+
+  @override
+  String get deallocReturnPhotos => 'वापसी की फ़ोटो';
+
+  @override
+  String get deallocReturnCondition => 'वापसी की हालत';
+
+  @override
+  String get deallocPhotographVehicleExactlyAsCame =>
+      'गाड़ी को ठीक उसी हालत में फ़ोटो लें जैसी वह लौटी है';
+
+  @override
+  String get deallocCompareAgainstHandoverSet => 'हैंडओवर वाली फ़ोटो से मिलाएं';
+
+  @override
+  String get deallocAnyNewDamageRecordHere =>
+      'यहां दर्ज किया गया कोई भी नया नुक़सान राइडर की सुरक्षा जमा राशि से आंका जाता है, इसलिए उसे साफ़-साफ़ दर्ज करें।';
+
+  @override
+  String get deallocVehicleAngles => 'गाड़ी के कोण';
+
+  @override
+  String get deallocComponents => 'पुर्ज़े';
+
+  @override
+  String get deallocOdometerReturn => 'वापसी पर ओडोमीटर';
+
+  @override
+  String get deallocEnterClosingOdometer => 'वापसी का ओडोमीटर डालें';
+
+  @override
+  String get deallocContinueAssessment => 'आकलन पर बढ़ें';
+
+  @override
+  String get deallocAssessment => 'आकलन';
+
+  @override
+  String get deallocConditionAssessment => 'हालत का आकलन';
+
+  @override
+  String get deallocRecordWhatComesBackWhat =>
+      'क्या लौटा और क्या नहीं, दर्ज करें';
+
+  @override
+  String get deallocVehicleCondition => 'गाड़ी की हालत';
+
+  @override
+  String get deallocExcellent => 'बहुत अच्छी';
+
+  @override
+  String get deallocNoDamageBeyondNormalWear =>
+      'सामान्य घिसावट के अलावा कोई नुक़सान नहीं';
+
+  @override
+  String get deallocGood => 'ठीक-ठाक';
+
+  @override
+  String get deallocMinorScuffsNothingRecover =>
+      'हल्की खरोंचें, वसूलने लायक कुछ नहीं';
+
+  @override
+  String get deallocDamaged => 'नुक़सान हुआ';
+
+  @override
+  String get deallocRecoverableDamageRaiseMaintenanceJob =>
+      'वसूलने लायक नुक़सान, मरम्मत का काम दर्ज करें';
+
+  @override
+  String get deallocRecordVehicleCondition => 'गाड़ी की हालत दर्ज करें';
+
+  @override
+  String get deallocDamageDescription => 'नुक़सान का विवरण';
+
+  @override
+  String get deallocWhatDamagedHowBadly => 'क्या ख़राब हुआ, और कितना';
+
+  @override
+  String get deallocDescribeDamage => 'नुक़सान बताएं';
+
+  @override
+  String get deallocEstimatedRecovery => 'अनुमानित वसूली';
+
+  @override
+  String get deallocDeductedFromRidersSecurityDeposit =>
+      'जांच के बाद राइडर की सुरक्षा जमा राशि से काटा जाता है।';
+
+  @override
+  String get deallocAccessoriesReturned => 'लौटाए गए सामान';
+
+  @override
+  String get deallocChargerCable => 'चार्जर और केबल';
+
+  @override
+  String get deallocRcInsurancePuc => 'आरसी, बीमा और पीयूसी';
+
+  @override
+  String get deallocChargeReturn => 'वापसी के समय चार्ज';
+
+  @override
+  String get deallocBatteryReturnedHub => 'बैटरी हब को लौटाई गई';
+
+  @override
+  String get deallocLoggedBackIntoChargingBay =>
+      'चार्जिंग बे की सूची में दोबारा दर्ज हो गई।';
+
+  @override
+  String get deallocConfirmBatteryBack => 'पक्का करें कि बैटरी वापस आ गई है';
+
+  @override
+  String get deallocContinueVerification => 'जांच पर बढ़ें';
+
+  @override
+  String get deallocVerification => 'जांच';
+
+  @override
+  String get deallocTwoPartyVerification => 'दोनों पक्षों की जांच';
+
+  @override
+  String get deallocBothRiderTeamLeadMust =>
+      'राइडर और टीम लीड दोनों को पक्का करना होगा';
+
+  @override
+  String get deallocCodesValid10MinutesAsk =>
+      'कोड 10 मिनट तक चलते हैं। हर व्यक्ति से उनका कोड बुलवाएं, उनका फ़ोन न लें।';
+
+  @override
+  String get deallocRiderConfirmation => 'राइडर की पुष्टि';
+
+  @override
+  String get deallocEnterRidersCode => 'राइडर का कोड डालें';
+
+  @override
+  String get deallocEnterAll6Digits => 'पूरे 6 अंक डालें';
+
+  @override
+  String get deallocTeamLeadConfirmation => 'टीम लीड की पुष्टि';
+
+  @override
+  String get deallocEnterTeamLeadsCode => 'टीम लीड का कोड डालें';
+
+  @override
+  String get deallocCloseRide => 'सवारी बंद करें';
+
+  @override
+  String get deallocEndRidersActiveRide => 'राइडर की चालू सवारी बंद करें';
+
+  @override
+  String get deallocStopsTelemetryClosesShiftSettles =>
+      'जानकारी आना बंद होता है, शिफ़्ट बंद होती है और आख़िरी ट्रिप निपट जाता है।';
+
+  @override
+  String get deallocEndRideContinue => 'आगे बढ़ने के लिए सवारी बंद करें';
+
+  @override
+  String get deallocSetFleetStatus => 'गाड़ी की स्थिति तय करें';
+
+  @override
+  String get deallocAvailable => 'उपलब्ध';
+
+  @override
+  String get deallocReadyAllocateAnotherRider =>
+      'किसी और राइडर को देने के लिए तैयार';
+
+  @override
+  String get deallocService => 'सर्विस में';
+
+  @override
+  String get deallocSendWorkshopFirst => 'पहले वर्कशॉप भेजें';
+
+  @override
+  String get deallocOffRoad => 'सड़क से बाहर';
+
+  @override
+  String get deallocNotUsableUntilFurtherNotice =>
+      'अगली सूचना तक इस्तेमाल लायक नहीं';
+
+  @override
+  String get deallocSetFleetStatus2 => 'गाड़ी की स्थिति तय करें';
+
+  @override
+  String get deallocCompleteDeAllocation => 'वापसी पूरी करें';
 }

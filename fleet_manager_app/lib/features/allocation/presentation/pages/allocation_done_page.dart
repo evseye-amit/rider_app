@@ -98,7 +98,7 @@ class _AllocationDonePageState extends State<AllocationDonePage>
                 _NextStep(
                   icon: Icons.electric_scooter_rounded,
                   title: context.l10n.allocationRequestVehicle,
-                  message: 'Confirms the vehicle\'s photos are on file and its IoT unit is online.',
+                  message: context.l10n.allocationConfirmsPhotosAndIot,
                 ),
                 Gap.md(),
                 _NextStep(

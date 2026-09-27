@@ -143,10 +143,10 @@ class _TrustStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const items = [
-      (Icons.verified_user_rounded, 'Verified\noperators'),
-      (Icons.bolt_rounded, 'Same-day\npayouts'),
-      (Icons.support_agent_rounded, '24x7\nroadside help'),
+    final items = [
+      (Icons.verified_user_rounded, context.l10n.authVerifiedOperators),
+      (Icons.bolt_rounded, context.l10n.authSameDayPayouts),
+      (Icons.support_agent_rounded, context.l10n.authRoadsideHelp),
     ];
 
     return Row(
@@ -198,13 +198,12 @@ class _LegalLine extends StatelessWidget {
       TextSpan(
         style: base,
         children: [
-          TextSpan(text: context.l10n.authByContinuingAgreeOur),
           TextSpan(
             text: context.l10n.commonTermsService,
             style: link,
             recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context),
           ),
-          const TextSpan(text: ' and '),
+          TextSpan(text: context.l10n.commonAnd),
           TextSpan(
             text: context.l10n.commonPrivacyPolicy,
             style: link,

@@ -237,14 +237,10 @@ abstract final class OnboardingFlowBuilder {
 
     if (code.contains('AGREEMENT') || code.contains('E_SIGN')) {
       return [
-        const UiNode(
+        UiNode(
           type: 'termsBlock',
           props: {
-            'body': 'This agreement is between you and your fleet operator. It covers the vehicle you are '
-                'handed, how it may be used, your responsibility for its care, the deposits and fees on '
-                'your plan, and how the arrangement ends. Read it fully before you accept. By ticking '
-                'the box below you confirm that you have read and agree to be bound by the rider '
-                'agreement and the operator\'s rider policies.',
+            'body': l10n.onboardingAgreementBody,
             'maxHeight': 200,
           },
         ),

@@ -141,10 +141,10 @@ class _TrustStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const items = [
-      (Icons.hub_rounded, 'Verified\nhub network'),
-      (Icons.insights_rounded, 'Live fleet\nvisibility'),
-      (Icons.support_agent_rounded, '24x7 ops\nsupport'),
+    final items = [
+      (Icons.hub_rounded, context.l10n.authVerifiedHubNetwork),
+      (Icons.insights_rounded, context.l10n.authLiveFleetVisibility),
+      (Icons.support_agent_rounded, context.l10n.authOpsSupport),
     ];
 
     return Row(

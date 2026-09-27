@@ -415,7 +415,7 @@ class _Footer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Use this when the IoT unit cannot be paired at the hub. The unit\'s current health is recorded with your reason.',
+            context.l10n.allocationBypassExplainer,
             style: AppText.bodySmall.copyWith(height: 1.5),
           ),
           const Gap.lg(),

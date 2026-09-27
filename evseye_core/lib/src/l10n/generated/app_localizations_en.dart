@@ -289,9 +289,6 @@ class AppL10nEn extends AppL10n {
   String get appPinkRidesRental => 'Pink Rides Rental';
 
   @override
-  String get authByContinuingAgreeOur => 'By continuing you agree to our ';
-
-  @override
   String get authChangeNumber => 'Change number';
 
   @override
@@ -2477,4 +2474,280 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get commonSon => 'Son';
+
+  @override
+  String get commonAnd => ' and ';
+
+  @override
+  String get authVerifiedOperators => 'Verified\noperators';
+
+  @override
+  String get authSameDayPayouts => 'Same-day\npayouts';
+
+  @override
+  String get authRoadsideHelp => '24x7\nroadside help';
+
+  @override
+  String get authVerifiedHubNetwork => 'Verified\nhub network';
+
+  @override
+  String get authLiveFleetVisibility => 'Live fleet\nvisibility';
+
+  @override
+  String get authOpsSupport => '24x7 ops\nsupport';
+
+  @override
+  String get allocationNoIotDevice => 'No IoT device';
+
+  @override
+  String get hubShowThisHub => 'Show this hub';
+
+  @override
+  String get deploymentAllSetUp => 'You\'re all set up';
+
+  @override
+  String get allocationConfirmsPhotosAndIot =>
+      'Confirms the vehicle\'s photos are on file and its IoT unit is online.';
+
+  @override
+  String get allocationBypassExplainer =>
+      'Use this when the IoT unit cannot be paired at the hub. The unit\'s current health is recorded with your reason.';
+
+  @override
+  String get onboardingAgreementBody =>
+      'This agreement is between you and your fleet operator. It covers the vehicle you are handed, how it may be used, your responsibility for its care, the deposits and fees on your plan, and how the arrangement ends. Read it fully before you accept. By ticking the box below you confirm that you have read and agree to be bound by the rider agreement and the operator\'s rider policies.';
+
+  @override
+  String authResendCodeIn(String seconds) {
+    return 'Resend code in $seconds';
+  }
+
+  @override
+  String get homeTodaysEarnings => 'Today\'s earnings';
+
+  @override
+  String get supportWhatsTheIssue => 'What\'s the issue';
+
+  @override
+  String get introEarnTitle => 'Earn more,\nride cleaner';
+
+  @override
+  String get introEarnBody =>
+      'Daily payouts, transparent incentives and a rental plan that fits how much you actually ride.';
+
+  @override
+  String get introEarnHighlight1 => 'Same-day settlement';
+
+  @override
+  String get introEarnHighlight2 => 'No hidden deductions';
+
+  @override
+  String get introVehicleTitle => 'Your scooter,\nfully connected';
+
+  @override
+  String get introVehicleBody =>
+      'Live battery, range and health from the onboard IoT unit. Unlock and start your shift from the app.';
+
+  @override
+  String get introVehicleHighlight1 => 'Live telemetry';
+
+  @override
+  String get introVehicleHighlight2 => 'One-tap start';
+
+  @override
+  String get introSupportTitle => 'Help that\nshows up';
+
+  @override
+  String get introSupportBody =>
+      'Roadside assistance, service booking and a team lead who can see exactly what you see.';
+
+  @override
+  String get introSupportHighlight1 => '24x7 roadside help';
+
+  @override
+  String get introSupportHighlight2 => 'Service at your hub';
+
+  @override
+  String get introCouldNotLoad => 'Could not load the intro slides.';
+
+  @override
+  String get deallocReturnPhotos => 'Return photos';
+
+  @override
+  String get deallocReturnCondition => 'Return condition';
+
+  @override
+  String get deallocPhotographVehicleExactlyAsCame =>
+      'Photograph the vehicle exactly as it came back';
+
+  @override
+  String get deallocCompareAgainstHandoverSet =>
+      'Compare against the handover set';
+
+  @override
+  String get deallocAnyNewDamageRecordHere =>
+      'Any new damage you record here is assessed against the rider\'s security deposit, so capture it clearly.';
+
+  @override
+  String get deallocVehicleAngles => 'Vehicle angles';
+
+  @override
+  String get deallocComponents => 'Components';
+
+  @override
+  String get deallocOdometerReturn => 'Odometer at return';
+
+  @override
+  String get deallocEnterClosingOdometer => 'Enter the closing odometer';
+
+  @override
+  String get deallocContinueAssessment => 'Continue to assessment';
+
+  @override
+  String get deallocAssessment => 'Assessment';
+
+  @override
+  String get deallocConditionAssessment => 'Condition assessment';
+
+  @override
+  String get deallocRecordWhatComesBackWhat =>
+      'Record what comes back and what is missing';
+
+  @override
+  String get deallocVehicleCondition => 'Vehicle condition';
+
+  @override
+  String get deallocExcellent => 'Excellent';
+
+  @override
+  String get deallocNoDamageBeyondNormalWear => 'No damage beyond normal wear';
+
+  @override
+  String get deallocGood => 'Good';
+
+  @override
+  String get deallocMinorScuffsNothingRecover =>
+      'Minor scuffs, nothing to recover';
+
+  @override
+  String get deallocDamaged => 'Damaged';
+
+  @override
+  String get deallocRecoverableDamageRaiseMaintenanceJob =>
+      'Recoverable damage — raise a maintenance job';
+
+  @override
+  String get deallocRecordVehicleCondition => 'Record the vehicle condition';
+
+  @override
+  String get deallocDamageDescription => 'Damage description';
+
+  @override
+  String get deallocWhatDamagedHowBadly => 'What is damaged, and how badly';
+
+  @override
+  String get deallocDescribeDamage => 'Describe the damage';
+
+  @override
+  String get deallocEstimatedRecovery => 'Estimated recovery';
+
+  @override
+  String get deallocDeductedFromRidersSecurityDeposit =>
+      'Deducted from the rider\'s security deposit after review.';
+
+  @override
+  String get deallocAccessoriesReturned => 'Accessories returned';
+
+  @override
+  String get deallocChargerCable => 'Charger & cable';
+
+  @override
+  String get deallocRcInsurancePuc => 'RC, insurance and PUC';
+
+  @override
+  String get deallocChargeReturn => 'Charge at return';
+
+  @override
+  String get deallocBatteryReturnedHub => 'Battery returned to the hub';
+
+  @override
+  String get deallocLoggedBackIntoChargingBay =>
+      'Logged back into the charging bay inventory.';
+
+  @override
+  String get deallocConfirmBatteryBack => 'Confirm the battery is back';
+
+  @override
+  String get deallocContinueVerification => 'Continue to verification';
+
+  @override
+  String get deallocVerification => 'Verification';
+
+  @override
+  String get deallocTwoPartyVerification => 'Two-party verification';
+
+  @override
+  String get deallocBothRiderTeamLeadMust =>
+      'Both the rider and the team lead must confirm';
+
+  @override
+  String get deallocCodesValid10MinutesAsk =>
+      'Codes are valid for 10 minutes. Ask each person to read theirs out — do not take their phone.';
+
+  @override
+  String get deallocRiderConfirmation => 'Rider confirmation';
+
+  @override
+  String get deallocEnterRidersCode => 'Enter the rider\'s code';
+
+  @override
+  String get deallocEnterAll6Digits => 'Enter all 6 digits';
+
+  @override
+  String get deallocTeamLeadConfirmation => 'Team lead confirmation';
+
+  @override
+  String get deallocEnterTeamLeadsCode => 'Enter the team lead\'s code';
+
+  @override
+  String get deallocCloseRide => 'Close the ride';
+
+  @override
+  String get deallocEndRidersActiveRide => 'End the rider\'s active ride';
+
+  @override
+  String get deallocStopsTelemetryClosesShiftSettles =>
+      'Stops telemetry, closes the shift and settles the final trip.';
+
+  @override
+  String get deallocEndRideContinue => 'End the ride to continue';
+
+  @override
+  String get deallocSetFleetStatus => 'Set fleet status';
+
+  @override
+  String get deallocAvailable => 'Available';
+
+  @override
+  String get deallocReadyAllocateAnotherRider =>
+      'Ready to allocate to another rider';
+
+  @override
+  String get deallocService => 'In service';
+
+  @override
+  String get deallocSendWorkshopFirst => 'Send to the workshop first';
+
+  @override
+  String get deallocOffRoad => 'Off road';
+
+  @override
+  String get deallocNotUsableUntilFurtherNotice =>
+      'Not usable until further notice';
+
+  @override
+  String get deallocSetFleetStatus2 => 'Set the fleet status';
+
+  @override
+  String get deallocCompleteDeAllocation => 'Complete de-allocation';
 }

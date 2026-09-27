@@ -252,7 +252,7 @@ class _VehicleOptionCard extends StatelessWidget {
               runSpacing: Insets.sm,
               children: [
                 StatusChip(
-                  label: vehicle.hasDevice ? 'IoT ${vehicle.iotDeviceNumber}' : 'No IoT device',
+                  label: vehicle.hasDevice ? 'IoT ${vehicle.iotDeviceNumber}' : context.l10n.allocationNoIotDevice,
                   tone: vehicle.hasDevice ? StatusTone.brand : StatusTone.warning,
                   icon: Icons.sensors_rounded,
                   dense: true,

@@ -288,10 +288,6 @@ class AppL10nTe extends AppL10n {
   String get appPinkRidesRental => 'Pink Rides Rental';
 
   @override
-  String get authByContinuingAgreeOur =>
-      'కొనసాగిస్తే మీరు అంగీకరిస్తున్నారు మా ';
-
-  @override
   String get authChangeNumber => 'నంబర్ మార్చండి';
 
   @override
@@ -2469,4 +2465,282 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get commonSon => 'కుమారుడు';
+
+  @override
+  String get commonAnd => ' మరియు ';
+
+  @override
+  String get authVerifiedOperators => 'ధృవీకరించిన\nఆపరేటర్లు';
+
+  @override
+  String get authSameDayPayouts => 'అదే రోజు\nచెల్లింపులు';
+
+  @override
+  String get authRoadsideHelp => '24x7\nరోడ్డుపై సహాయం';
+
+  @override
+  String get authVerifiedHubNetwork => 'ధృవీకరించిన\nహబ్ నెట్‌వర్క్';
+
+  @override
+  String get authLiveFleetVisibility => 'ఫ్లీట్ యొక్క\nప్రత్యక్ష సమాచారం';
+
+  @override
+  String get authOpsSupport => '24x7 ఆపరేషన్స్\nమద్దతు';
+
+  @override
+  String get allocationNoIotDevice => 'పరికరం లేదు';
+
+  @override
+  String get hubShowThisHub => 'ఈ హబ్ చూపించు';
+
+  @override
+  String get deploymentAllSetUp => 'మీరు పూర్తిగా సిద్ధంగా ఉన్నారు';
+
+  @override
+  String get allocationConfirmsPhotosAndIot =>
+      'వాహనం ఫోటోలు నమోదయ్యాయని, దాని పరికరం ఆన్‌లైన్‌లో ఉందని ఖరారు చేస్తుంది.';
+
+  @override
+  String get allocationBypassExplainer =>
+      'పరికరాన్ని హబ్‌లో జత చేయలేనప్పుడు దీన్ని వాడండి. పరికరం ప్రస్తుత స్థితి మీ కారణంతో నమోదవుతుంది.';
+
+  @override
+  String get onboardingAgreementBody =>
+      'ఈ ఒప్పందం మీకు మరియు మీ ఫ్లీట్ ఆపరేటర్‌కు మధ్య ఉంది. ఇందులో మీకు అప్పగించిన వాహనం, దాన్ని ఎలా వాడవచ్చు, దాని సంరక్షణలో మీ బాధ్యత, మీ ప్లాన్‌లోని డిపాజిట్లు మరియు రుసుములు, ఈ ఏర్పాటు ఎలా ముగుస్తుంది అనేవన్నీ ఉన్నాయి. అంగీకరించే ముందు పూర్తిగా చదవండి. కింది పెట్టెను గుర్తించడం ద్వారా మీరు రైడర్ ఒప్పందం మరియు ఆపరేటర్ రైడర్ విధానాలను చదివారని, వాటికి కట్టుబడి ఉంటారని ఖరారు చేస్తున్నారు.';
+
+  @override
+  String authResendCodeIn(String seconds) {
+    return '$seconds లో కోడ్ మళ్ళీ పంపండి';
+  }
+
+  @override
+  String get homeTodaysEarnings => 'ఈరోజు సంపాదన';
+
+  @override
+  String get supportWhatsTheIssue => 'ఏమి సమస్య';
+
+  @override
+  String get introEarnTitle => 'ఎక్కువ సంపాదించండి,\nస్వచ్ఛంగా ప్రయాణించండి';
+
+  @override
+  String get introEarnBody =>
+      'రోజువారీ చెల్లింపులు, స్పష్టమైన ప్రోత్సాహకాలు మరియు మీరు నిజంగా ఎంత ప్రయాణిస్తారో దానికి సరిపోయే అద్దె ప్లాన్.';
+
+  @override
+  String get introEarnHighlight1 => 'అదే రోజు పరిష్కారం';
+
+  @override
+  String get introEarnHighlight2 => 'దాచిన కోతలు లేవు';
+
+  @override
+  String get introVehicleTitle => 'మీ స్కూటర్,\nపూర్తిగా అనుసంధానం';
+
+  @override
+  String get introVehicleBody =>
+      'వాహన పరికరం నుంచి బ్యాటరీ, పరిధి మరియు స్థితి ప్రత్యక్ష సమాచారం. యాప్ నుంచే అన్‌లాక్ చేసి షిఫ్ట్ మొదలుపెట్టండి.';
+
+  @override
+  String get introVehicleHighlight1 => 'ప్రత్యక్ష సమాచారం';
+
+  @override
+  String get introVehicleHighlight2 => 'ఒక్క నొక్కుతో మొదలు';
+
+  @override
+  String get introSupportTitle => 'నిజంగా వచ్చే\nసహాయం';
+
+  @override
+  String get introSupportBody =>
+      'రోడ్డుపై సహాయం, సర్వీస్ బుకింగ్ మరియు మీరు చూసేదే చూడగల టీమ్ లీడ్.';
+
+  @override
+  String get introSupportHighlight1 => '24x7 రోడ్డుపై సహాయం';
+
+  @override
+  String get introSupportHighlight2 => 'మీ హబ్‌లో సర్వీస్';
+
+  @override
+  String get introCouldNotLoad => 'పరిచయ స్లైడ్‌లు తెరవలేకపోయాం.';
+
+  @override
+  String get deallocReturnPhotos => 'వాపసు ఫోటోలు';
+
+  @override
+  String get deallocReturnCondition => 'వాపసు స్థితి';
+
+  @override
+  String get deallocPhotographVehicleExactlyAsCame =>
+      'వాహనం తిరిగి వచ్చిన స్థితిలోనే దాని ఫోటో తీయండి';
+
+  @override
+  String get deallocCompareAgainstHandoverSet => 'అప్పగింత ఫోటోలతో పోల్చండి';
+
+  @override
+  String get deallocAnyNewDamageRecordHere =>
+      'ఇక్కడ నమోదు చేసిన ఏ కొత్త నష్టాన్నైనా రైడర్ భద్రతా డిపాజిట్ నుంచి అంచనా వేస్తారు, కాబట్టి దాన్ని స్పష్టంగా నమోదు చేయండి.';
+
+  @override
+  String get deallocVehicleAngles => 'వాహన కోణాలు';
+
+  @override
+  String get deallocComponents => 'భాగాలు';
+
+  @override
+  String get deallocOdometerReturn => 'వాపసు సమయంలో ఓడోమీటర్';
+
+  @override
+  String get deallocEnterClosingOdometer => 'ముగింపు ఓడోమీటర్ రాయండి';
+
+  @override
+  String get deallocContinueAssessment => 'అంచనాకు కొనసాగండి';
+
+  @override
+  String get deallocAssessment => 'అంచనా';
+
+  @override
+  String get deallocConditionAssessment => 'స్థితి అంచనా';
+
+  @override
+  String get deallocRecordWhatComesBackWhat =>
+      'ఏమి తిరిగి వచ్చింది, ఏమి లేదు నమోదు చేయండి';
+
+  @override
+  String get deallocVehicleCondition => 'వాహన స్థితి';
+
+  @override
+  String get deallocExcellent => 'చాలా బాగుంది';
+
+  @override
+  String get deallocNoDamageBeyondNormalWear =>
+      'సాధారణ అరుగుదల తప్ప ఏ నష్టమూ లేదు';
+
+  @override
+  String get deallocGood => 'బాగుంది';
+
+  @override
+  String get deallocMinorScuffsNothingRecover =>
+      'చిన్న గీతలు, రికవరీ చేయవలసినది ఏమీ లేదు';
+
+  @override
+  String get deallocDamaged => 'దెబ్బతింది';
+
+  @override
+  String get deallocRecoverableDamageRaiseMaintenanceJob =>
+      'రికవరీ చేయదగిన నష్టం, నిర్వహణ పని నమోదు చేయండి';
+
+  @override
+  String get deallocRecordVehicleCondition => 'వాహన స్థితిని నమోదు చేయండి';
+
+  @override
+  String get deallocDamageDescription => 'నష్టం వివరణ';
+
+  @override
+  String get deallocWhatDamagedHowBadly => 'ఏమి దెబ్బతింది, ఎంత తీవ్రంగా';
+
+  @override
+  String get deallocDescribeDamage => 'నష్టాన్ని వివరించండి';
+
+  @override
+  String get deallocEstimatedRecovery => 'అంచనా రికవరీ';
+
+  @override
+  String get deallocDeductedFromRidersSecurityDeposit =>
+      'సమీక్ష తర్వాత రైడర్ భద్రతా డిపాజిట్ నుంచి తీసివేస్తారు.';
+
+  @override
+  String get deallocAccessoriesReturned => 'తిరిగి ఇచ్చిన సామగ్రి';
+
+  @override
+  String get deallocChargerCable => 'చార్జర్ మరియు కేబుల్';
+
+  @override
+  String get deallocRcInsurancePuc => 'ఆర్‌సీ, బీమా మరియు పీయూసీ';
+
+  @override
+  String get deallocChargeReturn => 'వాపసు సమయంలో చార్జ్';
+
+  @override
+  String get deallocBatteryReturnedHub => 'బ్యాటరీ హబ్‌కు తిరిగి ఇచ్చారు';
+
+  @override
+  String get deallocLoggedBackIntoChargingBay =>
+      'చార్జింగ్ బే జాబితాలో మళ్ళీ నమోదైంది.';
+
+  @override
+  String get deallocConfirmBatteryBack =>
+      'బ్యాటరీ తిరిగి వచ్చిందని ఖరారు చేయండి';
+
+  @override
+  String get deallocContinueVerification => 'ధృవీకరణకు కొనసాగండి';
+
+  @override
+  String get deallocVerification => 'ధృవీకరణ';
+
+  @override
+  String get deallocTwoPartyVerification => 'రెండు వైపుల ధృవీకరణ';
+
+  @override
+  String get deallocBothRiderTeamLeadMust =>
+      'రైడర్ మరియు టీమ్ లీడ్ ఇద్దరూ ఖరారు చేయాలి';
+
+  @override
+  String get deallocCodesValid10MinutesAsk =>
+      'కోడ్‌లు 10 నిమిషాలు చెల్లుతాయి. ప్రతి ఒక్కరినీ వారి కోడ్ చదవమని అడగండి, వారి ఫోన్ తీసుకోవద్దు.';
+
+  @override
+  String get deallocRiderConfirmation => 'రైడర్ ధృవీకరణ';
+
+  @override
+  String get deallocEnterRidersCode => 'రైడర్ కోడ్ రాయండి';
+
+  @override
+  String get deallocEnterAll6Digits => 'మొత్తం 6 అంకెలు రాయండి';
+
+  @override
+  String get deallocTeamLeadConfirmation => 'టీమ్ లీడ్ ధృవీకరణ';
+
+  @override
+  String get deallocEnterTeamLeadsCode => 'టీమ్ లీడ్ కోడ్ రాయండి';
+
+  @override
+  String get deallocCloseRide => 'ప్రయాణాన్ని ముగించండి';
+
+  @override
+  String get deallocEndRidersActiveRide =>
+      'రైడర్ ప్రస్తుత ప్రయాణాన్ని ముగించండి';
+
+  @override
+  String get deallocStopsTelemetryClosesShiftSettles =>
+      'సమాచారం ఆగిపోతుంది, షిఫ్ట్ ముగుస్తుంది మరియు చివరి ట్రిప్ పరిష్కారమవుతుంది.';
+
+  @override
+  String get deallocEndRideContinue => 'కొనసాగడానికి ప్రయాణాన్ని ముగించండి';
+
+  @override
+  String get deallocSetFleetStatus => 'వాహన స్థితిని సెట్ చేయండి';
+
+  @override
+  String get deallocAvailable => 'అందుబాటులో';
+
+  @override
+  String get deallocReadyAllocateAnotherRider =>
+      'మరో రైడర్‌కు ఇవ్వడానికి సిద్ధం';
+
+  @override
+  String get deallocService => 'సర్వీస్‌లో';
+
+  @override
+  String get deallocSendWorkshopFirst => 'ముందు వర్క్‌షాప్‌కు పంపండి';
+
+  @override
+  String get deallocOffRoad => 'రోడ్డు నుంచి బయట';
+
+  @override
+  String get deallocNotUsableUntilFurtherNotice =>
+      'తదుపరి సూచన వరకు వాడటానికి పనికిరాదు';
+
+  @override
+  String get deallocSetFleetStatus2 => 'వాహన స్థితిని సెట్ చేయండి';
+
+  @override
+  String get deallocCompleteDeAllocation => 'వాపసు పూర్తి చేయండి';
 }

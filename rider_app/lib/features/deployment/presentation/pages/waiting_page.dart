@@ -63,7 +63,7 @@ class _WaitingViewState extends State<_WaitingView> with SingleTickerProviderSta
     final String vehicle = a?.fleet?.vehicleNumber ?? 'your scooter';
     return switch (d?.status) {
       null || DeploymentStatus.unknown => (
-          title: 'You\'re all set up',
+          title: context.l10n.deploymentAllSetUp,
           message: context.l10n.deploymentFleetManagerWillAllocateScooter,
           art: BrandArt.waiting,
         ),
