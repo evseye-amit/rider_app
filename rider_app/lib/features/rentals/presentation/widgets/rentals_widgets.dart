@@ -18,9 +18,9 @@ StatusTone invoiceTone(InvoiceStatus status) => switch (status) {
 };
 
 String invoiceLabel(InvoiceStatus status) => switch (status) {
-  InvoiceStatus.paid => LocaleController.strings.rentalsPaid,
+  InvoiceStatus.paid => ActiveLocale.strings.rentalsPaid,
   InvoiceStatus.due => 'Due',
-  InvoiceStatus.failed => LocaleController.strings.rentalsFailed,
+  InvoiceStatus.failed => ActiveLocale.strings.rentalsFailed,
 };
 
 class RentalsBand extends StatelessWidget {
@@ -37,10 +37,8 @@ class RentalsBand extends StatelessWidget {
       children: [
         HeroBandBar(
           leading: Builder(
-            builder: (context) => InkCircleButton(
-              icon: Icons.arrow_back_rounded,
-              onTap: () => Navigator.of(context).maybePop(),
-            ),
+            builder: (context) =>
+                InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
           ),
           subtitle: context.l10n.rentalsPlanAutoDebitRentReceipts,
           title: context.l10n.rentalsRentals,
@@ -59,30 +57,19 @@ class RentalsBand extends StatelessWidget {
                 p == null ? '—' : Fmt.money(p.weeklyRent),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppText.numericLarge.copyWith(
-                  fontSize: 38,
-                  color: AppColors.onInk,
-                ),
+                style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
               ),
             ),
             const SizedBox(width: Insets.sm),
             Padding(
               padding: const EdgeInsets.only(bottom: 6),
-              child: Text(
-                '/ week',
-                style: AppText.bodyMedium.copyWith(
-                  color: AppColors.onInkSecondary,
-                ),
-              ),
+              child: Text('/ week', style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary)),
             ),
           ],
         ),
         const Gap.xl(),
         Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: Insets.md,
-            horizontal: Insets.sm,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: Insets.md, horizontal: Insets.sm),
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.06),
             borderRadius: Corners.brMd,
@@ -141,47 +128,30 @@ class PlanCard extends StatelessWidget {
         : AppColors.warning;
 
     return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: Corners.brXl,
-        boxShadow: Shadows.floating,
-      ),
+      decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.floating),
       padding: const EdgeInsets.all(Insets.xl),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const IconTile(
-                icon: Icons.verified_user_rounded,
-                tone: AppColors.primary,
-                solid: true,
-              ),
+              const IconTile(icon: Icons.verified_user_rounded, tone: AppColors.primary, solid: true),
               const SizedBox(width: Insets.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(context.l10n.rentalsAutoDebitMandate,
-                      style: AppText.titleMedium.copyWith(fontSize: 15),
-                    ),
+                    Text(context.l10n.rentalsAutoDebitMandate, style: AppText.titleMedium.copyWith(fontSize: 15)),
                     const SizedBox(height: 2),
-                    Text(
-                      plan.mandateRef,
-                      style: AppText.bodySmall.copyWith(fontSize: 12),
-                    ),
+                    Text(plan.mandateRef, style: AppText.bodySmall.copyWith(fontSize: 12)),
                   ],
                 ),
               ),
               StatusChip(
-                label:
-                    plan.mandateStatus[0].toUpperCase() +
-                    plan.mandateStatus.substring(1),
+                label: plan.mandateStatus[0].toUpperCase() + plan.mandateStatus.substring(1),
                 tone: active
                     ? StatusTone.success
-                    : (plan.mandateStatus == 'failed'
-                          ? StatusTone.danger
-                          : StatusTone.warning),
+                    : (plan.mandateStatus == 'failed' ? StatusTone.danger : StatusTone.warning),
                 dense: true,
               ),
             ],
@@ -225,25 +195,16 @@ class InvoiceTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: Insets.sm + 2),
         child: Row(
           children: [
-            const PhotoThumb(
-              photo: BrandPhoto.money,
-              size: 44,
-              radius: 12,
-            ),
+            const PhotoThumb(photo: BrandPhoto.money, size: 44, radius: 12),
             const SizedBox(width: Insets.md),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    invoice.periodLabel,
-                    style: AppText.titleSmall.copyWith(fontSize: 13.5),
-                  ),
+                  Text(invoice.periodLabel, style: AppText.titleSmall.copyWith(fontSize: 13.5)),
                   const SizedBox(height: 2),
                   Text(
-                    invoice.paidOn != null
-                        ? 'Paid ${Fmt.date(invoice.paidOn!)}'
-                        : 'Due ${Fmt.date(invoice.dueDate)}',
+                    invoice.paidOn != null ? 'Paid ${Fmt.date(invoice.paidOn!)}' : 'Due ${Fmt.date(invoice.dueDate)}',
                     style: AppText.bodySmall.copyWith(fontSize: 11.5),
                   ),
                 ],
@@ -252,10 +213,7 @@ class InvoiceTile extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(
-                  Fmt.money(invoice.amount),
-                  style: AppText.numericSmall.copyWith(fontSize: 14),
-                ),
+                Text(Fmt.money(invoice.amount), style: AppText.numericSmall.copyWith(fontSize: 14)),
                 const SizedBox(height: 3),
                 StatusChip(
                   label: invoiceLabel(invoice.status),
@@ -266,11 +224,7 @@ class InvoiceTile extends StatelessWidget {
               ],
             ),
             const SizedBox(width: Insets.sm),
-            const Icon(
-              Icons.chevron_right_rounded,
-              size: 18,
-              color: AppColors.textMuted,
-            ),
+            const Icon(Icons.chevron_right_rounded, size: 18, color: AppColors.textMuted),
           ],
         ),
       ),
@@ -290,25 +244,15 @@ class InvoiceReceiptBody extends StatelessWidget {
       children: [
         Row(
           children: [
-            Expanded(
-              child: Text(
-                invoice.id,
-                style: AppText.code.copyWith(fontSize: 14),
-              ),
-            ),
-            StatusChip(
-              label: invoiceLabel(invoice.status),
-              tone: invoiceTone(invoice.status),
-            ),
+            Expanded(child: Text(invoice.id, style: AppText.code.copyWith(fontSize: 14))),
+            StatusChip(label: invoiceLabel(invoice.status), tone: invoiceTone(invoice.status)),
           ],
         ),
         const Gap.lg(),
         for (final item in invoice.items)
           KeyValueRow(
             label: item.label,
-            value: item.amount < 0
-                ? '−${Fmt.money(item.amount.abs())}'
-                : Fmt.money(item.amount),
+            value: item.amount < 0 ? '−${Fmt.money(item.amount.abs())}' : Fmt.money(item.amount),
             valueColor: item.amount < 0 ? AppColors.mint : null,
           ),
         const SizedBox(height: Insets.sm),

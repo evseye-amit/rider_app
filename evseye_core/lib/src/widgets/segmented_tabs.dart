@@ -131,7 +131,7 @@ class FilterChipBar extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: padding,
         itemCount: items.length,
-        separatorBuilder: (_, __) => const SizedBox(width: Insets.sm),
+        separatorBuilder: (_, _) => const SizedBox(width: Insets.sm),
         itemBuilder: (context, i) {
           final bool active = i == selectedIndex;
           return Pressable(

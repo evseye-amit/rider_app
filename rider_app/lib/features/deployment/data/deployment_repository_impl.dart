@@ -21,8 +21,7 @@ class DeploymentRepositoryImpl implements DeploymentRepository {
     String allocationId, {
     required String provider,
     required String reference,
-  }) =>
-      _api.submitPayment(allocationId, provider: provider, providerReference: reference);
+  }) => _api.submitPayment(allocationId, provider: provider, providerReference: reference);
 
   @override
   Future<Result<DeploymentWorkflow>> acceptPdi(String allocationId, List<PdiItemResponse> items) =>

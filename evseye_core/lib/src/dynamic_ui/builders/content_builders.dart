@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../l10n/l10n.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_dimens.dart';
 import '../../theme/app_typography.dart';
@@ -13,8 +14,6 @@ import '../../widgets/status_chip.dart';
 import '../../widgets/step_progress.dart';
 import '../registry/widget_registry.dart';
 import 'node_utils.dart';
-
-import '../../l10n/locale_controller.dart';
 Map<String, NodeBuilder> contentBuilders(WidgetRegistry r) => {
       'text': (context, node, scope) => Text(
             node.text(scope, 'text'),
@@ -56,9 +55,9 @@ Map<String, NodeBuilder> contentBuilders(WidgetRegistry r) => {
         final double? h = (node.props['height'] as num?)?.toDouble();
         final Widget img = src.startsWith('http')
             ? Image.network(src, fit: fit, height: h,
-                errorBuilder: (_, __, ___) => const SizedBox.shrink())
+                errorBuilder: (_, _, _) => const SizedBox.shrink())
             : Image.asset(src, fit: fit, height: h,
-                errorBuilder: (_, __, ___) => const SizedBox.shrink());
+                errorBuilder: (_, _, _) => const SizedBox.shrink());
         return ClipRRect(borderRadius: Corners.brMd, child: img);
       },
       'illustration': (context, node, scope) => Center(

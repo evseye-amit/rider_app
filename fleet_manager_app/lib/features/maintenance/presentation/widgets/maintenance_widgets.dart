@@ -4,30 +4,30 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/maintenance_job.dart';
 
 StatusTone jobStatusTone(String status) => switch (status) {
-      'overdue' => StatusTone.danger,
-      'inProgress' => StatusTone.warning,
-      'closed' => StatusTone.success,
-      _ => StatusTone.info,
-    };
+  'overdue' => StatusTone.danger,
+  'inProgress' => StatusTone.warning,
+  'closed' => StatusTone.success,
+  _ => StatusTone.info,
+};
 
 String jobStatusLabel(String status) => switch (status) {
-      'overdue' => LocaleController.strings.maintenanceOverdue,
-      'inProgress' => LocaleController.strings.maintenanceProgress,
-      'closed' => LocaleController.strings.maintenanceClosed,
-      _ => LocaleController.strings.commonOpen,
-    };
+  'overdue' => ActiveLocale.strings.maintenanceOverdue,
+  'inProgress' => ActiveLocale.strings.maintenanceProgress,
+  'closed' => ActiveLocale.strings.maintenanceClosed,
+  _ => ActiveLocale.strings.commonOpen,
+};
 
 StatusTone jobPriorityTone(String priority) => switch (priority.toLowerCase()) {
-      'high' => StatusTone.danger,
-      'low' => StatusTone.neutral,
-      _ => StatusTone.warning,
-    };
+  'high' => StatusTone.danger,
+  'low' => StatusTone.neutral,
+  _ => StatusTone.warning,
+};
 
 String jobPriorityLabel(String priority) => switch (priority.toLowerCase()) {
-      'high' => LocaleController.strings.commonHighPriority,
-      'low' => LocaleController.strings.commonLowPriority,
-      _ => LocaleController.strings.commonNormalPriority,
-    };
+  'high' => ActiveLocale.strings.commonHighPriority,
+  'low' => ActiveLocale.strings.commonLowPriority,
+  _ => ActiveLocale.strings.commonNormalPriority,
+};
 
 class OverlapModuleCard extends StatelessWidget {
   const OverlapModuleCard({
@@ -50,11 +50,7 @@ class OverlapModuleCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: padding,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: Corners.brXl,
-        boxShadow: Shadows.floating,
-      ),
+      decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.floating),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -77,16 +73,9 @@ class OverlapModuleCard extends StatelessWidget {
                       children: [
                         Text(
                           actionLabel!,
-                          style: AppText.titleSmall.copyWith(
-                            fontSize: 12.5,
-                            color: AppColors.primary,
-                          ),
+                          style: AppText.titleSmall.copyWith(fontSize: 12.5, color: AppColors.primary),
                         ),
-                        const Icon(
-                          Icons.chevron_right_rounded,
-                          size: 17,
-                          color: AppColors.primary,
-                        ),
+                        const Icon(Icons.chevron_right_rounded, size: 17, color: AppColors.primary),
                       ],
                     ),
                   ),
@@ -130,7 +119,9 @@ class JobRowTile extends StatelessWidget {
                   borderRadius: BorderRadius.horizontal(left: Corners.lg),
                 ),
               ),
-            Expanded(child: Padding(padding: const EdgeInsets.all(Insets.lg), child: _body(context, overdue))),
+            Expanded(
+              child: Padding(padding: const EdgeInsets.all(Insets.lg), child: _body(context, overdue)),
+            ),
           ],
         ),
       ),
@@ -141,137 +132,125 @@ class JobRowTile extends StatelessWidget {
 
   Widget _body(BuildContext context, bool overdue) {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Wrap(
-            spacing: Insets.sm,
-            runSpacing: Insets.xs,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Text(
-                job.id,
-                style: AppText.overline.copyWith(color: AppColors.textMuted),
-              ),
-              StatusChip(label: jobPriorityLabel(job.priority), tone: jobPriorityTone(job.priority), dense: true),
-              StatusChip(
-                label: jobStatusLabel(job.status),
-                tone: jobStatusTone(job.status),
-                dense: true,
-                solid: overdue,
-                icon: overdue ? Icons.warning_amber_rounded : null,
-              ),
-            ],
-          ),
-          const SizedBox(height: Insets.sm + 2),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const PhotoThumb(photo: BrandPhoto.service, size: 48),
-              const SizedBox(width: Insets.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${job.vehicleNumber} · ${job.model}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.titleMedium.copyWith(fontSize: 15),
-                    ),
-                    const SizedBox(height: 3),
-                    Row(
-                      children: [
-                        Flexible(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: AppColors.surfaceSunken,
-                              borderRadius: Corners.pill,
-                            ),
-                            child: Text(
-                              maintenanceTypeLabel(context, job.type),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppText.bodySmall.copyWith(fontSize: 10.5, fontWeight: FontWeight.w700),
-                            ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Wrap(
+          spacing: Insets.sm,
+          runSpacing: Insets.xs,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Text(job.id, style: AppText.overline.copyWith(color: AppColors.textMuted)),
+            StatusChip(label: jobPriorityLabel(job.priority), tone: jobPriorityTone(job.priority), dense: true),
+            StatusChip(
+              label: jobStatusLabel(job.status),
+              tone: jobStatusTone(job.status),
+              dense: true,
+              solid: overdue,
+              icon: overdue ? Icons.warning_amber_rounded : null,
+            ),
+          ],
+        ),
+        const SizedBox(height: Insets.sm + 2),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const PhotoThumb(photo: BrandPhoto.service, size: 48),
+            const SizedBox(width: Insets.md),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${job.vehicleNumber} · ${job.model}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.titleMedium.copyWith(fontSize: 15),
+                  ),
+                  const SizedBox(height: 3),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          decoration: BoxDecoration(color: AppColors.surfaceSunken, borderRadius: Corners.pill),
+                          child: Text(
+                            maintenanceTypeLabel(context, job.type),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppText.bodySmall.copyWith(fontSize: 10.5, fontWeight: FontWeight.w700),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: Insets.sm + 2),
-          Text(
-            job.issue,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: AppText.bodyMedium.copyWith(fontSize: 12.5, height: 1.4),
-          ),
-          const SizedBox(height: Insets.md),
-          Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-          const SizedBox(height: Insets.md),
-          Wrap(
-            spacing: Insets.md,
-            runSpacing: Insets.xs,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.event_rounded,
-                    size: 14,
-                    color: overdue ? AppColors.danger : AppColors.textMuted,
-                  ),
-                  const SizedBox(width: 5),
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 130),
-                    child: Text(
-                      job.isClosed
-                          ? 'Closed ${Fmt.date(job.closedOn ?? job.dueOn)}'
-                          : 'Due ${Fmt.date(job.dueOn)}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.bodySmall.copyWith(
-                        fontSize: 11.5,
-                        fontWeight: overdue ? FontWeight.w800 : FontWeight.w500,
-                        color: overdue ? AppColors.danger : null,
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
+            ),
+          ],
+        ),
+        const SizedBox(height: Insets.sm + 2),
+        Text(
+          job.issue,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: AppText.bodyMedium.copyWith(fontSize: 12.5, height: 1.4),
+        ),
+        const SizedBox(height: Insets.md),
+        Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
+        const SizedBox(height: Insets.md),
+        Wrap(
+          spacing: Insets.md,
+          runSpacing: Insets.xs,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.event_rounded, size: 14, color: overdue ? AppColors.danger : AppColors.textMuted),
+                const SizedBox(width: 5),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 130),
+                  child: Text(
+                    job.isClosed ? 'Closed ${Fmt.date(job.closedOn ?? job.dueOn)}' : 'Due ${Fmt.date(job.dueOn)}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.bodySmall.copyWith(
+                      fontSize: 11.5,
+                      fontWeight: overdue ? FontWeight.w800 : FontWeight.w500,
+                      color: overdue ? AppColors.danger : null,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.build_rounded, size: 14, color: AppColors.textMuted),
+                const SizedBox(width: 5),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 130),
+                  child: Text(
+                    job.assignedTo ?? ActiveLocale.strings.maintenanceUnassigned,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.bodySmall.copyWith(fontSize: 11.5),
+                  ),
+                ),
+              ],
+            ),
+            if (job.bay != null)
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.build_rounded, size: 14, color: AppColors.textMuted),
+                  const Icon(Icons.garage_rounded, size: 14, color: AppColors.textMuted),
                   const SizedBox(width: 5),
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 130),
-                    child: Text(
-                      job.assignedTo ?? LocaleController.strings.maintenanceUnassigned,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.bodySmall.copyWith(fontSize: 11.5),
-                    ),
-                  ),
+                  Text(job.bay!, style: AppText.bodySmall.copyWith(fontSize: 11.5)),
                 ],
               ),
-              if (job.bay != null)
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.garage_rounded, size: 14, color: AppColors.textMuted),
-                    const SizedBox(width: 5),
-                    Text(job.bay!, style: AppText.bodySmall.copyWith(fontSize: 11.5)),
-                  ],
-                ),
-            ],
-          ),
-        ],
-      );
+          ],
+        ),
+      ],
+    );
   }
 }

@@ -22,34 +22,24 @@ class IncentivesBand extends StatelessWidget {
       children: [
         HeroBandBar(
           leading: Builder(
-            builder: (context) => InkCircleButton(
-              icon: Icons.arrow_back_rounded,
-              onTap: () => Navigator.of(context).maybePop(),
-            ),
+            builder: (context) =>
+                InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
           ),
           subtitle: context.l10n.earningsBonusesCanStillClearWeek,
           title: context.l10n.commonIncentives,
         ),
         const Gap.xxl(),
-        Text(context.l10n.earningsEarnedWeek,
-          style: AppText.label.copyWith(color: AppColors.onInkSecondary),
-        ),
+        Text(context.l10n.earningsEarnedWeek, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
         const Gap.sm(),
         Text(
           Fmt.money(earnedThisWeek),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppText.numericLarge.copyWith(
-            fontSize: 38,
-            color: AppColors.onInk,
-          ),
+          style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
         ),
         const Gap.xl(),
         Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: Insets.md,
-            horizontal: Insets.sm,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: Insets.md, horizontal: Insets.sm),
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.06),
             borderRadius: Corners.brMd,
@@ -100,10 +90,7 @@ class IncentiveSchemeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color tone = NodeTokens.color(
-      scheme.tone,
-      fallback: AppColors.primary,
-    );
+    final Color tone = NodeTokens.color(scheme.tone, fallback: AppColors.primary);
 
     final Widget card = GlassCard(
       shadows: elevated ? Shadows.floating : Shadows.card,
@@ -113,12 +100,7 @@ class IncentiveSchemeCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconTile(
-                icon: NodeTokens.icon(scheme.icon),
-                tone: tone,
-                solid: true,
-                size: 40,
-              ),
+              IconTile(icon: NodeTokens.icon(scheme.icon), tone: tone, solid: true, size: 40),
               const SizedBox(width: Insets.md),
               Expanded(
                 child: Column(
@@ -126,12 +108,7 @@ class IncentiveSchemeCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Expanded(
-                          child: Text(
-                            scheme.title,
-                            style: AppText.titleMedium.copyWith(fontSize: 15),
-                          ),
-                        ),
+                        Expanded(child: Text(scheme.title, style: AppText.titleMedium.copyWith(fontSize: 15))),
                         if (dimmed)
                           StatusChip(
                             label: context.l10n.earningsAchieved,
@@ -142,18 +119,12 @@ class IncentiveSchemeCard extends StatelessWidget {
                         else
                           Text(
                             '+${Fmt.money(scheme.rewardAmount)}',
-                            style: AppText.numericSmall.copyWith(
-                              fontSize: 15,
-                              color: tone,
-                            ),
+                            style: AppText.numericSmall.copyWith(fontSize: 15, color: tone),
                           ),
                       ],
                     ),
                     const SizedBox(height: 2),
-                    Text(
-                      scheme.description,
-                      style: AppText.bodySmall.copyWith(fontSize: 12),
-                    ),
+                    Text(scheme.description, style: AppText.bodySmall.copyWith(fontSize: 12)),
                   ],
                 ),
               ),
@@ -168,8 +139,7 @@ class IncentiveSchemeCard extends StatelessWidget {
                   size: 64,
                   strokeWidth: 6,
                   color: tone,
-                  centerText:
-                      '${scheme.current.toInt()}/${scheme.target.toInt()}',
+                  centerText: '${scheme.current.toInt()}/${scheme.target.toInt()}',
                 ),
                 const SizedBox(width: Insets.lg),
                 Expanded(
@@ -186,24 +156,17 @@ class IncentiveSchemeCard extends StatelessWidget {
             LabeledProgress(
               value: scheme.progress,
               color: tone,
-              label:
-                  '${scheme.current.toInt()} of ${scheme.target.toInt()} ${scheme.unit}',
+              label: '${scheme.current.toInt()} of ${scheme.target.toInt()} ${scheme.unit}',
               trailingLabel: dimmed ? context.l10n.deploymentDone : Fmt.percent(scheme.progress),
             ),
           const SizedBox(height: Insets.md),
           Row(
             children: [
-              const Icon(
-                Icons.schedule_rounded,
-                size: 13,
-                color: AppColors.textMuted,
-              ),
+              const Icon(Icons.schedule_rounded, size: 13, color: AppColors.textMuted),
               const SizedBox(width: Insets.xs + 2),
               Flexible(
                 child: Text(
-                  dimmed
-                      ? 'Expired ${Fmt.date(scheme.expiresAt)}'
-                      : 'Ends ${Fmt.relative(scheme.expiresAt)}',
+                  dimmed ? 'Expired ${Fmt.date(scheme.expiresAt)}' : 'Ends ${Fmt.relative(scheme.expiresAt)}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppText.bodySmall.copyWith(fontSize: 11.5),
@@ -213,7 +176,8 @@ class IncentiveSchemeCard extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () => _showTerms(context),
-                child: Text(context.l10n.earningsTerms,
+                child: Text(
+                  context.l10n.earningsTerms,
                   style: AppText.bodySmall.copyWith(
                     fontSize: 11.5,
                     fontWeight: FontWeight.w800,
@@ -237,10 +201,7 @@ class IncentiveSchemeCard extends StatelessWidget {
       subtitle: context.l10n.earningsTermsConditions,
       child: Padding(
         padding: const EdgeInsets.only(bottom: Insets.lg),
-        child: Text(
-          scheme.terms,
-          style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.55),
-        ),
+        child: Text(scheme.terms, style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.55)),
       ),
     );
   }

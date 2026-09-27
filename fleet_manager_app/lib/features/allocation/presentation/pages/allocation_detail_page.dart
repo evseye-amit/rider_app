@@ -1,105 +1,73 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../app/di/injector.dart';
-import '../../domain/usecases/ask_payment.dart';
-import '../../domain/usecases/bypass_pairing.dart';
-import '../../domain/usecases/get_allocation_evidence.dart';
-import '../../domain/usecases/get_deployment_request.dart';
-import '../../domain/usecases/get_iot_health.dart';
-import '../../domain/usecases/request_fleet.dart';
-import '../../domain/usecases/submit_pdi.dart';
-import '../../domain/usecases/verify_payment.dart';
-import '../cubit/deployment_detail_cubit.dart';
+import '../providers/deployment_detail_provider.dart';
 import '../widgets/allocation_widgets.dart';
 
-class AllocationDetailPage extends StatelessWidget {
+class AllocationDetailPage extends ConsumerWidget {
   const AllocationDetailPage({required this.requestId, super.key});
 
   final String requestId;
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => DeploymentDetailCubit(
-        allocationId: requestId,
-        getRequest: GetDeploymentRequest(sl()),
-        getEvidence: GetAllocationEvidence(sl()),
-        getIotHealth: GetIotHealth(sl()),
-        requestFleet: RequestFleet(sl()),
-        askPayment: AskPayment(sl()),
-        verifyPayment: VerifyPayment(sl()),
-        submitPdi: SubmitPdi(sl()),
-        bypassPairing: BypassPairing(sl()),
-      )
-        ..load()
-        ..startPolling(),
-      child: const _DetailView(),
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<DeploymentDetail> detail = ref.watch(deploymentDetailProvider(requestId));
+
+    if (detail.isLoading && !detail.hasValue) {
+      return const Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: PageBody(
+            children: [
+              ShimmerBox(height: 120, borderRadius: Corners.brXl),
+              Gap.lg(),
+              ShimmerBox(height: 220, borderRadius: Corners.brLg),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final DeploymentDetail? current = detail.value;
+    if (detail.hasError || current == null) {
+      return AppScaffold(
+        title: context.l10n.commonHandover,
+        body: EmptyState(
+          title: context.l10n.allocationCouldNotLoadHandover,
+          message: detail.failureMessage,
+          icon: Icons.cloud_off_rounded,
+          tone: AppColors.danger,
+          actionLabel: context.l10n.commonTryAgain,
+          onAction: () => ref.read(deploymentDetailProvider(requestId).notifier).refresh(),
+        ),
+      );
+    }
+
+    return _Loaded(allocationId: requestId, detail: current);
   }
 }
 
-class _DetailView extends StatelessWidget {
-  const _DetailView();
+class _Loaded extends ConsumerWidget {
+  const _Loaded({required this.allocationId, required this.detail});
+
+  final String allocationId;
+  final DeploymentDetail detail;
 
   @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<DeploymentDetailCubit, DeploymentDetailState>(
-      listenWhen: (a, b) => b.message != null && a.message != b.message,
-      listener: (context, state) => AppSnack.error(context, state.message!),
-      builder: (context, state) {
-        if (state.isLoading) {
-          return Scaffold(
-            backgroundColor: AppColors.canvas,
-            body: SafeArea(
-              child: PageBody(children: const [
-                ShimmerBox(height: 120, borderRadius: Corners.brXl),
-                Gap.lg(),
-                ShimmerBox(height: 220, borderRadius: Corners.brLg),
-              ]),
-            ),
-          );
-        }
-        if (state.status == DeploymentDetailStatus.failure || state.request == null) {
-          return AppScaffold(
-            title: context.l10n.commonHandover,
-            body: EmptyState(
-              title: context.l10n.allocationCouldNotLoadHandover,
-              message: state.message,
-              icon: Icons.cloud_off_rounded,
-              tone: AppColors.danger,
-              actionLabel: context.l10n.commonTryAgain,
-              onAction: () => context.read<DeploymentDetailCubit>().load(),
-            ),
-          );
-        }
-        return _Loaded(state: state);
-      },
-    );
-  }
-}
-
-class _Loaded extends StatelessWidget {
-  const _Loaded({required this.state});
-
-  final DeploymentDetailState state;
-
-  DeploymentAllocation get request => state.request!;
-  DeploymentStatus get status => state.deployment;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final DeploymentAllocation request = detail.request;
+    final DeploymentStatus status = detail.status;
     final DeploymentRider? rider = request.rider;
     final DeploymentFleet? fleet = request.fleet;
 
     return HeroScaffold(
       bandColor: AppColors.ink,
       bottomPadding: 120,
-      onRefresh: () => context.read<DeploymentDetailCubit>().load(silent: true),
+      onRefresh: () => ref.read(deploymentDetailProvider(allocationId).notifier).refresh(silent: true),
       band: _Band(request: request),
-      bottomNavigationBar: _Footer(state: state),
+      bottomNavigationBar: _Footer(allocationId: allocationId, detail: detail),
       children: [
         OverlapModuleCard(
           title: context.l10n.allocationRider,
@@ -124,23 +92,42 @@ class _Loaded extends StatelessWidget {
                         },
                       ),
               ),
-              KeyValueRow(label: context.l10n.allocationRiderCode, value: (rider?.riderCode ?? '').isEmpty ? '—' : rider!.riderCode!, icon: Icons.badge_rounded),
+              KeyValueRow(
+                label: context.l10n.allocationRiderCode,
+                value: (rider?.riderCode ?? '').isEmpty ? '—' : rider!.riderCode!,
+                icon: Icons.badge_rounded,
+              ),
               KeyValueRow(label: context.l10n.commonCity, value: rider?.city ?? '—', icon: Icons.place_rounded),
               if (request.createdAt != null)
-                KeyValueRow(label: context.l10n.allocationReserved2, value: Fmt.dateTime(request.createdAt!), icon: Icons.schedule_rounded),
+                KeyValueRow(
+                  label: context.l10n.allocationReserved2,
+                  value: Fmt.dateTime(request.createdAt!),
+                  icon: Icons.schedule_rounded,
+                ),
             ],
           ),
         ),
         const Gap.lg(),
-
         ModuleCard(
           title: context.l10n.commonVehicle,
           leading: const IconTile(icon: Icons.electric_scooter_rounded, solid: true, size: 28),
           child: Column(
             children: [
-              KeyValueRow(label: context.l10n.allocationNumber, value: fleet?.vehicleNumber ?? '—', icon: Icons.confirmation_number_rounded),
-              KeyValueRow(label: context.l10n.commonModel, value: fleet?.modelName ?? '—', icon: Icons.two_wheeler_rounded),
-              KeyValueRow(label: context.l10n.allocationFleetCode, value: fleet?.fleetCode ?? '—', icon: Icons.qr_code_rounded),
+              KeyValueRow(
+                label: context.l10n.allocationNumber,
+                value: fleet?.vehicleNumber ?? '—',
+                icon: Icons.confirmation_number_rounded,
+              ),
+              KeyValueRow(
+                label: context.l10n.commonModel,
+                value: fleet?.modelName ?? '—',
+                icon: Icons.two_wheeler_rounded,
+              ),
+              KeyValueRow(
+                label: context.l10n.allocationFleetCode,
+                value: fleet?.fleetCode ?? '—',
+                icon: Icons.qr_code_rounded,
+              ),
               KeyValueRow(
                 label: context.l10n.allocationIotDevice,
                 value: fleet?.iotDeviceNumber ?? context.l10n.allocationNotMapped,
@@ -151,17 +138,17 @@ class _Loaded extends StatelessWidget {
           ),
         ),
         const Gap.lg(),
-
         ModuleCard(
           title: context.l10n.commonHandover,
           leading: const IconTile(icon: Icons.timeline_rounded, solid: true, size: 28),
           child: DeploymentTimeline(status: status, workflow: request.workflow),
         ),
         const Gap.lg(),
-
-        if (status == DeploymentStatus.paymentPaid) _EvidenceCard(evidence: state.evidence),
-        if (status == DeploymentStatus.devicePairingPending) _IotCard(health: state.iotHealth),
-        if (status == DeploymentStatus.pdiPendingRider || status == DeploymentStatus.trainingPending) _RiderTurnCard(status: status),
+        if (status == DeploymentStatus.paymentPaid) _EvidenceCard(evidence: detail.evidence),
+        if (status == DeploymentStatus.devicePairingPending)
+          _IotCard(allocationId: allocationId, health: detail.iotHealth),
+        if (status == DeploymentStatus.pdiPendingRider || status == DeploymentStatus.trainingPending)
+          _RiderTurnCard(status: status),
         if (status.isDeployed)
           ArtBlock(
             art: BrandArt.success,
@@ -173,6 +160,17 @@ class _Loaded extends StatelessWidget {
     );
   }
 }
+
+String _nextActionLabel(AppL10n l10n, DeploymentStatus status) => switch (status) {
+  DeploymentStatus.riderWaiting || DeploymentStatus.fleetRequested => l10n.allocationAskPayment,
+  DeploymentStatus.paymentPending => l10n.allocationVerifyPayment,
+  DeploymentStatus.paymentPaid => l10n.commonSubmitInspection,
+  DeploymentStatus.pdiPendingRider => l10n.allocationWaitingRiderAcceptInspection,
+  DeploymentStatus.trainingPending => l10n.allocationWaitingRiderFinishTraining,
+  DeploymentStatus.devicePairingPending => l10n.allocationWaitingRiderPairBypass,
+  DeploymentStatus.deployed => l10n.allocationDeployed,
+  DeploymentStatus.unknown => l10n.commonRefresh,
+};
 
 class _Band extends StatelessWidget {
   const _Band({required this.request});
@@ -188,10 +186,8 @@ class _Band extends StatelessWidget {
         Row(
           children: [
             Builder(
-              builder: (context) => InkCircleButton(
-                icon: Icons.arrow_back_rounded,
-                onTap: () => Navigator.of(context).maybePop(),
-              ),
+              builder: (context) =>
+                  InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
             ),
             const Spacer(),
             StatusChip(
@@ -199,8 +195,8 @@ class _Band extends StatelessWidget {
               tone: status.isDeployed
                   ? StatusTone.success
                   : status.waitsOnRider
-                      ? StatusTone.info
-                      : StatusTone.warning,
+                  ? StatusTone.info
+                  : StatusTone.warning,
               icon: status.isDeployed ? Icons.verified_rounded : Icons.hourglass_top_rounded,
               dense: true,
               solid: true,
@@ -239,26 +235,14 @@ class _Band extends StatelessWidget {
           status.waitsOnRider
               ? context.l10n.allocationWaitingRiderPageRefreshesIts
               : status.isDeployed
-                  ? context.l10n.allocationComplete2
-                  : 'Your move: ${_nextActionLabel(status).toLowerCase()}.',
+              ? context.l10n.allocationComplete2
+              : 'Your move: ${_nextActionLabel(context.l10n, status).toLowerCase()}.',
           style: AppText.bodySmall.copyWith(color: AppColors.onInkMuted),
         ),
       ],
     );
   }
 }
-
-String _nextActionLabel(DeploymentStatus status) => switch (status) {
-      DeploymentStatus.riderWaiting => LocaleController.strings.allocationAskPayment,
-      DeploymentStatus.fleetRequested => LocaleController.strings.allocationAskPayment,
-      DeploymentStatus.paymentPending => LocaleController.strings.allocationVerifyPayment,
-      DeploymentStatus.paymentPaid => LocaleController.strings.commonSubmitInspection,
-      DeploymentStatus.pdiPendingRider => LocaleController.strings.allocationWaitingRiderAcceptInspection,
-      DeploymentStatus.trainingPending => LocaleController.strings.allocationWaitingRiderFinishTraining,
-      DeploymentStatus.devicePairingPending => LocaleController.strings.allocationWaitingRiderPairBypass,
-      DeploymentStatus.deployed => LocaleController.strings.allocationDeployed,
-      DeploymentStatus.unknown => LocaleController.strings.commonRefresh,
-    };
 
 class _EvidenceCard extends StatelessWidget {
   const _EvidenceCard({required this.evidence});
@@ -267,69 +251,81 @@ class _EvidenceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AllocationEvidence? e = evidence;
+    final AllocationEvidence? current = evidence;
     return ModuleCard(
       title: context.l10n.allocationInspectionEvidence,
       leading: IconTile(
         icon: Icons.photo_library_rounded,
-        tone: e == null ? AppColors.textMuted : (e.isComplete ? AppColors.success : AppColors.warning),
+        tone: current == null ? AppColors.textMuted : (current.isComplete ? AppColors.success : AppColors.warning),
         solid: true,
         size: 28,
       ),
-      child: e == null
+      child: current == null
           ? const ShimmerBox(height: 40)
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  e.requiredPhotoTypes.isEmpty
-                      ? context.l10n.allocationClientRequiresNoInspectionPhotos
-                      : e.isComplete
-                          ? 'All ${e.requiredPhotoTypes.length} required photos are on file.'
-                          : 'Missing: ${e.missingPhotoTypes.join(', ')}. Upload them against the inspection before submitting.',
-                  style: AppText.bodySmall.copyWith(height: 1.5),
-                ),
-              ],
+          : Text(
+              current.requiredPhotoTypes.isEmpty
+                  ? context.l10n.allocationClientRequiresNoInspectionPhotos
+                  : current.isComplete
+                  ? 'All ${current.requiredPhotoTypes.length} required photos are on file.'
+                  : 'Missing: ${current.missingPhotoTypes.join(', ')}. Upload them against the inspection before submitting.',
+              style: AppText.bodySmall.copyWith(height: 1.5),
             ),
     );
   }
 }
 
-class _IotCard extends StatelessWidget {
-  const _IotCard({required this.health});
+class _IotCard extends ConsumerWidget {
+  const _IotCard({required this.allocationId, required this.health});
 
+  final String allocationId;
   final IotHealth? health;
 
+  Future<void> _refresh(BuildContext context, WidgetRef ref) async {
+    final Result<IotHealth> result = await ref.read(deploymentDetailProvider(allocationId).notifier).refreshIotHealth();
+    if (!context.mounted) return;
+    if (result case Err<IotHealth>(:final failure)) AppSnack.error(context, failure.message);
+  }
+
   @override
-  Widget build(BuildContext context) {
-    final IotHealth? h = health;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final IotHealth? current = health;
     return ModuleCard(
       title: context.l10n.commonIotUnit,
       leading: IconTile(
         icon: Icons.sensors_rounded,
-        tone: h == null ? AppColors.textMuted : (h.isHealthy ? AppColors.success : AppColors.warning),
+        tone: current == null ? AppColors.textMuted : (current.isHealthy ? AppColors.success : AppColors.warning),
         solid: true,
         size: 28,
       ),
       actionLabel: context.l10n.commonRefresh,
-      onAction: () => context.read<DeploymentDetailCubit>().refreshIotHealth(),
-      child: h == null
+      onAction: () => _refresh(context, ref),
+      child: current == null
           ? const ShimmerBox(height: 60)
           : Column(
               children: [
-                KeyValueRow(label: context.l10n.allocationDevice, value: h.deviceNumber, icon: Icons.qr_code_2_rounded),
+                KeyValueRow(
+                  label: context.l10n.allocationDevice,
+                  value: current.deviceNumber,
+                  icon: Icons.qr_code_2_rounded,
+                ),
                 KeyValueRow(
                   label: context.l10n.allocationHeartbeat,
-                  value: h.heartbeatAt == null ? context.l10n.allocationNever : '${Fmt.relative(h.heartbeatAt!)}${h.heartbeatFresh ? '' : ' · stale'}',
+                  value: current.heartbeatAt == null
+                      ? context.l10n.allocationNever
+                      : '${Fmt.relative(current.heartbeatAt!)}${current.heartbeatFresh ? '' : ' · stale'}',
                   icon: Icons.favorite_rounded,
-                  valueColor: h.heartbeatFresh ? AppColors.success : AppColors.warning,
+                  valueColor: current.heartbeatFresh ? AppColors.success : AppColors.warning,
                 ),
-                KeyValueRow(label: context.l10n.allocationSim, value: '${h.simStatus}${h.simLastFour == null ? '' : ' · ••${h.simLastFour}'}', icon: Icons.sim_card_rounded),
+                KeyValueRow(
+                  label: context.l10n.allocationSim,
+                  value: '${current.simStatus}${current.simLastFour == null ? '' : ' · ••${current.simLastFour}'}',
+                  icon: Icons.sim_card_rounded,
+                ),
                 KeyValueRow(
                   label: context.l10n.allocationCondition,
-                  value: h.isHealthy ? context.l10n.allocationHealthy : context.l10n.allocationAttentionRequired,
+                  value: current.isHealthy ? context.l10n.allocationHealthy : context.l10n.allocationAttentionRequired,
                   icon: Icons.health_and_safety_rounded,
-                  valueColor: h.isHealthy ? AppColors.success : AppColors.warning,
+                  valueColor: current.isHealthy ? AppColors.success : AppColors.warning,
                 ),
               ],
             ),
@@ -366,46 +362,63 @@ class _RiderTurnCard extends StatelessWidget {
   }
 }
 
-class _Footer extends StatelessWidget {
-  const _Footer({required this.state});
+class _Footer extends ConsumerWidget {
+  const _Footer({required this.allocationId, required this.detail});
 
-  final DeploymentDetailState state;
+  final String allocationId;
+  final DeploymentDetail detail;
 
-  Future<void> _askPayment(BuildContext context) async {
-    final List<PaymentLineItem>? items = await _PaymentSheet.show(context);
-    if (items == null || !context.mounted) return;
-    final DeploymentDetailCubit cubit = context.read<DeploymentDetailCubit>();
-    if (state.deployment == DeploymentStatus.riderWaiting && !await cubit.requestFleet()) return;
-    final bool ok = await cubit.askPayment(items);
-    if (ok && context.mounted) AppSnack.success(context, context.l10n.allocationPaymentRequestedRiderSeesNow);
+  DeploymentDetailNotifier _notifier(WidgetRef ref) => ref.read(deploymentDetailProvider(allocationId).notifier);
+
+  void _announce(BuildContext context, Result<void> result, String successMessage) {
+    switch (result) {
+      case Ok<void>():
+        AppSnack.success(context, successMessage);
+      case Err<void>(:final failure):
+        AppSnack.error(context, failure.message);
+    }
   }
 
-  Future<void> _verifyPayment(BuildContext context) async {
-    final DeploymentPayment? payment = null;
+  Future<void> _askPayment(BuildContext context, WidgetRef ref) async {
+    final List<PaymentLineItem>? items = await _PaymentSheet.show(context);
+    if (items == null || !context.mounted) return;
+
+    final DeploymentDetailNotifier notifier = _notifier(ref);
+    if (detail.status == DeploymentStatus.riderWaiting) {
+      final Result<void> requested = await notifier.requestFleet();
+      if (!context.mounted) return;
+      if (requested case Err<void>(:final failure)) {
+        AppSnack.error(context, failure.message);
+        return;
+      }
+    }
+    final Result<void> asked = await notifier.askPayment(items);
+    if (context.mounted) _announce(context, asked, context.l10n.allocationPaymentRequestedRiderSeesNow);
+  }
+
+  Future<void> _verifyPayment(BuildContext context, WidgetRef ref) async {
     final bool confirmed = await AppDialog.confirm(
       context,
       title: context.l10n.allocationPaymentReceived,
-      message: payment == null
-          ? context.l10n.allocationConfirmHaveReceivedAmountRider
-          : 'Confirm ${Fmt.money(payment.amount)} was received.',
+      message: context.l10n.allocationConfirmHaveReceivedAmountRider,
       confirmLabel: context.l10n.allocationMarkAsPaid,
       icon: Icons.payments_rounded,
       tone: AppColors.success,
     );
     if (!confirmed || !context.mounted) return;
-    final bool ok = await context.read<DeploymentDetailCubit>().verifyPayment();
-    if (ok && context.mounted) AppSnack.success(context, context.l10n.allocationPaymentVerified);
+    final Result<void> verified = await _notifier(ref).verifyPayment();
+    if (context.mounted) _announce(context, verified, context.l10n.allocationPaymentVerified);
   }
 
-  Future<void> _submitPdi(BuildContext context) async {
+  Future<void> _submitPdi(BuildContext context, WidgetRef ref) async {
     final ({String partner, List<PdiChecklistItem> items})? result = await _PdiSheet.show(context);
     if (result == null || !context.mounted) return;
-    final bool ok =
-        await context.read<DeploymentDetailCubit>().submitPdi(workPartnerName: result.partner, checklist: result.items);
-    if (ok && context.mounted) AppSnack.success(context, context.l10n.allocationInspectionSentRider2);
+    final Result<void> submitted = await _notifier(ref)
+        .submitPdi(workPartnerName: result.partner, checklist: result.items);
+    if (context.mounted) _announce(context, submitted, context.l10n.allocationInspectionSentRider2);
   }
 
-  Future<void> _bypass(BuildContext context) async {
+  Future<void> _bypass(BuildContext context, WidgetRef ref) async {
     final TextEditingController controller = TextEditingController();
     final String? remarks = await AppSheet.show<String>(
       context,
@@ -414,12 +427,15 @@ class _Footer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            context.l10n.allocationBypassExplainer,
-            style: AppText.bodySmall.copyWith(height: 1.5),
-          ),
+          Text(context.l10n.allocationBypassExplainer, style: AppText.bodySmall.copyWith(height: 1.5)),
           const Gap.lg(),
-          AppTextField(label: context.l10n.allocationReason, hint: context.l10n.maintenanceHintUnitNotPowering, maxLines: 3, controller: controller, autofocus: true),
+          AppTextField(
+            label: context.l10n.allocationReason,
+            hint: context.l10n.maintenanceHintUnitNotPowering,
+            maxLines: 3,
+            controller: controller,
+            autofocus: true,
+          ),
         ],
       ),
       footer: PrimaryButton(
@@ -428,37 +444,62 @@ class _Footer extends StatelessWidget {
         onPressed: () => Navigator.of(context).pop(controller.text.trim()),
       ),
     );
-    if (remarks == null || remarks.isEmpty || !context.mounted) {
-      if (remarks != null && remarks.isEmpty && context.mounted) AppSnack.error(context, context.l10n.allocationReasonRequiredBypass);
+    if (remarks == null || !context.mounted) return;
+    if (remarks.isEmpty) {
+      AppSnack.error(context, context.l10n.allocationReasonRequiredBypass);
       return;
     }
-    final bool ok = await context.read<DeploymentDetailCubit>().bypassPairing(remarks);
-    if (ok && context.mounted) AppSnack.success(context, context.l10n.allocationHandoverCompletedWithoutPairing);
+    final Result<void> bypassed = await _notifier(ref).bypassPairing(remarks);
+    if (context.mounted) _announce(context, bypassed, context.l10n.allocationHandoverCompletedWithoutPairing);
   }
 
   @override
-  Widget build(BuildContext context) {
-    final DeploymentStatus status = state.deployment;
-    final bool evidenceReady = state.evidence == null || state.evidence!.isComplete;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final DeploymentStatus status = detail.status;
+    final bool evidenceReady = detail.evidence == null || detail.evidence!.isComplete;
 
     final (String label, IconData icon, VoidCallback? onPressed) = switch (status) {
-      DeploymentStatus.riderWaiting => (context.l10n.allocationAskPayment, Icons.receipt_long_rounded, () => _askPayment(context)),
-      DeploymentStatus.fleetRequested => (context.l10n.allocationAskPayment, Icons.receipt_long_rounded, () => _askPayment(context)),
-      DeploymentStatus.paymentPending => (context.l10n.allocationVerifyPayment, Icons.payments_rounded, () => _verifyPayment(context)),
+      DeploymentStatus.riderWaiting || DeploymentStatus.fleetRequested => (
+        context.l10n.allocationAskPayment,
+        Icons.receipt_long_rounded,
+        () => _askPayment(context, ref),
+      ),
+      DeploymentStatus.paymentPending => (
+        context.l10n.allocationVerifyPayment,
+        Icons.payments_rounded,
+        () => _verifyPayment(context, ref),
+      ),
       DeploymentStatus.paymentPaid => (
-          evidenceReady ? context.l10n.commonSubmitInspection : context.l10n.allocationUploadEvidenceContinue,
-          Icons.fact_check_rounded,
-          evidenceReady ? () => _submitPdi(context) : null,
-        ),
-      DeploymentStatus.pdiPendingRider => (context.l10n.allocationWaitingRiderInspection, Icons.hourglass_top_rounded, null),
-      DeploymentStatus.trainingPending => (context.l10n.allocationWaitingRiderTraining, Icons.hourglass_top_rounded, null),
-      DeploymentStatus.devicePairingPending => (context.l10n.allocationBypassPairing2, Icons.sensors_off_rounded, () => _bypass(context)),
+        evidenceReady ? context.l10n.commonSubmitInspection : context.l10n.allocationUploadEvidenceContinue,
+        Icons.fact_check_rounded,
+        evidenceReady ? () => _submitPdi(context, ref) : null,
+      ),
+      DeploymentStatus.pdiPendingRider => (
+        context.l10n.allocationWaitingRiderInspection,
+        Icons.hourglass_top_rounded,
+        null,
+      ),
+      DeploymentStatus.trainingPending => (
+        context.l10n.allocationWaitingRiderTraining,
+        Icons.hourglass_top_rounded,
+        null,
+      ),
+      DeploymentStatus.devicePairingPending => (
+        context.l10n.allocationBypassPairing2,
+        Icons.sensors_off_rounded,
+        () => _bypass(context, ref),
+      ),
       DeploymentStatus.deployed => (context.l10n.allocationDeployed, Icons.verified_rounded, null),
-      DeploymentStatus.unknown => (context.l10n.commonRefresh, Icons.refresh_rounded, () => context.read<DeploymentDetailCubit>().load()),
+      DeploymentStatus.unknown => (context.l10n.commonRefresh, Icons.refresh_rounded, () => _notifier(ref).refresh()),
     };
 
     return Container(
-      padding: EdgeInsets.fromLTRB(Insets.gutter, Insets.md, Insets.gutter, MediaQuery.paddingOf(context).bottom + Insets.md),
+      padding: EdgeInsets.fromLTRB(
+        Insets.gutter,
+        Insets.md,
+        Insets.gutter,
+        MediaQuery.paddingOf(context).bottom + Insets.md,
+      ),
       decoration: const BoxDecoration(
         color: AppColors.canvas,
         border: Border(top: BorderSide(color: AppColors.stroke)),
@@ -466,8 +507,8 @@ class _Footer extends StatelessWidget {
       child: PrimaryButton(
         label: label,
         icon: icon,
-        loading: state.busy,
-        onPressed: state.busy ? null : onPressed,
+        loading: detail.busy,
+        onPressed: detail.busy ? null : onPressed,
         fillColor: status == DeploymentStatus.devicePairingPending ? AppColors.warning : null,
       ),
     );
@@ -475,61 +516,58 @@ class _Footer extends StatelessWidget {
 }
 
 class _PaymentSheet extends StatefulWidget {
-  const _PaymentSheet();
+  const _PaymentSheet({required this.labels});
+
+  final List<String> labels;
 
   static Future<List<PaymentLineItem>?> show(BuildContext context) => AppSheet.show<List<PaymentLineItem>>(
-        context,
-        title: context.l10n.allocationAskPayment,
-        subtitle: context.l10n.allocationWhatRiderPaysBeforeHandover,
-        child: const _PaymentSheet(),
-      );
+    context,
+    title: context.l10n.allocationAskPayment,
+    subtitle: context.l10n.allocationWhatRiderPaysBeforeHandover,
+    child: _PaymentSheet(
+      labels: [
+        context.l10n.allocationRentalFeeWeek,
+        context.l10n.allocationSecurityDeposit,
+        context.l10n.allocationOnboardingFee,
+      ],
+    ),
+  );
 
   @override
   State<_PaymentSheet> createState() => _PaymentSheetState();
 }
 
 class _PaymentSheetState extends State<_PaymentSheet> {
-  final List<(TextEditingController, TextEditingController)> _rows = [
-    (TextEditingController(), TextEditingController(text: '700')),
-    (TextEditingController(), TextEditingController(text: '3000')),
-    (TextEditingController(), TextEditingController(text: '500')),
+  static const List<String> _defaultAmounts = ['700', '3000', '500'];
+
+  late final List<(TextEditingController, TextEditingController)> _rows = [
+    for (final (int i, String label) in widget.labels.indexed)
+      (TextEditingController(text: label), TextEditingController(text: _defaultAmounts[i])),
   ];
-  bool _seeded = false;
   String? _error;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_seeded) return;
-    _seeded = true;
-    final AppL10n l10n = context.l10n;
-    _rows[0].$1.text = l10n.allocationRentalFeeWeek;
-    _rows[1].$1.text = l10n.allocationSecurityDeposit;
-    _rows[2].$1.text = l10n.allocationOnboardingFee;
-  }
-
-  @override
   void dispose() {
-    for (final (a, b) in _rows) {
-      a.dispose();
-      b.dispose();
+    for (final (TextEditingController label, TextEditingController amount) in _rows) {
+      label.dispose();
+      amount.dispose();
     }
     super.dispose();
   }
 
-  num get _total => _rows.fold<num>(0, (sum, r) => sum + (num.tryParse(r.$2.text.trim()) ?? 0));
+  num get _total => _rows.fold<num>(0, (sum, row) => sum + (num.tryParse(row.$2.text.trim()) ?? 0));
 
   void _submit() {
     final List<PaymentLineItem> items = [];
-    for (final (label, amount) in _rows) {
-      final String l = label.text.trim();
-      final num? a = num.tryParse(amount.text.trim());
-      if (l.isEmpty && (amount.text.trim().isEmpty)) continue;
-      if (l.isEmpty || a == null || a <= 0) {
+    for (final (TextEditingController label, TextEditingController amount) in _rows) {
+      final String text = label.text.trim();
+      final num? value = num.tryParse(amount.text.trim());
+      if (text.isEmpty && amount.text.trim().isEmpty) continue;
+      if (text.isEmpty || value == null || value <= 0) {
         setState(() => _error = context.l10n.allocationEveryLineNeedsLabelAmount);
         return;
       }
-      items.add(PaymentLineItem(label: l, amount: a));
+      items.add(PaymentLineItem(label: text, amount: value));
     }
     if (items.isEmpty) {
       setState(() => _error = context.l10n.allocationAddLeastOneLine);
@@ -543,17 +581,24 @@ class _PaymentSheetState extends State<_PaymentSheet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (int i = 0; i < _rows.length; i++) ...[
+        for (final (TextEditingController label, TextEditingController amount) in _rows) ...[
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(flex: 3, child: AppTextField(label: context.l10n.allocationItem, controller: _rows[i].$1, onChanged: (_) => setState(() => _error = null))),
+              Expanded(
+                flex: 3,
+                child: AppTextField(
+                  label: context.l10n.allocationItem,
+                  controller: label,
+                  onChanged: (_) => setState(() => _error = null),
+                ),
+              ),
               const SizedBox(width: Insets.md),
               Expanded(
                 flex: 2,
                 child: AppTextField(
                   label: context.l10n.allocationAmount,
-                  controller: _rows[i].$2,
+                  controller: amount,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   prefixText: '₹',
                   onChanged: (_) => setState(() => _error = null),
@@ -568,29 +613,41 @@ class _PaymentSheetState extends State<_PaymentSheet> {
           icon: Icons.add_rounded,
           onPressed: () => setState(() => _rows.add((TextEditingController(), TextEditingController()))),
         ),
-        Gap.md(),
+        const Gap.md(),
         KeyValueRow(label: context.l10n.commonTotal, value: Fmt.money(_total), valueStyle: AppText.titleMedium),
         if (_error != null) ...[
-          Gap.sm(),
+          const Gap.sm(),
           Text(_error!, style: AppText.bodySmall.copyWith(color: AppColors.danger)),
         ],
-        Gap.lg(),
+        const Gap.lg(),
         PrimaryButton(label: context.l10n.allocationSendPaymentRequest, icon: Icons.send_rounded, onPressed: _submit),
-        Gap.md(),
+        const Gap.md(),
       ],
     );
   }
 }
 
 class _PdiSheet extends StatefulWidget {
-  const _PdiSheet();
+  const _PdiSheet({required this.defaults});
+
+  final List<String> defaults;
 
   static Future<({String partner, List<PdiChecklistItem> items})?> show(BuildContext context) =>
       AppSheet.show<({String partner, List<PdiChecklistItem> items})>(
         context,
         title: context.l10n.commonPreDeliveryInspection,
         subtitle: context.l10n.allocationChecklistRiderWillAcceptItem,
-        child: _PdiSheet(),
+        child: _PdiSheet(
+          defaults: [
+            context.l10n.commonBrakes,
+            context.l10n.allocationTyresPressure,
+            context.l10n.allocationLightsIndicators,
+            context.l10n.allocationHornMirrors,
+            context.l10n.allocationBatteryChargeCharger,
+            context.l10n.allocationBodyPaintwork,
+            context.l10n.allocationHelmetHandedOver,
+          ],
+        ),
       );
 
   @override
@@ -598,19 +655,9 @@ class _PdiSheet extends StatefulWidget {
 }
 
 class _PdiSheetState extends State<_PdiSheet> {
-  static List<String> get _defaults => [
-    LocaleController.strings.commonBrakes,
-    LocaleController.strings.allocationTyresPressure,
-    LocaleController.strings.allocationLightsIndicators,
-    LocaleController.strings.allocationHornMirrors,
-    LocaleController.strings.allocationBatteryChargeCharger,
-    LocaleController.strings.allocationBodyPaintwork,
-    LocaleController.strings.allocationHelmetHandedOver,
-  ];
-
   final TextEditingController _partner = TextEditingController();
-  final Map<String, bool> _items = {for (final d in _defaults) d: true};
   final TextEditingController _custom = TextEditingController();
+  late final Map<String, bool> _items = {for (final String label in widget.defaults) label: true};
   String? _error;
 
   @override
@@ -620,7 +667,17 @@ class _PdiSheetState extends State<_PdiSheet> {
     super.dispose();
   }
 
-  static String _code(String label) => label.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]+'), '_').replaceAll(RegExp(r'^_|_$'), '');
+  static String _code(String label) =>
+      label.toUpperCase().replaceAll(RegExp(r'[^A-Z0-9]+'), '_').replaceAll(RegExp(r'^_|_$'), '');
+
+  void _addItem() {
+    final String value = _custom.text.trim();
+    if (value.isEmpty) return;
+    setState(() {
+      _items[value] = true;
+      _custom.clear();
+    });
+  }
 
   void _submit() {
     final String partner = _partner.text.trim();
@@ -629,7 +686,8 @@ class _PdiSheetState extends State<_PdiSheet> {
       return;
     }
     final List<PdiChecklistItem> items = [
-      for (final e in _items.entries) PdiChecklistItem(code: _code(e.key), label: e.key, mandatory: e.value),
+      for (final MapEntry<String, bool> entry in _items.entries)
+        PdiChecklistItem(code: _code(entry.key), label: entry.key, mandatory: entry.value),
     ];
     if (items.isEmpty) {
       setState(() => _error = context.l10n.allocationAddLeastOneItem);
@@ -653,10 +711,10 @@ class _PdiSheetState extends State<_PdiSheet> {
         const Gap.lg(),
         GroupLabel(context.l10n.allocationChecklistTapToggleMandatory),
         const Gap.md(),
-        for (final label in _items.keys.toList()) ...[
+        for (final String label in _items.keys.toList()) ...[
           AppCheckTile(
             value: _items[label]!,
-            onChanged: (v) => setState(() => _items[label] = v),
+            onChanged: (mandatory) => setState(() => _items[label] = mandatory),
             title: label,
             subtitle: _items[label]! ? context.l10n.commonMandatory : context.l10n.commonOptional,
           ),
@@ -664,19 +722,11 @@ class _PdiSheetState extends State<_PdiSheet> {
         ],
         Row(
           children: [
-            Expanded(child: AppTextField(label: context.l10n.allocationAddItem, controller: _custom)),
-            const SizedBox(width: Insets.md),
-            CircleIconButton(
-              icon: Icons.add_rounded,
-              onTap: () {
-                final String v = _custom.text.trim();
-                if (v.isEmpty) return;
-                setState(() {
-                  _items[v] = true;
-                  _custom.clear();
-                });
-              },
+            Expanded(
+              child: AppTextField(label: context.l10n.allocationAddItem, controller: _custom),
             ),
+            const SizedBox(width: Insets.md),
+            CircleIconButton(icon: Icons.add_rounded, onTap: _addItem),
           ],
         ),
         if (_error != null) ...[

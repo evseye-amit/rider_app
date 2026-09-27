@@ -1,12 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class TeamLead extends Equatable {
-  const TeamLead({
-    required this.id,
-    required this.name,
-    required this.mobile,
-    required this.riders,
-  });
+  const TeamLead({required this.id, required this.name, required this.mobile, required this.riders});
 
   final String id;
   final String name;
@@ -46,6 +41,5 @@ class HubProfile extends Equatable {
   bool get hasTeamLeads => teamLeads.isNotEmpty;
 
   @override
-  List<Object?> get props =>
-      [id, name, code, address, city, capacity, openedOn, chargingBays, serviceBays, teamLeads];
+  List<Object?> get props => [id, name, code, address, city, capacity, openedOn, chargingBays, serviceBays, teamLeads];
 }

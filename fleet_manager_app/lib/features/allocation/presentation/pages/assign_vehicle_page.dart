@@ -1,167 +1,158 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
+import '../../allocation_dependencies.dart';
 import '../../domain/usecases/allocate_vehicle.dart';
-import '../../domain/usecases/get_eligible_fleets.dart';
-import '../../domain/usecases/get_pending_rider.dart';
-import '../cubit/assign_vehicle_cubit.dart';
+import '../providers/assign_vehicle_options_provider.dart';
 import '../widgets/allocation_widgets.dart';
 
-class AssignVehiclePage extends StatelessWidget {
+class AssignVehiclePage extends ConsumerStatefulWidget {
   const AssignVehiclePage({required this.riderId, super.key});
 
   final String riderId;
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AssignVehicleCubit(
-        riderId: riderId,
-        getPendingRider: GetPendingRider(sl()),
-        getEligibleFleets: GetEligibleFleets(sl()),
-        allocateVehicle: AllocateVehicle(sl()),
-      )..load(),
-      child: const _AssignVehicleView(),
-    );
-  }
+  ConsumerState<AssignVehiclePage> createState() => _AssignVehiclePageState();
 }
 
-class _AssignVehicleView extends StatefulWidget {
-  const _AssignVehicleView();
-
-  @override
-  State<_AssignVehicleView> createState() => _AssignVehicleViewState();
-}
-
-class _AssignVehicleViewState extends State<_AssignVehicleView> {
+class _AssignVehiclePageState extends ConsumerState<AssignVehiclePage> {
   String? _selectedId;
   int _hubFilter = 0;
+  bool _allocating = false;
 
-  Future<void> _allocate(BuildContext context, AssignVehicleState state, EligibleFleet vehicle) async {
-    final PendingRider rider = state.rider!;
+  Future<void> _allocate(PendingRider rider, EligibleFleet vehicle) async {
     final bool confirmed = await AppDialog.confirm(
       context,
       title: 'Reserve ${vehicle.vehicleNumber}?',
-      message: '${vehicle.vehicleNumber} will be reserved for ${rider.name}. The handover — vehicle request, '
+      message:
+          '${vehicle.vehicleNumber} will be reserved for ${rider.name}. The handover — vehicle request, '
           'payment, inspection, training and pairing — then runs from the allocation desk.',
       confirmLabel: context.l10n.allocationAllocateVehicle,
       icon: Icons.check_circle_rounded,
       tone: AppColors.success,
     );
-    if (!confirmed || !context.mounted) return;
+    if (!confirmed || !mounted) return;
 
-    final AssignVehicleCubit cubit = context.read<AssignVehicleCubit>();
-    final bool ok = await cubit.allocate(vehicle.id);
-    if (!context.mounted) return;
-    if (ok) {
-      final DeploymentAllocation allocation = cubit.state.allocation!;
-      context.go(
-        '${Routes.allocationDone}?rider=${Uri.encodeComponent(rider.name)}'
-        '&vehicle=${Uri.encodeComponent(vehicle.vehicleNumber)}&id=${allocation.id}',
-      );
-    } else {
-      AppSnack.error(context, cubit.state.message ?? context.l10n.allocationCouldNotAllocateVehicle);
+    setState(() => _allocating = true);
+    final Result<DeploymentAllocation> result = await ref.read(allocateVehicleProvider)(
+      AllocateParams(riderId: widget.riderId, fleetId: vehicle.id),
+    );
+    if (!mounted) return;
+    setState(() => _allocating = false);
+
+    switch (result) {
+      case Ok<DeploymentAllocation>(:final value):
+        context.go(
+          '${Routes.allocationDone}?rider=${Uri.encodeComponent(rider.name)}'
+          '&vehicle=${Uri.encodeComponent(vehicle.vehicleNumber)}&id=${value.id}',
+        );
+      case Err<DeploymentAllocation>(:final failure):
+        AppSnack.error(context, failure.message);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AssignVehicleCubit, AssignVehicleState>(
-      builder: (context, state) {
-        if (state.isLoading) {
-          return Scaffold(
-            backgroundColor: AppColors.canvas,
-            body: SafeArea(
-              child: PageBody(children: const [
-                ShimmerBox(height: 46, borderRadius: Corners.pill),
-                Gap.xl(),
-                ShimmerBox(height: 150, borderRadius: Corners.brLg),
-                Gap.md(),
-                ShimmerBox(height: 150, borderRadius: Corners.brLg),
-              ]),
-            ),
-          );
-        }
-        if (state.status == AssignVehicleStatus.failure || state.rider == null) {
-          return AppScaffold(
-            title: context.l10n.allocationAssignVehicle,
-            body: EmptyState(
-              title: context.l10n.allocationCouldNotLoadAvailableVehicles,
-              message: state.message,
-              icon: Icons.cloud_off_rounded,
-              tone: AppColors.danger,
-              actionLabel: context.l10n.commonTryAgain,
-              onAction: () => context.read<AssignVehicleCubit>().load(),
-            ),
-          );
-        }
+    final AsyncValue<AssignVehicleOptions> options = ref.watch(assignVehicleOptionsProvider(widget.riderId));
 
-        final List<String> hubs = [context.l10n.allocationAllHubs, ...{for (final v in state.vehicles) v.hubName ?? '—'}.toList()..sort()];
-        final int hubFilter = _hubFilter.clamp(0, hubs.length - 1);
-        final List<EligibleFleet> filtered = state.vehicles
-            .where((v) => hubFilter == 0 || (v.hubName ?? '—') == hubs[hubFilter])
-            .toList(growable: false);
-        final EligibleFleet? selected = state.vehicles.where((v) => v.id == _selectedId).firstOrNull;
-
-        return HeroScaffold(
-          bandColor: AppColors.ink,
-          bottomPadding: 130,
-          band: _Band(rider: state.rider!),
-          bottomNavigationBar: _Footer(
-            selected: selected,
-            busy: state.isAllocating,
-            onContinue: selected == null || state.isAllocating ? null : () => _allocate(context, state, selected),
+    if (options.isLoading && !options.hasValue) {
+      return const Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: PageBody(
+            children: [
+              ShimmerBox(height: 46, borderRadius: Corners.pill),
+              Gap.xl(),
+              ShimmerBox(height: 150, borderRadius: Corners.brLg),
+              Gap.md(),
+              ShimmerBox(height: 150, borderRadius: Corners.brLg),
+            ],
           ),
-          children: [
-            OverlapModuleCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  FilterChipBar(
-                    items: hubs,
-                    selectedIndex: hubFilter,
-                    onChanged: (i) => setState(() => _hubFilter = i),
-                    padding: EdgeInsets.zero,
-                  ),
-                  const Gap.md(),
-                  Text(
-                    '${state.vehicles.length} vehicle${state.vehicles.length == 1 ? '' : 's'} ready in your hubs',
-                    style: AppText.bodySmall.copyWith(color: AppColors.textMuted),
-                  ),
-                ],
+        ),
+      );
+    }
+
+    final AssignVehicleOptions? data = options.value;
+    if (options.hasError || data == null) {
+      return AppScaffold(
+        title: context.l10n.allocationAssignVehicle,
+        body: EmptyState(
+          title: context.l10n.allocationCouldNotLoadAvailableVehicles,
+          message: options.failureMessage,
+          icon: Icons.cloud_off_rounded,
+          tone: AppColors.danger,
+          actionLabel: context.l10n.commonTryAgain,
+          onAction: () => ref.invalidate(assignVehicleOptionsProvider(widget.riderId)),
+        ),
+      );
+    }
+
+    final List<String> hubs = [
+      context.l10n.allocationAllHubs,
+      ...{for (final EligibleFleet vehicle in data.vehicles) vehicle.hubName ?? '—'}.toList()..sort(),
+    ];
+    final int hubFilter = _hubFilter.clamp(0, hubs.length - 1);
+    final List<EligibleFleet> filtered = data.vehicles
+        .where((vehicle) => hubFilter == 0 || (vehicle.hubName ?? '—') == hubs[hubFilter])
+        .toList(growable: false);
+    final EligibleFleet? selected = data.vehicles.where((vehicle) => vehicle.id == _selectedId).firstOrNull;
+
+    return HeroScaffold(
+      bandColor: AppColors.ink,
+      bottomPadding: 130,
+      band: _Band(rider: data.rider),
+      bottomNavigationBar: _Footer(
+        selected: selected,
+        busy: _allocating,
+        onContinue: selected == null || _allocating ? null : () => _allocate(data.rider, selected),
+      ),
+      children: [
+        OverlapModuleCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              FilterChipBar(
+                items: hubs,
+                selectedIndex: hubFilter,
+                onChanged: (i) => setState(() => _hubFilter = i),
+                padding: EdgeInsets.zero,
               ),
+              const Gap.md(),
+              Text(
+                '${data.vehicles.length} vehicle${data.vehicles.length == 1 ? '' : 's'} ready in your hubs',
+                style: AppText.bodySmall.copyWith(color: AppColors.textMuted),
+              ),
+            ],
+          ),
+        ),
+        const Gap.lg(),
+        if (filtered.isEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: Insets.lg),
+            child: ArtBlock(
+              art: BrandArt.empty,
+              artSize: 130,
+              title: context.l10n.allocationNoVehiclesReady,
+              message: context.l10n.allocationVehicleHasAvailableOnboardedAllocation,
             ),
-            const Gap.lg(),
-            if (filtered.isEmpty)
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: Insets.lg),
-                child: ArtBlock(
-                  art: BrandArt.empty,
-                  artSize: 130,
-                  title: context.l10n.allocationNoVehiclesReady,
-                  message: context.l10n.allocationVehicleHasAvailableOnboardedAllocation,
+          )
+        else
+          Column(
+            children: [
+              for (final EligibleFleet vehicle in filtered) ...[
+                _VehicleOptionCard(
+                  vehicle: vehicle,
+                  selected: vehicle.id == _selectedId,
+                  onTap: () => setState(() => _selectedId = vehicle.id),
                 ),
-              )
-            else
-              Column(
-                children: [
-                  for (final v in filtered) ...[
-                    _VehicleOptionCard(
-                      vehicle: v,
-                      selected: v.id == _selectedId,
-                      onTap: () => setState(() => _selectedId = v.id),
-                    ),
-                    if (v != filtered.last) const Gap.md(),
-                  ],
-                ],
-              ),
-          ],
-        );
-      },
+                if (vehicle != filtered.last) const Gap.md(),
+              ],
+            ],
+          ),
+      ],
     );
   }
 }
@@ -173,21 +164,20 @@ class _Band extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String riderCode = (rider.riderCode ?? '').isEmpty ? '' : ' · ${rider.riderCode}';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Builder(
-          builder: (context) => InkCircleButton(
-            icon: Icons.arrow_back_rounded,
-            onTap: () => Navigator.of(context).maybePop(),
-          ),
+          builder: (context) =>
+              InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
         ),
         const Gap.lg(),
         PhotoPanel(
           photo: BrandPhoto.fleet,
           height: 132,
           title: context.l10n.allocationAssignVehicle,
-          subtitle: 'For ${rider.name}${(rider.riderCode ?? '').isEmpty ? '' : ' · ${rider.riderCode}'} · ${Fmt.phone(rider.mobile)}',
+          subtitle: 'For ${rider.name}$riderCode · ${Fmt.phone(rider.mobile)}',
         ),
       ],
     );
@@ -227,9 +217,15 @@ class _VehicleOptionCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(vehicle.vehicleNumber, style: AppText.titleMedium.copyWith(fontSize: 15.5, letterSpacing: 0.3)),
+                      Text(
+                        vehicle.vehicleNumber,
+                        style: AppText.titleMedium.copyWith(fontSize: 15.5, letterSpacing: 0.3),
+                      ),
                       const SizedBox(height: 2),
-                      Text('${vehicle.fleetCode} · ${vehicle.hubName ?? '—'}', style: AppText.bodySmall.copyWith(fontSize: 12)),
+                      Text(
+                        '${vehicle.fleetCode} · ${vehicle.hubName ?? '—'}',
+                        style: AppText.bodySmall.copyWith(fontSize: 12),
+                      ),
                     ],
                   ),
                 ),
@@ -261,8 +257,8 @@ class _VehicleOptionCard extends StatelessWidget {
                   label: deviceOk
                       ? 'Online ${Fmt.relative(vehicle.iotLastHeartbeatAt!)}'
                       : vehicle.hasDevice
-                          ? context.l10n.allocationHeartbeatStale
-                          : context.l10n.allocationMapDeviceFirst,
+                      ? context.l10n.allocationHeartbeatStale
+                      : context.l10n.allocationMapDeviceFirst,
                   tone: deviceOk ? StatusTone.success : StatusTone.warning,
                   dense: true,
                 ),
@@ -285,7 +281,12 @@ class _Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(Insets.gutter, Insets.md, Insets.gutter, MediaQuery.paddingOf(context).bottom + Insets.md),
+      padding: EdgeInsets.fromLTRB(
+        Insets.gutter,
+        Insets.md,
+        Insets.gutter,
+        MediaQuery.paddingOf(context).bottom + Insets.md,
+      ),
       decoration: const BoxDecoration(
         color: AppColors.canvas,
         border: Border(top: BorderSide(color: AppColors.stroke)),

@@ -2,23 +2,23 @@ import 'dart:async';
 
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/session/session_controller.dart';
+import '../../../../core/session/fleet_session_provider.dart';
 
-class OtpPage extends StatefulWidget {
+class OtpPage extends ConsumerStatefulWidget {
   const OtpPage({required this.mobile, required this.otpRequestId, super.key});
 
   final String mobile;
   final String otpRequestId;
 
   @override
-  State<OtpPage> createState() => _OtpPageState();
+  ConsumerState<OtpPage> createState() => _OtpPageState();
 }
 
-class _OtpPageState extends State<OtpPage> {
+class _OtpPageState extends ConsumerState<OtpPage> {
   static const int _resendSeconds = 30;
 
   Timer? _ticker;
@@ -35,6 +35,12 @@ class _OtpPageState extends State<OtpPage> {
     _startTicker();
   }
 
+  @override
+  void dispose() {
+    _ticker?.cancel();
+    super.dispose();
+  }
+
   void _startTicker() {
     _secondsLeft = _resendSeconds;
     _ticker?.cancel();
@@ -49,12 +55,6 @@ class _OtpPageState extends State<OtpPage> {
     });
   }
 
-  @override
-  void dispose() {
-    _ticker?.cancel();
-    super.dispose();
-  }
-
   Future<void> _verify(String code) async {
     if (_verifying) return;
     if (code.length != 6) {
@@ -67,7 +67,8 @@ class _OtpPageState extends State<OtpPage> {
       _error = null;
     });
 
-    final Result<AuthUser> result = await sl<SessionController>()
+    final Result<AuthUser> result = await ref
+        .read(fleetSessionProvider.notifier)
         .verifyOtp(otpRequestId: _requestId, code: code);
     if (!mounted) return;
 
@@ -85,8 +86,7 @@ class _OtpPageState extends State<OtpPage> {
 
   Future<void> _resend() async {
     if (_secondsLeft > 0) return;
-    final Result<OtpChallenge> result =
-        await sl<SessionController>().requestOtp(widget.mobile);
+    final Result<OtpChallenge> result = await ref.read(fleetSessionProvider.notifier).requestOtp(widget.mobile);
     if (!mounted) return;
     switch (result) {
       case Ok<OtpChallenge>(:final value):
@@ -165,7 +165,8 @@ class _OtpPageState extends State<OtpPage> {
             const Icon(Icons.lock_outline_rounded, size: 14, color: AppColors.textMuted),
             const SizedBox(width: Insets.sm - 2),
             Flexible(
-              child: Text(context.l10n.authSessionEncryptedEndEnd,
+              child: Text(
+                context.l10n.authSessionEncryptedEndEnd,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,

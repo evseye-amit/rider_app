@@ -15,5 +15,6 @@ class AskPayment extends UseCase<DeploymentPayment, AskPaymentParams> {
   final AllocationRepository _repository;
 
   @override
-  Future<Result<DeploymentPayment>> call(AskPaymentParams params) => _repository.askPayment(params.allocationId, params.items);
+  Future<Result<DeploymentPayment>> call(AskPaymentParams params) =>
+      _repository.askPayment(params.allocationId, params.items);
 }

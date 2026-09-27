@@ -1,0 +1,51 @@
+{
+  "clientCode": "EVS-DEL-01",
+  "packageName": "Premium",
+  "version": 7,
+  "settings": {
+    "minimumAge": 18,
+    "securityDepositAmount": 3000,
+    "onboardingFeeAmount": 499,
+    "referenceCount": 2,
+    "supportPhone": "1800 200 4040",
+    "supportEmail": "riders@evseye.ai"
+  },
+  "features": {
+    "AGE_VERIFICATION": true,
+    "AGE_PROOF_DOCUMENT": false,
+    "ADDRESS_PROOF_DOCUMENT": true,
+    "REFERRAL_BENEFIT": true,
+    "PROFILE_PHOTO": true,
+    "FACE_LIVENESS_CHECK": true,
+
+    "AADHAR_VERIFICATION": true,
+    "AADHAR_PROOF_DOCUMENT": true,
+    "PAN_VERIFICATION": true,
+    "PAN_PROOF_DOCUMENT": false,
+
+    "DRIVING_LICENCE_VERIFICATION": true,
+    "DRIVING_LICENCE_PROOF_DOCUMENT": true,
+    "REFERENCE_CHECK": true,
+    "EMERGENCY_CONTACT": true,
+    "MEDICAL_DECLARATION": true,
+    "MEDICAL_PROOF_DOCUMENT": false,
+
+    "BANK_VERIFICATION": true,
+    "BANK_PROOF_DOCUMENT": true,
+    "UPI_CAPTURE": true,
+    "NACH_EMANDATE": true,
+    "SECURITY_DEPOSIT": true,
+    "ON_BOARDING_FEES": true,
+    "PLAN_SELECTION": true,
+    "INSURANCE_NOMINEE": true,
+
+    "TRAINING": true,
+    "AGREEMENT_E_SIGN": true,
+
+    "ATTENDANCE": true,
+    "WALLET": true,
+    "INCENTIVES": true,
+    "HELP_SUPPORT": true,
+    "IOT_TELEMETRY": true
+  }
+}

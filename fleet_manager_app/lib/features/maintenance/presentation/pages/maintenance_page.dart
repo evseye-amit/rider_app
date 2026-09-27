@@ -1,44 +1,30 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../domain/entities/maintenance_board.dart';
 import '../../domain/entities/maintenance_job.dart';
 import '../../domain/entities/maintenance_summary.dart';
-import '../../domain/usecases/get_maintenance_board.dart';
-import '../cubit/maintenance_cubit.dart';
+import '../providers/maintenance_board_provider.dart';
 import '../widgets/maintenance_widgets.dart';
 
 const List<String> _statusTabs = ['open', 'inProgress', 'overdue', 'closed'];
-List<String> _priorityFilters = ['All', LocaleController.strings.commonHigh, LocaleController.strings.commonNormal, 'Low'];
+const List<String> _priorityValues = ['', 'high', 'normal', 'low'];
 
-class MaintenancePage extends StatelessWidget {
+class MaintenancePage extends ConsumerStatefulWidget {
   const MaintenancePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => MaintenanceCubit(GetMaintenanceBoard(sl()))..load(),
-      child: const _MaintenanceView(),
-    );
-  }
+  ConsumerState<MaintenancePage> createState() => _MaintenancePageState();
 }
 
-class _MaintenanceView extends StatefulWidget {
-  const _MaintenanceView();
-
-  @override
-  State<_MaintenanceView> createState() => _MaintenanceViewState();
-}
-
-class _MaintenanceViewState extends State<_MaintenanceView> {
+class _MaintenancePageState extends ConsumerState<MaintenancePage> {
+  final TextEditingController _searchController = TextEditingController();
   int _tab = 0;
   int _priorityFilter = 0;
   String _query = '';
-  final TextEditingController _searchController = TextEditingController();
 
   @override
   void dispose() {
@@ -48,70 +34,66 @@ class _MaintenanceViewState extends State<_MaintenanceView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MaintenanceCubit, MaintenanceState>(
-      builder: (context, state) {
-        if (state.status == MaintenanceStatus.failure || (state.board == null && !state.isLoading)) {
-          return Scaffold(
-            backgroundColor: AppColors.canvas,
-            body: SafeArea(
-              child: EmptyState(
-                title: context.l10n.maintenanceCouldNotLoadMaintenanceBoard,
-                message: state.message,
-                icon: Icons.cloud_off_rounded,
-                tone: AppColors.danger,
-                actionLabel: context.l10n.commonTryAgain,
-                onAction: () => context.read<MaintenanceCubit>().refresh(),
+    final AsyncValue<MaintenanceBoard> maintenance = ref.watch(maintenanceBoardProvider);
+
+    if (maintenance.hasError) {
+      return Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: EmptyState(
+            title: context.l10n.maintenanceCouldNotLoadMaintenanceBoard,
+            message: maintenance.failureMessage,
+            icon: Icons.cloud_off_rounded,
+            tone: AppColors.danger,
+            actionLabel: context.l10n.commonTryAgain,
+            onAction: () => ref.invalidate(maintenanceBoardProvider),
+          ),
+        ),
+      );
+    }
+
+    final MaintenanceBoard? board = maintenance.value;
+
+    return HeroScaffold(
+      bottomPadding: 120,
+      onRefresh: () => ref.refreshQuietly(maintenanceBoardProvider),
+      floatingAction: _RaiseJobFab(onTap: () => context.push(Routes.raiseMaintenance)),
+      band: _Band(summary: board?.summary),
+      children: board == null
+          ? const [_MaintenanceSkeleton()]
+          : [
+              _Content(
+                board: board,
+                tab: _tab,
+                onTabChanged: (i) => setState(() => _tab = i),
+                query: _query,
+                onQueryChanged: (q) => setState(() => _query = q),
+                searchController: _searchController,
+                priorityFilter: _priorityFilter,
+                onPriorityChanged: (i) => setState(() => _priorityFilter = i),
               ),
-            ),
-          );
-        }
-
-        final MaintenanceBoard? board = state.board;
-
-        return HeroScaffold(
-          bottomPadding: 120,
-          onRefresh: () => context.read<MaintenanceCubit>().refresh(),
-          floatingAction: _RaiseJobFab(onTap: () => context.push(Routes.raiseMaintenance)),
-          band: _Band(board: board),
-          children: board == null
-              ? const [_MaintenanceSkeleton()]
-              : [
-                  _Content(
-                    board: board,
-                    tab: _tab,
-                    onTabChanged: (i) => setState(() => _tab = i),
-                    query: _query,
-                    onQueryChanged: (q) => setState(() => _query = q),
-                    searchController: _searchController,
-                    priorityFilter: _priorityFilter,
-                    onPriorityChanged: (i) => setState(() => _priorityFilter = i),
-                  ),
-                ],
-        );
-      },
+            ],
     );
   }
 }
 
 class _Band extends StatelessWidget {
-  const _Band({required this.board});
+  const _Band({required this.summary});
 
-  final MaintenanceBoard? board;
+  final MaintenanceSummary? summary;
 
   @override
   Widget build(BuildContext context) {
-    final MaintenanceSummary? summary = board?.summary;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const IconTile(icon: Icons.build_rounded, tone: AppColors.primaryBright, solid: true, size: 46),
             const SizedBox(width: Insets.md),
             Expanded(
-              child: Text(context.l10n.maintenanceMaintenanceBoard,
+              child: Text(
+                context.l10n.maintenanceMaintenanceBoard,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.displaySmall.copyWith(fontSize: 24, color: AppColors.onInk),
@@ -120,7 +102,8 @@ class _Band extends StatelessWidget {
           ],
         ),
         const Gap.sm(),
-        Text(context.l10n.maintenanceTrackEveryJobFromRaised,
+        Text(
+          context.l10n.maintenanceTrackEveryJobFromRaised,
           style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.4),
         ),
         const Gap.xl(),
@@ -191,21 +174,23 @@ class _Content extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String status = _statusTabs[tab];
-    final List<MaintenanceJob> jobs = board.jobs.where((j) {
-      final String q = query.trim().toLowerCase();
-      final bool matchesStatus = j.status == status;
-      final bool matchesQuery = q.isEmpty ||
-          j.vehicleNumber.toLowerCase().contains(q) ||
-          j.id.toLowerCase().contains(q) ||
-          j.issue.toLowerCase().contains(q);
-      final bool matchesPriority = priorityFilter == 0 ||
-          j.priority.toLowerCase() == _priorityFilters[priorityFilter].toLowerCase();
-      return matchesStatus && matchesQuery && matchesPriority;
-    }).toList(growable: false);
+    final String priority = _priorityValues[priorityFilter];
+    final String needle = query.trim().toLowerCase();
+    final List<MaintenanceJob> jobs = board.jobs
+        .where((job) {
+          final bool matchesStatus = job.status == status;
+          final bool matchesQuery =
+              needle.isEmpty ||
+              job.vehicleNumber.toLowerCase().contains(needle) ||
+              job.id.toLowerCase().contains(needle) ||
+              job.issue.toLowerCase().contains(needle);
+          final bool matchesPriority = priority.isEmpty || job.priority.toLowerCase() == priority;
+          return matchesStatus && matchesQuery && matchesPriority;
+        })
+        .toList(growable: false);
 
     final Map<int, int> counts = {
-      for (int i = 0; i < _statusTabs.length; i++)
-        i: board.jobs.where((j) => j.status == _statusTabs[i]).length,
+      for (int i = 0; i < _statusTabs.length; i++) i: board.jobs.where((job) => job.status == _statusTabs[i]).length,
     };
 
     return Column(
@@ -213,11 +198,7 @@ class _Content extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(Insets.lg),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: Corners.brXl,
-            boxShadow: Shadows.floating,
-          ),
+          decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.floating),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -225,12 +206,16 @@ class _Content extends StatelessWidget {
                 photo: BrandPhoto.service,
                 height: 132,
                 title: context.l10n.maintenanceServiceBay,
-                subtitle:
-                    '${board.summary.closedThisWeek} closed this week · avg ${board.summary.averageCloseHours}h',
+                subtitle: '${board.summary.closedThisWeek} closed this week · avg ${board.summary.averageCloseHours}h',
               ),
               const Gap.xl(),
               SegmentedTabs(
-                items: [context.l10n.commonOpen, context.l10n.ridersActive, context.l10n.maintenanceOverdue, context.l10n.maintenanceClosed],
+                items: [
+                  context.l10n.commonOpen,
+                  context.l10n.ridersActive,
+                  context.l10n.maintenanceOverdue,
+                  context.l10n.maintenanceClosed,
+                ],
                 selectedIndex: tab,
                 onChanged: onTabChanged,
                 counts: counts,
@@ -243,7 +228,7 @@ class _Content extends StatelessWidget {
               ),
               const Gap.md(),
               FilterChipBar(
-                items: _priorityFilters,
+                items: ['All', context.l10n.commonHigh, context.l10n.commonNormal, 'Low'],
                 selectedIndex: priorityFilter,
                 onChanged: onPriorityChanged,
                 padding: EdgeInsets.zero,
@@ -254,7 +239,7 @@ class _Content extends StatelessWidget {
         const Gap.xl(),
         if (jobs.isEmpty)
           Padding(
-            padding: EdgeInsets.symmetric(vertical: Insets.lg),
+            padding: const EdgeInsets.symmetric(vertical: Insets.lg),
             child: ArtBlock(
               art: BrandArt.empty,
               artSize: 130,
@@ -265,12 +250,9 @@ class _Content extends StatelessWidget {
         else
           Column(
             children: [
-              for (final j in jobs) ...[
-                JobRowTile(
-                  job: j,
-                  onTap: () => context.push('${Routes.maintenanceDetail}?id=${j.id}'),
-                ),
-                if (j != jobs.last) const Gap.md(),
+              for (final MaintenanceJob job in jobs) ...[
+                JobRowTile(job: job, onTap: () => context.push('${Routes.maintenanceDetail}?id=${job.id}')),
+                if (job != jobs.last) const Gap.md(),
               ],
             ],
           ),
@@ -300,10 +282,11 @@ class _RaiseJobFab extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.add_rounded, size: 20, color: Colors.white),
-            SizedBox(width: Insets.sm),
-            Text(context.l10n.maintenanceRaiseJob2,
-              style: TextStyle(
+            const Icon(Icons.add_rounded, size: 20, color: Colors.white),
+            const SizedBox(width: Insets.sm),
+            Text(
+              context.l10n.maintenanceRaiseJob2,
+              style: const TextStyle(
                 fontFamily: AppFonts.body,
                 fontSize: 14.5,
                 fontWeight: FontWeight.w800,
@@ -324,11 +307,7 @@ class _MaintenanceSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(Insets.lg),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: Corners.brXl,
-        boxShadow: Shadows.floating,
-      ),
+      decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.floating),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -338,10 +317,7 @@ class _MaintenanceSkeleton extends StatelessWidget {
           const Gap.lg(),
           const ShimmerBox(height: 46, borderRadius: Corners.pill),
           const Gap.xl(),
-          for (int i = 0; i < 3; i++) ...[
-            const ShimmerBox(height: 170, borderRadius: Corners.brLg),
-            const Gap.md(),
-          ],
+          for (int i = 0; i < 3; i++) ...[const ShimmerBox(height: 170, borderRadius: Corners.brLg), const Gap.md()],
         ],
       ),
     );

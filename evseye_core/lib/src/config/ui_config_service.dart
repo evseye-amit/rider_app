@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-import '../dynamic_ui/models/ui_screen_config.dart';
 import '../api/config_api.dart';
+import '../dynamic_ui/models/ui_screen_config.dart';
+import '../l10n/config_messages.dart';
 import '../utils/result.dart';
 import 'feature_flags.dart';
-
-import '../l10n/config_messages.dart';
 class UiConfigService {
   UiConfigService({AssetBundle? bundle, this.basePath = 'assets/config'})
       : _bundle = bundle ?? rootBundle;

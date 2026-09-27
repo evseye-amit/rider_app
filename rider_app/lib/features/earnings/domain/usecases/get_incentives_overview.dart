@@ -9,6 +9,5 @@ class GetIncentivesOverview extends UseCase<IncentivesOverview, NoParams> {
   final EarningsRepository _repository;
 
   @override
-  Future<Result<IncentivesOverview>> call(NoParams params) =>
-      _repository.getIncentives();
+  Future<Result<IncentivesOverview>> call(NoParams params) => _repository.getIncentives();
 }

@@ -2,14 +2,13 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_dimens.dart';
 import '../theme/app_typography.dart';
 import 'brand_photo.dart';
 import 'illustrations.dart';
 import 'pressable.dart';
-
-import '../l10n/locale_controller.dart';
 
 class AuthSheetScaffold extends StatelessWidget {
   const AuthSheetScaffold({
@@ -200,7 +199,7 @@ class _Hero extends StatelessWidget {
                     ),
                   ),
                 const Spacer(),
-                if (trailing != null) trailing!,
+                ?trailing,
                 if (trailing != null && bandAction != null) const SizedBox(width: Insets.sm),
                 if (bandAction != null)
                   Flexible(

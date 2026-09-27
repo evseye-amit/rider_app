@@ -33,7 +33,7 @@ class IntroRepositoryImpl implements IntroRepository {
 
       return Result.ok(slides);
     } on Object catch (e) {
-      return Result.err(ServerFailure('${LocaleController.strings.introCouldNotLoad} ($e)'));
+      return Result.err(ServerFailure('${ActiveLocale.strings.introCouldNotLoad} ($e)'));
     }
   }
 }

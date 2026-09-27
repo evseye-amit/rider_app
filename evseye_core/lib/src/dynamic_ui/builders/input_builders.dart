@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../l10n/l10n.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_dimens.dart';
 import '../../theme/app_typography.dart';
@@ -13,8 +14,6 @@ import '../models/ui_node.dart';
 import '../registry/dynamic_ui_scope.dart';
 import '../registry/widget_registry.dart';
 import 'node_utils.dart';
-
-import '../../l10n/locale_controller.dart';
 Map<String, NodeBuilder> inputBuilders(WidgetRegistry r) => {
       'textField': (context, node, scope) => _Field(
             node: node,

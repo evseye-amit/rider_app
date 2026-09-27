@@ -1,5 +1,4 @@
-import 'generated/app_localizations.dart';
-import 'locale_controller.dart';
+import 'l10n.dart';
 
 /// Resolves a message reference used inside a JSON flow config.
 ///
@@ -8,7 +7,7 @@ import 'locale_controller.dart';
 /// reference is returned unchanged.
 String resolveConfigText(String value, [AppL10n? messages]) {
   if (!value.startsWith('@')) return value;
-  final AppL10n l10n = messages ?? LocaleController.strings;
+  final AppL10n l10n = messages ?? ActiveLocale.strings;
   return switch (value.substring(1)) {
       'allocationBack' => l10n.allocationBack,
       'allocationDeAllocateVehicle' => l10n.allocationDeAllocateVehicle,

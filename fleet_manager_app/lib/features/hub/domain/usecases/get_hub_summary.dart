@@ -9,6 +9,5 @@ class GetHubSummary extends UseCase<HubSummary, String> {
   final HubRepository _repository;
 
   @override
-
   Future<Result<HubSummary>> call(String params) => _repository.getSummary(params);
 }

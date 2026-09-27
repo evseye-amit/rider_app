@@ -1,7 +1,6 @@
+import '../l10n/l10n.dart';
 import '../utils/result.dart';
 import 'api_client.dart';
-
-import '../l10n/locale_controller.dart';
 enum RiderScreen {
   onboarding,
   waiting,
@@ -51,15 +50,15 @@ enum DeploymentStatus {
       };
 
   String get label => switch (this) {
-        riderWaiting => LocaleController.strings.allocationVehicleReserved,
-        fleetRequested => LocaleController.strings.allocationVehicleReserved,
-        paymentPending => LocaleController.strings.errorPaymentPending,
-        paymentPaid => LocaleController.strings.deploymentPaymentReceived,
-        pdiPendingRider => LocaleController.strings.errorInspectionWithRider,
-        trainingPending => LocaleController.strings.errorTrainingProgress,
-        devicePairingPending => LocaleController.strings.errorPairingIotDevice,
-        deployed => LocaleController.strings.allocationDeployed,
-        unknown => LocaleController.strings.errorUnknown,
+        riderWaiting => ActiveLocale.strings.allocationVehicleReserved,
+        fleetRequested => ActiveLocale.strings.allocationVehicleReserved,
+        paymentPending => ActiveLocale.strings.errorPaymentPending,
+        paymentPaid => ActiveLocale.strings.deploymentPaymentReceived,
+        pdiPendingRider => ActiveLocale.strings.errorInspectionWithRider,
+        trainingPending => ActiveLocale.strings.errorTrainingProgress,
+        devicePairingPending => ActiveLocale.strings.errorPairingIotDevice,
+        deployed => ActiveLocale.strings.allocationDeployed,
+        unknown => ActiveLocale.strings.errorUnknown,
       };
 }
 

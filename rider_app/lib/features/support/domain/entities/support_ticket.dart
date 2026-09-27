@@ -25,11 +25,7 @@ class SupportTicket extends Equatable {
   final num repairCost;
   final bool costBorneByRider;
 
-  SupportTicket copyWith({
-    TicketStatus? status,
-    DateTime? updatedAt,
-    int? messageCount,
-  }) => SupportTicket(
+  SupportTicket copyWith({TicketStatus? status, DateTime? updatedAt, int? messageCount}) => SupportTicket(
     id: id,
     categoryKey: categoryKey,
     title: title,

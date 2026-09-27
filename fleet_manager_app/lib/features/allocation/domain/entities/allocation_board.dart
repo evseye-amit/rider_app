@@ -5,12 +5,7 @@ import 'active_allocation.dart';
 import 'deallocation_request.dart';
 
 class AllocationBoard extends Equatable {
-  const AllocationBoard({
-    required this.pending,
-    required this.inProgress,
-    required this.active,
-    required this.returns,
-  });
+  const AllocationBoard({required this.pending, required this.inProgress, required this.active, required this.returns});
 
   final List<PendingRider> pending;
   final List<DeploymentAllocation> inProgress;

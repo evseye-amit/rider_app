@@ -1,73 +1,52 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../domain/entities/vehicle.dart';
-import 'scooter_details_page.dart';
-import '../../domain/usecases/get_vehicle.dart';
-import '../cubit/scooter_cubit.dart';
+import '../providers/vehicle_provider.dart';
 import '../widgets/scooter_widgets.dart';
+import 'scooter_details_page.dart';
 
-class ScooterPage extends StatelessWidget {
+class ScooterPage extends ConsumerWidget {
   const ScooterPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ScooterCubit(GetVehicle(sl()))..load(),
-      child: const _ScooterView(),
-    );
-  }
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<Vehicle> vehicle = ref.watch(vehicleProvider);
 
-class _ScooterView extends StatelessWidget {
-  const _ScooterView();
+    if (vehicle.hasError) {
+      return Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: EmptyState(
+            title: context.l10n.scooterCouldNotLoadVehicle,
+            message: vehicle.failureMessage,
+            icon: Icons.cloud_off_rounded,
+            tone: AppColors.danger,
+            actionLabel: context.l10n.commonTryAgain,
+            onAction: () => ref.invalidate(vehicleProvider),
+          ),
+        ),
+      );
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<ScooterCubit, ScooterState>(
-      builder: (context, state) {
-        if (state.status == ScooterStatus.failure) {
-          return Scaffold(
-            backgroundColor: AppColors.canvas,
-            body: SafeArea(
-              child: EmptyState(
-                title: context.l10n.scooterCouldNotLoadVehicle,
-                message: state.message,
-                icon: Icons.cloud_off_rounded,
-                tone: AppColors.danger,
-                actionLabel: context.l10n.commonTryAgain,
-                onAction: () => context.read<ScooterCubit>().refresh(),
+    final Vehicle? data = vehicle.value;
+
+    return HeroScaffold(
+      bottomPadding: 120,
+      onRefresh: () => ref.refreshQuietly(vehicleProvider),
+      band: VehicleBand(vehicle: data),
+      children: data == null
+          ? const [_ScooterSkeleton()]
+          : [
+              _VehicleCard(vehicle: data),
+              const Gap.lg(),
+              ModuleCard(
+                title: context.l10n.commonIotUnit,
+                child: IotPanel(vehicle: data),
               ),
-            ),
-          );
-        }
-
-        final Vehicle? vehicle = state.vehicle;
-
-        return HeroScaffold(
-          bottomPadding: 120,
-          onRefresh: () => context.read<ScooterCubit>().refresh(),
-          band: VehicleBand(vehicle: vehicle),
-          children: vehicle == null
-              ? const [_ScooterSkeleton()]
-              : _content(context, vehicle),
-        );
-      },
+            ],
     );
-  }
-
-  List<Widget> _content(BuildContext context, Vehicle vehicle) {
-    return [
-      _VehicleCard(vehicle: vehicle),
-      const Gap.lg(),
-
-      ModuleCard(
-        title: context.l10n.commonIotUnit,
-        child: IotPanel(vehicle: vehicle),
-      ),
-    ];
   }
 }
 
@@ -76,9 +55,9 @@ class _ScooterSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: const [
+      children: [
         ShimmerBox(height: 116, borderRadius: Corners.brXl),
         Gap.xxl(),
         ShimmerBox(height: 200, borderRadius: Corners.brXl),
@@ -99,11 +78,7 @@ class _VehicleCard extends StatelessWidget {
       scale: 0.99,
       child: Container(
         padding: const EdgeInsets.all(Insets.lg),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: Corners.brXl,
-          boxShadow: Shadows.card,
-        ),
+        decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.card),
         child: Row(
           children: [
             const BrandIllustration(art: BrandArt.scooter, size: 84),
@@ -136,15 +111,13 @@ class _VehicleCard extends StatelessWidget {
                     vehicle.colour,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppText.bodySmall.copyWith(
-                      fontSize: 12,
-                      color: AppColors.textMuted,
-                    ),
+                    style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.textMuted),
                   ),
                   const SizedBox(height: Insets.sm),
                   Row(
                     children: [
-                      Text(context.l10n.scooterViewFullDetails,
+                      Text(
+                        context.l10n.scooterViewFullDetails,
                         style: AppText.bodySmall.copyWith(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w700,

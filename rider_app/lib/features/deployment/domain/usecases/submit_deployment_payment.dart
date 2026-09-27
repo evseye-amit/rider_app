@@ -18,9 +18,6 @@ class SubmitDeploymentPayment extends UseCase<DeploymentPayment, SubmitPaymentPa
   final DeploymentRepository _repository;
 
   @override
-  Future<Result<DeploymentPayment>> call(SubmitPaymentParams params) => _repository.submitPayment(
-        params.allocationId,
-        provider: params.provider,
-        reference: params.reference,
-      );
+  Future<Result<DeploymentPayment>> call(SubmitPaymentParams params) =>
+      _repository.submitPayment(params.allocationId, provider: params.provider, reference: params.reference);
 }

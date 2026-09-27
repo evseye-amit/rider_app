@@ -33,15 +33,8 @@ class ShiftStatusStrip extends StatelessWidget {
               Container(
                 width: 40,
                 height: 40,
-                decoration: BoxDecoration(
-                  color: AppColors.washFor(tone),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  present ? Icons.how_to_reg_rounded : Icons.person_off_rounded,
-                  size: 20,
-                  color: tone,
-                ),
+                decoration: BoxDecoration(color: AppColors.washFor(tone), shape: BoxShape.circle),
+                child: Icon(present ? Icons.how_to_reg_rounded : Icons.person_off_rounded, size: 20, color: tone),
               ),
               const SizedBox(width: Insets.md),
               Expanded(
@@ -97,10 +90,7 @@ class IncentiveCard extends StatelessWidget {
               Container(
                 width: 38,
                 height: 38,
-                decoration: BoxDecoration(
-                  color: AppColors.surface,
-                  borderRadius: Corners.brSm,
-                ),
+                decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brSm),
                 child: const Icon(Icons.emoji_events_rounded, size: 19, color: AppColors.warning),
               ),
               const SizedBox(width: Insets.md),
@@ -165,13 +155,7 @@ class VehicleCard extends StatelessWidget {
       padding: const EdgeInsets.all(Insets.lg),
       child: Row(
         children: [
-          RingGauge(
-            value: batteryPercent / 100,
-            size: 78,
-            strokeWidth: 7,
-            icon: Icons.bolt_rounded,
-            label: 'charge',
-          ),
+          RingGauge(value: batteryPercent / 100, size: 78, strokeWidth: 7, icon: Icons.bolt_rounded, label: 'charge'),
           const SizedBox(width: Insets.lg),
           Expanded(
             child: Column(
@@ -237,13 +221,10 @@ class QuickActionRow extends StatelessWidget {
                   Container(
                     height: 54,
                     decoration: BoxDecoration(
-                      color: AppColors.washFor(
-                        NodeTokens.color(action.tone, fallback: AppColors.primary),
-                      ),
+                      color: AppColors.washFor(NodeTokens.color(action.tone, fallback: AppColors.primary)),
                       borderRadius: Corners.brMd,
                       border: Border.all(
-                        color: NodeTokens.color(action.tone, fallback: AppColors.primary)
-                            .withValues(alpha: 0.26),
+                        color: NodeTokens.color(action.tone, fallback: AppColors.primary).withValues(alpha: 0.26),
                       ),
                     ),
                     child: Icon(
@@ -258,11 +239,7 @@ class QuickActionRow extends StatelessWidget {
                     maxLines: 2,
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
-                    style: AppText.bodySmall.copyWith(
-                      fontSize: 10.5,
-                      height: 1.25,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: AppText.bodySmall.copyWith(fontSize: 10.5, height: 1.25, fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -276,12 +253,7 @@ class QuickActionRow extends StatelessWidget {
 }
 
 class WeeklyEarningsChart extends StatelessWidget {
-  const WeeklyEarningsChart({
-    required this.values,
-    required this.labels,
-    this.todayIndex,
-    super.key,
-  });
+  const WeeklyEarningsChart({required this.values, required this.labels, this.todayIndex, super.key});
 
   final List<num> values;
   final List<String> labels;
@@ -355,8 +327,8 @@ class WeeklyEarningsChart extends StatelessWidget {
                               color: empty
                                   ? AppColors.surfaceSunken
                                   : isToday
-                                      ? AppColors.primary
-                                      : AppColors.primary.withValues(alpha: 0.35),
+                                  ? AppColors.primary
+                                  : AppColors.primary.withValues(alpha: 0.35),
                               borderRadius: Corners.brXs,
                             ),
                           ),

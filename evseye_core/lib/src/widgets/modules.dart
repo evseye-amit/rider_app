@@ -412,7 +412,7 @@ class PromoCarousel extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: padding,
         itemCount: items.length,
-        separatorBuilder: (_, __) => const SizedBox(width: Insets.md),
+        separatorBuilder: (_, _) => const SizedBox(width: Insets.md),
         itemBuilder: (context, i) {
           final PromoItem item = items[i];
           return SizedBox(

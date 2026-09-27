@@ -1,41 +1,27 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../domain/entities/allocation_board.dart';
 import '../../domain/entities/deallocation_request.dart';
-import '../../domain/usecases/get_allocation_board.dart';
-import '../cubit/allocations_cubit.dart';
+import '../providers/allocation_board_provider.dart';
 import '../widgets/allocation_widgets.dart';
 
-List<String> _priorityFilters = ['All', LocaleController.strings.commonHigh, LocaleController.strings.commonNormal, 'Low'];
+const List<String> _priorityValues = ['', 'high', 'normal', 'low'];
 
-class DeallocationsPage extends StatelessWidget {
+class DeallocationsPage extends ConsumerStatefulWidget {
   const DeallocationsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AllocationsCubit(GetAllocationBoard(sl()))..load(),
-      child: const _DeallocationsView(),
-    );
-  }
+  ConsumerState<DeallocationsPage> createState() => _DeallocationsPageState();
 }
 
-class _DeallocationsView extends StatefulWidget {
-  const _DeallocationsView();
-
-  @override
-  State<_DeallocationsView> createState() => _DeallocationsViewState();
-}
-
-class _DeallocationsViewState extends State<_DeallocationsView> {
+class _DeallocationsPageState extends ConsumerState<DeallocationsPage> {
+  final TextEditingController _searchController = TextEditingController();
   int _priorityFilter = 0;
   String _query = '';
-  final TextEditingController _searchController = TextEditingController();
 
   @override
   void dispose() {
@@ -43,69 +29,67 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
     super.dispose();
   }
 
-  List<DeallocationRequest> _returns(AllocationBoard board) =>
-      board.returns.where((r) {
-        final String q = _query.trim().toLowerCase();
-        final bool matchesQuery = q.isEmpty ||
-            r.riderName.toLowerCase().contains(q) ||
-            r.vehicleNumber.toLowerCase().contains(q) ||
-            r.id.toLowerCase().contains(q);
-        final bool matchesPriority = _priorityFilter == 0 ||
-            r.priority.toLowerCase() ==
-                _priorityFilters[_priorityFilter].toLowerCase();
-        return matchesQuery && matchesPriority;
-      }).toList(growable: false);
+  List<DeallocationRequest> _returns(AllocationBoard board) {
+    final String query = _query.trim().toLowerCase();
+    final String priority = _priorityValues[_priorityFilter];
+    return board.returns
+        .where((request) {
+          final bool matchesQuery =
+              query.isEmpty ||
+              request.riderName.toLowerCase().contains(query) ||
+              request.vehicleNumber.toLowerCase().contains(query) ||
+              request.id.toLowerCase().contains(query);
+          final bool matchesPriority = priority.isEmpty || request.priority.toLowerCase() == priority;
+          return matchesQuery && matchesPriority;
+        })
+        .toList(growable: false);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AllocationsCubit, AllocationsState>(
-      builder: (context, state) {
-        if (state.status == AllocationsStatus.failure ||
-            (state.board == null && !state.isLoading)) {
-          return Scaffold(
-            backgroundColor: AppColors.canvas,
-            body: SafeArea(
-              child: EmptyState(
-                title: context.l10n.allocationCouldNotLoadReturns,
-                message: state.message,
-                icon: Icons.cloud_off_rounded,
-                tone: AppColors.danger,
-                actionLabel: context.l10n.commonTryAgain,
-                onAction: () => context.read<AllocationsCubit>().refresh(),
-              ),
-            ),
-          );
-        }
+    final AsyncValue<AllocationBoard> allocations = ref.watch(allocationBoardProvider);
 
-        final AllocationBoard? board = state.board;
-        final int waiting = board?.returns.length ?? 0;
-
-        return HeroScaffold(
-          bottomPadding: 120,
-          onRefresh: () => context.read<AllocationsCubit>().refresh(),
-          band: DeskBand(
-            icon: Icons.assignment_return_rounded,
-            title: context.l10n.commonDeAllocation,
-            subtitle: context.l10n.allocationTakeVehicleBackPutShelf,
-            stats: [
-              DeskStat(
-                label: context.l10n.allocationQueue,
-                value: '$waiting',
-                icon: Icons.assignment_return_rounded,
-                alert: waiting > 0,
-              ),
-              DeskStat(
-                label: context.l10n.allocationOutRoad,
-                value: '${board?.active.length ?? 0}',
-                icon: Icons.electric_scooter_rounded,
-              ),
-            ],
+    if (allocations.hasError) {
+      return Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: EmptyState(
+            title: context.l10n.allocationCouldNotLoadReturns,
+            message: allocations.failureMessage,
+            icon: Icons.cloud_off_rounded,
+            tone: AppColors.danger,
+            actionLabel: context.l10n.commonTryAgain,
+            onAction: () => ref.invalidate(allocationBoardProvider),
           ),
-          children: board == null
-              ? const [AllocationBoardSkeleton()]
-              : [_content(context, board)],
-        );
-      },
+        ),
+      );
+    }
+
+    final AllocationBoard? board = allocations.value;
+    final int waiting = board?.returns.length ?? 0;
+
+    return HeroScaffold(
+      bottomPadding: 120,
+      onRefresh: () => ref.refreshQuietly(allocationBoardProvider),
+      band: DeskBand(
+        icon: Icons.assignment_return_rounded,
+        title: context.l10n.commonDeAllocation,
+        subtitle: context.l10n.allocationTakeVehicleBackPutShelf,
+        stats: [
+          DeskStat(
+            label: context.l10n.allocationQueue,
+            value: '$waiting',
+            icon: Icons.assignment_return_rounded,
+            alert: waiting > 0,
+          ),
+          DeskStat(
+            label: context.l10n.allocationOutRoad,
+            value: '${board?.active.length ?? 0}',
+            icon: Icons.electric_scooter_rounded,
+          ),
+        ],
+      ),
+      children: board == null ? const [AllocationBoardSkeleton()] : [_content(context, board)],
     );
   }
 
@@ -117,11 +101,7 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
       children: [
         Container(
           padding: const EdgeInsets.all(Insets.lg),
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: Corners.brXl,
-            boxShadow: Shadows.floating,
-          ),
+          decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.floating),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -132,7 +112,7 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
               ),
               const Gap.md(),
               FilterChipBar(
-                items: _priorityFilters,
+                items: ['All', context.l10n.commonHigh, context.l10n.commonNormal, 'Low'],
                 selectedIndex: _priorityFilter,
                 onChanged: (i) => setState(() => _priorityFilter = i),
                 padding: EdgeInsets.zero,
@@ -143,7 +123,7 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
         const Gap.xl(),
         if (items.isEmpty)
           Padding(
-            padding: EdgeInsets.symmetric(vertical: Insets.lg),
+            padding: const EdgeInsets.symmetric(vertical: Insets.lg),
             child: ArtBlock(
               art: BrandArt.empty,
               artSize: 130,
@@ -154,13 +134,13 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
         else
           Column(
             children: [
-              for (final r in items) ...[
+              for (final DeallocationRequest request in items) ...[
                 ReturnRequestTile(
-                  request: r,
-                  onOpen: () => context.push('${Routes.deallocationDetail}?id=${r.id}'),
-                  onProcess: () => context.push('${Routes.deallocationFlow}?id=${r.id}'),
+                  request: request,
+                  onOpen: () => context.push('${Routes.deallocationDetail}?id=${request.id}'),
+                  onProcess: () => context.push('${Routes.deallocationFlow}?id=${request.id}'),
                 ),
-                if (r != items.last) const Gap.md(),
+                if (request != items.last) const Gap.md(),
               ],
             ],
           ),

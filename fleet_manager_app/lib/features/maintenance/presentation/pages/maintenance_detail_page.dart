@@ -1,109 +1,84 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../domain/entities/maintenance_job.dart';
 import '../../domain/entities/vendor_option.dart';
-import '../../domain/usecases/get_maintenance_job.dart';
-import '../../domain/usecases/get_vendor_options.dart';
-import '../cubit/maintenance_detail_cubit.dart';
+import '../providers/maintenance_job_provider.dart';
+import '../providers/maintenance_options_providers.dart';
 import '../widgets/maintenance_widgets.dart';
 
-class MaintenanceDetailPage extends StatelessWidget {
+class MaintenanceDetailPage extends ConsumerWidget {
   const MaintenanceDetailPage({required this.jobId, super.key});
 
   final String jobId;
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => MaintenanceDetailCubit(GetMaintenanceJob(sl()), jobId)..load(),
-      child: const _MaintenanceDetailView(),
-    );
-  }
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<MaintenanceJob> job = ref.watch(maintenanceJobProvider(jobId));
+    final List<VendorOption> vendors = ref.watch(vendorOptionsProvider).value ?? const [];
 
-class _MaintenanceDetailView extends StatefulWidget {
-  const _MaintenanceDetailView();
+    if (job.isLoading && !job.hasValue) {
+      return const Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: PageBody(
+            children: [
+              ShimmerBox(height: 100, borderRadius: Corners.brLg),
+              Gap.xl(),
+              ShimmerBox(height: 160, borderRadius: Corners.brLg),
+              Gap.md(),
+              ShimmerBox(height: 220, borderRadius: Corners.brLg),
+            ],
+          ),
+        ),
+      );
+    }
 
-  @override
-  State<_MaintenanceDetailView> createState() => _MaintenanceDetailViewState();
-}
+    final MaintenanceJob? current = job.value;
+    if (job.hasError || current == null) {
+      return AppScaffold(
+        title: context.l10n.maintenanceJob,
+        body: EmptyState(
+          title: context.l10n.maintenanceCouldNotLoadJob,
+          message: job.failureMessage,
+          icon: Icons.cloud_off_rounded,
+          tone: AppColors.danger,
+          actionLabel: context.l10n.commonTryAgain,
+          onAction: () => ref.invalidate(maintenanceJobProvider(jobId)),
+        ),
+      );
+    }
 
-class _MaintenanceDetailViewState extends State<_MaintenanceDetailView> {
-  List<VendorOption> _vendors = const [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadVendors();
-  }
-
-  Future<void> _loadVendors() async {
-    final result = await GetVendorOptions(sl())(const NoParams());
-    if (!mounted) return;
-    result.fold((_) {}, (vendors) => setState(() => _vendors = vendors));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<MaintenanceDetailCubit, MaintenanceDetailState>(
-      builder: (context, state) {
-        if (state.isLoading) {
-          return Scaffold(
-            backgroundColor: AppColors.canvas,
-            body: SafeArea(
-              child: PageBody(children: const [
-                ShimmerBox(height: 100, borderRadius: Corners.brLg),
-                Gap.xl(),
-                ShimmerBox(height: 160, borderRadius: Corners.brLg),
-                Gap.md(),
-                ShimmerBox(height: 220, borderRadius: Corners.brLg),
-              ]),
-            ),
-          );
-        }
-        if (state.status == MaintenanceDetailStatus.failure || state.job == null) {
-          return AppScaffold(
-            title: context.l10n.maintenanceJob,
-            body: EmptyState(
-              title: context.l10n.maintenanceCouldNotLoadJob,
-              message: state.message,
-              icon: Icons.cloud_off_rounded,
-              tone: AppColors.danger,
-              actionLabel: context.l10n.commonTryAgain,
-              onAction: () => context.read<MaintenanceDetailCubit>().load(),
-            ),
-          );
-        }
-        return _Loaded(job: state.job!, vendors: _vendors);
-      },
-    );
+    return _Loaded(jobId: jobId, job: current, vendors: vendors);
   }
 }
 
 (int, int) _costBreakdown(String type) => switch (type) {
-      'BATTERY' => (4200, 800),
-      'BRAKES' => (550, 350),
-      'TYRES' => (1800, 200),
-      'IoT' => (900, 300),
-      'BODY' => (1200, 600),
-      'PRE_DELIVERY' => (200, 150),
-      _ => (650, 450),
-    };
+  'BATTERY' => (4200, 800),
+  'BRAKES' => (550, 350),
+  'TYRES' => (1800, 200),
+  'IoT' => (900, 300),
+  'BODY' => (1200, 600),
+  'PRE_DELIVERY' => (200, 150),
+  _ => (650, 450),
+};
 
-class _Loaded extends StatelessWidget {
-  const _Loaded({required this.job, required this.vendors});
+class _Loaded extends ConsumerWidget {
+  const _Loaded({required this.jobId, required this.job, required this.vendors});
 
+  final String jobId;
   final MaintenanceJob job;
   final List<VendorOption> vendors;
 
+  MaintenanceJobNotifier _notifier(WidgetRef ref) => ref.read(maintenanceJobProvider(jobId).notifier);
+
   @override
-  Widget build(BuildContext context) {
-    final (parts, labour) = _costBreakdown(job.type);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final (int parts, int labour) = _costBreakdown(job.type);
     final int total = parts + labour;
+    final bool inProgressOrClosed = job.status == 'inProgress' || job.isClosed;
 
     return HeroScaffold(
       bandColor: AppColors.ink,
@@ -111,221 +86,215 @@ class _Loaded extends StatelessWidget {
       band: _Band(job: job),
       bottomNavigationBar: job.isClosed
           ? null
-          : _Footer(
-              onUpdateStatus: () => _openStatusSheet(context),
-              onClose: () => _confirmClose(context),
-            ),
+          : _Footer(onUpdateStatus: () => _openStatusSheet(context, ref), onClose: () => _confirmClose(context, ref)),
       children: [
-          PhotoPanel(
-            photo: BrandPhoto.service,
-            height: 150,
-            title: job.vehicleNumber,
-            subtitle: job.model,
-            badge: StatusChip(
-              label: job.isClosed
-                  ? 'Closed ${Fmt.date(job.closedOn ?? job.dueOn)}'
-                  : 'Due ${Fmt.date(job.dueOn)}',
-              tone: job.isPastDue ? StatusTone.danger : StatusTone.neutral,
-              icon: Icons.event_rounded,
-              showDot: false,
-              dense: true,
-              solid: job.isPastDue,
-            ),
+        PhotoPanel(
+          photo: BrandPhoto.service,
+          height: 150,
+          title: job.vehicleNumber,
+          subtitle: job.model,
+          badge: StatusChip(
+            label: job.isClosed ? 'Closed ${Fmt.date(job.closedOn ?? job.dueOn)}' : 'Due ${Fmt.date(job.dueOn)}',
+            tone: job.isPastDue ? StatusTone.danger : StatusTone.neutral,
+            icon: Icons.event_rounded,
+            showDot: false,
+            dense: true,
+            solid: job.isPastDue,
           ),
-          const Gap.lg(),
-
-          ModuleCard(
-            title: context.l10n.maintenanceIssue,
-            leading: const IconTile(icon: Icons.report_problem_rounded, tone: AppColors.primary, size: 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(job.issue, style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.45)),
-                const SizedBox(height: Insets.md),
-                Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-                const SizedBox(height: Insets.md),
-                KeyValueRow(label: context.l10n.commonOdometer, value: '${Fmt.number(job.odometerKm)} km', icon: Icons.speed_rounded),
-                if (job.rider != null)
-                  KeyValueRow(label: context.l10n.maintenanceRiderFile, value: job.rider!, icon: Icons.person_rounded),
-                if (job.bay != null)
-                  KeyValueRow(label: context.l10n.maintenanceBay, value: job.bay!, icon: Icons.garage_rounded),
-              ],
-            ),
+        ),
+        const Gap.lg(),
+        ModuleCard(
+          title: context.l10n.maintenanceIssue,
+          leading: const IconTile(icon: Icons.report_problem_rounded, tone: AppColors.primary, size: 28),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(job.issue, style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.45)),
+              const SizedBox(height: Insets.md),
+              Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
+              const SizedBox(height: Insets.md),
+              KeyValueRow(
+                label: context.l10n.commonOdometer,
+                value: '${Fmt.number(job.odometerKm)} km',
+                icon: Icons.speed_rounded,
+              ),
+              if (job.rider != null)
+                KeyValueRow(label: context.l10n.maintenanceRiderFile, value: job.rider!, icon: Icons.person_rounded),
+              if (job.bay != null)
+                KeyValueRow(label: context.l10n.maintenanceBay, value: job.bay!, icon: Icons.garage_rounded),
+            ],
           ),
-          const Gap.lg(),
-
-          ModuleCard(
-            title: context.l10n.maintenanceAssignedVendor,
-            leading: const IconTile(icon: Icons.handyman_rounded, tone: AppColors.primary, size: 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+        ),
+        const Gap.lg(),
+        ModuleCard(
+          title: context.l10n.maintenanceAssignedVendor,
+          leading: const IconTile(icon: Icons.handyman_rounded, tone: AppColors.primary, size: 28),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const IconTile(icon: Icons.build_rounded, tone: AppColors.primary, size: 44),
+                  const SizedBox(width: Insets.md),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          job.assignedTo ?? context.l10n.maintenanceUnassigned,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.titleSmall.copyWith(fontSize: 14),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          job.assignedTo == null
+                              ? context.l10n.maintenanceAssignVendorStartWork
+                              : context.l10n.maintenanceServicePartner,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.bodySmall.copyWith(fontSize: 11.5),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: Insets.md),
+              Wrap(
+                alignment: WrapAlignment.end,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: Insets.sm,
+                runSpacing: Insets.sm,
+                children: [
+                  if (job.assignedTo != null)
+                    CircleIconButton(
+                      icon: Icons.call_rounded,
+                      background: AppColors.primaryWash,
+                      foreground: AppColors.primary,
+                      onTap: () {
+                        HapticFeedback.selectionClick();
+                        AppSnack.info(context, 'Calling ${job.assignedTo}…');
+                      },
+                    ),
+                  GhostButton(
+                    label: context.l10n.maintenanceReassign,
+                    icon: Icons.swap_horiz_rounded,
+                    onPressed: job.isClosed ? null : () => _openReassignSheet(context, ref),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const Gap.lg(),
+        ModuleCard(
+          title: context.l10n.maintenanceJobTimeline,
+          leading: const IconTile(icon: Icons.timeline_rounded, tone: AppColors.primary, size: 28),
+          child: Column(
+            children: [
+              _TimelineRow(
+                icon: Icons.flag_rounded,
+                title: context.l10n.commonRaised,
+                time: Fmt.dateTime(job.openedOn),
+                done: true,
+                isLast: false,
+              ),
+              _TimelineRow(
+                icon: Icons.assignment_ind_rounded,
+                title: job.assignedTo == null
+                    ? context.l10n.maintenanceAwaitingVendorAssignment
+                    : 'Assigned to ${job.assignedTo}',
+                time: job.assignedTo == null ? context.l10n.commonPending : context.l10n.deploymentDone,
+                done: job.assignedTo != null,
+                isLast: false,
+              ),
+              _TimelineRow(
+                icon: Icons.build_circle_rounded,
+                title: context.l10n.maintenanceProgress,
+                time: inProgressOrClosed ? context.l10n.deploymentDone : context.l10n.commonPending,
+                done: inProgressOrClosed,
+                isLast: false,
+              ),
+              _TimelineRow(
+                icon: Icons.check_circle_rounded,
+                title: context.l10n.maintenanceClosed,
+                time: job.isClosed ? Fmt.dateTime(job.closedOn ?? job.dueOn) : context.l10n.commonPending,
+                done: job.isClosed,
+                isLast: true,
+              ),
+            ],
+          ),
+        ),
+        const Gap.lg(),
+        ModuleCard(
+          title: context.l10n.maintenanceCostBreakdown,
+          leading: const IconTile(icon: Icons.receipt_long_rounded, tone: AppColors.primary, size: 28),
+          child: Column(
+            children: [
+              KeyValueRow(label: context.l10n.maintenanceParts, value: Fmt.money(parts)),
+              KeyValueRow(label: context.l10n.maintenanceLabour, value: Fmt.money(labour)),
+              const Divider(color: AppColors.stroke, height: Insets.xl),
+              KeyValueRow(
+                label: context.l10n.commonTotal,
+                value: Fmt.money(total),
+                valueStyle: AppText.numeric.copyWith(fontSize: 17, color: AppColors.primary),
+              ),
+            ],
+          ),
+        ),
+        const Gap.lg(),
+        ModuleCard(
+          title: context.l10n.maintenancePhotoEvidence,
+          leading: const IconTile(icon: Icons.photo_camera_rounded, tone: AppColors.primary, size: 28),
+          child: GridView.count(
+            crossAxisCount: 3,
+            crossAxisSpacing: Insets.md,
+            mainAxisSpacing: Insets.md,
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              PhotoSlot(label: context.l10n.maintenanceIssue, captured: true),
+              PhotoSlot(label: context.l10n.maintenanceProgress, captured: inProgressOrClosed),
+              PhotoSlot(label: context.l10n.maintenanceCompleted, captured: job.isClosed),
+            ],
+          ),
+        ),
+        const Gap.lg(),
+        ModuleCard(
+          title: context.l10n.maintenanceNotes,
+          actionLabel: context.l10n.maintenanceAddNote2,
+          onAction: job.isClosed ? null : () => _openAddNoteSheet(context, ref),
+          child: job.notes.isEmpty
+              ? EmptyState(
+                  title: context.l10n.maintenanceNoNotesYet,
+                  message: context.l10n.maintenanceUpdatesFromWorkshopWillShow,
+                  icon: Icons.notes_rounded,
+                  compact: true,
+                )
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const IconTile(icon: Icons.build_rounded, tone: AppColors.primary, size: 44),
-                    const SizedBox(width: Insets.md),
-                    Expanded(
-                      child: Column(
+                    for (final String note in job.notes) ...[
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            job.assignedTo ?? context.l10n.maintenanceUnassigned,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppText.titleSmall.copyWith(fontSize: 14),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            job.assignedTo == null ? context.l10n.maintenanceAssignVendorStartWork : context.l10n.maintenanceServicePartner,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppText.bodySmall.copyWith(fontSize: 11.5),
-                          ),
+                          const Icon(Icons.circle, size: 6, color: AppColors.primary),
+                          const SizedBox(width: Insets.sm),
+                          Expanded(child: Text(note, style: AppText.bodyMedium.copyWith(fontSize: 13))),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: Insets.md),
-                Wrap(
-                  alignment: WrapAlignment.end,
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  spacing: Insets.sm,
-                  runSpacing: Insets.sm,
-                  children: [
-                    if (job.assignedTo != null)
-                      CircleIconButton(
-                        icon: Icons.call_rounded,
-
-                        background: AppColors.primaryWash,
-                        foreground: AppColors.primary,
-                        onTap: () {
-                          HapticFeedback.selectionClick();
-                          AppSnack.info(context, 'Calling ${job.assignedTo}…');
-                        },
-                      ),
-                    GhostButton(
-                      label: context.l10n.maintenanceReassign,
-                      icon: Icons.swap_horiz_rounded,
-                      onPressed: job.isClosed ? null : () => _openReassignSheet(context),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const Gap.lg(),
-
-          ModuleCard(
-            title: context.l10n.maintenanceJobTimeline,
-            leading: const IconTile(icon: Icons.timeline_rounded, tone: AppColors.primary, size: 28),
-            child: Column(
-              children: [
-                _TimelineRow(
-                  icon: Icons.flag_rounded,
-                  title: context.l10n.commonRaised,
-                  time: Fmt.dateTime(job.openedOn),
-                  done: true,
-                  isLast: false,
-                ),
-                _TimelineRow(
-                  icon: Icons.assignment_ind_rounded,
-                  title: job.assignedTo == null ? context.l10n.maintenanceAwaitingVendorAssignment : 'Assigned to ${job.assignedTo}',
-                  time: job.assignedTo == null ? context.l10n.commonPending : context.l10n.deploymentDone,
-                  done: job.assignedTo != null,
-                  isLast: false,
-                ),
-                _TimelineRow(
-                  icon: Icons.build_circle_rounded,
-                  title: context.l10n.maintenanceProgress,
-                  time: job.status == 'inProgress' || job.isClosed ? context.l10n.deploymentDone : context.l10n.commonPending,
-                  done: job.status == 'inProgress' || job.isClosed,
-                  isLast: false,
-                ),
-                _TimelineRow(
-                  icon: Icons.check_circle_rounded,
-                  title: context.l10n.maintenanceClosed,
-                  time: job.isClosed ? Fmt.dateTime(job.closedOn ?? job.dueOn) : context.l10n.commonPending,
-                  done: job.isClosed,
-                  isLast: true,
-                ),
-              ],
-            ),
-          ),
-          const Gap.lg(),
-
-          ModuleCard(
-            title: context.l10n.maintenanceCostBreakdown,
-            leading: const IconTile(icon: Icons.receipt_long_rounded, tone: AppColors.primary, size: 28),
-            child: Column(
-              children: [
-                KeyValueRow(label: context.l10n.maintenanceParts, value: Fmt.money(parts)),
-                KeyValueRow(label: context.l10n.maintenanceLabour, value: Fmt.money(labour)),
-                const Divider(color: AppColors.stroke, height: Insets.xl),
-                KeyValueRow(
-                  label: context.l10n.commonTotal,
-                  value: Fmt.money(total),
-                  valueStyle: AppText.numeric.copyWith(fontSize: 17, color: AppColors.primary),
-                ),
-              ],
-            ),
-          ),
-          const Gap.lg(),
-
-          ModuleCard(
-            title: context.l10n.maintenancePhotoEvidence,
-            leading: const IconTile(icon: Icons.photo_camera_rounded, tone: AppColors.primary, size: 28),
-            child: GridView.count(
-              crossAxisCount: 3,
-              crossAxisSpacing: Insets.md,
-              mainAxisSpacing: Insets.md,
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                PhotoSlot(label: context.l10n.maintenanceIssue, captured: true),
-                PhotoSlot(label: context.l10n.maintenanceProgress, captured: job.status == 'inProgress' || job.isClosed),
-                PhotoSlot(label: context.l10n.maintenanceCompleted, captured: job.isClosed),
-              ],
-            ),
-          ),
-          const Gap.lg(),
-
-          ModuleCard(
-            title: context.l10n.maintenanceNotes,
-            actionLabel: context.l10n.maintenanceAddNote2,
-            onAction: job.isClosed ? null : () => _openAddNoteSheet(context),
-            child: job.notes.isEmpty
-                ? EmptyState(
-                    title: context.l10n.maintenanceNoNotesYet,
-                    message: context.l10n.maintenanceUpdatesFromWorkshopWillShow,
-                    icon: Icons.notes_rounded,
-                    compact: true,
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      for (final n in job.notes) ...[
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Icon(Icons.circle, size: 6, color: AppColors.primary),
-                            const SizedBox(width: Insets.sm),
-                            Expanded(
-                              child: Text(n, style: AppText.bodyMedium.copyWith(fontSize: 13)),
-                            ),
-                          ],
-                        ),
-                        if (n != job.notes.last) const Gap.md(),
-                      ],
+                      if (note != job.notes.last) const Gap.md(),
                     ],
-                  ),
-          ),
-        ],
+                  ],
+                ),
+        ),
+      ],
     );
   }
 
-  Future<void> _confirmClose(BuildContext context) async {
+  Future<void> _confirmClose(BuildContext context, WidgetRef ref) async {
     final bool confirmed = await AppDialog.confirm(
       context,
       title: context.l10n.maintenanceCloseJob2,
@@ -335,38 +304,35 @@ class _Loaded extends StatelessWidget {
       tone: AppColors.success,
     );
     if (!confirmed || !context.mounted) return;
-    context.read<MaintenanceDetailCubit>().closeJob();
+    _notifier(ref).closeJob();
     AppSnack.success(context, '${job.id} closed.');
   }
 
-  Future<void> _openStatusSheet(BuildContext context) async {
-    final MaintenanceDetailCubit cubit = context.read<MaintenanceDetailCubit>();
+  Future<void> _openStatusSheet(BuildContext context, WidgetRef ref) async {
     final String? picked = await AppSheet.show<String>(
       context,
       title: context.l10n.maintenanceUpdateStatus,
       subtitle: job.id,
       child: Column(
         children: [
-          for (final s in const ['open', 'inProgress', 'overdue'])
+          for (final String status in const ['open', 'inProgress', 'overdue'])
             Padding(
               padding: const EdgeInsets.only(bottom: Insets.sm + 2),
               child: AppRadioTile(
-                selected: job.status == s,
-                title: jobStatusLabel(s),
-                onTap: () => Navigator.of(context).pop(s),
+                selected: job.status == status,
+                title: jobStatusLabel(status),
+                onTap: () => Navigator.of(context).pop(status),
               ),
             ),
         ],
       ),
     );
-    if (picked != null && context.mounted) {
-      cubit.updateStatus(picked);
-      AppSnack.success(context, 'Status updated to ${jobStatusLabel(picked)}.');
-    }
+    if (picked == null || !context.mounted) return;
+    _notifier(ref).updateStatus(picked);
+    AppSnack.success(context, 'Status updated to ${jobStatusLabel(picked)}.');
   }
 
-  Future<void> _openReassignSheet(BuildContext context) async {
-    final MaintenanceDetailCubit cubit = context.read<MaintenanceDetailCubit>();
+  Future<void> _openReassignSheet(BuildContext context, WidgetRef ref) async {
     if (vendors.isEmpty) {
       AppSnack.warning(context, context.l10n.maintenanceNoVendorsAvailableReassignRight);
       return;
@@ -377,27 +343,25 @@ class _Loaded extends StatelessWidget {
       subtitle: job.id,
       child: Column(
         children: [
-          for (final v in vendors)
+          for (final VendorOption vendor in vendors)
             Padding(
               padding: const EdgeInsets.only(bottom: Insets.sm + 2),
               child: AppRadioTile(
-                selected: job.assignedTo == v.name,
-                title: v.name,
-                subtitle: '${v.type} · ★ ${v.rating.toStringAsFixed(1)}',
-                onTap: () => Navigator.of(context).pop(v.name),
+                selected: job.assignedTo == vendor.name,
+                title: vendor.name,
+                subtitle: '${vendor.type} · ★ ${vendor.rating.toStringAsFixed(1)}',
+                onTap: () => Navigator.of(context).pop(vendor.name),
               ),
             ),
         ],
       ),
     );
-    if (picked != null && context.mounted) {
-      cubit.reassignVendor(picked);
-      AppSnack.success(context, 'Reassigned to $picked.');
-    }
+    if (picked == null || !context.mounted) return;
+    _notifier(ref).reassignVendor(picked);
+    AppSnack.success(context, 'Reassigned to $picked.');
   }
 
-  Future<void> _openAddNoteSheet(BuildContext context) async {
-    final MaintenanceDetailCubit cubit = context.read<MaintenanceDetailCubit>();
+  Future<void> _openAddNoteSheet(BuildContext context, WidgetRef ref) async {
     final TextEditingController controller = TextEditingController();
     final String? note = await AppSheet.show<String>(
       context,
@@ -415,10 +379,9 @@ class _Loaded extends StatelessWidget {
         onPressed: () => Navigator.of(context).pop(controller.text),
       ),
     );
-    if (note != null && note.trim().isNotEmpty && context.mounted) {
-      cubit.addNote(note);
-      AppSnack.success(context, context.l10n.maintenanceNoteAdded);
-    }
+    if (note == null || note.trim().isEmpty || !context.mounted) return;
+    _notifier(ref).addNote(note);
+    AppSnack.success(context, context.l10n.maintenanceNoteAdded);
   }
 }
 
@@ -499,23 +462,16 @@ class _Band extends StatelessWidget {
         Row(
           children: [
             Builder(
-              builder: (context) => InkCircleButton(
-                icon: Icons.arrow_back_rounded,
-                onTap: () => Navigator.of(context).maybePop(),
-              ),
+              builder: (context) =>
+                  InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
             ),
             const Spacer(),
-            StatusChip(
-              label: jobStatusLabel(job.status),
-              tone: jobStatusTone(job.status),
-              dense: true,
-              solid: true,
-            ),
+            StatusChip(label: jobStatusLabel(job.status), tone: jobStatusTone(job.status), dense: true, solid: true),
           ],
         ),
         const Gap.xl(),
         Text(
-          '\${job.id} · \${maintenanceTypeLabel(context, job.type)}',
+          '${job.id} · ${maintenanceTypeLabel(context, job.type)}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.onInkSecondary),
@@ -528,11 +484,7 @@ class _Band extends StatelessWidget {
           style: AppText.displaySmall.copyWith(fontSize: 24, color: AppColors.onInk),
         ),
         const Gap.lg(),
-        StatusChip(
-          label: jobPriorityLabel(job.priority),
-          tone: jobPriorityTone(job.priority),
-          dense: true,
-        ),
+        StatusChip(label: jobPriorityLabel(job.priority), tone: jobPriorityTone(job.priority), dense: true),
       ],
     );
   }

@@ -25,12 +25,11 @@ class RaiseTicket extends UseCase<SupportTicket, RaiseTicketParams> {
   final SupportRepository _repository;
 
   @override
-  Future<Result<SupportTicket>> call(RaiseTicketParams params) =>
-      _repository.raiseTicket(
-        categoryKey: params.categoryKey,
-        subject: params.subject,
-        description: params.description,
-        vehicleAffected: params.vehicleAffected,
-        photoCount: params.photoCount,
-      );
+  Future<Result<SupportTicket>> call(RaiseTicketParams params) => _repository.raiseTicket(
+    categoryKey: params.categoryKey,
+    subject: params.subject,
+    description: params.description,
+    vehicleAffected: params.vehicleAffected,
+    photoCount: params.photoCount,
+  );
 }

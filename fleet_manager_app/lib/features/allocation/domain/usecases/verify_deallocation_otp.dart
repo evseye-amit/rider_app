@@ -16,5 +16,6 @@ class VerifyDeallocationOtp extends UseCase<void, VerifyDeallocationOtpParams> {
   final AllocationRepository _repository;
 
   @override
-  Future<Result<void>> call(VerifyDeallocationOtpParams params) => _repository.verifyDeallocationOtp(params.allocationId, otpRequestId: params.otpRequestId, code: params.code);
+  Future<Result<void>> call(VerifyDeallocationOtpParams params) =>
+      _repository.verifyDeallocationOtp(params.allocationId, otpRequestId: params.otpRequestId, code: params.code);
 }

@@ -67,12 +67,11 @@ abstract final class FeatureKeys {
 @immutable
 class FeatureFlags {
   const FeatureFlags({
-    Map<String, bool> flags = const {},
-    Map<String, dynamic> settings = const {},
+    this._flags = const {},
+    this._settings = const {},
     this.packageName = '',
     this.clientCode = '',
-  })  : _flags = flags,
-        _settings = settings;
+  });
 
   final Map<String, bool> _flags;
   final Map<String, dynamic> _settings;

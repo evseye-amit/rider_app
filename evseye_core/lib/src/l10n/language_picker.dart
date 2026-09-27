@@ -6,7 +6,7 @@ import '../theme/app_typography.dart';
 import '../widgets/buttons.dart';
 import '../widgets/feedback.dart';
 import '../widgets/pressable.dart';
-import 'locale_controller.dart';
+import 'l10n.dart';
 
 class LanguagePicker extends StatefulWidget {
   const LanguagePicker({required this.selected, super.key});

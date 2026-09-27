@@ -1,9 +1,10 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/app.dart';
-import 'app/di/injector.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,8 +22,14 @@ Future<void> main() async {
 
   registerDefaultWidgets();
 
-  await configureDependencies();
-  await sl<LocaleController>().load();
+  final SharedPreferences preferences = await SharedPreferences.getInstance();
+  await ActiveLocale.initializeFormatting();
 
-  runApp(const RiderApp());
+  runApp(
+    ProviderScope(
+      overrides: [sharedPreferencesProvider.overrideWithValue(preferences)],
+      retry: noProviderRetry,
+      child: const RiderApp(),
+    ),
+  );
 }

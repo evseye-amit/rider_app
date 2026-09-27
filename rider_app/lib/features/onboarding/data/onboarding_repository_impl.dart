@@ -18,22 +18,15 @@ class OnboardingRepositoryImpl implements OnboardingRepository {
       _riderApp.saveStep(stepId, values);
 
   @override
-  Future<Result<RemotePhoto>> uploadDocument({
-    required String fieldCode,
-    required File file,
-  }) {
+  Future<Result<RemotePhoto>> uploadDocument({required String fieldCode, required File file}) {
     final String name = file.path.toLowerCase();
     final String mime = name.endsWith('.pdf')
         ? 'application/pdf'
         : name.endsWith('.png')
-            ? 'image/png'
-            : name.endsWith('.webp')
-                ? 'image/webp'
-                : 'image/jpeg';
-    return _media.uploadOnboardingDocument(
-      fieldCode: fieldCode,
-      file: file,
-      mimeType: mime,
-    );
+        ? 'image/png'
+        : name.endsWith('.webp')
+        ? 'image/webp'
+        : 'image/jpeg';
+    return _media.uploadOnboardingDocument(fieldCode: fieldCode, file: file, mimeType: mime);
   }
 }

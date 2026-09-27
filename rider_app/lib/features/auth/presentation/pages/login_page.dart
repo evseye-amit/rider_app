@@ -2,23 +2,24 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/session/session_controller.dart';
 import '../../../../core/legal/legal_link.dart';
+import '../../../../core/session/rider_session_provider.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _controller = TextEditingController();
-  static final RegExp _mobileRe = RegExp(r'^[6-9]\d{9}$');
+class _LoginPageState extends ConsumerState<LoginPage> {
+  static final RegExp _mobilePattern = RegExp(r'^[6-9]\d{9}$');
+
+  final TextEditingController _mobile = TextEditingController();
 
   String? _error;
   bool _loading = false;
@@ -26,18 +27,23 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(() => setState(() {}));
+    _mobile.addListener(() => setState(() {}));
     WidgetsBinding.instance.addPostFrameCallback((_) => _askLanguage());
   }
 
+  @override
+  void dispose() {
+    _mobile.dispose();
+    super.dispose();
+  }
+
+  bool get _valid => _mobilePattern.hasMatch(_mobile.text.trim());
+
   Future<void> _askLanguage() async {
-    final LocaleController locale = sl<LocaleController>();
-    if (locale.hasBeenPrompted || !mounted) return;
-    final AppLocale? picked = await LanguagePicker.show(
-      context,
-      selected: locale.current,
-      firstRun: true,
-    );
+    final LocalePreference preference = ref.read(localeProvider);
+    if (preference.hasBeenPrompted || !mounted) return;
+    final AppLocale? picked = await LanguagePicker.show(context, selected: preference.locale, firstRun: true);
+    final LocaleNotifier locale = ref.read(localeProvider.notifier);
     if (picked == null) {
       await locale.markPrompted();
       return;
@@ -45,16 +51,8 @@ class _LoginPageState extends State<LoginPage> {
     await locale.select(picked);
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  bool get _valid => _mobileRe.hasMatch(_controller.text.trim());
-
   Future<void> _continue() async {
-    final String mobile = _controller.text.trim();
+    final String mobile = _mobile.text.trim();
     if (!_valid) {
       setState(() => _error = context.l10n.commonEnterValid10DigitMobile);
       return;
@@ -64,8 +62,7 @@ class _LoginPageState extends State<LoginPage> {
       _loading = true;
     });
 
-    final Result<OtpChallenge> result =
-        await sl<SessionController>().startSignIn(mobile);
+    final Result<OtpChallenge> result = await ref.read(riderSessionProvider.notifier).startSignIn(mobile);
     if (!mounted) return;
 
     switch (result) {
@@ -83,10 +80,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return AuthSheetScaffold(
-      trailing: LanguageChip(
-        controller: sl<LocaleController>(),
-        onChanged: (_) => setState(() {}),
-      ),
+      trailing: const LanguageChip(),
       photo: BrandPhoto.rider,
       artSize: 210,
       title: context.l10n.authWelcomeBack,
@@ -96,18 +90,13 @@ class _LoginPageState extends State<LoginPage> {
           label: context.l10n.commonMobileNumber,
           hint: '98765 43210',
           prefixText: '+91',
-          controller: _controller,
+          controller: _mobile,
           keyboardType: TextInputType.phone,
           maxLength: 10,
           errorText: _error,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            LengthLimitingTextInputFormatter(10),
-          ],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(10)],
           onSubmitted: (_) => _continue(),
-          suffix: _valid
-              ? const Icon(Icons.check_circle_rounded, size: 20, color: AppColors.success)
-              : null,
+          suffix: _valid ? const Icon(Icons.check_circle_rounded, size: 20, color: AppColors.success) : null,
         ),
         const Gap.xl(),
         PrimaryButton(
@@ -123,7 +112,8 @@ class _LoginPageState extends State<LoginPage> {
             const Icon(Icons.lock_outline_rounded, size: 14, color: AppColors.textMuted),
             const SizedBox(width: Insets.sm - 2),
             Flexible(
-              child: Text(context.l10n.authWillText6DigitCode,
+              child: Text(
+                context.l10n.authWillText6DigitCode,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.bodySmall.copyWith(fontSize: 12),
@@ -136,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
         const Gap.xl(),
         const _TrustStrip(),
         const Gap.xxl(),
-        _LegalLine(),
+        const _LegalLine(),
       ],
     );
   }
@@ -147,7 +137,7 @@ class _TrustStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = [
+    final List<(IconData, String)> items = [
       (Icons.verified_user_rounded, context.l10n.authVerifiedOperators),
       (Icons.bolt_rounded, context.l10n.authSameDayPayouts),
       (Icons.support_agent_rounded, context.l10n.authRoadsideHelp),
@@ -156,16 +146,11 @@ class _TrustStrip extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        for (final (icon, label) in items) ...[
+        for (final (IconData icon, String label) in items) ...[
           Expanded(
             child: Column(
               children: [
-                IconTile(
-                  icon: icon,
-                  tone: AppColors.primary,
-                  size: 46,
-                  solid: true,
-                ),
+                IconTile(icon: icon, tone: AppColors.primary, size: 46, solid: true),
                 const SizedBox(height: Insets.sm),
                 Text(
                   label,
@@ -190,13 +175,12 @@ class _TrustStrip extends StatelessWidget {
 }
 
 class _LegalLine extends StatelessWidget {
+  const _LegalLine();
+
   @override
   Widget build(BuildContext context) {
     final TextStyle base = AppText.bodySmall.copyWith(fontSize: 12, height: 1.5);
-    final TextStyle link = base.copyWith(
-      color: AppColors.primary,
-      fontWeight: FontWeight.w700,
-    );
+    final TextStyle link = base.copyWith(color: AppColors.primary, fontWeight: FontWeight.w700);
 
     return Text.rich(
       TextSpan(

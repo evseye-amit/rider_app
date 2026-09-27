@@ -1,56 +1,23 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../domain/entities/wallet_summary.dart';
-import '../../domain/usecases/get_wallet.dart';
-import '../cubit/wallet_cubit.dart';
+import '../providers/wallet_provider.dart';
 import '../widgets/wallet_widgets.dart';
 
-class WalletPage extends StatelessWidget {
+class WalletPage extends ConsumerStatefulWidget {
   const WalletPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => WalletCubit(GetWallet(sl()))..load(),
-      child: const _WalletView(),
-    );
-  }
+  ConsumerState<WalletPage> createState() => _WalletPageState();
 }
 
-class _WalletView extends StatefulWidget {
-  const _WalletView();
-
-  @override
-  State<_WalletView> createState() => _WalletViewState();
-}
-
-class _WalletViewState extends State<_WalletView> {
-  int _filter = 0;
-  String _query = '';
+class _WalletPageState extends ConsumerState<WalletPage> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
-
-  static List<String> get _filters => ['All', LocaleController.strings.walletCredits, LocaleController.strings.walletDebits];
-
-  List<WalletTransaction> _apply(List<WalletTransaction> all) {
-    final Iterable<WalletTransaction> byTab = switch (_filter) {
-      1 => all.where((t) => t.isCredit),
-      2 => all.where((t) => !t.isCredit),
-      _ => all,
-    };
-    final String q = _query.trim().toLowerCase();
-    if (q.isEmpty) return byTab.toList();
-    return byTab
-        .where(
-          (t) =>
-              t.title.toLowerCase().contains(q) ||
-              t.subtitle.toLowerCase().contains(q),
-        )
-        .toList();
-  }
+  int _filter = 0;
+  String _query = '';
 
   @override
   void dispose() {
@@ -59,38 +26,49 @@ class _WalletViewState extends State<_WalletView> {
     super.dispose();
   }
 
+  List<String> _filters(AppL10n l10n) => ['All', l10n.walletCredits, l10n.walletDebits];
+
+  List<WalletTransaction> _apply(List<WalletTransaction> all) {
+    final Iterable<WalletTransaction> byTab = switch (_filter) {
+      1 => all.where((t) => t.isCredit),
+      2 => all.where((t) => !t.isCredit),
+      _ => all,
+    };
+    final String query = _query.trim().toLowerCase();
+    if (query.isEmpty) return byTab.toList();
+    return byTab
+        .where((t) => t.title.toLowerCase().contains(query) || t.subtitle.toLowerCase().contains(query))
+        .toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WalletCubit, WalletState>(
-      builder: (context, state) {
-        if (state.status == WalletStatus.failure) {
-          return Scaffold(
-            backgroundColor: AppColors.canvas,
-            body: SafeArea(
-              child: EmptyState(
-                title: context.l10n.walletCouldNotLoadWallet,
-                message: state.message,
-                icon: Icons.cloud_off_rounded,
-                tone: AppColors.danger,
-                actionLabel: context.l10n.commonTryAgain,
-                onAction: () => context.read<WalletCubit>().refresh(),
-              ),
-            ),
-          );
-        }
+    final AsyncValue<WalletSummary> wallet = ref.watch(walletProvider);
 
-        final WalletSummary? summary = state.summary;
+    if (wallet.hasError) {
+      return Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: EmptyState(
+            title: context.l10n.walletCouldNotLoadWallet,
+            message: wallet.failureMessage,
+            icon: Icons.cloud_off_rounded,
+            tone: AppColors.danger,
+            actionLabel: context.l10n.commonTryAgain,
+            onAction: () => ref.invalidate(walletProvider),
+          ),
+        ),
+      );
+    }
 
-        return HeroScaffold(
-          bottomPadding: 120,
-          controller: _scrollController,
-          onRefresh: () => context.read<WalletCubit>().refresh(),
-          band: WalletBand(summary: summary),
-          children: summary == null
-              ? const [_WalletSkeleton()]
-              : _content(context, summary),
-        );
-      },
+    final WalletSummary? summary = wallet.value;
+
+    return HeroScaffold(
+      bottomPadding: 120,
+      controller: _scrollController,
+      onRefresh: () => ref.refreshQuietly(walletProvider),
+      band: WalletBand(summary: summary),
+      children: summary == null ? const [_WalletSkeleton()] : _content(context, summary),
     );
   }
 
@@ -107,10 +85,7 @@ class _WalletViewState extends State<_WalletView> {
           children: [
             Text(
               'Last payment ${summary.lastPayoutAt == null ? '—' : Fmt.relative(summary.lastPayoutAt!)}',
-              style: AppText.bodySmall.copyWith(
-                fontSize: 12,
-                color: AppColors.textSecondary,
-              ),
+              style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.textSecondary),
             ),
             const Gap.lg(),
             AppSearchField(
@@ -120,7 +95,7 @@ class _WalletViewState extends State<_WalletView> {
             ),
             const Gap.md(),
             SegmentedTabs(
-              items: _filters,
+              items: _filters(context.l10n),
               selectedIndex: _filter,
               counts: {1: credits, 2: debits},
               onChanged: (i) => setState(() => _filter = i),
@@ -141,16 +116,9 @@ class _WalletViewState extends State<_WalletView> {
             else
               Column(
                 children: [
-                  for (final tx in shown) ...[
-                    TransactionTile(
-                      transaction: tx,
-                      onTap: () => _openDetail(context, tx),
-                    ),
-                    if (tx != shown.last)
-                      Divider(
-                        color: AppColors.stroke.withValues(alpha: 0.5),
-                        height: 1,
-                      ),
+                  for (final WalletTransaction transaction in shown) ...[
+                    TransactionTile(transaction: transaction, onTap: () => _openDetail(context, transaction)),
+                    if (transaction != shown.last) Divider(color: AppColors.stroke.withValues(alpha: 0.5), height: 1),
                   ],
                 ],
               ),
@@ -160,12 +128,12 @@ class _WalletViewState extends State<_WalletView> {
     ];
   }
 
-  Future<void> _openDetail(BuildContext context, WalletTransaction tx) {
+  Future<void> _openDetail(BuildContext context, WalletTransaction transaction) {
     return AppSheet.show(
       context,
-      title: tx.title,
-      subtitle: tx.subtitle,
-      child: TransactionDetailBody(transaction: tx),
+      title: transaction.title,
+      subtitle: transaction.subtitle,
+      child: TransactionDetailBody(transaction: transaction),
     );
   }
 }
@@ -175,9 +143,9 @@ class _WalletSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: const [
+      children: [
         ShimmerBox(width: 140, height: 20),
         Gap.lg(),
         ShimmerBox(height: 42, borderRadius: Corners.pill),

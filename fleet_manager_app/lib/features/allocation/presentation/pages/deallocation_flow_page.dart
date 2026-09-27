@@ -1,217 +1,175 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/session/session_controller.dart';
+import '../../../../core/session/fleet_session_provider.dart';
+import '../../allocation_dependencies.dart';
 import '../../domain/allocation_repository.dart' show DeallocationStart;
 import '../../domain/entities/deallocation_request.dart';
-import '../../domain/usecases/complete_deallocation.dart';
-import '../../domain/usecases/complete_inspection.dart';
-import '../../domain/usecases/get_deallocation_request.dart';
-import '../../domain/usecases/initiate_deallocation.dart';
 import '../../domain/usecases/request_deallocation_otp.dart';
 import '../../domain/usecases/verify_deallocation_otp.dart';
-import '../cubit/deallocation_flow_cubit.dart';
+import '../providers/deallocation_request_provider.dart';
 
-class DeallocationFlowPage extends StatelessWidget {
+class DeallocationFlowPage extends ConsumerStatefulWidget {
   const DeallocationFlowPage({required this.requestId, super.key});
 
   final String requestId;
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => DeallocationFlowCubit(GetDeallocationRequest(sl()), requestId)..load(),
-      child: const _DeallocationFlowView(),
-    );
-  }
+  ConsumerState<DeallocationFlowPage> createState() => _DeallocationFlowPageState();
 }
 
-class _DeallocationFlowView extends StatefulWidget {
-  const _DeallocationFlowView();
-
-  @override
-  State<_DeallocationFlowView> createState() => _DeallocationFlowViewState();
-}
-
-class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
+class _DeallocationFlowPageState extends ConsumerState<DeallocationFlowPage> {
   final DynamicFormController _form = DynamicFormController();
-  UiFlowConfig? _flow;
-  String? _flowError;
   int _stepIndex = 0;
   bool _busy = false;
-  late DynamicUiScope _scope;
 
   String? _inspectionId;
   OtpChallenge? _riderOtp;
   OtpChallenge? _operatorOtp;
 
-  @override
-  void initState() {
-    super.initState();
-    _loadFlow();
-  }
+  UiFlowConfig? get _flow => ref.read(deallocationFlowConfigProvider).value;
 
-  Future<void> _loadFlow() async {
-    try {
-      final UiFlowConfig flow = await sl<UiConfigService>().loadFlow('deallocation_flow');
-      if (!mounted) return;
-      setState(() => _flow = flow);
-    } on Object {
-      if (!mounted) return;
-      setState(() => _flowError = context.l10n.allocationCouldNotLoadDeAllocation2);
-    }
-  }
+  DeallocationRequest? get _request => ref.read(deallocationRequestProvider(widget.requestId)).value;
+
+  DynamicUiScope _scopeFor(FleetSession session, DeallocationRequest request) => session.scope(
+    form: _form,
+    onAction: _handleAction,
+    data: {
+      'rider': {'name': request.riderName, 'code': request.riderCode, 'mobile': request.mobile},
+      'vehicle': {'number': request.vehicleNumber, 'model': request.model},
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
-    if (_flowError != null) {
+    final AsyncValue<UiFlowConfig> flowConfig = ref.watch(deallocationFlowConfigProvider);
+    final AsyncValue<DeallocationRequest> request = ref.watch(deallocationRequestProvider(widget.requestId));
+
+    if (flowConfig.hasError) {
       return AppScaffold(
         title: context.l10n.allocationDeAllocateVehicle,
         body: EmptyState(
           title: context.l10n.allocationCouldNotLoadDeAllocation,
-          message: _flowError,
+          message: context.l10n.allocationCouldNotLoadDeAllocation2,
           icon: Icons.cloud_off_rounded,
           tone: AppColors.danger,
           actionLabel: context.l10n.commonTryAgain,
-          onAction: () {
-            setState(() => _flowError = null);
-            _loadFlow();
-          },
+          onAction: () => ref.invalidate(deallocationFlowConfigProvider),
         ),
       );
     }
 
-    return BlocBuilder<DeallocationFlowCubit, DeallocationFlowState>(
-      builder: (context, state) {
-        if (_flow == null || state.isLoading) {
-          return AppScaffold(
-            title: context.l10n.allocationDeAllocateVehicle,
-            body: PageBody(children: const [
-              ShimmerBox(height: 40, borderRadius: Corners.pill),
-              Gap.xl(),
-              ShimmerBox(height: 140, borderRadius: Corners.brLg),
-              Gap.md(),
-              ShimmerBox(height: 220, borderRadius: Corners.brLg),
-            ]),
-          );
-        }
-        if (state.status == DeallocationFlowStatus.failure || state.request == null) {
-          return AppScaffold(
-            title: context.l10n.allocationDeAllocateVehicle,
-            body: EmptyState(
-              title: context.l10n.allocationCouldNotLoadReturn,
-              message: state.message,
-              icon: Icons.cloud_off_rounded,
-              tone: AppColors.danger,
-              actionLabel: context.l10n.commonTryAgain,
-              onAction: () => context.read<DeallocationFlowCubit>().load(),
-            ),
-          );
-        }
-
-        final UiFlowConfig flow = _flow!;
-        final DeallocationRequest request = state.request!;
-        final UiFlowStep step = flow.steps[_stepIndex];
-        final SessionController session = sl<SessionController>();
-
-        _scope = session.scope(
-          form: _form,
-          onAction: _handleAction,
-          data: {
-            'rider': {'name': request.riderName, 'code': request.riderCode, 'mobile': request.mobile},
-            'vehicle': {'number': request.vehicleNumber, 'model': request.model},
-          },
-        );
-
-        final String? stepTitle = step.screen.title == null ? null : _scope.interpolate(step.screen.title);
-
-        return Stack(
+    final UiFlowConfig? flow = flowConfig.value;
+    if (flow == null || (request.isLoading && !request.hasValue)) {
+      return AppScaffold(
+        title: context.l10n.allocationDeAllocateVehicle,
+        body: const PageBody(
           children: [
-            DynamicScreen(
-              config: step.screen,
-              scope: _scope,
-              onBack: _busy ? null : () => _handleBack(context, request),
-              headerSlot: _FlowHeader(
-                steps: flow.steps.map((s) => s.shortLabel ?? s.label).toList(growable: false),
-                currentIndex: _stepIndex,
-                stepTitle: stepTitle ?? step.label,
-                riderName: request.riderName,
-                vehicleNumber: request.vehicleNumber,
-                vehicleModel: request.model,
-                note: _stepIndex == flow.steps.length - 1 ? _verificationNote(request) : null,
-              ),
-            ),
-            if (_busy) Positioned.fill(child: LoadingOverlay(message: context.l10n.allocationTalkingServer)),
+            ShimmerBox(height: 40, borderRadius: Corners.pill),
+            Gap.xl(),
+            ShimmerBox(height: 140, borderRadius: Corners.brLg),
+            Gap.md(),
+            ShimmerBox(height: 220, borderRadius: Corners.brLg),
           ],
-        );
-      },
+        ),
+      );
+    }
+
+    final DeallocationRequest? current = request.value;
+    if (request.hasError || current == null) {
+      return AppScaffold(
+        title: context.l10n.allocationDeAllocateVehicle,
+        body: EmptyState(
+          title: context.l10n.allocationCouldNotLoadReturn,
+          message: request.failureMessage,
+          icon: Icons.cloud_off_rounded,
+          tone: AppColors.danger,
+          actionLabel: context.l10n.commonTryAgain,
+          onAction: () => ref.invalidate(deallocationRequestProvider(widget.requestId)),
+        ),
+      );
+    }
+
+    final FleetSession session = ref.watch(fleetSessionProvider);
+    final DynamicUiScope scope = _scopeFor(session, current);
+    final UiFlowStep step = flow.steps[_stepIndex];
+    final String? stepTitle = step.screen.title == null ? null : scope.interpolate(step.screen.title);
+
+    return Stack(
+      children: [
+        DynamicScreen(
+          config: step.screen,
+          scope: scope,
+          onBack: _busy ? null : () => _handleBack(current),
+          headerSlot: _FlowHeader(
+            steps: flow.steps.map((s) => s.shortLabel ?? s.label).toList(growable: false),
+            currentIndex: _stepIndex,
+            stepTitle: stepTitle ?? step.label,
+            riderName: current.riderName,
+            vehicleNumber: current.vehicleNumber,
+            vehicleModel: current.model,
+            note: _stepIndex == flow.steps.length - 1 ? _verificationNote(current, session.mobile) : null,
+          ),
+        ),
+        if (_busy) Positioned.fill(child: LoadingOverlay(message: context.l10n.allocationTalkingServer)),
+      ],
     );
   }
 
-  String _verificationNote(DeallocationRequest request) {
-    final String me = sl<SessionController>().mobile;
-    return _riderOtp == null
-        ? context.l10n.allocationCodesSentWhenStepOpens
-        : 'Codes sent to the rider (${Fmt.phone(request.mobile)}) and to you (${me.isEmpty ? 'your number' : Fmt.phone(me)}).';
+  String _verificationNote(DeallocationRequest request, String operatorMobile) {
+    if (_riderOtp == null) return context.l10n.allocationCodesSentWhenStepOpens;
+    final String operator = operatorMobile.isEmpty ? 'your number' : Fmt.phone(operatorMobile);
+    return 'Codes sent to the rider (${Fmt.phone(request.mobile)}) and to you ($operator).';
   }
 
   void _handleAction(BuildContext context, UiAction action, UiNode node) {
     switch (action.type) {
       case 'next':
-        _advance(context);
-        break;
-      case 'previous':
-      case 'back':
-        final DeallocationFlowState state = context.read<DeallocationFlowCubit>().state;
-        if (state.request != null) _handleBack(context, state.request!);
-        break;
+        _advance();
+      case 'previous' || 'back':
+        final DeallocationRequest? request = _request;
+        if (request != null) _handleBack(request);
       case 'pickFile':
-
         _form.setValue(node.fieldKey, 'capture_${DateTime.now().millisecondsSinceEpoch}.jpg');
         AppSnack.success(context, context.l10n.allocationPhotoAttached);
-        break;
       case 'navigate':
         if (action.target != null) context.push(action.target!);
-        break;
-      default:
-        break;
     }
   }
 
-  Future<void> _advance(BuildContext context) async {
-    if (_busy) return;
-    final UiFlowConfig flow = _flow!;
-    final UiFlowStep step = flow.steps[_stepIndex];
-    final bool ok = _form.validateNodes(step.screen.body, isVisible: _scope.isVisible);
-    if (!ok) return;
+  Future<void> _advance() async {
+    final UiFlowConfig? flow = _flow;
+    final DeallocationRequest? request = _request;
+    if (_busy || flow == null || request == null) return;
 
-    final DeallocationRequest request = context.read<DeallocationFlowCubit>().state.request!;
+    final UiFlowStep step = flow.steps[_stepIndex];
+    final DynamicUiScope scope = _scopeFor(ref.read(fleetSessionProvider), request);
+    if (!_form.validateNodes(step.screen.body, isVisible: scope.isVisible)) return;
 
     if (_stepIndex < flow.steps.length - 1) {
       if (_stepIndex == flow.steps.length - 2) {
-        final bool prepared = await _prepareVerification(context, request);
-        if (!prepared || !context.mounted) return;
+        final bool prepared = await _prepareVerification(request);
+        if (!prepared || !mounted) return;
       }
       setState(() => _stepIndex++);
       return;
     }
 
-    await _complete(context, request);
+    await _complete(request);
   }
 
-  Future<bool> _prepareVerification(BuildContext context, DeallocationRequest request) async {
+  Future<bool> _prepareVerification(DeallocationRequest request) async {
     setState(() => _busy = true);
     try {
       if (_inspectionId == null) {
         if (request.isInitiated && request.postReturnInspectionId != null) {
           _inspectionId = request.postReturnInspectionId;
         } else {
-          final Result<DeallocationStart> started = await InitiateDeallocation(sl())(request.id);
-          if (!context.mounted) return false;
+          final Result<DeallocationStart> started = await ref.read(initiateDeallocationProvider)(request.id);
+          if (!mounted) return false;
           switch (started) {
             case Err<DeallocationStart>(:final failure):
               AppSnack.error(context, failure.message);
@@ -222,16 +180,21 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
         }
       }
 
-      final String operatorMobile = sl<SessionController>().mobile;
+      final String operatorMobile = ref.read(fleetSessionProvider).mobile;
+      final RequestDeallocationOtp requestOtp = ref.read(requestDeallocationOtpProvider);
       final List<Result<OtpChallenge>> codes = await Future.wait([
-        RequestDeallocationOtp(sl())(DeallocationOtpParams(allocationId: request.id, phone: request.mobile, party: 'RIDER')),
-        RequestDeallocationOtp(sl())(
-          DeallocationOtpParams(allocationId: request.id, phone: operatorMobile.isEmpty ? request.mobile : operatorMobile, party: 'OPERATOR'),
+        requestOtp(DeallocationOtpParams(allocationId: request.id, phone: request.mobile, party: 'RIDER')),
+        requestOtp(
+          DeallocationOtpParams(
+            allocationId: request.id,
+            phone: operatorMobile.isEmpty ? request.mobile : operatorMobile,
+            party: 'OPERATOR',
+          ),
         ),
       ]);
-      if (!context.mounted) return false;
-      for (final r in codes) {
-        if (r case Err<OtpChallenge>(:final failure)) {
+      if (!mounted) return false;
+      for (final Result<OtpChallenge> code in codes) {
+        if (code case Err<OtpChallenge>(:final failure)) {
           AppSnack.error(context, failure.message);
           return false;
         }
@@ -245,7 +208,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
     }
   }
 
-  Future<void> _complete(BuildContext context, DeallocationRequest request) async {
+  Future<void> _complete(DeallocationRequest request) async {
     final bool confirmed = await AppDialog.confirm(
       context,
       title: context.l10n.allocationCompleteDeAllocation,
@@ -254,7 +217,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
       icon: Icons.check_circle_rounded,
       tone: AppColors.success,
     );
-    if (!confirmed || !context.mounted) return;
+    if (!confirmed || !mounted) return;
 
     setState(() => _busy = true);
     try {
@@ -262,33 +225,34 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
         (_riderOtp, _form.stringOf('riderOtp'), 'rider'),
         (_operatorOtp, _form.stringOf('teamLeadOtp'), 'operator'),
       ];
-      for (final (challenge, code, who) in codes) {
+      final VerifyDeallocationOtp verifyOtp = ref.read(verifyDeallocationOtpProvider);
+      for (final (OtpChallenge? challenge, String code, String who) in codes) {
         if (challenge == null) {
           AppSnack.error(context, 'The $who code was never sent — go back a step and forward again.');
           return;
         }
-        final Result<void> verified = await VerifyDeallocationOtp(sl())(
+        final Result<void> verified = await verifyOtp(
           VerifyDeallocationOtpParams(allocationId: request.id, otpRequestId: challenge.otpRequestId, code: code),
         );
-        if (!context.mounted) return;
+        if (!mounted) return;
         if (verified case Err<void>(:final failure)) {
           AppSnack.error(context, 'The $who code was not accepted: ${failure.message}');
           return;
         }
       }
 
-      if (_inspectionId != null && _inspectionId!.isNotEmpty) {
-        final Result<void> inspected = await CompleteInspection(sl())(_inspectionId!);
-        if (!context.mounted) return;
-
+      final String? inspectionId = _inspectionId;
+      if (inspectionId != null && inspectionId.isNotEmpty) {
+        final Result<void> inspected = await ref.read(completeInspectionProvider)(inspectionId);
+        if (!mounted) return;
         if (inspected case Err<void>(:final failure) when failure is! ValidationFailure) {
           AppSnack.error(context, failure.message);
           return;
         }
       }
 
-      final Result<void> done = await CompleteDeallocation(sl())(request.id);
-      if (!context.mounted) return;
+      final Result<void> done = await ref.read(completeDeallocationProvider)(request.id);
+      if (!mounted) return;
       switch (done) {
         case Err<void>(:final failure):
           AppSnack.error(context, failure.message);
@@ -301,7 +265,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
     }
   }
 
-  Future<void> _handleBack(BuildContext context, DeallocationRequest request) async {
+  Future<void> _handleBack(DeallocationRequest request) async {
     if (_stepIndex > 0) {
       setState(() => _stepIndex--);
       return;
@@ -316,7 +280,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
       cancelLabel: context.l10n.allocationKeepGoing,
       destructive: true,
     );
-    if (confirmed && context.mounted) context.pop();
+    if (confirmed && mounted) context.pop();
   }
 }
 
@@ -347,11 +311,7 @@ class _FlowHeader extends StatelessWidget {
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(Insets.lg),
-          decoration: BoxDecoration(
-            color: AppColors.ink,
-            borderRadius: Corners.brLg,
-            boxShadow: Shadows.soft,
-          ),
+          decoration: BoxDecoration(color: AppColors.ink, borderRadius: Corners.brLg, boxShadow: Shadows.soft),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

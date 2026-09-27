@@ -23,6 +23,5 @@ class RaiseJobInput extends Equatable {
   final int photoCount;
 
   @override
-  List<Object?> get props =>
-      [vehicleNumber, model, jobType, priority, issue, odometerKm, vendor, photoCount];
+  List<Object?> get props => [vehicleNumber, model, jobType, priority, issue, odometerKm, vendor, photoCount];
 }

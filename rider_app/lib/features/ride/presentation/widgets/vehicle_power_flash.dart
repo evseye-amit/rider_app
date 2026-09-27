@@ -37,15 +37,10 @@ class _Flash extends StatefulWidget {
 }
 
 class _FlashState extends State<_Flash> with TickerProviderStateMixin {
-  late final AnimationController _enter = AnimationController(
-    vsync: this,
-    duration: Motion.fast,
-  )..forward();
+  late final AnimationController _enter = AnimationController(vsync: this, duration: Motion.fast)..forward();
 
-  late final AnimationController _blink = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 620),
-  )..repeat(reverse: true);
+  late final AnimationController _blink = AnimationController(vsync: this, duration: const Duration(milliseconds: 620))
+    ..repeat(reverse: true);
 
   Timer? _timer;
   bool _leaving = false;
@@ -119,23 +114,17 @@ class _FlashState extends State<_Flash> with TickerProviderStateMixin {
                             height: 104 + b * 12,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: AppColors.primary
-                                  .withValues(alpha: 0.08 + b * 0.12),
+                              color: AppColors.primary.withValues(alpha: 0.08 + b * 0.12),
                             ),
                           ),
                           Container(
                             width: 76,
                             height: 76,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: AppColors.primary,
-                            ),
+                            decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primary),
                             child: Opacity(
                               opacity: 0.5 + b * 0.5,
                               child: Icon(
-                                on
-                                    ? Icons.bolt_rounded
-                                    : Icons.power_settings_new_rounded,
+                                on ? Icons.bolt_rounded : Icons.power_settings_new_rounded,
                                 size: 40,
                                 color: Colors.white,
                               ),
@@ -153,9 +142,7 @@ class _FlashState extends State<_Flash> with TickerProviderStateMixin {
                   ),
                   const Gap.sm(),
                   Text(
-                    on
-                        ? context.l10n.rideRideSafeHelmetLightsChecked
-                        : context.l10n.rideParkedLocked,
+                    on ? context.l10n.rideRideSafeHelmetLightsChecked : context.l10n.rideParkedLocked,
                     textAlign: TextAlign.center,
                     style: AppText.bodyMedium.copyWith(fontSize: 13, height: 1.5),
                   ),

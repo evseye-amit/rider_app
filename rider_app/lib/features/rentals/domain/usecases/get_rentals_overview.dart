@@ -9,6 +9,5 @@ class GetRentalsOverview extends UseCase<RentalsOverview, NoParams> {
   final RentalsRepository _repository;
 
   @override
-  Future<Result<RentalsOverview>> call(NoParams params) =>
-      _repository.getRentals();
+  Future<Result<RentalsOverview>> call(NoParams params) => _repository.getRentals();
 }

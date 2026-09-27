@@ -1,12 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class VendorOption extends Equatable {
-  const VendorOption({
-    required this.id,
-    required this.name,
-    required this.type,
-    required this.rating,
-  });
+  const VendorOption({required this.id, required this.name, required this.type, required this.rating});
 
   final String id;
   final String name;

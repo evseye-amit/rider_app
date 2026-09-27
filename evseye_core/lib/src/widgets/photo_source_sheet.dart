@@ -3,13 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../l10n/l10n.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_dimens.dart';
 import '../theme/app_typography.dart';
 import 'buttons.dart';
 import 'pressable.dart';
-
-import '../l10n/locale_controller.dart';
 
 enum PhotoSource { camera, gallery }
 

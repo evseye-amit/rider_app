@@ -15,5 +15,6 @@ class AllocateVehicle extends UseCase<DeploymentAllocation, AllocateParams> {
   final AllocationRepository _repository;
 
   @override
-  Future<Result<DeploymentAllocation>> call(AllocateParams params) => _repository.allocate(riderId: params.riderId, fleetId: params.fleetId);
+  Future<Result<DeploymentAllocation>> call(AllocateParams params) =>
+      _repository.allocate(riderId: params.riderId, fleetId: params.fleetId);
 }

@@ -46,14 +46,14 @@ class HomeSummary extends Equatable {
 
   @override
   List<Object?> get props => [
-        todayEarnings,
-        incentiveEarned,
-        rentDue,
-        walletBalance,
-        tripsToday,
-        announcements,
-        quickActions,
-      ];
+    todayEarnings,
+    incentiveEarned,
+    rentDue,
+    walletBalance,
+    tripsToday,
+    announcements,
+    quickActions,
+  ];
 }
 
 class Announcement extends Equatable {

@@ -31,16 +31,16 @@ class ActiveAllocation extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        riderName,
-        riderCode,
-        mobile,
-        vehicleNumber,
-        model,
-        allocatedOn,
-        teamLead,
-        plan,
-        batteryPercent,
-        status,
-      ];
+    id,
+    riderName,
+    riderCode,
+    mobile,
+    vehicleNumber,
+    model,
+    allocatedOn,
+    teamLead,
+    plan,
+    batteryPercent,
+    status,
+  ];
 }

@@ -24,83 +24,56 @@ class VehicleBand extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const IconTile(
-              icon: Icons.electric_scooter_rounded,
-              tone: AppColors.primary,
-              solid: true,
-              size: 44,
-            ),
+            const IconTile(icon: Icons.electric_scooter_rounded, tone: AppColors.primary, solid: true, size: 44),
             const SizedBox(width: Insets.md),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(context.l10n.commonScooter,
-                    style: AppText.bodySmall.copyWith(
-                      fontSize: 12,
-                      color: AppColors.onInkSecondary,
-                    ),
+                  Text(
+                    context.l10n.commonScooter,
+                    style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.onInkSecondary),
                   ),
                   const SizedBox(height: 1),
                   Text(
                     v?.vehicleNumber ?? '—',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppText.titleLarge.copyWith(
-                      fontSize: 20,
-                      color: AppColors.onInk,
-                    ),
+                    style: AppText.titleLarge.copyWith(fontSize: 20, color: AppColors.onInk),
                   ),
                 ],
               ),
             ),
             const SizedBox(width: Insets.sm),
             StatusChip(
-              label: v == null
-                  ? '—'
-                  : (v.iot.online ? context.l10n.scooterIotOnline : context.l10n.scooterIotOffline),
-              tone: v == null
-                  ? StatusTone.neutral
-                  : (v.iot.online ? StatusTone.success : StatusTone.danger),
+              label: v == null ? '—' : (v.iot.online ? context.l10n.scooterIotOnline : context.l10n.scooterIotOffline),
+              tone: v == null ? StatusTone.neutral : (v.iot.online ? StatusTone.success : StatusTone.danger),
               solid: true,
               dense: true,
             ),
           ],
         ),
         const Gap.xxl(),
-        Text(context.l10n.scooterBatteryCharge,
-          style: AppText.label.copyWith(color: AppColors.onInkSecondary),
-        ),
+        Text(context.l10n.scooterBatteryCharge, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
         const Gap.sm(),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              '$battery%',
-              style: AppText.numericLarge.copyWith(
-                fontSize: 38,
-                color: AppColors.onInk,
-              ),
-            ),
+            Text('$battery%', style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk)),
             if (v?.charging ?? false) ...[
               const SizedBox(width: Insets.md),
               Padding(
                 padding: const EdgeInsets.only(bottom: 6),
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 3,
-                  ),
-                  decoration: BoxDecoration(
-                    color: batteryTone.withValues(alpha: 0.18),
-                    borderRadius: Corners.pill,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(color: batteryTone.withValues(alpha: 0.18), borderRadius: Corners.pill),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.bolt_rounded, size: 12, color: batteryTone),
                       const SizedBox(width: 3),
-                      Text(context.l10n.scooterCharging,
+                      Text(
+                        context.l10n.scooterCharging,
                         style: AppText.bodySmall.copyWith(
                           fontSize: 11,
                           fontWeight: FontWeight.w800,
@@ -116,10 +89,7 @@ class VehicleBand extends StatelessWidget {
         ),
         const Gap.xl(),
         Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: Insets.md,
-            horizontal: Insets.sm,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: Insets.md, horizontal: Insets.sm),
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.06),
             borderRadius: Corners.brMd,
@@ -174,32 +144,18 @@ class IotPanel extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(context.l10n.scooterSignalStrength,
-              style: AppText.bodySmall.copyWith(
-                fontSize: 12.5,
-                color: AppColors.textSecondary,
-              ),
+            Text(
+              context.l10n.scooterSignalStrength,
+              style: AppText.bodySmall.copyWith(fontSize: 12.5, color: AppColors.textSecondary),
             ),
             const Spacer(),
             _SignalBars(strength: iot.signal),
           ],
         ),
         const SizedBox(height: Insets.sm),
-        KeyValueRow(
-          label: context.l10n.scooterDeviceId,
-          value: iot.deviceId,
-          icon: Icons.memory_rounded,
-        ),
-        KeyValueRow(
-          label: context.l10n.scooterLastPing,
-          value: iot.lastPing,
-          icon: Icons.sensors_rounded,
-        ),
-        KeyValueRow(
-          label: context.l10n.scooterFirmware,
-          value: 'v${iot.firmware}',
-          icon: Icons.system_update_rounded,
-        ),
+        KeyValueRow(label: context.l10n.scooterDeviceId, value: iot.deviceId, icon: Icons.memory_rounded),
+        KeyValueRow(label: context.l10n.scooterLastPing, value: iot.lastPing, icon: Icons.sensors_rounded),
+        KeyValueRow(label: context.l10n.scooterFirmware, value: 'v${iot.firmware}', icon: Icons.system_update_rounded),
       ],
     );
   }
@@ -227,10 +183,7 @@ class _SignalBars extends StatelessWidget {
           width: 4,
           height: 8.0 + i * 4,
           margin: const EdgeInsets.only(left: 2),
-          decoration: BoxDecoration(
-            color: active ? tone : AppColors.stroke,
-            borderRadius: BorderRadius.circular(2),
-          ),
+          decoration: BoxDecoration(color: active ? tone : AppColors.stroke, borderRadius: BorderRadius.circular(2)),
         );
       }),
     );

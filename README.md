@@ -65,16 +65,30 @@ Clean architecture, one folder per feature:
 
 ```
 lib/features/<feature>/
-├── domain/          entities, repository interface, use cases   (no Flutter)
-├── data/            repository implementation, JSON → entity mapping
-└── presentation/    cubit, pages, screen-local widgets
+├── domain/                  entities, repository interface, use cases   (no Flutter)
+├── data/                    repository implementation, JSON → entity mapping
+├── <feature>_dependencies.dart   Riverpod providers for the repository and its use cases
+└── presentation/
+    ├── providers/           screen state: FutureProviders and Notifiers
+    ├── pages/               Consumer widgets
+    └── widgets/             screen-local widgets
 ```
 
+- State management is [Riverpod](https://riverpod.dev) 3, written by hand
+  (no code generation). Pure fetches are `FutureProvider`s; screens with
+  polling, local edits or multi-step actions get an `AsyncNotifier` or
+  `Notifier`. Session state lives in `lib/core/session/` as one
+  `NotifierProvider` per app.
 - Repositories return `Result<T>` — `Ok` or `Err` with a typed `Failure`. They
-  never throw across the layer boundary.
-- `lib/app/di/injector.dart` is the only place dependencies are wired.
-- `go_router` handles all navigation. Paths live in `lib/app/router/app_routes.dart`;
-  nothing hardcodes a path string.
+  never throw across the layer boundary; `Result.getOrThrow()` is the bridge
+  into `AsyncValue` for providers.
+- Shared infrastructure (`SharedPreferences`, `TokenStore`, `ApiClient`, the
+  API clients and `UiConfigService`) is provided by `evseye_core`; each app's
+  `main.dart` loads `SharedPreferences` and overrides `sharedPreferencesProvider`
+  in the root `ProviderScope`.
+- `go_router` handles all navigation. The router is itself a provider that
+  listens to the session, so redirects follow sign-in state. Paths live in
+  `lib/app/router/app_routes.dart`; nothing hardcodes a path string.
 - Tabs use `StatefulShellRoute`, so each destination keeps its own back stack.
 
 ## Server-driven screens
@@ -197,42 +211,6 @@ cd <app_dir>
 dart run flutter_launcher_icons
 dart run flutter_native_splash:create
 ```
-
-## Tests
-
-```bash
-cd evseye_core        && flutter test                          # 17 — the engine
-cd rider_app          && flutter test --exclude-tags screenshots  # 52
-cd fleet_manager_app  && flutter test --exclude-tags screenshots  # 51
-```
-
-Each app also carries an **overflow suite** that pumps every screen at
-320x568 and 430x932 and fails on any `RenderFlex` overflow. It found 18 real
-layout breaks on the rider side alone, which is why it exists: a dense row of
-chips, a long vehicle number or a large rupee amount breaks on a small phone
-long before anyone notices on a simulator.
-
-### Reviewing the UI
-
-```bash
-cd rider_app && flutter test test/screenshot_test.dart --dart-define=OUT=build/screens
-```
-
-Renders every screen to a PNG so the whole app can be reviewed in one pass.
-Tagged `screenshots`, so it is excluded from the normal run.
-
-`evseye_core` covers condition evaluation, the validators, visible-only form
-validation, feature-flag parsing, document parsing, and that the registry hides
-gated nodes and survives an unknown component type.
-
-The two app suites run against the **real bundled JSON**, not fixtures, so a bad
-edit to `assets/config/*.json` fails the build rather than the app. They assert
-that every component type a document names is registered, that the flows have
-the steps the spec describes, and — concretely — that turning
-`PAN_VERIFICATION` off removes the field *and* stops it blocking submission,
-that dropping `TEAM_LEAD_OTP` leaves only the rider's OTP, and that the damage
-fields appear only once a vehicle is marked damaged and leave no stale errors
-behind when it is marked good again.
 
 ## Checks
 

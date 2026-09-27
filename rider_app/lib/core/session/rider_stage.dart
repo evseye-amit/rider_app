@@ -13,28 +13,22 @@ enum RiderStage {
   active;
 
   String get route => switch (this) {
-        signedOut => Routes.login,
-        onboarding => Routes.onboarding,
-        waiting => Routes.deploymentWaiting,
-        payment => Routes.deploymentPayment,
-        pdi => Routes.deploymentPdi,
-        training => Routes.deploymentTraining,
-        devicePairing => Routes.home,
-        active => Routes.home,
-      };
+    signedOut => Routes.login,
+    onboarding => Routes.onboarding,
+    waiting => Routes.deploymentWaiting,
+    payment => Routes.deploymentPayment,
+    pdi => Routes.deploymentPdi,
+    training => Routes.deploymentTraining,
+    devicePairing || active => Routes.home,
+  };
 
-  bool get isDeploying => switch (this) {
-        waiting || payment || pdi || training => true,
-        _ => false,
-      };
+  static RiderStage fromScreen(RiderScreen screen) => switch (screen) {
+    RiderScreen.onboarding => onboarding,
+    RiderScreen.waiting => waiting,
+    RiderScreen.payment => payment,
+    RiderScreen.pdi => pdi,
+    RiderScreen.training => training,
+    RiderScreen.devicePairing => devicePairing,
+    RiderScreen.home => active,
+  };
 }
-
-RiderStage riderStageFrom(RiderScreen screen) => switch (screen) {
-      RiderScreen.onboarding => RiderStage.onboarding,
-      RiderScreen.waiting => RiderStage.waiting,
-      RiderScreen.payment => RiderStage.payment,
-      RiderScreen.pdi => RiderStage.pdi,
-      RiderScreen.training => RiderStage.training,
-      RiderScreen.devicePairing => RiderStage.devicePairing,
-      RiderScreen.home => RiderStage.active,
-    };

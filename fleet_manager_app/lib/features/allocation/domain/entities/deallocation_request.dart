@@ -36,17 +36,17 @@ class DeallocationRequest extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        riderName,
-        riderCode,
-        mobile,
-        vehicleNumber,
-        model,
-        reason,
-        raisedOn,
-        teamLead,
-        priority,
-        allocationStatus,
-        postReturnInspectionId,
-      ];
+    id,
+    riderName,
+    riderCode,
+    mobile,
+    vehicleNumber,
+    model,
+    reason,
+    raisedOn,
+    teamLead,
+    priority,
+    allocationStatus,
+    postReturnInspectionId,
+  ];
 }

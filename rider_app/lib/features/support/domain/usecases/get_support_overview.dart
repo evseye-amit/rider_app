@@ -9,6 +9,5 @@ class GetSupportOverview extends UseCase<SupportOverview, NoParams> {
   final SupportRepository _repository;
 
   @override
-  Future<Result<SupportOverview>> call(NoParams params) =>
-      _repository.getOverview();
+  Future<Result<SupportOverview>> call(NoParams params) => _repository.getOverview();
 }

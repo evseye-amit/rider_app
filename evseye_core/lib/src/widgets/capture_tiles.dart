@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_dimens.dart';
 import '../theme/app_typography.dart';
 import 'pressable.dart';
 import 'status_chip.dart';
-
-import '../l10n/locale_controller.dart';
 
 enum UploadState { empty, uploading, uploaded, rejected }
 

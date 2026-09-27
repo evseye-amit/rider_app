@@ -16,12 +16,8 @@ class AllocationDonePage extends StatefulWidget {
   State<AllocationDonePage> createState() => _AllocationDonePageState();
 }
 
-class _AllocationDonePageState extends State<AllocationDonePage>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: Motion.slow,
-  )..forward();
+class _AllocationDonePageState extends State<AllocationDonePage> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(vsync: this, duration: Motion.slow)..forward();
 
   @override
   void dispose() {
@@ -79,10 +75,7 @@ class _AllocationDonePageState extends State<AllocationDonePage>
                     children: [
                       Text(widget.riderName, style: AppText.titleSmall.copyWith(fontSize: 14)),
                       SizedBox(height: 2),
-                      Text(
-                        'Vehicle ${widget.vehicleNumber}',
-                        style: AppText.bodySmall.copyWith(fontSize: 12),
-                      ),
+                      Text('Vehicle ${widget.vehicleNumber}', style: AppText.bodySmall.copyWith(fontSize: 12)),
                     ],
                   ),
                 ),

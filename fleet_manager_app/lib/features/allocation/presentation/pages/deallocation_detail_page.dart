@@ -1,65 +1,54 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../domain/entities/deallocation_request.dart';
-import '../../domain/usecases/get_deallocation_request.dart';
-import '../cubit/deallocation_detail_cubit.dart';
+import '../providers/deallocation_request_provider.dart';
 import '../widgets/allocation_widgets.dart';
 
-class DeallocationDetailPage extends StatelessWidget {
+class DeallocationDetailPage extends ConsumerWidget {
   const DeallocationDetailPage({required this.requestId, super.key});
 
   final String requestId;
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => DeallocationDetailCubit(GetDeallocationRequest(sl()), requestId)..load(),
-      child: const _DeallocationDetailView(),
-    );
-  }
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<DeallocationRequest> request = ref.watch(deallocationRequestProvider(requestId));
 
-class _DeallocationDetailView extends StatelessWidget {
-  const _DeallocationDetailView();
+    if (request.isLoading && !request.hasValue) {
+      return const Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: PageBody(
+            children: [
+              ShimmerBox(height: 160, borderRadius: Corners.brLg),
+              Gap.xl(),
+              ShimmerBox(height: 140, borderRadius: Corners.brLg),
+            ],
+          ),
+        ),
+      );
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<DeallocationDetailCubit, DeallocationDetailState>(
-      builder: (context, state) {
-        if (state.isLoading) {
-          return Scaffold(
-            backgroundColor: AppColors.canvas,
-            body: SafeArea(
-              child: PageBody(children: const [
-                ShimmerBox(height: 160, borderRadius: Corners.brLg),
-                Gap.xl(),
-                ShimmerBox(height: 140, borderRadius: Corners.brLg),
-              ]),
-            ),
-          );
-        }
-        if (state.status == DeallocationDetailStatus.failure || state.request == null) {
-          return AppScaffold(
-            title: context.l10n.allocationReturnRequest,
-            body: EmptyState(
-              title: context.l10n.allocationCouldNotLoadReturn,
-              message: state.message,
-              icon: Icons.cloud_off_rounded,
-              tone: AppColors.danger,
-              actionLabel: context.l10n.commonTryAgain,
-              onAction: () => context.read<DeallocationDetailCubit>().load(),
-            ),
-          );
-        }
-        return _Loaded(request: state.request!);
-      },
-    );
+    final DeallocationRequest? current = request.value;
+    if (request.hasError || current == null) {
+      return AppScaffold(
+        title: context.l10n.allocationReturnRequest,
+        body: EmptyState(
+          title: context.l10n.allocationCouldNotLoadReturn,
+          message: request.failureMessage,
+          icon: Icons.cloud_off_rounded,
+          tone: AppColors.danger,
+          actionLabel: context.l10n.commonTryAgain,
+          onAction: () => ref.invalidate(deallocationRequestProvider(requestId)),
+        ),
+      );
+    }
+
+    return _Loaded(request: current);
   }
 }
 
@@ -68,7 +57,12 @@ class _Loaded extends StatelessWidget {
 
   final DeallocationRequest request;
 
-  static List<String> get _handoverAngles => [LocaleController.strings.allocationLeftSide, LocaleController.strings.allocationRightSide, LocaleController.strings.allocationFront, LocaleController.strings.allocationBack];
+  List<String> _handoverAngles(AppL10n l10n) => [
+    l10n.allocationLeftSide,
+    l10n.allocationRightSide,
+    l10n.allocationFront,
+    l10n.allocationBack,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -76,106 +70,98 @@ class _Loaded extends StatelessWidget {
       bandColor: AppColors.ink,
       bottomPadding: 110,
       band: _Band(request: request),
-      bottomNavigationBar: _Footer(
-        onPressed: () => context.push('${Routes.deallocationFlow}?id=${request.id}'),
-      ),
+      bottomNavigationBar: _Footer(onPressed: () => context.push('${Routes.deallocationFlow}?id=${request.id}')),
       children: [
-          OverlapModuleCard(
-            title: context.l10n.allocationRider,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                KeyValueRow(
-                  label: context.l10n.commonMobile,
-                  value: Fmt.phone(request.mobile),
-                  icon: Icons.phone_rounded,
-                  trailing: CircleIconButton(
-                    icon: Icons.call_rounded,
-                    size: 34,
-                    iconSize: 16,
-
-                    background: AppColors.primaryWash,
-                    foreground: AppColors.primary,
-                    onTap: () {
-                      HapticFeedback.selectionClick();
-                      AppSnack.info(context, 'Calling ${Fmt.phone(request.mobile)}…');
-                    },
-                  ),
+        OverlapModuleCard(
+          title: context.l10n.allocationRider,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              KeyValueRow(
+                label: context.l10n.commonMobile,
+                value: Fmt.phone(request.mobile),
+                icon: Icons.phone_rounded,
+                trailing: CircleIconButton(
+                  icon: Icons.call_rounded,
+                  size: 34,
+                  iconSize: 16,
+                  background: AppColors.primaryWash,
+                  foreground: AppColors.primary,
+                  onTap: () {
+                    HapticFeedback.selectionClick();
+                    AppSnack.info(context, 'Calling ${Fmt.phone(request.mobile)}…');
+                  },
                 ),
-                KeyValueRow(label: context.l10n.commonTeamLead, value: request.teamLead, icon: Icons.badge_rounded),
-              ],
-            ),
+              ),
+              KeyValueRow(label: context.l10n.commonTeamLead, value: request.teamLead, icon: Icons.badge_rounded),
+            ],
           ),
-          const Gap.lg(),
-
-          ModuleCard(
-            title: context.l10n.commonVehicle,
-            leading: const IconTile(icon: Icons.electric_scooter_rounded, tone: AppColors.primary, size: 28),
-            child: Row(
-              children: [
-                const PhotoThumb(photo: BrandPhoto.fleet, size: 44),
-                const SizedBox(width: Insets.md),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(request.vehicleNumber, style: AppText.titleMedium.copyWith(fontSize: 15.5)),
-                      const SizedBox(height: 2),
-                      Text(request.model, style: AppText.bodySmall.copyWith(fontSize: 12)),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Gap.lg(),
-
-          ModuleCard(
-            title: context.l10n.allocationReturnReason,
-            leading: const IconTile(icon: Icons.info_outline_rounded, tone: AppColors.primary, size: 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(request.reason, style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.45)),
-                const SizedBox(height: Insets.md),
-                Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-                const SizedBox(height: Insets.md),
-                KeyValueRow(
-                  label: context.l10n.allocationRaised,
-                  value: Fmt.dateTime(request.raisedOn),
-                  icon: Icons.schedule_rounded,
-                ),
-              ],
-            ),
-          ),
-          const Gap.lg(),
-
-          ModuleCard(
-            title: context.l10n.allocationOriginalHandoverPhotos,
-            leading: const IconTile(icon: Icons.photo_library_rounded, tone: AppColors.primary, solid: true, size: 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(context.l10n.allocationCompareReturnedVehicleAgainstReference,
-                  style: AppText.bodySmall,
-                ),
-                const Gap.lg(),
-                GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: Insets.md,
-                  mainAxisSpacing: Insets.md,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  physics: const NeverScrollableScrollPhysics(),
+        ),
+        const Gap.lg(),
+        ModuleCard(
+          title: context.l10n.commonVehicle,
+          leading: const IconTile(icon: Icons.electric_scooter_rounded, tone: AppColors.primary, size: 28),
+          child: Row(
+            children: [
+              const PhotoThumb(photo: BrandPhoto.fleet, size: 44),
+              const SizedBox(width: Insets.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    for (final angle in _handoverAngles)
-                      PhotoSlot(label: angle, captured: true, onTap: () {}),
+                    Text(request.vehicleNumber, style: AppText.titleMedium.copyWith(fontSize: 15.5)),
+                    const SizedBox(height: 2),
+                    Text(request.model, style: AppText.bodySmall.copyWith(fontSize: 12)),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
+        const Gap.lg(),
+        ModuleCard(
+          title: context.l10n.allocationReturnReason,
+          leading: const IconTile(icon: Icons.info_outline_rounded, tone: AppColors.primary, size: 28),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(request.reason, style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.45)),
+              const SizedBox(height: Insets.md),
+              Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
+              const SizedBox(height: Insets.md),
+              KeyValueRow(
+                label: context.l10n.allocationRaised,
+                value: Fmt.dateTime(request.raisedOn),
+                icon: Icons.schedule_rounded,
+              ),
+            ],
+          ),
+        ),
+        const Gap.lg(),
+        ModuleCard(
+          title: context.l10n.allocationOriginalHandoverPhotos,
+          leading: const IconTile(icon: Icons.photo_library_rounded, tone: AppColors.primary, solid: true, size: 28),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(context.l10n.allocationCompareReturnedVehicleAgainstReference, style: AppText.bodySmall),
+              const Gap.lg(),
+              GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: Insets.md,
+                mainAxisSpacing: Insets.md,
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                  for (final String angle in _handoverAngles(context.l10n))
+                    PhotoSlot(label: angle, captured: true, onTap: () {}),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -193,10 +179,8 @@ class _Band extends StatelessWidget {
         Row(
           children: [
             Builder(
-              builder: (context) => InkCircleButton(
-                icon: Icons.arrow_back_rounded,
-                onTap: () => Navigator.of(context).maybePop(),
-              ),
+              builder: (context) =>
+                  InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
             ),
             const Spacer(),
             StatusChip(
@@ -209,7 +193,6 @@ class _Band extends StatelessWidget {
         ),
         const Gap.xl(),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             AppAvatar(name: request.riderName, size: 60),
             const SizedBox(width: Insets.lg),

@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
 
+import '../l10n/l10n.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_dimens.dart';
 import '../theme/app_typography.dart';
 import 'pressable.dart';
-
-import '../l10n/locale_controller.dart';
 class AppTextField extends StatefulWidget {
   const AppTextField({
     this.label,
@@ -153,7 +152,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   onSubmitted: widget.onSubmitted,
                   enableInteractiveSelection: !widget.blockClipboard,
                   contextMenuBuilder:
-                      widget.blockClipboard ? (_, __) => const SizedBox.shrink() : null,
+                      widget.blockClipboard ? (_, _) => const SizedBox.shrink() : null,
                   cursorColor: AppColors.cyan,
                   style: widget.style ??
                       AppText.bodyLarge.copyWith(
@@ -475,7 +474,7 @@ class AppSearchField extends StatelessWidget {
               ),
             ),
           ),
-          if (trailing != null) trailing!,
+          ?trailing,
         ],
       ),
     );

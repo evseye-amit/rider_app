@@ -9,6 +9,5 @@ class GetHubProfile extends UseCase<HubProfile, String> {
   final HubRepository _repository;
 
   @override
-
   Future<Result<HubProfile>> call(String params) => _repository.getProfile(params);
 }

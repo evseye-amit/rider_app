@@ -9,6 +9,5 @@ class GetDeallocationRequest extends UseCase<DeallocationRequest, String> {
   final AllocationRepository _repository;
 
   @override
-  Future<Result<DeallocationRequest>> call(String requestId) =>
-      _repository.getDeallocationRequest(requestId);
+  Future<Result<DeallocationRequest>> call(String requestId) => _repository.getDeallocationRequest(requestId);
 }

@@ -49,19 +49,14 @@ class IncentiveScheme extends Equatable {
 }
 
 class IncentivesOverview extends Equatable {
-  const IncentivesOverview({
-    required this.earnedThisWeek,
-    required this.schemes,
-  });
+  const IncentivesOverview({required this.earnedThisWeek, required this.schemes});
 
   final num earnedThisWeek;
   final List<IncentiveScheme> schemes;
 
-  List<IncentiveScheme> get active =>
-      schemes.where((s) => !s.achieved).toList(growable: false);
+  List<IncentiveScheme> get active => schemes.where((s) => !s.achieved).toList(growable: false);
 
-  List<IncentiveScheme> get achieved =>
-      schemes.where((s) => s.achieved).toList(growable: false);
+  List<IncentiveScheme> get achieved => schemes.where((s) => s.achieved).toList(growable: false);
 
   @override
   List<Object?> get props => [earnedThisWeek, schemes];

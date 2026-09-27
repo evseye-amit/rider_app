@@ -4,19 +4,17 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
+import '../l10n/l10n.dart';
 import '../utils/result.dart';
 import 'api_env.dart';
 import 'token_store.dart';
-
-import '../l10n/locale_controller.dart';
 class ApiClient {
   ApiClient({
-    required TokenStore tokens,
+    required this._tokens,
     Dio? dio,
     String? baseUrl,
     bool? logRequests,
-  })  : _tokens = tokens,
-        _dio = dio ??
+  })  : _dio = dio ??
             Dio(
               BaseOptions(
                 baseUrl: baseUrl ?? ApiEnv.baseUrl,
@@ -52,7 +50,7 @@ class ApiClient {
           if (token != null && token.isNotEmpty && options.extra['skipAuth'] != true) {
             options.headers['Authorization'] = 'Bearer $token';
           }
-          options.headers['Accept-Language'] = LocaleController.activeLanguageTag;
+          options.headers['Accept-Language'] = ActiveLocale.languageTag;
           handler.next(options);
         },
       ),
@@ -121,10 +119,10 @@ class ApiClient {
       if (res.statusCode == 401 && !skipAuth && !isRetry && _tokens.hasSession) {
         final bool refreshed = await _refreshOnce();
         if (refreshed) {
-          return _send<T>(method, path, body: body, query: query, parse: parse, isRetry: true);
+          return await _send<T>(method, path, body: body, query: query, parse: parse, isRetry: true);
         }
         onSessionExpired?.call();
-        return Result.err(UnauthorizedFailure(LocaleController.strings.errorSessionHasExpiredSignAgain));
+        return Result.err(UnauthorizedFailure(ActiveLocale.strings.errorSessionHasExpiredSignAgain));
       }
 
       final int status = res.statusCode ?? 0;
@@ -176,13 +174,13 @@ class ApiClient {
       message = (body['error'] as Map)['message']?.toString();
     }
     return switch (status) {
-      400 || 422 => ValidationFailure(message ?? LocaleController.strings.errorDidNotLookRight),
-      401 => UnauthorizedFailure(message ?? LocaleController.strings.commonSignContinue),
+      400 || 422 => ValidationFailure(message ?? ActiveLocale.strings.errorDidNotLookRight),
+      401 => UnauthorizedFailure(message ?? ActiveLocale.strings.commonSignContinue),
 
-      403 => ForbiddenFailure(message ?? LocaleController.strings.commonAccountCannotDo),
-      404 => NotFoundFailure(message ?? LocaleController.strings.commonNotFound),
-      429 => RateLimitFailure(message ?? LocaleController.strings.commonTooManyAttemptsWaitMoment),
-      _ => ServerFailure(message ?? LocaleController.strings.commonSomethingWentWrongPleaseTry, status),
+      403 => ForbiddenFailure(message ?? ActiveLocale.strings.commonAccountCannotDo),
+      404 => NotFoundFailure(message ?? ActiveLocale.strings.commonNotFound),
+      429 => RateLimitFailure(message ?? ActiveLocale.strings.commonTooManyAttemptsWaitMoment),
+      _ => ServerFailure(message ?? ActiveLocale.strings.commonSomethingWentWrongPleaseTry, status),
     };
   }
 
@@ -191,10 +189,10 @@ class ApiClient {
       DioExceptionType.connectionTimeout ||
       DioExceptionType.sendTimeout ||
       DioExceptionType.receiveTimeout =>
-        NetworkFailure(LocaleController.strings.errorServerTookTooLongAnswer),
+        NetworkFailure(ActiveLocale.strings.errorServerTookTooLongAnswer),
       DioExceptionType.connectionError =>
-        NetworkFailure(LocaleController.strings.errorCouldNotReachServerCheck),
-      _ => ServerFailure(e.message ?? LocaleController.strings.commonSomethingWentWrongPleaseTry),
+        NetworkFailure(ActiveLocale.strings.errorCouldNotReachServerCheck),
+      _ => ServerFailure(e.message ?? ActiveLocale.strings.commonSomethingWentWrongPleaseTry),
     };
   }
 }

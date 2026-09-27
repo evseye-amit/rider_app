@@ -3,19 +3,19 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../l10n/l10n.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_dimens.dart';
 import '../../theme/app_typography.dart';
+import '../../widgets/app_scaffold.dart';
 import '../../widgets/buttons.dart';
 import '../../widgets/feedback.dart';
-import '../../widgets/inputs.dart';
-import '../../widgets/app_scaffold.dart';
 import '../../widgets/glass_card.dart';
+import '../../widgets/inputs.dart';
 import '../models/ui_node.dart';
 import '../registry/dynamic_ui_scope.dart';
 import '../registry/widget_registry.dart';
 import 'node_utils.dart';
-import '../../l10n/locale_controller.dart';
 
 /// Stable relationship codes. The label shown to the rider is resolved from
 /// [relationLabel]; the code is what gets stored and compared.

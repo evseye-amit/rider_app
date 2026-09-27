@@ -1,8 +1,9 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/session/session_controller.dart';
+import '../../core/session/rider_session_provider.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_page.dart';
 import '../../features/deployment/presentation/pages/payment_page.dart';
@@ -25,22 +26,21 @@ import '../../features/support/presentation/pages/support_page.dart';
 import '../../features/wallet/presentation/pages/wallet_page.dart';
 import 'app_routes.dart';
 
-class AppRouter {
-  AppRouter({required SessionController session}) : _session = session;
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 
-  final SessionController _session;
+const Set<String> _publicPaths = {Routes.splash, Routes.intro, Routes.login, Routes.otp};
 
-  static final GlobalKey<NavigatorState> _rootKey = GlobalKey<NavigatorState>(debugLabel: 'root');
-  static final GlobalKey<NavigatorState> _shellKey = GlobalKey<NavigatorState>(debugLabel: 'shell');
+final routerProvider = Provider<GoRouter>((ref) {
+  final ValueNotifier<RiderStage> stage = ValueNotifier<RiderStage>(ref.read(riderSessionProvider).stage);
+  ref.onDispose(stage.dispose);
+  ref.listen(riderSessionProvider.select((s) => s.stage), (_, next) => stage.value = next);
 
-  static GlobalKey<NavigatorState> get rootNavigatorKey => _rootKey;
-
-  late final GoRouter config = GoRouter(
-    navigatorKey: _rootKey,
+  return GoRouter(
+    navigatorKey: _rootNavigatorKey,
     initialLocation: Routes.splash,
-    debugLogDiagnostics: false,
-    refreshListenable: _session,
-    redirect: _guard,
+    refreshListenable: stage,
+    redirect: (context, state) => _redirect(stage.value, state.uri.path),
     routes: [
       GoRoute(path: Routes.splash, name: 'splash', builder: (context, state) => const SplashPage()),
       GoRoute(path: Routes.intro, name: 'intro', builder: (context, state) => const IntroPage()),
@@ -53,7 +53,6 @@ class AppRouter {
           otpRequestId: state.uri.queryParameters['request'] ?? '',
         ),
       ),
-
       GoRoute(
         path: Routes.onboarding,
         name: 'onboarding',
@@ -66,18 +65,28 @@ class AppRouter {
           ),
         ],
       ),
-
-      GoRoute(path: Routes.deploymentWaiting, name: 'deploymentWaiting', builder: (context, state) => const WaitingPage()),
-      GoRoute(path: Routes.deploymentPayment, name: 'deploymentPayment', builder: (context, state) => const PaymentPage()),
+      GoRoute(
+        path: Routes.deploymentWaiting,
+        name: 'deploymentWaiting',
+        builder: (context, state) => const WaitingPage(),
+      ),
+      GoRoute(
+        path: Routes.deploymentPayment,
+        name: 'deploymentPayment',
+        builder: (context, state) => const PaymentPage(),
+      ),
       GoRoute(path: Routes.deploymentPdi, name: 'deploymentPdi', builder: (context, state) => const PdiPage()),
-      GoRoute(path: Routes.deploymentTraining, name: 'deploymentTraining', builder: (context, state) => const TrainingPage()),
-
+      GoRoute(
+        path: Routes.deploymentTraining,
+        name: 'deploymentTraining',
+        builder: (context, state) => const TrainingPage(),
+      ),
       StatefulShellRoute.indexedStack(
-        parentNavigatorKey: _rootKey,
+        parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state, navigationShell) => RiderShell(navigationShell: navigationShell),
         branches: [
           StatefulShellBranch(
-            navigatorKey: _shellKey,
+            navigatorKey: _homeNavigatorKey,
             routes: [GoRoute(path: Routes.home, name: 'home', builder: (context, state) => const HomePage())],
           ),
           StatefulShellBranch(
@@ -93,7 +102,7 @@ class AppRouter {
                   GoRoute(
                     path: 'raise',
                     name: 'raiseTicket',
-                    parentNavigatorKey: _rootKey,
+                    parentNavigatorKey: _rootNavigatorKey,
                     builder: (context, state) => RaiseTicketPage(categoryKey: state.uri.queryParameters['category']),
                   ),
                 ],
@@ -105,35 +114,31 @@ class AppRouter {
           ),
         ],
       ),
-
       GoRoute(path: Routes.incentives, name: 'incentives', builder: (context, state) => const IncentivesPage()),
       GoRoute(path: Routes.rentals, name: 'rentals', builder: (context, state) => const RentalsPage()),
       GoRoute(path: Routes.profile, name: 'profile', builder: (context, state) => const ProfilePage()),
-      GoRoute(path: Routes.notifications, name: 'notifications', builder: (context, state) => const NotificationsPage()),
+      GoRoute(
+        path: Routes.notifications,
+        name: 'notifications',
+        builder: (context, state) => const NotificationsPage(),
+      ),
     ],
     errorBuilder: (context, state) => _RouteErrorPage(location: state.uri.toString()),
   );
+});
 
-  String? _guard(BuildContext context, GoRouterState state) {
-    final String path = state.uri.path;
-    const Set<String> preAuth = {Routes.splash, Routes.intro, Routes.login, Routes.otp};
-    if (preAuth.contains(path)) return null;
-
-    final RiderStage stage = _session.stage;
-    return switch (stage) {
-      RiderStage.signedOut => Routes.login,
-      RiderStage.onboarding => path.startsWith(Routes.onboarding) ? null : Routes.onboarding,
-
-      RiderStage.waiting ||
-      RiderStage.payment ||
-      RiderStage.pdi ||
-      RiderStage.training =>
-        path == stage.route ? null : stage.route,
-      RiderStage.devicePairing ||
-      RiderStage.active =>
-        path.startsWith(Routes.onboarding) || path.startsWith('/deployment') ? Routes.home : null,
-    };
-  }
+String? _redirect(RiderStage stage, String path) {
+  if (_publicPaths.contains(path)) return null;
+  return switch (stage) {
+    RiderStage.signedOut => Routes.login,
+    RiderStage.onboarding => path.startsWith(Routes.onboarding) ? null : Routes.onboarding,
+    RiderStage.waiting ||
+    RiderStage.payment ||
+    RiderStage.pdi ||
+    RiderStage.training => path == stage.route ? null : stage.route,
+    RiderStage.devicePairing ||
+    RiderStage.active => path.startsWith(Routes.onboarding) || path.startsWith('/deployment') ? Routes.home : null,
+  };
 }
 
 class _RouteErrorPage extends StatelessWidget {

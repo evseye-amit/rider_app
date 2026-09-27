@@ -1,73 +1,56 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
+import '../../../../core/session/rider_session_provider.dart';
 import '../../../ride/presentation/widgets/pairing_flash.dart';
 import '../../../ride/presentation/widgets/vehicle_power_flash.dart';
-import '../../../../core/session/session_controller.dart';
 
-class RiderShell extends StatefulWidget {
+class RiderShell extends ConsumerWidget {
   const RiderShell({required this.navigationShell, super.key});
 
   final StatefulNavigationShell navigationShell;
 
-  @override
-  State<RiderShell> createState() => _RiderShellState();
-}
+  void _onPowerTap(BuildContext context, WidgetRef ref) {
+    final RiderSession session = ref.read(riderSessionProvider);
+    final RiderSessionNotifier notifier = ref.read(riderSessionProvider.notifier);
+    if (session.pairing) return;
 
-class _RiderShellState extends State<RiderShell> {
-  @override
-  void initState() {
-    super.initState();
-    sl<SessionController>().loadPairing();
+    if (!session.scooterPaired) {
+      notifier.setPairing(true);
+      PairingFlash.show(context, onPaired: notifier.markPaired);
+      return;
+    }
+
+    HapticFeedback.mediumImpact();
+
+    if (!session.present) {
+      AppSnack.warning(context, context.l10n.homeMarkYourselfPresentSwitchVehicle);
+      return;
+    }
+    final bool next = !session.vehicleOn;
+    notifier.setVehicleOn(next);
+    VehiclePowerFlash.show(context, on: next);
   }
 
   @override
-  Widget build(BuildContext context) {
-    final SessionController session = sl<SessionController>();
-    final StatefulNavigationShell navigationShell = widget.navigationShell;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final RiderSession session = ref.watch(riderSessionProvider);
 
     return Scaffold(
       backgroundColor: AppColors.canvas,
       extendBody: true,
       body: navigationShell,
-      bottomNavigationBar: ListenableBuilder(
-        listenable: session,
-        builder: (context, _) => RiderBottomBar(
-          currentIndex: navigationShell.currentIndex,
-          vehicleOn: session.vehicleOn,
-          canRide: session.present,
-          paired: session.scooterPaired,
-          pairing: session.pairing,
-          onTap: (index) => navigationShell.goBranch(
-            index,
-            initialLocation: index == navigationShell.currentIndex,
-          ),
-          onPowerTap: () {
-            if (session.pairing) return;
-
-            if (!session.scooterPaired) {
-              session.setPairing(true);
-              PairingFlash.show(context, onPaired: session.markPaired);
-              return;
-            }
-
-            HapticFeedback.mediumImpact();
-
-            if (!session.present) {
-              AppSnack.warning(
-                context,
-                context.l10n.homeMarkYourselfPresentSwitchVehicle,
-              );
-              return;
-            }
-            final bool next = !session.vehicleOn;
-            session.setVehicleOn(next);
-            VehiclePowerFlash.show(context, on: next);
-          },
-        ),
+      bottomNavigationBar: RiderBottomBar(
+        currentIndex: navigationShell.currentIndex,
+        vehicleOn: session.vehicleOn,
+        canRide: session.present,
+        paired: session.scooterPaired,
+        pairing: session.pairing,
+        onTap: (index) => navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex),
+        onPowerTap: () => _onPowerTap(context, ref),
       ),
     );
   }
@@ -82,11 +65,11 @@ enum RiderTab {
   const RiderTab(this.activeIcon, this.icon);
 
   String label(AppL10n l10n) => switch (this) {
-        RiderTab.home => l10n.hubHome,
-        RiderTab.scooter => l10n.homeScooter,
-        RiderTab.wallet => l10n.commonWallet,
-        RiderTab.support => l10n.commonSupport,
-      };
+    RiderTab.home => l10n.hubHome,
+    RiderTab.scooter => l10n.homeScooter,
+    RiderTab.wallet => l10n.commonWallet,
+    RiderTab.support => l10n.commonSupport,
+  };
   final IconData activeIcon;
   final IconData icon;
 }
@@ -135,37 +118,15 @@ class RiderBottomBar extends StatelessWidget {
               decoration: const BoxDecoration(
                 color: AppColors.surface,
                 border: Border(top: BorderSide(color: AppColors.stroke)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x14122C52),
-                    blurRadius: 16,
-                    offset: Offset(0, -4),
-                  ),
-                ],
+                boxShadow: [BoxShadow(color: Color(0x14122C52), blurRadius: 16, offset: Offset(0, -4))],
               ),
               child: Row(
                 children: [
-                  _BarItem(
-                    tab: RiderTab.home,
-                    active: currentIndex == 0,
-                    onTap: () => onTap(0),
-                  ),
-                  _BarItem(
-                    tab: RiderTab.scooter,
-                    active: currentIndex == 1,
-                    onTap: () => onTap(1),
-                  ),
+                  _BarItem(tab: RiderTab.home, active: currentIndex == 0, onTap: () => onTap(0)),
+                  _BarItem(tab: RiderTab.scooter, active: currentIndex == 1, onTap: () => onTap(1)),
                   const SizedBox(width: _powerSize + 16),
-                  _BarItem(
-                    tab: RiderTab.wallet,
-                    active: currentIndex == 3,
-                    onTap: () => onTap(3),
-                  ),
-                  _BarItem(
-                    tab: RiderTab.support,
-                    active: currentIndex == 2,
-                    onTap: () => onTap(2),
-                  ),
+                  _BarItem(tab: RiderTab.wallet, active: currentIndex == 3, onTap: () => onTap(3)),
+                  _BarItem(tab: RiderTab.support, active: currentIndex == 2, onTap: () => onTap(2)),
                 ],
               ),
             ),
@@ -345,19 +306,12 @@ class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderSta
             shape: BoxShape.circle,
 
             color: filled ? fill : AppColors.surface,
-            border: Border.all(
-              color: filled ? fill : AppColors.strokeStrong,
-              width: 1.4,
-            ),
+            border: Border.all(color: filled ? fill : AppColors.strokeStrong, width: 1.4),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                _icon,
-                size: 23,
-                color: filled ? Colors.white : AppColors.primary,
-              ),
+              Icon(_icon, size: 23, color: filled ? Colors.white : AppColors.primary),
               const SizedBox(height: 1),
               Text(
                 _label,

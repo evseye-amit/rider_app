@@ -9,9 +9,7 @@ class ScooterDetailsPage extends StatelessWidget {
   final Vehicle vehicle;
 
   static Future<void> open(BuildContext context, Vehicle vehicle) =>
-      Navigator.of(context).push<void>(
-        MaterialPageRoute(builder: (_) => ScooterDetailsPage(vehicle: vehicle)),
-      );
+      Navigator.of(context).push<void>(MaterialPageRoute(builder: (_) => ScooterDetailsPage(vehicle: vehicle)));
 
   String _or(String? value) => (value == null || value.trim().isEmpty) ? '—' : value.trim();
 
@@ -42,7 +40,11 @@ class ScooterDetailsPage extends StatelessWidget {
                   value: vehicle.vehicleNumber,
                   icon: Icons.confirmation_number_rounded,
                 ),
-                KeyValueRow(label: context.l10n.commonModel, value: _or(vehicle.model), icon: Icons.two_wheeler_rounded),
+                KeyValueRow(
+                  label: context.l10n.commonModel,
+                  value: _or(vehicle.model),
+                  icon: Icons.two_wheeler_rounded,
+                ),
                 KeyValueRow(label: context.l10n.commonColour, value: _or(vehicle.colour), icon: Icons.palette_rounded),
                 KeyValueRow(label: 'Chassis / VIN', value: _or(vehicle.vin), icon: Icons.tag_rounded),
               ],

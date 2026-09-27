@@ -28,16 +28,7 @@ class WalletTransaction extends Equatable {
   bool get isCredit => type == TransactionType.credit;
 
   @override
-  List<Object?> get props => [
-    id,
-    type,
-    category,
-    title,
-    subtitle,
-    amount,
-    at,
-    status,
-  ];
+  List<Object?> get props => [id, type, category, title, subtitle, amount, at, status];
 }
 
 class WalletSummary extends Equatable {

@@ -9,6 +9,5 @@ class GetWallet extends UseCase<WalletSummary, NoParams> {
   final WalletRepository _repository;
 
   @override
-  Future<Result<WalletSummary>> call(NoParams params) =>
-      _repository.getWallet();
+  Future<Result<WalletSummary>> call(NoParams params) => _repository.getWallet();
 }

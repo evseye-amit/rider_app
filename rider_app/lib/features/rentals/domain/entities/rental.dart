@@ -34,15 +34,7 @@ class RentalInvoice extends Equatable {
   num get itemsTotal => items.fold<num>(0, (a, b) => a + b.amount);
 
   @override
-  List<Object?> get props => [
-    id,
-    periodLabel,
-    amount,
-    dueDate,
-    paidOn,
-    status,
-    items,
-  ];
+  List<Object?> get props => [id, periodLabel, amount, dueDate, paidOn, status, items];
 }
 
 class RentalPlan extends Equatable {
@@ -66,14 +58,7 @@ class RentalPlan extends Equatable {
   Duration get timeToDebit => nextDebitDate.difference(DateTime.now());
 
   @override
-  List<Object?> get props => [
-    name,
-    weeklyRent,
-    nextDebitDate,
-    autoDebitEnabled,
-    mandateStatus,
-    mandateRef,
-  ];
+  List<Object?> get props => [name, weeklyRent, nextDebitDate, autoDebitEnabled, mandateStatus, mandateRef];
 }
 
 class RentalsOverview extends Equatable {

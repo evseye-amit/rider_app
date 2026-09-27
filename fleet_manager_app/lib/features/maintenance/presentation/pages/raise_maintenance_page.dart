@@ -1,69 +1,40 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../domain/entities/raise_job_input.dart';
 import '../../domain/entities/vehicle_option.dart';
 import '../../domain/entities/vendor_option.dart';
-import '../../domain/usecases/get_vehicle_options.dart';
-import '../../domain/usecases/get_vendor_options.dart';
-import '../../domain/usecases/raise_maintenance_job.dart';
-import '../cubit/raise_maintenance_cubit.dart';
+import '../../maintenance_dependencies.dart';
+import '../providers/maintenance_options_providers.dart';
 
-List<String> _jobTypes = [
-  LocaleController.strings.maintenanceScheduledService,
-  LocaleController.strings.maintenanceBattery,
-  LocaleController.strings.commonBrakes,
-  LocaleController.strings.maintenanceTyres,
-  'IoT',
-  LocaleController.strings.maintenanceBody,
-  LocaleController.strings.commonOther,
-];
-
-class RaiseMaintenancePage extends StatelessWidget {
+class RaiseMaintenancePage extends ConsumerStatefulWidget {
   const RaiseMaintenancePage({this.vehicleNumber, super.key});
 
   final String? vehicleNumber;
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => RaiseMaintenanceCubit(
-        GetVehicleOptions(sl()),
-        GetVendorOptions(sl()),
-        RaiseMaintenanceJob(sl()),
-      )..load(),
-      child: _RaiseMaintenanceView(prefillVehicleNumber: vehicleNumber),
-    );
-  }
+  ConsumerState<RaiseMaintenancePage> createState() => _RaiseMaintenancePageState();
 }
 
-class _RaiseMaintenanceView extends StatefulWidget {
-  const _RaiseMaintenanceView({this.prefillVehicleNumber});
+class _RaiseMaintenancePageState extends ConsumerState<RaiseMaintenancePage> {
+  static const List<String> _photoSlots = ['issue', 'context', 'closeup'];
 
-  final String? prefillVehicleNumber;
+  final TextEditingController _issueController = TextEditingController();
+  final TextEditingController _odometerController = TextEditingController();
+  final Set<String> _photos = {};
 
-  @override
-  State<_RaiseMaintenanceView> createState() => _RaiseMaintenanceViewState();
-}
-
-class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
   VehicleOption? _vehicle;
   String? _jobType;
   String _priority = 'normal';
   String? _vendor;
   bool _prefilled = false;
-  final TextEditingController _issueController = TextEditingController();
-  final TextEditingController _odometerController = TextEditingController();
+  bool _submitting = false;
 
   String? _vehicleError;
   String? _jobTypeError;
   String? _issueError;
-
-  final Set<String> _photos = {};
-  static const List<String> _photoSlots = ['issue', 'context', 'closeup'];
 
   @override
   void dispose() {
@@ -72,233 +43,249 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
     super.dispose();
   }
 
+  List<String> _jobTypes(AppL10n l10n) => [
+    l10n.maintenanceScheduledService,
+    l10n.maintenanceBattery,
+    l10n.commonBrakes,
+    l10n.maintenanceTyres,
+    'IoT',
+    l10n.maintenanceBody,
+    l10n.commonOther,
+  ];
+
   void _prefill(List<VehicleOption> vehicles) {
-    if (_prefilled || widget.prefillVehicleNumber == null) return;
-    final VehicleOption? match =
-        vehicles.where((v) => v.number == widget.prefillVehicleNumber).firstOrNull;
-    if (match != null) {
-      _vehicle = match;
-    }
+    if (_prefilled || widget.vehicleNumber == null) return;
+    _vehicle = vehicles.where((vehicle) => vehicle.number == widget.vehicleNumber).firstOrNull ?? _vehicle;
     _prefilled = true;
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RaiseMaintenanceCubit, RaiseMaintenanceState>(
-      builder: (context, state) {
-        if (state.isLoading) {
-          return AppScaffold(
-            title: context.l10n.maintenanceRaiseJob,
-            body: PageBody(children: const [
-              ShimmerBox(height: 108, borderRadius: Corners.brLg),
-              Gap.xl(),
-              ShimmerBox(height: 54, borderRadius: Corners.brMd),
-              Gap.lg(),
-              ShimmerBox(height: 54, borderRadius: Corners.brMd),
-              Gap.lg(),
-              ShimmerBox(height: 120, borderRadius: Corners.brMd),
-            ]),
-          );
-        }
-        if (state.status == RaiseMaintenanceStatus.failure) {
-          return AppScaffold(
-            title: context.l10n.maintenanceRaiseJob,
-            body: EmptyState(
-              title: context.l10n.maintenanceCouldNotLoadForm,
-              message: state.message,
-              icon: Icons.cloud_off_rounded,
-              tone: AppColors.danger,
-              actionLabel: context.l10n.commonTryAgain,
-              onAction: () => context.read<RaiseMaintenanceCubit>().load(),
+    final AsyncValue<List<VehicleOption>> vehicles = ref.watch(vehicleOptionsProvider);
+    final AsyncValue<List<VendorOption>> vendors = ref.watch(vendorOptionsProvider);
+
+    if ((vehicles.isLoading && !vehicles.hasValue) || (vendors.isLoading && !vendors.hasValue)) {
+      return AppScaffold(
+        title: context.l10n.maintenanceRaiseJob,
+        body: const PageBody(
+          children: [
+            ShimmerBox(height: 108, borderRadius: Corners.brLg),
+            Gap.xl(),
+            ShimmerBox(height: 54, borderRadius: Corners.brMd),
+            Gap.lg(),
+            ShimmerBox(height: 54, borderRadius: Corners.brMd),
+            Gap.lg(),
+            ShimmerBox(height: 120, borderRadius: Corners.brMd),
+          ],
+        ),
+      );
+    }
+
+    final String? loadError = vehicles.failureMessage ?? vendors.failureMessage;
+    final List<VehicleOption>? vehicleOptions = vehicles.value;
+    final List<VendorOption>? vendorOptions = vendors.value;
+    if (loadError != null || vehicleOptions == null || vendorOptions == null) {
+      return AppScaffold(
+        title: context.l10n.maintenanceRaiseJob,
+        body: EmptyState(
+          title: context.l10n.maintenanceCouldNotLoadForm,
+          message: loadError,
+          icon: Icons.cloud_off_rounded,
+          tone: AppColors.danger,
+          actionLabel: context.l10n.commonTryAgain,
+          onAction: () {
+            ref.invalidate(vehicleOptionsProvider);
+            ref.invalidate(vendorOptionsProvider);
+          },
+        ),
+      );
+    }
+
+    _prefill(vehicleOptions);
+
+    return AppScaffold(
+      title: context.l10n.maintenanceRaiseJob,
+      subtitle: context.l10n.maintenanceSendVehicleWorkshop,
+      footer: PrimaryButton(
+        label: context.l10n.maintenanceRaiseJob2,
+        icon: Icons.build_rounded,
+        loading: _submitting,
+        onPressed: _submitting ? null : _submit,
+      ),
+      body: PageBody(
+        children: [
+          PhotoPanel(
+            photo: BrandPhoto.service,
+            height: 132,
+            title: context.l10n.maintenanceSendWorkshop,
+            subtitle: context.l10n.maintenanceTechnicianPicksUpAsSoon,
+          ),
+          const Gap.lg(),
+          ModuleCard(
+            title: context.l10n.commonVehicle,
+            leading: const IconTile(icon: Icons.electric_scooter_rounded, tone: AppColors.primary, size: 28),
+            child: AppPickerField(
+              label: context.l10n.commonVehicle,
+              required: true,
+              hint: context.l10n.maintenanceSelectVehicle,
+              value: _vehicle == null ? null : '${_vehicle!.number} · ${_vehicle!.model}',
+              errorText: _vehicleError,
+              prefixIcon: Icons.electric_scooter_rounded,
+              onTap: () => _pickVehicle(vehicleOptions),
             ),
-          );
-        }
-
-        _prefill(state.vehicles);
-
-        return AppScaffold(
-          title: context.l10n.maintenanceRaiseJob,
-          subtitle: context.l10n.maintenanceSendVehicleWorkshop,
-          footer: PrimaryButton(
-            label: context.l10n.maintenanceRaiseJob2,
-            icon: Icons.build_rounded,
-            loading: state.submitting,
-            onPressed: state.submitting ? null : () => _submit(context, state),
           ),
-          body: PageBody(
-            children: [
-              PhotoPanel(
-                photo: BrandPhoto.service,
-                height: 132,
-                title: context.l10n.maintenanceSendWorkshop,
-                subtitle: context.l10n.maintenanceTechnicianPicksUpAsSoon,
-              ),
-              const Gap.lg(),
-              ModuleCard(
-                title: context.l10n.commonVehicle,
-                leading: const IconTile(icon: Icons.electric_scooter_rounded, tone: AppColors.primary, size: 28),
-                child: AppPickerField(
-                  label: context.l10n.commonVehicle,
+          const Gap.lg(),
+          ModuleCard(
+            title: context.l10n.maintenanceJobDetails,
+            leading: const IconTile(icon: Icons.assignment_rounded, tone: AppColors.primary, size: 28),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppPickerField(
+                  label: context.l10n.maintenanceJobType,
                   required: true,
-                  hint: context.l10n.maintenanceSelectVehicle,
-                  value: _vehicle == null ? null : '${_vehicle!.number} · ${_vehicle!.model}',
-                  errorText: _vehicleError,
-                  prefixIcon: Icons.electric_scooter_rounded,
-                  onTap: () => _pickVehicle(context, state.vehicles),
+                  hint: context.l10n.maintenanceWhatKindJob,
+                  value: _jobType,
+                  errorText: _jobTypeError,
+                  prefixIcon: Icons.category_rounded,
+                  onTap: _pickJobType,
                 ),
-              ),
-              const Gap.lg(),
-
-              ModuleCard(
-                title: context.l10n.maintenanceJobDetails,
-                leading: const IconTile(icon: Icons.assignment_rounded, tone: AppColors.primary, size: 28),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppPickerField(
-                      label: context.l10n.maintenanceJobType,
-                      required: true,
-                      hint: context.l10n.maintenanceWhatKindJob,
-                      value: _jobType,
-                      errorText: _jobTypeError,
-                      prefixIcon: Icons.category_rounded,
-                      onTap: () => _pickJobType(context),
-                    ),
-                    const Gap.lg(),
-                    _PrioritySelector(
-                      value: _priority,
-                      onChanged: (p) => setState(() => _priority = p),
-                    ),
-                    const Gap.lg(),
-                    AppTextField(
-                      label: context.l10n.maintenanceIssueDescription,
-                      hint: context.l10n.maintenanceWhatWrongWithVehicle,
-                      required: true,
-                      maxLines: 4,
-                      controller: _issueController,
-                      errorText: _issueError,
-                      textCapitalization: TextCapitalization.sentences,
-                    ),
-                    const Gap.lg(),
-                    AppTextField(
-                      label: context.l10n.maintenanceOdometerReading,
-                      hint: context.l10n.maintenanceHintOdometer,
-                      keyboardType: TextInputType.number,
-                      prefixIcon: Icons.speed_rounded,
-                      controller: _odometerController,
-                      helper: context.l10n.maintenanceKilometresAsShownCluster,
-                    ),
-                  ],
+                const Gap.lg(),
+                _PrioritySelector(value: _priority, onChanged: (priority) => setState(() => _priority = priority)),
+                const Gap.lg(),
+                AppTextField(
+                  label: context.l10n.maintenanceIssueDescription,
+                  hint: context.l10n.maintenanceWhatWrongWithVehicle,
+                  required: true,
+                  maxLines: 4,
+                  controller: _issueController,
+                  errorText: _issueError,
+                  textCapitalization: TextCapitalization.sentences,
                 ),
-              ),
-              const Gap.lg(),
-
-              ModuleCard(
-                title: context.l10n.maintenanceVendor,
-                leading: const IconTile(icon: Icons.build_rounded, tone: AppColors.primary, size: 28),
-                child: AppPickerField(
-                  label: context.l10n.maintenanceAssign,
-                  hint: context.l10n.maintenanceChooseLater,
-                  value: _vendor,
-                  prefixIcon: Icons.storefront_rounded,
-                  onTap: () => _pickVendor(context, state.vendors),
+                const Gap.lg(),
+                AppTextField(
+                  label: context.l10n.maintenanceOdometerReading,
+                  hint: context.l10n.maintenanceHintOdometer,
+                  keyboardType: TextInputType.number,
+                  prefixIcon: Icons.speed_rounded,
+                  controller: _odometerController,
+                  helper: context.l10n.maintenanceKilometresAsShownCluster,
                 ),
-              ),
-              const Gap.lg(),
-
-              ModuleCard(
-                title: context.l10n.maintenancePhotoEvidence,
-                leading: const IconTile(icon: Icons.photo_camera_rounded, tone: AppColors.primary, size: 28),
-                child: GridView.count(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: Insets.md,
-                  mainAxisSpacing: Insets.md,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    for (final slot in _photoSlots)
-                      PhotoSlot(
-                        label: switch (slot) {
-                          'issue' => context.l10n.maintenanceIssueCloseUp,
-                          'context' => context.l10n.maintenanceWideShot,
-                          _ => context.l10n.commonOdometer,
-                        },
-                        captured: _photos.contains(slot),
-                        onTap: () {
-                          HapticFeedback.selectionClick();
-                          setState(() => _photos.add(slot));
-                        },
-                        onRetake: () => setState(() => _photos.remove(slot)),
-                      ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        );
-      },
+          const Gap.lg(),
+          ModuleCard(
+            title: context.l10n.maintenanceVendor,
+            leading: const IconTile(icon: Icons.build_rounded, tone: AppColors.primary, size: 28),
+            child: AppPickerField(
+              label: context.l10n.maintenanceAssign,
+              hint: context.l10n.maintenanceChooseLater,
+              value: _vendor,
+              prefixIcon: Icons.storefront_rounded,
+              onTap: () => _pickVendor(vendorOptions),
+            ),
+          ),
+          const Gap.lg(),
+          ModuleCard(
+            title: context.l10n.maintenancePhotoEvidence,
+            leading: const IconTile(icon: Icons.photo_camera_rounded, tone: AppColors.primary, size: 28),
+            child: GridView.count(
+              crossAxisCount: 3,
+              crossAxisSpacing: Insets.md,
+              mainAxisSpacing: Insets.md,
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                for (final String slot in _photoSlots)
+                  PhotoSlot(
+                    label: switch (slot) {
+                      'issue' => context.l10n.maintenanceIssueCloseUp,
+                      'context' => context.l10n.maintenanceWideShot,
+                      _ => context.l10n.commonOdometer,
+                    },
+                    captured: _photos.contains(slot),
+                    onTap: () {
+                      HapticFeedback.selectionClick();
+                      setState(() => _photos.add(slot));
+                    },
+                    onRetake: () => setState(() => _photos.remove(slot)),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Future<void> _pickVehicle(BuildContext context, List<VehicleOption> vehicles) async {
+  Future<void> _pickVehicle(List<VehicleOption> vehicles) async {
     final VehicleOption? picked = await AppSheet.show<VehicleOption>(
       context,
       title: context.l10n.maintenanceSelectVehicle,
       child: Column(
         children: [
-          for (final v in vehicles)
+          for (final VehicleOption vehicle in vehicles)
             Padding(
               padding: const EdgeInsets.only(bottom: Insets.sm + 2),
               child: AppRadioTile(
-                selected: _vehicle?.number == v.number,
-                title: v.number,
-                subtitle: v.model,
-                onTap: () => Navigator.of(context).pop(v),
+                selected: _vehicle?.number == vehicle.number,
+                title: vehicle.number,
+                subtitle: vehicle.model,
+                onTap: () => Navigator.of(context).pop(vehicle),
               ),
             ),
         ],
       ),
     );
-    if (picked != null) setState(() { _vehicle = picked; _vehicleError = null; });
+    if (picked == null) return;
+    setState(() {
+      _vehicle = picked;
+      _vehicleError = null;
+    });
   }
 
-  Future<void> _pickJobType(BuildContext context) async {
+  Future<void> _pickJobType() async {
     final String? picked = await AppSheet.show<String>(
       context,
       title: context.l10n.maintenanceJobType,
       child: Column(
         children: [
-          for (final t in _jobTypes)
+          for (final String type in _jobTypes(context.l10n))
             Padding(
               padding: const EdgeInsets.only(bottom: Insets.sm + 2),
               child: AppRadioTile(
-                selected: _jobType == t,
-                title: t,
-                onTap: () => Navigator.of(context).pop(t),
+                selected: _jobType == type,
+                title: type,
+                onTap: () => Navigator.of(context).pop(type),
               ),
             ),
         ],
       ),
     );
-    if (picked != null) setState(() { _jobType = picked; _jobTypeError = null; });
+    if (picked == null) return;
+    setState(() {
+      _jobType = picked;
+      _jobTypeError = null;
+    });
   }
 
-  Future<void> _pickVendor(BuildContext context, List<VendorOption> vendors) async {
+  Future<void> _pickVendor(List<VendorOption> vendors) async {
     final String? picked = await AppSheet.show<String>(
       context,
       title: context.l10n.maintenanceAssignVendor,
       subtitle: context.l10n.maintenanceCanAlsoAssignLater,
       child: Column(
         children: [
-          for (final v in vendors)
+          for (final VendorOption vendor in vendors)
             Padding(
               padding: const EdgeInsets.only(bottom: Insets.sm + 2),
               child: AppRadioTile(
-                selected: _vendor == v.name,
-                title: v.name,
-                subtitle: '${v.type} · ★ ${v.rating.toStringAsFixed(1)}',
-                onTap: () => Navigator.of(context).pop(v.name),
+                selected: _vendor == vendor.name,
+                title: vendor.name,
+                subtitle: '${vendor.type} · ★ ${vendor.rating.toStringAsFixed(1)}',
+                onTap: () => Navigator.of(context).pop(vendor.name),
               ),
             ),
         ],
@@ -307,7 +294,7 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
     if (picked != null) setState(() => _vendor = picked);
   }
 
-  Future<void> _submit(BuildContext context, RaiseMaintenanceState state) async {
+  Future<void> _submit() async {
     setState(() {
       _vehicleError = _vehicle == null ? context.l10n.maintenanceSelectVehicleJob : null;
       _jobTypeError = _jobType == null ? context.l10n.maintenanceSelectJobType : null;
@@ -326,15 +313,18 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
       photoCount: _photos.length,
     );
 
-    final result = await context.read<RaiseMaintenanceCubit>().submit(input);
-    if (!context.mounted) return;
-    result.fold(
-      (failure) => AppSnack.error(context, failure.message),
-      (jobId) {
-        AppSnack.success(context, '$jobId raised for ${input.vehicleNumber}.');
-        Navigator.of(context).pop(jobId);
-      },
-    );
+    setState(() => _submitting = true);
+    final Result<String> result = await ref.read(raiseMaintenanceJobProvider)(input);
+    if (!mounted) return;
+    setState(() => _submitting = false);
+
+    switch (result) {
+      case Ok<String>(:final value):
+        AppSnack.success(context, '$value raised for ${input.vehicleNumber}.');
+        Navigator.of(context).pop(value);
+      case Err<String>(:final failure):
+        AppSnack.error(context, failure.message);
+    }
   }
 }
 
@@ -353,9 +343,11 @@ class _PrioritySelector extends StatelessWidget {
         const SizedBox(height: Insets.sm),
         Row(
           children: [
-            for (final p in const ['low', 'normal', 'high']) ...[
-              Expanded(child: _PriorityPill(priority: p, selected: value == p, onTap: () => onChanged(p))),
-              if (p != 'high') const SizedBox(width: Insets.sm),
+            for (final String priority in const ['low', 'normal', 'high']) ...[
+              Expanded(
+                child: _PriorityPill(priority: priority, selected: value == priority, onTap: () => onChanged(priority)),
+              ),
+              if (priority != 'high') const SizedBox(width: Insets.sm),
             ],
           ],
         ),

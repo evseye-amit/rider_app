@@ -1,35 +1,24 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../app/di/injector.dart';
-import '../../../../core/session/session_controller.dart';
+import '../../../../core/session/rider_session_provider.dart';
 
-class ProfilePage extends StatefulWidget {
+class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final Map<String, Object?> rider = ref.watch(riderSessionProvider).profile;
 
-class _ProfilePageState extends State<ProfilePage> {
-  @override
-  Widget build(BuildContext context) {
-    final SessionController session = sl<SessionController>();
-    final Map<String, Object?> r = session.profile;
+    final String name = rider['name']?.toString() ?? context.l10n.allocationRider;
+    final String riderCode = rider['riderCode']?.toString() ?? '—';
+    final num rating = (rider['rating'] as num?) ?? 0;
+    final DateTime? joinedOn = DateTime.tryParse(rider['joinedOn']?.toString() ?? '');
 
-    final String name = r['name']?.toString() ?? context.l10n.allocationRider;
-    final String riderCode = r['riderCode']?.toString() ?? '—';
-    final num rating = (r['rating'] as num?) ?? 0;
-    final DateTime? joinedOn = DateTime.tryParse(
-      r['joinedOn']?.toString() ?? '',
-    );
     return HeroScaffold(
       bottomPadding: Insets.x4l,
-      band: _Band(
-        name: name,
-        riderCode: riderCode,
-        rating: rating,
-      ),
+      band: _Band(name: name, riderCode: riderCode, rating: rating),
       children: [
         _SectionCard(
           icon: Icons.badge_rounded,
@@ -37,54 +26,42 @@ class _ProfilePageState extends State<ProfilePage> {
           title: context.l10n.profilePersonalDetails,
           rows: [
             _DetailRow(label: context.l10n.commonFullName, value: name),
-            _DetailRow(
-              label: context.l10n.commonMobile,
-              value: Fmt.phone(r['mobile']?.toString() ?? ''),
-            ),
-
-            _DetailRow(label: context.l10n.profileEmail, value: r['email']?.toString() ?? '—'),
-            _DetailRow(
-              label: context.l10n.profileJoined,
-              value: joinedOn == null ? '—' : Fmt.date(joinedOn),
-            ),
+            _DetailRow(label: context.l10n.commonMobile, value: Fmt.phone(rider['mobile']?.toString() ?? '')),
+            _DetailRow(label: context.l10n.profileEmail, value: rider['email']?.toString() ?? '—'),
+            _DetailRow(label: context.l10n.profileJoined, value: joinedOn == null ? '—' : Fmt.date(joinedOn)),
           ],
         ),
         const Gap.lg(),
-
         _SectionCard(
           icon: Icons.location_on_rounded,
           tone: AppColors.primary,
           title: context.l10n.profileAddressHub,
           rows: [
-            _DetailRow(label: context.l10n.commonCity, value: r['city']?.toString() ?? '—'),
-            _DetailRow(label: context.l10n.profileHub, value: r['hub']?.toString() ?? '—'),
-            _DetailRow(
-              label: context.l10n.profileHubCode,
-              value: r['hubCode']?.toString() ?? '—',
-            ),
+            _DetailRow(label: context.l10n.commonCity, value: rider['city']?.toString() ?? '—'),
+            _DetailRow(label: context.l10n.profileHub, value: rider['hub']?.toString() ?? '—'),
+            _DetailRow(label: context.l10n.profileHubCode, value: rider['hubCode']?.toString() ?? '—'),
           ],
         ),
         const Gap.lg(),
-
         ModuleCard(
           title: context.l10n.commonTeamLead,
           child: Row(
             children: [
-              AppAvatar(name: r['teamLead']?.toString() ?? '?', size: 44),
+              AppAvatar(name: rider['teamLead']?.toString() ?? '?', size: 44),
               const SizedBox(width: Insets.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      r['teamLead']?.toString() ?? '—',
+                      rider['teamLead']?.toString() ?? '—',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppText.titleSmall.copyWith(fontSize: 14),
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      Fmt.phone(r['teamLeadMobile']?.toString() ?? ''),
+                      Fmt.phone(rider['teamLeadMobile']?.toString() ?? ''),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppText.bodySmall.copyWith(fontSize: 12),
@@ -100,8 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 background: AppColors.primaryWash,
                 foreground: AppColors.primary,
                 borderColor: Colors.transparent,
-                onTap: () =>
-                    AppSnack.success(context, 'Calling ${r['teamLead']}…'),
+                onTap: () => AppSnack.success(context, 'Calling ${rider['teamLead']}…'),
               ),
             ],
           ),
@@ -112,11 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
 }
 
 class _Band extends StatelessWidget {
-  const _Band({
-    required this.name,
-    required this.riderCode,
-    required this.rating,
-  });
+  const _Band({required this.name, required this.riderCode, required this.rating});
 
   final String name;
   final String riderCode;
@@ -130,27 +102,17 @@ class _Band extends StatelessWidget {
         Row(
           children: [
             Builder(
-              builder: (context) => InkCircleButton(
-                icon: Icons.arrow_back_rounded,
-                onTap: () => Navigator.of(context).maybePop(),
-              ),
+              builder: (context) =>
+                  InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
             ),
             const Spacer(),
-            Text(context.l10n.commonProfile,
-              style: AppText.titleLarge.copyWith(
-                fontSize: 17,
-                color: AppColors.onInk,
-              ),
-            ),
+            Text(context.l10n.commonProfile, style: AppText.titleLarge.copyWith(fontSize: 17, color: AppColors.onInk)),
             const Spacer(),
-
             const SizedBox(width: 40),
           ],
         ),
         const Gap.xl(),
-
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Stack(
               clipBehavior: Clip.none,
@@ -159,9 +121,7 @@ class _Band extends StatelessWidget {
                   padding: const EdgeInsets.all(3),
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.fromBorderSide(
-                      BorderSide(color: Colors.white24, width: 1.4),
-                    ),
+                    border: Border.fromBorderSide(BorderSide(color: Colors.white24, width: 1.4)),
                   ),
                   child: AppAvatar(name: name, size: 72),
                 ),
@@ -170,15 +130,8 @@ class _Band extends StatelessWidget {
                   bottom: -2,
                   child: Container(
                     padding: const EdgeInsets.all(2.5),
-                    decoration: const BoxDecoration(
-                      color: AppColors.ink,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.verified_rounded,
-                      size: 20,
-                      color: AppColors.mint,
-                    ),
+                    decoration: const BoxDecoration(color: AppColors.ink, shape: BoxShape.circle),
+                    child: const Icon(Icons.verified_rounded, size: 20, color: AppColors.mint),
                   ),
                 ),
               ],
@@ -193,36 +146,22 @@ class _Band extends StatelessWidget {
                     name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppText.displaySmall.copyWith(
-                      fontSize: 21,
-                      color: AppColors.onInk,
-                    ),
+                    style: AppText.displaySmall.copyWith(fontSize: 21, color: AppColors.onInk),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     riderCode,
-                    style: AppText.code.copyWith(
-                      fontSize: 11.5,
-                      letterSpacing: 1.2,
-                      color: AppColors.onInkSecondary,
-                    ),
+                    style: AppText.code.copyWith(fontSize: 11.5, letterSpacing: 1.2, color: AppColors.onInkSecondary),
                   ),
                   const SizedBox(height: 6),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
-                        Icons.star_rounded,
-                        size: 15,
-                        color: AppColors.warning,
-                      ),
+                      const Icon(Icons.star_rounded, size: 15, color: AppColors.warning),
                       const SizedBox(width: 4),
                       Text(
                         '${rating.toStringAsFixed(1)} rating',
-                        style: AppText.bodySmall.copyWith(
-                          fontSize: 12,
-                          color: AppColors.onInkSecondary,
-                        ),
+                        style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.onInkSecondary),
                       ),
                     ],
                   ),
@@ -237,12 +176,7 @@ class _Band extends StatelessWidget {
 }
 
 class _SectionCard extends StatelessWidget {
-  const _SectionCard({
-    required this.icon,
-    required this.tone,
-    required this.title,
-    required this.rows,
-  });
+  const _SectionCard({required this.icon, required this.tone, required this.title, required this.rows});
 
   final IconData icon;
   final Color tone;
@@ -254,10 +188,7 @@ class _SectionCard extends StatelessWidget {
     return ModuleCard(
       title: title,
       leading: IconTile(icon: icon, tone: tone, size: 34, solid: true),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: rows,
-      ),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: rows),
     );
   }
 }
@@ -273,12 +204,8 @@ class _DetailRow extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: Insets.sm + 2),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            flex: 4,
-            child: Text(label, style: AppText.bodySmall.copyWith(fontSize: 13)),
-          ),
+          Expanded(flex: 4, child: Text(label, style: AppText.bodySmall.copyWith(fontSize: 13))),
           const SizedBox(width: Insets.md),
           Expanded(
             flex: 5,

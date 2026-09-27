@@ -22,11 +22,7 @@ class SupportCategory extends Equatable {
 }
 
 class TeamLead extends Equatable {
-  const TeamLead({
-    required this.name,
-    required this.mobile,
-    required this.role,
-  });
+  const TeamLead({required this.name, required this.mobile, required this.role});
 
   final String name;
   final String mobile;
@@ -67,12 +63,9 @@ class SupportOverview extends Equatable {
 
   num get totalRepairCost => tickets.fold<num>(0, (sum, t) => sum + t.repairCost);
 
-  num get riderBorneCost =>
-      tickets.where((t) => t.costBorneByRider).fold<num>(0, (sum, t) => sum + t.repairCost);
+  num get riderBorneCost => tickets.where((t) => t.costBorneByRider).fold<num>(0, (sum, t) => sum + t.repairCost);
 
-  List<SupportTicket> get openTickets => tickets
-      .where((t) => t.status == TicketStatus.open)
-      .toList(growable: false);
+  List<SupportTicket> get openTickets => tickets.where((t) => t.status == TicketStatus.open).toList(growable: false);
 
   SupportCategory? categoryFor(String key) {
     for (final category in categories) {
@@ -82,13 +75,5 @@ class SupportOverview extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-    roadsideNumber,
-    supportEmail,
-    hubName,
-    teamLead,
-    categories,
-    tickets,
-    faqs,
-  ];
+  List<Object?> get props => [roadsideNumber, supportEmail, hubName, teamLead, categories, tickets, faqs];
 }

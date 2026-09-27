@@ -1,6 +1,6 @@
+import 'package:equatable/equatable.dart';
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/widgets.dart';
-import 'package:equatable/equatable.dart';
 
 class MaintenanceJob extends Equatable {
   const MaintenanceJob({
@@ -43,12 +43,7 @@ class MaintenanceJob extends Equatable {
 
   bool get isPastDue => !isClosed && DateTime.now().isAfter(dueOn);
 
-  MaintenanceJob copyWith({
-    String? status,
-    DateTime? closedOn,
-    String? assignedTo,
-    List<String>? notes,
-  }) =>
+  MaintenanceJob copyWith({String? status, DateTime? closedOn, String? assignedTo, List<String>? notes}) =>
       MaintenanceJob(
         id: id,
         vehicleNumber: vehicleNumber,
@@ -69,30 +64,30 @@ class MaintenanceJob extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        vehicleNumber,
-        model,
-        type,
-        priority,
-        status,
-        openedOn,
-        dueOn,
-        closedOn,
-        odometerKm,
-        issue,
-        assignedTo,
-        rider,
-        bay,
-        notes,
-      ];
+    id,
+    vehicleNumber,
+    model,
+    type,
+    priority,
+    status,
+    openedOn,
+    dueOn,
+    closedOn,
+    odometerKm,
+    issue,
+    assignedTo,
+    rider,
+    bay,
+    notes,
+  ];
 }
 
 String maintenanceTypeLabel(BuildContext context, String code) => switch (code) {
-      'BRAKES' => context.l10n.commonBrakes,
-      'BATTERY' => context.l10n.maintenanceBattery,
-      'TYRES' => context.l10n.maintenanceTyres,
-      'BODY' => context.l10n.maintenanceBody,
-      'PRE_DELIVERY' => context.l10n.maintenancePreDelivery,
-      'SERVICE' => context.l10n.hubService,
-      _ => code,
-    };
+  'BRAKES' => context.l10n.commonBrakes,
+  'BATTERY' => context.l10n.maintenanceBattery,
+  'TYRES' => context.l10n.maintenanceTyres,
+  'BODY' => context.l10n.maintenanceBody,
+  'PRE_DELIVERY' => context.l10n.maintenancePreDelivery,
+  'SERVICE' => context.l10n.hubService,
+  _ => code,
+};

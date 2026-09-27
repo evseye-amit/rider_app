@@ -35,7 +35,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   final TextEditingController _searchController = TextEditingController();
   String _query = '';
   int _filterIndex = 0;
-  static List<String> get _filters => ['All', LocaleController.strings.notificationsUnread];
+  List<String> _filters(AppL10n l10n) => ['All', l10n.notificationsUnread];
 
   @override
   void initState() {
@@ -85,10 +85,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
       );
     }
     if (_items == null) {
-      return AppScaffold(
-        title: context.l10n.notificationsNotifications,
-        body: _NotificationsSkeleton(),
-      );
+      return AppScaffold(title: context.l10n.notificationsNotifications, body: _NotificationsSkeleton());
     }
 
     final int unread = _items!.where((n) => !n.read).length;
@@ -97,22 +94,15 @@ class _NotificationsPageState extends State<NotificationsPage> {
     final String query = _query.trim().toLowerCase();
     final List<_NotificationItem> visible = _items!.where((n) {
       final bool matchesFilter = _filterIndex == 0 || !n.read;
-      final bool matchesQuery = query.isEmpty ||
-          n.title.toLowerCase().contains(query) ||
-          n.message.toLowerCase().contains(query);
+      final bool matchesQuery =
+          query.isEmpty || n.title.toLowerCase().contains(query) || n.message.toLowerCase().contains(query);
       return matchesFilter && matchesQuery;
     }).toList();
-    final List<_NotificationItem> today =
-        visible.where((n) => _isSameDay(n.at, now)).toList();
-    final List<_NotificationItem> earlier =
-        visible.where((n) => !_isSameDay(n.at, now)).toList();
+    final List<_NotificationItem> today = visible.where((n) => _isSameDay(n.at, now)).toList();
+    final List<_NotificationItem> earlier = visible.where((n) => !_isSameDay(n.at, now)).toList();
 
     return HeroScaffold(
-      band: _Band(
-        total: _items!.length,
-        unread: unread,
-        onMarkAllRead: unread == 0 ? null : _markAllRead,
-      ),
+      band: _Band(total: _items!.length, unread: unread, onMarkAllRead: unread == 0 ? null : _markAllRead),
       children: _items!.isEmpty
           ? [
               ModuleCard(
@@ -134,7 +124,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               ),
               const Gap.md(),
               FilterChipBar(
-                items: _filters,
+                items: _filters(context.l10n),
                 selectedIndex: _filterIndex,
                 onChanged: (i) => setState(() => _filterIndex = i),
                 padding: EdgeInsets.zero,
@@ -155,10 +145,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   child: Column(
                     children: [
                       for (final item in today) ...[
-                        _NotificationRow(
-                          item: item,
-                          onDismiss: () => _dismiss(item),
-                        ),
+                        _NotificationRow(item: item, onDismiss: () => _dismiss(item)),
                         if (item != today.last) const Gap.md(),
                       ],
                     ],
@@ -172,10 +159,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   child: Column(
                     children: [
                       for (final item in earlier) ...[
-                        _NotificationRow(
-                          item: item,
-                          onDismiss: () => _dismiss(item),
-                        ),
+                        _NotificationRow(item: item, onDismiss: () => _dismiss(item)),
                         if (item != earlier.last) const Gap.md(),
                       ],
                     ],
@@ -185,16 +169,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  bool _isSameDay(DateTime a, DateTime b) =>
-      a.year == b.year && a.month == b.month && a.day == b.day;
+  bool _isSameDay(DateTime a, DateTime b) => a.year == b.year && a.month == b.month && a.day == b.day;
 }
 
 class _Band extends StatelessWidget {
-  const _Band({
-    required this.total,
-    required this.unread,
-    required this.onMarkAllRead,
-  });
+  const _Band({required this.total, required this.unread, required this.onMarkAllRead});
 
   final int total;
   final int unread;
@@ -208,43 +187,30 @@ class _Band extends StatelessWidget {
         Row(
           children: [
             Builder(
-              builder: (context) => InkCircleButton(
-                icon: Icons.arrow_back_rounded,
-                onTap: () => Navigator.of(context).maybePop(),
-              ),
+              builder: (context) =>
+                  InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
             ),
             const SizedBox(width: Insets.md),
             Expanded(
-              child: Text(context.l10n.notificationsNotifications,
+              child: Text(
+                context.l10n.notificationsNotifications,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppText.titleLarge.copyWith(
-                  fontSize: 17,
-                  color: AppColors.onInk,
-                ),
+                style: AppText.titleLarge.copyWith(fontSize: 17, color: AppColors.onInk),
               ),
             ),
-            if (onMarkAllRead != null)
-              InkCircleButton(
-                icon: Icons.done_all_rounded,
-                onTap: onMarkAllRead,
-              ),
+            if (onMarkAllRead != null) InkCircleButton(icon: Icons.done_all_rounded, onTap: onMarkAllRead),
           ],
         ),
         const Gap.xl(),
 
         Text(
           unread == 0 ? context.l10n.notificationsAllCaughtUp : '$unread unread',
-          style: AppText.displaySmall.copyWith(
-            fontSize: 26,
-            color: AppColors.onInk,
-          ),
+          style: AppText.displaySmall.copyWith(fontSize: 26, color: AppColors.onInk),
         ),
         const SizedBox(height: 4),
         Text(
-          unread == 0
-              ? context.l10n.notificationsNothingNewNeedsAttention
-              : '$total notifications in your inbox',
+          unread == 0 ? context.l10n.notificationsNothingNewNeedsAttention : '$total notifications in your inbox',
           style: AppText.bodySmall.copyWith(color: AppColors.onInkSecondary),
         ),
       ],
@@ -259,11 +225,11 @@ class _NotificationRow extends StatelessWidget {
   final VoidCallback onDismiss;
 
   static Color _solidTone(Color tone) => switch (tone) {
-        AppColors.warning => AppColors.amber,
-        AppColors.danger => AppColors.coral,
-        AppColors.success => AppColors.mint,
-        _ => tone,
-      };
+    AppColors.warning => AppColors.amber,
+    AppColors.danger => AppColors.coral,
+    AppColors.success => AppColors.mint,
+    _ => tone,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -281,10 +247,7 @@ class _NotificationRow extends StatelessWidget {
           borderRadius: Corners.brLg,
           border: Border.all(color: AppColors.danger.withValues(alpha: 0.28)),
         ),
-        child: const Icon(
-          Icons.delete_outline_rounded,
-          color: AppColors.danger,
-        ),
+        child: const Icon(Icons.delete_outline_rounded, color: AppColors.danger),
       ),
       child: Container(
         padding: const EdgeInsets.all(Insets.md + 2),
@@ -315,9 +278,7 @@ class _NotificationRow extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: AppText.titleSmall.copyWith(
                             fontSize: 13.5,
-                            fontWeight: item.read
-                                ? FontWeight.w600
-                                : FontWeight.w800,
+                            fontWeight: item.read ? FontWeight.w600 : FontWeight.w800,
                           ),
                         ),
                       ),
@@ -326,10 +287,7 @@ class _NotificationRow extends StatelessWidget {
                         Container(
                           width: 7,
                           height: 7,
-                          decoration: const BoxDecoration(
-                            color: AppColors.cyan,
-                            shape: BoxShape.circle,
-                          ),
+                          decoration: const BoxDecoration(color: AppColors.cyan, shape: BoxShape.circle),
                         ),
                       ],
                     ],
@@ -339,10 +297,7 @@ class _NotificationRow extends StatelessWidget {
                     item.message,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppText.bodySmall.copyWith(
-                      fontSize: 12,
-                      height: 1.45,
-                    ),
+                    style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45),
                   ),
                   const SizedBox(height: 8),
                   Align(

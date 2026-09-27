@@ -16,16 +16,22 @@ class WalletRepositoryImpl implements WalletRepository {
 
   static WalletSummary _summary(RiderWallet w) {
     final DateTime weekAgo = DateTime.now().subtract(const Duration(days: 7));
-    final List<WalletTransaction> transactions = [
-      for (final p in w.payments) _transaction(p),
-    ]..sort((a, b) => b.at.compareTo(a.at));
+    final List<WalletTransaction> transactions = [for (final p in w.payments) _transaction(p)]
+      ..sort((a, b) => b.at.compareTo(a.at));
 
-    final Iterable<DeploymentPayment> paidThisWeek =
-        w.payments.where((p) => p.isPaid && (p.paidAt ?? p.createdAt ?? weekAgo).isAfter(weekAgo));
-    final DeploymentPayment? lastPaid = w.payments.where((p) => p.isPaid).fold<DeploymentPayment?>(
-      null,
-      (best, p) => best == null || (p.paidAt ?? p.createdAt ?? DateTime(0)).isAfter(best.paidAt ?? best.createdAt ?? DateTime(0)) ? p : best,
+    final Iterable<DeploymentPayment> paidThisWeek = w.payments.where(
+      (p) => p.isPaid && (p.paidAt ?? p.createdAt ?? weekAgo).isAfter(weekAgo),
     );
+    final DeploymentPayment? lastPaid = w.payments
+        .where((p) => p.isPaid)
+        .fold<DeploymentPayment?>(
+          null,
+          (best, p) =>
+              best == null ||
+                  (p.paidAt ?? p.createdAt ?? DateTime(0)).isAfter(best.paidAt ?? best.createdAt ?? DateTime(0))
+              ? p
+              : best,
+        );
 
     return WalletSummary(
       balance: w.totalPaid,
@@ -48,7 +54,7 @@ class WalletRepositoryImpl implements WalletRepository {
       id: p.id,
       type: TransactionType.debit,
       category: 'deposit',
-      title: items.isEmpty ? LocaleController.strings.walletDeploymentPayment : items,
+      title: items.isEmpty ? ActiveLocale.strings.walletDeploymentPayment : items,
       subtitle: switch (p.status) {
         'PAID' => 'Verified by your fleet manager$vehicle',
         'SUBMITTED' => 'Reference ${p.providerReference ?? ''} awaiting verification$vehicle',

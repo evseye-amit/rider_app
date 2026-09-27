@@ -1,20 +1,24 @@
+import 'dart:async';
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/session/session_controller.dart';
+import '../../../../core/session/fleet_session_provider.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
+  static final RegExp _mobilePattern = RegExp(r'^[6-9]\d{9}$');
+
   final TextEditingController _mobile = TextEditingController();
   String? _error;
   bool _submitting = false;
@@ -26,28 +30,25 @@ class _LoginPageState extends State<LoginPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) => _askLanguage());
   }
 
-  Future<void> _askLanguage() async {
-    final LocaleController locale = sl<LocaleController>();
-    if (locale.hasBeenPrompted || !mounted) return;
-    final AppLocale? picked = await LanguagePicker.show(
-      context,
-      selected: locale.current,
-      firstRun: true,
-    );
-    if (picked == null) {
-      await locale.markPrompted();
-      return;
-    }
-    await locale.select(picked);
-  }
-
   @override
   void dispose() {
     _mobile.dispose();
     super.dispose();
   }
 
-  bool get _isValid => RegExp(r'^[6-9]\d{9}$').hasMatch(_mobile.text.trim());
+  bool get _isValid => _mobilePattern.hasMatch(_mobile.text.trim());
+
+  Future<void> _askLanguage() async {
+    final LocalePreference preference = ref.read(localeProvider);
+    if (preference.hasBeenPrompted || !mounted) return;
+    final AppLocale? picked = await LanguagePicker.show(context, selected: preference.locale, firstRun: true);
+    final LocaleNotifier locale = ref.read(localeProvider.notifier);
+    if (picked == null) {
+      await locale.markPrompted();
+      return;
+    }
+    await locale.select(picked);
+  }
 
   Future<void> _continue() async {
     FocusScope.of(context).unfocus();
@@ -61,14 +62,13 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     final String mobile = _mobile.text.trim();
-    final Result<OtpChallenge> result =
-        await sl<SessionController>().requestOtp(mobile);
+    final Result<OtpChallenge> result = await ref.read(fleetSessionProvider.notifier).requestOtp(mobile);
     if (!mounted) return;
     setState(() => _submitting = false);
 
     switch (result) {
       case Ok<OtpChallenge>(:final value):
-        context.push('${Routes.otp}?mobile=$mobile&request=${value.otpRequestId}');
+        unawaited(context.push('${Routes.otp}?mobile=$mobile&request=${value.otpRequestId}'));
       case Err<OtpChallenge>(:final failure):
         setState(() => _error = failure.message);
     }
@@ -77,10 +77,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return AuthSheetScaffold(
-      trailing: LanguageChip(
-        controller: sl<LocaleController>(),
-        onChanged: (_) => setState(() {}),
-      ),
+      trailing: const LanguageChip(),
       art: BrandArt.manager,
       artSize: 200,
       title: context.l10n.authSignRunHub,
@@ -95,17 +92,12 @@ class _LoginPageState extends State<LoginPage> {
           controller: _mobile,
           errorText: _error,
           maxLength: 10,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            LengthLimitingTextInputFormatter(10),
-          ],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(10)],
           onChanged: (_) {
             if (_error != null) setState(() => _error = null);
           },
           onSubmitted: (_) => _continue(),
-          suffix: _isValid
-              ? const Icon(Icons.check_circle_rounded, size: 20, color: AppColors.success)
-              : null,
+          suffix: _isValid ? const Icon(Icons.check_circle_rounded, size: 20, color: AppColors.success) : null,
         ),
         const Gap.xl(),
         PrimaryButton(
@@ -145,7 +137,7 @@ class _TrustStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = [
+    final List<(IconData, String)> items = [
       (Icons.hub_rounded, context.l10n.authVerifiedHubNetwork),
       (Icons.insights_rounded, context.l10n.authLiveFleetVisibility),
       (Icons.support_agent_rounded, context.l10n.authOpsSupport),
@@ -154,16 +146,11 @@ class _TrustStrip extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        for (final (icon, label) in items) ...[
+        for (final (IconData icon, String label) in items) ...[
           Expanded(
             child: Column(
               children: [
-                IconTile(
-                  icon: icon,
-                  tone: AppColors.primary,
-                  size: 46,
-                  solid: true,
-                ),
+                IconTile(icon: icon, tone: AppColors.primary, size: 46, solid: true),
                 const SizedBox(height: Insets.sm),
                 Text(
                   label,

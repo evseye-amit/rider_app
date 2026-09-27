@@ -5,16 +5,16 @@ import '../../domain/entities/active_allocation.dart';
 import '../../domain/entities/deallocation_request.dart';
 
 StatusTone priorityTone(String priority) => switch (priority.toLowerCase()) {
-      'high' => StatusTone.danger,
-      'low' => StatusTone.neutral,
-      _ => StatusTone.warning,
-    };
+  'high' => StatusTone.danger,
+  'low' => StatusTone.neutral,
+  _ => StatusTone.warning,
+};
 
 String priorityLabel(String priority) => switch (priority.toLowerCase()) {
-      'high' => LocaleController.strings.commonHighPriority,
-      'low' => LocaleController.strings.commonLowPriority,
-      _ => LocaleController.strings.commonNormalPriority,
-    };
+  'high' => ActiveLocale.strings.commonHighPriority,
+  'low' => ActiveLocale.strings.commonLowPriority,
+  _ => ActiveLocale.strings.commonNormalPriority,
+};
 
 class OverlapModuleCard extends StatelessWidget {
   const OverlapModuleCard({
@@ -37,11 +37,7 @@ class OverlapModuleCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: padding,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: Corners.brXl,
-        boxShadow: Shadows.floating,
-      ),
+      decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.floating),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -64,16 +60,9 @@ class OverlapModuleCard extends StatelessWidget {
                       children: [
                         Text(
                           actionLabel!,
-                          style: AppText.titleSmall.copyWith(
-                            fontSize: 12.5,
-                            color: AppColors.primary,
-                          ),
+                          style: AppText.titleSmall.copyWith(fontSize: 12.5, color: AppColors.primary),
                         ),
-                        const Icon(
-                          Icons.chevron_right_rounded,
-                          size: 17,
-                          color: AppColors.primary,
-                        ),
+                        const Icon(Icons.chevron_right_rounded, size: 17, color: AppColors.primary),
                       ],
                     ),
                   ),
@@ -116,10 +105,7 @@ class PendingRiderTile extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  [
-                    if ((rider.riderCode ?? '').isNotEmpty) rider.riderCode!,
-                    Fmt.phone(rider.mobile),
-                  ].join(' · '),
+                  [if ((rider.riderCode ?? '').isNotEmpty) rider.riderCode!, Fmt.phone(rider.mobile)].join(' · '),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppText.bodySmall.copyWith(fontSize: 12),
@@ -220,7 +206,10 @@ class DeploymentRequestTile extends StatelessWidget {
                 ),
                 Text(
                   mine ? context.l10n.allocationMove : context.l10n.allocationWaitingRider,
-                  style: AppText.bodySmall.copyWith(fontSize: 11.5, color: mine ? AppColors.primary : AppColors.textMuted),
+                  style: AppText.bodySmall.copyWith(
+                    fontSize: 11.5,
+                    color: mine ? AppColors.primary : AppColors.textMuted,
+                  ),
                 ),
                 if (allocation.updatedAt != null)
                   Text(
@@ -249,8 +238,16 @@ class DeploymentTimeline extends StatelessWidget {
       (DeploymentStatus.paymentPending, context.l10n.allocationPaymentRequested, null),
       (DeploymentStatus.paymentPaid, context.l10n.allocationPaymentVerified, workflow?.paymentPaidAt),
       (DeploymentStatus.pdiPendingRider, context.l10n.allocationInspectionSentRider, null),
-      (DeploymentStatus.trainingPending, context.l10n.allocationInspectionAcceptedTraining, workflow?.riderPdiAcceptedAt),
-      (DeploymentStatus.devicePairingPending, context.l10n.allocationTrainingDonePairing, workflow?.trainingCompletedAt),
+      (
+        DeploymentStatus.trainingPending,
+        context.l10n.allocationInspectionAcceptedTraining,
+        workflow?.riderPdiAcceptedAt,
+      ),
+      (
+        DeploymentStatus.devicePairingPending,
+        context.l10n.allocationTrainingDonePairing,
+        workflow?.trainingCompletedAt,
+      ),
       (DeploymentStatus.deployed, context.l10n.allocationDeployed, workflow?.pairedAt ?? workflow?.pairingBypassedAt),
     ];
     final int current = status == DeploymentStatus.unknown ? -1 : status.step;
@@ -319,13 +316,9 @@ class ActiveAllocationTile extends StatelessWidget {
                 const SizedBox(height: Insets.md),
                 Row(
                   children: [
-                    if (allocation.batteryPercent != null)
-                      BatteryBar(percent: allocation.batteryPercent!),
+                    if (allocation.batteryPercent != null) BatteryBar(percent: allocation.batteryPercent!),
                     const Spacer(),
-                    Text(
-                      'since ${Fmt.date(allocation.allocatedOn)}',
-                      style: AppText.bodySmall.copyWith(fontSize: 11),
-                    ),
+                    Text('since ${Fmt.date(allocation.allocatedOn)}', style: AppText.bodySmall.copyWith(fontSize: 11)),
                   ],
                 ),
               ],
@@ -338,12 +331,7 @@ class ActiveAllocationTile extends StatelessWidget {
 }
 
 class ReturnRequestTile extends StatelessWidget {
-  const ReturnRequestTile({
-    required this.request,
-    required this.onOpen,
-    required this.onProcess,
-    super.key,
-  });
+  const ReturnRequestTile({required this.request, required this.onOpen, required this.onProcess, super.key});
 
   final DeallocationRequest request;
   final VoidCallback onOpen;
@@ -451,12 +439,7 @@ class ReturnRequestTile extends StatelessWidget {
 }
 
 class DeskStat {
-  const DeskStat({
-    required this.label,
-    required this.value,
-    required this.icon,
-    this.alert = false,
-  });
+  const DeskStat({required this.label, required this.value, required this.icon, this.alert = false});
 
   final String label;
   final String value;
@@ -466,13 +449,7 @@ class DeskStat {
 }
 
 class DeskBand extends StatelessWidget {
-  const DeskBand({
-    required this.icon,
-    required this.title,
-    required this.subtitle,
-    required this.stats,
-    super.key,
-  });
+  const DeskBand({required this.icon, required this.title, required this.subtitle, required this.stats, super.key});
 
   final IconData icon;
   final String title;
@@ -499,10 +476,7 @@ class DeskBand extends StatelessWidget {
           ],
         ),
         const Gap.sm(),
-        Text(
-          subtitle,
-          style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.4),
-        ),
+        Text(subtitle, style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.4)),
         const Gap.xl(),
         Container(
           padding: const EdgeInsets.symmetric(vertical: Insets.md, horizontal: Insets.sm),
@@ -514,10 +488,7 @@ class DeskBand extends StatelessWidget {
           child: Row(
             children: [
               for (final stat in stats) ...[
-                if (stat != stats.first) ...[
-                  const InkDivider(),
-                  const SizedBox(width: Insets.md),
-                ],
+                if (stat != stats.first) ...[const InkDivider(), const SizedBox(width: Insets.md)],
                 Expanded(
                   child: InkStat(
                     label: stat.label,
@@ -542,11 +513,7 @@ class AllocationBoardSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(Insets.lg),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: Corners.brXl,
-        boxShadow: Shadows.floating,
-      ),
+      decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.floating),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -554,10 +521,7 @@ class AllocationBoardSkeleton extends StatelessWidget {
           const Gap.lg(),
           const ShimmerBox(height: 46, borderRadius: Corners.pill),
           const Gap.xl(),
-          for (int i = 0; i < 3; i++) ...[
-            const ShimmerBox(height: 150, borderRadius: Corners.brLg),
-            const Gap.md(),
-          ],
+          for (int i = 0; i < 3; i++) ...[const ShimmerBox(height: 150, borderRadius: Corners.brLg), const Gap.md()],
         ],
       ),
     );

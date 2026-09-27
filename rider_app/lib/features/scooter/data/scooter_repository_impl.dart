@@ -19,7 +19,7 @@ class ScooterRepositoryImpl implements ScooterRepository {
         final DeploymentAllocation? allocation = value.allocation;
         final DeploymentFleet? fleet = allocation?.fleet;
         if (allocation == null || fleet == null) {
-          return Result.err(NotFoundFailure(LocaleController.strings.scooterNoScooterHasBeenAllocated));
+          return Result.err(NotFoundFailure(ActiveLocale.strings.scooterNoScooterHasBeenAllocated));
         }
         return Result.ok(_vehicle(allocation, fleet, value.status));
     }
@@ -51,7 +51,7 @@ class ScooterRepositoryImpl implements ScooterRepository {
       tyrePressureFront: 32,
       tyrePressureRear: 36,
       iot: VehicleIot(
-        deviceId: fleet.iotDeviceNumber ?? (status.isDeployed ? LocaleController.strings.commonPaired : '—'),
+        deviceId: fleet.iotDeviceNumber ?? (status.isDeployed ? ActiveLocale.strings.commonPaired : '—'),
         online: status.isDeployed,
         signal: status.isDeployed ? 3 : 0,
         lastPing: status.isDeployed ? 'a moment ago' : '—',
@@ -60,35 +60,35 @@ class ScooterRepositoryImpl implements ScooterRepository {
       documents: [
         VehicleDocument(
           key: 'rc',
-          label: LocaleController.strings.scooterRegistrationCertificate,
+          label: ActiveLocale.strings.scooterRegistrationCertificate,
           validTill: DateTime(Demo.now.year + 4, 3, 31),
           status: 'valid',
         ),
         VehicleDocument(
           key: 'insurance',
-          label: LocaleController.strings.commonInsurance,
+          label: ActiveLocale.strings.commonInsurance,
           validTill: Demo.today().add(Duration(days: 23)),
           status: 'expiring',
         ),
         VehicleDocument(
           key: 'permit',
-          label: LocaleController.strings.scooterCommercialPermit,
+          label: ActiveLocale.strings.scooterCommercialPermit,
           validTill: DateTime(Demo.now.year + 1, 11, 30),
           status: 'valid',
         ),
         VehicleDocument(
           key: 'puc',
-          label: LocaleController.strings.scooterFitnessCertificate,
+          label: ActiveLocale.strings.scooterFitnessCertificate,
           validTill: DateTime(Demo.now.year + 2, 6, 15),
           status: 'valid',
         ),
       ],
       accessories: [
-        VehicleAccessory(key: 'helmet', label: LocaleController.strings.scooterHelmet, present: true),
-        VehicleAccessory(key: 'charger', label: LocaleController.strings.scooterCharger, present: true),
-        VehicleAccessory(key: 'toolkit', label: LocaleController.strings.scooterToolkit, present: true),
-        VehicleAccessory(key: 'phone_mount', label: LocaleController.strings.scooterPhoneMount, present: true),
-        VehicleAccessory(key: 'delivery_box', label: LocaleController.strings.scooterDeliveryBox, present: false),
+        VehicleAccessory(key: 'helmet', label: ActiveLocale.strings.scooterHelmet, present: true),
+        VehicleAccessory(key: 'charger', label: ActiveLocale.strings.scooterCharger, present: true),
+        VehicleAccessory(key: 'toolkit', label: ActiveLocale.strings.scooterToolkit, present: true),
+        VehicleAccessory(key: 'phone_mount', label: ActiveLocale.strings.scooterPhoneMount, present: true),
+        VehicleAccessory(key: 'delivery_box', label: ActiveLocale.strings.scooterDeliveryBox, present: false),
       ],
       recentTrips: _trips(),
     );
@@ -100,10 +100,50 @@ class ScooterRepositoryImpl implements ScooterRepository {
   }
 
   static List<VehicleTrip> _trips() => [
-        VehicleTrip(id: 'trip_884', from: 'Okhla Phase II', to: 'Nehru Place', distanceKm: 6.4, durationMin: 22, earning: 95, at: Demo.hoursAgo(2)),
-        VehicleTrip(id: 'trip_883', from: 'Kalkaji', to: 'Greater Kailash II', distanceKm: 4.1, durationMin: 16, earning: 78, at: Demo.hoursAgo(3)),
-        VehicleTrip(id: 'trip_882', from: 'Jasola Vihar', to: 'Sarita Vihar', distanceKm: 5.8, durationMin: 19, earning: 88, at: Demo.hoursAgo(5)),
-        VehicleTrip(id: 'trip_881', from: 'Okhla Phase I', to: 'Lajpat Nagar', distanceKm: 8.2, durationMin: 31, earning: 124, at: Demo.hoursAgo(7)),
-        VehicleTrip(id: 'trip_880', from: 'Okhla Phase II', to: 'Ashram', distanceKm: 7.1, durationMin: 26, earning: 106, at: Demo.hoursAgo(9)),
-      ];
+    VehicleTrip(
+      id: 'trip_884',
+      from: 'Okhla Phase II',
+      to: 'Nehru Place',
+      distanceKm: 6.4,
+      durationMin: 22,
+      earning: 95,
+      at: Demo.hoursAgo(2),
+    ),
+    VehicleTrip(
+      id: 'trip_883',
+      from: 'Kalkaji',
+      to: 'Greater Kailash II',
+      distanceKm: 4.1,
+      durationMin: 16,
+      earning: 78,
+      at: Demo.hoursAgo(3),
+    ),
+    VehicleTrip(
+      id: 'trip_882',
+      from: 'Jasola Vihar',
+      to: 'Sarita Vihar',
+      distanceKm: 5.8,
+      durationMin: 19,
+      earning: 88,
+      at: Demo.hoursAgo(5),
+    ),
+    VehicleTrip(
+      id: 'trip_881',
+      from: 'Okhla Phase I',
+      to: 'Lajpat Nagar',
+      distanceKm: 8.2,
+      durationMin: 31,
+      earning: 124,
+      at: Demo.hoursAgo(7),
+    ),
+    VehicleTrip(
+      id: 'trip_880',
+      from: 'Okhla Phase II',
+      to: 'Ashram',
+      distanceKm: 7.1,
+      durationMin: 26,
+      earning: 106,
+      at: Demo.hoursAgo(9),
+    ),
+  ];
 }

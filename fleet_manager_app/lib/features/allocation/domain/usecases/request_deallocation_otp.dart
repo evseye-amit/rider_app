@@ -17,5 +17,6 @@ class RequestDeallocationOtp extends UseCase<OtpChallenge, DeallocationOtpParams
   final AllocationRepository _repository;
 
   @override
-  Future<Result<OtpChallenge>> call(DeallocationOtpParams params) => _repository.requestDeallocationOtp(params.allocationId, phone: params.phone, party: params.party);
+  Future<Result<OtpChallenge>> call(DeallocationOtpParams params) =>
+      _repository.requestDeallocationOtp(params.allocationId, phone: params.phone, party: params.party);
 }

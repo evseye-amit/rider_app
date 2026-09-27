@@ -2,26 +2,32 @@ import 'dart:io';
 
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/session/session_controller.dart';
-import '../../domain/onboarding_draft.dart';
+import '../../../../core/session/rider_session_provider.dart';
 import '../../domain/onboarding_flow_builder.dart';
 import '../../domain/usecases/save_onboarding_step.dart';
 import '../../domain/usecases/upload_onboarding_document.dart';
+import '../../onboarding_dependencies.dart';
+import '../providers/onboarding_draft_provider.dart';
 
-class OnboardingFlowPage extends StatefulWidget {
+class OnboardingFlowPage extends ConsumerStatefulWidget {
   const OnboardingFlowPage({super.key});
 
   @override
-  State<OnboardingFlowPage> createState() => _OnboardingFlowPageState();
+  ConsumerState<OnboardingFlowPage> createState() => _OnboardingFlowPageState();
 }
 
-class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
-  late final DynamicFormController _form =
-      DynamicFormController(initial: Map<String, Object?>.from(OnboardingDraft.instance.values));
+class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
+  static const int _defaultMinAge = 18;
+
+  late final DynamicFormController _form = DynamicFormController(
+    initial: Map<String, Object?>.from(ref.read(onboardingDraftProvider)),
+  );
+
+  final Set<String> _uploading = {};
 
   RiderOnboardingConfig? _config;
   UiFlowConfig? _flow;
@@ -29,12 +35,12 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
   bool _saving = false;
   String? _loadError;
 
-  final Set<String> _uploading = <String>{};
+  RiderSessionNotifier get _session => ref.read(riderSessionProvider.notifier);
 
-  DynamicUiScope get _scope =>
-      _session.scope(form: _form, onAction: _handleAction, busyFields: _uploading);
+  DynamicUiScope _scopeFor(RiderSession session) =>
+      session.scope(form: _form, onAction: _handleAction, busyFields: _uploading);
 
-  SessionController get _session => sl<SessionController>();
+  DynamicUiScope get _scope => _scopeFor(ref.read(riderSessionProvider));
 
   @override
   void initState() {
@@ -43,7 +49,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
   }
 
   Future<void> _load() async {
-    RiderOnboardingConfig? config = _session.onboarding;
+    RiderOnboardingConfig? config = ref.read(riderSessionProvider).onboarding;
     if (config == null) {
       final Result<RiderOnboardingConfig> result = await _session.loadOnboarding();
       if (!mounted) return;
@@ -55,24 +61,23 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
           return;
       }
     }
-    if (!mounted) return;
-    _apply(config, jumpTo: OnboardingDraft.instance.jumpToStepIndex);
-    OnboardingDraft.instance.jumpToStepIndex = null;
+    _apply(config);
   }
 
   void _apply(RiderOnboardingConfig config, {int? jumpTo}) {
+    final RiderSession session = ref.read(riderSessionProvider);
     final UiFlowConfig flow = OnboardingFlowBuilder.build(config, context.l10n);
-    for (final entry in config.progress.values.entries) {
+
+    for (final MapEntry<String, Object?> entry in config.progress.values.entries) {
       if (_form.valueOf(entry.key) == null && entry.value != null) {
         _form.setValue(entry.key, entry.value, markTouched: false);
       }
     }
-
     if (config.fieldCodes.contains('MOBILE_NUMBER') && _form.valueOf('MOBILE_NUMBER') == null) {
-      _form.setValue('MOBILE_NUMBER', _session.mobile, markTouched: false);
+      _form.setValue('MOBILE_NUMBER', session.mobile, markTouched: false);
     }
     if (config.fieldCodes.contains('FULL_NAME') && _form.valueOf('FULL_NAME') == null) {
-      final Object? name = _session.profile['name'];
+      final Object? name = session.profile['name'];
       if (name != null) _form.setValue('FULL_NAME', name, markTouched: false);
     }
 
@@ -85,7 +90,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
     });
   }
 
-  void _persist() => OnboardingDraft.instance.save(_form.values);
+  void _persist() => ref.read(onboardingDraftProvider.notifier).save(_form.values);
 
   Future<void> _confirmExit() async {
     final bool confirmed = await AppDialog.confirm(
@@ -111,33 +116,20 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
   }
 
   Map<String, Object?> _stepValues(OnboardingStepConfig step) => {
-        for (final f in step.inputs)
-          if (_form.valueOf(f.fieldCode) != null && _form.valueOf(f.fieldCode).toString().trim().isNotEmpty)
-            f.fieldCode: _form.valueOf(f.fieldCode).toString().trim(),
-      };
-
-
-  static const int _defaultMinAge = 18;
+    for (final OnboardingFieldConfig field in step.inputs)
+      if (_form.valueOf(field.fieldCode) != null && _form.valueOf(field.fieldCode).toString().trim().isNotEmpty)
+        field.fieldCode: _form.valueOf(field.fieldCode).toString().trim(),
+  };
 
   String? _ageCheck(OnboardingStepConfig step) {
-    OnboardingFieldConfig? gate;
-    for (final f in step.fields) {
-      if (f.featureCode.toUpperCase().contains('AGE_VERIFICATION')) {
-        gate = f;
-        break;
-      }
-    }
+    final OnboardingFieldConfig? gate = step.fields
+        .where((field) => field.featureCode.toUpperCase().contains('AGE_VERIFICATION'))
+        .firstOrNull;
     if (gate == null) return null;
 
     final int minAge = _minAgeOf(gate);
-    final String dob = (_form.valueOf('DATE_OF_BIRTH') ??
-            _config?.value('DATE_OF_BIRTH') ??
-            '')
-        .toString()
-        .trim();
-    if (dob.isEmpty) {
-      return context.l10n.onboardingAddDateBirthFirstStep;
-    }
+    final String dob = (_form.valueOf('DATE_OF_BIRTH') ?? _config?.value('DATE_OF_BIRTH') ?? '').toString().trim();
+    if (dob.isEmpty) return context.l10n.onboardingAddDateBirthFirstStep;
     final DateTime? born = DateTime.tryParse(dob);
     if (born == null) return context.l10n.onboardingDateBirthNotValid;
 
@@ -148,7 +140,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
   }
 
   int _minAgeOf(OnboardingFieldConfig field) {
-    for (final key in const ['minAge', 'minimumAge']) {
+    for (final String key in const ['minAge', 'minimumAge']) {
       final Object? direct = field.configuration[key] ?? field.validation[key];
       final int? parsed = direct is int ? direct : int.tryParse(direct?.toString() ?? '');
       if (parsed != null && parsed > 0) return parsed;
@@ -165,12 +157,13 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
     return _defaultMinAge;
   }
 
-  Future<void> _advance(BuildContext context) async {
+  Future<void> _advance() async {
     if (_saving) return;
     final RiderOnboardingConfig config = _config!;
-    final UiFlowStep step = _flow!.steps[_stepIndex];
-    final bool ok = _form.validateNodes(step.screen.body, isVisible: _scope.isVisible);
-    if (!ok) {
+    final UiFlowConfig flow = _flow!;
+    final UiFlowStep step = flow.steps[_stepIndex];
+    final bool valid = _form.validateNodes(step.screen.body, isVisible: _scope.isVisible);
+    if (!valid) {
       AppSnack.error(context, context.l10n.onboardingPleaseFixHighlightedFieldsBefore);
       return;
     }
@@ -182,15 +175,18 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
     }
     _persist();
 
-    if (_stepIndex == _flow!.steps.length - 1) {
-      context.push(Routes.onboardingPreview);
+    if (_stepIndex == flow.steps.length - 1) {
+      final int? editStep = await context.push<int>(Routes.onboardingPreview);
+      if (!mounted || editStep == null) return;
+      setState(() => _stepIndex = editStep.clamp(0, flow.steps.length - 1));
       return;
     }
 
     final OnboardingStepConfig apiStep = config.steps[_stepIndex];
     setState(() => _saving = true);
-    final Result<RiderOnboardingConfig> result =
-        await SaveOnboardingStep(sl())(SaveStepParams(stepId: apiStep.stepId, values: _stepValues(apiStep)));
+    final Result<RiderOnboardingConfig> result = await ref.read(saveOnboardingStepProvider)(
+      SaveStepParams(stepId: apiStep.stepId, values: _stepValues(apiStep)),
+    );
     if (!mounted) return;
     setState(() => _saving = false);
 
@@ -200,11 +196,11 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
         if (!mounted) return;
         _apply(value, jumpTo: _stepIndex + 1);
       case Err<RiderOnboardingConfig>(:final failure):
-        AppSnack.error(this.context, failure.message);
+        AppSnack.error(context, failure.message);
     }
   }
 
-  Future<void> _capture(BuildContext context, UiNode node) async {
+  Future<void> _capture(UiNode node) async {
     final String key = node.fieldKey;
     final String fieldCode = (node.props['fieldCode'] ?? node.props['featureCode'] ?? '').toString();
     if (fieldCode.isEmpty) return;
@@ -216,43 +212,38 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
     if (file == null || !mounted) return;
 
     setState(() => _uploading.add(key));
-    final Result<RemotePhoto> result =
-        await UploadOnboardingDocument(sl())(UploadDocumentParams(fieldCode: fieldCode, file: file));
+    final Result<RemotePhoto> result = await ref.read(uploadOnboardingDocumentProvider)(
+      UploadDocumentParams(fieldCode: fieldCode, file: file),
+    );
     if (!mounted) return;
     setState(() => _uploading.remove(key));
 
     switch (result) {
       case Ok<RemotePhoto>():
         _form.setValue(key, file.uri.pathSegments.last);
-        AppSnack.success(this.context, this.context.l10n.commonUploaded);
+        AppSnack.success(context, context.l10n.commonUploaded);
       case Err<RemotePhoto>(:final failure):
-        AppSnack.error(this.context, failure.message);
+        AppSnack.error(context, failure.message);
     }
   }
 
   void _handleAction(BuildContext context, UiAction action, UiNode node) {
     switch (action.type) {
       case 'next':
-        _advance(context);
-        break;
-      case 'previous':
-      case 'back':
+        _advance();
+      case 'previous' || 'back':
         _back();
-        break;
       case 'pickFile':
-        _capture(context, node);
-        break;
+        _capture(node);
       case 'navigate':
         if (action.target != null) context.push(action.target!);
-        break;
-      default:
-        break;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_flow == null) {
+    final UiFlowConfig? flow = _flow;
+    if (flow == null) {
       return Scaffold(
         backgroundColor: AppColors.canvas,
         body: SafeArea(
@@ -273,7 +264,6 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
       );
     }
 
-    final UiFlowConfig flow = _flow!;
     if (flow.steps.isEmpty) {
       return Scaffold(
         backgroundColor: AppColors.canvas,
@@ -289,13 +279,14 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
       );
     }
 
+    final DynamicUiScope scope = _scopeFor(ref.watch(riderSessionProvider));
     final UiFlowStep step = flow.steps[_stepIndex];
     final List<String> labels = flow.steps.map((s) => s.shortLabel ?? s.label).toList(growable: false);
 
     return Scaffold(
       backgroundColor: AppColors.canvas,
       body: DynamicUiProvider(
-        scope: _scope,
+        scope: scope,
         child: Stack(
           children: [
             Column(
@@ -323,13 +314,13 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
                               ),
                               const Gap.xl(),
                               Text(
-                                _scope.interpolate(step.screen.title),
+                                scope.interpolate(step.screen.title),
                                 style: AppText.displaySmall.copyWith(color: AppColors.onInk, fontSize: 25),
                               ),
                               if (step.screen.subtitle != null && step.screen.subtitle!.isNotEmpty) ...[
                                 const Gap.sm(),
                                 Text(
-                                  _scope.interpolate(step.screen.subtitle),
+                                  scope.interpolate(step.screen.subtitle),
                                   style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.5),
                                 ),
                               ],
@@ -354,7 +345,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
                                 ),
                                 const Gap.lg(),
                                 ModuleCard(
-                                  child: DynamicNodeList(nodes: step.screen.body, scope: _scope),
+                                  child: DynamicNodeList(nodes: step.screen.body, scope: scope),
                                 ),
                                 const Gap.xl(),
                               ],
@@ -381,7 +372,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
                       ignoring: _saving,
                       child: Opacity(
                         opacity: _saving ? 0.6 : 1,
-                        child: DynamicNodeList(nodes: step.screen.footer, scope: _scope, gap: Insets.md),
+                        child: DynamicNodeList(nodes: step.screen.footer, scope: scope, gap: Insets.md),
                       ),
                     ),
                   ),

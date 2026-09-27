@@ -57,8 +57,8 @@ class RidersRepositoryImpl implements RidersRepository {
   }
 
   static RiderState _stateFrom(String? status) => switch (status) {
-        'ACTIVE' => RiderState.active,
-        'ONBOARDING' => RiderState.onboarding,
-        _ => RiderState.exited,
-      };
+    'ACTIVE' => RiderState.active,
+    'ONBOARDING' => RiderState.onboarding,
+    _ => RiderState.exited,
+  };
 }

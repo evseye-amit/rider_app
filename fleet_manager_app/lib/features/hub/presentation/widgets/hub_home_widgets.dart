@@ -28,23 +28,13 @@ class HubCard extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(Insets.lg),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: Corners.brXl,
-
-        boxShadow: Shadows.floating,
-      ),
+      decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.floating),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const IconTile(
-                icon: Icons.hub_rounded,
-                tone: AppColors.primary,
-                solid: true,
-                size: 40,
-              ),
+              const IconTile(icon: Icons.hub_rounded, tone: AppColors.primary, solid: true, size: 40),
               const SizedBox(width: Insets.md),
               Expanded(
                 child: Column(
@@ -57,10 +47,7 @@ class HubCard extends StatelessWidget {
                       style: AppText.titleMedium.copyWith(fontSize: 16),
                     ),
                     const SizedBox(height: 2),
-                    Text(
-                      profile.code,
-                      style: AppText.code.copyWith(fontSize: 11.5, letterSpacing: 1),
-                    ),
+                    Text(profile.code, style: AppText.code.copyWith(fontSize: 11.5, letterSpacing: 1)),
                   ],
                 ),
               ),
@@ -69,11 +56,7 @@ class HubCard extends StatelessWidget {
 
           if (hubs.length > 1) ...[
             const Gap.lg(),
-            _HubPicker(
-              hubs: hubs,
-              selectedIndexes: selectedIndexes,
-              onChanged: onSelectionChanged,
-            ),
+            _HubPicker(hubs: hubs, selectedIndexes: selectedIndexes, onChanged: onSelectionChanged),
           ],
 
           const Gap.lg(),
@@ -82,22 +65,17 @@ class HubCard extends StatelessWidget {
 
           _Line(icon: Icons.location_on_rounded, text: profile.address),
           const Gap.md(),
-          _Line(
-            icon: Icons.electric_scooter_rounded,
-            text: '$allocated of ${profile.capacity} slots in use',
-          ),
+          _Line(icon: Icons.electric_scooter_rounded, text: '$allocated of ${profile.capacity} slots in use'),
           const Gap.md(),
           _Line(
             icon: Icons.ev_station_rounded,
-            text: '${profile.chargingBays} charging bays · '
+            text:
+                '${profile.chargingBays} charging bays · '
                 '${profile.serviceBays} service bays',
           ),
           if (profile.hasTeamLeads) ...[
             const Gap.md(),
-            _Line(
-              icon: Icons.groups_rounded,
-              text: profile.teamLeads.map((l) => l.name.split(' ').first).join(', '),
-            ),
+            _Line(icon: Icons.groups_rounded, text: profile.teamLeads.map((l) => l.name.split(' ').first).join(', ')),
           ],
         ],
       ),
@@ -106,11 +84,7 @@ class HubCard extends StatelessWidget {
 }
 
 class _HubPicker extends StatelessWidget {
-  const _HubPicker({
-    required this.hubs,
-    required this.selectedIndexes,
-    required this.onChanged,
-  });
+  const _HubPicker({required this.hubs, required this.selectedIndexes, required this.onChanged});
 
   final List<HubProfile> hubs;
   final List<int> selectedIndexes;
@@ -122,10 +96,7 @@ class _HubPicker extends StatelessWidget {
       onTap: () => _open(context),
       scale: 0.99,
       child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Insets.md,
-          vertical: Insets.sm + 2,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: Insets.md, vertical: Insets.sm + 2),
         decoration: BoxDecoration(
           color: AppColors.primaryWash,
           borderRadius: Corners.brMd,
@@ -149,11 +120,7 @@ class _HubPicker extends StatelessWidget {
                 ),
               ),
             ),
-            const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              size: 20,
-              color: AppColors.primary,
-            ),
+            const Icon(Icons.keyboard_arrow_down_rounded, size: 20, color: AppColors.primary),
           ],
         ),
       ),
@@ -229,20 +196,13 @@ class _HubOption extends StatelessWidget {
           color: selected ? AppColors.primaryWash : AppColors.surface,
           borderRadius: Corners.brMd,
           border: Border.all(
-            color: selected
-                ? AppColors.primary.withValues(alpha: 0.45)
-                : AppColors.stroke,
+            color: selected ? AppColors.primary.withValues(alpha: 0.45) : AppColors.stroke,
             width: selected ? 1.4 : 1,
           ),
         ),
         child: Row(
           children: [
-            IconTile(
-              icon: Icons.hub_rounded,
-              tone: AppColors.primary,
-              solid: selected,
-              size: 36,
-            ),
+            IconTile(icon: Icons.hub_rounded, tone: AppColors.primary, solid: selected, size: 36),
             const SizedBox(width: Insets.md),
             Expanded(
               child: Column(
@@ -264,12 +224,7 @@ class _HubOption extends StatelessWidget {
                 ],
               ),
             ),
-            if (selected)
-              const Icon(
-                Icons.check_circle_rounded,
-                size: 20,
-                color: AppColors.primary,
-              ),
+            if (selected) const Icon(Icons.check_circle_rounded, size: 20, color: AppColors.primary),
           ],
         ),
       ),
@@ -290,12 +245,7 @@ class _Line extends StatelessWidget {
       children: [
         Icon(icon, size: 17, color: AppColors.primary),
         const SizedBox(width: Insets.sm + 2),
-        Expanded(
-          child: Text(
-            text,
-            style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
-          ),
-        ),
+        Expanded(child: Text(text, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45))),
       ],
     );
   }

@@ -1,83 +1,62 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../app/di/injector.dart';
-import '../../../../core/session/session_controller.dart';
-import '../../domain/usecases/accept_pdi.dart';
-import '../cubit/deployment_cubit.dart';
-import '../cubit/pdi_cubit.dart';
+import '../providers/deployment_provider.dart';
+import '../providers/pdi_checklist_provider.dart';
 
-class PdiPage extends StatelessWidget {
+class PdiPage extends ConsumerWidget {
   const PdiPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => DeploymentCubit(sl<SessionController>())..load(silent: sl<SessionController>().deployment != null),
-      child: const _PdiLoader(),
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<RiderDeployment> deployment = ref.watch(deploymentProvider);
+    final RiderDeployment? current = deployment.value;
+    final String? allocationId = current?.allocation?.id;
+    final List<PdiChecklistItem> items = current?.workflow?.pdiChecklist ?? const [];
+
+    if (deployment.hasError || (allocationId == null && !deployment.isLoading)) {
+      return AppScaffold(
+        title: context.l10n.commonPreDeliveryInspection,
+        showBack: false,
+        body: EmptyState(
+          title: context.l10n.deploymentCouldNotLoadChecklist,
+          message: deployment.failureMessage ?? context.l10n.deploymentFleetManagerHasNotSubmitted,
+          icon: Icons.cloud_off_rounded,
+          tone: AppColors.danger,
+          actionLabel: context.l10n.commonTryAgain,
+          onAction: () => ref.read(deploymentProvider.notifier).refresh(),
+        ),
+      );
+    }
+
+    if (allocationId == null || items.isEmpty) {
+      return AppScaffold(
+        title: context.l10n.commonPreDeliveryInspection,
+        showBack: false,
+        body: PageBody(
+          children: List.generate(
+            4,
+            (_) => const Padding(
+              padding: EdgeInsets.only(bottom: Insets.md),
+              child: ShimmerBox(height: 74, borderRadius: Corners.brMd),
+            ),
+          ),
+        ),
+      );
+    }
+
+    return _PdiView(deployment: current!, allocationId: allocationId);
   }
 }
 
-class _PdiLoader extends StatelessWidget {
-  const _PdiLoader();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<DeploymentCubit, DeploymentState>(
-      buildWhen: (a, b) => a.deployment?.allocation?.id != b.deployment?.allocation?.id || a.status != b.status,
-      builder: (context, state) {
-        final RiderDeployment? d = state.deployment;
-        final String? allocationId = d?.allocation?.id;
-        final List<PdiChecklistItem> items = d?.workflow?.pdiChecklist ?? const [];
-
-        if (state.status == DeploymentLoad.failure || (allocationId == null && !state.isLoading)) {
-          return AppScaffold(
-            title: context.l10n.commonPreDeliveryInspection,
-            showBack: false,
-            body: EmptyState(
-              title: context.l10n.deploymentCouldNotLoadChecklist,
-              message: state.message ?? context.l10n.deploymentFleetManagerHasNotSubmitted,
-              icon: Icons.cloud_off_rounded,
-              tone: AppColors.danger,
-              actionLabel: context.l10n.commonTryAgain,
-              onAction: context.read<DeploymentCubit>().load,
-            ),
-          );
-        }
-        if (allocationId == null || items.isEmpty) {
-          return AppScaffold(
-            title: context.l10n.commonPreDeliveryInspection,
-            showBack: false,
-            body: PageBody(
-              children: List.generate(
-                4,
-                (_) => const Padding(
-                  padding: EdgeInsets.only(bottom: Insets.md),
-                  child: ShimmerBox(height: 74, borderRadius: Corners.brMd),
-                ),
-              ),
-            ),
-          );
-        }
-
-        return BlocProvider(
-          key: ValueKey(allocationId),
-          create: (_) => PdiCubit(items: items, acceptPdi: AcceptPdi(sl()), allocationId: allocationId),
-          child: _PdiView(deployment: d!),
-        );
-      },
-    );
-  }
-}
-
-class _PdiView extends StatelessWidget {
-  const _PdiView({required this.deployment});
+class _PdiView extends ConsumerWidget {
+  const _PdiView({required this.deployment, required this.allocationId});
 
   final RiderDeployment deployment;
+  final String allocationId;
 
-  Future<void> _fail(BuildContext context, PdiCubit cubit, PdiChecklistItem item) async {
+  Future<void> _fail(BuildContext context, PdiChecklistNotifier checklist, PdiChecklistItem item) async {
     final TextEditingController controller = TextEditingController();
     final String fallbackNote = context.l10n.deploymentFlaggedByRider;
     final String? note = await AppSheet.show<String>(
@@ -98,12 +77,12 @@ class _PdiView extends StatelessWidget {
       ),
     );
     if (note == null) return;
-    cubit.setVerdict(item.code, CheckState.fail);
-
-    cubit.setNote(item.code, note.isEmpty ? fallbackNote : note);
+    checklist
+      ..setVerdict(item.code, CheckState.fail)
+      ..setNote(item.code, note.isEmpty ? fallbackNote : note);
   }
 
-  Future<void> _submit(BuildContext context, PdiCubit cubit, PdiState state) async {
+  Future<void> _submit(BuildContext context, WidgetRef ref, PdiChecklistState state) async {
     final bool confirmed = await AppDialog.confirm(
       context,
       title: state.anyFailed ? context.l10n.deploymentSubmitWithProblemsFlagged : context.l10n.deploymentAcceptScooter2,
@@ -114,63 +93,65 @@ class _PdiView extends StatelessWidget {
       icon: Icons.fact_check_rounded,
     );
     if (!confirmed || !context.mounted) return;
-    final bool ok = await cubit.submit();
-    if (!context.mounted) return;
-    if (ok) {
-      AppSnack.success(context, context.l10n.deploymentInspectionAccepted);
 
-      await context.read<DeploymentCubit>().load(silent: true);
-    } else {
-      AppSnack.error(context, cubit.state.message ?? context.l10n.deploymentCouldNotSubmitInspection);
+    final Result<DeploymentWorkflow> result = await ref.read(pdiChecklistProvider(allocationId).notifier).submit();
+    if (!context.mounted) return;
+    switch (result) {
+      case Ok<DeploymentWorkflow>():
+        AppSnack.success(context, context.l10n.deploymentInspectionAccepted);
+        await ref.read(deploymentProvider.notifier).refresh(silent: true);
+      case Err<DeploymentWorkflow>(:final failure):
+        AppSnack.error(context, failure.message);
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final DeploymentFleet? fleet = deployment.allocation?.fleet;
     final String? partner = deployment.workflow?.workPartnerName;
+    final PdiChecklistState state = ref.watch(pdiChecklistProvider(allocationId));
+    final PdiChecklistNotifier checklist = ref.watch(pdiChecklistProvider(allocationId).notifier);
 
-    return BlocBuilder<PdiCubit, PdiState>(
-      builder: (context, state) {
-        final PdiCubit cubit = context.read<PdiCubit>();
-        return AppScaffold(
-          title: context.l10n.commonPreDeliveryInspection,
-          subtitle: fleet == null ? null : '${fleet.vehicleNumber}${fleet.modelName == null ? '' : ' · ${fleet.modelName}'}',
-          showBack: false,
-          footer: PrimaryButton(
-            label: state.allChecked ? (state.anyFailed ? context.l10n.commonSubmitInspection : context.l10n.deploymentAcceptScooter) : context.l10n.commonSubmitInspection,
-            icon: Icons.fact_check_rounded,
-            loading: state.isSubmitting,
-            onPressed: state.allChecked && !state.isSubmitting ? () => _submit(context, cubit, state) : null,
+    return AppScaffold(
+      title: context.l10n.commonPreDeliveryInspection,
+      subtitle: fleet == null
+          ? null
+          : '${fleet.vehicleNumber}${fleet.modelName == null ? '' : ' · ${fleet.modelName}'}',
+      showBack: false,
+      footer: PrimaryButton(
+        label: state.allChecked && !state.anyFailed
+            ? context.l10n.deploymentAcceptScooter
+            : context.l10n.commonSubmitInspection,
+        icon: Icons.fact_check_rounded,
+        loading: state.isSubmitting,
+        onPressed: state.allChecked && !state.isSubmitting ? () => _submit(context, ref, state) : null,
+      ),
+      body: PageBody(
+        children: [
+          _Band(state: state, partner: partner),
+          const Gap.lg(),
+          ModuleCard(
+            title: context.l10n.deploymentCheckEachItem,
+            leading: const IconTile(icon: Icons.checklist_rounded, solid: true, size: 28),
+            child: Column(
+              children: [
+                for (final PdiChecklistItem item in state.items) ...[
+                  ChecklistTile(
+                    title: item.label,
+                    subtitle: item.mandatory ? context.l10n.commonMandatory : context.l10n.commonOptional,
+                    state: state.verdictOf(item.code),
+                    note: state.notes[item.code],
+                    onPass: () => checklist.setVerdict(item.code, CheckState.pass),
+                    onFail: () => _fail(context, checklist, item),
+                  ),
+                  if (item != state.items.last) const Gap.md(),
+                ],
+              ],
+            ),
           ),
-          body: PageBody(
-            children: [
-              _Band(state: state, partner: partner),
-              const Gap.lg(),
-              ModuleCard(
-                title: context.l10n.deploymentCheckEachItem,
-                leading: const IconTile(icon: Icons.checklist_rounded, solid: true, size: 28),
-                child: Column(
-                  children: [
-                    for (final item in state.items) ...[
-                      ChecklistTile(
-                        title: item.label,
-                        subtitle: item.mandatory ? context.l10n.commonMandatory : context.l10n.commonOptional,
-                        state: state.verdictOf(item.code),
-                        note: state.notes[item.code],
-                        onPass: () => cubit.setVerdict(item.code, CheckState.pass),
-                        onFail: () => _fail(context, cubit, item),
-                      ),
-                      if (item != state.items.last) const Gap.md(),
-                    ],
-                  ],
-                ),
-              ),
-              const Gap.xl(),
-            ],
-          ),
-        );
-      },
+          const Gap.xl(),
+        ],
+      ),
     );
   }
 }
@@ -178,7 +159,7 @@ class _PdiView extends StatelessWidget {
 class _Band extends StatelessWidget {
   const _Band({required this.state, required this.partner});
 
-  final PdiState state;
+  final PdiChecklistState state;
   final String? partner;
 
   @override
@@ -187,9 +168,7 @@ class _Band extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(context.l10n.deploymentGoThroughEachItemWith,
-            style: AppText.bodySmall.copyWith(height: 1.5),
-          ),
+          Text(context.l10n.deploymentGoThroughEachItemWith, style: AppText.bodySmall.copyWith(height: 1.5)),
           if (partner != null && partner!.isNotEmpty) ...[
             const Gap.sm(),
             Text(context.l10n.pdiInspectedBy(partner!), style: AppText.bodySmall.copyWith(color: AppColors.textMuted)),
@@ -198,7 +177,7 @@ class _Band extends StatelessWidget {
           LabeledProgress(
             value: state.total == 0 ? 0 : state.checked / state.total,
             label: '${state.checked} of ${state.total} checked',
-            trailingLabel: state.anyFailed ? '${state.verdicts.values.where((v) => v == CheckState.fail).length} flagged' : null,
+            trailingLabel: state.anyFailed ? '${state.flagged} flagged' : null,
             color: state.anyFailed ? AppColors.warning : AppColors.primary,
           ),
         ],

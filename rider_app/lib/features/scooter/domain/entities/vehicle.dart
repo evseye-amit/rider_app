@@ -21,12 +21,7 @@ class VehicleIot extends Equatable {
 }
 
 class VehicleDocument extends Equatable {
-  const VehicleDocument({
-    required this.key,
-    required this.label,
-    required this.validTill,
-    required this.status,
-  });
+  const VehicleDocument({required this.key, required this.label, required this.validTill, required this.status});
 
   final String key;
   final String label;
@@ -42,11 +37,7 @@ class VehicleDocument extends Equatable {
 }
 
 class VehicleAccessory extends Equatable {
-  const VehicleAccessory({
-    required this.key,
-    required this.label,
-    required this.present,
-  });
+  const VehicleAccessory({required this.key, required this.label, required this.present});
 
   final String key;
   final String label;
@@ -76,15 +67,7 @@ class VehicleTrip extends Equatable {
   final DateTime at;
 
   @override
-  List<Object?> get props => [
-    id,
-    from,
-    to,
-    distanceKm,
-    durationMin,
-    earning,
-    at,
-  ];
+  List<Object?> get props => [id, from, to, distanceKm, durationMin, earning, at];
 }
 
 class Vehicle extends Equatable {
@@ -144,8 +127,7 @@ class Vehicle extends Equatable {
   final String? teamLeadName;
   final String? clusterManagerName;
 
-  int get kmToNextService =>
-      (nextServiceKm - odometerKm).clamp(0, nextServiceKm);
+  int get kmToNextService => (nextServiceKm - odometerKm).clamp(0, nextServiceKm);
 
   double get serviceProgress {
     final int span = nextServiceKm - lastServiceKm;

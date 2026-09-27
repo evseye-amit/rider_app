@@ -45,8 +45,7 @@ abstract final class Demo {
     return DateTime(n.year, n.month, n.day);
   }
 
-  static DateTime daysAgo(int days) =>
-      today().subtract(Duration(days: days));
+  static DateTime daysAgo(int days) => today().subtract(Duration(days: days));
 
   static DateTime hoursAgo(int hours) => now.subtract(Duration(hours: hours));
 
@@ -56,25 +55,9 @@ abstract final class Demo {
     return t.add(Duration(days: delta == 0 ? 7 : delta));
   }
 
-  static const List<String> weekLabels = [
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat',
-    'Sun',
-  ];
+  static const List<String> weekLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-  static const List<num> weekEarnings = [
-    980,
-    1120,
-    860,
-    1340,
-    1210,
-    1490,
-    todayEarnings,
-  ];
+  static const List<num> weekEarnings = [980, 1120, 860, 1340, 1210, 1490, todayEarnings];
 
   static const List<int> weekTrips = [11, 13, 9, 15, 14, 17, tripsToday];
 }

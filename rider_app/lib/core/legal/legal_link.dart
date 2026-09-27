@@ -8,10 +8,7 @@ abstract final class LegalLink {
   );
 
   static Future<void> open(BuildContext context) async {
-    final bool ok = await launchUrl(
-      document,
-      mode: LaunchMode.externalApplication,
-    );
+    final bool ok = await launchUrl(document, mode: LaunchMode.externalApplication);
     if (ok || !context.mounted) return;
     AppSnack.error(context, context.l10n.commonCouldNotOpenDocumentTry);
   }

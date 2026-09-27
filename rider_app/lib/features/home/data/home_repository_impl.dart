@@ -26,7 +26,7 @@ class HomeRepositoryImpl implements HomeRepository {
         incentiveTripsTarget: 20,
         rentDue: 1750,
         rentDueDate: _nextWeekday(now, DateTime.monday),
-        rentPlan: LocaleController.strings.commonWeeklyPlan,
+        rentPlan: ActiveLocale.strings.commonWeeklyPlan,
 
         walletBalance: walletBalance,
 
@@ -40,15 +40,15 @@ class HomeRepositoryImpl implements HomeRepository {
         announcements: [
           Announcement(
             id: 'surge_okhla',
-            title: LocaleController.strings.homeSurgeOkhlaTill9Pm,
-            message: LocaleController.strings.homeExtra15TripOkhlaPhase,
+            title: ActiveLocale.strings.homeSurgeOkhlaTill9Pm,
+            message: ActiveLocale.strings.homeExtra15TripOkhlaPhase,
             tone: 'success',
             icon: 'bolt',
           ),
           Announcement(
             id: 'service_due',
-            title: LocaleController.strings.homeServiceDue240Km,
-            message: LocaleController.strings.homeBookSlotOkhlaHubBefore,
+            title: ActiveLocale.strings.homeServiceDue240Km,
+            message: ActiveLocale.strings.homeBookSlotOkhlaHubBefore,
             tone: 'warning',
             icon: 'build',
           ),
@@ -57,28 +57,28 @@ class HomeRepositoryImpl implements HomeRepository {
         quickActions: [
           QuickAction(
             key: 'wallet',
-            label: LocaleController.strings.commonWallet,
+            label: ActiveLocale.strings.commonWallet,
             icon: 'wallet',
             tone: 'primary',
             route: '/wallet',
           ),
           QuickAction(
             key: 'rentals',
-            label: LocaleController.strings.homeRent,
+            label: ActiveLocale.strings.homeRent,
             icon: 'receipt',
             tone: 'primary',
             route: '/rentals',
           ),
           QuickAction(
             key: 'incentives',
-            label: LocaleController.strings.commonIncentives,
+            label: ActiveLocale.strings.commonIncentives,
             icon: 'trophy',
             tone: 'success',
             route: '/incentives',
           ),
           QuickAction(
             key: 'support',
-            label: LocaleController.strings.commonSupport,
+            label: ActiveLocale.strings.commonSupport,
             icon: 'support',
             tone: 'info',
             route: '/support',

@@ -1,8 +1,7 @@
 import '../config/feature_flags.dart';
+import '../l10n/l10n.dart';
 import '../utils/result.dart';
 import 'api_client.dart';
-
-import '../l10n/locale_controller.dart';
 class ClientModule {
   const ClientModule({
     required this.code,
@@ -78,7 +77,7 @@ class ConfigApi {
     if (clientId.isEmpty) {
       return Future.value(
         Result.err(
-          UnauthorizedFailure(LocaleController.strings.commonSignBeforeReadingClientConfiguration),
+          UnauthorizedFailure(ActiveLocale.strings.commonSignBeforeReadingClientConfiguration),
         ),
       );
     }

@@ -15,10 +15,7 @@ class FleetShell extends StatelessWidget {
       body: navigationShell,
       bottomNavigationBar: FleetBottomBar(
         currentIndex: navigationShell.currentIndex,
-        onTap: (index) => navigationShell.goBranch(
-          index,
-          initialLocation: index == navigationShell.currentIndex,
-        ),
+        onTap: (index) => navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex),
       ),
     );
   }
@@ -34,22 +31,18 @@ enum FleetTab {
   const FleetTab(this.activeIcon, this.icon);
 
   String label(AppL10n l10n) => switch (this) {
-        FleetTab.home => l10n.profileHub,
-        FleetTab.allocations => l10n.hubAllocate,
-        FleetTab.deallocations => l10n.hubReturn,
-        FleetTab.team => l10n.ridersTeam,
-        FleetTab.maintenance => l10n.hubService,
-      };
+    FleetTab.home => l10n.profileHub,
+    FleetTab.allocations => l10n.hubAllocate,
+    FleetTab.deallocations => l10n.hubReturn,
+    FleetTab.team => l10n.ridersTeam,
+    FleetTab.maintenance => l10n.hubService,
+  };
   final IconData activeIcon;
   final IconData icon;
 }
 
 class FleetBottomBar extends StatelessWidget {
-  const FleetBottomBar({
-    required this.currentIndex,
-    required this.onTap,
-    super.key,
-  });
+  const FleetBottomBar({required this.currentIndex, required this.onTap, super.key});
 
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -67,18 +60,12 @@ class FleetBottomBar extends StatelessWidget {
       decoration: const BoxDecoration(
         color: AppColors.surface,
         border: Border(top: BorderSide(color: AppColors.stroke)),
-        boxShadow: [
-          BoxShadow(color: Color(0x14122C52), blurRadius: 16, offset: Offset(0, -4)),
-        ],
+        boxShadow: [BoxShadow(color: Color(0x14122C52), blurRadius: 16, offset: Offset(0, -4))],
       ),
       child: Row(
         children: [
           for (final tab in FleetTab.values)
-            _BarItem(
-              tab: tab,
-              active: currentIndex == tab.index,
-              onTap: () => onTap(tab.index),
-            ),
+            _BarItem(tab: tab, active: currentIndex == tab.index, onTap: () => onTap(tab.index)),
         ],
       ),
     );

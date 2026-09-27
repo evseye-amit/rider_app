@@ -38,29 +38,20 @@ class WalletBand extends StatelessWidget {
       children: [
         Row(
           children: [
-            const IconTile(
-              icon: Icons.account_balance_wallet_rounded,
-              tone: AppColors.primary,
-              solid: true,
-              size: 44,
-            ),
+            const IconTile(icon: Icons.account_balance_wallet_rounded, tone: AppColors.primary, solid: true, size: 44),
             const SizedBox(width: Insets.md),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(context.l10n.walletMoney,
-                    style: AppText.bodySmall.copyWith(
-                      fontSize: 12,
-                      color: AppColors.onInkSecondary,
-                    ),
+                  Text(
+                    context.l10n.walletMoney,
+                    style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.onInkSecondary),
                   ),
                   const SizedBox(height: 1),
-                  Text(context.l10n.commonWallet,
-                    style: AppText.titleLarge.copyWith(
-                      fontSize: 20,
-                      color: AppColors.onInk,
-                    ),
+                  Text(
+                    context.l10n.commonWallet,
+                    style: AppText.titleLarge.copyWith(fontSize: 20, color: AppColors.onInk),
                   ),
                 ],
               ),
@@ -75,25 +66,17 @@ class WalletBand extends StatelessWidget {
           ],
         ),
         const Gap.xxl(),
-        Text(context.l10n.commonPaidDate,
-          style: AppText.label.copyWith(color: AppColors.onInkSecondary),
-        ),
+        Text(context.l10n.commonPaidDate, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
         const Gap.sm(),
         Text(
           s == null ? '—' : Fmt.money(s.balance),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: AppText.numericLarge.copyWith(
-            fontSize: 38,
-            color: AppColors.onInk,
-          ),
+          style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
         ),
         const Gap.xl(),
         Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: Insets.md,
-            horizontal: Insets.sm,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: Insets.md, horizontal: Insets.sm),
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.06),
             borderRadius: Corners.brMd,
@@ -135,12 +118,7 @@ class WalletBand extends StatelessWidget {
 }
 
 class WeekSummaryRow extends StatelessWidget {
-  const WeekSummaryRow({
-    required this.credited,
-    required this.deducted,
-    required this.incentives,
-    super.key,
-  });
+  const WeekSummaryRow({required this.credited, required this.deducted, required this.incentives, super.key});
 
   final num credited;
   final num deducted;
@@ -183,20 +161,11 @@ class WeekSummaryRow extends StatelessWidget {
 
 class _VDiv extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => Container(
-    width: 1,
-    height: 44,
-    color: AppColors.stroke.withValues(alpha: 0.6),
-  );
+  Widget build(BuildContext context) => Container(width: 1, height: 44, color: AppColors.stroke.withValues(alpha: 0.6));
 }
 
 class _WeekTile extends StatelessWidget {
-  const _WeekTile({
-    required this.label,
-    required this.value,
-    required this.icon,
-    required this.color,
-  });
+  const _WeekTile({required this.label, required this.value, required this.icon, required this.color});
 
   final String label;
   final String value;
@@ -265,9 +234,7 @@ class TransactionTile extends StatelessWidget {
                   '$sign${Fmt.money(transaction.amount)}',
                   style: AppText.numericSmall.copyWith(
                     fontSize: 14,
-                    color: transaction.isCredit
-                        ? AppColors.mint
-                        : AppColors.danger,
+                    color: transaction.isCredit ? AppColors.mint : AppColors.danger,
                   ),
                 ),
                 const SizedBox(height: 3),
@@ -303,30 +270,17 @@ class TransactionDetailBody extends StatelessWidget {
             Container(
               width: 46,
               height: 46,
-              decoration: BoxDecoration(
-                color: AppColors.washFor(tone),
-                borderRadius: Corners.brMd,
-              ),
-              child: Icon(
-                categoryIcon(transaction.category),
-                size: 22,
-                color: tone,
-              ),
+              decoration: BoxDecoration(color: AppColors.washFor(tone), borderRadius: Corners.brMd),
+              child: Icon(categoryIcon(transaction.category), size: 22, color: tone),
             ),
             const SizedBox(width: Insets.md),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    transaction.title,
-                    style: AppText.titleMedium.copyWith(fontSize: 16),
-                  ),
+                  Text(transaction.title, style: AppText.titleMedium.copyWith(fontSize: 16)),
                   const SizedBox(height: 2),
-                  Text(
-                    transaction.subtitle,
-                    style: AppText.bodySmall.copyWith(fontSize: 12.5),
-                  ),
+                  Text(transaction.subtitle, style: AppText.bodySmall.copyWith(fontSize: 12.5)),
                 ],
               ),
             ),
@@ -357,6 +311,5 @@ class TransactionDetailBody extends StatelessWidget {
     );
   }
 
-  static String _titleCase(String s) =>
-      s.isEmpty ? s : '${s[0].toUpperCase()}${s.substring(1)}';
+  static String _titleCase(String s) => s.isEmpty ? s : '${s[0].toUpperCase()}${s.substring(1)}';
 }

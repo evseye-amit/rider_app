@@ -1,23 +1,19 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:evseye_core/evseye_core.dart';
+
 enum EarningsPeriod { daily, weekly, monthly }
 
 extension EarningsPeriodX on EarningsPeriod {
   String get label => switch (this) {
-    EarningsPeriod.daily => LocaleController.strings.earningsDaily,
-    EarningsPeriod.weekly => LocaleController.strings.earningsWeekly,
-    EarningsPeriod.monthly => LocaleController.strings.earningsMonthly,
+    EarningsPeriod.daily => ActiveLocale.strings.earningsDaily,
+    EarningsPeriod.weekly => ActiveLocale.strings.earningsWeekly,
+    EarningsPeriod.monthly => ActiveLocale.strings.earningsMonthly,
   };
 }
 
 class EarningsBar extends Equatable {
-  const EarningsBar({
-    required this.label,
-    required this.amount,
-    required this.trips,
-    required this.date,
-  });
+  const EarningsBar({required this.label, required this.amount, required this.trips, required this.date});
 
   final String label;
   final num amount;
@@ -47,21 +43,11 @@ class EarningsBreakdown extends Equatable {
   num get net => gross - deductions;
 
   @override
-  List<Object?> get props => [
-    baseFare,
-    distancePay,
-    surge,
-    incentives,
-    deductions,
-  ];
+  List<Object?> get props => [baseFare, distancePay, surge, incentives, deductions];
 }
 
 class EarningsOverview extends Equatable {
-  const EarningsOverview({
-    required this.bars,
-    required this.breakdowns,
-    required this.dailyEntries,
-  });
+  const EarningsOverview({required this.bars, required this.breakdowns, required this.dailyEntries});
 
   final Map<EarningsPeriod, List<EarningsBar>> bars;
   final Map<EarningsPeriod, EarningsBreakdown> breakdowns;
@@ -72,13 +58,7 @@ class EarningsOverview extends Equatable {
 
   EarningsBreakdown breakdownFor(EarningsPeriod period) =>
       breakdowns[period] ??
-      const EarningsBreakdown(
-        baseFare: 0,
-        distancePay: 0,
-        surge: 0,
-        incentives: 0,
-        deductions: 0,
-      );
+      const EarningsBreakdown(baseFare: 0, distancePay: 0, surge: 0, incentives: 0, deductions: 0);
 
   @override
   List<Object?> get props => [bars, breakdowns, dailyEntries];

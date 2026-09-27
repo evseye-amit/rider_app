@@ -41,15 +41,12 @@ class AllocationRepositoryImpl implements AllocationRepository {
   @override
   Future<Result<PendingRider>> getPendingRider(String riderId) async {
     final Result<List<PendingRider>> result = await _deployments.pendingRiders();
-    return result.fold(
-      Result<PendingRider>.err,
-      (riders) {
-        for (final r in riders) {
-          if (r.id == riderId) return Result.ok(r);
-        }
-        return Result.err(NotFoundFailure(LocaleController.strings.allocationRiderNoLongerWaitingVehicle));
-      },
-    );
+    return result.fold(Result<PendingRider>.err, (riders) {
+      for (final r in riders) {
+        if (r.id == riderId) return Result.ok(r);
+      }
+      return Result.err(NotFoundFailure(ActiveLocale.strings.allocationRiderNoLongerWaitingVehicle));
+    });
   }
 
   @override
@@ -91,8 +88,7 @@ class AllocationRepositoryImpl implements AllocationRepository {
     String allocationId, {
     required String workPartnerName,
     required List<PdiChecklistItem> checklist,
-  }) =>
-      _deployments.submitPdi(allocationId, workPartnerName: workPartnerName, checklist: checklist);
+  }) => _deployments.submitPdi(allocationId, workPartnerName: workPartnerName, checklist: checklist);
 
   @override
   Future<Result<IotHealth>> getIotHealth(String allocationId) => _deployments.iotHealth(allocationId);
@@ -103,45 +99,43 @@ class AllocationRepositoryImpl implements AllocationRepository {
 
   @override
   Future<Result<DeallocationRequest>> getDeallocationRequest(String allocationId) => _api.get<DeallocationRequest>(
-        '/allocations/$allocationId',
-        parse: (data) => _returnFrom(Map<String, dynamic>.from(data as Map)),
-      );
+    '/allocations/$allocationId',
+    parse: (data) => _returnFrom(Map<String, dynamic>.from(data as Map)),
+  );
 
   @override
   Future<Result<DeallocationStart>> initiateDeallocation(String allocationId) => _api.post<DeallocationStart>(
-        '/allocations/$allocationId/deallocation/initiate',
-        parse: (data) {
-          final Map<String, dynamic> m = Map<String, dynamic>.from(data as Map);
-          return DeallocationStart(
-            allocationId: m['allocationId']?.toString() ?? allocationId,
-            inspectionId: m['inspectionId']?.toString() ?? '',
-          );
-        },
+    '/allocations/$allocationId/deallocation/initiate',
+    parse: (data) {
+      final Map<String, dynamic> m = Map<String, dynamic>.from(data as Map);
+      return DeallocationStart(
+        allocationId: m['allocationId']?.toString() ?? allocationId,
+        inspectionId: m['inspectionId']?.toString() ?? '',
       );
+    },
+  );
 
   @override
   Future<Result<OtpChallenge>> requestDeallocationOtp(
     String allocationId, {
     required String phone,
     required String party,
-  }) =>
-      _api.post<OtpChallenge>(
-        '/allocations/$allocationId/deallocation/otp/request',
-        body: {'phone': _e164(phone), 'party': party},
-        parse: (data) => OtpChallenge.fromJson(Map<String, dynamic>.from(data as Map)),
-      );
+  }) => _api.post<OtpChallenge>(
+    '/allocations/$allocationId/deallocation/otp/request',
+    body: {'phone': _e164(phone), 'party': party},
+    parse: (data) => OtpChallenge.fromJson(Map<String, dynamic>.from(data as Map)),
+  );
 
   @override
   Future<Result<void>> verifyDeallocationOtp(
     String allocationId, {
     required String otpRequestId,
     required String code,
-  }) =>
-      _api.post<void>(
-        '/allocations/$allocationId/deallocation/otp/verify',
-        body: {'otpRequestId': otpRequestId, 'code': code},
-        parse: (_) {},
-      );
+  }) => _api.post<void>(
+    '/allocations/$allocationId/deallocation/otp/verify',
+    body: {'otpRequestId': otpRequestId, 'code': code},
+    parse: (_) {},
+  );
 
   @override
   Future<Result<void>> completeInspection(String inspectionId) =>
@@ -169,7 +163,8 @@ class AllocationRepositoryImpl implements AllocationRepository {
       mobile: rider['mobile']?.toString() ?? '',
       vehicleNumber: fleet['vehicleNumber']?.toString() ?? '—',
       model: fleet['modelName']?.toString() ?? '',
-      allocatedOn: DateTime.tryParse(row['allocatedAt']?.toString() ?? '') ??
+      allocatedOn:
+          DateTime.tryParse(row['allocatedAt']?.toString() ?? '') ??
           DateTime.tryParse(row['createdAt']?.toString() ?? '') ??
           DateTime.now(),
 
@@ -190,7 +185,9 @@ class AllocationRepositoryImpl implements AllocationRepository {
       mobile: rider['mobile']?.toString() ?? '',
       vehicleNumber: fleet['vehicleNumber']?.toString() ?? '—',
       model: fleet['modelName']?.toString() ?? '',
-      reason: row['status'] == 'ACTIVE' ? LocaleController.strings.allocationActiveAllocation : LocaleController.strings.allocationReturnInitiated,
+      reason: row['status'] == 'ACTIVE'
+          ? ActiveLocale.strings.allocationActiveAllocation
+          : ActiveLocale.strings.allocationReturnInitiated,
       raisedOn: DateTime.tryParse(row['updatedAt']?.toString() ?? '') ?? DateTime.now(),
       teamLead: '',
       priority: 'normal',

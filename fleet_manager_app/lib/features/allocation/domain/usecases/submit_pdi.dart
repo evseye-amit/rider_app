@@ -16,5 +16,6 @@ class SubmitPdi extends UseCase<DeploymentWorkflow, SubmitPdiParams> {
   final AllocationRepository _repository;
 
   @override
-  Future<Result<DeploymentWorkflow>> call(SubmitPdiParams params) => _repository.submitPdi(params.allocationId, workPartnerName: params.workPartnerName, checklist: params.checklist);
+  Future<Result<DeploymentWorkflow>> call(SubmitPdiParams params) =>
+      _repository.submitPdi(params.allocationId, workPartnerName: params.workPartnerName, checklist: params.checklist);
 }

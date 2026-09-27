@@ -16,24 +16,18 @@ class HubRepositoryImpl implements HubRepository {
     final Result<List<HubProfile>> result = await _api.get<List<HubProfile>>(
       '/hubs',
       parse: (data) {
-        final List<dynamic> rows =
-            data is Map ? (data['items'] as List<dynamic>? ?? const []) : data as List<dynamic>;
-        return rows
-            .map((e) => _hubFromApi(Map<String, dynamic>.from(e as Map)))
-            .toList(growable: false);
+        final List<dynamic> rows = data is Map ? (data['items'] as List<dynamic>? ?? const []) : data as List<dynamic>;
+        return rows.map((e) => _hubFromApi(Map<String, dynamic>.from(e as Map))).toList(growable: false);
       },
     );
-    return result.map(
-      (hubs) => [...hubs]..sort((a, b) => a.code.compareTo(b.code)),
-    );
+    return result.map((hubs) => [...hubs]..sort((a, b) => a.code.compareTo(b.code)));
   }
 
   static HubProfile _hubFromApi(Map<String, dynamic> json) {
     final String line1 = json['addressLine1']?.toString() ?? '';
     final String city = json['city']?.toString() ?? '';
     final String postal = json['postalCode']?.toString() ?? '';
-    final String address =
-        [line1, city, postal].where((p) => p.isNotEmpty).join(', ');
+    final String address = [line1, city, postal].where((p) => p.isNotEmpty).join(', ');
 
     return HubProfile(
       id: json['id']?.toString() ?? '',
@@ -103,17 +97,12 @@ class HubRepositoryImpl implements HubRepository {
   @override
   Future<Result<HubProfile>> getProfile(String hubCode) async {
     final Result<List<HubProfile>> hubs = await listHubs();
-    return hubs.fold(
-      Result<HubProfile>.err,
-      (list) {
-        for (final hub in list) {
-          if (hub.code == hubCode) return Result.ok(hub);
-        }
-        return list.isEmpty
-            ? Result.err(NotFoundFailure(LocaleController.strings.hubNoHubAssigned))
-            : Result.ok(list.first);
-      },
-    );
+    return hubs.fold(Result<HubProfile>.err, (list) {
+      for (final hub in list) {
+        if (hub.code == hubCode) return Result.ok(hub);
+      }
+      return list.isEmpty ? Result.err(NotFoundFailure(ActiveLocale.strings.hubNoHubAssigned)) : Result.ok(list.first);
+    });
   }
 
   Future<Map<String, int>> _queueCounts() async {
@@ -121,9 +110,7 @@ class HubRepositoryImpl implements HubRepository {
       '/allocations',
       query: {'pageSize': _maxPageSize},
       parse: (data) {
-        final List<dynamic> rows = data is Map
-            ? (data['items'] as List<dynamic>? ?? const [])
-            : data as List<dynamic>;
+        final List<dynamic> rows = data is Map ? (data['items'] as List<dynamic>? ?? const []) : data as List<dynamic>;
         int waiting = 0;
         int returns = 0;
         for (final row in rows) {
@@ -141,13 +128,10 @@ class HubRepositoryImpl implements HubRepository {
   }
 
   Future<Map<String, dynamic>> _hub(String hubCode) async {
-    final Result<List<Map<String, dynamic>>> rows =
-        await _api.get<List<Map<String, dynamic>>>(
+    final Result<List<Map<String, dynamic>>> rows = await _api.get<List<Map<String, dynamic>>>(
       '/hubs',
       parse: (data) {
-        final List<dynamic> raw = data is Map
-            ? (data['items'] as List<dynamic>? ?? const [])
-            : data as List<dynamic>;
+        final List<dynamic> raw = data is Map ? (data['items'] as List<dynamic>? ?? const []) : data as List<dynamic>;
         return raw.map((e) => Map<String, dynamic>.from(e as Map)).toList(growable: false);
       },
     );

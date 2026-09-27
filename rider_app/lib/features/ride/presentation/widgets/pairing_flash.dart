@@ -40,20 +40,15 @@ class _Pairing extends StatefulWidget {
 }
 
 class _PairingState extends State<_Pairing> with TickerProviderStateMixin {
-  late final AnimationController _enter = AnimationController(
-    vsync: this,
-    duration: Motion.fast,
-  )..forward();
+  late final AnimationController _enter = AnimationController(vsync: this, duration: Motion.fast)..forward();
 
   late final AnimationController _ripple = AnimationController(
     vsync: this,
     duration: const Duration(milliseconds: 1500),
   )..repeat();
 
-  late final AnimationController _arc = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 850),
-  )..repeat();
+  late final AnimationController _arc = AnimationController(vsync: this, duration: const Duration(milliseconds: 850))
+    ..repeat();
 
   Timer? _buzz;
   Timer? _connect;
@@ -65,10 +60,7 @@ class _PairingState extends State<_Pairing> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     HapticFeedback.mediumImpact();
-    _buzz = Timer.periodic(
-      const Duration(milliseconds: 240),
-      (_) => HapticFeedback.selectionClick(),
-    );
+    _buzz = Timer.periodic(const Duration(milliseconds: 240), (_) => HapticFeedback.selectionClick());
     _connect = Timer(PairingFlash.connecting, _complete);
   }
 
@@ -143,11 +135,7 @@ class _PairingState extends State<_Pairing> with TickerProviderStateMixin {
                       animation: Listenable.merge([_ripple, _arc]),
                       builder: (context, _) => CustomPaint(
                         size: const Size.square(168),
-                        painter: _ElectricHalo(
-                          ripple: _ripple.value,
-                          sweep: _arc.value,
-                          paired: _paired,
-                        ),
+                        painter: _ElectricHalo(ripple: _ripple.value, sweep: _arc.value, paired: _paired),
                         child: Center(
                           child: AnimatedContainer(
                             duration: Motion.normal,
@@ -269,10 +257,7 @@ class _ElectricHalo extends CustomPainter {
         ..shader = SweepGradient(
           startAngle: sweep * 2 * math.pi,
           endAngle: sweep * 2 * math.pi + math.pi / 2.4,
-          colors: [
-            AppColors.primary.withValues(alpha: 0.0),
-            AppColors.primary,
-          ],
+          colors: [AppColors.primary.withValues(alpha: 0.0), AppColors.primary],
         ).createShader(ring),
     );
 
@@ -293,6 +278,5 @@ class _ElectricHalo extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_ElectricHalo old) =>
-      old.ripple != ripple || old.sweep != sweep || old.paired != paired;
+  bool shouldRepaint(_ElectricHalo old) => old.ripple != ripple || old.sweep != sweep || old.paired != paired;
 }

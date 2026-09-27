@@ -1,55 +1,51 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/session/session_controller.dart';
-import '../../domain/onboarding_draft.dart';
+import '../../../../core/session/rider_session_provider.dart';
 import '../../domain/usecases/save_onboarding_step.dart';
+import '../../onboarding_dependencies.dart';
+import '../providers/onboarding_draft_provider.dart';
 
-class OnboardingPreviewPage extends StatefulWidget {
+class OnboardingPreviewPage extends ConsumerStatefulWidget {
   const OnboardingPreviewPage({super.key});
 
   @override
-  State<OnboardingPreviewPage> createState() => _OnboardingPreviewPageState();
+  ConsumerState<OnboardingPreviewPage> createState() => _OnboardingPreviewPageState();
 }
 
-class _OnboardingPreviewPageState extends State<OnboardingPreviewPage> {
+class _OnboardingPreviewPageState extends ConsumerState<OnboardingPreviewPage> {
   bool _submitting = false;
 
-  SessionController get _session => sl<SessionController>();
-
-  void _edit(int stepIndex) {
-    OnboardingDraft.instance.jumpToStepIndex = stepIndex;
-    context.go(Routes.onboarding);
-  }
+  void _edit(int stepIndex) => context.pop(stepIndex);
 
   Future<void> _submit(RiderOnboardingConfig config) async {
     if (_submitting || config.steps.isEmpty) return;
     final OnboardingStepConfig last = config.steps.last;
-    final Map<String, Object?> draft = OnboardingDraft.instance.values;
+    final Map<String, Object?> draft = ref.read(onboardingDraftProvider);
     final Map<String, Object?> values = {
-      for (final f in last.inputs)
-        if (draft[f.fieldCode] != null && draft[f.fieldCode].toString().trim().isNotEmpty)
-          f.fieldCode: draft[f.fieldCode].toString().trim(),
+      for (final OnboardingFieldConfig field in last.inputs)
+        if (draft[field.fieldCode] != null && draft[field.fieldCode].toString().trim().isNotEmpty)
+          field.fieldCode: draft[field.fieldCode].toString().trim(),
     };
 
     setState(() => _submitting = true);
-    final Result<RiderOnboardingConfig> result =
-        await SaveOnboardingStep(sl())(SaveStepParams(stepId: last.stepId, values: values));
+    final Result<RiderOnboardingConfig> result = await ref.read(saveOnboardingStepProvider)(
+      SaveStepParams(stepId: last.stepId, values: values),
+    );
     if (!mounted) return;
 
     switch (result) {
       case Ok<RiderOnboardingConfig>(:final value):
-
-        await _session.applyOnboarding(value);
+        await ref.read(riderSessionProvider.notifier).applyOnboarding(value);
         if (!mounted) return;
         setState(() => _submitting = false);
         if (value.isComplete) {
-          OnboardingDraft.instance.values = const {};
+          ref.read(onboardingDraftProvider.notifier).clear();
           AppSnack.success(context, context.l10n.onboardingApplicationSubmitted);
-          context.go(_session.homeRoute);
+          context.go(ref.read(riderSessionProvider).homeRoute);
         } else {
           AppSnack.error(context, context.l10n.onboardingSomeStepsStillIncompleteGo);
         }
@@ -61,7 +57,7 @@ class _OnboardingPreviewPageState extends State<OnboardingPreviewPage> {
 
   @override
   Widget build(BuildContext context) {
-    final RiderOnboardingConfig? config = _session.onboarding;
+    final RiderOnboardingConfig? config = ref.watch(riderSessionProvider.select((s) => s.onboarding));
     if (config == null) {
       return AppScaffold(
         title: context.l10n.onboardingReviewApplication,
@@ -75,15 +71,17 @@ class _OnboardingPreviewPageState extends State<OnboardingPreviewPage> {
       );
     }
 
-    final Map<String, Object?> draft = OnboardingDraft.instance.values;
+    final Map<String, Object?> draft = ref.watch(onboardingDraftProvider);
     final Map<String, Object?> saved = config.progress.values;
     Object? valueOf(String key) => draft[key] ?? saved[key];
 
-    final List<OnboardingFieldConfig> allFields = [for (final s in config.steps) ...s.fields];
-    final int total = allFields.where((f) => f.isInput || f.isUpload).length;
-    final int filled = allFields.where((f) {
-      final Object? v = valueOf(f.formKey);
-      return (f.isInput || f.isUpload) && v != null && v.toString().trim().isNotEmpty;
+    final List<OnboardingFieldConfig> allFields = [
+      for (final OnboardingStepConfig step in config.steps) ...step.fields,
+    ];
+    final int total = allFields.where((field) => field.isInput || field.isUpload).length;
+    final int filled = allFields.where((field) {
+      final Object? value = valueOf(field.formKey);
+      return (field.isInput || field.isUpload) && value != null && value.toString().trim().isNotEmpty;
     }).length;
 
     return HeroScaffold(
@@ -91,7 +89,12 @@ class _OnboardingPreviewPageState extends State<OnboardingPreviewPage> {
       bottomPadding: 120,
       band: _Band(packageName: config.packageName, filled: filled, total: total),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.fromLTRB(Insets.gutter, Insets.md, Insets.gutter, MediaQuery.paddingOf(context).bottom + Insets.md),
+        padding: EdgeInsets.fromLTRB(
+          Insets.gutter,
+          Insets.md,
+          Insets.gutter,
+          MediaQuery.paddingOf(context).bottom + Insets.md,
+        ),
         decoration: const BoxDecoration(
           color: AppColors.canvas,
           border: Border(top: BorderSide(color: AppColors.stroke)),
@@ -126,23 +129,28 @@ class _Band extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Builder(
-          builder: (context) => InkCircleButton(
-            icon: Icons.arrow_back_rounded,
-            onTap: () => Navigator.of(context).maybePop(),
-          ),
+          builder: (context) =>
+              InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
         ),
         const Gap.xl(),
-        Text(context.l10n.onboardingReviewApplication, style: AppText.displaySmall.copyWith(color: AppColors.onInk, fontSize: 25)),
+        Text(
+          context.l10n.onboardingReviewApplication,
+          style: AppText.displaySmall.copyWith(color: AppColors.onInk, fontSize: 25),
+        ),
         const Gap.sm(),
-        Text(context.l10n.onboardingCheckEverythingBeforeSubmitCan,
+        Text(
+          context.l10n.onboardingCheckEverythingBeforeSubmitCan,
           style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.5),
         ),
         const Gap.lg(),
-
         Row(
           children: [
             Expanded(
-              child: InkStat(label: context.l10n.onboardingAnswered, value: '$filled of $total', icon: Icons.fact_check_rounded),
+              child: InkStat(
+                label: context.l10n.onboardingAnswered,
+                value: '$filled of $total',
+                icon: Icons.fact_check_rounded,
+              ),
             ),
             const InkDivider(),
             const SizedBox(width: Insets.md),
@@ -169,7 +177,8 @@ class _StepCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<OnboardingFieldConfig> shown = step.fields.where((f) => f.isInput || f.isUpload).toList();
+    final List<OnboardingFieldConfig> shown = step.fields.where((field) => field.isInput || field.isUpload).toList();
+
     return ModuleCard(
       title: step.stepName,
       actionLabel: context.l10n.onboardingEdit,
@@ -178,33 +187,35 @@ class _StepCard extends StatelessWidget {
           ? Text(
               step.capabilities.isEmpty
                   ? context.l10n.onboardingNothingFillStep
-                  : step.capabilities.map((c) => c.label).join(' · '),
+                  : step.capabilities.map((capability) => capability.label).join(' · '),
               style: AppText.bodySmall.copyWith(height: 1.5),
             )
           : Column(
               children: [
-                for (final f in shown)
+                for (final OnboardingFieldConfig field in shown)
                   KeyValueRow(
-                    label: f.label,
-                    value: _display(f, valueOf(f.formKey)),
-                    icon: f.isUpload ? Icons.attach_file_rounded : null,
-                    valueColor: valueOf(f.formKey) == null ? AppColors.textMuted : null,
+                    label: field.label,
+                    value: _display(context.l10n, field, valueOf(field.formKey)),
+                    icon: field.isUpload ? Icons.attach_file_rounded : null,
+                    valueColor: valueOf(field.formKey) == null ? AppColors.textMuted : null,
                   ),
               ],
             ),
     );
   }
 
-  static String _display(OnboardingFieldConfig f, Object? value) {
-    if (value == null || value.toString().trim().isEmpty) return f.required || f.isUpload ? LocaleController.strings.onboardingNotProvided : '—';
-    final String s = value.toString();
-    if (f.isUpload) return LocaleController.strings.onboardingAttached;
-    if (f.fieldCode.contains('AADHAAR')) return Fmt.maskAadhaar(s);
-    if (f.fieldType == 'MOBILE') return Fmt.phone(s);
-    if (f.fieldType == 'DATE') {
-      final DateTime? d = DateTime.tryParse(s);
-      return d == null ? s : Fmt.date(d);
+  static String _display(AppL10n l10n, OnboardingFieldConfig field, Object? value) {
+    if (value == null || value.toString().trim().isEmpty) {
+      return field.required || field.isUpload ? l10n.onboardingNotProvided : '—';
     }
-    return s;
+    final String text = value.toString();
+    if (field.isUpload) return l10n.onboardingAttached;
+    if (field.fieldCode.contains('AADHAAR')) return Fmt.maskAadhaar(text);
+    if (field.fieldType == 'MOBILE') return Fmt.phone(text);
+    if (field.fieldType == 'DATE') {
+      final DateTime? date = DateTime.tryParse(text);
+      return date == null ? text : Fmt.date(date);
+    }
+    return text;
   }
 }

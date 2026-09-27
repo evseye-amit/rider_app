@@ -1,68 +1,45 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/session/session_controller.dart';
+import '../../../../core/session/rider_session_provider.dart';
 import '../../domain/entities/home_summary.dart';
-import '../../domain/usecases/get_home_summary.dart';
-import '../cubit/home_cubit.dart';
+import '../providers/home_summary_provider.dart';
 import '../widgets/rider_drawer.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => HomeCubit(GetHomeSummary(sl()))..load(),
-      child: const _HomeView(),
-    );
-  }
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<HomeSummary> summary = ref.watch(homeSummaryProvider);
 
-class _HomeView extends StatelessWidget {
-  const _HomeView();
+    if (summary.hasError) {
+      return Scaffold(
+        drawer: const RiderDrawer(),
+        body: SafeArea(
+          child: EmptyState(
+            title: context.l10n.homeCouldNotLoadDashboard,
+            message: summary.failureMessage,
+            icon: Icons.cloud_off_rounded,
+            tone: AppColors.danger,
+            actionLabel: context.l10n.commonTryAgain,
+            onAction: () => ref.invalidate(homeSummaryProvider),
+          ),
+        ),
+      );
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    final SessionController session = sl<SessionController>();
+    final HomeSummary? data = summary.value;
 
-    return ListenableBuilder(
-      listenable: session,
-      builder: (context, _) => BlocBuilder<HomeCubit, HomeState>(
-        builder: (context, state) {
-          if (state.status == HomeStatus.failure) {
-            return Scaffold(
-              drawer: const RiderDrawer(),
-              body: SafeArea(
-                child: EmptyState(
-                  title: context.l10n.homeCouldNotLoadDashboard,
-                  message: state.message,
-                  icon: Icons.cloud_off_rounded,
-                  tone: AppColors.danger,
-                  actionLabel: context.l10n.commonTryAgain,
-                  onAction: () => context.read<HomeCubit>().refresh(),
-                ),
-              ),
-            );
-          }
-
-          final HomeSummary? summary = state.summary;
-
-          return HeroScaffold(
-            drawer: const RiderDrawer(),
-            bottomPadding: 120,
-            onRefresh: () => context.read<HomeCubit>().refresh(),
-            band: _Band(session: session, summary: summary),
-            children: summary == null
-                ? const [_HomeSkeleton()]
-                : _content(context, summary),
-          );
-        },
-      ),
+    return HeroScaffold(
+      drawer: const RiderDrawer(),
+      bottomPadding: 120,
+      onRefresh: () => ref.refreshQuietly(homeSummaryProvider),
+      band: _Band(summary: data),
+      children: data == null ? const [_HomeSkeleton()] : _content(context, data),
     );
   }
 
@@ -87,10 +64,8 @@ class _HomeView extends StatelessWidget {
         ],
       ),
       const Gap.lg(),
-
       ModuleCard(
         title: context.l10n.commonYesterdayGlance,
-
         padding: const EdgeInsets.all(Insets.md),
         child: GridView(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -115,9 +90,7 @@ class _HomeView extends StatelessWidget {
             StatCard(
               label: context.l10n.homeRentDue,
               value: Fmt.money(summary.rentDue),
-              caption: summary.rentDueDate == null
-                  ? summary.rentPlan
-                  : 'due ${Fmt.date(summary.rentDueDate!)}',
+              caption: summary.rentDueDate == null ? summary.rentPlan : 'due ${Fmt.date(summary.rentDueDate!)}',
               icon: Icons.receipt_long_rounded,
               accent: AppColors.primary,
               compact: true,
@@ -130,23 +103,44 @@ class _HomeView extends StatelessWidget {
   }
 }
 
-class _Band extends StatelessWidget {
-  const _Band({required this.session, required this.summary});
+class _Band extends ConsumerWidget {
+  const _Band({required this.summary});
 
-  final SessionController session;
   final HomeSummary? summary;
 
-  String get _greeting {
-    final int h = DateTime.now().hour;
-    if (h < 12) return LocaleController.strings.commonGoodMorning;
-    if (h < 17) return LocaleController.strings.commonGoodAfternoon;
-    if (h < 21) return LocaleController.strings.commonGoodEvening;
-    return LocaleController.strings.homeRidingLate;
+  String _greeting(AppL10n l10n) {
+    final int hour = DateTime.now().hour;
+    if (hour < 12) return l10n.commonGoodMorning;
+    if (hour < 17) return l10n.commonGoodAfternoon;
+    if (hour < 21) return l10n.commonGoodEvening;
+    return l10n.homeRidingLate;
+  }
+
+  Future<void> _confirmAttendance(BuildContext context, WidgetRef ref, bool next) async {
+    if (!next) {
+      final bool confirmed = await AppDialog.confirm(
+        context,
+        title: context.l10n.homeMarkYourselfAbsent,
+        message: context.l10n.homeShiftWillEndScooterWill,
+        confirmLabel: context.l10n.homeMarkAbsent,
+        icon: Icons.person_off_rounded,
+        destructive: true,
+      );
+      if (!confirmed || !context.mounted) return;
+    }
+
+    ref.read(riderSessionProvider.notifier).setAttendance(next);
+    next
+        ? AppSnack.success(context, context.l10n.commonMarkedPresentShiftHasStarted)
+        : AppSnack.warning(context, context.l10n.homeMarkedAbsentScooterNowDisabled);
   }
 
   @override
-  Widget build(BuildContext context) {
-    final String name = session.profile['shortName']?.toString() ?? context.l10n.allocationRider;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final String name =
+        ref.watch(riderSessionProvider.select((s) => s.profile['shortName']?.toString())) ??
+        context.l10n.allocationRider;
+    final bool present = ref.watch(riderSessionProvider.select((s) => s.present));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,10 +148,8 @@ class _Band extends StatelessWidget {
         Row(
           children: [
             Builder(
-              builder: (context) => InkCircleButton(
-                icon: Icons.menu_rounded,
-                onTap: () => Scaffold.of(context).openDrawer(),
-              ),
+              builder: (context) =>
+                  InkCircleButton(icon: Icons.menu_rounded, onTap: () => Scaffold.of(context).openDrawer()),
             ),
             const SizedBox(width: Insets.md),
             Expanded(
@@ -165,30 +157,21 @@ class _Band extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _greeting,
-                    style: AppText.bodySmall.copyWith(
-                      fontSize: 12,
-                      color: AppColors.onInkSecondary,
-                    ),
+                    _greeting(context.l10n),
+                    style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.onInkSecondary),
                   ),
                   const SizedBox(height: 1),
                   Text(
                     name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppText.titleLarge.copyWith(
-                      fontSize: 20,
-                      color: AppColors.onInk,
-                    ),
+                    style: AppText.titleLarge.copyWith(fontSize: 20, color: AppColors.onInk),
                   ),
                 ],
               ),
             ),
             const SizedBox(width: Insets.sm),
-            AttendanceToggle(
-              present: session.present,
-              onChanged: (next) => _confirmAttendance(context, next),
-            ),
+            AttendanceToggle(present: present, onChanged: (next) => _confirmAttendance(context, ref, next)),
             const SizedBox(width: Insets.sm),
             InkCircleButton(
               icon: Icons.notifications_none_rounded,
@@ -198,11 +181,7 @@ class _Band extends StatelessWidget {
           ],
         ),
         const Gap.xxl(),
-
-        Text(
-          context.l10n.homeTodaysEarnings,
-          style: AppText.label.copyWith(color: AppColors.onInkSecondary),
-        ),
+        Text(context.l10n.homeTodaysEarnings, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
         const Gap.sm(),
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -245,7 +224,6 @@ class _Band extends StatelessWidget {
           ],
         ),
         const Gap.xl(),
-
         Container(
           padding: const EdgeInsets.symmetric(vertical: Insets.md, horizontal: Insets.sm),
           decoration: BoxDecoration(
@@ -276,9 +254,7 @@ class _Band extends StatelessWidget {
               Expanded(
                 child: InkStat(
                   label: context.l10n.homeOnline,
-                  value: Fmt.duration(
-                    Duration(minutes: session.present ? (summary?.onlineMinutes ?? 0) : 0),
-                  ),
+                  value: Fmt.duration(Duration(minutes: present ? (summary?.onlineMinutes ?? 0) : 0)),
                   icon: Icons.schedule_rounded,
                 ),
               ),
@@ -287,26 +263,6 @@ class _Band extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  Future<void> _confirmAttendance(BuildContext context, bool next) async {
-    if (!next) {
-      final bool confirmed = await AppDialog.confirm(
-        context,
-        title: context.l10n.homeMarkYourselfAbsent,
-        message: context.l10n.homeShiftWillEndScooterWill,
-        confirmLabel: context.l10n.homeMarkAbsent,
-        icon: Icons.person_off_rounded,
-        destructive: true,
-      );
-      if (!confirmed) return;
-    }
-
-    session.setAttendance(next);
-    if (!context.mounted) return;
-    next
-        ? AppSnack.success(context, context.l10n.commonMarkedPresentShiftHasStarted)
-        : AppSnack.warning(context, context.l10n.homeMarkedAbsentScooterNowDisabled);
   }
 }
 
@@ -322,7 +278,6 @@ class _HomeSkeleton extends StatelessWidget {
         const Gap.xxl(),
         const ShimmerBox(width: 130, height: 20),
         const Gap.lg(),
-
         GridView(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -333,10 +288,7 @@ class _HomeSkeleton extends StatelessWidget {
           shrinkWrap: true,
           padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
-          children: List.generate(
-            2,
-            (_) => const ShimmerBox(height: 114, borderRadius: Corners.brLg),
-          ),
+          children: List.generate(2, (_) => const ShimmerBox(height: 114, borderRadius: Corners.brLg)),
         ),
         const Gap.xxl(),
         const ShimmerBox(height: 104, borderRadius: Corners.brLg),

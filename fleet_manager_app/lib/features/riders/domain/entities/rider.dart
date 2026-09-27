@@ -1,14 +1,15 @@
 import 'package:equatable/equatable.dart';
 
 import 'package:evseye_core/evseye_core.dart';
+
 enum RiderState { active, onboarding, exited }
 
 extension RiderStateX on RiderState {
   String get label => switch (this) {
-        RiderState.active => LocaleController.strings.ridersActive,
-        RiderState.onboarding => LocaleController.strings.ridersOnboarding,
-        RiderState.exited => LocaleController.strings.ridersExited,
-      };
+    RiderState.active => ActiveLocale.strings.ridersActive,
+    RiderState.onboarding => ActiveLocale.strings.ridersOnboarding,
+    RiderState.exited => ActiveLocale.strings.ridersExited,
+  };
 }
 
 class Rider extends Equatable {
@@ -41,6 +42,5 @@ class Rider extends Equatable {
   bool get hasVehicle => (vehicleNumber ?? '').isNotEmpty;
 
   @override
-  List<Object?> get props =>
-      [id, name, riderCode, mobile, teamLead, plan, state, vehicleNumber, exitReason];
+  List<Object?> get props => [id, name, riderCode, mobile, teamLead, plan, state, vehicleNumber, exitReason];
 }

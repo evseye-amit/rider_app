@@ -1,34 +1,20 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../domain/entities/rider.dart';
-import '../../domain/usecases/get_riders.dart';
-import '../cubit/riders_cubit.dart';
+import '../providers/riders_provider.dart';
 
-class TeamPage extends StatelessWidget {
+class TeamPage extends ConsumerStatefulWidget {
   const TeamPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => RidersCubit(GetRiders(sl()))..load(),
-      child: const _RidersView(),
-    );
-  }
+  ConsumerState<TeamPage> createState() => _TeamPageState();
 }
 
-class _RidersView extends StatefulWidget {
-  const _RidersView();
-
-  @override
-  State<_RidersView> createState() => _RidersViewState();
-}
-
-class _RidersViewState extends State<_RidersView> {
+class _TeamPageState extends ConsumerState<TeamPage> {
   final TextEditingController _search = TextEditingController();
   int _tab = 0;
 
@@ -39,119 +25,98 @@ class _RidersViewState extends State<_RidersView> {
   }
 
   List<Rider> _filtered(List<Rider> all, RiderState state) {
-    final String q = _search.text.trim().toLowerCase();
-    return all.where((r) => r.state == state).where((r) {
-      if (q.isEmpty) return true;
-      return r.name.toLowerCase().contains(q) ||
-          r.riderCode.toLowerCase().contains(q) ||
-          (r.vehicleNumber ?? '').toLowerCase().contains(q);
+    final String query = _search.text.trim().toLowerCase();
+    return all.where((rider) => rider.state == state).where((rider) {
+      if (query.isEmpty) return true;
+      return rider.name.toLowerCase().contains(query) ||
+          rider.riderCode.toLowerCase().contains(query) ||
+          (rider.vehicleNumber ?? '').toLowerCase().contains(query);
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RidersCubit, RidersState>(
-      builder: (context, state) {
-        if (state.status == RidersStatus.failure) {
-          return Scaffold(
-            backgroundColor: AppColors.canvas,
-            body: SafeArea(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: EmptyState(
-                      title: context.l10n.ridersCouldNotLoadTeam,
-                      message: state.message,
-                      icon: Icons.cloud_off_rounded,
-                      tone: AppColors.danger,
-                      actionLabel: context.l10n.commonTryAgain,
-                      onAction: () => context.read<RidersCubit>().refresh(),
+    final AsyncValue<List<Rider>> riders = ref.watch(ridersProvider);
+
+    if (riders.hasError) {
+      return Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: EmptyState(
+            title: context.l10n.ridersCouldNotLoadTeam,
+            message: riders.failureMessage,
+            icon: Icons.cloud_off_rounded,
+            tone: AppColors.danger,
+            actionLabel: context.l10n.commonTryAgain,
+            onAction: () => ref.invalidate(ridersProvider),
+          ),
+        ),
+      );
+    }
+
+    final List<Rider>? all = riders.value;
+    final List<Rider> active = _filtered(all ?? const [], RiderState.active);
+    final List<Rider> onboarding = _filtered(all ?? const [], RiderState.onboarding);
+    final List<Rider> exited = _filtered(all ?? const [], RiderState.exited);
+    final List<Rider> shown = [active, onboarding, exited][_tab];
+
+    return HeroScaffold(
+      bottomPadding: 120,
+      onRefresh: () => ref.refreshQuietly(ridersProvider),
+      band: _RidersBand(riders: all ?? const []),
+      children: all == null
+          ? const [_RidersSkeleton()]
+          : [
+              ModuleCard(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AppSearchField(
+                      hint: context.l10n.ridersSearchNameCodeVehicle,
+                      controller: _search,
+                      onChanged: (_) => setState(() {}),
                     ),
-                  ),
-                ],
+                    const Gap.md(),
+                    SegmentedTabs(
+                      items: [context.l10n.ridersActive, context.l10n.ridersOnboarding, context.l10n.ridersExited],
+                      selectedIndex: _tab,
+                      onChanged: (i) => setState(() => _tab = i),
+                      counts: {0: active.length, 1: onboarding.length, 2: exited.length},
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        }
-
-        final List<Rider> active = _filtered(state.riders, RiderState.active);
-        final List<Rider> onboarding = _filtered(
-          state.riders,
-          RiderState.onboarding,
-        );
-        final List<Rider> exited = _filtered(state.riders, RiderState.exited);
-        final List<List<Rider>> byTab = [active, onboarding, exited];
-        final List<Rider> shown = state.isLoading ? const [] : byTab[_tab];
-
-        return HeroScaffold(
-          bottomPadding: 120,
-          onRefresh: () => context.read<RidersCubit>().refresh(),
-          band: _RidersBand(riders: state.riders, loading: state.isLoading),
-          children: state.isLoading
-              ? const [_RidersSkeleton()]
-              : [
-                  ModuleCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        AppSearchField(
-                          hint: context.l10n.ridersSearchNameCodeVehicle,
-                          controller: _search,
-                          onChanged: (_) => setState(() {}),
-                        ),
-                        const Gap.md(),
-                        SegmentedTabs(
-                          items: [context.l10n.ridersActive, context.l10n.ridersOnboarding, context.l10n.ridersExited],
-                          selectedIndex: _tab,
-                          onChanged: (i) => setState(() => _tab = i),
-                          counts: {
-                            0: active.length,
-                            1: onboarding.length,
-                            2: exited.length,
-                          },
-                        ),
-                      ],
-                    ),
+              const Gap.lg(),
+              if (shown.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: Insets.lg),
+                  child: ArtBlock(
+                    art: BrandArt.empty,
+                    artSize: 130,
+                    title: context.l10n.ridersNoRidersHere,
+                    message: context.l10n.ridersNobodyMatchesSearchList,
                   ),
-                  const Gap.lg(),
-                  if (shown.isEmpty)
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: Insets.lg),
-                      child: ArtBlock(
-                        art: BrandArt.empty,
-                        artSize: 130,
-                        title: context.l10n.ridersNoRidersHere,
-                        message: context.l10n.ridersNobodyMatchesSearchList,
-                      ),
-                    )
-                  else
-                    ModuleCard(
-                      child: Column(
-                        children: [
-                          for (final r in shown) ...[
-                            _RiderRow(
-                              rider: r,
-                              onTap: () => _openRiderSheet(context, r),
-                            ),
-                            if (r != shown.last) ...[
-                              const Gap.md(),
-                              Divider(
-                                color: AppColors.stroke.withValues(alpha: 0.6),
-                                height: 1,
-                              ),
-                              const Gap.md(),
-                            ],
-                          ],
+                )
+              else
+                ModuleCard(
+                  child: Column(
+                    children: [
+                      for (final Rider rider in shown) ...[
+                        _RiderRow(rider: rider, onTap: () => _openRiderSheet(rider)),
+                        if (rider != shown.last) ...[
+                          const Gap.md(),
+                          Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
+                          const Gap.md(),
                         ],
-                      ),
-                    ),
-                ],
-        );
-      },
+                      ],
+                    ],
+                  ),
+                ),
+            ],
     );
   }
 
-  Future<void> _openRiderSheet(BuildContext context, Rider rider) async {
+  Future<void> _openRiderSheet(Rider rider) async {
     await AppSheet.show(
       context,
       title: rider.name,
@@ -161,30 +126,15 @@ class _RidersViewState extends State<_RidersView> {
         children: [
           Row(
             children: [
-              AppAvatar(
-                name: rider.name,
-                size: 56,
-                showRing: rider.state == RiderState.active,
-              ),
+              AppAvatar(name: rider.name, size: 56, showRing: rider.state == RiderState.active),
               const SizedBox(width: Insets.lg),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    StatusChip(
-                      label: rider.state.label,
-                      tone: switch (rider.state) {
-                        RiderState.active => StatusTone.success,
-                        RiderState.onboarding => StatusTone.warning,
-                        RiderState.exited => StatusTone.neutral,
-                      },
-                      dense: true,
-                    ),
+                    StatusChip(label: rider.state.label, tone: _stateTone(rider.state), dense: true),
                     const SizedBox(height: Insets.sm),
-                    Text(
-                      Fmt.phone(rider.mobile),
-                      style: AppText.bodyMedium.copyWith(fontSize: 14),
-                    ),
+                    Text(Fmt.phone(rider.mobile), style: AppText.bodyMedium.copyWith(fontSize: 14)),
                   ],
                 ),
               ),
@@ -198,16 +148,10 @@ class _RidersViewState extends State<_RidersView> {
             value: rider.teamLead,
             icon: Icons.supervisor_account_rounded,
           ),
-          KeyValueRow(
-            label: context.l10n.ridersPlan,
-            value: rider.plan,
-            icon: Icons.workspace_premium_rounded,
-          ),
+          KeyValueRow(label: context.l10n.ridersPlan, value: rider.plan, icon: Icons.workspace_premium_rounded),
           KeyValueRow(
             label: context.l10n.commonVehicle,
-            value: rider.hasVehicle
-                ? rider.vehicleNumber!
-                : context.l10n.ridersAwaitingAllocation,
+            value: rider.hasVehicle ? rider.vehicleNumber! : context.l10n.ridersAwaitingAllocation,
             icon: Icons.electric_scooter_rounded,
           ),
           if (rider.kycStatus != null)
@@ -215,9 +159,7 @@ class _RidersViewState extends State<_RidersView> {
               label: context.l10n.ridersKycStatus,
               value: rider.kycStatus == 'verified' ? context.l10n.ridersVerified : context.l10n.commonPending,
               icon: Icons.verified_user_rounded,
-              valueColor: rider.kycStatus == 'verified'
-                  ? AppColors.success
-                  : AppColors.warning,
+              valueColor: rider.kycStatus == 'verified' ? AppColors.success : AppColors.warning,
             ),
           if (rider.exitReason != null)
             KeyValueRow(
@@ -228,9 +170,7 @@ class _RidersViewState extends State<_RidersView> {
             ),
           if (rider.joinedOn != null)
             KeyValueRow(
-              label: rider.state == RiderState.exited
-                  ? context.l10n.ridersJoined
-                  : context.l10n.ridersWithHubSince,
+              label: rider.state == RiderState.exited ? context.l10n.ridersJoined : context.l10n.ridersWithHubSince,
               value: Fmt.date(rider.joinedOn!),
               icon: Icons.calendar_today_rounded,
             ),
@@ -246,10 +186,7 @@ class _RidersViewState extends State<_RidersView> {
               size: AppButtonSize.medium,
               onPressed: () {
                 Navigator.of(context).pop();
-                AppSnack.info(
-                  context,
-                  'Calling ${rider.name} · ${Fmt.phone(rider.mobile)}',
-                );
+                AppSnack.info(context, 'Calling ${rider.name} · ${Fmt.phone(rider.mobile)}');
               },
             ),
           ),
@@ -274,62 +211,50 @@ class _RidersViewState extends State<_RidersView> {
   }
 }
 
+StatusTone _stateTone(RiderState state) => switch (state) {
+  RiderState.active => StatusTone.success,
+  RiderState.onboarding => StatusTone.warning,
+  RiderState.exited => StatusTone.neutral,
+};
+
 class _RidersBand extends StatelessWidget {
-  const _RidersBand({required this.riders, required this.loading});
+  const _RidersBand({required this.riders});
 
   final List<Rider> riders;
-  final bool loading;
 
   @override
   Widget build(BuildContext context) {
-    final int active = riders.where((r) => r.state == RiderState.active).length;
-    final int onboarding = riders
-        .where((r) => r.state == RiderState.onboarding)
-        .length;
-    final int exited = riders.where((r) => r.state == RiderState.exited).length;
+    final int active = riders.where((rider) => rider.state == RiderState.active).length;
+    final int onboarding = riders.where((rider) => rider.state == RiderState.onboarding).length;
+    final int exited = riders.where((rider) => rider.state == RiderState.exited).length;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            const IconTile(
-              icon: Icons.groups_rounded,
-              tone: AppColors.primaryBright,
-              solid: true,
-              size: 46,
-            ),
+            const IconTile(icon: Icons.groups_rounded, tone: AppColors.primaryBright, solid: true, size: 46),
             const SizedBox(width: Insets.md),
             Expanded(
-              child: Text(context.l10n.ridersTeam,
+              child: Text(
+                context.l10n.ridersTeam,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppText.displaySmall.copyWith(
-                  fontSize: 24,
-                  color: AppColors.onInk,
-                ),
+                style: AppText.displaySmall.copyWith(fontSize: 24, color: AppColors.onInk),
               ),
             ),
           ],
         ),
         const Gap.xxl(),
-        Text(context.l10n.ridersRidersRoster,
-          style: AppText.label.copyWith(color: AppColors.onInkSecondary),
-        ),
+        Text(context.l10n.ridersRidersRoster, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
         const Gap.sm(),
         Text(
-          loading ? '—' : '${riders.length}',
-          style: AppText.numericLarge.copyWith(
-            fontSize: 38,
-            color: AppColors.onInk,
-          ),
+          riders.isEmpty ? '—' : '${riders.length}',
+          style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
         ),
         const Gap.xl(),
         Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: Insets.md,
-            horizontal: Insets.sm,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: Insets.md, horizontal: Insets.sm),
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.06),
             borderRadius: Corners.brMd,
@@ -338,11 +263,7 @@ class _RidersBand extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: InkStat(
-                  label: context.l10n.ridersActive,
-                  value: '$active',
-                  icon: Icons.bolt_rounded,
-                ),
+                child: InkStat(label: context.l10n.ridersActive, value: '$active', icon: Icons.bolt_rounded),
               ),
               const InkDivider(),
               const SizedBox(width: Insets.md),
@@ -356,11 +277,7 @@ class _RidersBand extends StatelessWidget {
               const InkDivider(),
               const SizedBox(width: Insets.md),
               Expanded(
-                child: InkStat(
-                  label: context.l10n.ridersExited,
-                  value: '$exited',
-                  icon: Icons.logout_rounded,
-                ),
+                child: InkStat(label: context.l10n.ridersExited, value: '$exited', icon: Icons.logout_rounded),
               ),
             ],
           ),
@@ -383,11 +300,7 @@ class _RiderRow extends StatelessWidget {
       scale: 0.99,
       child: Row(
         children: [
-          AppAvatar(
-            name: rider.name,
-            size: 46,
-            showRing: rider.state == RiderState.active,
-          ),
+          AppAvatar(name: rider.name, size: 46, showRing: rider.state == RiderState.active),
           const SizedBox(width: Insets.md),
           Expanded(
             child: Column(
@@ -410,18 +323,14 @@ class _RiderRow extends StatelessWidget {
                 Row(
                   children: [
                     Icon(
-                      rider.hasVehicle
-                          ? Icons.electric_scooter_rounded
-                          : Icons.hourglass_empty_rounded,
+                      rider.hasVehicle ? Icons.electric_scooter_rounded : Icons.hourglass_empty_rounded,
                       size: 13,
                       color: AppColors.textMuted,
                     ),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
-                        rider.hasVehicle
-                            ? rider.vehicleNumber!
-                            : context.l10n.ridersAwaitingAllocation,
+                        rider.hasVehicle ? rider.vehicleNumber! : context.l10n.ridersAwaitingAllocation,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppText.bodySmall.copyWith(fontSize: 11.5),
@@ -433,23 +342,13 @@ class _RiderRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: Insets.sm),
-
           ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 104),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
-                StatusChip(
-                  label: rider.state.label,
-                  dense: true,
-
-                  tone: switch (rider.state) {
-                    RiderState.active => StatusTone.success,
-                    RiderState.onboarding => StatusTone.warning,
-                    RiderState.exited => StatusTone.neutral,
-                  },
-                ),
+                StatusChip(label: rider.state.label, dense: true, tone: _stateTone(rider.state)),
                 const SizedBox(height: 6),
                 Text(
                   rider.plan,
@@ -472,12 +371,12 @@ class _RidersSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const ShimmerBox(height: 256, borderRadius: Corners.brXl),
-        const Gap.lg(),
-        const ShimmerBox(height: 420, borderRadius: Corners.brXl),
+        ShimmerBox(height: 256, borderRadius: Corners.brXl),
+        Gap.lg(),
+        ShimmerBox(height: 420, borderRadius: Corners.brXl),
       ],
     );
   }

@@ -2,25 +2,24 @@ import 'dart:async';
 
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
-import '../../../../core/session/session_controller.dart';
+import '../../../../core/session/rider_session_provider.dart';
 
 enum _Stage { entering, verifying, verified }
 
-class OtpPage extends StatefulWidget {
+class OtpPage extends ConsumerStatefulWidget {
   const OtpPage({required this.mobile, required this.otpRequestId, super.key});
 
   final String mobile;
-
   final String otpRequestId;
 
   @override
-  State<OtpPage> createState() => _OtpPageState();
+  ConsumerState<OtpPage> createState() => _OtpPageState();
 }
 
-class _OtpPageState extends State<OtpPage> {
+class _OtpPageState extends ConsumerState<OtpPage> {
   static const int _resendSeconds = 30;
 
   Timer? _ticker;
@@ -37,6 +36,12 @@ class _OtpPageState extends State<OtpPage> {
     _startTimer();
   }
 
+  @override
+  void dispose() {
+    _ticker?.cancel();
+    super.dispose();
+  }
+
   void _startTimer() {
     _remaining = _resendSeconds;
     _ticker?.cancel();
@@ -50,12 +55,6 @@ class _OtpPageState extends State<OtpPage> {
     });
   }
 
-  @override
-  void dispose() {
-    _ticker?.cancel();
-    super.dispose();
-  }
-
   Future<void> _verify(String code) async {
     if (code.length != 6 || _stage != _Stage.entering) return;
     setState(() {
@@ -63,18 +62,17 @@ class _OtpPageState extends State<OtpPage> {
       _hasError = false;
     });
 
-    final Result<AuthUser> result = await sl<SessionController>()
+    final Result<AuthUser> result = await ref
+        .read(riderSessionProvider.notifier)
         .verifyOtp(otpRequestId: _requestId, code: code);
     if (!mounted) return;
 
     switch (result) {
       case Ok<AuthUser>():
         setState(() => _stage = _Stage.verified);
-
-        await Future.delayed(const Duration(milliseconds: 450));
+        await Future<void>.delayed(const Duration(milliseconds: 450));
         if (!mounted) return;
-
-        context.go(sl<SessionController>().homeRoute);
+        context.go(ref.read(riderSessionProvider).homeRoute);
       case Err<AuthUser>(:final failure):
         setState(() {
           _stage = _Stage.entering;
@@ -86,8 +84,7 @@ class _OtpPageState extends State<OtpPage> {
 
   Future<void> _resend() async {
     if (_remaining > 0) return;
-    final Result<OtpChallenge> result =
-        await sl<SessionController>().requestOtp(widget.mobile);
+    final Result<OtpChallenge> result = await ref.read(riderSessionProvider.notifier).requestOtp(widget.mobile);
     if (!mounted) return;
     switch (result) {
       case Ok<OtpChallenge>(:final value):
@@ -102,9 +99,9 @@ class _OtpPageState extends State<OtpPage> {
   }
 
   String get _masked {
-    final String m = widget.mobile;
-    if (m.length < 6) return m;
-    return '${m.substring(0, 2)}${'•' * (m.length - 4)}${m.substring(m.length - 2)}';
+    final String mobile = widget.mobile;
+    if (mobile.length < 6) return mobile;
+    return '${mobile.substring(0, 2)}${'•' * (mobile.length - 4)}${mobile.substring(mobile.length - 2)}';
   }
 
   @override
@@ -125,7 +122,6 @@ class _OtpPageState extends State<OtpPage> {
             child: OtpInput(length: 6, hasError: _hasError, onCompleted: _verify),
           ),
         ),
-
         if (_error != null) ...[
           const Gap.md(),
           Row(
@@ -133,13 +129,7 @@ class _OtpPageState extends State<OtpPage> {
               const Icon(Icons.error_rounded, size: 15, color: AppColors.danger),
               const SizedBox(width: Insets.xs + 2),
               Expanded(
-                child: Text(
-                  _error!,
-                  style: AppText.bodySmall.copyWith(
-                    color: AppColors.danger,
-                    fontSize: 12.5,
-                  ),
-                ),
+                child: Text(_error!, style: AppText.bodySmall.copyWith(color: AppColors.danger, fontSize: 12.5)),
               ),
             ],
           ),
@@ -149,32 +139,28 @@ class _OtpPageState extends State<OtpPage> {
           duration: Motion.normal,
           child: switch (_stage) {
             _Stage.entering => Center(
-                key: const ValueKey('idle'),
-                child: _remaining > 0
-                    ? Text(
-                        context.l10n.authResendCodeIn('0:${_remaining.toString().padLeft(2, "0")}'),
-                        style: AppText.bodySmall,
-                      )
-                    : GhostButton(
-                        label: context.l10n.authResendCode,
-                        icon: Icons.refresh_rounded,
-                        onPressed: _resend,
-                      ),
-              ),
+              key: const ValueKey('idle'),
+              child: _remaining > 0
+                  ? Text(
+                      context.l10n.authResendCodeIn('0:${_remaining.toString().padLeft(2, '0')}'),
+                      style: AppText.bodySmall,
+                    )
+                  : GhostButton(label: context.l10n.authResendCode, icon: Icons.refresh_rounded, onPressed: _resend),
+            ),
             _Stage.verifying => _StatusRow(
-                key: ValueKey('verifying'),
-                icon: null,
-                label: context.l10n.authVerifyingNumber,
-                tone: AppColors.cyan,
-                spinning: true,
-              ),
+              key: const ValueKey('verifying'),
+              icon: null,
+              label: context.l10n.authVerifyingNumber,
+              tone: AppColors.cyan,
+              spinning: true,
+            ),
             _Stage.verified => _StatusRow(
-                key: ValueKey('verified'),
-                icon: Icons.check_circle_rounded,
-                label: context.l10n.authNumberVerified,
-                tone: AppColors.success,
-                spinning: false,
-              ),
+              key: const ValueKey('verified'),
+              icon: Icons.check_circle_rounded,
+              label: context.l10n.authNumberVerified,
+              tone: AppColors.success,
+              spinning: false,
+            ),
           },
         ),
         const Gap.xxl(),
@@ -191,13 +177,7 @@ class _OtpPageState extends State<OtpPage> {
 }
 
 class _StatusRow extends StatelessWidget {
-  const _StatusRow({
-    required this.icon,
-    required this.label,
-    required this.tone,
-    required this.spinning,
-    super.key,
-  });
+  const _StatusRow({required this.icon, required this.label, required this.tone, required this.spinning, super.key});
 
   final IconData? icon;
   final String label;
@@ -210,11 +190,7 @@ class _StatusRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (spinning)
-          SizedBox(
-            width: 16,
-            height: 16,
-            child: CircularProgressIndicator(strokeWidth: 2, color: tone),
-          )
+          SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: tone))
         else if (icon != null)
           Icon(icon, size: 18, color: tone),
         const SizedBox(width: Insets.sm),

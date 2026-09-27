@@ -22,14 +22,13 @@ class FleetStatusBreakdown extends Equatable {
   double get inServiceShare => _share(inService);
   double get offRoadShare => _share(offRoad);
 
-  static FleetStatusBreakdown combine(Iterable<FleetStatusBreakdown> parts) =>
-      FleetStatusBreakdown(
-        total: parts.fold(0, (sum, p) => sum + p.total),
-        allocated: parts.fold(0, (sum, p) => sum + p.allocated),
-        available: parts.fold(0, (sum, p) => sum + p.available),
-        inService: parts.fold(0, (sum, p) => sum + p.inService),
-        offRoad: parts.fold(0, (sum, p) => sum + p.offRoad),
-      );
+  static FleetStatusBreakdown combine(Iterable<FleetStatusBreakdown> parts) => FleetStatusBreakdown(
+    total: parts.fold(0, (sum, p) => sum + p.total),
+    allocated: parts.fold(0, (sum, p) => sum + p.allocated),
+    available: parts.fold(0, (sum, p) => sum + p.available),
+    inService: parts.fold(0, (sum, p) => sum + p.inService),
+    offRoad: parts.fold(0, (sum, p) => sum + p.offRoad),
+  );
 
   @override
   List<Object?> get props => [total, allocated, available, inService, offRoad];
@@ -113,9 +112,7 @@ class HubSummary extends Equatable {
       return parts.fold<double>(0, (a, p) => a + pick(p) * p.fleet.total) / fleet;
     }
 
-    final int weeks = parts
-        .map((p) => p.weeklyAllocations.length)
-        .fold<int>(0, (a, b) => a > b ? a : b);
+    final int weeks = parts.map((p) => p.weeklyAllocations.length).fold<int>(0, (a, b) => a > b ? a : b);
 
     return HubSummary(
       hubName: '${parts.length} hubs combined',
@@ -137,17 +134,9 @@ class HubSummary extends Equatable {
       todayDeallocations: sum((p) => p.todayDeallocations),
       weeklyAllocations: [
         for (int i = 0; i < weeks; i++)
-          parts.fold<num>(
-            0,
-            (a, p) => a + (i < p.weeklyAllocations.length ? p.weeklyAllocations[i] : 0),
-          ),
+          parts.fold<num>(0, (a, p) => a + (i < p.weeklyAllocations.length ? p.weeklyAllocations[i] : 0)),
       ],
-      weeklyLabels: parts
-          .firstWhere(
-            (p) => p.weeklyLabels.length == weeks,
-            orElse: () => parts.first,
-          )
-          .weeklyLabels,
+      weeklyLabels: parts.firstWhere((p) => p.weeklyLabels.length == weeks, orElse: () => parts.first).weeklyLabels,
       alerts: [for (final p in parts) ...p.alerts],
     );
   }
@@ -157,16 +146,16 @@ class HubSummary extends Equatable {
 
   @override
   List<Object?> get props => [
-        hubName,
-        hubCode,
-        fleet,
-        ridersActive,
-        ridersPresent,
-        utilisation,
-        uptime,
-        pendingAllocations,
-        pendingDeallocations,
-        openMaintenance,
-        alerts,
-      ];
+    hubName,
+    hubCode,
+    fleet,
+    ridersActive,
+    ridersPresent,
+    utilisation,
+    uptime,
+    pendingAllocations,
+    pendingDeallocations,
+    openMaintenance,
+    alerts,
+  ];
 }

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_dimens.dart';
 import '../theme/app_typography.dart';
 import 'buttons.dart';
 import 'section_header.dart';
-
-import '../l10n/locale_controller.dart';
 abstract final class AppSnack {
   static void show(
     BuildContext context,

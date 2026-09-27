@@ -15,5 +15,6 @@ class BypassPairing extends UseCase<DeploymentWorkflow, BypassPairingParams> {
   final AllocationRepository _repository;
 
   @override
-  Future<Result<DeploymentWorkflow>> call(BypassPairingParams params) => _repository.bypassPairing(params.allocationId, params.remarks);
+  Future<Result<DeploymentWorkflow>> call(BypassPairingParams params) =>
+      _repository.bypassPairing(params.allocationId, params.remarks);
 }

@@ -1,53 +1,36 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../domain/entities/rental.dart';
-import '../../domain/usecases/get_rentals_overview.dart';
-import '../cubit/rentals_cubit.dart';
+import '../providers/rentals_overview_provider.dart';
 import '../widgets/rentals_widgets.dart';
 
-class RentalsPage extends StatelessWidget {
+class RentalsPage extends ConsumerWidget {
   const RentalsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => RentalsCubit(GetRentalsOverview(sl()))..load(),
-      child: const _RentalsView(),
-    );
-  }
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<RentalsOverview> rentals = ref.watch(rentalsOverviewProvider);
+    final RentalsOverview? overview = rentals.value;
 
-class _RentalsView extends StatelessWidget {
-  const _RentalsView();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<RentalsCubit, RentalsState>(
-      builder: (context, state) {
-        final RentalsOverview? overview = state.overview;
-
-        return HeroScaffold(
-          onRefresh: () => context.read<RentalsCubit>().refresh(),
-          band: RentalsBand(plan: overview?.plan),
-          children: state.status == RentalsStatus.failure
-              ? [
-                  EmptyState(
-                    title: context.l10n.rentalsCouldNotLoadRentPlan,
-                    message: state.message,
-                    icon: Icons.cloud_off_rounded,
-                    tone: AppColors.danger,
-                    actionLabel: context.l10n.commonTryAgain,
-                    onAction: () => context.read<RentalsCubit>().refresh(),
-                  ),
-                ]
-              : overview == null
-              ? const [_RentalsSkeleton()]
-              : _content(context, overview),
-        );
-      },
+    return HeroScaffold(
+      onRefresh: () => ref.refreshQuietly(rentalsOverviewProvider),
+      band: RentalsBand(plan: overview?.plan),
+      children: rentals.hasError
+          ? [
+              EmptyState(
+                title: context.l10n.rentalsCouldNotLoadRentPlan,
+                message: rentals.failureMessage,
+                icon: Icons.cloud_off_rounded,
+                tone: AppColors.danger,
+                actionLabel: context.l10n.commonTryAgain,
+                onAction: () => ref.invalidate(rentalsOverviewProvider),
+              ),
+            ]
+          : overview == null
+          ? const [_RentalsSkeleton()]
+          : _content(context, overview),
     );
   }
 
@@ -55,7 +38,6 @@ class _RentalsView extends StatelessWidget {
     return [
       PlanCard(plan: overview.plan),
       const Gap.lg(),
-
       PhotoPanel(
         photo: BrandPhoto.money,
         height: 130,
@@ -63,22 +45,19 @@ class _RentalsView extends StatelessWidget {
         subtitle: context.l10n.rentalsAutoDebitKeepsEveryCycle,
       ),
       const Gap.lg(),
-
       ModuleCard(
         title: context.l10n.rentalsInvoiceHistory,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(context.l10n.rentalsTapReceiptSeeFullBreakdown,
-              style: AppText.bodySmall.copyWith(
-                fontSize: 12,
-                color: AppColors.textSecondary,
-              ),
+            Text(
+              context.l10n.rentalsTapReceiptSeeFullBreakdown,
+              style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.textSecondary),
             ),
             const Gap.lg(),
             if (overview.invoices.isEmpty)
               Padding(
-                padding: EdgeInsets.symmetric(vertical: Insets.md),
+                padding: const EdgeInsets.symmetric(vertical: Insets.md),
                 child: EmptyState(
                   title: context.l10n.rentalsNoInvoicesYet,
                   message: context.l10n.rentalsRentReceiptsWillAppearHere,
@@ -87,16 +66,10 @@ class _RentalsView extends StatelessWidget {
                 ),
               )
             else
-              for (final invoice in overview.invoices) ...[
-                InvoiceTile(
-                  invoice: invoice,
-                  onTap: () => _openReceipt(context, invoice),
-                ),
+              for (final RentalInvoice invoice in overview.invoices) ...[
+                InvoiceTile(invoice: invoice, onTap: () => _openReceipt(context, invoice)),
                 if (invoice != overview.invoices.last)
-                  Divider(
-                    color: AppColors.stroke.withValues(alpha: 0.5),
-                    height: 1,
-                  ),
+                  Divider(color: AppColors.stroke.withValues(alpha: 0.5), height: 1),
               ],
           ],
         ),
@@ -115,10 +88,7 @@ class _RentalsView extends StatelessWidget {
         icon: Icons.download_rounded,
         onPressed: () {
           Navigator.of(context).pop();
-          AppSnack.success(
-            context,
-            'Receipt for ${invoice.periodLabel} downloaded.',
-          );
+          AppSnack.success(context, 'Receipt for ${invoice.periodLabel} downloaded.');
         },
       ),
     );
@@ -130,9 +100,9 @@ class _RentalsSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: const [
+      children: [
         ShimmerBox(height: 128, borderRadius: Corners.brXl),
         Gap.xxl(),
         ShimmerBox(width: 150, height: 20),

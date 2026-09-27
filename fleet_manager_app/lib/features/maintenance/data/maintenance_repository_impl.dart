@@ -37,7 +37,7 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
     for (final job in _jobs()) {
       if (job.id == id) return Result.ok(job);
     }
-    return Result.err(NotFoundFailure(LocaleController.strings.maintenanceJobNoLongerBoard));
+    return Result.err(NotFoundFailure(ActiveLocale.strings.maintenanceJobNoLongerBoard));
   }
 
   static List<MaintenanceJob> _jobs() {
@@ -55,11 +55,14 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
         openedOn: days(-4),
         dueOn: days(-1),
         odometerKm: 9120,
-        issue: LocaleController.strings.maintenanceRearBrakeBitesLateSqueals,
+        issue: ActiveLocale.strings.maintenanceRearBrakeBitesLateSqueals,
         assignedTo: 'Sharma Auto Works',
         rider: 'Neha Bansal',
         bay: 'Bay 3',
-        notes: [LocaleController.strings.maintenancePadsMeasured12Mm, LocaleController.strings.maintenanceReplacementSetOrdered],
+        notes: [
+          ActiveLocale.strings.maintenancePadsMeasured12Mm,
+          ActiveLocale.strings.maintenanceReplacementSetOrdered,
+        ],
       ),
       MaintenanceJob(
         id: 'JOB-2325',
@@ -71,11 +74,11 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
         openedOn: days(-1),
         dueOn: days(1),
         odometerKm: 7460,
-        issue: LocaleController.strings.maintenanceChargeHolds62ThenDrops,
+        issue: ActiveLocale.strings.maintenanceChargeHolds62ThenDrops,
         assignedTo: 'Sharma Auto Works',
         rider: 'Farhan Sheikh',
         bay: 'Bay 1',
-        notes: [LocaleController.strings.maintenanceCellBalanceTestBookedAfternoon],
+        notes: [ActiveLocale.strings.maintenanceCellBalanceTestBookedAfternoon],
       ),
       MaintenanceJob(
         id: 'JOB-2331',
@@ -87,7 +90,7 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
         openedOn: days(-1),
         dueOn: days(3),
         odometerKm: 11380,
-        issue: LocaleController.strings.maintenanceFrontTyreWornPastWear,
+        issue: ActiveLocale.strings.maintenanceFrontTyreWornPastWear,
         rider: 'Anjali Desai',
         notes: const [],
       ),
@@ -101,7 +104,7 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
         openedOn: now,
         dueOn: days(2),
         odometerKm: 5210,
-        issue: LocaleController.strings.maintenanceTrackerDropsOffBetweenOkhla,
+        issue: ActiveLocale.strings.maintenanceTrackerDropsOffBetweenOkhla,
         rider: 'Vikas Rana',
         notes: const [],
       ),
@@ -116,10 +119,10 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
         dueOn: days(-3),
         closedOn: days(-3),
         odometerKm: 6890,
-        issue: LocaleController.strings.maintenanceScuffedSidePanelAfterParking,
+        issue: ActiveLocale.strings.maintenanceScuffedSidePanelAfterParking,
         assignedTo: 'Gurgaon Motor Care',
         bay: 'Bay 2',
-        notes: [LocaleController.strings.maintenancePanelResprayedRefitted],
+        notes: [ActiveLocale.strings.maintenancePanelResprayedRefitted],
       ),
     ];
   }
@@ -130,29 +133,43 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
       '/fleets',
       query: {'pageSize': _maxPageSize},
       parse: (data) {
-        final List<dynamic> rows = data is Map
-            ? (data['items'] as List<dynamic>? ?? const [])
-            : data as List<dynamic>;
-        return rows.map((e) {
-          final Map<String, dynamic> row = Map<String, dynamic>.from(e as Map);
-          return VehicleOption(
-            number: row['vehicleNumber']?.toString() ?? '—',
-            model: row['modelName']?.toString() ?? '',
-          );
-        }).toList(growable: false);
+        final List<dynamic> rows = data is Map ? (data['items'] as List<dynamic>? ?? const []) : data as List<dynamic>;
+        return rows
+            .map((e) {
+              final Map<String, dynamic> row = Map<String, dynamic>.from(e as Map);
+              return VehicleOption(
+                number: row['vehicleNumber']?.toString() ?? '—',
+                model: row['modelName']?.toString() ?? '',
+              );
+            })
+            .toList(growable: false);
       },
     );
   }
 
   @override
   Future<Result<List<VendorOption>>> getVendorOptions() async => Result.ok(<VendorOption>[
-        VendorOption(id: 'vendor_sharma', name: 'Sharma Auto Works', type: LocaleController.strings.maintenanceTwoWheelerWorkshop, rating: 4.6),
-        VendorOption(id: 'vendor_gurgaon', name: 'Gurgaon Motor Care', type: LocaleController.strings.maintenanceBodyPaint, rating: 4.3),
-        VendorOption(id: 'vendor_voltcare', name: 'VoltCare EV Service', type: LocaleController.strings.maintenanceBatterySpecialist, rating: 4.8),
-      ]);
+    VendorOption(
+      id: 'vendor_sharma',
+      name: 'Sharma Auto Works',
+      type: ActiveLocale.strings.maintenanceTwoWheelerWorkshop,
+      rating: 4.6,
+    ),
+    VendorOption(
+      id: 'vendor_gurgaon',
+      name: 'Gurgaon Motor Care',
+      type: ActiveLocale.strings.maintenanceBodyPaint,
+      rating: 4.3,
+    ),
+    VendorOption(
+      id: 'vendor_voltcare',
+      name: 'VoltCare EV Service',
+      type: ActiveLocale.strings.maintenanceBatterySpecialist,
+      rating: 4.8,
+    ),
+  ]);
 
   @override
-  Future<Result<String>> raiseJob(RaiseJobInput input) async => Result.err(
-        ServerFailure(LocaleController.strings.maintenanceRaisingMaintenanceJobNeedsApi),
-      );
+  Future<Result<String>> raiseJob(RaiseJobInput input) async =>
+      Result.err(ServerFailure(ActiveLocale.strings.maintenanceRaisingMaintenanceJobNeedsApi));
 }

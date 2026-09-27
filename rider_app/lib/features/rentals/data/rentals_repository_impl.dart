@@ -12,7 +12,7 @@ class RentalsRepositoryImpl implements RentalsRepository {
     return Result.ok(
       RentalsOverview(
         plan: RentalPlan(
-          name: LocaleController.strings.commonWeeklyPlan,
+          name: ActiveLocale.strings.commonWeeklyPlan,
           weeklyRent: Demo.weeklyRent,
           nextDebitDate: Demo.nextWeekday(DateTime.monday),
           autoDebitEnabled: true,
@@ -67,17 +67,14 @@ class RentalsRepositoryImpl implements RentalsRepository {
     final num insurance = 120;
     final num maintenance = 80;
     return [
-      InvoiceLineItem(label: LocaleController.strings.rentalsVehicleRent, amount: total - insurance - maintenance),
-      InvoiceLineItem(label: LocaleController.strings.commonInsurance, amount: insurance),
-      InvoiceLineItem(label: LocaleController.strings.rentalsMaintenanceCover, amount: maintenance),
+      InvoiceLineItem(label: ActiveLocale.strings.rentalsVehicleRent, amount: total - insurance - maintenance),
+      InvoiceLineItem(label: ActiveLocale.strings.commonInsurance, amount: insurance),
+      InvoiceLineItem(label: ActiveLocale.strings.rentalsMaintenanceCover, amount: maintenance),
     ];
   }
 
   static String _weekLabel(DateTime monday) {
-    const List<String> months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-    ];
+    const List<String> months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     final DateTime sunday = monday.add(const Duration(days: 6));
     final String from = '${monday.day} ${months[monday.month - 1]}';
     final String to = '${sunday.day} ${months[sunday.month - 1]}';

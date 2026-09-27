@@ -8,10 +8,12 @@ abstract final class OnboardingFlowBuilder {
     return UiFlowConfig(
       id: 'rider_onboarding',
       title: l10n.onboardingRiderOnboarding,
-      meta: {'packageCode': config.packageCode, 'packageName': config.packageName, 'submitLabel': l10n.onboardingSubmitApplication},
-      steps: [
-        for (int i = 0; i < steps.length; i++) _step(steps[i], isLast: i == steps.length - 1, l10n: l10n),
-      ],
+      meta: {
+        'packageCode': config.packageCode,
+        'packageName': config.packageName,
+        'submitLabel': l10n.onboardingSubmitApplication,
+      },
+      steps: [for (int i = 0; i < steps.length; i++) _step(steps[i], isLast: i == steps.length - 1, l10n: l10n)],
     );
   }
 
@@ -25,7 +27,13 @@ abstract final class OnboardingFlowBuilder {
 
     final List<UiNode> uploads = [for (final f in step.uploads) _upload(f, l10n)];
     if (uploads.isNotEmpty) {
-      body.add(UiNode(type: 'group', props: {'title': l10n.onboardingDocuments, 'icon': 'upload', 'gap': 14}, children: uploads));
+      body.add(
+        UiNode(
+          type: 'group',
+          props: {'title': l10n.onboardingDocuments, 'icon': 'upload', 'gap': 14},
+          children: uploads,
+        ),
+      );
     }
 
     final List<UiNode> capabilities = [for (final f in step.capabilities) ..._capability(f, l10n)];
@@ -34,15 +42,17 @@ abstract final class OnboardingFlowBuilder {
     }
 
     if (body.isEmpty) {
-      body.add(UiNode(
-        type: 'banner',
-        props: {
-          'title': l10n.onboardingNothingToFillHere,
-          'message': l10n.onboardingStepHandledByOperator,
-          'tone': 'info',
-          'icon': 'info',
-        },
-      ));
+      body.add(
+        UiNode(
+          type: 'banner',
+          props: {
+            'title': l10n.onboardingNothingToFillHere,
+            'message': l10n.onboardingStepHandledByOperator,
+            'tone': 'info',
+            'icon': 'info',
+          },
+        ),
+      );
     }
 
     return UiFlowStep(
@@ -58,7 +68,10 @@ abstract final class OnboardingFlowBuilder {
         footer: [
           UiNode(
             type: 'primaryButton',
-            props: {'label': isLast ? l10n.onboardingReviewApplication : l10n.authContinue, 'icon': isLast ? 'checklist' : 'arrowForward'},
+            props: {
+              'label': isLast ? l10n.onboardingReviewApplication : l10n.authContinue,
+              'icon': isLast ? 'checklist' : 'arrowForward',
+            },
             action: const UiAction(type: 'next'),
           ),
         ],
@@ -66,13 +79,9 @@ abstract final class OnboardingFlowBuilder {
     );
   }
 
-
   static bool _expectsFutureDate(String code) {
     final String c = code.toUpperCase();
-    return c.contains('EXPIR') ||
-        c.contains('VALID') ||
-        c.contains('RENEW') ||
-        c.contains('DUE');
+    return c.contains('EXPIR') || c.contains('VALID') || c.contains('RENEW') || c.contains('DUE');
   }
 
   static UiNode _input(OnboardingFieldConfig f, AppL10n l10n) {
@@ -85,12 +94,7 @@ abstract final class OnboardingFlowBuilder {
 
     switch (f.fieldType) {
       case 'BANK_ACCOUNT':
-        return UiNode(
-          type: 'bankAccountField',
-          id: f.fieldCode,
-          props: {...props},
-          validations: rules,
-        );
+        return UiNode(type: 'bankAccountField', id: f.fieldCode, props: {...props}, validations: rules);
       case 'REFERENCE':
         return UiNode(
           type: 'referenceField',
@@ -99,12 +103,7 @@ abstract final class OnboardingFlowBuilder {
           validations: rules,
         );
       case 'NOMINEE':
-        return UiNode(
-          type: 'nomineeField',
-          id: f.fieldCode,
-          props: {...props, 'maxCount': 4},
-          validations: rules,
-        );
+        return UiNode(type: 'nomineeField', id: f.fieldCode, props: {...props, 'maxCount': 4}, validations: rules);
       case 'MOBILE':
         return UiNode(
           type: 'textField',
@@ -124,10 +123,7 @@ abstract final class OnboardingFlowBuilder {
           validations: [
             ...rules,
             if (future && !rules.any((r) => r.type == 'futureDate'))
-              ValidationRule(
-                type: 'futureDate',
-                message: l10n.onboardingDocumentHasExpiredEnterDate,
-              ),
+              ValidationRule(type: 'futureDate', message: l10n.onboardingDocumentHasExpiredEnterDate),
           ],
         );
       case 'TEXTAREA':
@@ -153,7 +149,9 @@ abstract final class OnboardingFlowBuilder {
           id: f.fieldCode,
           props: {
             ...props,
-            'options': [for (final o in f.options) {'value': o, 'label': o}],
+            'options': [
+              for (final o in f.options) {'value': o, 'label': o},
+            ],
           },
           enabledWhen: f.isEnabled ? null : const UiCondition(flag: '__NEVER__'),
           validations: rules,
@@ -176,13 +174,13 @@ abstract final class OnboardingFlowBuilder {
   }
 
   static List<ValidationRule> _rules(OnboardingFieldConfig f, AppL10n l10n) => [
-        if (f.required) ValidationRule(type: 'required', message: '${f.label} is required'),
-        if (f.fieldType == 'MOBILE') const ValidationRule(type: 'mobile'),
-        if (f.minLength != null) ValidationRule(type: 'minLength', value: f.minLength),
-        if (f.maxLength != null) ValidationRule(type: 'maxLength', value: f.maxLength),
-        if (f.pattern != null && f.fieldType != 'MOBILE')
-          ValidationRule(type: 'pattern', value: f.pattern, message: l10n.onboardingEnterValidField(f.label)),
-      ];
+    if (f.required) ValidationRule(type: 'required', message: '${f.label} is required'),
+    if (f.fieldType == 'MOBILE') const ValidationRule(type: 'mobile'),
+    if (f.minLength != null) ValidationRule(type: 'minLength', value: f.minLength),
+    if (f.maxLength != null) ValidationRule(type: 'maxLength', value: f.maxLength),
+    if (f.pattern != null && f.fieldType != 'MOBILE')
+      ValidationRule(type: 'pattern', value: f.pattern, message: l10n.onboardingEnterValidField(f.label)),
+  ];
 
   static UiNode _upload(OnboardingFieldConfig f, AppL10n l10n) {
     final List<String> types = f.allowedFileTypes;
@@ -205,8 +203,7 @@ abstract final class OnboardingFlowBuilder {
       },
       action: const UiAction(type: 'pickFile'),
       validations: [
-        if (f.required)
-          ValidationRule(type: 'required', message: l10n.onboardingAddYourField(f.label.toLowerCase())),
+        if (f.required) ValidationRule(type: 'required', message: l10n.onboardingAddYourField(f.label.toLowerCase())),
       ],
     );
   }
@@ -227,23 +224,14 @@ abstract final class OnboardingFlowBuilder {
             'minCount': minCount,
             'maxCount': configured < minCount ? minCount : configured,
           },
-          validations: [
-            if (f.required)
-              ValidationRule(type: 'required', message: l10n.onboardingAddLeastOneReference),
-          ],
+          validations: [if (f.required) ValidationRule(type: 'required', message: l10n.onboardingAddLeastOneReference)],
         ),
       ];
     }
 
     if (code.contains('AGREEMENT') || code.contains('E_SIGN')) {
       return [
-        UiNode(
-          type: 'termsBlock',
-          props: {
-            'body': l10n.onboardingAgreementBody,
-            'maxHeight': 200,
-          },
-        ),
+        UiNode(type: 'termsBlock', props: {'body': l10n.onboardingAgreementBody, 'maxHeight': 200}),
         UiNode(
           type: 'checkbox',
           id: f.formKey,
@@ -256,26 +244,25 @@ abstract final class OnboardingFlowBuilder {
   }
 
   static String _shortLabel(String stepCode, String name, AppL10n l10n) => switch (stepCode) {
-        'RIDER_PERSONAL_PROFILE' => l10n.commonProfile,
-        'RIDER_KYC' => 'KYC',
-        'RIDER_COMPLIANCE_ELIGIBILITY' => l10n.onboardingStepEligibility,
-        'RIDER_COMMERCIALS' => l10n.walletPayments,
-        'RIDER_TRAINING' => l10n.onboardingStepTraining,
-        'RIDER_AGREEMENT_ESIGN' => l10n.onboardingStepAgreement,
-        'RIDER_REVIEW_SUBMIT' => LocaleController.strings.onboardingReview,
-        _ => name.split(RegExp(r'\s+')).first,
-      };
+    'RIDER_PERSONAL_PROFILE' => l10n.commonProfile,
+    'RIDER_KYC' => 'KYC',
+    'RIDER_COMPLIANCE_ELIGIBILITY' => l10n.onboardingStepEligibility,
+    'RIDER_COMMERCIALS' => l10n.walletPayments,
+    'RIDER_TRAINING' => l10n.onboardingStepTraining,
+    'RIDER_AGREEMENT_ESIGN' => l10n.onboardingStepAgreement,
+    'RIDER_REVIEW_SUBMIT' => ActiveLocale.strings.onboardingReview,
+    _ => name.split(RegExp(r'\s+')).first,
+  };
 
   static String _icon(String stepCode) => switch (stepCode) {
-        'RIDER_PERSONAL_PROFILE' => 'person',
-        'RIDER_KYC' => 'badge',
-        'RIDER_COMPLIANCE_ELIGIBILITY' => 'verified',
-        'RIDER_COMMERCIALS' => 'wallet',
-        'RIDER_TRAINING' => 'school',
-        'RIDER_AGREEMENT_ESIGN' => 'edit',
-        _ => 'checklist',
-      };
-
+    'RIDER_PERSONAL_PROFILE' => 'person',
+    'RIDER_KYC' => 'badge',
+    'RIDER_COMPLIANCE_ELIGIBILITY' => 'verified',
+    'RIDER_COMMERCIALS' => 'wallet',
+    'RIDER_TRAINING' => 'school',
+    'RIDER_AGREEMENT_ESIGN' => 'edit',
+    _ => 'checklist',
+  };
 
   static String _inputIcon(String code) {
     final String c = code.toUpperCase();

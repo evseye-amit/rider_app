@@ -1,97 +1,63 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../app/di/injector.dart';
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/session/session_controller.dart';
-import '../../domain/entities/hub_profile.dart';
+import '../../../../core/session/fleet_session_provider.dart';
 import '../../domain/entities/hub_summary.dart';
-import '../../domain/usecases/get_hub_profile.dart';
-import '../../domain/usecases/get_hub_summary.dart';
-import '../cubit/hub_cubit.dart';
+import '../providers/hub_overview_provider.dart';
 import '../widgets/fleet_drawer.dart';
 import '../widgets/hub_home_widgets.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final SessionController session = sl<SessionController>();
-    return BlocProvider(
-      create: (_) =>
-          HubCubit(GetHubSummary(sl()), GetHubProfile(sl()))..loadAll(session.activeHubCodes),
-      child: const _HomeView(),
-    );
-  }
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<HubOverview> hub = ref.watch(hubOverviewProvider);
 
-class _HomeView extends StatelessWidget {
-  const _HomeView();
+    if (hub.hasError) {
+      return Scaffold(
+        backgroundColor: AppColors.canvas,
+        drawer: const FleetDrawer(),
+        body: SafeArea(
+          child: EmptyState(
+            title: context.l10n.hubCouldNotLoadHub,
+            message: hub.failureMessage,
+            icon: Icons.cloud_off_rounded,
+            tone: AppColors.danger,
+            actionLabel: context.l10n.commonTryAgain,
+            onAction: () => ref.invalidate(hubOverviewProvider),
+          ),
+        ),
+      );
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    final SessionController session = sl<SessionController>();
+    final HubOverview? overview = hub.value;
 
-    return ListenableBuilder(
-      listenable: session,
-      builder: (context, _) => BlocBuilder<HubCubit, HubState>(
-      builder: (context, state) {
-        if (state.status == HubStatus.failure) {
-          return Scaffold(
-            backgroundColor: AppColors.canvas,
-            drawer: const FleetDrawer(),
-            body: SafeArea(
-              child: EmptyState(
-                title: context.l10n.hubCouldNotLoadHub,
-                message: state.message,
-                icon: Icons.cloud_off_rounded,
-                tone: AppColors.danger,
-                actionLabel: context.l10n.commonTryAgain,
-                onAction: () => context.read<HubCubit>().refresh(),
-              ),
-            ),
-          );
-        }
-
-        final HubSummary? summary = state.summary;
-        final HubProfile? profile = state.profile;
-
-        return HeroScaffold(
-          drawer: const FleetDrawer(),
-          bottomPadding: 120,
-          onRefresh: () => context.read<HubCubit>().refresh(),
-          band: _Band(session: session, summary: summary),
-          children: summary == null || profile == null
-              ? const [_HomeSkeleton()]
-              : _content(context, session, summary, profile),
-        );
-      },
-      ),
+    return HeroScaffold(
+      drawer: const FleetDrawer(),
+      bottomPadding: 120,
+      onRefresh: () => ref.refreshQuietly(hubOverviewProvider),
+      band: _Band(summary: overview?.summary),
+      children: overview == null ? const [_HomeSkeleton()] : _content(context, ref, overview),
     );
   }
 
-  List<Widget> _content(
-    BuildContext context,
-    SessionController session,
-    HubSummary summary,
-    HubProfile profile,
-  ) {
+  List<Widget> _content(BuildContext context, WidgetRef ref, HubOverview overview) {
+    final FleetSession session = ref.watch(fleetSessionProvider);
+    final HubSummary summary = overview.summary;
+
     return [
       HubCard(
-        profile: profile,
+        profile: overview.profile,
         summary: summary,
         hubs: session.hubs,
         selectedIndexes: session.activeHubIndexes,
-        onSelectionChanged: (indexes) {
-          session.setHubSelection(indexes);
-          context.read<HubCubit>().loadAll(session.activeHubCodes);
-        },
+        onSelectionChanged: ref.read(fleetSessionProvider.notifier).setHubSelection,
       ),
       const Gap.lg(),
-
       ModuleCard(
         title: context.l10n.commonYesterdayGlance,
         padding: const EdgeInsets.all(Insets.md),
@@ -133,9 +99,7 @@ class _HomeView extends StatelessWidget {
             StatCard(
               label: context.l10n.hubOpenJobs,
               value: '${summary.openMaintenance}',
-              caption: summary.overdueMaintenance > 0
-                  ? '${summary.overdueMaintenance} overdue'
-                  : 'all on schedule',
+              caption: summary.overdueMaintenance > 0 ? '${summary.overdueMaintenance} overdue' : 'all on schedule',
               icon: Icons.build_rounded,
               compact: true,
               onTap: () => context.go(Routes.maintenance),
@@ -147,35 +111,34 @@ class _HomeView extends StatelessWidget {
   }
 }
 
-class _Band extends StatelessWidget {
-  const _Band({required this.session, required this.summary});
+class _Band extends ConsumerWidget {
+  const _Band({required this.summary});
 
-  final SessionController session;
   final HubSummary? summary;
 
-  String get _greeting {
-    final int h = DateTime.now().hour;
-    if (h < 12) return LocaleController.strings.commonGoodMorning;
-    if (h < 17) return LocaleController.strings.commonGoodAfternoon;
-    if (h < 21) return LocaleController.strings.commonGoodEvening;
-    return LocaleController.strings.hubWorkingLate;
+  String _greeting(AppL10n l10n) {
+    final int hour = DateTime.now().hour;
+    if (hour < 12) return l10n.commonGoodMorning;
+    if (hour < 17) return l10n.commonGoodAfternoon;
+    if (hour < 21) return l10n.commonGoodEvening;
+    return l10n.hubWorkingLate;
   }
 
-
-  void _markAttendance(BuildContext context, SessionController session, bool next) {
-    session.setAttendance(next);
+  void _markAttendance(BuildContext context, WidgetRef ref, bool next) {
+    ref.read(fleetSessionProvider.notifier).setAttendance(next);
     next
         ? AppSnack.success(context, context.l10n.commonMarkedPresentShiftHasStarted)
         : AppSnack.info(context, context.l10n.hubMarkedAbsentShiftClosed);
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final FleetSession session = ref.watch(fleetSessionProvider);
+    final HubSummary? current = summary;
     final String firstName = session.managerName.split(' ').first;
-    final int baysFree = summary == null
+    final int baysFree = current == null
         ? 0
-        : (summary!.chargingBaysTotal - summary!.chargingBaysBusy)
-            .clamp(0, summary!.chargingBaysTotal);
+        : (current.chargingBaysTotal - current.chargingBaysBusy).clamp(0, current.chargingBaysTotal);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,10 +146,8 @@ class _Band extends StatelessWidget {
         Row(
           children: [
             Builder(
-              builder: (context) => InkCircleButton(
-                icon: Icons.menu_rounded,
-                onTap: () => Scaffold.of(context).openDrawer(),
-              ),
+              builder: (context) =>
+                  InkCircleButton(icon: Icons.menu_rounded, onTap: () => Scaffold.of(context).openDrawer()),
             ),
             const SizedBox(width: Insets.md),
             Expanded(
@@ -194,50 +155,35 @@ class _Band extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '$_greeting, $firstName',
+                    '${_greeting(context.l10n)}, $firstName',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppText.bodySmall.copyWith(
-                      fontSize: 12,
-                      color: AppColors.onInkSecondary,
-                    ),
+                    style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.onInkSecondary),
                   ),
                   const SizedBox(height: 1),
-
                   Text(
-                    summary?.hubName ?? session.hubName,
+                    current?.hubName ?? session.hubName,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppText.titleLarge.copyWith(
-                      fontSize: 20,
-                      color: AppColors.onInk,
-                    ),
+                    style: AppText.titleLarge.copyWith(fontSize: 20, color: AppColors.onInk),
                   ),
                 ],
               ),
             ),
             const SizedBox(width: Insets.sm),
-            AttendanceToggle(
-              present: session.present,
-              onChanged: (next) => _markAttendance(context, session, next),
-            ),
+            AttendanceToggle(present: session.present, onChanged: (next) => _markAttendance(context, ref, next)),
           ],
         ),
         const Gap.xxl(),
-        Text(context.l10n.hubFleetUtilisation,
-          style: AppText.label.copyWith(color: AppColors.onInkSecondary),
-        ),
+        Text(context.l10n.hubFleetUtilisation, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
         const Gap.sm(),
         Text(
-          summary == null ? '—' : Fmt.percent(summary!.utilisation),
+          current == null ? '—' : Fmt.percent(current.utilisation),
           style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
         ),
         const Gap.xl(),
         Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: Insets.md,
-            horizontal: Insets.sm,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: Insets.md, horizontal: Insets.sm),
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.06),
             borderRadius: Corners.brMd,
@@ -248,7 +194,7 @@ class _Band extends StatelessWidget {
               Expanded(
                 child: InkStat(
                   label: context.l10n.hubUptime,
-                  value: summary == null ? '—' : Fmt.percent(summary!.uptime),
+                  value: current == null ? '—' : Fmt.percent(current.uptime),
                   icon: Icons.bolt_rounded,
                 ),
               ),
@@ -257,9 +203,7 @@ class _Band extends StatelessWidget {
               Expanded(
                 child: InkStat(
                   label: context.l10n.hubShift,
-                  value: summary == null
-                      ? '—'
-                      : '${summary!.ridersPresent}/${summary!.ridersActive}',
+                  value: current == null ? '—' : '${current.ridersPresent}/${current.ridersActive}',
                   icon: Icons.groups_rounded,
                 ),
               ),
@@ -268,7 +212,7 @@ class _Band extends StatelessWidget {
               Expanded(
                 child: InkStat(
                   label: context.l10n.hubBaysFree,
-                  value: summary == null ? '—' : '$baysFree',
+                  value: current == null ? '—' : '$baysFree',
                   icon: Icons.ev_station_rounded,
                 ),
               ),
