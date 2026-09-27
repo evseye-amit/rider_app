@@ -66,7 +66,7 @@ class _TrainingViewState extends State<_TrainingView> {
                 child: Image.network(
                   item.downloadUrl!,
                   fit: BoxFit.cover,
-                  errorBuilder: (_, __, ___) => const ColoredBox(
+                  errorBuilder: (_, _, _) => const ColoredBox(
                     color: AppColors.surfaceMuted,
                     child: Center(child: Icon(Icons.school_rounded, size: 40, color: AppColors.textMuted)),
                   ),

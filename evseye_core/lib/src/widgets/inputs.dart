@@ -152,7 +152,7 @@ class _AppTextFieldState extends State<AppTextField> {
                   onSubmitted: widget.onSubmitted,
                   enableInteractiveSelection: !widget.blockClipboard,
                   contextMenuBuilder:
-                      widget.blockClipboard ? (_, __) => const SizedBox.shrink() : null,
+                      widget.blockClipboard ? (_, _) => const SizedBox.shrink() : null,
                   cursorColor: AppColors.cyan,
                   style: widget.style ??
                       AppText.bodyLarge.copyWith(
@@ -474,7 +474,7 @@ class AppSearchField extends StatelessWidget {
               ),
             ),
           ),
-          if (trailing != null) trailing!,
+          ?trailing,
         ],
       ),
     );
