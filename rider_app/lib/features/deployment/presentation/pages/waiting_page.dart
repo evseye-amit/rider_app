@@ -47,9 +47,9 @@ class _WaitingViewState extends State<_WaitingView> with SingleTickerProviderSta
   Future<void> _signOut(BuildContext context) async {
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: 'Sign out?',
-      message: 'Your progress is saved. Sign in again any time to pick up where you left off.',
-      confirmLabel: 'Sign out',
+      title: tr('Sign out?'),
+      message: tr('Your progress is saved. Sign in again any time to pick up where you left off.'),
+      confirmLabel: tr('Sign out'),
       icon: Icons.logout_rounded,
       destructive: true,
     );
@@ -64,26 +64,26 @@ class _WaitingViewState extends State<_WaitingView> with SingleTickerProviderSta
     return switch (d?.status) {
       null || DeploymentStatus.unknown => (
           title: 'You\'re all set up',
-          message: 'Your fleet manager will allocate a scooter to you. We will bring you straight here when they do.',
+          message: tr('Your fleet manager will allocate a scooter to you. We will bring you straight here when they do.'),
           art: BrandArt.waiting,
         ),
       DeploymentStatus.riderWaiting => (
           title: '$vehicle is reserved for you',
-          message: 'Your fleet manager is preparing the vehicle and its IoT unit. Your payment details appear here as soon as they are ready.',
+          message: tr('Your fleet manager is preparing the vehicle and its IoT unit. Your payment details appear here as soon as they are ready.'),
           art: BrandArt.scooter,
         ),
       DeploymentStatus.fleetRequested => (
           title: '$vehicle is reserved for you',
-          message: 'Your fleet manager is putting together your payment details. You will be asked to pay in a moment.',
+          message: tr('Your fleet manager is putting together your payment details. You will be asked to pay in a moment.'),
           art: BrandArt.wallet,
         ),
       DeploymentStatus.paymentPaid => (
-          title: 'Payment received',
+          title: tr('Payment received'),
           message: 'Your fleet manager is writing up the pre-delivery inspection for $vehicle. You will check it over next.',
           art: BrandArt.service,
         ),
       _ => (
-          title: 'Almost there',
+          title: tr('Almost there'),
           message: 'Your fleet manager is on the next step for $vehicle.',
           art: BrandArt.waiting,
         ),
@@ -98,15 +98,15 @@ class _WaitingViewState extends State<_WaitingView> with SingleTickerProviderSta
 
         if (state.status == DeploymentLoad.failure) {
           return AppScaffold(
-            title: 'Preparing your scooter',
+            title: tr('Preparing your scooter'),
             showBack: false,
             actions: [IconButton(icon: const Icon(Icons.logout_rounded), onPressed: () => _signOut(context))],
             body: EmptyState(
-              title: 'Could not reach the server',
+              title: tr('Could not reach the server'),
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: 'Try again',
+              actionLabel: tr('Try again'),
               onAction: cubit.load,
             ),
           );
@@ -114,7 +114,7 @@ class _WaitingViewState extends State<_WaitingView> with SingleTickerProviderSta
 
         if (state.isLoading && state.deployment == null) {
           return AppScaffold(
-            title: 'Preparing your scooter',
+            title: tr('Preparing your scooter'),
             showBack: false,
             body: const PageBody(children: [
               ShimmerBox(height: 200, borderRadius: Corners.brXl),
@@ -130,11 +130,11 @@ class _WaitingViewState extends State<_WaitingView> with SingleTickerProviderSta
         final copy = _copy(d);
 
         return AppScaffold(
-          title: 'Preparing your scooter',
+          title: tr('Preparing your scooter'),
           subtitle: d?.status == DeploymentStatus.unknown || d?.status == null ? 'Waiting for an allocation' : d!.status.label,
           centerTitle: true,
           showBack: false,
-          actions: [IconButton(icon: const Icon(Icons.logout_rounded), tooltip: 'Sign out', onPressed: () => _signOut(context))],
+          actions: [IconButton(icon: const Icon(Icons.logout_rounded), tooltip: tr('Sign out'), onPressed: () => _signOut(context))],
           body: RefreshIndicator(
             onRefresh: cubit.load,
             child: PageBody(
@@ -148,14 +148,14 @@ class _WaitingViewState extends State<_WaitingView> with SingleTickerProviderSta
                 const Gap.xl(),
                 if (f != null)
                   ModuleCard(
-                    title: 'Your scooter',
+                    title: tr('Your scooter'),
                     leading: const IconTile(icon: Icons.electric_scooter_rounded, solid: true, size: 28),
                     child: Column(
                       children: [
-                        KeyValueRow(label: 'Vehicle', value: f.vehicleNumber, icon: Icons.confirmation_number_rounded),
-                        if (f.modelName != null) KeyValueRow(label: 'Model', value: f.modelName!, icon: Icons.two_wheeler_rounded),
-                        if (f.colour != null) KeyValueRow(label: 'Colour', value: f.colour!, icon: Icons.palette_rounded),
-                        KeyValueRow(label: 'Handover', value: d!.status.label, icon: Icons.timeline_rounded),
+                        KeyValueRow(label: tr('Vehicle'), value: f.vehicleNumber, icon: Icons.confirmation_number_rounded),
+                        if (f.modelName != null) KeyValueRow(label: tr('Model'), value: f.modelName!, icon: Icons.two_wheeler_rounded),
+                        if (f.colour != null) KeyValueRow(label: tr('Colour'), value: f.colour!, icon: Icons.palette_rounded),
+                        KeyValueRow(label: tr('Handover'), value: d!.status.label, icon: Icons.timeline_rounded),
                       ],
                     ),
                   ),
@@ -166,8 +166,7 @@ class _WaitingViewState extends State<_WaitingView> with SingleTickerProviderSta
                   animation: _pulse,
                   builder: (context, _) => Opacity(
                     opacity: 0.55 + _pulse.value * 0.45,
-                    child: Text(
-                      'Checking with your fleet manager every few seconds…',
+                    child: Text(tr('Checking with your fleet manager every few seconds…'),
                       textAlign: TextAlign.center,
                       style: AppText.bodySmall.copyWith(color: AppColors.textMuted),
                     ),
@@ -200,7 +199,7 @@ class _Steps extends StatelessWidget {
   Widget build(BuildContext context) {
     final int current = status == DeploymentStatus.unknown ? -1 : status.step;
     return ModuleCard(
-      title: 'What happens next',
+      title: tr('What happens next'),
       leading: const IconTile(icon: Icons.route_rounded, solid: true, size: 28),
       child: Column(
         children: [

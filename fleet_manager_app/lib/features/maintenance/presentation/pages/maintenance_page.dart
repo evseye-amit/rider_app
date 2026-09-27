@@ -55,11 +55,11 @@ class _MaintenanceViewState extends State<_MaintenanceView> {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: 'Could not load the maintenance board',
+                title: tr('Could not load the maintenance board'),
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: 'Try again',
+                actionLabel: tr('Try again'),
                 onAction: () => context.read<MaintenanceCubit>().refresh(),
               ),
             ),
@@ -111,8 +111,7 @@ class _Band extends StatelessWidget {
             const IconTile(icon: Icons.build_rounded, tone: AppColors.primaryBright, solid: true, size: 46),
             const SizedBox(width: Insets.md),
             Expanded(
-              child: Text(
-                'Maintenance board',
+              child: Text(tr('Maintenance board'),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.displaySmall.copyWith(fontSize: 24, color: AppColors.onInk),
@@ -121,8 +120,7 @@ class _Band extends StatelessWidget {
           ],
         ),
         const Gap.sm(),
-        Text(
-          'Track every job from raised to closed',
+        Text(tr('Track every job from raised to closed'),
           style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.4),
         ),
         const Gap.xl(),
@@ -137,7 +135,7 @@ class _Band extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: 'Open',
+                  label: tr('Open'),
                   value: '${summary?.open ?? 0}',
                   icon: Icons.build_circle_outlined,
                 ),
@@ -146,7 +144,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'Overdue',
+                  label: tr('Overdue'),
                   value: '${summary?.overdue ?? 0}',
                   icon: Icons.warning_amber_rounded,
                   valueColor: (summary?.overdue ?? 0) > 0 ? AppColors.onInkCoral : null,
@@ -156,7 +154,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'In progress',
+                  label: tr('In progress'),
                   value: '${summary?.inProgress ?? 0}',
                   icon: Icons.sync_rounded,
                 ),
@@ -226,7 +224,7 @@ class _Content extends StatelessWidget {
               PhotoPanel(
                 photo: BrandPhoto.service,
                 height: 132,
-                title: 'Service bay',
+                title: tr('Service bay'),
                 subtitle:
                     '${board.summary.closedThisWeek} closed this week · avg ${board.summary.averageCloseHours}h',
               ),
@@ -239,7 +237,7 @@ class _Content extends StatelessWidget {
               ),
               const Gap.lg(),
               AppSearchField(
-                hint: 'Search vehicle, job ID or issue',
+                hint: tr('Search vehicle, job ID or issue'),
                 controller: searchController,
                 onChanged: onQueryChanged,
               ),
@@ -255,13 +253,13 @@ class _Content extends StatelessWidget {
         ),
         const Gap.xl(),
         if (jobs.isEmpty)
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: Insets.lg),
             child: ArtBlock(
               art: BrandArt.empty,
               artSize: 130,
-              title: 'No jobs here',
-              message: 'Nothing matches this queue and filter right now.',
+              title: tr('No jobs here'),
+              message: tr('Nothing matches this queue and filter right now.'),
             ),
           )
         else
@@ -299,13 +297,12 @@ class _RaiseJobFab extends StatelessWidget {
           borderRadius: Corners.pill,
           boxShadow: Shadows.lift(AppColors.primary, opacity: 0.4, blur: 22),
         ),
-        child: const Row(
+        child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(Icons.add_rounded, size: 20, color: Colors.white),
             SizedBox(width: Insets.sm),
-            Text(
-              'Raise job',
+            Text(tr('Raise job'),
               style: TextStyle(
                 fontFamily: AppFonts.body,
                 fontSize: 14.5,

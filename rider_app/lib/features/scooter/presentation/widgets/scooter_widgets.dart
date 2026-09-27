@@ -35,8 +35,7 @@ class VehicleBand extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Your scooter',
+                  Text(tr('Your scooter'),
                     style: AppText.bodySmall.copyWith(
                       fontSize: 12,
                       color: AppColors.onInkSecondary,
@@ -69,8 +68,7 @@ class VehicleBand extends StatelessWidget {
           ],
         ),
         const Gap.xxl(),
-        Text(
-          'Battery charge',
+        Text(tr('Battery charge'),
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),
@@ -102,8 +100,7 @@ class VehicleBand extends StatelessWidget {
                     children: [
                       Icon(Icons.bolt_rounded, size: 12, color: batteryTone),
                       const SizedBox(width: 3),
-                      Text(
-                        'Charging',
+                      Text(tr('Charging'),
                         style: AppText.bodySmall.copyWith(
                           fontSize: 11,
                           fontWeight: FontWeight.w800,
@@ -132,7 +129,7 @@ class VehicleBand extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: 'Range',
+                  label: tr('Range'),
                   value: v == null ? '—' : Fmt.distanceKm(v.rangeKm),
                   icon: Icons.near_me_rounded,
                 ),
@@ -141,7 +138,7 @@ class VehicleBand extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'Health',
+                  label: tr('Health'),
                   value: v == null ? '—' : '${v.healthPercent}%',
                   icon: Icons.monitor_heart_rounded,
                 ),
@@ -150,7 +147,7 @@ class VehicleBand extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'Next service',
+                  label: tr('Next service'),
                   value: v == null ? '—' : '${v.kmToNextService} km',
                   icon: Icons.build_rounded,
                 ),
@@ -177,8 +174,7 @@ class IotPanel extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(
-              'Signal strength',
+            Text(tr('Signal strength'),
               style: AppText.bodySmall.copyWith(
                 fontSize: 12.5,
                 color: AppColors.textSecondary,
@@ -190,17 +186,17 @@ class IotPanel extends StatelessWidget {
         ),
         const SizedBox(height: Insets.sm),
         KeyValueRow(
-          label: 'Device ID',
+          label: tr('Device ID'),
           value: iot.deviceId,
           icon: Icons.memory_rounded,
         ),
         KeyValueRow(
-          label: 'Last ping',
+          label: tr('Last ping'),
           value: iot.lastPing,
           icon: Icons.sensors_rounded,
         ),
         KeyValueRow(
-          label: 'Firmware',
+          label: tr('Firmware'),
           value: 'v${iot.firmware}',
           icon: Icons.system_update_rounded,
         ),

@@ -34,21 +34,21 @@ class _PdiLoader extends StatelessWidget {
 
         if (state.status == DeploymentLoad.failure || (allocationId == null && !state.isLoading)) {
           return AppScaffold(
-            title: 'Pre-delivery inspection',
+            title: tr('Pre-delivery inspection'),
             showBack: false,
             body: EmptyState(
-              title: 'Could not load the checklist',
+              title: tr('Could not load the checklist'),
               message: state.message ?? 'Your fleet manager has not submitted the inspection yet.',
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: 'Try again',
+              actionLabel: tr('Try again'),
               onAction: context.read<DeploymentCubit>().load,
             ),
           );
         }
         if (allocationId == null || items.isEmpty) {
           return AppScaffold(
-            title: 'Pre-delivery inspection',
+            title: tr('Pre-delivery inspection'),
             showBack: false,
             body: PageBody(
               children: List.generate(
@@ -81,17 +81,17 @@ class _PdiView extends StatelessWidget {
     final TextEditingController controller = TextEditingController();
     final String? note = await AppSheet.show<String>(
       context,
-      title: 'What is wrong?',
+      title: tr('What is wrong?'),
       subtitle: item.label,
       child: AppTextField(
-        label: 'Note for the workshop team',
-        hint: 'e.g. Front tyre worn below limit',
+        label: tr('Note for the workshop team'),
+        hint: tr('e.g. Front tyre worn below limit'),
         maxLines: 3,
         controller: controller,
         autofocus: true,
       ),
       footer: PrimaryButton(
-        label: 'Flag as a problem',
+        label: tr('Flag as a problem'),
         icon: Icons.flag_rounded,
         onPressed: () => Navigator.of(context).pop(controller.text.trim()),
       ),
@@ -133,7 +133,7 @@ class _PdiView extends StatelessWidget {
       builder: (context, state) {
         final PdiCubit cubit = context.read<PdiCubit>();
         return AppScaffold(
-          title: 'Pre-delivery inspection',
+          title: tr('Pre-delivery inspection'),
           subtitle: fleet == null ? null : '${fleet.vehicleNumber}${fleet.modelName == null ? '' : ' · ${fleet.modelName}'}',
           showBack: false,
           footer: PrimaryButton(
@@ -147,7 +147,7 @@ class _PdiView extends StatelessWidget {
               _Band(state: state, partner: partner),
               const Gap.lg(),
               ModuleCard(
-                title: 'Check each item',
+                title: tr('Check each item'),
                 leading: const IconTile(icon: Icons.checklist_rounded, solid: true, size: 28),
                 child: Column(
                   children: [
@@ -186,8 +186,7 @@ class _Band extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Go through each item with your team lead. Flag anything that is not right — it goes to the workshop with your note.',
+          Text(tr('Go through each item with your team lead. Flag anything that is not right — it goes to the workshop with your note.'),
             style: AppText.bodySmall.copyWith(height: 1.5),
           ),
           if (partner != null && partner!.isNotEmpty) ...[

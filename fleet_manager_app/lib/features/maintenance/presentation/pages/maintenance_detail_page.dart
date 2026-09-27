@@ -67,13 +67,13 @@ class _MaintenanceDetailViewState extends State<_MaintenanceDetailView> {
         }
         if (state.status == MaintenanceDetailStatus.failure || state.job == null) {
           return AppScaffold(
-            title: 'Job',
+            title: tr('Job'),
             body: EmptyState(
-              title: 'Could not load this job',
+              title: tr('Could not load this job'),
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: 'Try again',
+              actionLabel: tr('Try again'),
               onAction: () => context.read<MaintenanceDetailCubit>().load(),
             ),
           );
@@ -135,7 +135,7 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: 'Issue',
+            title: tr('Issue'),
             leading: const IconTile(icon: Icons.report_problem_rounded, tone: AppColors.primary, size: 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,18 +144,18 @@ class _Loaded extends StatelessWidget {
                 const SizedBox(height: Insets.md),
                 Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
                 const SizedBox(height: Insets.md),
-                KeyValueRow(label: 'Odometer', value: '${Fmt.number(job.odometerKm)} km', icon: Icons.speed_rounded),
+                KeyValueRow(label: tr('Odometer'), value: '${Fmt.number(job.odometerKm)} km', icon: Icons.speed_rounded),
                 if (job.rider != null)
-                  KeyValueRow(label: 'Rider on file', value: job.rider!, icon: Icons.person_rounded),
+                  KeyValueRow(label: tr('Rider on file'), value: job.rider!, icon: Icons.person_rounded),
                 if (job.bay != null)
-                  KeyValueRow(label: 'Bay', value: job.bay!, icon: Icons.garage_rounded),
+                  KeyValueRow(label: tr('Bay'), value: job.bay!, icon: Icons.garage_rounded),
               ],
             ),
           ),
           const Gap.lg(),
 
           ModuleCard(
-            title: 'Assigned vendor',
+            title: tr('Assigned vendor'),
             leading: const IconTile(icon: Icons.handyman_rounded, tone: AppColors.primary, size: 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,7 +205,7 @@ class _Loaded extends StatelessWidget {
                         },
                       ),
                     GhostButton(
-                      label: 'Reassign',
+                      label: tr('Reassign'),
                       icon: Icons.swap_horiz_rounded,
                       onPressed: job.isClosed ? null : () => _openReassignSheet(context),
                     ),
@@ -217,13 +217,13 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: 'Job timeline',
+            title: tr('Job timeline'),
             leading: const IconTile(icon: Icons.timeline_rounded, tone: AppColors.primary, size: 28),
             child: Column(
               children: [
                 _TimelineRow(
                   icon: Icons.flag_rounded,
-                  title: 'Raised',
+                  title: tr('Raised'),
                   time: Fmt.dateTime(job.openedOn),
                   done: true,
                   isLast: false,
@@ -237,14 +237,14 @@ class _Loaded extends StatelessWidget {
                 ),
                 _TimelineRow(
                   icon: Icons.build_circle_rounded,
-                  title: 'In progress',
+                  title: tr('In progress'),
                   time: job.status == 'inProgress' || job.isClosed ? 'Done' : 'Pending',
                   done: job.status == 'inProgress' || job.isClosed,
                   isLast: false,
                 ),
                 _TimelineRow(
                   icon: Icons.check_circle_rounded,
-                  title: 'Closed',
+                  title: tr('Closed'),
                   time: job.isClosed ? Fmt.dateTime(job.closedOn ?? job.dueOn) : 'Pending',
                   done: job.isClosed,
                   isLast: true,
@@ -255,15 +255,15 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: 'Cost breakdown',
+            title: tr('Cost breakdown'),
             leading: const IconTile(icon: Icons.receipt_long_rounded, tone: AppColors.primary, size: 28),
             child: Column(
               children: [
-                KeyValueRow(label: 'Parts', value: Fmt.money(parts)),
-                KeyValueRow(label: 'Labour', value: Fmt.money(labour)),
+                KeyValueRow(label: tr('Parts'), value: Fmt.money(parts)),
+                KeyValueRow(label: tr('Labour'), value: Fmt.money(labour)),
                 const Divider(color: AppColors.stroke, height: Insets.xl),
                 KeyValueRow(
-                  label: 'Total',
+                  label: tr('Total'),
                   value: Fmt.money(total),
                   valueStyle: AppText.numeric.copyWith(fontSize: 17, color: AppColors.primary),
                 ),
@@ -273,7 +273,7 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: 'Photo evidence',
+            title: tr('Photo evidence'),
             leading: const IconTile(icon: Icons.photo_camera_rounded, tone: AppColors.primary, size: 28),
             child: GridView.count(
               crossAxisCount: 3,
@@ -283,22 +283,22 @@ class _Loaded extends StatelessWidget {
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                const PhotoSlot(label: 'Issue', captured: true),
-                PhotoSlot(label: 'In progress', captured: job.status == 'inProgress' || job.isClosed),
-                PhotoSlot(label: 'Completed', captured: job.isClosed),
+                PhotoSlot(label: tr('Issue'), captured: true),
+                PhotoSlot(label: tr('In progress'), captured: job.status == 'inProgress' || job.isClosed),
+                PhotoSlot(label: tr('Completed'), captured: job.isClosed),
               ],
             ),
           ),
           const Gap.lg(),
 
           ModuleCard(
-            title: 'Notes',
-            actionLabel: 'Add note',
+            title: tr('Notes'),
+            actionLabel: tr('Add note'),
             onAction: job.isClosed ? null : () => _openAddNoteSheet(context),
             child: job.notes.isEmpty
-                ? const EmptyState(
-                    title: 'No notes yet',
-                    message: 'Updates from the workshop will show up here.',
+                ? EmptyState(
+                    title: tr('No notes yet'),
+                    message: tr('Updates from the workshop will show up here.'),
                     icon: Icons.notes_rounded,
                     compact: true,
                   )
@@ -328,9 +328,9 @@ class _Loaded extends StatelessWidget {
   Future<void> _confirmClose(BuildContext context) async {
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: 'Close this job?',
+      title: tr('Close this job?'),
       message: '${job.id} will be marked closed. This cannot be undone from here.',
-      confirmLabel: 'Close job',
+      confirmLabel: tr('Close job'),
       icon: Icons.check_circle_rounded,
       tone: AppColors.success,
     );
@@ -343,7 +343,7 @@ class _Loaded extends StatelessWidget {
     final MaintenanceDetailCubit cubit = context.read<MaintenanceDetailCubit>();
     final String? picked = await AppSheet.show<String>(
       context,
-      title: 'Update status',
+      title: tr('Update status'),
       subtitle: job.id,
       child: Column(
         children: [
@@ -373,7 +373,7 @@ class _Loaded extends StatelessWidget {
     }
     final String? picked = await AppSheet.show<String>(
       context,
-      title: 'Reassign vendor',
+      title: tr('Reassign vendor'),
       subtitle: job.id,
       child: Column(
         children: [
@@ -401,17 +401,17 @@ class _Loaded extends StatelessWidget {
     final TextEditingController controller = TextEditingController();
     final String? note = await AppSheet.show<String>(
       context,
-      title: 'Add a note',
+      title: tr('Add a note'),
       subtitle: job.id,
       child: AppTextField(
-        label: 'Note',
-        hint: 'What happened, or what is needed next',
+        label: tr('Note'),
+        hint: tr('What happened, or what is needed next'),
         maxLines: 4,
         controller: controller,
         autofocus: true,
       ),
       footer: PrimaryButton(
-        label: 'Save note',
+        label: tr('Save note'),
         onPressed: () => Navigator.of(context).pop(controller.text),
       ),
     );
@@ -561,7 +561,7 @@ class _Footer extends StatelessWidget {
         children: [
           Expanded(
             child: SecondaryButton(
-              label: 'Update status',
+              label: tr('Update status'),
               size: AppButtonSize.medium,
               onPressed: onUpdateStatus,
             ),
@@ -569,7 +569,7 @@ class _Footer extends StatelessWidget {
           const SizedBox(width: Insets.md),
           Expanded(
             child: PrimaryButton(
-              label: 'Close job',
+              label: tr('Close job'),
               icon: Icons.check_circle_rounded,
               size: AppButtonSize.medium,
               onPressed: onClose,

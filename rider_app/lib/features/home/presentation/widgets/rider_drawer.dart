@@ -33,13 +33,13 @@ class RiderDrawer extends StatelessWidget {
                   children: [
                     _DrawerItem(
                       icon: Icons.person_rounded,
-                      label: 'Profile',
-                      subtitle: 'Personal details and KYC',
+                      label: tr('Profile'),
+                      subtitle: tr('Personal details and KYC'),
                       onTap: () => _go(context, Routes.profile),
                     ),
                     _DrawerItem(
                       icon: Icons.support_agent_rounded,
-                      label: 'Help & support',
+                      label: tr('Help & support'),
                       onTap: () {
                         Navigator.of(context).pop();
                         context.go(Routes.support);
@@ -48,33 +48,40 @@ class RiderDrawer extends StatelessWidget {
 
                     const SizedBox(height: Insets.md),
                     _DrawerItem(
+                      icon: Icons.language_rounded,
+                      label: tr('Language'),
+                      subtitle: AppLocaleController.instance.locale.nativeName,
+                      onTap: () => _pickLanguage(context),
+                    ),
+
+                    const SizedBox(height: Insets.md),
+                    _DrawerItem(
                       icon: Icons.gavel_rounded,
-                      label: 'Terms of service',
+                      label: tr('Terms of service'),
                       onTap: () => _openDocument(context),
                     ),
                     _DrawerItem(
                       icon: Icons.privacy_tip_rounded,
-                      label: 'Privacy policy',
+                      label: tr('Privacy policy'),
                       onTap: () => _openDocument(context),
                     ),
                     _DrawerItem(
                       icon: Icons.info_rounded,
-                      label: 'About EVSEYE',
+                      label: tr('About this app'),
                       onTap: () => _openDocument(context),
                     ),
 
                     const SizedBox(height: Insets.xl),
                     _DrawerItem(
                       icon: Icons.logout_rounded,
-                      label: 'Sign out',
+                      label: tr('Sign out'),
                       destructive: true,
                       onTap: () async {
                         final bool confirmed = await AppDialog.confirm(
                           context,
-                          title: 'Sign out?',
-                          message:
-                              'You will need your mobile number and an OTP to sign back in.',
-                          confirmLabel: 'Sign out',
+                          title: tr('Sign out?'),
+                          message: tr('You will need your mobile number and an OTP to sign back in.'),
+                          confirmLabel: tr('Sign out'),
                           icon: Icons.logout_rounded,
                           destructive: true,
                         );
@@ -92,10 +99,7 @@ class RiderDrawer extends StatelessWidget {
                 padding: const EdgeInsets.only(top: Insets.lg, bottom: Insets.lg),
                 child: Column(
                   children: [
-                    const EvseyeLogo(markSize: 26, wordSize: 17, inline: true),
-                    const SizedBox(height: Insets.sm),
-                    Text(
-                      'Version 1.0.0',
+                    Text('${tr('Version')} 1.0.0',
                       style: AppText.bodySmall.copyWith(fontSize: 11, color: AppColors.textMuted),
                     ),
                   ],
@@ -106,6 +110,11 @@ class RiderDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  static Future<void> _pickLanguage(BuildContext context) async {
+    final AppLocale? picked = await LanguagePicker.show(context);
+    if (picked != null) await AppLocaleController.instance.select(picked);
   }
 
   static void _go(BuildContext context, String route) {

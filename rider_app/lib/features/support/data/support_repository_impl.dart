@@ -13,7 +13,7 @@ class SupportRepositoryImpl implements SupportRepository {
     return Result.ok(
       SupportOverview(
         roadsideNumber: '1800 267 8899',
-        supportEmail: 'riders@evseye.in',
+        supportEmail: 'support@pinkrides.in',
         hubName: Demo.hub,
         teamLead: const TeamLead(
           name: Demo.teamLead,

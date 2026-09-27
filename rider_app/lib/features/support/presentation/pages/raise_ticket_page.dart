@@ -82,8 +82,8 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
   Future<void> _pickCategory(List<SupportCategory> categories) async {
     final String? picked = await AppSheet.show<String>(
       context,
-      title: 'Choose a category',
-      subtitle: 'This decides who picks up your ticket and how fast',
+      title: tr('Choose a category'),
+      subtitle: tr('This decides who picks up your ticket and how fast'),
       child: Column(
         children: [
           for (final c in categories) ...[
@@ -144,10 +144,10 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
             : categoryTileTone(selected.key);
 
         return AppScaffold(
-          title: 'Raise a ticket',
-          subtitle: 'The more detail you give, the faster we can help',
+          title: tr('Raise a ticket'),
+          subtitle: tr('The more detail you give, the faster we can help'),
           footer: PrimaryButton(
-            label: 'Submit ticket',
+            label: tr('Submit ticket'),
             icon: Icons.send_rounded,
             loading: submitting,
             onPressed: loadingCategories
@@ -180,10 +180,10 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AppPickerField(
-                            label: 'Category',
+                            label: tr('Category'),
                             required: true,
                             value: selected?.label,
-                            hint: 'Select a category',
+                            hint: tr('Select a category'),
                             errorText: _categoryError,
                             onTap: () => _pickCategory(state.categories),
                             prefixIcon: selected == null
@@ -192,10 +192,10 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                           ),
                           const Gap.lg(),
                           AppTextField(
-                            label: 'Subject',
+                            label: tr('Subject'),
                             required: true,
                             controller: _subject,
-                            hint: 'One line that sums up the issue',
+                            hint: tr('One line that sums up the issue'),
                             errorText: _subjectError,
                             textCapitalization: TextCapitalization.sentences,
                             onChanged: (_) {
@@ -209,17 +209,17 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                     ),
                     const Gap.lg(),
                     ModuleCard(
-                      title: 'Tell us more',
+                      title: tr('Tell us more'),
                       leading: const IconTile(
                         icon: Icons.notes_rounded,
                         tone: AppColors.primary,
                         solid: true,
                       ),
                       child: AppTextField(
-                        label: 'Description',
+                        label: tr('Description'),
                         required: true,
                         controller: _description,
-                        hint: 'What happened, and since when?',
+                        hint: tr('What happened, and since when?'),
                         maxLines: 5,
                         errorText: _descriptionError,
                         textCapitalization: TextCapitalization.sentences,
@@ -232,7 +232,7 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                     ),
                     const Gap.lg(),
                     ModuleCard(
-                      title: 'Photos (optional)',
+                      title: tr('Photos (optional)'),
                       leading: const IconTile(
                         icon: Icons.photo_camera_rounded,
                         tone: AppColors.primary,
@@ -258,7 +258,7 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                     ),
                     const Gap.lg(),
                     ModuleCard(
-                      title: 'Vehicle impact',
+                      title: tr('Vehicle impact'),
                       leading: const IconTile(
                         icon: Icons.warning_amber_rounded,
                         tone: AppColors.amber,
@@ -267,9 +267,8 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                       child: AppCheckTile(
                         value: _vehicleAffected,
                         onChanged: (v) => setState(() => _vehicleAffected = v),
-                        title: 'The vehicle is affected',
-                        subtitle:
-                            'Turn this on if you cannot ride safely until this is fixed',
+                        title: tr('The vehicle is affected'),
+                        subtitle: tr('Turn this on if you cannot ride safely until this is fixed'),
                       ),
                     ),
                   ],

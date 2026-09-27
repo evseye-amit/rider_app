@@ -90,15 +90,15 @@ class _PaymentViewState extends State<_PaymentView> {
 
         if (state.status == DeploymentLoad.failure || allocationId == null) {
           return AppScaffold(
-            title: 'Payment',
+            title: tr('Payment'),
             showBack: false,
             body: state.isLoading
                 ? const PageBody(children: [ShimmerBox(height: 180, borderRadius: Corners.brXl)])
                 : EmptyState(
-                    title: 'No payment to show',
+                    title: tr('No payment to show'),
                     message: state.message ?? 'Your fleet manager has not asked for a payment yet.',
                     icon: Icons.receipt_long_rounded,
-                    actionLabel: 'Refresh',
+                    actionLabel: tr('Refresh'),
                     onAction: context.read<DeploymentCubit>().load,
                   ),
           );
@@ -125,7 +125,7 @@ class _PaymentViewState extends State<_PaymentView> {
                     _Submitted(payment: payment)
                   else ...[
                     ModuleCard(
-                      title: 'How did you pay?',
+                      title: tr('How did you pay?'),
                       leading: const IconTile(icon: Icons.payments_rounded, solid: true, size: 28),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -138,9 +138,9 @@ class _PaymentViewState extends State<_PaymentView> {
                           ),
                           const Gap.lg(),
                           AppTextField(
-                            label: 'Transaction reference',
+                            label: tr('Transaction reference'),
                             hint: _provider == 'UPI' ? 'UPI transaction ID, e.g. 4284 7192 3456' : 'Reference or receipt number',
-                            helper: 'Your fleet manager checks this against what they received.',
+                            helper: tr('Your fleet manager checks this against what they received.'),
                             controller: _reference,
                             errorText: _error,
                             prefixIcon: Icons.tag_rounded,
@@ -176,7 +176,7 @@ class _Bill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ModuleCard(
-      title: 'Amount due',
+      title: tr('Amount due'),
       leading: const IconTile(icon: Icons.receipt_long_rounded, solid: true, size: 28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +185,7 @@ class _Bill extends StatelessWidget {
           const Gap.md(),
           for (final item in payment.items) KeyValueRow(label: item.label, value: Fmt.money(item.amount)),
           const Divider(),
-          KeyValueRow(label: 'Total', value: Fmt.money(payment.amount), valueStyle: AppText.titleSmall),
+          KeyValueRow(label: tr('Total'), value: Fmt.money(payment.amount), valueStyle: AppText.titleSmall),
           if (payment.createdAt != null) ...[
             const Gap.sm(),
             Text('Requested ${Fmt.relative(payment.createdAt!)}', style: AppText.bodySmall.copyWith(color: AppColors.textMuted)),
@@ -208,7 +208,7 @@ class _Submitted extends StatelessWidget {
         ArtBlock(
           art: BrandArt.success,
           artSize: 140,
-          title: 'Reference submitted',
+          title: tr('Reference submitted'),
           message: 'Your fleet manager is checking ${payment.provider ?? 'the payment'} reference '
               '${payment.providerReference ?? ''}. This screen moves on the moment it is verified.',
         ),
@@ -216,11 +216,11 @@ class _Submitted extends StatelessWidget {
         ModuleCard(
           child: Column(
             children: [
-              KeyValueRow(label: 'Paid via', value: payment.provider ?? '—', icon: Icons.payments_rounded),
-              KeyValueRow(label: 'Reference', value: payment.providerReference ?? '—', icon: Icons.tag_rounded),
+              KeyValueRow(label: tr('Paid via'), value: payment.provider ?? '—', icon: Icons.payments_rounded),
+              KeyValueRow(label: tr('Reference'), value: payment.providerReference ?? '—', icon: Icons.tag_rounded),
               if (payment.submittedAt != null)
-                KeyValueRow(label: 'Submitted', value: Fmt.dateTime(payment.submittedAt!), icon: Icons.schedule_rounded),
-              const KeyValueRow(label: 'Status', value: 'Awaiting verification', icon: Icons.hourglass_top_rounded),
+                KeyValueRow(label: tr('Submitted'), value: Fmt.dateTime(payment.submittedAt!), icon: Icons.schedule_rounded),
+              KeyValueRow(label: tr('Status'), value: 'Awaiting verification', icon: Icons.hourglass_top_rounded),
             ],
           ),
         ),

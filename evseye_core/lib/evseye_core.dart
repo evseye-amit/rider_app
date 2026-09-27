@@ -6,6 +6,8 @@ export 'src/theme/app_gradients.dart';
 export 'src/theme/app_theme.dart';
 export 'src/theme/app_typography.dart';
 
+export 'src/l10n/app_locale.dart';
+export 'src/l10n/language_picker.dart';
 export 'src/widgets/app_scaffold.dart';
 export 'src/widgets/auth_sheet.dart';
 export 'src/widgets/attendance_toggle.dart';

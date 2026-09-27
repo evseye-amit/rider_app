@@ -42,11 +42,11 @@ class _IncentivesView extends StatelessWidget {
           children: state.status == IncentivesStatus.failure
               ? [
                   EmptyState(
-                    title: 'Could not load your incentives',
+                    title: tr('Could not load your incentives'),
                     message: state.message,
                     icon: Icons.cloud_off_rounded,
                     tone: AppColors.danger,
-                    actionLabel: 'Try again',
+                    actionLabel: tr('Try again'),
                     onAction: () => context.read<IncentivesCubit>().refresh(),
                   ),
                 ]
@@ -63,25 +63,25 @@ class _IncentivesView extends StatelessWidget {
     final List<IncentiveScheme> achieved = overview.achieved;
 
     return [
-      const PhotoPanel(
+      PhotoPanel(
         photo: BrandPhoto.money,
         height: 130,
-        title: 'Turn extra trips into extra pay',
-        subtitle: 'Clear a scheme this week and it lands in your wallet instantly',
+        title: tr('Turn extra trips into extra pay'),
+        subtitle: tr('Clear a scheme this week and it lands in your wallet instantly'),
       ),
       const Gap.lg(),
 
       if (active.isEmpty)
-        const Padding(
+        Padding(
           padding: EdgeInsets.symmetric(vertical: Insets.xl),
           child: ArtBlock(
             art: BrandArt.success,
-            title: 'No active schemes right now',
-            message: 'Check back tomorrow for new incentives.',
+            title: tr('No active schemes right now'),
+            message: tr('Check back tomorrow for new incentives.'),
           ),
         )
       else ...[
-        const SectionHeader(title: 'Active schemes'),
+        SectionHeader(title: tr('Active schemes')),
         const Gap.lg(),
         for (final scheme in active) ...[
           IncentiveSchemeCard(
@@ -95,9 +95,9 @@ class _IncentivesView extends StatelessWidget {
       ],
       if (achieved.isNotEmpty) ...[
         const Gap.xxl(),
-        const SectionHeader(
-          title: 'Achieved',
-          subtitle: 'Already cleared and credited',
+        SectionHeader(
+          title: tr('Achieved'),
+          subtitle: tr('Already cleared and credited'),
         ),
         const Gap.lg(),
         for (final scheme in achieved) ...[

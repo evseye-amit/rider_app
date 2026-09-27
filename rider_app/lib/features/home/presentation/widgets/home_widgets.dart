@@ -202,7 +202,7 @@ class VehicleCard extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      MetricPill(icon: Icons.near_me_rounded, value: '$rangeKm', label: 'km left'),
+                      MetricPill(icon: Icons.near_me_rounded, value: '$rangeKm', label: tr('km left')),
                       const SizedBox(width: Insets.sm),
                       const Icon(Icons.chevron_right_rounded, size: 18, color: AppColors.textMuted),
                     ],
@@ -304,13 +304,13 @@ class WeeklyEarningsChart extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('This week', style: AppText.label),
+                    Text(tr('This week'), style: AppText.label),
                     const SizedBox(height: Insets.xs),
                     Text(Fmt.money(total), style: AppText.numeric.copyWith(fontSize: 24)),
                   ],
                 ),
               ),
-              const StatusChip(label: 'Mon – Sun', tone: StatusTone.neutral, dense: true, showDot: false),
+              StatusChip(label: tr('Mon – Sun'), tone: StatusTone.neutral, dense: true, showDot: false),
             ],
           ),
           const SizedBox(height: Insets.xl),

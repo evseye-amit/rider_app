@@ -34,17 +34,17 @@ class _ProfilePageState extends State<ProfilePage> {
         _SectionCard(
           icon: Icons.badge_rounded,
           tone: AppColors.primary,
-          title: 'Personal details',
+          title: tr('Personal details'),
           rows: [
-            _DetailRow(label: 'Full name', value: name),
+            _DetailRow(label: tr('Full name'), value: name),
             _DetailRow(
-              label: 'Mobile',
+              label: tr('Mobile'),
               value: Fmt.phone(r['mobile']?.toString() ?? ''),
             ),
 
-            _DetailRow(label: 'Email', value: r['email']?.toString() ?? '—'),
+            _DetailRow(label: tr('Email'), value: r['email']?.toString() ?? '—'),
             _DetailRow(
-              label: 'Joined on',
+              label: tr('Joined on'),
               value: joinedOn == null ? '—' : Fmt.date(joinedOn),
             ),
           ],
@@ -54,12 +54,12 @@ class _ProfilePageState extends State<ProfilePage> {
         _SectionCard(
           icon: Icons.location_on_rounded,
           tone: AppColors.primary,
-          title: 'Address & hub',
+          title: tr('Address & hub'),
           rows: [
-            _DetailRow(label: 'City', value: r['city']?.toString() ?? '—'),
-            _DetailRow(label: 'Hub', value: r['hub']?.toString() ?? '—'),
+            _DetailRow(label: tr('City'), value: r['city']?.toString() ?? '—'),
+            _DetailRow(label: tr('Hub'), value: r['hub']?.toString() ?? '—'),
             _DetailRow(
-              label: 'Hub code',
+              label: tr('Hub code'),
               value: r['hubCode']?.toString() ?? '—',
             ),
           ],
@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
         const Gap.lg(),
 
         ModuleCard(
-          title: 'Team lead',
+          title: tr('Team lead'),
           child: Row(
             children: [
               AppAvatar(name: r['teamLead']?.toString() ?? '?', size: 44),
@@ -136,8 +136,7 @@ class _Band extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Text(
-              'Profile',
+            Text(tr('Profile'),
               style: AppText.titleLarge.copyWith(
                 fontSize: 17,
                 color: AppColors.onInk,

@@ -60,11 +60,11 @@ class _RidersViewState extends State<_RidersView> {
                 children: [
                   Expanded(
                     child: EmptyState(
-                      title: 'Could not load the team',
+                      title: tr('Could not load the team'),
                       message: state.message,
                       icon: Icons.cloud_off_rounded,
                       tone: AppColors.danger,
-                      actionLabel: 'Try again',
+                      actionLabel: tr('Try again'),
                       onAction: () => context.read<RidersCubit>().refresh(),
                     ),
                   ),
@@ -95,7 +95,7 @@ class _RidersViewState extends State<_RidersView> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         AppSearchField(
-                          hint: 'Search name, code or vehicle',
+                          hint: tr('Search name, code or vehicle'),
                           controller: _search,
                           onChanged: (_) => setState(() {}),
                         ),
@@ -115,13 +115,13 @@ class _RidersViewState extends State<_RidersView> {
                   ),
                   const Gap.lg(),
                   if (shown.isEmpty)
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(vertical: Insets.lg),
                       child: ArtBlock(
                         art: BrandArt.empty,
                         artSize: 130,
-                        title: 'No riders here',
-                        message: 'Nobody matches this search in this list.',
+                        title: tr('No riders here'),
+                        message: tr('Nobody matches this search in this list.'),
                       ),
                     )
                   else
@@ -194,17 +194,17 @@ class _RidersViewState extends State<_RidersView> {
           Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
           const Gap.md(),
           KeyValueRow(
-            label: 'Team lead',
+            label: tr('Team lead'),
             value: rider.teamLead,
             icon: Icons.supervisor_account_rounded,
           ),
           KeyValueRow(
-            label: 'Plan',
+            label: tr('Plan'),
             value: rider.plan,
             icon: Icons.workspace_premium_rounded,
           ),
           KeyValueRow(
-            label: 'Vehicle',
+            label: tr('Vehicle'),
             value: rider.hasVehicle
                 ? rider.vehicleNumber!
                 : 'Awaiting allocation',
@@ -212,7 +212,7 @@ class _RidersViewState extends State<_RidersView> {
           ),
           if (rider.kycStatus != null)
             KeyValueRow(
-              label: 'KYC status',
+              label: tr('KYC status'),
               value: rider.kycStatus == 'verified' ? 'Verified' : 'Pending',
               icon: Icons.verified_user_rounded,
               valueColor: rider.kycStatus == 'verified'
@@ -221,7 +221,7 @@ class _RidersViewState extends State<_RidersView> {
             ),
           if (rider.exitReason != null)
             KeyValueRow(
-              label: 'Exit reason',
+              label: tr('Exit reason'),
               value: rider.exitReason!,
               icon: Icons.logout_rounded,
               valueColor: AppColors.textMuted,
@@ -241,7 +241,7 @@ class _RidersViewState extends State<_RidersView> {
           Expanded(
             flex: 2,
             child: SecondaryButton(
-              label: 'Call',
+              label: tr('Call'),
               icon: Icons.call_rounded,
               size: AppButtonSize.medium,
               onPressed: () {
@@ -258,7 +258,7 @@ class _RidersViewState extends State<_RidersView> {
             Expanded(
               flex: 3,
               child: PrimaryButton(
-                label: 'Allocations',
+                label: tr('Allocations'),
                 icon: Icons.electric_scooter_rounded,
                 size: AppButtonSize.medium,
                 onPressed: () {
@@ -301,8 +301,7 @@ class _RidersBand extends StatelessWidget {
             ),
             const SizedBox(width: Insets.md),
             Expanded(
-              child: Text(
-                'Team',
+              child: Text(tr('Team'),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.displaySmall.copyWith(
@@ -314,8 +313,7 @@ class _RidersBand extends StatelessWidget {
           ],
         ),
         const Gap.xxl(),
-        Text(
-          'Riders on the roster',
+        Text(tr('Riders on the roster'),
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),
@@ -341,7 +339,7 @@ class _RidersBand extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: 'Active',
+                  label: tr('Active'),
                   value: '$active',
                   icon: Icons.bolt_rounded,
                 ),
@@ -350,7 +348,7 @@ class _RidersBand extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'Onboarding',
+                  label: tr('Onboarding'),
                   value: '$onboarding',
                   icon: Icons.hourglass_top_rounded,
                 ),
@@ -359,7 +357,7 @@ class _RidersBand extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'Exited',
+                  label: tr('Exited'),
                   value: '$exited',
                   icon: Icons.logout_rounded,
                 ),

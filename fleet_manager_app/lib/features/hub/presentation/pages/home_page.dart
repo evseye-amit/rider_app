@@ -45,11 +45,11 @@ class _HomeView extends StatelessWidget {
             drawer: const FleetDrawer(),
             body: SafeArea(
               child: EmptyState(
-                title: 'Could not load your hub',
+                title: tr('Could not load your hub'),
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: 'Try again',
+                actionLabel: tr('Try again'),
                 onAction: () => context.read<HubCubit>().refresh(),
               ),
             ),
@@ -93,7 +93,7 @@ class _HomeView extends StatelessWidget {
       const Gap.lg(),
 
       ModuleCard(
-        title: 'Yesterday at a glance',
+        title: tr('Yesterday at a glance'),
         padding: const EdgeInsets.all(Insets.md),
         child: GridView(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -107,7 +107,7 @@ class _HomeView extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             StatCard(
-              label: 'Waiting to allocate',
+              label: tr('Waiting to allocate'),
               value: '${summary.pendingAllocations}',
               caption: '${summary.todayAllocations} done today',
               icon: Icons.swap_horiz_rounded,
@@ -115,7 +115,7 @@ class _HomeView extends StatelessWidget {
               onTap: () => context.go(Routes.allocations),
             ),
             StatCard(
-              label: 'Returns to clear',
+              label: tr('Returns to clear'),
               value: '${summary.pendingDeallocations}',
               caption: '${summary.todayDeallocations} done today',
               icon: Icons.assignment_return_rounded,
@@ -123,7 +123,7 @@ class _HomeView extends StatelessWidget {
               onTap: () => context.go(Routes.deallocations),
             ),
             StatCard(
-              label: 'Riders present',
+              label: tr('Riders present'),
               value: '${summary.ridersPresent}',
               caption: 'of ${summary.ridersActive} active',
               icon: Icons.groups_rounded,
@@ -131,7 +131,7 @@ class _HomeView extends StatelessWidget {
               onTap: () => context.go(Routes.team),
             ),
             StatCard(
-              label: 'Open jobs',
+              label: tr('Open jobs'),
               value: '${summary.openMaintenance}',
               caption: summary.overdueMaintenance > 0
                   ? '${summary.overdueMaintenance} overdue'
@@ -224,8 +224,7 @@ class _Band extends StatelessWidget {
           ],
         ),
         const Gap.xxl(),
-        Text(
-          'Fleet utilisation',
+        Text(tr('Fleet utilisation'),
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),
@@ -248,7 +247,7 @@ class _Band extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: 'Uptime',
+                  label: tr('Uptime'),
                   value: summary == null ? '—' : Fmt.percent(summary!.uptime),
                   icon: Icons.bolt_rounded,
                 ),
@@ -257,7 +256,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'On shift',
+                  label: tr('On shift'),
                   value: summary == null
                       ? '—'
                       : '${summary!.ridersPresent}/${summary!.ridersActive}',
@@ -268,7 +267,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'Bays free',
+                  label: tr('Bays free'),
                   value: summary == null ? '—' : '$baysFree',
                   icon: Icons.ev_station_rounded,
                 ),

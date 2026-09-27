@@ -39,11 +39,11 @@ class _HomeView extends StatelessWidget {
               drawer: const RiderDrawer(),
               body: SafeArea(
                 child: EmptyState(
-                  title: 'Could not load your dashboard',
+                  title: tr('Could not load your dashboard'),
                   message: state.message,
                   icon: Icons.cloud_off_rounded,
                   tone: AppColors.danger,
-                  actionLabel: 'Try again',
+                  actionLabel: tr('Try again'),
                   onAction: () => context.read<HomeCubit>().refresh(),
                 ),
               ),
@@ -69,18 +69,18 @@ class _HomeView extends StatelessWidget {
   List<Widget> _content(BuildContext context, HomeSummary summary) {
     return [
       BalanceStrip(
-        label: 'Paid to date',
+        label: tr('Paid to date'),
         amount: Fmt.money(summary.walletBalance),
-        caption: 'Deposits and handover fees',
+        caption: tr('Deposits and handover fees'),
         onTapBalance: () => context.go(Routes.wallet),
         actions: [
           StripAction(
-            label: 'Withdraw',
+            label: tr('Withdraw'),
             icon: Icons.south_west_rounded,
             onTap: () => context.go(Routes.wallet),
           ),
           StripAction(
-            label: 'History',
+            label: tr('History'),
             icon: Icons.receipt_long_rounded,
             onTap: () => context.go(Routes.wallet),
           ),
@@ -89,7 +89,7 @@ class _HomeView extends StatelessWidget {
       const Gap.lg(),
 
       ModuleCard(
-        title: 'Yesterday at a glance',
+        title: tr('Yesterday at a glance'),
 
         padding: const EdgeInsets.all(Insets.md),
         child: GridView(
@@ -104,7 +104,7 @@ class _HomeView extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             StatCard(
-              label: 'Incentive earned',
+              label: tr('Incentive earned'),
               value: Fmt.money(summary.incentiveEarned),
               caption: 'of ${Fmt.money(summary.incentiveTarget)} target',
               icon: Icons.emoji_events_rounded,
@@ -113,7 +113,7 @@ class _HomeView extends StatelessWidget {
               onTap: () => context.push(Routes.incentives),
             ),
             StatCard(
-              label: 'Rent due',
+              label: tr('Rent due'),
               value: Fmt.money(summary.rentDue),
               caption: summary.rentDueDate == null
                   ? summary.rentPlan
@@ -257,7 +257,7 @@ class _Band extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: 'Trips',
+                  label: tr('Trips'),
                   value: '${summary?.tripsToday ?? 0}',
                   icon: Icons.route_rounded,
                 ),
@@ -266,7 +266,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'Distance',
+                  label: tr('Distance'),
                   value: Fmt.distanceKm(summary?.distanceTodayKm ?? 0),
                   icon: Icons.near_me_rounded,
                 ),
@@ -275,7 +275,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'Online',
+                  label: tr('Online'),
                   value: Fmt.duration(
                     Duration(minutes: session.present ? (summary?.onlineMinutes ?? 0) : 0),
                   ),
@@ -293,10 +293,9 @@ class _Band extends StatelessWidget {
     if (!next) {
       final bool confirmed = await AppDialog.confirm(
         context,
-        title: 'Mark yourself absent?',
-        message:
-            'Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans.',
-        confirmLabel: 'Mark absent',
+        title: tr('Mark yourself absent?'),
+        message: tr('Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans.'),
+        confirmLabel: tr('Mark absent'),
         icon: Icons.person_off_rounded,
         destructive: true,
       );

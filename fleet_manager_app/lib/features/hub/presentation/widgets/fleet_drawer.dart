@@ -29,54 +29,61 @@ class FleetDrawer extends StatelessWidget {
                   children: [
                     _Item(
                       icon: Icons.dashboard_rounded,
-                      label: 'Home',
-                      subtitle: 'Your hub at a glance',
+                      label: tr('Home'),
+                      subtitle: tr('Your hub at a glance'),
                       onTap: () => _goTab(context, Routes.home),
                     ),
                     _Item(
                       icon: Icons.swap_horiz_rounded,
-                      label: 'Allocation',
+                      label: tr('Allocation'),
                       onTap: () => _goTab(context, Routes.allocations),
                     ),
                     _Item(
                       icon: Icons.assignment_return_rounded,
-                      label: 'De-allocation',
+                      label: tr('De-allocation'),
                       onTap: () => _goTab(context, Routes.deallocations),
                     ),
                     _Item(
                       icon: Icons.build_rounded,
-                      label: 'Maintenance',
+                      label: tr('Maintenance'),
                       onTap: () => _goTab(context, Routes.maintenance),
                     ),
 
                     const SizedBox(height: Insets.md),
                     _Item(
+                      icon: Icons.language_rounded,
+                      label: tr('Language'),
+                      onTap: () => _pickLanguage(context),
+                    ),
+
+                    const SizedBox(height: Insets.md),
+                    _Item(
                       icon: Icons.gavel_rounded,
-                      label: 'Terms of service',
+                      label: tr('Terms of service'),
                       onTap: () => _openDocument(context),
                     ),
                     _Item(
                       icon: Icons.privacy_tip_rounded,
-                      label: 'Privacy policy',
+                      label: tr('Privacy policy'),
                       onTap: () => _openDocument(context),
                     ),
                     _Item(
                       icon: Icons.info_rounded,
-                      label: 'About EVSEYE',
+                      label: tr('About this app'),
                       onTap: () => _openDocument(context),
                     ),
 
                     const SizedBox(height: Insets.xl),
                     _Item(
                       icon: Icons.logout_rounded,
-                      label: 'Sign out',
+                      label: tr('Sign out'),
                       destructive: true,
                       onTap: () async {
                         final bool ok = await AppDialog.confirm(
                           context,
-                          title: 'Sign out?',
-                          message: 'You will need your mobile number and an OTP to sign back in.',
-                          confirmLabel: 'Sign out',
+                          title: tr('Sign out?'),
+                          message: tr('You will need your mobile number and an OTP to sign back in.'),
+                          confirmLabel: tr('Sign out'),
                           icon: Icons.logout_rounded,
                           destructive: true,
                         );
@@ -92,10 +99,7 @@ class FleetDrawer extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: Insets.lg),
                 child: Column(
                   children: [
-                    const EvseyeLogo(markSize: 26, wordSize: 17, inline: true),
-                    const SizedBox(height: Insets.sm),
-                    Text(
-                      'Fleet Manager · v1.0.0',
+                    Text('${tr('Version')} 1.0.0',
                       style: AppText.bodySmall.copyWith(fontSize: 11, color: AppColors.textMuted),
                     ),
                   ],
@@ -106,6 +110,11 @@ class FleetDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  static Future<void> _pickLanguage(BuildContext context) async {
+    final AppLocale? picked = await LanguagePicker.show(context);
+    if (picked != null) await AppLocaleController.instance.select(picked);
   }
 
   static void _goTab(BuildContext context, String route) {
@@ -151,8 +160,7 @@ class _Header extends StatelessWidget {
                       style: AppText.titleLarge.copyWith(fontSize: 18),
                     ),
                     const SizedBox(height: 3),
-                    Text(
-                      'Fleet Manager',
+                    Text(tr('Fleet Manager'),
                       style: AppText.bodySmall.copyWith(fontSize: 12),
                     ),
                   ],

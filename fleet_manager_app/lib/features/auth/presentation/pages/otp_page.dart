@@ -106,7 +106,7 @@ class _OtpPageState extends State<OtpPage> {
       art: BrandArt.manager,
       artSize: 170,
       showBack: true,
-      title: 'Verify your number',
+      title: tr('Verify your number'),
       subtitle: 'Enter the 6-digit code sent to +91 ${widget.mobile}',
       children: [
         OtpInput(hasError: _hasError, onCompleted: _verify),
@@ -136,7 +136,7 @@ class _OtpPageState extends State<OtpPage> {
                 child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
               ),
               const SizedBox(width: Insets.sm),
-              Text('Verifying…', style: AppText.bodySmall),
+              Text(tr('Verifying…'), style: AppText.bodySmall),
             ],
           ),
         ],
@@ -147,7 +147,7 @@ class _OtpPageState extends State<OtpPage> {
           runSpacing: Insets.sm,
           children: [
             GhostButton(
-              label: 'Edit number',
+              label: tr('Edit number'),
               icon: Icons.edit_rounded,
               onPressed: () => Navigator.of(context).maybePop(),
             ),
@@ -165,8 +165,7 @@ class _OtpPageState extends State<OtpPage> {
             const Icon(Icons.lock_outline_rounded, size: 14, color: AppColors.textMuted),
             const SizedBox(width: Insets.sm - 2),
             Flexible(
-              child: Text(
-                'Your session is encrypted end-to-end',
+              child: Text(tr('Your session is encrypted end-to-end'),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,

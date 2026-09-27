@@ -23,6 +23,19 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _mobile.addListener(() => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => _askLanguage());
+  }
+
+  Future<void> _askLanguage() async {
+    final AppLocaleController locale = AppLocaleController.instance;
+    if (!locale.loaded) await locale.load();
+    if (locale.asked || !mounted) return;
+    final AppLocale? picked = await LanguagePicker.show(context, firstRun: true);
+    if (picked == null) {
+      await locale.markAsked();
+      return;
+    }
+    await locale.select(picked);
   }
 
   @override
@@ -63,13 +76,11 @@ class _LoginPageState extends State<LoginPage> {
     return AuthSheetScaffold(
       art: BrandArt.manager,
       artSize: 200,
-      title: 'Sign in to run your hub',
-      subtitle:
-          'Sign in with the mobile number registered to your hub to manage '
-          'allocations, riders and maintenance.',
+      title: tr('Sign in to run your hub'),
+      subtitle: tr('Sign in with the mobile number registered to your hub to manage allocations, riders and maintenance.'),
       children: [
         AppTextField(
-          label: 'Mobile number',
+          label: tr('Mobile number'),
           hint: '98765 43210',
           prefixText: '+91',
           required: true,
@@ -91,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         const Gap.xl(),
         PrimaryButton(
-          label: 'Continue',
+          label: tr('Continue'),
           trailingIcon: Icons.arrow_forward_rounded,
           loading: _submitting,
           onPressed: _isValid ? _continue : null,
@@ -104,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(width: Insets.sm - 2),
             Flexible(
               child: Text(
-                'Only numbers registered by your EVSEYE client admin can sign in',
+                tr('Only numbers registered by your admin can sign in'),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
@@ -114,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
         const Gap.xxl(),
-        const AuthDivider(label: 'Why EVSEYE'),
+        AuthDivider(label: tr('Why choose us')),
         const Gap.xl(),
         const _TrustStrip(),
       ],

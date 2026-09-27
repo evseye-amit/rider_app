@@ -90,9 +90,9 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
   Future<void> _confirmExit() async {
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: 'Exit onboarding?',
-      message: 'Every step you have completed is saved. You can pick up exactly where you left off next time you sign in.',
-      confirmLabel: 'Exit',
+      title: tr('Exit onboarding?'),
+      message: tr('Every step you have completed is saved. You can pick up exactly where you left off next time you sign in.'),
+      confirmLabel: tr('Exit'),
       icon: Icons.logout_rounded,
       destructive: true,
     );
@@ -211,7 +211,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
 
     final File? file = await PhotoSourceSheet.pick(
       context,
-      subtitle: 'Take a photo of the document, or choose one you already have',
+      subtitle: tr('Take a photo of the document, or choose one you already have'),
     );
     if (file == null || !mounted) return;
 
@@ -258,17 +258,17 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
         body: SafeArea(
           child: _loadError != null
               ? EmptyState(
-                  title: 'Could not load onboarding',
+                  title: tr('Could not load onboarding'),
                   message: _loadError,
                   icon: Icons.cloud_off_rounded,
                   tone: AppColors.danger,
-                  actionLabel: 'Retry',
+                  actionLabel: tr('Retry'),
                   onAction: () {
                     setState(() => _loadError = null);
                     _load();
                   },
                 )
-              : const Center(child: LoadingOverlay(message: 'Loading your onboarding form…')),
+              : Center(child: LoadingOverlay(message: tr('Loading your onboarding form…'))),
         ),
       );
     }
@@ -279,11 +279,11 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
         backgroundColor: AppColors.canvas,
         body: SafeArea(
           child: EmptyState(
-            title: 'Nothing to fill in',
+            title: tr('Nothing to fill in'),
             message: 'Your fleet operator\'s package has no onboarding steps configured yet. '
                 'Ask them to set up rider onboarding, then sign in again.',
             icon: Icons.assignment_outlined,
-            actionLabel: 'Refresh',
+            actionLabel: tr('Refresh'),
             onAction: _load,
           ),
         ),
@@ -388,7 +388,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
                   ),
               ],
             ),
-            if (_saving) const Positioned.fill(child: LoadingOverlay(message: 'Saving…')),
+            if (_saving) Positioned.fill(child: LoadingOverlay(message: tr('Saving…'))),
           ],
         ),
       ),

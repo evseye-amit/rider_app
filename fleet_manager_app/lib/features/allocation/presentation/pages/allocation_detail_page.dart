@@ -64,13 +64,13 @@ class _DetailView extends StatelessWidget {
         }
         if (state.status == DeploymentDetailStatus.failure || state.request == null) {
           return AppScaffold(
-            title: 'Handover',
+            title: tr('Handover'),
             body: EmptyState(
-              title: 'Could not load this handover',
+              title: tr('Could not load this handover'),
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: 'Try again',
+              actionLabel: tr('Try again'),
               onAction: () => context.read<DeploymentDetailCubit>().load(),
             ),
           );
@@ -102,12 +102,12 @@ class _Loaded extends StatelessWidget {
       bottomNavigationBar: _Footer(state: state),
       children: [
         OverlapModuleCard(
-          title: 'Rider',
+          title: tr('Rider'),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               KeyValueRow(
-                label: 'Mobile',
+                label: tr('Mobile'),
                 value: rider == null ? '—' : Fmt.phone(rider.mobile),
                 icon: Icons.phone_rounded,
                 trailing: rider == null
@@ -124,25 +124,25 @@ class _Loaded extends StatelessWidget {
                         },
                       ),
               ),
-              KeyValueRow(label: 'Rider code', value: (rider?.riderCode ?? '').isEmpty ? '—' : rider!.riderCode!, icon: Icons.badge_rounded),
-              KeyValueRow(label: 'City', value: rider?.city ?? '—', icon: Icons.place_rounded),
+              KeyValueRow(label: tr('Rider code'), value: (rider?.riderCode ?? '').isEmpty ? '—' : rider!.riderCode!, icon: Icons.badge_rounded),
+              KeyValueRow(label: tr('City'), value: rider?.city ?? '—', icon: Icons.place_rounded),
               if (request.createdAt != null)
-                KeyValueRow(label: 'Reserved on', value: Fmt.dateTime(request.createdAt!), icon: Icons.schedule_rounded),
+                KeyValueRow(label: tr('Reserved on'), value: Fmt.dateTime(request.createdAt!), icon: Icons.schedule_rounded),
             ],
           ),
         ),
         const Gap.lg(),
 
         ModuleCard(
-          title: 'Vehicle',
+          title: tr('Vehicle'),
           leading: const IconTile(icon: Icons.electric_scooter_rounded, solid: true, size: 28),
           child: Column(
             children: [
-              KeyValueRow(label: 'Number', value: fleet?.vehicleNumber ?? '—', icon: Icons.confirmation_number_rounded),
-              KeyValueRow(label: 'Model', value: fleet?.modelName ?? '—', icon: Icons.two_wheeler_rounded),
-              KeyValueRow(label: 'Fleet code', value: fleet?.fleetCode ?? '—', icon: Icons.qr_code_rounded),
+              KeyValueRow(label: tr('Number'), value: fleet?.vehicleNumber ?? '—', icon: Icons.confirmation_number_rounded),
+              KeyValueRow(label: tr('Model'), value: fleet?.modelName ?? '—', icon: Icons.two_wheeler_rounded),
+              KeyValueRow(label: tr('Fleet code'), value: fleet?.fleetCode ?? '—', icon: Icons.qr_code_rounded),
               KeyValueRow(
-                label: 'IoT device',
+                label: tr('IoT device'),
                 value: fleet?.iotDeviceNumber ?? 'Not mapped',
                 icon: Icons.sensors_rounded,
                 valueColor: fleet?.iotDeviceNumber == null ? AppColors.warning : null,
@@ -153,7 +153,7 @@ class _Loaded extends StatelessWidget {
         const Gap.lg(),
 
         ModuleCard(
-          title: 'Handover',
+          title: tr('Handover'),
           leading: const IconTile(icon: Icons.timeline_rounded, solid: true, size: 28),
           child: DeploymentTimeline(status: status, workflow: request.workflow),
         ),
@@ -163,11 +163,11 @@ class _Loaded extends StatelessWidget {
         if (status == DeploymentStatus.devicePairingPending) _IotCard(health: state.iotHealth),
         if (status == DeploymentStatus.pdiPendingRider || status == DeploymentStatus.trainingPending) _RiderTurnCard(status: status),
         if (status.isDeployed)
-          const ArtBlock(
+          ArtBlock(
             art: BrandArt.success,
             artSize: 120,
-            title: 'Deployed',
-            message: 'The rider paired the scooter and is on the road. This handover is complete.',
+            title: tr('Deployed'),
+            message: tr('The rider paired the scooter and is on the road. This handover is complete.'),
           ),
       ],
     );
@@ -269,7 +269,7 @@ class _EvidenceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final AllocationEvidence? e = evidence;
     return ModuleCard(
-      title: 'Inspection evidence',
+      title: tr('Inspection evidence'),
       leading: IconTile(
         icon: Icons.photo_library_rounded,
         tone: e == null ? AppColors.textMuted : (e.isComplete ? AppColors.success : AppColors.warning),
@@ -304,29 +304,29 @@ class _IotCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final IotHealth? h = health;
     return ModuleCard(
-      title: 'IoT unit',
+      title: tr('IoT unit'),
       leading: IconTile(
         icon: Icons.sensors_rounded,
         tone: h == null ? AppColors.textMuted : (h.isHealthy ? AppColors.success : AppColors.warning),
         solid: true,
         size: 28,
       ),
-      actionLabel: 'Refresh',
+      actionLabel: tr('Refresh'),
       onAction: () => context.read<DeploymentDetailCubit>().refreshIotHealth(),
       child: h == null
           ? const ShimmerBox(height: 60)
           : Column(
               children: [
-                KeyValueRow(label: 'Device', value: h.deviceNumber, icon: Icons.qr_code_2_rounded),
+                KeyValueRow(label: tr('Device'), value: h.deviceNumber, icon: Icons.qr_code_2_rounded),
                 KeyValueRow(
-                  label: 'Heartbeat',
+                  label: tr('Heartbeat'),
                   value: h.heartbeatAt == null ? 'Never' : '${Fmt.relative(h.heartbeatAt!)}${h.heartbeatFresh ? '' : ' · stale'}',
                   icon: Icons.favorite_rounded,
                   valueColor: h.heartbeatFresh ? AppColors.success : AppColors.warning,
                 ),
-                KeyValueRow(label: 'SIM', value: '${h.simStatus}${h.simLastFour == null ? '' : ' · ••${h.simLastFour}'}', icon: Icons.sim_card_rounded),
+                KeyValueRow(label: tr('SIM'), value: '${h.simStatus}${h.simLastFour == null ? '' : ' · ••${h.simLastFour}'}', icon: Icons.sim_card_rounded),
                 KeyValueRow(
-                  label: 'Condition',
+                  label: tr('Condition'),
                   value: h.isHealthy ? 'Healthy' : 'Attention required',
                   icon: Icons.health_and_safety_rounded,
                   valueColor: h.isHealthy ? AppColors.success : AppColors.warning,
@@ -384,11 +384,11 @@ class _Footer extends StatelessWidget {
     final DeploymentPayment? payment = null;
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: 'Payment received?',
+      title: tr('Payment received?'),
       message: payment == null
           ? 'Confirm you have received the amount the rider submitted a reference for. This cannot be undone.'
           : 'Confirm ${Fmt.money(payment.amount)} was received.',
-      confirmLabel: 'Mark as paid',
+      confirmLabel: tr('Mark as paid'),
       icon: Icons.payments_rounded,
       tone: AppColors.success,
     );
@@ -409,8 +409,8 @@ class _Footer extends StatelessWidget {
     final TextEditingController controller = TextEditingController();
     final String? remarks = await AppSheet.show<String>(
       context,
-      title: 'Bypass pairing?',
-      subtitle: 'Completes the handover without the rider pairing the device',
+      title: tr('Bypass pairing?'),
+      subtitle: tr('Completes the handover without the rider pairing the device'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -419,11 +419,11 @@ class _Footer extends StatelessWidget {
             style: AppText.bodySmall.copyWith(height: 1.5),
           ),
           const Gap.lg(),
-          AppTextField(label: 'Reason', hint: 'e.g. Unit not powering on; workshop ticket raised', maxLines: 3, controller: controller, autofocus: true),
+          AppTextField(label: tr('Reason'), hint: tr('e.g. Unit not powering on; workshop ticket raised'), maxLines: 3, controller: controller, autofocus: true),
         ],
       ),
       footer: PrimaryButton(
-        label: 'Bypass and deploy',
+        label: tr('Bypass and deploy'),
         icon: Icons.warning_amber_rounded,
         onPressed: () => Navigator.of(context).pop(controller.text.trim()),
       ),
@@ -479,8 +479,8 @@ class _PaymentSheet extends StatefulWidget {
 
   static Future<List<PaymentLineItem>?> show(BuildContext context) => AppSheet.show<List<PaymentLineItem>>(
         context,
-        title: 'Ask for payment',
-        subtitle: 'What the rider pays before the handover',
+        title: tr('Ask for payment'),
+        subtitle: tr('What the rider pays before the handover'),
         child: const _PaymentSheet(),
       );
 
@@ -490,9 +490,9 @@ class _PaymentSheet extends StatefulWidget {
 
 class _PaymentSheetState extends State<_PaymentSheet> {
   final List<(TextEditingController, TextEditingController)> _rows = [
-    (TextEditingController(text: 'Rental fee (week)'), TextEditingController(text: '700')),
-    (TextEditingController(text: 'Security deposit'), TextEditingController(text: '3000')),
-    (TextEditingController(text: 'Onboarding fee'), TextEditingController(text: '500')),
+    (TextEditingController(text: tr('Rental fee (week)')), TextEditingController(text: '700')),
+    (TextEditingController(text: tr('Security deposit')), TextEditingController(text: '3000')),
+    (TextEditingController(text: tr('Onboarding fee')), TextEditingController(text: '500')),
   ];
   String? _error;
 
@@ -535,12 +535,12 @@ class _PaymentSheetState extends State<_PaymentSheet> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(flex: 3, child: AppTextField(label: 'Item', controller: _rows[i].$1, onChanged: (_) => setState(() => _error = null))),
+              Expanded(flex: 3, child: AppTextField(label: tr('Item'), controller: _rows[i].$1, onChanged: (_) => setState(() => _error = null))),
               const SizedBox(width: Insets.md),
               Expanded(
                 flex: 2,
                 child: AppTextField(
-                  label: 'Amount',
+                  label: tr('Amount'),
                   controller: _rows[i].$2,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   prefixText: '₹',
@@ -552,18 +552,18 @@ class _PaymentSheetState extends State<_PaymentSheet> {
           const Gap.md(),
         ],
         GhostButton(
-          label: 'Add a line',
+          label: tr('Add a line'),
           icon: Icons.add_rounded,
           onPressed: () => setState(() => _rows.add((TextEditingController(), TextEditingController()))),
         ),
         const Gap.md(),
-        KeyValueRow(label: 'Total', value: Fmt.money(_total), valueStyle: AppText.titleMedium),
+        KeyValueRow(label: tr('Total'), value: Fmt.money(_total), valueStyle: AppText.titleMedium),
         if (_error != null) ...[
           const Gap.sm(),
           Text(_error!, style: AppText.bodySmall.copyWith(color: AppColors.danger)),
         ],
         const Gap.lg(),
-        PrimaryButton(label: 'Send payment request', icon: Icons.send_rounded, onPressed: _submit),
+        PrimaryButton(label: tr('Send payment request'), icon: Icons.send_rounded, onPressed: _submit),
         const Gap.md(),
       ],
     );
@@ -576,8 +576,8 @@ class _PdiSheet extends StatefulWidget {
   static Future<({String partner, List<PdiChecklistItem> items})?> show(BuildContext context) =>
       AppSheet.show<({String partner, List<PdiChecklistItem> items})>(
         context,
-        title: 'Pre-delivery inspection',
-        subtitle: 'The checklist the rider will accept item by item',
+        title: tr('Pre-delivery inspection'),
+        subtitle: tr('The checklist the rider will accept item by item'),
         child: const _PdiSheet(),
       );
 
@@ -632,9 +632,9 @@ class _PdiSheetState extends State<_PdiSheet> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         AppTextField(
-          label: 'Work partner',
-          hint: 'e.g. Sharma Auto Works',
-          helper: 'The workshop or technician who inspected the vehicle',
+          label: tr('Work partner'),
+          hint: tr('e.g. Sharma Auto Works'),
+          helper: tr('The workshop or technician who inspected the vehicle'),
           controller: _partner,
           onChanged: (_) => setState(() => _error = null),
         ),
@@ -652,7 +652,7 @@ class _PdiSheetState extends State<_PdiSheet> {
         ],
         Row(
           children: [
-            Expanded(child: AppTextField(label: 'Add an item', controller: _custom)),
+            Expanded(child: AppTextField(label: tr('Add an item'), controller: _custom)),
             const SizedBox(width: Insets.md),
             CircleIconButton(
               icon: Icons.add_rounded,
@@ -672,7 +672,7 @@ class _PdiSheetState extends State<_PdiSheet> {
           Text(_error!, style: AppText.bodySmall.copyWith(color: AppColors.danger)),
         ],
         const Gap.lg(),
-        PrimaryButton(label: 'Send to rider', icon: Icons.send_rounded, onPressed: _submit),
+        PrimaryButton(label: tr('Send to rider'), icon: Icons.send_rounded, onPressed: _submit),
         const Gap.md(),
       ],
     );

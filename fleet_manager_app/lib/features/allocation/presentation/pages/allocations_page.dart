@@ -53,11 +53,11 @@ class _AllocationsViewState extends State<_AllocationsView> {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: 'Could not load allocations',
+                title: tr('Could not load allocations'),
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: 'Try again',
+                actionLabel: tr('Try again'),
                 onAction: () => context.read<AllocationsCubit>().refresh(),
               ),
             ),
@@ -71,23 +71,23 @@ class _AllocationsViewState extends State<_AllocationsView> {
           onRefresh: () => context.read<AllocationsCubit>().refresh(),
           band: DeskBand(
             icon: Icons.swap_horiz_rounded,
-            title: 'Allocation',
-            subtitle: 'Match a waiting rider with a vehicle, then walk the handover through',
+            title: tr('Allocation'),
+            subtitle: tr('Match a waiting rider with a vehicle, then walk the handover through'),
             stats: [
               DeskStat(
-                label: 'Waiting',
+                label: tr('Waiting'),
                 value: '${board?.pending.length ?? 0}',
                 icon: Icons.hourglass_top_rounded,
                 alert: (board?.pending.length ?? 0) > 0,
               ),
               DeskStat(
-                label: 'Your move',
+                label: tr('Your move'),
                 value: '${board?.needingAction ?? 0}',
                 icon: Icons.touch_app_rounded,
                 alert: (board?.needingAction ?? 0) > 0,
               ),
               DeskStat(
-                label: 'On road',
+                label: tr('On road'),
                 value: '${board?.active.length ?? 0}',
                 icon: Icons.electric_scooter_rounded,
               ),
@@ -160,13 +160,13 @@ class _PendingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) {
-      return const Padding(
+      return Padding(
         padding: EdgeInsets.symmetric(vertical: Insets.lg),
         child: ArtBlock(
           art: BrandArt.empty,
           artSize: 130,
-          title: 'Nobody waiting',
-          message: 'Every onboarded rider in your hubs has a vehicle or a handover under way.',
+          title: tr('Nobody waiting'),
+          message: tr('Every onboarded rider in your hubs has a vehicle or a handover under way.'),
         ),
       );
     }
@@ -192,13 +192,13 @@ class _InProgressList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) {
-      return const Padding(
+      return Padding(
         padding: EdgeInsets.symmetric(vertical: Insets.lg),
         child: ArtBlock(
           art: BrandArt.empty,
           artSize: 130,
-          title: 'No handovers in progress',
-          message: 'Allocate a vehicle to a waiting rider to start one.',
+          title: tr('No handovers in progress'),
+          message: tr('Allocate a vehicle to a waiting rider to start one.'),
         ),
       );
     }
@@ -224,13 +224,13 @@ class _ActiveList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) {
-      return const Padding(
+      return Padding(
         padding: EdgeInsets.symmetric(vertical: Insets.lg),
         child: ArtBlock(
           art: BrandArt.empty,
           artSize: 130,
-          title: 'No vehicles out',
-          message: 'Nothing is currently allocated to a rider.',
+          title: tr('No vehicles out'),
+          message: tr('Nothing is currently allocated to a rider.'),
         ),
       );
     }
@@ -252,14 +252,14 @@ class _ActiveList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          KeyValueRow(label: 'Vehicle', value: '${r.vehicleNumber} · ${r.model}'),
-          KeyValueRow(label: 'Allocated on', value: Fmt.date(r.allocatedOn)),
-          KeyValueRow(label: 'Status', value: r.status == 'riding' ? 'Riding' : 'Idle'),
+          KeyValueRow(label: tr('Vehicle'), value: '${r.vehicleNumber} · ${r.model}'),
+          KeyValueRow(label: tr('Allocated on'), value: Fmt.date(r.allocatedOn)),
+          KeyValueRow(label: tr('Status'), value: r.status == 'riding' ? 'Riding' : 'Idle'),
           const Gap.lg(),
         ],
       ),
       footer: SecondaryButton(
-        label: 'Start a return',
+        label: tr('Start a return'),
         icon: Icons.assignment_return_rounded,
         onPressed: () {
           Navigator.of(context).pop();

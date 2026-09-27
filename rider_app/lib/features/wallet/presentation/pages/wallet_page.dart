@@ -68,11 +68,11 @@ class _WalletViewState extends State<_WalletView> {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: 'Could not load your wallet',
+                title: tr('Could not load your wallet'),
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: 'Try again',
+                actionLabel: tr('Try again'),
                 onAction: () => context.read<WalletCubit>().refresh(),
               ),
             ),
@@ -101,7 +101,7 @@ class _WalletViewState extends State<_WalletView> {
 
     return [
       ModuleCard(
-        title: 'Transactions',
+        title: tr('Transactions'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -114,7 +114,7 @@ class _WalletViewState extends State<_WalletView> {
             ),
             const Gap.lg(),
             AppSearchField(
-              hint: 'Search transactions',
+              hint: tr('Search transactions'),
               controller: _searchController,
               onChanged: (v) => setState(() => _query = v),
             ),
@@ -132,7 +132,7 @@ class _WalletViewState extends State<_WalletView> {
                 child: ArtBlock(
                   art: BrandArt.wallet,
                   artSize: 130,
-                  title: 'No transactions here',
+                  title: tr('No transactions here'),
                   message: summary.transactions.isEmpty
                       ? 'Your ledger will fill up as you ride and earn.'
                       : 'Nothing matches this filter yet.',

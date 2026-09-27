@@ -66,11 +66,11 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: 'Could not load returns',
+                title: tr('Could not load returns'),
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: 'Try again',
+                actionLabel: tr('Try again'),
                 onAction: () => context.read<AllocationsCubit>().refresh(),
               ),
             ),
@@ -85,17 +85,17 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
           onRefresh: () => context.read<AllocationsCubit>().refresh(),
           band: DeskBand(
             icon: Icons.assignment_return_rounded,
-            title: 'De-allocation',
-            subtitle: 'Take a vehicle back and put it on the shelf',
+            title: tr('De-allocation'),
+            subtitle: tr('Take a vehicle back and put it on the shelf'),
             stats: [
               DeskStat(
-                label: 'In the queue',
+                label: tr('In the queue'),
                 value: '$waiting',
                 icon: Icons.assignment_return_rounded,
                 alert: waiting > 0,
               ),
               DeskStat(
-                label: 'Out on road',
+                label: tr('Out on road'),
                 value: '${board?.active.length ?? 0}',
                 icon: Icons.electric_scooter_rounded,
               ),
@@ -126,7 +126,7 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               AppSearchField(
-                hint: 'Search rider or vehicle number',
+                hint: tr('Search rider or vehicle number'),
                 controller: _searchController,
                 onChanged: (q) => setState(() => _query = q),
               ),
@@ -142,13 +142,13 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
         ),
         const Gap.xl(),
         if (items.isEmpty)
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(vertical: Insets.lg),
             child: ArtBlock(
               art: BrandArt.empty,
               artSize: 130,
-              title: 'Nothing to take back',
-              message: 'Every de-allocation request has been processed.',
+              title: tr('Nothing to take back'),
+              message: tr('Every de-allocation request has been processed.'),
             ),
           )
         else

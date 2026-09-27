@@ -32,14 +32,14 @@ class _AllocationDonePageState extends State<AllocationDonePage>
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      title: 'Vehicle reserved',
+      title: tr('Vehicle reserved'),
       showBack: false,
 
       footer: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           PrimaryButton(
-            label: 'Continue the handover',
+            label: tr('Continue the handover'),
             icon: Icons.arrow_forward_rounded,
             onPressed: widget.allocationId == null
                 ? () => context.go(Routes.allocations)
@@ -47,7 +47,7 @@ class _AllocationDonePageState extends State<AllocationDonePage>
           ),
           const Gap.md(),
           SecondaryButton(
-            label: 'Back to the desk',
+            label: tr('Back to the desk'),
             icon: Icons.swap_horiz_rounded,
             onPressed: () => context.go(Routes.allocations),
           ),
@@ -61,14 +61,14 @@ class _AllocationDonePageState extends State<AllocationDonePage>
               scale: CurvedAnimation(parent: _controller, curve: Motion.spring),
               child: ArtBlock(
                 art: BrandArt.success,
-                title: 'Vehicle reserved',
+                title: tr('Vehicle reserved'),
                 message: '${widget.vehicleNumber} is reserved for ${widget.riderName}. The handover starts now.',
               ),
             ),
           ),
           const Gap.xxl(),
           ModuleCard(
-            title: 'What was allocated',
+            title: tr('What was allocated'),
             child: Row(
               children: [
                 const IconTile(icon: Icons.person_rounded, tone: AppColors.primary, size: 38),
@@ -78,7 +78,7 @@ class _AllocationDonePageState extends State<AllocationDonePage>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(widget.riderName, style: AppText.titleSmall.copyWith(fontSize: 14)),
-                      const SizedBox(height: 2),
+                      SizedBox(height: 2),
                       Text(
                         'Vehicle ${widget.vehicleNumber}',
                         style: AppText.bodySmall.copyWith(fontSize: 12),
@@ -86,31 +86,31 @@ class _AllocationDonePageState extends State<AllocationDonePage>
                     ],
                   ),
                 ),
-                const StatusChip(label: 'Reserved', tone: StatusTone.brand, dense: true),
+                StatusChip(label: tr('Reserved'), tone: StatusTone.brand, dense: true),
               ],
             ),
           ),
-          const Gap.lg(),
+          Gap.lg(),
           ModuleCard(
-            title: 'What happens next',
+            title: tr('What happens next'),
             child: Column(
-              children: const [
+              children: [
                 _NextStep(
                   icon: Icons.electric_scooter_rounded,
-                  title: 'Request the vehicle',
+                  title: tr('Request the vehicle'),
                   message: 'Confirms the vehicle\'s photos are on file and its IoT unit is online.',
                 ),
                 Gap.md(),
                 _NextStep(
                   icon: Icons.receipt_long_rounded,
-                  title: 'Payment',
-                  message: 'You raise the deposit and fees; the rider pays and submits the reference; you verify it.',
+                  title: tr('Payment'),
+                  message: tr('You raise the deposit and fees; the rider pays and submits the reference; you verify it.'),
                 ),
                 Gap.md(),
                 _NextStep(
                   icon: Icons.fact_check_rounded,
-                  title: 'Inspection, training, pairing',
-                  message: 'You write the PDI checklist; the rider accepts it, completes training and pairs the IoT unit.',
+                  title: tr('Inspection, training, pairing'),
+                  message: tr('You write the PDI checklist; the rider accepts it, completes training and pairs the IoT unit.'),
                 ),
               ],
             ),

@@ -80,7 +80,7 @@ class _IntroViewState extends State<_IntroView> {
                       child: state.isLastPage
                           ? null
                           : GhostButton(
-                              label: 'Skip',
+                              label: tr('Skip'),
                               color: AppColors.textMuted,
                               onPressed: () => context.go(Routes.login),
                             ),

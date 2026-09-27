@@ -34,11 +34,11 @@ class _SupportView extends StatelessWidget {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: 'Could not load support',
+                title: tr('Could not load support'),
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: 'Try again',
+                actionLabel: tr('Try again'),
                 onAction: () => context.read<SupportCubit>().refresh(),
               ),
             ),
@@ -62,7 +62,7 @@ class _SupportView extends StatelessWidget {
   List<Widget> _content(BuildContext context, SupportOverview overview) {
     return [
       ModuleCard(
-        title: 'Need help with something?',
+        title: tr('Need help with something?'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -73,7 +73,7 @@ class _SupportView extends StatelessWidget {
             ),
             const Gap.lg(),
             PrimaryButton(
-              label: 'Raise a ticket',
+              label: tr('Raise a ticket'),
               icon: Icons.add_rounded,
               onPressed: () => _raiseTicket(context),
             ),
@@ -83,13 +83,12 @@ class _SupportView extends StatelessWidget {
       const Gap.lg(),
 
       ModuleCard(
-        title: 'Your tickets',
+        title: tr('Your tickets'),
         child: overview.tickets.isEmpty
-            ? const EmptyState(
+            ? EmptyState(
                 compact: true,
-                title: 'No tickets yet',
-                message:
-                    'Raise one above if something needs attention.',
+                title: tr('No tickets yet'),
+                message: tr('Raise one above if something needs attention.'),
                 icon: Icons.confirmation_num_outlined,
               )
             : Column(
@@ -130,12 +129,12 @@ class _SupportView extends StatelessWidget {
                       child: Column(
                         children: [
                           KeyValueRow(
-                            label: 'Repairs across your tickets',
+                            label: tr('Repairs across your tickets'),
                             value: Fmt.money(overview.totalRepairCost),
                             icon: Icons.build_rounded,
                           ),
                           KeyValueRow(
-                            label: 'Borne by you',
+                            label: tr('Borne by you'),
                             value: Fmt.money(overview.riderBorneCost),
                             icon: Icons.account_balance_wallet_rounded,
                             valueColor:
@@ -184,8 +183,7 @@ class _SupportBand extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Support',
+                  Text(tr('Support'),
                     style: AppText.bodySmall.copyWith(
                       fontSize: 12,
                       color: AppColors.onInkSecondary,
@@ -207,8 +205,7 @@ class _SupportBand extends StatelessWidget {
           ],
         ),
         const Gap.xxl(),
-        Text(
-          'Open tickets',
+        Text(tr('Open tickets'),
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),
@@ -234,7 +231,7 @@ class _SupportBand extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: 'Open',
+                  label: tr('Open'),
                   value: '$open',
                   icon: Icons.pending_actions_rounded,
                 ),
@@ -243,7 +240,7 @@ class _SupportBand extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'Resolved',
+                  label: tr('Resolved'),
                   value: '$resolved',
                   icon: Icons.check_circle_rounded,
                 ),

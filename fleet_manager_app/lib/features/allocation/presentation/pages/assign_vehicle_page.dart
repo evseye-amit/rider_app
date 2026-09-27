@@ -48,7 +48,7 @@ class _AssignVehicleViewState extends State<_AssignVehicleView> {
       title: 'Reserve ${vehicle.vehicleNumber}?',
       message: '${vehicle.vehicleNumber} will be reserved for ${rider.name}. The handover — vehicle request, '
           'payment, inspection, training and pairing — then runs from the allocation desk.',
-      confirmLabel: 'Allocate vehicle',
+      confirmLabel: tr('Allocate vehicle'),
       icon: Icons.check_circle_rounded,
       tone: AppColors.success,
     );
@@ -88,13 +88,13 @@ class _AssignVehicleViewState extends State<_AssignVehicleView> {
         }
         if (state.status == AssignVehicleStatus.failure || state.rider == null) {
           return AppScaffold(
-            title: 'Assign a vehicle',
+            title: tr('Assign a vehicle'),
             body: EmptyState(
-              title: 'Could not load available vehicles',
+              title: tr('Could not load available vehicles'),
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: 'Try again',
+              actionLabel: tr('Try again'),
               onAction: () => context.read<AssignVehicleCubit>().load(),
             ),
           );
@@ -137,13 +137,13 @@ class _AssignVehicleViewState extends State<_AssignVehicleView> {
             ),
             const Gap.lg(),
             if (filtered.isEmpty)
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(vertical: Insets.lg),
                 child: ArtBlock(
                   art: BrandArt.empty,
                   artSize: 130,
-                  title: 'No vehicles ready',
-                  message: 'A vehicle has to be available, onboarded and allocation-enabled in one of your hubs to appear here.',
+                  title: tr('No vehicles ready'),
+                  message: tr('A vehicle has to be available, onboarded and allocation-enabled in one of your hubs to appear here.'),
                 ),
               )
             else
@@ -186,7 +186,7 @@ class _Band extends StatelessWidget {
         PhotoPanel(
           photo: BrandPhoto.fleet,
           height: 132,
-          title: 'Assign a vehicle',
+          title: tr('Assign a vehicle'),
           subtitle: 'For ${rider.name}${(rider.riderCode ?? '').isEmpty ? '' : ' · ${rider.riderCode}'} · ${Fmt.phone(rider.mobile)}',
         ),
       ],

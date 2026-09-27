@@ -42,8 +42,8 @@ class RentalsBand extends StatelessWidget {
               onTap: () => Navigator.of(context).maybePop(),
             ),
           ),
-          subtitle: 'Your plan, auto-debit and rent receipts',
-          title: 'Rentals',
+          subtitle: tr('Your plan, auto-debit and rent receipts'),
+          title: tr('Rentals'),
         ),
         const Gap.xxl(),
         Text(
@@ -93,7 +93,7 @@ class RentalsBand extends StatelessWidget {
               Expanded(
                 flex: 6,
                 child: InkStat(
-                  label: 'Next debit',
+                  label: tr('Next debit'),
                   value: p == null ? '—' : Fmt.date(p.nextDebitDate),
                   icon: Icons.event_rounded,
                 ),
@@ -103,7 +103,7 @@ class RentalsBand extends StatelessWidget {
               Expanded(
                 flex: 4,
                 child: InkStat(
-                  label: 'Debits in',
+                  label: tr('Debits in'),
                   value: p == null ? '—' : countdownLabel(p.timeToDebit),
                   icon: Icons.timer_outlined,
                 ),
@@ -113,7 +113,7 @@ class RentalsBand extends StatelessWidget {
               Expanded(
                 flex: 4,
                 child: InkStat(
-                  label: 'Auto-debit',
+                  label: tr('Auto-debit'),
                   value: p == null ? '—' : (p.autoDebitEnabled ? 'On' : 'Off'),
                   icon: Icons.autorenew_rounded,
                 ),
@@ -162,8 +162,7 @@ class PlanCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Auto-debit mandate',
+                    Text(tr('Auto-debit mandate'),
                       style: AppText.titleMedium.copyWith(fontSize: 15),
                     ),
                     const SizedBox(height: 2),
@@ -316,12 +315,12 @@ class InvoiceReceiptBody extends StatelessWidget {
         Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
         const SizedBox(height: Insets.sm),
         KeyValueRow(
-          label: 'Total',
+          label: tr('Total'),
           value: Fmt.money(invoice.amount),
           valueStyle: AppText.numeric.copyWith(fontSize: 18),
         ),
         const Gap.lg(),
-        KeyValueRow(label: 'Billing period', value: invoice.periodLabel),
+        KeyValueRow(label: tr('Billing period'), value: invoice.periodLabel),
         KeyValueRow(
           label: invoice.paidOn != null ? 'Paid on' : 'Due on',
           value: Fmt.date(invoice.paidOn ?? invoice.dueDate),

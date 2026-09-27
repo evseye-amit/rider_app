@@ -27,12 +27,11 @@ class IncentivesBand extends StatelessWidget {
               onTap: () => Navigator.of(context).maybePop(),
             ),
           ),
-          subtitle: 'Bonuses you can still clear this week',
-          title: 'Incentives',
+          subtitle: tr('Bonuses you can still clear this week'),
+          title: tr('Incentives'),
         ),
         const Gap.xxl(),
-        Text(
-          'Earned this week',
+        Text(tr('Earned this week'),
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),
@@ -60,7 +59,7 @@ class IncentivesBand extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: 'Active schemes',
+                  label: tr('Active schemes'),
                   value: '$activeCount',
                   icon: Icons.emoji_events_rounded,
                 ),
@@ -69,7 +68,7 @@ class IncentivesBand extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'Cleared',
+                  label: tr('Cleared'),
                   value: '$achievedCount',
                   icon: Icons.check_circle_rounded,
                 ),
@@ -134,8 +133,8 @@ class IncentiveSchemeCard extends StatelessWidget {
                           ),
                         ),
                         if (dimmed)
-                          const StatusChip(
-                            label: 'Achieved',
+                          StatusChip(
+                            label: tr('Achieved'),
                             tone: StatusTone.success,
                             icon: Icons.check_circle_rounded,
                             dense: true,
@@ -214,8 +213,7 @@ class IncentiveSchemeCard extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () => _showTerms(context),
-                child: Text(
-                  'Terms',
+                child: Text(tr('Terms'),
                   style: AppText.bodySmall.copyWith(
                     fontSize: 11.5,
                     fontWeight: FontWeight.w800,
@@ -236,7 +234,7 @@ class IncentiveSchemeCard extends StatelessWidget {
     AppSheet.show(
       context,
       title: scheme.title,
-      subtitle: 'Terms & conditions',
+      subtitle: tr('Terms & conditions'),
       child: Padding(
         padding: const EdgeInsets.only(bottom: Insets.lg),
         child: Text(

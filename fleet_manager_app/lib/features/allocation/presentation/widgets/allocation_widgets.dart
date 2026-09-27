@@ -146,7 +146,7 @@ class PendingRiderTile extends StatelessWidget {
           ),
           const SizedBox(width: Insets.sm),
           SecondaryButton(
-            label: 'Assign',
+            label: tr('Assign'),
             icon: Icons.swap_horiz_rounded,
             expand: false,
             size: AppButtonSize.small,
@@ -430,13 +430,13 @@ class ReturnRequestTile extends StatelessWidget {
             runSpacing: Insets.sm,
             children: [
               GhostButton(
-                label: 'View return',
+                label: tr('View return'),
                 icon: Icons.chevron_right_rounded,
                 onPressed: onOpen,
                 dense: true,
               ),
               SecondaryButton(
-                label: 'Process return',
+                label: tr('Process return'),
                 icon: Icons.assignment_return_rounded,
                 expand: false,
                 size: AppButtonSize.small,

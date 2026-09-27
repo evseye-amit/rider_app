@@ -165,8 +165,8 @@ class _HubPicker extends StatelessWidget {
 
     final List<int>? result = await AppSheet.show<List<int>>(
       context,
-      title: 'Your hubs',
-      subtitle: 'Pick one, or several to see their numbers combined',
+      title: tr('Your hubs'),
+      subtitle: tr('Pick one, or several to see their numbers combined'),
       child: StatefulBuilder(
         builder: (context, setSheetState) => Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

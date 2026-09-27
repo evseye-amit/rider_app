@@ -64,12 +64,12 @@ class _OnboardingPreviewPageState extends State<OnboardingPreviewPage> {
     final RiderOnboardingConfig? config = _session.onboarding;
     if (config == null) {
       return AppScaffold(
-        title: 'Review your application',
+        title: tr('Review your application'),
         body: EmptyState(
-          title: 'Nothing to review yet',
-          message: 'Start onboarding to see your answers here.',
+          title: tr('Nothing to review yet'),
+          message: tr('Start onboarding to see your answers here.'),
           icon: Icons.assignment_outlined,
-          actionLabel: 'Go to onboarding',
+          actionLabel: tr('Go to onboarding'),
           onAction: () => context.go(Routes.onboarding),
         ),
       );
@@ -97,7 +97,7 @@ class _OnboardingPreviewPageState extends State<OnboardingPreviewPage> {
           border: Border(top: BorderSide(color: AppColors.stroke)),
         ),
         child: PrimaryButton(
-          label: 'Submit application',
+          label: tr('Submit application'),
           icon: Icons.send_rounded,
           loading: _submitting,
           onPressed: _submitting ? null : () => _submit(config),
@@ -132,10 +132,9 @@ class _Band extends StatelessWidget {
           ),
         ),
         const Gap.xl(),
-        Text('Review your application', style: AppText.displaySmall.copyWith(color: AppColors.onInk, fontSize: 25)),
+        Text(tr('Review your application'), style: AppText.displaySmall.copyWith(color: AppColors.onInk, fontSize: 25)),
         const Gap.sm(),
-        Text(
-          'Check everything before you submit. You can still edit any step.',
+        Text(tr('Check everything before you submit. You can still edit any step.'),
           style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.5),
         ),
         const Gap.lg(),
@@ -143,13 +142,13 @@ class _Band extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: InkStat(label: 'Answered', value: '$filled of $total', icon: Icons.fact_check_rounded),
+              child: InkStat(label: tr('Answered'), value: '$filled of $total', icon: Icons.fact_check_rounded),
             ),
             const InkDivider(),
             const SizedBox(width: Insets.md),
             Expanded(
               child: InkStat(
-                label: 'Package',
+                label: tr('Package'),
                 value: packageName.isEmpty ? '—' : packageName,
                 icon: Icons.inventory_2_rounded,
               ),
@@ -173,7 +172,7 @@ class _StepCard extends StatelessWidget {
     final List<OnboardingFieldConfig> shown = step.fields.where((f) => f.isInput || f.isUpload).toList();
     return ModuleCard(
       title: step.stepName,
-      actionLabel: 'Edit',
+      actionLabel: tr('Edit'),
       onAction: onEdit,
       child: shown.isEmpty
           ? Text(

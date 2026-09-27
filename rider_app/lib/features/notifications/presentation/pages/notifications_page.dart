@@ -70,13 +70,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     if (_error != null) {
       return AppScaffold(
-        title: 'Notifications',
+        title: tr('Notifications'),
         body: EmptyState(
-          title: 'Could not load notifications',
+          title: tr('Could not load notifications'),
           message: _error,
           icon: Icons.cloud_off_rounded,
           tone: AppColors.danger,
-          actionLabel: 'Try again',
+          actionLabel: tr('Try again'),
           onAction: () {
             setState(() => _error = null);
             _load();
@@ -85,8 +85,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
       );
     }
     if (_items == null) {
-      return const AppScaffold(
-        title: 'Notifications',
+      return AppScaffold(
+        title: tr('Notifications'),
         body: _NotificationsSkeleton(),
       );
     }
@@ -117,19 +117,18 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ? [
               ModuleCard(
                 padding: const EdgeInsets.symmetric(vertical: Insets.x3l),
-                child: const Center(
+                child: Center(
                   child: ArtBlock(
                     art: BrandArt.empty,
-                    title: 'All clear',
-                    message:
-                        'New earnings, reminders and alerts will show up here.',
+                    title: tr('All clear'),
+                    message: tr('New earnings, reminders and alerts will show up here.'),
                   ),
                 ),
               ),
             ]
           : [
               AppSearchField(
-                hint: 'Search notifications',
+                hint: tr('Search notifications'),
                 controller: _searchController,
                 onChanged: (v) => setState(() => _query = v),
               ),
@@ -142,17 +141,17 @@ class _NotificationsPageState extends State<NotificationsPage> {
               ),
               const Gap.lg(),
               if (visible.isEmpty)
-                const ModuleCard(
+                ModuleCard(
                   padding: EdgeInsets.symmetric(vertical: Insets.xxl),
                   child: EmptyState(
                     compact: true,
-                    title: 'No matching notifications',
+                    title: tr('No matching notifications'),
                     icon: Icons.search_off_rounded,
                   ),
                 ),
               if (today.isNotEmpty) ...[
                 ModuleCard(
-                  title: 'Today',
+                  title: tr('Today'),
                   child: Column(
                     children: [
                       for (final item in today) ...[
@@ -169,7 +168,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               ],
               if (earlier.isNotEmpty)
                 ModuleCard(
-                  title: 'Earlier',
+                  title: tr('Earlier'),
                   child: Column(
                     children: [
                       for (final item in earlier) ...[
@@ -216,8 +215,7 @@ class _Band extends StatelessWidget {
             ),
             const SizedBox(width: Insets.md),
             Expanded(
-              child: Text(
-                'Notifications',
+              child: Text(tr('Notifications'),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.titleLarge.copyWith(

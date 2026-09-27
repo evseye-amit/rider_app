@@ -27,6 +27,19 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _controller.addListener(() => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => _askLanguage());
+  }
+
+  Future<void> _askLanguage() async {
+    final AppLocaleController locale = AppLocaleController.instance;
+    if (!locale.loaded) await locale.load();
+    if (locale.asked || !mounted) return;
+    final AppLocale? picked = await LanguagePicker.show(context, firstRun: true);
+    if (picked == null) {
+      await locale.markAsked();
+      return;
+    }
+    await locale.select(picked);
   }
 
   @override
@@ -69,11 +82,11 @@ class _LoginPageState extends State<LoginPage> {
     return AuthSheetScaffold(
       photo: BrandPhoto.rider,
       artSize: 210,
-      title: 'Welcome back',
-      subtitle: 'Sign in with the mobile number registered with your fleet operator.',
+      title: tr('Welcome back'),
+      subtitle: tr('Sign in with the mobile number registered with your fleet operator.'),
       children: [
         AppTextField(
-          label: 'Mobile number',
+          label: tr('Mobile number'),
           hint: '98765 43210',
           prefixText: '+91',
           controller: _controller,
@@ -91,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         const Gap.xl(),
         PrimaryButton(
-          label: 'Continue',
+          label: tr('Continue'),
           trailingIcon: Icons.arrow_forward_rounded,
           loading: _loading,
           onPressed: _valid ? _continue : null,
@@ -103,8 +116,7 @@ class _LoginPageState extends State<LoginPage> {
             const Icon(Icons.lock_outline_rounded, size: 14, color: AppColors.textMuted),
             const SizedBox(width: Insets.sm - 2),
             Flexible(
-              child: Text(
-                'We will text you a 6-digit code',
+              child: Text(tr('We will text you a 6-digit code'),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.bodySmall.copyWith(fontSize: 12),
@@ -113,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
         const Gap.xxl(),
-        const AuthDivider(label: 'Why EVSEYE'),
+        AuthDivider(label: tr('Why ride with us')),
         const Gap.xl(),
         const _TrustStrip(),
         const Gap.xxl(),
@@ -183,15 +195,15 @@ class _LegalLine extends StatelessWidget {
       TextSpan(
         style: base,
         children: [
-          const TextSpan(text: 'By continuing you agree to our '),
+          TextSpan(text: tr('By continuing you agree to our ')),
           TextSpan(
-            text: 'Terms of service',
+            text: tr('Terms of service'),
             style: link,
             recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context),
           ),
           const TextSpan(text: ' and '),
           TextSpan(
-            text: 'Privacy policy',
+            text: tr('Privacy policy'),
             style: link,
             recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context),
           ),

@@ -78,7 +78,7 @@ class _TrainingViewState extends State<_TrainingView> {
           const Gap.lg(),
         ],
       ),
-      footer: PrimaryButton(label: 'Done', icon: Icons.check_rounded, onPressed: () => Navigator.of(context).pop()),
+      footer: PrimaryButton(label: tr('Done'), icon: Icons.check_rounded, onPressed: () => Navigator.of(context).pop()),
     );
     if (!mounted || item.viewed) return;
     final Result<DeploymentWorkflow> marked =
@@ -114,14 +114,14 @@ class _TrainingViewState extends State<_TrainingView> {
 
         if (state.status == DeploymentLoad.failure || (allocationId == null && !state.isLoading)) {
           return AppScaffold(
-            title: 'Safety training',
+            title: tr('Safety training'),
             showBack: false,
             body: EmptyState(
-              title: 'Could not load training',
+              title: tr('Could not load training'),
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: 'Try again',
+              actionLabel: tr('Try again'),
               onAction: context.read<DeploymentCubit>().load,
             ),
           );
@@ -132,11 +132,11 @@ class _TrainingViewState extends State<_TrainingView> {
         final int viewed = items?.where((i) => i.viewed).length ?? 0;
 
         return AppScaffold(
-          title: 'Safety training',
+          title: tr('Safety training'),
           subtitle: items == null ? null : '$viewed of ${items.length} completed',
           showBack: false,
           footer: PrimaryButton(
-            label: 'Finish training',
+            label: tr('Finish training'),
             icon: Icons.school_rounded,
             loading: _finishing,
             onPressed: ready && !_finishing && allocationId != null ? () => _finish(context, allocationId) : null,
@@ -145,11 +145,11 @@ class _TrainingViewState extends State<_TrainingView> {
             children: [
               if (_error != null)
                 EmptyState(
-                  title: 'Training unavailable',
+                  title: tr('Training unavailable'),
                   message: _error,
                   icon: Icons.school_outlined,
                   tone: AppColors.warning,
-                  actionLabel: 'Retry',
+                  actionLabel: tr('Retry'),
                   onAction: allocationId == null ? null : () => _load(allocationId, force: true),
                 )
               else if (items == null)
@@ -159,7 +159,7 @@ class _TrainingViewState extends State<_TrainingView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Open each module and read it through. Mandatory ones must be completed before you can finish.',
+                      Text(tr('Open each module and read it through. Mandatory ones must be completed before you can finish.'),
                           style: AppText.bodySmall.copyWith(height: 1.5)),
                       const Gap.lg(),
                       LabeledProgress(

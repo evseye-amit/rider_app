@@ -70,13 +70,13 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
   Widget build(BuildContext context) {
     if (_flowError != null) {
       return AppScaffold(
-        title: 'De-allocate vehicle',
+        title: tr('De-allocate vehicle'),
         body: EmptyState(
-          title: 'Could not load the de-allocation flow',
+          title: tr('Could not load the de-allocation flow'),
           message: _flowError,
           icon: Icons.cloud_off_rounded,
           tone: AppColors.danger,
-          actionLabel: 'Try again',
+          actionLabel: tr('Try again'),
           onAction: () {
             setState(() => _flowError = null);
             _loadFlow();
@@ -89,7 +89,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
       builder: (context, state) {
         if (_flow == null || state.isLoading) {
           return AppScaffold(
-            title: 'De-allocate vehicle',
+            title: tr('De-allocate vehicle'),
             body: PageBody(children: const [
               ShimmerBox(height: 40, borderRadius: Corners.pill),
               Gap.xl(),
@@ -101,13 +101,13 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
         }
         if (state.status == DeallocationFlowStatus.failure || state.request == null) {
           return AppScaffold(
-            title: 'De-allocate vehicle',
+            title: tr('De-allocate vehicle'),
             body: EmptyState(
-              title: 'Could not load this return',
+              title: tr('Could not load this return'),
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: 'Try again',
+              actionLabel: tr('Try again'),
               onAction: () => context.read<DeallocationFlowCubit>().load(),
             ),
           );
@@ -145,7 +145,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
                 note: _stepIndex == flow.steps.length - 1 ? _verificationNote(request) : null,
               ),
             ),
-            if (_busy) const Positioned.fill(child: LoadingOverlay(message: 'Talking to the server…')),
+            if (_busy) Positioned.fill(child: LoadingOverlay(message: tr('Talking to the server…'))),
           ],
         );
       },
@@ -248,9 +248,9 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
   Future<void> _complete(BuildContext context, DeallocationRequest request) async {
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: 'Complete this de-allocation?',
+      title: tr('Complete this de-allocation?'),
       message: '${request.vehicleNumber} will be taken back from ${request.riderName} and the allocation closed.',
-      confirmLabel: 'Complete',
+      confirmLabel: tr('Complete'),
       icon: Icons.check_circle_rounded,
       tone: AppColors.success,
     );
@@ -308,12 +308,12 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
     }
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: 'Abandon this de-allocation?',
+      title: tr('Abandon this de-allocation?'),
       message: _inspectionId == null
           ? 'The photos and assessment entered for ${request.vehicleNumber} will be lost.'
           : 'The return has already been started on the server. You can finish it later from the Returns tab.',
-      confirmLabel: 'Abandon',
-      cancelLabel: 'Keep going',
+      confirmLabel: tr('Abandon'),
+      cancelLabel: tr('Keep going'),
       destructive: true,
     );
     if (confirmed && context.mounted) context.pop();

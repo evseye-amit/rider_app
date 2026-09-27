@@ -46,13 +46,13 @@ class _DeallocationDetailView extends StatelessWidget {
         }
         if (state.status == DeallocationDetailStatus.failure || state.request == null) {
           return AppScaffold(
-            title: 'Return request',
+            title: tr('Return request'),
             body: EmptyState(
-              title: 'Could not load this return',
+              title: tr('Could not load this return'),
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: 'Try again',
+              actionLabel: tr('Try again'),
               onAction: () => context.read<DeallocationDetailCubit>().load(),
             ),
           );
@@ -81,12 +81,12 @@ class _Loaded extends StatelessWidget {
       ),
       children: [
           OverlapModuleCard(
-            title: 'Rider',
+            title: tr('Rider'),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 KeyValueRow(
-                  label: 'Mobile',
+                  label: tr('Mobile'),
                   value: Fmt.phone(request.mobile),
                   icon: Icons.phone_rounded,
                   trailing: CircleIconButton(
@@ -102,14 +102,14 @@ class _Loaded extends StatelessWidget {
                     },
                   ),
                 ),
-                KeyValueRow(label: 'Team lead', value: request.teamLead, icon: Icons.badge_rounded),
+                KeyValueRow(label: tr('Team lead'), value: request.teamLead, icon: Icons.badge_rounded),
               ],
             ),
           ),
           const Gap.lg(),
 
           ModuleCard(
-            title: 'Vehicle',
+            title: tr('Vehicle'),
             leading: const IconTile(icon: Icons.electric_scooter_rounded, tone: AppColors.primary, size: 28),
             child: Row(
               children: [
@@ -131,7 +131,7 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: 'Return reason',
+            title: tr('Return reason'),
             leading: const IconTile(icon: Icons.info_outline_rounded, tone: AppColors.primary, size: 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +141,7 @@ class _Loaded extends StatelessWidget {
                 Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
                 const SizedBox(height: Insets.md),
                 KeyValueRow(
-                  label: 'Raised on',
+                  label: tr('Raised on'),
                   value: Fmt.dateTime(request.raisedOn),
                   icon: Icons.schedule_rounded,
                 ),
@@ -151,13 +151,12 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: 'Original handover photos',
+            title: tr('Original handover photos'),
             leading: const IconTile(icon: Icons.photo_library_rounded, tone: AppColors.primary, solid: true, size: 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Compare the returned vehicle against this reference set',
+                Text(tr('Compare the returned vehicle against this reference set'),
                   style: AppText.bodySmall,
                 ),
                 const Gap.lg(),
@@ -248,7 +247,7 @@ class _Band extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: 'Vehicle',
+                  label: tr('Vehicle'),
                   value: request.vehicleNumber,
                   icon: Icons.electric_scooter_rounded,
                 ),
@@ -257,7 +256,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: 'Raised',
+                  label: tr('Raised'),
                   value: Fmt.relative(request.raisedOn),
                   icon: Icons.schedule_rounded,
                 ),
@@ -289,7 +288,7 @@ class _Footer extends StatelessWidget {
         border: Border(top: BorderSide(color: AppColors.stroke)),
       ),
       child: PrimaryButton(
-        label: 'Process return',
+        label: tr('Process return'),
         icon: Icons.assignment_return_rounded,
         onPressed: onPressed,
       ),

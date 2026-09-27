@@ -33,11 +33,11 @@ class _ScooterView extends StatelessWidget {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: 'Could not load your vehicle',
+                title: tr('Could not load your vehicle'),
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: 'Try again',
+                actionLabel: tr('Try again'),
                 onAction: () => context.read<ScooterCubit>().refresh(),
               ),
             ),
@@ -64,7 +64,7 @@ class _ScooterView extends StatelessWidget {
       const Gap.lg(),
 
       ModuleCard(
-        title: 'IoT unit',
+        title: tr('IoT unit'),
         child: IotPanel(vehicle: vehicle),
       ),
     ];
@@ -144,8 +144,7 @@ class _VehicleCard extends StatelessWidget {
                   const SizedBox(height: Insets.sm),
                   Row(
                     children: [
-                      Text(
-                        'View full details',
+                      Text(tr('View full details'),
                         style: AppText.bodySmall.copyWith(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w700,

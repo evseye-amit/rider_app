@@ -88,7 +88,7 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
       builder: (context, state) {
         if (state.isLoading) {
           return AppScaffold(
-            title: 'Raise a job',
+            title: tr('Raise a job'),
             body: PageBody(children: const [
               ShimmerBox(height: 108, borderRadius: Corners.brLg),
               Gap.xl(),
@@ -102,13 +102,13 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
         }
         if (state.status == RaiseMaintenanceStatus.failure) {
           return AppScaffold(
-            title: 'Raise a job',
+            title: tr('Raise a job'),
             body: EmptyState(
-              title: 'Could not load the form',
+              title: tr('Could not load the form'),
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: 'Try again',
+              actionLabel: tr('Try again'),
               onAction: () => context.read<RaiseMaintenanceCubit>().load(),
             ),
           );
@@ -117,30 +117,30 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
         _prefill(state.vehicles);
 
         return AppScaffold(
-          title: 'Raise a job',
-          subtitle: 'Send a vehicle to the workshop',
+          title: tr('Raise a job'),
+          subtitle: tr('Send a vehicle to the workshop'),
           footer: PrimaryButton(
-            label: 'Raise job',
+            label: tr('Raise job'),
             icon: Icons.build_rounded,
             loading: state.submitting,
             onPressed: state.submitting ? null : () => _submit(context, state),
           ),
           body: PageBody(
             children: [
-              const PhotoPanel(
+              PhotoPanel(
                 photo: BrandPhoto.service,
                 height: 132,
-                title: 'Send it to the workshop',
-                subtitle: 'A technician picks this up as soon as it is raised.',
+                title: tr('Send it to the workshop'),
+                subtitle: tr('A technician picks this up as soon as it is raised.'),
               ),
               const Gap.lg(),
               ModuleCard(
-                title: 'Vehicle',
+                title: tr('Vehicle'),
                 leading: const IconTile(icon: Icons.electric_scooter_rounded, tone: AppColors.primary, size: 28),
                 child: AppPickerField(
-                  label: 'Vehicle',
+                  label: tr('Vehicle'),
                   required: true,
-                  hint: 'Select a vehicle',
+                  hint: tr('Select a vehicle'),
                   value: _vehicle == null ? null : '${_vehicle!.number} · ${_vehicle!.model}',
                   errorText: _vehicleError,
                   prefixIcon: Icons.electric_scooter_rounded,
@@ -150,15 +150,15 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
               const Gap.lg(),
 
               ModuleCard(
-                title: 'Job details',
+                title: tr('Job details'),
                 leading: const IconTile(icon: Icons.assignment_rounded, tone: AppColors.primary, size: 28),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppPickerField(
-                      label: 'Job type',
+                      label: tr('Job type'),
                       required: true,
-                      hint: 'What kind of job is this',
+                      hint: tr('What kind of job is this'),
                       value: _jobType,
                       errorText: _jobTypeError,
                       prefixIcon: Icons.category_rounded,
@@ -171,8 +171,8 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
                     ),
                     const Gap.lg(),
                     AppTextField(
-                      label: 'Issue description',
-                      hint: 'What is wrong with the vehicle',
+                      label: tr('Issue description'),
+                      hint: tr('What is wrong with the vehicle'),
                       required: true,
                       maxLines: 4,
                       controller: _issueController,
@@ -181,12 +181,12 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
                     ),
                     const Gap.lg(),
                     AppTextField(
-                      label: 'Odometer reading',
-                      hint: 'e.g. 9420',
+                      label: tr('Odometer reading'),
+                      hint: tr('e.g. 9420'),
                       keyboardType: TextInputType.number,
                       prefixIcon: Icons.speed_rounded,
                       controller: _odometerController,
-                      helper: 'In kilometres, as shown on the cluster.',
+                      helper: tr('In kilometres, as shown on the cluster.'),
                     ),
                   ],
                 ),
@@ -194,11 +194,11 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
               const Gap.lg(),
 
               ModuleCard(
-                title: 'Vendor',
+                title: tr('Vendor'),
                 leading: const IconTile(icon: Icons.build_rounded, tone: AppColors.primary, size: 28),
                 child: AppPickerField(
-                  label: 'Assign to',
-                  hint: 'Choose later',
+                  label: tr('Assign to'),
+                  hint: tr('Choose later'),
                   value: _vendor,
                   prefixIcon: Icons.storefront_rounded,
                   onTap: () => _pickVendor(context, state.vendors),
@@ -207,7 +207,7 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
               const Gap.lg(),
 
               ModuleCard(
-                title: 'Photo evidence',
+                title: tr('Photo evidence'),
                 leading: const IconTile(icon: Icons.photo_camera_rounded, tone: AppColors.primary, size: 28),
                 child: GridView.count(
                   crossAxisCount: 3,
@@ -244,7 +244,7 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
   Future<void> _pickVehicle(BuildContext context, List<VehicleOption> vehicles) async {
     final VehicleOption? picked = await AppSheet.show<VehicleOption>(
       context,
-      title: 'Select a vehicle',
+      title: tr('Select a vehicle'),
       child: Column(
         children: [
           for (final v in vehicles)
@@ -266,7 +266,7 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
   Future<void> _pickJobType(BuildContext context) async {
     final String? picked = await AppSheet.show<String>(
       context,
-      title: 'Job type',
+      title: tr('Job type'),
       child: Column(
         children: [
           for (final t in _jobTypes)
@@ -287,8 +287,8 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
   Future<void> _pickVendor(BuildContext context, List<VendorOption> vendors) async {
     final String? picked = await AppSheet.show<String>(
       context,
-      title: 'Assign a vendor',
-      subtitle: 'You can also assign this later',
+      title: tr('Assign a vendor'),
+      subtitle: tr('You can also assign this later'),
       child: Column(
         children: [
           for (final v in vendors)
@@ -349,7 +349,7 @@ class _PrioritySelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Priority', style: AppText.label),
+        Text(tr('Priority'), style: AppText.label),
         const SizedBox(height: Insets.sm),
         Row(
           children: [
