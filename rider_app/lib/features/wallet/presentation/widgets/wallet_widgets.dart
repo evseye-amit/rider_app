@@ -49,14 +49,14 @@ class WalletBand extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(tr('Your money'),
+                  Text(context.l10n.walletMoney,
                     style: AppText.bodySmall.copyWith(
                       fontSize: 12,
                       color: AppColors.onInkSecondary,
                     ),
                   ),
                   const SizedBox(height: 1),
-                  Text(tr('Wallet'),
+                  Text(context.l10n.commonWallet,
                     style: AppText.titleLarge.copyWith(
                       fontSize: 20,
                       color: AppColors.onInk,
@@ -75,7 +75,7 @@ class WalletBand extends StatelessWidget {
           ],
         ),
         const Gap.xxl(),
-        Text(tr('Paid to date'),
+        Text(context.l10n.commonPaidDate,
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),
@@ -103,7 +103,7 @@ class WalletBand extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: tr('This week'),
+                  label: context.l10n.commonWeek,
                   value: s == null ? '—' : Fmt.money(s.deductedThisWeek),
                   icon: Icons.north_east_rounded,
                 ),
@@ -112,7 +112,7 @@ class WalletBand extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: tr('Due now'),
+                  label: context.l10n.walletDueNow,
                   value: s == null ? '—' : Fmt.money(s.pendingPayout),
                   icon: Icons.schedule_rounded,
                 ),
@@ -121,7 +121,7 @@ class WalletBand extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: tr('Payments'),
+                  label: context.l10n.walletPayments,
                   value: s == null ? '—' : '${s.transactions.length}',
                   icon: Icons.receipt_long_rounded,
                 ),
@@ -152,7 +152,7 @@ class WeekSummaryRow extends StatelessWidget {
       children: [
         Expanded(
           child: _WeekTile(
-            label: tr('Credited'),
+            label: context.l10n.walletCredited,
             value: Fmt.money(credited),
             icon: Icons.south_west_rounded,
             color: AppColors.mint,
@@ -161,7 +161,7 @@ class WeekSummaryRow extends StatelessWidget {
         _VDiv(),
         Expanded(
           child: _WeekTile(
-            label: tr('Deducted'),
+            label: context.l10n.walletDeducted,
             value: Fmt.money(deducted),
             icon: Icons.north_east_rounded,
             color: AppColors.danger,
@@ -170,7 +170,7 @@ class WeekSummaryRow extends StatelessWidget {
         _VDiv(),
         Expanded(
           child: _WeekTile(
-            label: tr('Incentives'),
+            label: context.l10n.commonIncentives,
             value: Fmt.money(incentives),
             icon: Icons.emoji_events_rounded,
             color: AppColors.warning,
@@ -344,11 +344,11 @@ class TransactionDetailBody extends StatelessWidget {
         ),
         const Gap.xl(),
         Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-        KeyValueRow(label: tr('Reference ID'), value: transaction.id.toUpperCase()),
-        KeyValueRow(label: tr('Category'), value: _titleCase(transaction.category)),
-        KeyValueRow(label: tr('Date & time'), value: Fmt.dateTime(transaction.at)),
+        KeyValueRow(label: context.l10n.walletReferenceId, value: transaction.id.toUpperCase()),
+        KeyValueRow(label: context.l10n.commonCategory, value: _titleCase(transaction.category)),
+        KeyValueRow(label: context.l10n.walletDateTime, value: Fmt.dateTime(transaction.at)),
         KeyValueRow(
-          label: tr('Status'),
+          label: context.l10n.commonStatus,
           value: _titleCase(transaction.status),
           valueColor: statusTone(transaction.status).color,
         ),

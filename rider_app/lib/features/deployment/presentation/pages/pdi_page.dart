@@ -34,21 +34,21 @@ class _PdiLoader extends StatelessWidget {
 
         if (state.status == DeploymentLoad.failure || (allocationId == null && !state.isLoading)) {
           return AppScaffold(
-            title: tr('Pre-delivery inspection'),
+            title: context.l10n.commonPreDeliveryInspection,
             showBack: false,
             body: EmptyState(
-              title: tr('Could not load the checklist'),
-              message: state.message ?? 'Your fleet manager has not submitted the inspection yet.',
+              title: context.l10n.deploymentCouldNotLoadChecklist,
+              message: state.message ?? context.l10n.deploymentFleetManagerHasNotSubmitted,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: tr('Try again'),
+              actionLabel: context.l10n.commonTryAgain,
               onAction: context.read<DeploymentCubit>().load,
             ),
           );
         }
         if (allocationId == null || items.isEmpty) {
           return AppScaffold(
-            title: tr('Pre-delivery inspection'),
+            title: context.l10n.commonPreDeliveryInspection,
             showBack: false,
             body: PageBody(
               children: List.generate(
@@ -79,19 +79,20 @@ class _PdiView extends StatelessWidget {
 
   Future<void> _fail(BuildContext context, PdiCubit cubit, PdiChecklistItem item) async {
     final TextEditingController controller = TextEditingController();
+    final String fallbackNote = context.l10n.deploymentFlaggedByRider;
     final String? note = await AppSheet.show<String>(
       context,
-      title: tr('What is wrong?'),
+      title: context.l10n.deploymentWhatWrong,
       subtitle: item.label,
       child: AppTextField(
-        label: tr('Note for the workshop team'),
-        hint: tr('e.g. Front tyre worn below limit'),
+        label: context.l10n.deploymentNoteWorkshopTeam,
+        hint: context.l10n.pdiHintTyreWorn,
         maxLines: 3,
         controller: controller,
         autofocus: true,
       ),
       footer: PrimaryButton(
-        label: tr('Flag as a problem'),
+        label: context.l10n.deploymentFlagAsProblem,
         icon: Icons.flag_rounded,
         onPressed: () => Navigator.of(context).pop(controller.text.trim()),
       ),
@@ -99,28 +100,28 @@ class _PdiView extends StatelessWidget {
     if (note == null) return;
     cubit.setVerdict(item.code, CheckState.fail);
 
-    cubit.setNote(item.code, note.isEmpty ? 'Flagged by rider' : note);
+    cubit.setNote(item.code, note.isEmpty ? fallbackNote : note);
   }
 
   Future<void> _submit(BuildContext context, PdiCubit cubit, PdiState state) async {
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: state.anyFailed ? 'Submit with problems flagged?' : 'Accept this scooter?',
+      title: state.anyFailed ? context.l10n.deploymentSubmitWithProblemsFlagged : context.l10n.deploymentAcceptScooter2,
       message: state.anyFailed
-          ? 'Items marked as a problem go to your fleet manager with your notes. The handover continues on the rest.'
-          : 'You confirm every item has been checked with your team lead and the scooter is fit to ride.',
-      confirmLabel: state.anyFailed ? 'Submit inspection' : 'Accept scooter',
+          ? context.l10n.deploymentItemsMarkedAsProblemGo
+          : context.l10n.deploymentConfirmEveryItemHasBeen,
+      confirmLabel: state.anyFailed ? context.l10n.commonSubmitInspection : context.l10n.deploymentAcceptScooter,
       icon: Icons.fact_check_rounded,
     );
     if (!confirmed || !context.mounted) return;
     final bool ok = await cubit.submit();
     if (!context.mounted) return;
     if (ok) {
-      AppSnack.success(context, 'Inspection accepted');
+      AppSnack.success(context, context.l10n.deploymentInspectionAccepted);
 
       await context.read<DeploymentCubit>().load(silent: true);
     } else {
-      AppSnack.error(context, cubit.state.message ?? 'Could not submit the inspection');
+      AppSnack.error(context, cubit.state.message ?? context.l10n.deploymentCouldNotSubmitInspection);
     }
   }
 
@@ -133,11 +134,11 @@ class _PdiView extends StatelessWidget {
       builder: (context, state) {
         final PdiCubit cubit = context.read<PdiCubit>();
         return AppScaffold(
-          title: tr('Pre-delivery inspection'),
+          title: context.l10n.commonPreDeliveryInspection,
           subtitle: fleet == null ? null : '${fleet.vehicleNumber}${fleet.modelName == null ? '' : ' · ${fleet.modelName}'}',
           showBack: false,
           footer: PrimaryButton(
-            label: state.allChecked ? (state.anyFailed ? 'Submit inspection' : 'Accept scooter') : 'Submit inspection',
+            label: state.allChecked ? (state.anyFailed ? context.l10n.commonSubmitInspection : context.l10n.deploymentAcceptScooter) : context.l10n.commonSubmitInspection,
             icon: Icons.fact_check_rounded,
             loading: state.isSubmitting,
             onPressed: state.allChecked && !state.isSubmitting ? () => _submit(context, cubit, state) : null,
@@ -147,14 +148,14 @@ class _PdiView extends StatelessWidget {
               _Band(state: state, partner: partner),
               const Gap.lg(),
               ModuleCard(
-                title: tr('Check each item'),
+                title: context.l10n.deploymentCheckEachItem,
                 leading: const IconTile(icon: Icons.checklist_rounded, solid: true, size: 28),
                 child: Column(
                   children: [
                     for (final item in state.items) ...[
                       ChecklistTile(
                         title: item.label,
-                        subtitle: item.mandatory ? 'Mandatory' : 'Optional',
+                        subtitle: item.mandatory ? context.l10n.commonMandatory : context.l10n.commonOptional,
                         state: state.verdictOf(item.code),
                         note: state.notes[item.code],
                         onPass: () => cubit.setVerdict(item.code, CheckState.pass),
@@ -186,12 +187,12 @@ class _Band extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(tr('Go through each item with your team lead. Flag anything that is not right — it goes to the workshop with your note.'),
+          Text(context.l10n.deploymentGoThroughEachItemWith,
             style: AppText.bodySmall.copyWith(height: 1.5),
           ),
           if (partner != null && partner!.isNotEmpty) ...[
             const Gap.sm(),
-            Text('Inspected by $partner', style: AppText.bodySmall.copyWith(color: AppColors.textMuted)),
+            Text(context.l10n.pdiInspectedBy(partner!), style: AppText.bodySmall.copyWith(color: AppColors.textMuted)),
           ],
           const Gap.lg(),
           LabeledProgress(

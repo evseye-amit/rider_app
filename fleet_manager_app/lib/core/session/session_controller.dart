@@ -94,7 +94,7 @@ class SessionController extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get managerName => 'Manager';
+  String get managerName => LocaleController.strings.commonManager;
 
   String get hubId => hub?.id ?? '';
   String get hubName => hub?.name ?? '—';

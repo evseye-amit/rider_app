@@ -61,7 +61,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
   }
 
   void _apply(RiderOnboardingConfig config, {int? jumpTo}) {
-    final UiFlowConfig flow = OnboardingFlowBuilder.build(config);
+    final UiFlowConfig flow = OnboardingFlowBuilder.build(config, context.l10n);
     for (final entry in config.progress.values.entries) {
       if (_form.valueOf(entry.key) == null && entry.value != null) {
         _form.setValue(entry.key, entry.value, markTouched: false);
@@ -90,9 +90,9 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
   Future<void> _confirmExit() async {
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: tr('Exit onboarding?'),
-      message: tr('Every step you have completed is saved. You can pick up exactly where you left off next time you sign in.'),
-      confirmLabel: tr('Exit'),
+      title: context.l10n.onboardingExitOnboarding,
+      message: context.l10n.onboardingEveryStepHaveCompletedSaved,
+      confirmLabel: context.l10n.onboardingExit,
       icon: Icons.logout_rounded,
       destructive: true,
     );
@@ -136,10 +136,10 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
         .toString()
         .trim();
     if (dob.isEmpty) {
-      return 'Add your date of birth on the first step before continuing';
+      return context.l10n.onboardingAddDateBirthFirstStep;
     }
     final DateTime? born = DateTime.tryParse(dob);
-    if (born == null) return 'That date of birth is not valid';
+    if (born == null) return context.l10n.onboardingDateBirthNotValid;
 
     final DateTime now = DateTime.now();
     int age = now.year - born.year;
@@ -171,7 +171,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
     final UiFlowStep step = _flow!.steps[_stepIndex];
     final bool ok = _form.validateNodes(step.screen.body, isVisible: _scope.isVisible);
     if (!ok) {
-      AppSnack.error(context, 'Please fix the highlighted fields before continuing');
+      AppSnack.error(context, context.l10n.onboardingPleaseFixHighlightedFieldsBefore);
       return;
     }
 
@@ -211,7 +211,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
 
     final File? file = await PhotoSourceSheet.pick(
       context,
-      subtitle: tr('Take a photo of the document, or choose one you already have'),
+      subtitle: context.l10n.onboardingTakePhotoDocumentChooseOne,
     );
     if (file == null || !mounted) return;
 
@@ -224,7 +224,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
     switch (result) {
       case Ok<RemotePhoto>():
         _form.setValue(key, file.uri.pathSegments.last);
-        AppSnack.success(this.context, 'Uploaded');
+        AppSnack.success(this.context, this.context.l10n.commonUploaded);
       case Err<RemotePhoto>(:final failure):
         AppSnack.error(this.context, failure.message);
     }
@@ -258,17 +258,17 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
         body: SafeArea(
           child: _loadError != null
               ? EmptyState(
-                  title: tr('Could not load onboarding'),
+                  title: context.l10n.onboardingCouldNotLoadOnboarding,
                   message: _loadError,
                   icon: Icons.cloud_off_rounded,
                   tone: AppColors.danger,
-                  actionLabel: tr('Retry'),
+                  actionLabel: context.l10n.commonRetry,
                   onAction: () {
                     setState(() => _loadError = null);
                     _load();
                   },
                 )
-              : Center(child: LoadingOverlay(message: tr('Loading your onboarding form…'))),
+              : Center(child: LoadingOverlay(message: context.l10n.onboardingLoadingOnboardingForm)),
         ),
       );
     }
@@ -279,11 +279,10 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
         backgroundColor: AppColors.canvas,
         body: SafeArea(
           child: EmptyState(
-            title: tr('Nothing to fill in'),
-            message: 'Your fleet operator\'s package has no onboarding steps configured yet. '
-                'Ask them to set up rider onboarding, then sign in again.',
+            title: context.l10n.onboardingNothingFill,
+            message: context.l10n.onboardingNoStepsConfigured,
             icon: Icons.assignment_outlined,
-            actionLabel: tr('Refresh'),
+            actionLabel: context.l10n.commonRefresh,
             onAction: _load,
           ),
         ),
@@ -388,7 +387,7 @@ class _OnboardingFlowPageState extends State<OnboardingFlowPage> {
                   ),
               ],
             ),
-            if (_saving) Positioned.fill(child: LoadingOverlay(message: tr('Saving…'))),
+            if (_saving) Positioned.fill(child: LoadingOverlay(message: context.l10n.onboardingSaving)),
           ],
         ),
       ),

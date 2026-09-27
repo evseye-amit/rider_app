@@ -20,8 +20,8 @@ Future<void> main() async {
   );
 
   registerDefaultWidgets();
-  await AppLocaleController.instance.load();
   await configureDependencies();
+  await sl<LocaleController>().load();
 
   runApp(const FleetManagerApp());
 }

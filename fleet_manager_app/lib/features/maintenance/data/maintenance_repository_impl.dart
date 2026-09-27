@@ -37,7 +37,7 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
     for (final job in _jobs()) {
       if (job.id == id) return Result.ok(job);
     }
-    return const Result.err(NotFoundFailure('That job is no longer on the board.'));
+    return Result.err(NotFoundFailure(LocaleController.strings.maintenanceJobNoLongerBoard));
   }
 
   static List<MaintenanceJob> _jobs() {
@@ -49,45 +49,45 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
         id: 'JOB-2318',
         vehicleNumber: 'DL1SCA4471',
         model: 'Ather 450X Gen 3',
-        type: 'Brakes',
+        type: 'BRAKES',
         priority: 'high',
         status: 'overdue',
         openedOn: days(-4),
         dueOn: days(-1),
         odometerKm: 9120,
-        issue: 'Rear brake bites late and squeals under load.',
+        issue: LocaleController.strings.maintenanceRearBrakeBitesLateSqueals,
         assignedTo: 'Sharma Auto Works',
         rider: 'Neha Bansal',
         bay: 'Bay 3',
-        notes: const ['Pads measured at 1.2 mm', 'Replacement set ordered'],
+        notes: [LocaleController.strings.maintenancePadsMeasured12Mm, LocaleController.strings.maintenanceReplacementSetOrdered],
       ),
       MaintenanceJob(
         id: 'JOB-2325',
         vehicleNumber: 'DL1SCB2290',
         model: 'Ather 450X Gen 3',
-        type: 'Battery',
+        type: 'BATTERY',
         priority: 'high',
         status: 'inProgress',
         openedOn: days(-1),
         dueOn: days(1),
         odometerKm: 7460,
-        issue: 'Charge holds to 62% then drops to 40% within a kilometre.',
+        issue: LocaleController.strings.maintenanceChargeHolds62ThenDrops,
         assignedTo: 'Sharma Auto Works',
         rider: 'Farhan Sheikh',
         bay: 'Bay 1',
-        notes: const ['Cell balance test booked for this afternoon'],
+        notes: [LocaleController.strings.maintenanceCellBalanceTestBookedAfternoon],
       ),
       MaintenanceJob(
         id: 'JOB-2331',
         vehicleNumber: 'DL1SCE5521',
         model: 'Ather 450X Gen 3',
-        type: 'Tyres',
+        type: 'TYRES',
         priority: 'normal',
         status: 'open',
         openedOn: days(-1),
         dueOn: days(3),
         odometerKm: 11380,
-        issue: 'Front tyre worn past the wear bar.',
+        issue: LocaleController.strings.maintenanceFrontTyreWornPastWear,
         rider: 'Anjali Desai',
         notes: const [],
       ),
@@ -101,7 +101,7 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
         openedOn: now,
         dueOn: days(2),
         odometerKm: 5210,
-        issue: 'Tracker drops off between Okhla and Jasola.',
+        issue: LocaleController.strings.maintenanceTrackerDropsOffBetweenOkhla,
         rider: 'Vikas Rana',
         notes: const [],
       ),
@@ -109,17 +109,17 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
         id: 'JOB-2309',
         vehicleNumber: 'DL1SCD9015',
         model: 'Ather 450X Gen 3',
-        type: 'Body',
+        type: 'BODY',
         priority: 'low',
         status: 'closed',
         openedOn: days(-6),
         dueOn: days(-3),
         closedOn: days(-3),
         odometerKm: 6890,
-        issue: 'Scuffed side panel after a parking knock.',
+        issue: LocaleController.strings.maintenanceScuffedSidePanelAfterParking,
         assignedTo: 'Gurgaon Motor Care',
         bay: 'Bay 2',
-        notes: const ['Panel resprayed and refitted'],
+        notes: [LocaleController.strings.maintenancePanelResprayedRefitted],
       ),
     ];
   }
@@ -145,14 +145,14 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
   }
 
   @override
-  Future<Result<List<VendorOption>>> getVendorOptions() async => const Result.ok(<VendorOption>[
-        VendorOption(id: 'vendor_sharma', name: 'Sharma Auto Works', type: 'Two-wheeler workshop', rating: 4.6),
-        VendorOption(id: 'vendor_gurgaon', name: 'Gurgaon Motor Care', type: 'Body and paint', rating: 4.3),
-        VendorOption(id: 'vendor_voltcare', name: 'VoltCare EV Service', type: 'Battery specialist', rating: 4.8),
+  Future<Result<List<VendorOption>>> getVendorOptions() async => Result.ok(<VendorOption>[
+        VendorOption(id: 'vendor_sharma', name: 'Sharma Auto Works', type: LocaleController.strings.maintenanceTwoWheelerWorkshop, rating: 4.6),
+        VendorOption(id: 'vendor_gurgaon', name: 'Gurgaon Motor Care', type: LocaleController.strings.maintenanceBodyPaint, rating: 4.3),
+        VendorOption(id: 'vendor_voltcare', name: 'VoltCare EV Service', type: LocaleController.strings.maintenanceBatterySpecialist, rating: 4.8),
       ]);
 
   @override
-  Future<Result<String>> raiseJob(RaiseJobInput input) async => const Result.err(
-        ServerFailure('Raising a maintenance job needs an API that does not exist yet.'),
+  Future<Result<String>> raiseJob(RaiseJobInput input) async => Result.err(
+        ServerFailure(LocaleController.strings.maintenanceRaisingMaintenanceJobNeedsApi),
       );
 }

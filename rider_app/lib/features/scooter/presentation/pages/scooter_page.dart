@@ -33,11 +33,11 @@ class _ScooterView extends StatelessWidget {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: tr('Could not load your vehicle'),
+                title: context.l10n.scooterCouldNotLoadVehicle,
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: tr('Try again'),
+                actionLabel: context.l10n.commonTryAgain,
                 onAction: () => context.read<ScooterCubit>().refresh(),
               ),
             ),
@@ -64,7 +64,7 @@ class _ScooterView extends StatelessWidget {
       const Gap.lg(),
 
       ModuleCard(
-        title: tr('IoT unit'),
+        title: context.l10n.commonIotUnit,
         child: IotPanel(vehicle: vehicle),
       ),
     ];
@@ -114,7 +114,7 @@ class _VehicleCard extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   StatusChip(
-                    label: vehicle.charging ? 'Charging' : 'On road',
+                    label: vehicle.charging ? context.l10n.scooterCharging : context.l10n.allocationRoad,
                     tone: vehicle.charging ? StatusTone.info : StatusTone.success,
                     dense: true,
                   ),
@@ -144,7 +144,7 @@ class _VehicleCard extends StatelessWidget {
                   const SizedBox(height: Insets.sm),
                   Row(
                     children: [
-                      Text(tr('View full details'),
+                      Text(context.l10n.scooterViewFullDetails,
                         style: AppText.bodySmall.copyWith(
                           fontSize: 11.5,
                           fontWeight: FontWeight.w700,

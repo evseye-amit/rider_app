@@ -8,6 +8,7 @@ import '../utils/result.dart';
 import 'api_env.dart';
 import 'token_store.dart';
 
+import '../l10n/locale_controller.dart';
 class ApiClient {
   ApiClient({
     required TokenStore tokens,
@@ -122,7 +123,7 @@ class ApiClient {
           return _send<T>(method, path, body: body, query: query, parse: parse, isRetry: true);
         }
         onSessionExpired?.call();
-        return const Result.err(UnauthorizedFailure('Your session has expired. Sign in again.'));
+        return Result.err(UnauthorizedFailure(LocaleController.strings.errorSessionHasExpiredSignAgain));
       }
 
       final int status = res.statusCode ?? 0;
@@ -174,13 +175,13 @@ class ApiClient {
       message = (body['error'] as Map)['message']?.toString();
     }
     return switch (status) {
-      400 || 422 => ValidationFailure(message ?? 'That did not look right.'),
-      401 => UnauthorizedFailure(message ?? 'Sign in to continue.'),
+      400 || 422 => ValidationFailure(message ?? LocaleController.strings.errorDidNotLookRight),
+      401 => UnauthorizedFailure(message ?? LocaleController.strings.commonSignContinue),
 
-      403 => ForbiddenFailure(message ?? 'Your account cannot do that.'),
-      404 => NotFoundFailure(message ?? 'Not found.'),
-      429 => RateLimitFailure(message ?? 'Too many attempts. Wait a moment.'),
-      _ => ServerFailure(message ?? 'Something went wrong. Please try again.', status),
+      403 => ForbiddenFailure(message ?? LocaleController.strings.commonAccountCannotDo),
+      404 => NotFoundFailure(message ?? LocaleController.strings.commonNotFound),
+      429 => RateLimitFailure(message ?? LocaleController.strings.commonTooManyAttemptsWaitMoment),
+      _ => ServerFailure(message ?? LocaleController.strings.commonSomethingWentWrongPleaseTry, status),
     };
   }
 
@@ -189,10 +190,10 @@ class ApiClient {
       DioExceptionType.connectionTimeout ||
       DioExceptionType.sendTimeout ||
       DioExceptionType.receiveTimeout =>
-        const NetworkFailure('The server took too long to answer.'),
+        NetworkFailure(LocaleController.strings.errorServerTookTooLongAnswer),
       DioExceptionType.connectionError =>
-        const NetworkFailure('Could not reach the server. Check your connection.'),
-      _ => ServerFailure(e.message ?? 'Something went wrong. Please try again.'),
+        NetworkFailure(LocaleController.strings.errorCouldNotReachServerCheck),
+      _ => ServerFailure(e.message ?? LocaleController.strings.commonSomethingWentWrongPleaseTry),
     };
   }
 }

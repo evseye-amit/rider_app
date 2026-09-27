@@ -7,6 +7,7 @@ import '../theme/app_typography.dart';
 import 'app_scaffold.dart';
 import 'buttons.dart';
 
+import '../l10n/locale_controller.dart';
 class AppDateWheel {
   const AppDateWheel._();
 
@@ -15,9 +16,11 @@ class AppDateWheel {
     required DateTime first,
     required DateTime last,
     DateTime? initial,
-    String title = 'Select a date',
-    String confirmLabel = 'Done',
+    String? title,
+    String? confirmLabel,
   }) {
+    final String sheetTitle = title ?? context.l10n.commonSelectDate;
+    final String confirmText = confirmLabel ?? context.l10n.deploymentDone;
     DateTime start = initial ?? DateTime(last.year, last.month, last.day);
     if (start.isBefore(first)) start = first;
     if (start.isAfter(last)) start = last;
@@ -51,7 +54,7 @@ class AppDateWheel {
                 ),
                 const Gap.lg(),
                 Text(
-                  title,
+                  sheetTitle,
                   textAlign: TextAlign.center,
                   style: AppText.titleMedium.copyWith(color: AppColors.textPrimary),
                 ),
@@ -79,7 +82,7 @@ class AppDateWheel {
                 ),
                 const Gap.lg(),
                 PrimaryButton(
-                  label: confirmLabel,
+                  label: confirmText,
                   icon: Icons.check_rounded,
                   onPressed: () => Navigator.of(sheetContext).pop(
                     DateTime(selected.year, selected.month, selected.day),

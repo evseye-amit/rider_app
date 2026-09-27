@@ -46,13 +46,13 @@ class _DeallocationDetailView extends StatelessWidget {
         }
         if (state.status == DeallocationDetailStatus.failure || state.request == null) {
           return AppScaffold(
-            title: tr('Return request'),
+            title: context.l10n.allocationReturnRequest,
             body: EmptyState(
-              title: tr('Could not load this return'),
+              title: context.l10n.allocationCouldNotLoadReturn,
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: tr('Try again'),
+              actionLabel: context.l10n.commonTryAgain,
               onAction: () => context.read<DeallocationDetailCubit>().load(),
             ),
           );
@@ -68,7 +68,7 @@ class _Loaded extends StatelessWidget {
 
   final DeallocationRequest request;
 
-  static const List<String> _handoverAngles = ['Left side', 'Right side', 'Front', 'Back'];
+  static List<String> get _handoverAngles => [LocaleController.strings.allocationLeftSide, LocaleController.strings.allocationRightSide, LocaleController.strings.allocationFront, LocaleController.strings.allocationBack];
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +81,12 @@ class _Loaded extends StatelessWidget {
       ),
       children: [
           OverlapModuleCard(
-            title: tr('Rider'),
+            title: context.l10n.allocationRider,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 KeyValueRow(
-                  label: tr('Mobile'),
+                  label: context.l10n.commonMobile,
                   value: Fmt.phone(request.mobile),
                   icon: Icons.phone_rounded,
                   trailing: CircleIconButton(
@@ -102,14 +102,14 @@ class _Loaded extends StatelessWidget {
                     },
                   ),
                 ),
-                KeyValueRow(label: tr('Team lead'), value: request.teamLead, icon: Icons.badge_rounded),
+                KeyValueRow(label: context.l10n.commonTeamLead, value: request.teamLead, icon: Icons.badge_rounded),
               ],
             ),
           ),
           const Gap.lg(),
 
           ModuleCard(
-            title: tr('Vehicle'),
+            title: context.l10n.commonVehicle,
             leading: const IconTile(icon: Icons.electric_scooter_rounded, tone: AppColors.primary, size: 28),
             child: Row(
               children: [
@@ -131,7 +131,7 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: tr('Return reason'),
+            title: context.l10n.allocationReturnReason,
             leading: const IconTile(icon: Icons.info_outline_rounded, tone: AppColors.primary, size: 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,7 +141,7 @@ class _Loaded extends StatelessWidget {
                 Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
                 const SizedBox(height: Insets.md),
                 KeyValueRow(
-                  label: tr('Raised on'),
+                  label: context.l10n.allocationRaised,
                   value: Fmt.dateTime(request.raisedOn),
                   icon: Icons.schedule_rounded,
                 ),
@@ -151,12 +151,12 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: tr('Original handover photos'),
+            title: context.l10n.allocationOriginalHandoverPhotos,
             leading: const IconTile(icon: Icons.photo_library_rounded, tone: AppColors.primary, solid: true, size: 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(tr('Compare the returned vehicle against this reference set'),
+                Text(context.l10n.allocationCompareReturnedVehicleAgainstReference,
                   style: AppText.bodySmall,
                 ),
                 const Gap.lg(),
@@ -247,7 +247,7 @@ class _Band extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: tr('Vehicle'),
+                  label: context.l10n.commonVehicle,
                   value: request.vehicleNumber,
                   icon: Icons.electric_scooter_rounded,
                 ),
@@ -256,7 +256,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: tr('Raised'),
+                  label: context.l10n.commonRaised,
                   value: Fmt.relative(request.raisedOn),
                   icon: Icons.schedule_rounded,
                 ),
@@ -288,7 +288,7 @@ class _Footer extends StatelessWidget {
         border: Border(top: BorderSide(color: AppColors.stroke)),
       ),
       child: PrimaryButton(
-        label: tr('Process return'),
+        label: context.l10n.allocationProcessReturn,
         icon: Icons.assignment_return_rounded,
         onPressed: onPressed,
       ),

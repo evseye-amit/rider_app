@@ -147,15 +147,15 @@ class _FlashState extends State<_Flash> with TickerProviderStateMixin {
                   ),
                   const Gap.xl(),
                   Text(
-                    on ? 'Vehicle is ON' : 'Vehicle is OFF',
+                    on ? context.l10n.rideVehicle : context.l10n.rideVehicleOff,
                     textAlign: TextAlign.center,
                     style: AppText.displaySmall.copyWith(fontSize: 22),
                   ),
                   const Gap.sm(),
                   Text(
                     on
-                        ? 'Ride safe. Helmet on, lights checked.'
-                        : 'Parked and locked.',
+                        ? context.l10n.rideRideSafeHelmetLightsChecked
+                        : context.l10n.rideParkedLocked,
                     textAlign: TextAlign.center,
                     style: AppText.bodyMedium.copyWith(fontSize: 13, height: 1.5),
                   ),

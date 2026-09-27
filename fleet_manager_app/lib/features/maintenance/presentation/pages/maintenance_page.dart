@@ -13,7 +13,7 @@ import '../cubit/maintenance_cubit.dart';
 import '../widgets/maintenance_widgets.dart';
 
 const List<String> _statusTabs = ['open', 'inProgress', 'overdue', 'closed'];
-const List<String> _priorityFilters = ['All', 'High', 'Normal', 'Low'];
+List<String> _priorityFilters = ['All', LocaleController.strings.commonHigh, LocaleController.strings.commonNormal, 'Low'];
 
 class MaintenancePage extends StatelessWidget {
   const MaintenancePage({super.key});
@@ -55,11 +55,11 @@ class _MaintenanceViewState extends State<_MaintenanceView> {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: tr('Could not load the maintenance board'),
+                title: context.l10n.maintenanceCouldNotLoadMaintenanceBoard,
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: tr('Try again'),
+                actionLabel: context.l10n.commonTryAgain,
                 onAction: () => context.read<MaintenanceCubit>().refresh(),
               ),
             ),
@@ -111,7 +111,7 @@ class _Band extends StatelessWidget {
             const IconTile(icon: Icons.build_rounded, tone: AppColors.primaryBright, solid: true, size: 46),
             const SizedBox(width: Insets.md),
             Expanded(
-              child: Text(tr('Maintenance board'),
+              child: Text(context.l10n.maintenanceMaintenanceBoard,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.displaySmall.copyWith(fontSize: 24, color: AppColors.onInk),
@@ -120,7 +120,7 @@ class _Band extends StatelessWidget {
           ],
         ),
         const Gap.sm(),
-        Text(tr('Track every job from raised to closed'),
+        Text(context.l10n.maintenanceTrackEveryJobFromRaised,
           style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.4),
         ),
         const Gap.xl(),
@@ -135,7 +135,7 @@ class _Band extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: tr('Open'),
+                  label: context.l10n.commonOpen,
                   value: '${summary?.open ?? 0}',
                   icon: Icons.build_circle_outlined,
                 ),
@@ -144,7 +144,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: tr('Overdue'),
+                  label: context.l10n.maintenanceOverdue,
                   value: '${summary?.overdue ?? 0}',
                   icon: Icons.warning_amber_rounded,
                   valueColor: (summary?.overdue ?? 0) > 0 ? AppColors.onInkCoral : null,
@@ -154,7 +154,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: tr('In progress'),
+                  label: context.l10n.maintenanceProgress,
                   value: '${summary?.inProgress ?? 0}',
                   icon: Icons.sync_rounded,
                 ),
@@ -224,20 +224,20 @@ class _Content extends StatelessWidget {
               PhotoPanel(
                 photo: BrandPhoto.service,
                 height: 132,
-                title: tr('Service bay'),
+                title: context.l10n.maintenanceServiceBay,
                 subtitle:
                     '${board.summary.closedThisWeek} closed this week · avg ${board.summary.averageCloseHours}h',
               ),
               const Gap.xl(),
               SegmentedTabs(
-                items: const ['Open', 'Active', 'Overdue', 'Closed'],
+                items: [context.l10n.commonOpen, context.l10n.ridersActive, context.l10n.maintenanceOverdue, context.l10n.maintenanceClosed],
                 selectedIndex: tab,
                 onChanged: onTabChanged,
                 counts: counts,
               ),
               const Gap.lg(),
               AppSearchField(
-                hint: tr('Search vehicle, job ID or issue'),
+                hint: context.l10n.maintenanceSearchVehicleJobIdIssue,
                 controller: searchController,
                 onChanged: onQueryChanged,
               ),
@@ -258,8 +258,8 @@ class _Content extends StatelessWidget {
             child: ArtBlock(
               art: BrandArt.empty,
               artSize: 130,
-              title: tr('No jobs here'),
-              message: tr('Nothing matches this queue and filter right now.'),
+              title: context.l10n.maintenanceNoJobsHere,
+              message: context.l10n.maintenanceNothingMatchesQueueFilterRight,
             ),
           )
         else
@@ -302,7 +302,7 @@ class _RaiseJobFab extends StatelessWidget {
           children: [
             Icon(Icons.add_rounded, size: 20, color: Colors.white),
             SizedBox(width: Insets.sm),
-            Text(tr('Raise job'),
+            Text(context.l10n.maintenanceRaiseJob2,
               style: TextStyle(
                 fontFamily: AppFonts.body,
                 fontSize: 14.5,

@@ -114,8 +114,8 @@ class _OtpPageState extends State<OtpPage> {
       onBack: () => context.pop(),
       photo: BrandPhoto.rider,
       artSize: 170,
-      title: tr('Verify your number'),
-      subtitle: 'A 6-digit code was sent to +91 $_masked',
+      title: context.l10n.authVerifyNumber,
+      subtitle: context.l10n.authOtpSentTo(_masked),
       children: [
         IgnorePointer(
           ignoring: _stage != _Stage.entering,
@@ -156,7 +156,7 @@ class _OtpPageState extends State<OtpPage> {
                         style: AppText.bodySmall,
                       )
                     : GhostButton(
-                        label: tr('Resend code'),
+                        label: context.l10n.authResendCode,
                         icon: Icons.refresh_rounded,
                         onPressed: _resend,
                       ),
@@ -164,24 +164,24 @@ class _OtpPageState extends State<OtpPage> {
             _Stage.verifying => _StatusRow(
                 key: ValueKey('verifying'),
                 icon: null,
-                label: tr('Verifying your number…'),
+                label: context.l10n.authVerifyingNumber,
                 tone: AppColors.cyan,
                 spinning: true,
               ),
             _Stage.verified => _StatusRow(
                 key: ValueKey('verified'),
                 icon: Icons.check_circle_rounded,
-                label: tr('Number verified'),
+                label: context.l10n.authNumberVerified,
                 tone: AppColors.success,
                 spinning: false,
               ),
           },
         ),
         const Gap.xxl(),
-        AuthDivider(label: tr('Wrong number?')),
+        AuthDivider(label: context.l10n.authWrongNumber),
         const Gap.lg(),
         GhostButton(
-          label: tr('Change number'),
+          label: context.l10n.authChangeNumber,
           icon: Icons.edit_rounded,
           onPressed: _stage == _Stage.entering ? () => context.pop() : null,
         ),

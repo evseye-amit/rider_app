@@ -1,12 +1,13 @@
 import 'package:equatable/equatable.dart';
 
+import 'package:evseye_core/evseye_core.dart';
 enum EarningsPeriod { daily, weekly, monthly }
 
 extension EarningsPeriodX on EarningsPeriod {
   String get label => switch (this) {
-    EarningsPeriod.daily => 'Daily',
-    EarningsPeriod.weekly => 'Weekly',
-    EarningsPeriod.monthly => 'Monthly',
+    EarningsPeriod.daily => LocaleController.strings.earningsDaily,
+    EarningsPeriod.weekly => LocaleController.strings.earningsWeekly,
+    EarningsPeriod.monthly => LocaleController.strings.earningsMonthly,
   };
 }
 

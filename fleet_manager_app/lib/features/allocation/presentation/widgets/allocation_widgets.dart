@@ -11,9 +11,9 @@ StatusTone priorityTone(String priority) => switch (priority.toLowerCase()) {
     };
 
 String priorityLabel(String priority) => switch (priority.toLowerCase()) {
-      'high' => 'High priority',
-      'low' => 'Low priority',
-      _ => 'Normal priority',
+      'high' => LocaleController.strings.commonHighPriority,
+      'low' => LocaleController.strings.commonLowPriority,
+      _ => LocaleController.strings.commonNormalPriority,
     };
 
 class OverlapModuleCard extends StatelessWidget {
@@ -146,7 +146,7 @@ class PendingRiderTile extends StatelessWidget {
           ),
           const SizedBox(width: Insets.sm),
           SecondaryButton(
-            label: tr('Assign'),
+            label: context.l10n.allocationAssign,
             icon: Icons.swap_horiz_rounded,
             expand: false,
             size: AppButtonSize.small,
@@ -188,7 +188,7 @@ class DeploymentRequestTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        allocation.rider?.name ?? 'Rider',
+                        allocation.rider?.name ?? context.l10n.allocationRider,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppText.titleMedium.copyWith(fontSize: 15),
@@ -219,7 +219,7 @@ class DeploymentRequestTile extends StatelessWidget {
                   dense: true,
                 ),
                 Text(
-                  mine ? 'Your move' : 'Waiting on the rider',
+                  mine ? context.l10n.allocationMove : context.l10n.allocationWaitingRider,
                   style: AppText.bodySmall.copyWith(fontSize: 11.5, color: mine ? AppColors.primary : AppColors.textMuted),
                 ),
                 if (allocation.updatedAt != null)
@@ -245,13 +245,13 @@ class DeploymentTimeline extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<(DeploymentStatus, String, DateTime?)> rows = [
-      (DeploymentStatus.riderWaiting, 'Vehicle reserved', workflow?.createdAt),
-      (DeploymentStatus.paymentPending, 'Payment requested', null),
-      (DeploymentStatus.paymentPaid, 'Payment verified', workflow?.paymentPaidAt),
-      (DeploymentStatus.pdiPendingRider, 'Inspection sent to rider', null),
-      (DeploymentStatus.trainingPending, 'Inspection accepted · training', workflow?.riderPdiAcceptedAt),
-      (DeploymentStatus.devicePairingPending, 'Training done · pairing', workflow?.trainingCompletedAt),
-      (DeploymentStatus.deployed, 'Deployed', workflow?.pairedAt ?? workflow?.pairingBypassedAt),
+      (DeploymentStatus.riderWaiting, context.l10n.allocationVehicleReserved, workflow?.createdAt),
+      (DeploymentStatus.paymentPending, context.l10n.allocationPaymentRequested, null),
+      (DeploymentStatus.paymentPaid, context.l10n.allocationPaymentVerified, workflow?.paymentPaidAt),
+      (DeploymentStatus.pdiPendingRider, context.l10n.allocationInspectionSentRider, null),
+      (DeploymentStatus.trainingPending, context.l10n.allocationInspectionAcceptedTraining, workflow?.riderPdiAcceptedAt),
+      (DeploymentStatus.devicePairingPending, context.l10n.allocationTrainingDonePairing, workflow?.trainingCompletedAt),
+      (DeploymentStatus.deployed, context.l10n.allocationDeployed, workflow?.pairedAt ?? workflow?.pairingBypassedAt),
     ];
     final int current = status == DeploymentStatus.unknown ? -1 : status.step;
 
@@ -303,7 +303,7 @@ class ActiveAllocationTile extends StatelessWidget {
                       ),
                     ),
                     StatusChip(
-                      label: riding ? 'Riding' : 'Idle',
+                      label: riding ? context.l10n.allocationRiding : context.l10n.allocationIdle,
                       tone: riding ? StatusTone.brand : StatusTone.neutral,
                       dense: true,
                     ),
@@ -430,13 +430,13 @@ class ReturnRequestTile extends StatelessWidget {
             runSpacing: Insets.sm,
             children: [
               GhostButton(
-                label: tr('View return'),
+                label: context.l10n.allocationViewReturn,
                 icon: Icons.chevron_right_rounded,
                 onPressed: onOpen,
                 dense: true,
               ),
               SecondaryButton(
-                label: tr('Process return'),
+                label: context.l10n.allocationProcessReturn,
                 icon: Icons.assignment_return_rounded,
                 expand: false,
                 size: AppButtonSize.small,

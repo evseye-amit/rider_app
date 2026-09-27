@@ -33,7 +33,7 @@ class _WalletViewState extends State<_WalletView> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
 
-  static const List<String> _filters = ['All', 'Credits', 'Debits'];
+  static List<String> get _filters => ['All', LocaleController.strings.walletCredits, LocaleController.strings.walletDebits];
 
   List<WalletTransaction> _apply(List<WalletTransaction> all) {
     final Iterable<WalletTransaction> byTab = switch (_filter) {
@@ -68,11 +68,11 @@ class _WalletViewState extends State<_WalletView> {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: tr('Could not load your wallet'),
+                title: context.l10n.walletCouldNotLoadWallet,
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: tr('Try again'),
+                actionLabel: context.l10n.commonTryAgain,
                 onAction: () => context.read<WalletCubit>().refresh(),
               ),
             ),
@@ -101,7 +101,7 @@ class _WalletViewState extends State<_WalletView> {
 
     return [
       ModuleCard(
-        title: tr('Transactions'),
+        title: context.l10n.walletTransactions,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -114,7 +114,7 @@ class _WalletViewState extends State<_WalletView> {
             ),
             const Gap.lg(),
             AppSearchField(
-              hint: tr('Search transactions'),
+              hint: context.l10n.walletSearchTransactions,
               controller: _searchController,
               onChanged: (v) => setState(() => _query = v),
             ),
@@ -132,10 +132,10 @@ class _WalletViewState extends State<_WalletView> {
                 child: ArtBlock(
                   art: BrandArt.wallet,
                   artSize: 130,
-                  title: tr('No transactions here'),
+                  title: context.l10n.walletNoTransactionsHere,
                   message: summary.transactions.isEmpty
-                      ? 'Your ledger will fill up as you ride and earn.'
-                      : 'Nothing matches this filter yet.',
+                      ? context.l10n.walletLedgerWillFillUpAs
+                      : context.l10n.walletNothingMatchesFilterYet,
                 ),
               )
             else

@@ -12,7 +12,7 @@ class RentalsRepositoryImpl implements RentalsRepository {
     return Result.ok(
       RentalsOverview(
         plan: RentalPlan(
-          name: 'Weekly plan',
+          name: LocaleController.strings.commonWeeklyPlan,
           weeklyRent: Demo.weeklyRent,
           nextDebitDate: Demo.nextWeekday(DateTime.monday),
           autoDebitEnabled: true,
@@ -67,9 +67,9 @@ class RentalsRepositoryImpl implements RentalsRepository {
     final num insurance = 120;
     final num maintenance = 80;
     return [
-      InvoiceLineItem(label: 'Vehicle rent', amount: total - insurance - maintenance),
-      InvoiceLineItem(label: 'Insurance', amount: insurance),
-      InvoiceLineItem(label: 'Maintenance cover', amount: maintenance),
+      InvoiceLineItem(label: LocaleController.strings.rentalsVehicleRent, amount: total - insurance - maintenance),
+      InvoiceLineItem(label: LocaleController.strings.commonInsurance, amount: insurance),
+      InvoiceLineItem(label: LocaleController.strings.rentalsMaintenanceCover, amount: maintenance),
     ];
   }
 

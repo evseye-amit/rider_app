@@ -48,10 +48,10 @@ class _OnboardingPreviewPageState extends State<OnboardingPreviewPage> {
         setState(() => _submitting = false);
         if (value.isComplete) {
           OnboardingDraft.instance.values = const {};
-          AppSnack.success(context, 'Application submitted');
+          AppSnack.success(context, context.l10n.onboardingApplicationSubmitted);
           context.go(_session.homeRoute);
         } else {
-          AppSnack.error(context, 'Some steps are still incomplete. Go back and finish them.');
+          AppSnack.error(context, context.l10n.onboardingSomeStepsStillIncompleteGo);
         }
       case Err<RiderOnboardingConfig>(:final failure):
         setState(() => _submitting = false);
@@ -64,12 +64,12 @@ class _OnboardingPreviewPageState extends State<OnboardingPreviewPage> {
     final RiderOnboardingConfig? config = _session.onboarding;
     if (config == null) {
       return AppScaffold(
-        title: tr('Review your application'),
+        title: context.l10n.onboardingReviewApplication,
         body: EmptyState(
-          title: tr('Nothing to review yet'),
-          message: tr('Start onboarding to see your answers here.'),
+          title: context.l10n.onboardingNothingReviewYet,
+          message: context.l10n.onboardingStartOnboardingSeeAnswersHere,
           icon: Icons.assignment_outlined,
-          actionLabel: tr('Go to onboarding'),
+          actionLabel: context.l10n.onboardingGoOnboarding,
           onAction: () => context.go(Routes.onboarding),
         ),
       );
@@ -97,7 +97,7 @@ class _OnboardingPreviewPageState extends State<OnboardingPreviewPage> {
           border: Border(top: BorderSide(color: AppColors.stroke)),
         ),
         child: PrimaryButton(
-          label: tr('Submit application'),
+          label: context.l10n.onboardingSubmitApplication,
           icon: Icons.send_rounded,
           loading: _submitting,
           onPressed: _submitting ? null : () => _submit(config),
@@ -132,9 +132,9 @@ class _Band extends StatelessWidget {
           ),
         ),
         const Gap.xl(),
-        Text(tr('Review your application'), style: AppText.displaySmall.copyWith(color: AppColors.onInk, fontSize: 25)),
+        Text(context.l10n.onboardingReviewApplication, style: AppText.displaySmall.copyWith(color: AppColors.onInk, fontSize: 25)),
         const Gap.sm(),
-        Text(tr('Check everything before you submit. You can still edit any step.'),
+        Text(context.l10n.onboardingCheckEverythingBeforeSubmitCan,
           style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.5),
         ),
         const Gap.lg(),
@@ -142,13 +142,13 @@ class _Band extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: InkStat(label: tr('Answered'), value: '$filled of $total', icon: Icons.fact_check_rounded),
+              child: InkStat(label: context.l10n.onboardingAnswered, value: '$filled of $total', icon: Icons.fact_check_rounded),
             ),
             const InkDivider(),
             const SizedBox(width: Insets.md),
             Expanded(
               child: InkStat(
-                label: tr('Package'),
+                label: context.l10n.onboardingPackage,
                 value: packageName.isEmpty ? '—' : packageName,
                 icon: Icons.inventory_2_rounded,
               ),
@@ -172,12 +172,12 @@ class _StepCard extends StatelessWidget {
     final List<OnboardingFieldConfig> shown = step.fields.where((f) => f.isInput || f.isUpload).toList();
     return ModuleCard(
       title: step.stepName,
-      actionLabel: tr('Edit'),
+      actionLabel: context.l10n.onboardingEdit,
       onAction: onEdit,
       child: shown.isEmpty
           ? Text(
               step.capabilities.isEmpty
-                  ? 'Nothing to fill in on this step.'
+                  ? context.l10n.onboardingNothingFillStep
                   : step.capabilities.map((c) => c.label).join(' · '),
               style: AppText.bodySmall.copyWith(height: 1.5),
             )
@@ -196,9 +196,9 @@ class _StepCard extends StatelessWidget {
   }
 
   static String _display(OnboardingFieldConfig f, Object? value) {
-    if (value == null || value.toString().trim().isEmpty) return f.required || f.isUpload ? 'Not provided' : '—';
+    if (value == null || value.toString().trim().isEmpty) return f.required || f.isUpload ? LocaleController.strings.onboardingNotProvided : '—';
     final String s = value.toString();
-    if (f.isUpload) return 'Attached';
+    if (f.isUpload) return LocaleController.strings.onboardingAttached;
     if (f.fieldCode.contains('AADHAAR')) return Fmt.maskAadhaar(s);
     if (f.fieldType == 'MOBILE') return Fmt.phone(s);
     if (f.fieldType == 'DATE') {

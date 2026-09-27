@@ -14,7 +14,7 @@ class RiderDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final SessionController session = sl<SessionController>();
     final Map<String, Object?> rider = session.profile;
-    final String name = rider['name']?.toString() ?? 'Rider';
+    final String name = rider['name']?.toString() ?? context.l10n.allocationRider;
     final String riderCode = rider['riderCode']?.toString() ?? '—';
     final String hub = rider['hub']?.toString() ?? '—';
 
@@ -33,13 +33,13 @@ class RiderDrawer extends StatelessWidget {
                   children: [
                     _DrawerItem(
                       icon: Icons.person_rounded,
-                      label: tr('Profile'),
-                      subtitle: tr('Personal details and KYC'),
+                      label: context.l10n.commonProfile,
+                      subtitle: context.l10n.homePersonalDetailsKyc,
                       onTap: () => _go(context, Routes.profile),
                     ),
                     _DrawerItem(
                       icon: Icons.support_agent_rounded,
-                      label: tr('Help & support'),
+                      label: context.l10n.homeHelpSupport,
                       onTap: () {
                         Navigator.of(context).pop();
                         context.go(Routes.support);
@@ -49,39 +49,39 @@ class RiderDrawer extends StatelessWidget {
                     const SizedBox(height: Insets.md),
                     _DrawerItem(
                       icon: Icons.language_rounded,
-                      label: tr('Language'),
-                      subtitle: AppLocaleController.instance.locale.nativeName,
+                      label: context.l10n.commonLanguage,
+                      subtitle: sl<LocaleController>().current.nativeName,
                       onTap: () => _pickLanguage(context),
                     ),
 
                     const SizedBox(height: Insets.md),
                     _DrawerItem(
                       icon: Icons.gavel_rounded,
-                      label: tr('Terms of service'),
+                      label: context.l10n.commonTermsService,
                       onTap: () => _openDocument(context),
                     ),
                     _DrawerItem(
                       icon: Icons.privacy_tip_rounded,
-                      label: tr('Privacy policy'),
+                      label: context.l10n.commonPrivacyPolicy,
                       onTap: () => _openDocument(context),
                     ),
                     _DrawerItem(
                       icon: Icons.info_rounded,
-                      label: tr('About this app'),
+                      label: context.l10n.commonAboutApp,
                       onTap: () => _openDocument(context),
                     ),
 
                     const SizedBox(height: Insets.xl),
                     _DrawerItem(
                       icon: Icons.logout_rounded,
-                      label: tr('Sign out'),
+                      label: context.l10n.commonSignOut,
                       destructive: true,
                       onTap: () async {
                         final bool confirmed = await AppDialog.confirm(
                           context,
-                          title: tr('Sign out?'),
-                          message: tr('You will need your mobile number and an OTP to sign back in.'),
-                          confirmLabel: tr('Sign out'),
+                          title: context.l10n.commonSignOut2,
+                          message: context.l10n.commonWillNeedMobileNumberOtp,
+                          confirmLabel: context.l10n.commonSignOut,
                           icon: Icons.logout_rounded,
                           destructive: true,
                         );
@@ -99,7 +99,7 @@ class RiderDrawer extends StatelessWidget {
                 padding: const EdgeInsets.only(top: Insets.lg, bottom: Insets.lg),
                 child: Column(
                   children: [
-                    Text('${tr('Version')} 1.0.0',
+                    Text('${context.l10n.commonVersion} 1.0.0',
                       style: AppText.bodySmall.copyWith(fontSize: 11, color: AppColors.textMuted),
                     ),
                   ],
@@ -113,8 +113,9 @@ class RiderDrawer extends StatelessWidget {
   }
 
   static Future<void> _pickLanguage(BuildContext context) async {
-    final AppLocale? picked = await LanguagePicker.show(context);
-    if (picked != null) await AppLocaleController.instance.select(picked);
+    final LocaleController locale = sl<LocaleController>();
+    final AppLocale? picked = await LanguagePicker.show(context, selected: locale.current);
+    if (picked != null) await locale.select(picked);
   }
 
   static void _go(BuildContext context, String route) {

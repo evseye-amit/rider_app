@@ -31,12 +31,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _askLanguage() async {
-    final AppLocaleController locale = AppLocaleController.instance;
-    if (!locale.loaded) await locale.load();
-    if (locale.asked || !mounted) return;
-    final AppLocale? picked = await LanguagePicker.show(context, firstRun: true);
+    final LocaleController locale = sl<LocaleController>();
+    if (locale.hasBeenPrompted || !mounted) return;
+    final AppLocale? picked = await LanguagePicker.show(
+      context,
+      selected: locale.current,
+      firstRun: true,
+    );
     if (picked == null) {
-      await locale.markAsked();
+      await locale.markPrompted();
       return;
     }
     await locale.select(picked);
@@ -53,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _continue() async {
     final String mobile = _controller.text.trim();
     if (!_valid) {
-      setState(() => _error = 'Enter a valid 10-digit mobile number');
+      setState(() => _error = context.l10n.commonEnterValid10DigitMobile);
       return;
     }
     setState(() {
@@ -82,11 +85,11 @@ class _LoginPageState extends State<LoginPage> {
     return AuthSheetScaffold(
       photo: BrandPhoto.rider,
       artSize: 210,
-      title: tr('Welcome back'),
-      subtitle: tr('Sign in with the mobile number registered with your fleet operator.'),
+      title: context.l10n.authWelcomeBack,
+      subtitle: context.l10n.authSignWithMobileNumberRegistered2,
       children: [
         AppTextField(
-          label: tr('Mobile number'),
+          label: context.l10n.commonMobileNumber,
           hint: '98765 43210',
           prefixText: '+91',
           controller: _controller,
@@ -104,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         const Gap.xl(),
         PrimaryButton(
-          label: tr('Continue'),
+          label: context.l10n.authContinue,
           trailingIcon: Icons.arrow_forward_rounded,
           loading: _loading,
           onPressed: _valid ? _continue : null,
@@ -116,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
             const Icon(Icons.lock_outline_rounded, size: 14, color: AppColors.textMuted),
             const SizedBox(width: Insets.sm - 2),
             Flexible(
-              child: Text(tr('We will text you a 6-digit code'),
+              child: Text(context.l10n.authWillText6DigitCode,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.bodySmall.copyWith(fontSize: 12),
@@ -125,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
         const Gap.xxl(),
-        AuthDivider(label: tr('Why ride with us')),
+        AuthDivider(label: context.l10n.authWhyRideWithUs),
         const Gap.xl(),
         const _TrustStrip(),
         const Gap.xxl(),
@@ -195,15 +198,15 @@ class _LegalLine extends StatelessWidget {
       TextSpan(
         style: base,
         children: [
-          TextSpan(text: tr('By continuing you agree to our ')),
+          TextSpan(text: context.l10n.authByContinuingAgreeOur),
           TextSpan(
-            text: tr('Terms of service'),
+            text: context.l10n.commonTermsService,
             style: link,
             recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context),
           ),
           const TextSpan(text: ' and '),
           TextSpan(
-            text: tr('Privacy policy'),
+            text: context.l10n.commonPrivacyPolicy,
             style: link,
             recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context),
           ),

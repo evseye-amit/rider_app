@@ -6,7 +6,7 @@ import '../domain/entities/support_ticket.dart';
 import '../domain/support_repository.dart';
 
 class SupportRepositoryImpl implements SupportRepository {
-  const SupportRepositoryImpl();
+  SupportRepositoryImpl();
 
   @override
   Future<Result<SupportOverview>> getOverview() async {
@@ -15,80 +15,77 @@ class SupportRepositoryImpl implements SupportRepository {
         roadsideNumber: '1800 267 8899',
         supportEmail: 'support@pinkrides.in',
         hubName: Demo.hub,
-        teamLead: const TeamLead(
+        teamLead: TeamLead(
           name: Demo.teamLead,
           mobile: Demo.teamLeadMobile,
           role: 'Team lead · ${Demo.hub}',
         ),
-        categories: const [
+        categories: [
           SupportCategory(
             key: 'battery',
-            label: 'Battery or charging',
+            label: LocaleController.strings.supportBatteryCharging,
             icon: 'battery',
             tone: 'warning',
-            sla: 'Response within 30 min',
+            sla: LocaleController.strings.supportResponseWithin30Min,
           ),
           SupportCategory(
             key: 'breakdown',
-            label: 'Breakdown on the road',
+            label: LocaleController.strings.supportBreakdownRoad,
             icon: 'build',
             tone: 'danger',
-            sla: 'Roadside within 45 min',
+            sla: LocaleController.strings.supportRoadsideWithin45Min,
           ),
           SupportCategory(
             key: 'payment',
-            label: 'Payment or wallet',
+            label: LocaleController.strings.supportPaymentWallet,
             icon: 'wallet',
             tone: 'primary',
-            sla: 'Response within 4 hours',
+            sla: LocaleController.strings.supportResponseWithin4Hours,
           ),
           SupportCategory(
             key: 'documents',
-            label: 'Documents and KYC',
+            label: LocaleController.strings.supportDocumentsKyc,
             icon: 'document',
             tone: 'info',
-            sla: 'Response within 1 day',
+            sla: LocaleController.strings.supportResponseWithin1Day,
           ),
           SupportCategory(
             key: 'accident',
-            label: 'Accident or theft',
+            label: LocaleController.strings.supportAccidentTheft,
             icon: 'shield',
             tone: 'danger',
-            sla: 'Call back within 15 min',
+            sla: LocaleController.strings.supportCallBackWithin15Min,
           ),
           SupportCategory(
             key: 'other',
-            label: 'Something else',
+            label: LocaleController.strings.supportSomethingElse,
             icon: 'help',
             tone: 'muted',
-            sla: 'Response within 1 day',
+            sla: LocaleController.strings.supportResponseWithin1Day,
           ),
         ],
         tickets: _tickets(),
-        faqs: const [
+        faqs: [
           SupportFaq(
-            question: 'When does my rent get debited?',
+            question: LocaleController.strings.supportWhenDoesMyRentGet,
             answer:
-                'Every Monday morning against your NACH mandate. If the wallet '
-                'is short, the debit retries on Tuesday before it is marked failed.',
+                LocaleController.strings.supportEveryMondayMorningAgainstNach,
           ),
           SupportFaq(
-            question: 'What happens if the battery dies mid-shift?',
+            question: LocaleController.strings.supportWhatHappensIfBatteryDies,
             answer:
-                'Raise a Battery or charging ticket and swap at the nearest hub. '
-                'Trips lost to a swap do not count against your incentive target.',
+                LocaleController.strings.supportRaiseBatteryChargingTicketSwap +
+                    LocaleController.strings.supportTripsLostSwapDoNot,
           ),
           SupportFaq(
-            question: 'How soon can I withdraw my earnings?',
+            question: LocaleController.strings.supportHowSoonCanIWithdraw,
             answer:
-                'Any settled balance can be withdrawn once a day. Payouts before '
-                '6 pm reach the account the same evening.',
+                LocaleController.strings.supportAnySettledBalanceCanWithdrawn,
           ),
           SupportFaq(
-            question: 'Can I keep the scooter overnight?',
+            question: LocaleController.strings.supportCanIKeepScooterOvernight,
             answer:
-                'Yes, on weekly and monthly plans. Daily plans return to the hub '
-                'at shift close, and rent still applies if you keep it out.',
+                LocaleController.strings.supportYesWeeklyMonthlyPlansDaily,
           ),
         ],
       ),
@@ -99,7 +96,7 @@ class SupportRepositoryImpl implements SupportRepository {
         SupportTicket(
           id: 'TKT-4471',
           categoryKey: 'battery',
-          title: 'Battery drops to 20% within 40 km',
+          title: LocaleController.strings.supportBatteryDrops20Within40,
           status: TicketStatus.open,
           createdAt: Demo.daysAgo(1),
           updatedAt: Demo.hoursAgo(5),
@@ -109,7 +106,7 @@ class SupportRepositoryImpl implements SupportRepository {
         SupportTicket(
           id: 'TKT-4462',
           categoryKey: 'payment',
-          title: 'Referral bonus for Sunil not credited',
+          title: LocaleController.strings.supportReferralBonusSunilNotCredited,
           status: TicketStatus.open,
           createdAt: Demo.daysAgo(3),
           updatedAt: Demo.daysAgo(2),
@@ -119,7 +116,7 @@ class SupportRepositoryImpl implements SupportRepository {
         SupportTicket(
           id: 'TKT-4398',
           categoryKey: 'documents',
-          title: 'Licence re-upload after renewal',
+          title: LocaleController.strings.supportLicenceReUploadAfterRenewal,
           status: TicketStatus.resolved,
           createdAt: Demo.daysAgo(12),
           updatedAt: Demo.daysAgo(10),
@@ -129,7 +126,7 @@ class SupportRepositoryImpl implements SupportRepository {
         SupportTicket(
           id: 'TKT-4310',
           categoryKey: 'breakdown',
-          title: 'Rear tyre puncture near Ashram',
+          title: LocaleController.strings.supportRearTyrePunctureNearAshram,
           status: TicketStatus.resolved,
           createdAt: Demo.daysAgo(21),
           updatedAt: Demo.daysAgo(21),

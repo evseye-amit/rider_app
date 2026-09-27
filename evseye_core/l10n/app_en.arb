@@ -1,0 +1,3082 @@
+{
+  "@@locale": "en",
+  "allocationAbandon": "Abandon",
+  "@allocationAbandon": {
+    "description": "Abandon"
+  },
+  "allocationAbandonDeAllocation": "Abandon this de-allocation?",
+  "@allocationAbandonDeAllocation": {
+    "description": "Abandon this de-allocation?"
+  },
+  "allocationAddItem": "Add an item",
+  "@allocationAddItem": {
+    "description": "Add an item"
+  },
+  "allocationAddLine": "Add a line",
+  "@allocationAddLine": {
+    "description": "Add a line"
+  },
+  "allocationAllocateVehicle": "Allocate vehicle",
+  "@allocationAllocateVehicle": {
+    "description": "Allocate vehicle"
+  },
+  "allocationAllocateVehicleWaitingRiderStart": "Allocate a vehicle to a waiting rider to start one.",
+  "@allocationAllocateVehicleWaitingRiderStart": {
+    "description": "Allocate a vehicle to a waiting rider to start one."
+  },
+  "allocationAmount": "Amount",
+  "@allocationAmount": {
+    "description": "Amount"
+  },
+  "allocationAskPayment": "Ask for payment",
+  "@allocationAskPayment": {
+    "description": "Ask for payment"
+  },
+  "allocationAssign": "Assign",
+  "@allocationAssign": {
+    "description": "Assign"
+  },
+  "allocationAssignVehicle": "Assign a vehicle",
+  "@allocationAssignVehicle": {
+    "description": "Assign a vehicle"
+  },
+  "allocationBackDesk": "Back to the desk",
+  "@allocationBackDesk": {
+    "description": "Back to the desk"
+  },
+  "allocationBypassDeploy": "Bypass and deploy",
+  "@allocationBypassDeploy": {
+    "description": "Bypass and deploy"
+  },
+  "allocationBypassPairing": "Bypass pairing?",
+  "@allocationBypassPairing": {
+    "description": "Bypass pairing?"
+  },
+  "allocationChecklistRiderWillAcceptItem": "The checklist the rider will accept item by item",
+  "@allocationChecklistRiderWillAcceptItem": {
+    "description": "The checklist the rider will accept item by item"
+  },
+  "allocationCompareReturnedVehicleAgainstReference": "Compare the returned vehicle against this reference set",
+  "@allocationCompareReturnedVehicleAgainstReference": {
+    "description": "Compare the returned vehicle against this reference set"
+  },
+  "allocationComplete": "Complete",
+  "@allocationComplete": {
+    "description": "Complete"
+  },
+  "allocationCompleteDeAllocation": "Complete this de-allocation?",
+  "@allocationCompleteDeAllocation": {
+    "description": "Complete this de-allocation?"
+  },
+  "allocationCompletesHandoverWithoutRiderPairing": "Completes the handover without the rider pairing the device",
+  "@allocationCompletesHandoverWithoutRiderPairing": {
+    "description": "Completes the handover without the rider pairing the device"
+  },
+  "allocationCondition": "Condition",
+  "@allocationCondition": {
+    "description": "Condition"
+  },
+  "allocationContinueHandover": "Continue the handover",
+  "@allocationContinueHandover": {
+    "description": "Continue the handover"
+  },
+  "allocationCouldNotLoadAllocations": "Could not load allocations",
+  "@allocationCouldNotLoadAllocations": {
+    "description": "Could not load allocations"
+  },
+  "allocationCouldNotLoadAvailableVehicles": "Could not load available vehicles",
+  "@allocationCouldNotLoadAvailableVehicles": {
+    "description": "Could not load available vehicles"
+  },
+  "allocationCouldNotLoadDeAllocation": "Could not load the de-allocation flow",
+  "@allocationCouldNotLoadDeAllocation": {
+    "description": "Could not load the de-allocation flow"
+  },
+  "allocationCouldNotLoadHandover": "Could not load this handover",
+  "@allocationCouldNotLoadHandover": {
+    "description": "Could not load this handover"
+  },
+  "allocationCouldNotLoadReturn": "Could not load this return",
+  "@allocationCouldNotLoadReturn": {
+    "description": "Could not load this return"
+  },
+  "allocationCouldNotLoadReturns": "Could not load returns",
+  "@allocationCouldNotLoadReturns": {
+    "description": "Could not load returns"
+  },
+  "allocationDeAllocateVehicle": "De-allocate vehicle",
+  "@allocationDeAllocateVehicle": {
+    "description": "De-allocate vehicle"
+  },
+  "allocationDeployed": "Deployed",
+  "@allocationDeployed": {
+    "description": "Deployed"
+  },
+  "allocationDevice": "Device",
+  "@allocationDevice": {
+    "description": "Device"
+  },
+  "allocationEveryDeAllocationRequestHas": "Every de-allocation request has been processed.",
+  "@allocationEveryDeAllocationRequestHas": {
+    "description": "Every de-allocation request has been processed."
+  },
+  "allocationEveryOnboardedRiderHubsHas": "Every onboarded rider in your hubs has a vehicle or a handover under way.",
+  "@allocationEveryOnboardedRiderHubsHas": {
+    "description": "Every onboarded rider in your hubs has a vehicle or a handover under way."
+  },
+  "allocationFleetCode": "Fleet code",
+  "@allocationFleetCode": {
+    "description": "Fleet code"
+  },
+  "allocationHeartbeat": "Heartbeat",
+  "@allocationHeartbeat": {
+    "description": "Heartbeat"
+  },
+  "allocationInspectionEvidence": "Inspection evidence",
+  "@allocationInspectionEvidence": {
+    "description": "Inspection evidence"
+  },
+  "allocationInspectionTrainingPairing": "Inspection, training, pairing",
+  "@allocationInspectionTrainingPairing": {
+    "description": "Inspection, training, pairing"
+  },
+  "allocationIotDevice": "IoT device",
+  "@allocationIotDevice": {
+    "description": "IoT device"
+  },
+  "allocationItem": "Item",
+  "@allocationItem": {
+    "description": "Item"
+  },
+  "allocationKeepGoing": "Keep going",
+  "@allocationKeepGoing": {
+    "description": "Keep going"
+  },
+  "allocationMarkAsPaid": "Mark as paid",
+  "@allocationMarkAsPaid": {
+    "description": "Mark as paid"
+  },
+  "allocationMatchWaitingRiderWithVehicle": "Match a waiting rider with a vehicle, then walk the handover through",
+  "@allocationMatchWaitingRiderWithVehicle": {
+    "description": "Match a waiting rider with a vehicle, then walk the handover through"
+  },
+  "allocationMove": "Your move",
+  "@allocationMove": {
+    "description": "Your move"
+  },
+  "allocationNoHandoversProgress": "No handovers in progress",
+  "@allocationNoHandoversProgress": {
+    "description": "No handovers in progress"
+  },
+  "allocationNoVehiclesOut": "No vehicles out",
+  "@allocationNoVehiclesOut": {
+    "description": "No vehicles out"
+  },
+  "allocationNoVehiclesReady": "No vehicles ready",
+  "@allocationNoVehiclesReady": {
+    "description": "No vehicles ready"
+  },
+  "allocationNobodyWaiting": "Nobody waiting",
+  "@allocationNobodyWaiting": {
+    "description": "Nobody waiting"
+  },
+  "allocationNothingCurrentlyAllocatedRider": "Nothing is currently allocated to a rider.",
+  "@allocationNothingCurrentlyAllocatedRider": {
+    "description": "Nothing is currently allocated to a rider."
+  },
+  "allocationNothingTakeBack": "Nothing to take back",
+  "@allocationNothingTakeBack": {
+    "description": "Nothing to take back"
+  },
+  "allocationNumber": "Number",
+  "@allocationNumber": {
+    "description": "Number"
+  },
+  "allocationOnboardingFee": "Onboarding fee",
+  "@allocationOnboardingFee": {
+    "description": "Onboarding fee"
+  },
+  "allocationOriginalHandoverPhotos": "Original handover photos",
+  "@allocationOriginalHandoverPhotos": {
+    "description": "Original handover photos"
+  },
+  "allocationOutRoad": "Out on road",
+  "@allocationOutRoad": {
+    "description": "Out on road"
+  },
+  "allocationPaymentReceived": "Payment received?",
+  "@allocationPaymentReceived": {
+    "description": "Payment received?"
+  },
+  "allocationProcessReturn": "Process return",
+  "@allocationProcessReturn": {
+    "description": "Process return"
+  },
+  "allocationQueue": "In the queue",
+  "@allocationQueue": {
+    "description": "In the queue"
+  },
+  "allocationRaiseDepositFeesRiderPays": "You raise the deposit and fees; the rider pays and submits the reference; you verify it.",
+  "@allocationRaiseDepositFeesRiderPays": {
+    "description": "You raise the deposit and fees; the rider pays and submits the reference; you verify it."
+  },
+  "allocationRaised": "Raised on",
+  "@allocationRaised": {
+    "description": "Raised on"
+  },
+  "allocationReason": "Reason",
+  "@allocationReason": {
+    "description": "Reason"
+  },
+  "allocationRentalFeeWeek": "Rental fee (week)",
+  "@allocationRentalFeeWeek": {
+    "description": "Rental fee (week)"
+  },
+  "allocationRequestVehicle": "Request the vehicle",
+  "@allocationRequestVehicle": {
+    "description": "Request the vehicle"
+  },
+  "allocationReserved": "Reserved",
+  "@allocationReserved": {
+    "description": "Reserved"
+  },
+  "allocationReserved2": "Reserved on",
+  "@allocationReserved2": {
+    "description": "Reserved on"
+  },
+  "allocationReturnReason": "Return reason",
+  "@allocationReturnReason": {
+    "description": "Return reason"
+  },
+  "allocationReturnRequest": "Return request",
+  "@allocationReturnRequest": {
+    "description": "Return request"
+  },
+  "allocationRider": "Rider",
+  "@allocationRider": {
+    "description": "Rider"
+  },
+  "allocationRiderCode": "Rider code",
+  "@allocationRiderCode": {
+    "description": "Rider code"
+  },
+  "allocationRiderPairedScooterRoadHandover": "The rider paired the scooter and is on the road. This handover is complete.",
+  "@allocationRiderPairedScooterRoadHandover": {
+    "description": "The rider paired the scooter and is on the road. This handover is complete."
+  },
+  "allocationRoad": "On road",
+  "@allocationRoad": {
+    "description": "On road"
+  },
+  "allocationSearchRiderVehicleNumber": "Search rider or vehicle number",
+  "@allocationSearchRiderVehicleNumber": {
+    "description": "Search rider or vehicle number"
+  },
+  "allocationSecurityDeposit": "Security deposit",
+  "@allocationSecurityDeposit": {
+    "description": "Security deposit"
+  },
+  "allocationSendPaymentRequest": "Send payment request",
+  "@allocationSendPaymentRequest": {
+    "description": "Send payment request"
+  },
+  "allocationSendRider": "Send to rider",
+  "@allocationSendRider": {
+    "description": "Send to rider"
+  },
+  "allocationSim": "SIM",
+  "@allocationSim": {
+    "description": "SIM"
+  },
+  "allocationStartReturn": "Start a return",
+  "@allocationStartReturn": {
+    "description": "Start a return"
+  },
+  "allocationTakeVehicleBackPutShelf": "Take a vehicle back and put it on the shelf",
+  "@allocationTakeVehicleBackPutShelf": {
+    "description": "Take a vehicle back and put it on the shelf"
+  },
+  "allocationTalkingServer": "Talking to the server…",
+  "@allocationTalkingServer": {
+    "description": "Talking to the server…"
+  },
+  "allocationVehicleHasAvailableOnboardedAllocation": "A vehicle has to be available, onboarded and allocation-enabled in one of your hubs to appear here.",
+  "@allocationVehicleHasAvailableOnboardedAllocation": {
+    "description": "A vehicle has to be available, onboarded and allocation-enabled in one of your hubs to appear here."
+  },
+  "allocationVehicleReserved": "Vehicle reserved",
+  "@allocationVehicleReserved": {
+    "description": "Vehicle reserved"
+  },
+  "allocationViewReturn": "View return",
+  "@allocationViewReturn": {
+    "description": "View return"
+  },
+  "allocationWaiting": "Waiting",
+  "@allocationWaiting": {
+    "description": "Waiting"
+  },
+  "allocationWhatRiderPaysBeforeHandover": "What the rider pays before the handover",
+  "@allocationWhatRiderPaysBeforeHandover": {
+    "description": "What the rider pays before the handover"
+  },
+  "allocationWhatWasAllocated": "What was allocated",
+  "@allocationWhatWasAllocated": {
+    "description": "What was allocated"
+  },
+  "allocationWorkPartner": "Work partner",
+  "@allocationWorkPartner": {
+    "description": "Work partner"
+  },
+  "allocationWorkshopTechnicianWhoInspectedVehicle": "The workshop or technician who inspected the vehicle",
+  "@allocationWorkshopTechnicianWhoInspectedVehicle": {
+    "description": "The workshop or technician who inspected the vehicle"
+  },
+  "allocationWritePdiChecklistRiderAccepts": "You write the PDI checklist; the rider accepts it, completes training and pairs the IoT unit.",
+  "@allocationWritePdiChecklistRiderAccepts": {
+    "description": "You write the PDI checklist; the rider accepts it, completes training and pairs the IoT unit."
+  },
+  "appGoHome": "Go home",
+  "@appGoHome": {
+    "description": "Go home"
+  },
+  "appPinkRidesOps": "Pink Rides Ops",
+  "@appPinkRidesOps": {
+    "description": "Pink Rides Ops"
+  },
+  "appPinkRidesRental": "Pink Rides Rental",
+  "@appPinkRidesRental": {
+    "description": "Pink Rides Rental"
+  },
+  "authByContinuingAgreeOur": "By continuing you agree to our ",
+  "@authByContinuingAgreeOur": {
+    "description": "By continuing you agree to our "
+  },
+  "authChangeNumber": "Change number",
+  "@authChangeNumber": {
+    "description": "Change number"
+  },
+  "authContinue": "Continue",
+  "@authContinue": {
+    "description": "Continue"
+  },
+  "authEditNumber": "Edit number",
+  "@authEditNumber": {
+    "description": "Edit number"
+  },
+  "authNumberVerified": "Number verified",
+  "@authNumberVerified": {
+    "description": "Number verified"
+  },
+  "authOnlyNumbersRegisteredByAdmin": "Only numbers registered by your admin can sign in",
+  "@authOnlyNumbersRegisteredByAdmin": {
+    "description": "Only numbers registered by your admin can sign in"
+  },
+  "authResendCode": "Resend code",
+  "@authResendCode": {
+    "description": "Resend code"
+  },
+  "authSessionEncryptedEndEnd": "Your session is encrypted end-to-end",
+  "@authSessionEncryptedEndEnd": {
+    "description": "Your session is encrypted end-to-end"
+  },
+  "authSignRunHub": "Sign in to run your hub",
+  "@authSignRunHub": {
+    "description": "Sign in to run your hub"
+  },
+  "authSignWithMobileNumberRegistered": "Sign in with the mobile number registered to your hub to manage allocations, riders and maintenance.",
+  "@authSignWithMobileNumberRegistered": {
+    "description": "Sign in with the mobile number registered to your hub to manage allocations, riders and maintenance."
+  },
+  "authSignWithMobileNumberRegistered2": "Sign in with the mobile number registered with your fleet operator.",
+  "@authSignWithMobileNumberRegistered2": {
+    "description": "Sign in with the mobile number registered with your fleet operator."
+  },
+  "authVerifyNumber": "Verify your number",
+  "@authVerifyNumber": {
+    "description": "Verify your number"
+  },
+  "authVerifying": "Verifying…",
+  "@authVerifying": {
+    "description": "Verifying…"
+  },
+  "authVerifyingNumber": "Verifying your number…",
+  "@authVerifyingNumber": {
+    "description": "Verifying your number…"
+  },
+  "authWelcomeBack": "Welcome back",
+  "@authWelcomeBack": {
+    "description": "Welcome back"
+  },
+  "authWhyChooseUs": "Why choose us",
+  "@authWhyChooseUs": {
+    "description": "Why choose us"
+  },
+  "authWhyRideWithUs": "Why ride with us",
+  "@authWhyRideWithUs": {
+    "description": "Why ride with us"
+  },
+  "authWillText6DigitCode": "We will text you a 6-digit code",
+  "@authWillText6DigitCode": {
+    "description": "We will text you a 6-digit code"
+  },
+  "authWrongNumber": "Wrong number?",
+  "@authWrongNumber": {
+    "description": "Wrong number?"
+  },
+  "commonAboutApp": "About this app",
+  "@commonAboutApp": {
+    "description": "About this app"
+  },
+  "commonAccountNumbersMatch": "Account numbers match",
+  "@commonAccountNumbersMatch": {
+    "description": "Account numbers match"
+  },
+  "commonAddAnotherReference": "Add another reference",
+  "@commonAddAnotherReference": {
+    "description": "Add another reference"
+  },
+  "commonAddNominee": "Add nominee",
+  "@commonAddNominee": {
+    "description": "Add nominee"
+  },
+  "commonAllocated": "Allocated on",
+  "@commonAllocated": {
+    "description": "Allocated on"
+  },
+  "commonAllocation": "Allocation",
+  "@commonAllocation": {
+    "description": "Allocation"
+  },
+  "commonAppWillChangeRightAway": "The app will change right away.",
+  "@commonAppWillChangeRightAway": {
+    "description": "The app will change right away."
+  },
+  "commonAttendance": "Attendance",
+  "@commonAttendance": {
+    "description": "Attendance"
+  },
+  "commonCamera": "Camera",
+  "@commonCamera": {
+    "description": "Camera"
+  },
+  "commonCanChangeLaterFromMenu": "You can change it later from the menu.",
+  "@commonCanChangeLaterFromMenu": {
+    "description": "You can change it later from the menu."
+  },
+  "commonCancel": "Cancel",
+  "@commonCancel": {
+    "description": "Cancel"
+  },
+  "commonCategory": "Category",
+  "@commonCategory": {
+    "description": "Category"
+  },
+  "commonChooseLanguage": "Choose your language",
+  "@commonChooseLanguage": {
+    "description": "Choose your language"
+  },
+  "commonCity": "City",
+  "@commonCity": {
+    "description": "City"
+  },
+  "commonColour": "Colour",
+  "@commonColour": {
+    "description": "Colour"
+  },
+  "commonConfirmAccountNumber": "Confirm account number",
+  "@commonConfirmAccountNumber": {
+    "description": "Confirm account number"
+  },
+  "commonDeAllocation": "De-allocation",
+  "@commonDeAllocation": {
+    "description": "De-allocation"
+  },
+  "commonEnterAccountNumber": "Enter your account number",
+  "@commonEnterAccountNumber": {
+    "description": "Enter your account number"
+  },
+  "commonFullName": "Full name",
+  "@commonFullName": {
+    "description": "Full name"
+  },
+  "commonGallery": "Gallery",
+  "@commonGallery": {
+    "description": "Gallery"
+  },
+  "commonHandover": "Handover",
+  "@commonHandover": {
+    "description": "Handover"
+  },
+  "commonHowTheyRelated": "How are they related to you?",
+  "@commonHowTheyRelated": {
+    "description": "How are they related to you?"
+  },
+  "commonIncentives": "Incentives",
+  "@commonIncentives": {
+    "description": "Incentives"
+  },
+  "commonIotUnit": "IoT unit",
+  "@commonIotUnit": {
+    "description": "IoT unit"
+  },
+  "commonLanguage": "Language",
+  "@commonLanguage": {
+    "description": "Language"
+  },
+  "commonMake100": "Make it 100%",
+  "@commonMake100": {
+    "description": "Make it 100%"
+  },
+  "commonMobile": "Mobile",
+  "@commonMobile": {
+    "description": "Mobile"
+  },
+  "commonMobileNumber": "Mobile number",
+  "@commonMobileNumber": {
+    "description": "Mobile number"
+  },
+  "commonModel": "Model",
+  "@commonModel": {
+    "description": "Model"
+  },
+  "commonNominationComplete": "Your nomination is complete.",
+  "@commonNominationComplete": {
+    "description": "Your nomination is complete."
+  },
+  "commonOdometer": "Odometer",
+  "@commonOdometer": {
+    "description": "Odometer"
+  },
+  "commonOpen": "Open",
+  "@commonOpen": {
+    "description": "Open"
+  },
+  "commonOtherRelationship": "Other relationship",
+  "@commonOtherRelationship": {
+    "description": "Other relationship"
+  },
+  "commonPaidDate": "Paid to date",
+  "@commonPaidDate": {
+    "description": "Paid to date"
+  },
+  "commonPayment": "Payment",
+  "@commonPayment": {
+    "description": "Payment"
+  },
+  "commonPreDeliveryInspection": "Pre-delivery inspection",
+  "@commonPreDeliveryInspection": {
+    "description": "Pre-delivery inspection"
+  },
+  "commonPrivacyPolicy": "Privacy policy",
+  "@commonPrivacyPolicy": {
+    "description": "Privacy policy"
+  },
+  "commonProfile": "Profile",
+  "@commonProfile": {
+    "description": "Profile"
+  },
+  "commonRaised": "Raised",
+  "@commonRaised": {
+    "description": "Raised"
+  },
+  "commonRefresh": "Refresh",
+  "@commonRefresh": {
+    "description": "Refresh"
+  },
+  "commonRelationship": "Relationship",
+  "@commonRelationship": {
+    "description": "Relationship"
+  },
+  "commonRemove": "Remove",
+  "@commonRemove": {
+    "description": "Remove"
+  },
+  "commonRetake": "Retake",
+  "@commonRetake": {
+    "description": "Retake"
+  },
+  "commonRetry": "Retry",
+  "@commonRetry": {
+    "description": "Retry"
+  },
+  "commonSave": "Save",
+  "@commonSave": {
+    "description": "Save"
+  },
+  "commonScooter": "Your scooter",
+  "@commonScooter": {
+    "description": "Your scooter"
+  },
+  "commonSelect": "Select",
+  "@commonSelect": {
+    "description": "Select"
+  },
+  "commonShare": "Share",
+  "@commonShare": {
+    "description": "Share"
+  },
+  "commonSharesAddUp100": "Shares add up to 100%",
+  "@commonSharesAddUp100": {
+    "description": "Shares add up to 100%"
+  },
+  "commonSignOut": "Sign out",
+  "@commonSignOut": {
+    "description": "Sign out"
+  },
+  "commonSignOut2": "Sign out?",
+  "@commonSignOut2": {
+    "description": "Sign out?"
+  },
+  "commonSkip": "Skip",
+  "@commonSkip": {
+    "description": "Skip"
+  },
+  "commonStatus": "Status",
+  "@commonStatus": {
+    "description": "Status"
+  },
+  "commonSupport": "Support",
+  "@commonSupport": {
+    "description": "Support"
+  },
+  "commonTeamLead": "Team lead",
+  "@commonTeamLead": {
+    "description": "Team lead"
+  },
+  "commonTellUsHowTheyRelated": "Tell us how they are related to you",
+  "@commonTellUsHowTheyRelated": {
+    "description": "Tell us how they are related to you"
+  },
+  "commonTermsService": "Terms of service",
+  "@commonTermsService": {
+    "description": "Terms of service"
+  },
+  "commonTheirName": "Their name",
+  "@commonTheirName": {
+    "description": "Their name"
+  },
+  "commonTotal": "Total",
+  "@commonTotal": {
+    "description": "Total"
+  },
+  "commonTryAgain": "Try again",
+  "@commonTryAgain": {
+    "description": "Try again"
+  },
+  "commonTypeAgain": "Type it again",
+  "@commonTypeAgain": {
+    "description": "Type it again"
+  },
+  "commonVehicle": "Vehicle",
+  "@commonVehicle": {
+    "description": "Vehicle"
+  },
+  "commonVersion": "Version",
+  "@commonVersion": {
+    "description": "Version"
+  },
+  "commonWallet": "Wallet",
+  "@commonWallet": {
+    "description": "Wallet"
+  },
+  "commonWeek": "This week",
+  "@commonWeek": {
+    "description": "This week"
+  },
+  "commonWhatHappensNext": "What happens next",
+  "@commonWhatHappensNext": {
+    "description": "What happens next"
+  },
+  "commonWillNeedMobileNumberOtp": "You will need your mobile number and an OTP to sign back in.",
+  "@commonWillNeedMobileNumberOtp": {
+    "description": "You will need your mobile number and an OTP to sign back in."
+  },
+  "commonYesterdayGlance": "Yesterday at a glance",
+  "@commonYesterdayGlance": {
+    "description": "Yesterday at a glance"
+  },
+  "deploymentAlmostThere": "Almost there",
+  "@deploymentAlmostThere": {
+    "description": "Almost there"
+  },
+  "deploymentAmountDue": "Amount due",
+  "@deploymentAmountDue": {
+    "description": "Amount due"
+  },
+  "deploymentCheckEachItem": "Check each item",
+  "@deploymentCheckEachItem": {
+    "description": "Check each item"
+  },
+  "deploymentCheckingWithFleetManagerEvery": "Checking with your fleet manager every few seconds…",
+  "@deploymentCheckingWithFleetManagerEvery": {
+    "description": "Checking with your fleet manager every few seconds…"
+  },
+  "deploymentCouldNotLoadChecklist": "Could not load the checklist",
+  "@deploymentCouldNotLoadChecklist": {
+    "description": "Could not load the checklist"
+  },
+  "deploymentCouldNotLoadTraining": "Could not load training",
+  "@deploymentCouldNotLoadTraining": {
+    "description": "Could not load training"
+  },
+  "deploymentCouldNotReachServer": "Could not reach the server",
+  "@deploymentCouldNotReachServer": {
+    "description": "Could not reach the server"
+  },
+  "deploymentDone": "Done",
+  "@deploymentDone": {
+    "description": "Done"
+  },
+  "deploymentFinishTraining": "Finish training",
+  "@deploymentFinishTraining": {
+    "description": "Finish training"
+  },
+  "deploymentFlagAsProblem": "Flag as a problem",
+  "@deploymentFlagAsProblem": {
+    "description": "Flag as a problem"
+  },
+  "deploymentFleetManagerChecksAgainstWhat": "Your fleet manager checks this against what they received.",
+  "@deploymentFleetManagerChecksAgainstWhat": {
+    "description": "Your fleet manager checks this against what they received."
+  },
+  "deploymentFleetManagerPreparingVehicleIts": "Your fleet manager is preparing the vehicle and its IoT unit. Your payment details appear here as soon as they are ready.",
+  "@deploymentFleetManagerPreparingVehicleIts": {
+    "description": "Your fleet manager is preparing the vehicle and its IoT unit. Your payment details appear here as soon as they are ready."
+  },
+  "deploymentFleetManagerPuttingTogetherPayment": "Your fleet manager is putting together your payment details. You will be asked to pay in a moment.",
+  "@deploymentFleetManagerPuttingTogetherPayment": {
+    "description": "Your fleet manager is putting together your payment details. You will be asked to pay in a moment."
+  },
+  "deploymentFleetManagerWillAllocateScooter": "Your fleet manager will allocate a scooter to you. We will bring you straight here when they do.",
+  "@deploymentFleetManagerWillAllocateScooter": {
+    "description": "Your fleet manager will allocate a scooter to you. We will bring you straight here when they do."
+  },
+  "deploymentGoThroughEachItemWith": "Go through each item with your team lead. Flag anything that is not right — it goes to the workshop with your note.",
+  "@deploymentGoThroughEachItemWith": {
+    "description": "Go through each item with your team lead. Flag anything that is not right — it goes to the workshop with your note."
+  },
+  "deploymentHowDidPay": "How did you pay?",
+  "@deploymentHowDidPay": {
+    "description": "How did you pay?"
+  },
+  "deploymentNoPaymentShow": "No payment to show",
+  "@deploymentNoPaymentShow": {
+    "description": "No payment to show"
+  },
+  "deploymentNoteWorkshopTeam": "Note for the workshop team",
+  "@deploymentNoteWorkshopTeam": {
+    "description": "Note for the workshop team"
+  },
+  "deploymentOpenEachModuleReadThrough": "Open each module and read it through. Mandatory ones must be completed before you can finish.",
+  "@deploymentOpenEachModuleReadThrough": {
+    "description": "Open each module and read it through. Mandatory ones must be completed before you can finish."
+  },
+  "deploymentPaidVia": "Paid via",
+  "@deploymentPaidVia": {
+    "description": "Paid via"
+  },
+  "deploymentPaymentReceived": "Payment received",
+  "@deploymentPaymentReceived": {
+    "description": "Payment received"
+  },
+  "deploymentPreparingScooter": "Preparing your scooter",
+  "@deploymentPreparingScooter": {
+    "description": "Preparing your scooter"
+  },
+  "deploymentProgressSavedSignAgainAny": "Your progress is saved. Sign in again any time to pick up where you left off.",
+  "@deploymentProgressSavedSignAgainAny": {
+    "description": "Your progress is saved. Sign in again any time to pick up where you left off."
+  },
+  "deploymentReference": "Reference",
+  "@deploymentReference": {
+    "description": "Reference"
+  },
+  "deploymentReferenceSubmitted": "Reference submitted",
+  "@deploymentReferenceSubmitted": {
+    "description": "Reference submitted"
+  },
+  "deploymentSafetyTraining": "Safety training",
+  "@deploymentSafetyTraining": {
+    "description": "Safety training"
+  },
+  "deploymentSubmitted": "Submitted",
+  "@deploymentSubmitted": {
+    "description": "Submitted"
+  },
+  "deploymentTrainingUnavailable": "Training unavailable",
+  "@deploymentTrainingUnavailable": {
+    "description": "Training unavailable"
+  },
+  "deploymentTransactionReference": "Transaction reference",
+  "@deploymentTransactionReference": {
+    "description": "Transaction reference"
+  },
+  "deploymentWhatWrong": "What is wrong?",
+  "@deploymentWhatWrong": {
+    "description": "What is wrong?"
+  },
+  "earningsAchieved": "Achieved",
+  "@earningsAchieved": {
+    "description": "Achieved"
+  },
+  "earningsActiveSchemes": "Active schemes",
+  "@earningsActiveSchemes": {
+    "description": "Active schemes"
+  },
+  "earningsAlreadyClearedCredited": "Already cleared and credited",
+  "@earningsAlreadyClearedCredited": {
+    "description": "Already cleared and credited"
+  },
+  "earningsBonusesCanStillClearWeek": "Bonuses you can still clear this week",
+  "@earningsBonusesCanStillClearWeek": {
+    "description": "Bonuses you can still clear this week"
+  },
+  "earningsCheckBackTomorrowNewIncentives": "Check back tomorrow for new incentives.",
+  "@earningsCheckBackTomorrowNewIncentives": {
+    "description": "Check back tomorrow for new incentives."
+  },
+  "earningsClearSchemeWeekLandsWallet": "Clear a scheme this week and it lands in your wallet instantly",
+  "@earningsClearSchemeWeekLandsWallet": {
+    "description": "Clear a scheme this week and it lands in your wallet instantly"
+  },
+  "earningsCleared": "Cleared",
+  "@earningsCleared": {
+    "description": "Cleared"
+  },
+  "earningsCouldNotLoadIncentives": "Could not load your incentives",
+  "@earningsCouldNotLoadIncentives": {
+    "description": "Could not load your incentives"
+  },
+  "earningsEarnedWeek": "Earned this week",
+  "@earningsEarnedWeek": {
+    "description": "Earned this week"
+  },
+  "earningsNoActiveSchemesRightNow": "No active schemes right now",
+  "@earningsNoActiveSchemesRightNow": {
+    "description": "No active schemes right now"
+  },
+  "earningsTerms": "Terms",
+  "@earningsTerms": {
+    "description": "Terms"
+  },
+  "earningsTermsConditions": "Terms & conditions",
+  "@earningsTermsConditions": {
+    "description": "Terms & conditions"
+  },
+  "earningsTurnExtraTripsIntoExtra": "Turn extra trips into extra pay",
+  "@earningsTurnExtraTripsIntoExtra": {
+    "description": "Turn extra trips into extra pay"
+  },
+  "homeCouldNotLoadDashboard": "Could not load your dashboard",
+  "@homeCouldNotLoadDashboard": {
+    "description": "Could not load your dashboard"
+  },
+  "homeDepositsHandoverFees": "Deposits and handover fees",
+  "@homeDepositsHandoverFees": {
+    "description": "Deposits and handover fees"
+  },
+  "homeDistance": "Distance",
+  "@homeDistance": {
+    "description": "Distance"
+  },
+  "homeHelpSupport": "Help & support",
+  "@homeHelpSupport": {
+    "description": "Help & support"
+  },
+  "homeHistory": "History",
+  "@homeHistory": {
+    "description": "History"
+  },
+  "homeIncentiveEarned": "Incentive earned",
+  "@homeIncentiveEarned": {
+    "description": "Incentive earned"
+  },
+  "homeMarkAbsent": "Mark absent",
+  "@homeMarkAbsent": {
+    "description": "Mark absent"
+  },
+  "homeMarkYourselfAbsent": "Mark yourself absent?",
+  "@homeMarkYourselfAbsent": {
+    "description": "Mark yourself absent?"
+  },
+  "homeMonSun": "Mon – Sun",
+  "@homeMonSun": {
+    "description": "Mon – Sun"
+  },
+  "homeOnline": "Online",
+  "@homeOnline": {
+    "description": "Online"
+  },
+  "homePersonalDetailsKyc": "Personal details and KYC",
+  "@homePersonalDetailsKyc": {
+    "description": "Personal details and KYC"
+  },
+  "homeRentDue": "Rent due",
+  "@homeRentDue": {
+    "description": "Rent due"
+  },
+  "homeShiftWillEndScooterWill": "Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans.",
+  "@homeShiftWillEndScooterWill": {
+    "description": "Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans."
+  },
+  "homeTrips": "Trips",
+  "@homeTrips": {
+    "description": "Trips"
+  },
+  "homeWithdraw": "Withdraw",
+  "@homeWithdraw": {
+    "description": "Withdraw"
+  },
+  "hubBaysFree": "Bays free",
+  "@hubBaysFree": {
+    "description": "Bays free"
+  },
+  "hubCouldNotLoadHub": "Could not load your hub",
+  "@hubCouldNotLoadHub": {
+    "description": "Could not load your hub"
+  },
+  "hubFleetManager": "Fleet Manager",
+  "@hubFleetManager": {
+    "description": "Fleet Manager"
+  },
+  "hubFleetUtilisation": "Fleet utilisation",
+  "@hubFleetUtilisation": {
+    "description": "Fleet utilisation"
+  },
+  "hubHome": "Home",
+  "@hubHome": {
+    "description": "Home"
+  },
+  "hubHubGlance": "Your hub at a glance",
+  "@hubHubGlance": {
+    "description": "Your hub at a glance"
+  },
+  "hubHubs": "Your hubs",
+  "@hubHubs": {
+    "description": "Your hubs"
+  },
+  "hubMaintenance": "Maintenance",
+  "@hubMaintenance": {
+    "description": "Maintenance"
+  },
+  "hubOpenJobs": "Open jobs",
+  "@hubOpenJobs": {
+    "description": "Open jobs"
+  },
+  "hubPickOneSeveralSeeTheir": "Pick one, or several to see their numbers combined",
+  "@hubPickOneSeveralSeeTheir": {
+    "description": "Pick one, or several to see their numbers combined"
+  },
+  "hubReturnsClear": "Returns to clear",
+  "@hubReturnsClear": {
+    "description": "Returns to clear"
+  },
+  "hubRidersPresent": "Riders present",
+  "@hubRidersPresent": {
+    "description": "Riders present"
+  },
+  "hubShift": "On shift",
+  "@hubShift": {
+    "description": "On shift"
+  },
+  "hubUptime": "Uptime",
+  "@hubUptime": {
+    "description": "Uptime"
+  },
+  "hubWaitingAllocate": "Waiting to allocate",
+  "@hubWaitingAllocate": {
+    "description": "Waiting to allocate"
+  },
+  "maintenanceAddNote": "Add a note",
+  "@maintenanceAddNote": {
+    "description": "Add a note"
+  },
+  "maintenanceAddNote2": "Add note",
+  "@maintenanceAddNote2": {
+    "description": "Add note"
+  },
+  "maintenanceAssign": "Assign to",
+  "@maintenanceAssign": {
+    "description": "Assign to"
+  },
+  "maintenanceAssignVendor": "Assign a vendor",
+  "@maintenanceAssignVendor": {
+    "description": "Assign a vendor"
+  },
+  "maintenanceAssignedVendor": "Assigned vendor",
+  "@maintenanceAssignedVendor": {
+    "description": "Assigned vendor"
+  },
+  "maintenanceBay": "Bay",
+  "@maintenanceBay": {
+    "description": "Bay"
+  },
+  "maintenanceCanAlsoAssignLater": "You can also assign this later",
+  "@maintenanceCanAlsoAssignLater": {
+    "description": "You can also assign this later"
+  },
+  "maintenanceChooseLater": "Choose later",
+  "@maintenanceChooseLater": {
+    "description": "Choose later"
+  },
+  "maintenanceCloseJob": "Close job",
+  "@maintenanceCloseJob": {
+    "description": "Close job"
+  },
+  "maintenanceCloseJob2": "Close this job?",
+  "@maintenanceCloseJob2": {
+    "description": "Close this job?"
+  },
+  "maintenanceClosed": "Closed",
+  "@maintenanceClosed": {
+    "description": "Closed"
+  },
+  "maintenanceCompleted": "Completed",
+  "@maintenanceCompleted": {
+    "description": "Completed"
+  },
+  "maintenanceCostBreakdown": "Cost breakdown",
+  "@maintenanceCostBreakdown": {
+    "description": "Cost breakdown"
+  },
+  "maintenanceCouldNotLoadForm": "Could not load the form",
+  "@maintenanceCouldNotLoadForm": {
+    "description": "Could not load the form"
+  },
+  "maintenanceCouldNotLoadJob": "Could not load this job",
+  "@maintenanceCouldNotLoadJob": {
+    "description": "Could not load this job"
+  },
+  "maintenanceCouldNotLoadMaintenanceBoard": "Could not load the maintenance board",
+  "@maintenanceCouldNotLoadMaintenanceBoard": {
+    "description": "Could not load the maintenance board"
+  },
+  "maintenanceIssue": "Issue",
+  "@maintenanceIssue": {
+    "description": "Issue"
+  },
+  "maintenanceIssueDescription": "Issue description",
+  "@maintenanceIssueDescription": {
+    "description": "Issue description"
+  },
+  "maintenanceJob": "Job",
+  "@maintenanceJob": {
+    "description": "Job"
+  },
+  "maintenanceJobDetails": "Job details",
+  "@maintenanceJobDetails": {
+    "description": "Job details"
+  },
+  "maintenanceJobTimeline": "Job timeline",
+  "@maintenanceJobTimeline": {
+    "description": "Job timeline"
+  },
+  "maintenanceJobType": "Job type",
+  "@maintenanceJobType": {
+    "description": "Job type"
+  },
+  "maintenanceKilometresAsShownCluster": "In kilometres, as shown on the cluster.",
+  "@maintenanceKilometresAsShownCluster": {
+    "description": "In kilometres, as shown on the cluster."
+  },
+  "maintenanceLabour": "Labour",
+  "@maintenanceLabour": {
+    "description": "Labour"
+  },
+  "maintenanceMaintenanceBoard": "Maintenance board",
+  "@maintenanceMaintenanceBoard": {
+    "description": "Maintenance board"
+  },
+  "maintenanceNoJobsHere": "No jobs here",
+  "@maintenanceNoJobsHere": {
+    "description": "No jobs here"
+  },
+  "maintenanceNoNotesYet": "No notes yet",
+  "@maintenanceNoNotesYet": {
+    "description": "No notes yet"
+  },
+  "maintenanceNote": "Note",
+  "@maintenanceNote": {
+    "description": "Note"
+  },
+  "maintenanceNotes": "Notes",
+  "@maintenanceNotes": {
+    "description": "Notes"
+  },
+  "maintenanceNothingMatchesQueueFilterRight": "Nothing matches this queue and filter right now.",
+  "@maintenanceNothingMatchesQueueFilterRight": {
+    "description": "Nothing matches this queue and filter right now."
+  },
+  "maintenanceOdometerReading": "Odometer reading",
+  "@maintenanceOdometerReading": {
+    "description": "Odometer reading"
+  },
+  "maintenanceOverdue": "Overdue",
+  "@maintenanceOverdue": {
+    "description": "Overdue"
+  },
+  "maintenanceParts": "Parts",
+  "@maintenanceParts": {
+    "description": "Parts"
+  },
+  "maintenancePhotoEvidence": "Photo evidence",
+  "@maintenancePhotoEvidence": {
+    "description": "Photo evidence"
+  },
+  "maintenancePriority": "Priority",
+  "@maintenancePriority": {
+    "description": "Priority"
+  },
+  "maintenanceProgress": "In progress",
+  "@maintenanceProgress": {
+    "description": "In progress"
+  },
+  "maintenanceRaiseJob": "Raise a job",
+  "@maintenanceRaiseJob": {
+    "description": "Raise a job"
+  },
+  "maintenanceRaiseJob2": "Raise job",
+  "@maintenanceRaiseJob2": {
+    "description": "Raise job"
+  },
+  "maintenanceReassign": "Reassign",
+  "@maintenanceReassign": {
+    "description": "Reassign"
+  },
+  "maintenanceReassignVendor": "Reassign vendor",
+  "@maintenanceReassignVendor": {
+    "description": "Reassign vendor"
+  },
+  "maintenanceRiderFile": "Rider on file",
+  "@maintenanceRiderFile": {
+    "description": "Rider on file"
+  },
+  "maintenanceSaveNote": "Save note",
+  "@maintenanceSaveNote": {
+    "description": "Save note"
+  },
+  "maintenanceSearchVehicleJobIdIssue": "Search vehicle, job ID or issue",
+  "@maintenanceSearchVehicleJobIdIssue": {
+    "description": "Search vehicle, job ID or issue"
+  },
+  "maintenanceSelectVehicle": "Select a vehicle",
+  "@maintenanceSelectVehicle": {
+    "description": "Select a vehicle"
+  },
+  "maintenanceSendVehicleWorkshop": "Send a vehicle to the workshop",
+  "@maintenanceSendVehicleWorkshop": {
+    "description": "Send a vehicle to the workshop"
+  },
+  "maintenanceSendWorkshop": "Send it to the workshop",
+  "@maintenanceSendWorkshop": {
+    "description": "Send it to the workshop"
+  },
+  "maintenanceServiceBay": "Service bay",
+  "@maintenanceServiceBay": {
+    "description": "Service bay"
+  },
+  "maintenanceTechnicianPicksUpAsSoon": "A technician picks this up as soon as it is raised.",
+  "@maintenanceTechnicianPicksUpAsSoon": {
+    "description": "A technician picks this up as soon as it is raised."
+  },
+  "maintenanceTrackEveryJobFromRaised": "Track every job from raised to closed",
+  "@maintenanceTrackEveryJobFromRaised": {
+    "description": "Track every job from raised to closed"
+  },
+  "maintenanceUpdateStatus": "Update status",
+  "@maintenanceUpdateStatus": {
+    "description": "Update status"
+  },
+  "maintenanceUpdatesFromWorkshopWillShow": "Updates from the workshop will show up here.",
+  "@maintenanceUpdatesFromWorkshopWillShow": {
+    "description": "Updates from the workshop will show up here."
+  },
+  "maintenanceVendor": "Vendor",
+  "@maintenanceVendor": {
+    "description": "Vendor"
+  },
+  "maintenanceWhatHappenedWhatNeededNext": "What happened, or what is needed next",
+  "@maintenanceWhatHappenedWhatNeededNext": {
+    "description": "What happened, or what is needed next"
+  },
+  "maintenanceWhatKindJob": "What kind of job is this",
+  "@maintenanceWhatKindJob": {
+    "description": "What kind of job is this"
+  },
+  "maintenanceWhatWrongWithVehicle": "What is wrong with the vehicle",
+  "@maintenanceWhatWrongWithVehicle": {
+    "description": "What is wrong with the vehicle"
+  },
+  "notificationsAllClear": "All clear",
+  "@notificationsAllClear": {
+    "description": "All clear"
+  },
+  "notificationsCouldNotLoadNotifications": "Could not load notifications",
+  "@notificationsCouldNotLoadNotifications": {
+    "description": "Could not load notifications"
+  },
+  "notificationsEarlier": "Earlier",
+  "@notificationsEarlier": {
+    "description": "Earlier"
+  },
+  "notificationsNewEarningsRemindersAlertsWill": "New earnings, reminders and alerts will show up here.",
+  "@notificationsNewEarningsRemindersAlertsWill": {
+    "description": "New earnings, reminders and alerts will show up here."
+  },
+  "notificationsNoMatchingNotifications": "No matching notifications",
+  "@notificationsNoMatchingNotifications": {
+    "description": "No matching notifications"
+  },
+  "notificationsNotifications": "Notifications",
+  "@notificationsNotifications": {
+    "description": "Notifications"
+  },
+  "notificationsSearchNotifications": "Search notifications",
+  "@notificationsSearchNotifications": {
+    "description": "Search notifications"
+  },
+  "notificationsToday": "Today",
+  "@notificationsToday": {
+    "description": "Today"
+  },
+  "onboardingAcceptAgreementContinue": "Accept the agreement to continue",
+  "@onboardingAcceptAgreementContinue": {
+    "description": "Accept the agreement to continue"
+  },
+  "onboardingAddLeastOneReference": "Add at least one reference",
+  "@onboardingAddLeastOneReference": {
+    "description": "Add at least one reference"
+  },
+  "onboardingAnswered": "Answered",
+  "@onboardingAnswered": {
+    "description": "Answered"
+  },
+  "onboardingCheckEverythingBeforeSubmitCan": "Check everything before you submit. You can still edit any step.",
+  "@onboardingCheckEverythingBeforeSubmitCan": {
+    "description": "Check everything before you submit. You can still edit any step."
+  },
+  "onboardingCouldNotLoadOnboarding": "Could not load onboarding",
+  "@onboardingCouldNotLoadOnboarding": {
+    "description": "Could not load onboarding"
+  },
+  "onboardingDocumentHasExpiredEnterDate": "This document has expired. Enter a date later than today.",
+  "@onboardingDocumentHasExpiredEnterDate": {
+    "description": "This document has expired. Enter a date later than today."
+  },
+  "onboardingEdit": "Edit",
+  "@onboardingEdit": {
+    "description": "Edit"
+  },
+  "onboardingEveryStepHaveCompletedSaved": "Every step you have completed is saved. You can pick up exactly where you left off next time you sign in.",
+  "@onboardingEveryStepHaveCompletedSaved": {
+    "description": "Every step you have completed is saved. You can pick up exactly where you left off next time you sign in."
+  },
+  "onboardingExit": "Exit",
+  "@onboardingExit": {
+    "description": "Exit"
+  },
+  "onboardingExitOnboarding": "Exit onboarding?",
+  "@onboardingExitOnboarding": {
+    "description": "Exit onboarding?"
+  },
+  "onboardingGoOnboarding": "Go to onboarding",
+  "@onboardingGoOnboarding": {
+    "description": "Go to onboarding"
+  },
+  "onboardingLoadingOnboardingForm": "Loading your onboarding form…",
+  "@onboardingLoadingOnboardingForm": {
+    "description": "Loading your onboarding form…"
+  },
+  "onboardingNothingFill": "Nothing to fill in",
+  "@onboardingNothingFill": {
+    "description": "Nothing to fill in"
+  },
+  "onboardingNothingReviewYet": "Nothing to review yet",
+  "@onboardingNothingReviewYet": {
+    "description": "Nothing to review yet"
+  },
+  "onboardingPackage": "Package",
+  "@onboardingPackage": {
+    "description": "Package"
+  },
+  "onboardingReviewApplication": "Review application",
+  "@onboardingReviewApplication": {
+    "description": "Review application"
+  },
+  "onboardingRiderOnboarding": "Rider onboarding",
+  "@onboardingRiderOnboarding": {
+    "description": "Rider onboarding"
+  },
+  "onboardingSaving": "Saving…",
+  "@onboardingSaving": {
+    "description": "Saving…"
+  },
+  "onboardingStartOnboardingSeeAnswersHere": "Start onboarding to see your answers here.",
+  "@onboardingStartOnboardingSeeAnswersHere": {
+    "description": "Start onboarding to see your answers here."
+  },
+  "onboardingSubmitApplication": "Submit application",
+  "@onboardingSubmitApplication": {
+    "description": "Submit application"
+  },
+  "onboardingTakePhotoDocumentChooseOne": "Take a photo of the document, or choose one you already have",
+  "@onboardingTakePhotoDocumentChooseOne": {
+    "description": "Take a photo of the document, or choose one you already have"
+  },
+  "profileAddressHub": "Address & hub",
+  "@profileAddressHub": {
+    "description": "Address & hub"
+  },
+  "profileEmail": "Email",
+  "@profileEmail": {
+    "description": "Email"
+  },
+  "profileHub": "Hub",
+  "@profileHub": {
+    "description": "Hub"
+  },
+  "profileHubCode": "Hub code",
+  "@profileHubCode": {
+    "description": "Hub code"
+  },
+  "profileJoined": "Joined on",
+  "@profileJoined": {
+    "description": "Joined on"
+  },
+  "profilePersonalDetails": "Personal details",
+  "@profilePersonalDetails": {
+    "description": "Personal details"
+  },
+  "rentalsAutoDebit": "Auto-debit",
+  "@rentalsAutoDebit": {
+    "description": "Auto-debit"
+  },
+  "rentalsAutoDebitKeepsEveryCycle": "Auto-debit keeps every cycle paid on time, no manual transfers",
+  "@rentalsAutoDebitKeepsEveryCycle": {
+    "description": "Auto-debit keeps every cycle paid on time, no manual transfers"
+  },
+  "rentalsAutoDebitMandate": "Auto-debit mandate",
+  "@rentalsAutoDebitMandate": {
+    "description": "Auto-debit mandate"
+  },
+  "rentalsBillingPeriod": "Billing period",
+  "@rentalsBillingPeriod": {
+    "description": "Billing period"
+  },
+  "rentalsCouldNotLoadRentPlan": "Could not load your rent plan",
+  "@rentalsCouldNotLoadRentPlan": {
+    "description": "Could not load your rent plan"
+  },
+  "rentalsDebits": "Debits in",
+  "@rentalsDebits": {
+    "description": "Debits in"
+  },
+  "rentalsDownloadPdf": "Download PDF",
+  "@rentalsDownloadPdf": {
+    "description": "Download PDF"
+  },
+  "rentalsInvoiceHistory": "Invoice history",
+  "@rentalsInvoiceHistory": {
+    "description": "Invoice history"
+  },
+  "rentalsNextDebit": "Next debit",
+  "@rentalsNextDebit": {
+    "description": "Next debit"
+  },
+  "rentalsNoInvoicesYet": "No invoices yet",
+  "@rentalsNoInvoicesYet": {
+    "description": "No invoices yet"
+  },
+  "rentalsPlanAutoDebitRentReceipts": "Your plan, auto-debit and rent receipts",
+  "@rentalsPlanAutoDebitRentReceipts": {
+    "description": "Your plan, auto-debit and rent receipts"
+  },
+  "rentalsRentHandledAutomatically": "Rent, handled automatically",
+  "@rentalsRentHandledAutomatically": {
+    "description": "Rent, handled automatically"
+  },
+  "rentalsRentReceipt": "Rent receipt",
+  "@rentalsRentReceipt": {
+    "description": "Rent receipt"
+  },
+  "rentalsRentReceiptsWillAppearHere": "Your rent receipts will appear here.",
+  "@rentalsRentReceiptsWillAppearHere": {
+    "description": "Your rent receipts will appear here."
+  },
+  "rentalsRentals": "Rentals",
+  "@rentalsRentals": {
+    "description": "Rentals"
+  },
+  "rentalsTapReceiptSeeFullBreakdown": "Tap a receipt to see the full breakdown",
+  "@rentalsTapReceiptSeeFullBreakdown": {
+    "description": "Tap a receipt to see the full breakdown"
+  },
+  "ridersActive": "Active",
+  "@ridersActive": {
+    "description": "Active"
+  },
+  "ridersAllocations": "Allocations",
+  "@ridersAllocations": {
+    "description": "Allocations"
+  },
+  "ridersCall": "Call",
+  "@ridersCall": {
+    "description": "Call"
+  },
+  "ridersCouldNotLoadTeam": "Could not load the team",
+  "@ridersCouldNotLoadTeam": {
+    "description": "Could not load the team"
+  },
+  "ridersExitReason": "Exit reason",
+  "@ridersExitReason": {
+    "description": "Exit reason"
+  },
+  "ridersExited": "Exited",
+  "@ridersExited": {
+    "description": "Exited"
+  },
+  "ridersKycStatus": "KYC status",
+  "@ridersKycStatus": {
+    "description": "KYC status"
+  },
+  "ridersNoRidersHere": "No riders here",
+  "@ridersNoRidersHere": {
+    "description": "No riders here"
+  },
+  "ridersNobodyMatchesSearchList": "Nobody matches this search in this list.",
+  "@ridersNobodyMatchesSearchList": {
+    "description": "Nobody matches this search in this list."
+  },
+  "ridersOnboarding": "Onboarding",
+  "@ridersOnboarding": {
+    "description": "Onboarding"
+  },
+  "ridersPlan": "Plan",
+  "@ridersPlan": {
+    "description": "Plan"
+  },
+  "ridersRidersRoster": "Riders on the roster",
+  "@ridersRidersRoster": {
+    "description": "Riders on the roster"
+  },
+  "ridersSearchNameCodeVehicle": "Search name, code or vehicle",
+  "@ridersSearchNameCodeVehicle": {
+    "description": "Search name, code or vehicle"
+  },
+  "ridersTeam": "Team",
+  "@ridersTeam": {
+    "description": "Team"
+  },
+  "scooterAllowedFromHub": "Allowed from hub",
+  "@scooterAllowedFromHub": {
+    "description": "Allowed from hub"
+  },
+  "scooterBatteryCharge": "Battery charge",
+  "@scooterBatteryCharge": {
+    "description": "Battery charge"
+  },
+  "scooterBatterySerial": "Battery serial",
+  "@scooterBatterySerial": {
+    "description": "Battery serial"
+  },
+  "scooterBatteryType": "Battery type",
+  "@scooterBatteryType": {
+    "description": "Battery type"
+  },
+  "scooterCharging": "Charging",
+  "@scooterCharging": {
+    "description": "Charging"
+  },
+  "scooterClusterManager": "Cluster manager",
+  "@scooterClusterManager": {
+    "description": "Cluster manager"
+  },
+  "scooterControllerNumber": "Controller number",
+  "@scooterControllerNumber": {
+    "description": "Controller number"
+  },
+  "scooterCouldNotLoadVehicle": "Could not load your vehicle",
+  "@scooterCouldNotLoadVehicle": {
+    "description": "Could not load your vehicle"
+  },
+  "scooterDeviceId": "Device ID",
+  "@scooterDeviceId": {
+    "description": "Device ID"
+  },
+  "scooterDeviceNumber": "Device number",
+  "@scooterDeviceNumber": {
+    "description": "Device number"
+  },
+  "scooterFirmware": "Firmware",
+  "@scooterFirmware": {
+    "description": "Firmware"
+  },
+  "scooterHealth": "Health",
+  "@scooterHealth": {
+    "description": "Health"
+  },
+  "scooterIdentity": "Identity",
+  "@scooterIdentity": {
+    "description": "Identity"
+  },
+  "scooterLastPing": "Last ping",
+  "@scooterLastPing": {
+    "description": "Last ping"
+  },
+  "scooterMotorNumber": "Motor number",
+  "@scooterMotorNumber": {
+    "description": "Motor number"
+  },
+  "scooterNextService": "Next service",
+  "@scooterNextService": {
+    "description": "Next service"
+  },
+  "scooterOdometerService": "Odometer and service",
+  "@scooterOdometerService": {
+    "description": "Odometer and service"
+  },
+  "scooterParked": "Parked at",
+  "@scooterParked": {
+    "description": "Parked at"
+  },
+  "scooterPowertrain": "Powertrain",
+  "@scooterPowertrain": {
+    "description": "Powertrain"
+  },
+  "scooterRange": "Range",
+  "@scooterRange": {
+    "description": "Range"
+  },
+  "scooterSignalStrength": "Signal strength",
+  "@scooterSignalStrength": {
+    "description": "Signal strength"
+  },
+  "scooterVehicleDetails": "Vehicle details",
+  "@scooterVehicleDetails": {
+    "description": "Vehicle details"
+  },
+  "scooterVehicleNumber": "Vehicle number",
+  "@scooterVehicleNumber": {
+    "description": "Vehicle number"
+  },
+  "scooterViewFullDetails": "View full details",
+  "@scooterViewFullDetails": {
+    "description": "View full details"
+  },
+  "scooterWhereBelongs": "Where it belongs",
+  "@scooterWhereBelongs": {
+    "description": "Where it belongs"
+  },
+  "scooterWhoLooksAfter": "Who looks after you",
+  "@scooterWhoLooksAfter": {
+    "description": "Who looks after you"
+  },
+  "supportBorneBy": "Borne by you",
+  "@supportBorneBy": {
+    "description": "Borne by you"
+  },
+  "supportChooseCategory": "Choose a category",
+  "@supportChooseCategory": {
+    "description": "Choose a category"
+  },
+  "supportCouldNotLoadSupport": "Could not load support",
+  "@supportCouldNotLoadSupport": {
+    "description": "Could not load support"
+  },
+  "supportDecidesWhoPicksUpTicket": "This decides who picks up your ticket and how fast",
+  "@supportDecidesWhoPicksUpTicket": {
+    "description": "This decides who picks up your ticket and how fast"
+  },
+  "supportDescription": "Description",
+  "@supportDescription": {
+    "description": "Description"
+  },
+  "supportMoreDetailGiveFasterCan": "The more detail you give, the faster we can help",
+  "@supportMoreDetailGiveFasterCan": {
+    "description": "The more detail you give, the faster we can help"
+  },
+  "supportNeedHelpWithSomething": "Need help with something?",
+  "@supportNeedHelpWithSomething": {
+    "description": "Need help with something?"
+  },
+  "supportNoTicketsYet": "No tickets yet",
+  "@supportNoTicketsYet": {
+    "description": "No tickets yet"
+  },
+  "supportOneLineSumsUpIssue": "One line that sums up the issue",
+  "@supportOneLineSumsUpIssue": {
+    "description": "One line that sums up the issue"
+  },
+  "supportOpenTickets": "Open tickets",
+  "@supportOpenTickets": {
+    "description": "Open tickets"
+  },
+  "supportPhotosOptional": "Photos (optional)",
+  "@supportPhotosOptional": {
+    "description": "Photos (optional)"
+  },
+  "supportRaiseOneAboveIfSomething": "Raise one above if something needs attention.",
+  "@supportRaiseOneAboveIfSomething": {
+    "description": "Raise one above if something needs attention."
+  },
+  "supportRaiseTicket": "Raise a ticket",
+  "@supportRaiseTicket": {
+    "description": "Raise a ticket"
+  },
+  "supportRepairsAcrossTickets": "Repairs across your tickets",
+  "@supportRepairsAcrossTickets": {
+    "description": "Repairs across your tickets"
+  },
+  "supportResolved": "Resolved",
+  "@supportResolved": {
+    "description": "Resolved"
+  },
+  "supportSelectCategory": "Select a category",
+  "@supportSelectCategory": {
+    "description": "Select a category"
+  },
+  "supportSubject": "Subject",
+  "@supportSubject": {
+    "description": "Subject"
+  },
+  "supportSubmitTicket": "Submit ticket",
+  "@supportSubmitTicket": {
+    "description": "Submit ticket"
+  },
+  "supportTellUsMore": "Tell us more",
+  "@supportTellUsMore": {
+    "description": "Tell us more"
+  },
+  "supportTickets": "Your tickets",
+  "@supportTickets": {
+    "description": "Your tickets"
+  },
+  "supportTurnIfCannotRideSafely": "Turn this on if you cannot ride safely until this is fixed",
+  "@supportTurnIfCannotRideSafely": {
+    "description": "Turn this on if you cannot ride safely until this is fixed"
+  },
+  "supportVehicleAffected": "The vehicle is affected",
+  "@supportVehicleAffected": {
+    "description": "The vehicle is affected"
+  },
+  "supportVehicleImpact": "Vehicle impact",
+  "@supportVehicleImpact": {
+    "description": "Vehicle impact"
+  },
+  "supportWhatHappenedSinceWhen": "What happened, and since when?",
+  "@supportWhatHappenedSinceWhen": {
+    "description": "What happened, and since when?"
+  },
+  "walletCouldNotLoadWallet": "Could not load your wallet",
+  "@walletCouldNotLoadWallet": {
+    "description": "Could not load your wallet"
+  },
+  "walletCredited": "Credited",
+  "@walletCredited": {
+    "description": "Credited"
+  },
+  "walletDateTime": "Date & time",
+  "@walletDateTime": {
+    "description": "Date & time"
+  },
+  "walletDeducted": "Deducted",
+  "@walletDeducted": {
+    "description": "Deducted"
+  },
+  "walletDueNow": "Due now",
+  "@walletDueNow": {
+    "description": "Due now"
+  },
+  "walletMoney": "Your money",
+  "@walletMoney": {
+    "description": "Your money"
+  },
+  "walletNoTransactionsHere": "No transactions here",
+  "@walletNoTransactionsHere": {
+    "description": "No transactions here"
+  },
+  "walletPayments": "Payments",
+  "@walletPayments": {
+    "description": "Payments"
+  },
+  "walletReferenceId": "Reference ID",
+  "@walletReferenceId": {
+    "description": "Reference ID"
+  },
+  "walletSearchTransactions": "Search transactions",
+  "@walletSearchTransactions": {
+    "description": "Search transactions"
+  },
+  "walletTransactions": "Transactions",
+  "@walletTransactions": {
+    "description": "Transactions"
+  },
+  "authOtpSentTo": "A 6-digit code was sent to +91 {mobile}",
+  "@authOtpSentTo": {
+    "description": "A 6-digit code was sent to +91 {mobile}",
+    "placeholders": {
+      "mobile": {
+        "type": "String"
+      }
+    }
+  },
+  "pdiInspectedBy": "Inspected by {partner}",
+  "@pdiInspectedBy": {
+    "description": "Inspected by {partner}",
+    "placeholders": {
+      "partner": {
+        "type": "String"
+      }
+    }
+  },
+  "routerNoScreenAt": "No screen at {location}",
+  "@routerNoScreenAt": {
+    "description": "No screen at {location}",
+    "placeholders": {
+      "location": {
+        "type": "String"
+      }
+    }
+  },
+  "deploymentManagerNextStep": "Your fleet manager is on the next step for {vehicle}.",
+  "@deploymentManagerNextStep": {
+    "description": "Your fleet manager is on the next step for {vehicle}.",
+    "placeholders": {
+      "vehicle": {
+        "type": "String"
+      }
+    }
+  },
+  "deploymentWritingPdi": "Your fleet manager is writing up the pre-delivery inspection for {vehicle}. You will check it over next.",
+  "@deploymentWritingPdi": {
+    "description": "Your fleet manager is writing up the pre-delivery inspection for {vehicle}. You will check it over next.",
+    "placeholders": {
+      "vehicle": {
+        "type": "String"
+      }
+    }
+  },
+  "commonKmLeft": "km left",
+  "@commonKmLeft": {
+    "description": "km left"
+  },
+  "pdiHintTyreWorn": "e.g. Front tyre worn below limit",
+  "@pdiHintTyreWorn": {
+    "description": "e.g. Front tyre worn below limit"
+  },
+  "maintenanceHintOdometer": "e.g. 9420",
+  "@maintenanceHintOdometer": {
+    "description": "e.g. 9420"
+  },
+  "allocationHintWorkPartner": "e.g. Sharma Auto Works",
+  "@allocationHintWorkPartner": {
+    "description": "e.g. Sharma Auto Works"
+  },
+  "maintenanceHintUnitNotPowering": "e.g. Unit not powering on; workshop ticket raised",
+  "@maintenanceHintUnitNotPowering": {
+    "description": "e.g. Unit not powering on; workshop ticket raised"
+  },
+  "commonHintGuardian": "e.g. Guardian",
+  "@commonHintGuardian": {
+    "description": "e.g. Guardian"
+  },
+  "onboardingDocuments": "Documents",
+  "@onboardingDocuments": {
+    "description": "Documents"
+  },
+  "onboardingNothingToFillHere": "Nothing to fill in here",
+  "@onboardingNothingToFillHere": {
+    "description": "Nothing to fill in here"
+  },
+  "onboardingStepHandledByOperator": "This step is handled by your fleet operator. Continue to the next one.",
+  "@onboardingStepHandledByOperator": {
+    "description": "This step is handled by your fleet operator. Continue to the next one."
+  },
+  "onboardingReferences": "References",
+  "@onboardingReferences": {
+    "description": "References"
+  },
+  "onboardingAgreeToRiderAgreement": "I have read and agree to the rider agreement",
+  "@onboardingAgreeToRiderAgreement": {
+    "description": "I have read and agree to the rider agreement"
+  },
+  "onboardingStepEligibility": "Eligibility",
+  "@onboardingStepEligibility": {
+    "description": "Eligibility"
+  },
+  "onboardingStepTraining": "Training",
+  "@onboardingStepTraining": {
+    "description": "Training"
+  },
+  "onboardingStepAgreement": "Agreement",
+  "@onboardingStepAgreement": {
+    "description": "Agreement"
+  },
+  "onboardingEnterValidField": "Enter a valid {field}",
+  "@onboardingEnterValidField": {
+    "description": "Enter a valid {field}",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingAddYourField": "Add your {field}",
+  "@onboardingAddYourField": {
+    "description": "Add your {field}",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "allocationReasonRequiredBypass": "A reason is required to bypass",
+  "@allocationReasonRequiredBypass": {
+    "description": "A reason is required to bypass"
+  },
+  "commonAbsent": "Absent",
+  "@commonAbsent": {
+    "description": "Absent"
+  },
+  "deploymentAcceptScooter": "Accept scooter",
+  "@deploymentAcceptScooter": {
+    "description": "Accept scooter"
+  },
+  "deploymentAcceptScooter2": "Accept this scooter?",
+  "@deploymentAcceptScooter2": {
+    "description": "Accept this scooter?"
+  },
+  "supportAccidentTheft": "Accident or theft",
+  "@supportAccidentTheft": {
+    "description": "Accident or theft"
+  },
+  "commonAccountNumbersDoNotMatch": "Account numbers do not match",
+  "@commonAccountNumbersDoNotMatch": {
+    "description": "Account numbers do not match"
+  },
+  "allocationActiveAllocation": "Active allocation",
+  "@allocationActiveAllocation": {
+    "description": "Active allocation"
+  },
+  "supportAddFewMoreDetails10": "Add a few more details (10+ characters)",
+  "@supportAddFewMoreDetails10": {
+    "description": "Add a few more details (10+ characters)"
+  },
+  "commonAddPhoto": "Add a photo",
+  "@commonAddPhoto": {
+    "description": "Add a photo"
+  },
+  "allocationAddLeastOneItem": "Add at least one item",
+  "@allocationAddLeastOneItem": {
+    "description": "Add at least one item"
+  },
+  "allocationAddLeastOneLine": "Add at least one line",
+  "@allocationAddLeastOneLine": {
+    "description": "Add at least one line"
+  },
+  "onboardingAddDateBirthFirstStep": "Add your date of birth on the first step before continuing",
+  "@onboardingAddDateBirthFirstStep": {
+    "description": "Add your date of birth on the first step before continuing"
+  },
+  "allocationAllHubs": "All hubs",
+  "@allocationAllHubs": {
+    "description": "All hubs"
+  },
+  "hubAllocate": "Allocate",
+  "@hubAllocate": {
+    "description": "Allocate"
+  },
+  "supportAnySettledBalanceCanWithdrawn": "Any settled balance can be withdrawn once a day. Payouts before ",
+  "@supportAnySettledBalanceCanWithdrawn": {
+    "description": "Any settled balance can be withdrawn once a day. Payouts before "
+  },
+  "onboardingApplicationSubmitted": "Application submitted",
+  "@onboardingApplicationSubmitted": {
+    "description": "Application submitted"
+  },
+  "maintenanceAssignVendorStartWork": "Assign a vendor to start work",
+  "@maintenanceAssignVendorStartWork": {
+    "description": "Assign a vendor to start work"
+  },
+  "onboardingAttached": "Attached",
+  "@onboardingAttached": {
+    "description": "Attached"
+  },
+  "allocationAttentionRequired": "Attention required",
+  "@allocationAttentionRequired": {
+    "description": "Attention required"
+  },
+  "rentalsAutoDebitNotActiveSettle": "Auto-debit is not active — settle upcoming invoices manually until the mandate is restored.",
+  "@rentalsAutoDebitNotActiveSettle": {
+    "description": "Auto-debit is not active — settle upcoming invoices manually until the mandate is restored."
+  },
+  "ridersAwaitingAllocation": "Awaiting allocation",
+  "@ridersAwaitingAllocation": {
+    "description": "Awaiting allocation"
+  },
+  "maintenanceAwaitingVendorAssignment": "Awaiting vendor assignment",
+  "@maintenanceAwaitingVendorAssignment": {
+    "description": "Awaiting vendor assignment"
+  },
+  "deploymentAwaitingVerification": "Awaiting verification",
+  "@deploymentAwaitingVerification": {
+    "description": "Awaiting verification"
+  },
+  "allocationBack": "Back",
+  "@allocationBack": {
+    "description": "Back"
+  },
+  "commonBankAccountNumber": "Bank account number",
+  "@commonBankAccountNumber": {
+    "description": "Bank account number"
+  },
+  "deploymentBankTransfer": "Bank transfer",
+  "@deploymentBankTransfer": {
+    "description": "Bank transfer"
+  },
+  "maintenanceBattery": "Battery",
+  "@maintenanceBattery": {
+    "description": "Battery"
+  },
+  "allocationBatteryChargeCharger": "Battery charge and charger",
+  "@allocationBatteryChargeCharger": {
+    "description": "Battery charge and charger"
+  },
+  "supportBatteryDrops20Within40": "Battery drops to 20% within 40 km",
+  "@supportBatteryDrops20Within40": {
+    "description": "Battery drops to 20% within 40 km"
+  },
+  "supportBatteryCharging": "Battery or charging",
+  "@supportBatteryCharging": {
+    "description": "Battery or charging"
+  },
+  "maintenanceBatterySpecialist": "Battery specialist",
+  "@maintenanceBatterySpecialist": {
+    "description": "Battery specialist"
+  },
+  "maintenanceBody": "Body",
+  "@maintenanceBody": {
+    "description": "Body"
+  },
+  "maintenanceBodyPaint": "Body and paint",
+  "@maintenanceBodyPaint": {
+    "description": "Body and paint"
+  },
+  "allocationBodyPaintwork": "Body and paintwork",
+  "@allocationBodyPaintwork": {
+    "description": "Body and paintwork"
+  },
+  "homeBonusUnlocked": "Bonus unlocked",
+  "@homeBonusUnlocked": {
+    "description": "Bonus unlocked"
+  },
+  "homeBookSlotOkhlaHubBefore": "Book a slot at the Okhla hub before the odometer hits 8,000 km.",
+  "@homeBookSlotOkhlaHubBefore": {
+    "description": "Book a slot at the Okhla hub before the odometer hits 8,000 km."
+  },
+  "commonBrakes": "Brakes",
+  "@commonBrakes": {
+    "description": "Brakes"
+  },
+  "supportBreakdownRoad": "Breakdown on the road",
+  "@supportBreakdownRoad": {
+    "description": "Breakdown on the road"
+  },
+  "commonBrother": "Brother",
+  "@commonBrother": {
+    "description": "Brother"
+  },
+  "allocationBypassPairing2": "Bypass pairing",
+  "@allocationBypassPairing2": {
+    "description": "Bypass pairing"
+  },
+  "supportCallBackWithin15Min": "Call back within 15 min",
+  "@supportCallBackWithin15Min": {
+    "description": "Call back within 15 min"
+  },
+  "supportCanIKeepScooterOvernight": "Can I keep the scooter overnight?",
+  "@supportCanIKeepScooterOvernight": {
+    "description": "Can I keep the scooter overnight?"
+  },
+  "earningsCancelledTripsDoNotCount": "Cancelled trips do not count. Credited by midnight.",
+  "@earningsCancelledTripsDoNotCount": {
+    "description": "Cancelled trips do not count. Credited by midnight."
+  },
+  "deploymentCard": "Card",
+  "@deploymentCard": {
+    "description": "Card"
+  },
+  "deploymentCashHub": "Cash at hub",
+  "@deploymentCashHub": {
+    "description": "Cash at hub"
+  },
+  "maintenanceCellBalanceTestBookedAfternoon": "Cell balance test booked for this afternoon",
+  "@maintenanceCellBalanceTestBookedAfternoon": {
+    "description": "Cell balance test booked for this afternoon"
+  },
+  "maintenanceChargeHolds62ThenDrops": "Charge holds to 62% then drops to 40% within a kilometre.",
+  "@maintenanceChargeHolds62ThenDrops": {
+    "description": "Charge holds to 62% then drops to 40% within a kilometre."
+  },
+  "scooterCharger": "Charger",
+  "@scooterCharger": {
+    "description": "Charger"
+  },
+  "allocationChecklistTapToggleMandatory": "Checklist · tap to toggle mandatory",
+  "@allocationChecklistTapToggleMandatory": {
+    "description": "Checklist · tap to toggle mandatory"
+  },
+  "allocationCodesSentWhenStepOpens": "Codes are sent when this step opens.",
+  "@allocationCodesSentWhenStepOpens": {
+    "description": "Codes are sent when this step opens."
+  },
+  "commonColleague": "Colleague",
+  "@commonColleague": {
+    "description": "Colleague"
+  },
+  "scooterCommercialPermit": "Commercial permit",
+  "@scooterCommercialPermit": {
+    "description": "Commercial permit"
+  },
+  "earningsComplete20TripsToday": "Complete 20 trips today",
+  "@earningsComplete20TripsToday": {
+    "description": "Complete 20 trips today"
+  },
+  "allocationComplete2": "Complete.",
+  "@allocationComplete2": {
+    "description": "Complete."
+  },
+  "earningsCompletedRewardCreditedWallet": "Completed — reward credited to your wallet.",
+  "@earningsCompletedRewardCreditedWallet": {
+    "description": "Completed — reward credited to your wallet."
+  },
+  "commonConfirm": "Confirm",
+  "@commonConfirm": {
+    "description": "Confirm"
+  },
+  "allocationConfirmHaveReceivedAmountRider": "Confirm you have received the amount the rider submitted a reference for. This cannot be undone.",
+  "@allocationConfirmHaveReceivedAmountRider": {
+    "description": "Confirm you have received the amount the rider submitted a reference for. This cannot be undone."
+  },
+  "allocationCouldNotAllocateVehicle": "Could not allocate the vehicle",
+  "@allocationCouldNotAllocateVehicle": {
+    "description": "Could not allocate the vehicle"
+  },
+  "allocationCouldNotLoadDeAllocation2": "Could not load the de-allocation flow.",
+  "@allocationCouldNotLoadDeAllocation2": {
+    "description": "Could not load the de-allocation flow."
+  },
+  "commonCouldNotOpenDocumentTry": "Could not open the document. Try again.",
+  "@commonCouldNotOpenDocumentTry": {
+    "description": "Could not open the document. Try again."
+  },
+  "errorCouldNotReachServerCheck": "Could not reach the server. Check your connection.",
+  "@errorCouldNotReachServerCheck": {
+    "description": "Could not reach the server. Check your connection."
+  },
+  "commonCouldNotReadLocalData": "Could not read local data.",
+  "@commonCouldNotReadLocalData": {
+    "description": "Could not read local data."
+  },
+  "deploymentCouldNotSubmitInspection": "Could not submit the inspection",
+  "@deploymentCouldNotSubmitInspection": {
+    "description": "Could not submit the inspection"
+  },
+  "earningsCover400KmWeek": "Cover 400 km this week",
+  "@earningsCover400KmWeek": {
+    "description": "Cover 400 km this week"
+  },
+  "walletCredits": "Credits",
+  "@walletCredits": {
+    "description": "Credits"
+  },
+  "rentalsCurrentPlan": "Current plan",
+  "@rentalsCurrentPlan": {
+    "description": "Current plan"
+  },
+  "earningsDaily": "Daily",
+  "@earningsDaily": {
+    "description": "Daily"
+  },
+  "earningsDailyTripTarget": "Daily trip target",
+  "@earningsDailyTripTarget": {
+    "description": "Daily trip target"
+  },
+  "commonDaughter": "Daughter",
+  "@commonDaughter": {
+    "description": "Daughter"
+  },
+  "walletDebits": "Debits",
+  "@walletDebits": {
+    "description": "Debits"
+  },
+  "scooterDeliveryBox": "Delivery box",
+  "@scooterDeliveryBox": {
+    "description": "Delivery box"
+  },
+  "walletDeploymentPayment": "Deployment payment",
+  "@walletDeploymentPayment": {
+    "description": "Deployment payment"
+  },
+  "maintenanceDescribeIssue": "Describe the issue",
+  "@maintenanceDescribeIssue": {
+    "description": "Describe the issue"
+  },
+  "supportDocumentsKyc": "Documents and KYC",
+  "@supportDocumentsKyc": {
+    "description": "Documents and KYC"
+  },
+  "rentalsDue": "Due on",
+  "@rentalsDue": {
+    "description": "Due on"
+  },
+  "validationEnterDateLaterThanToday": "Enter a date later than today",
+  "@validationEnterDateLaterThanToday": {
+    "description": "Enter a date later than today"
+  },
+  "validationEnterDateBeforeToday": "Enter a date on or before today",
+  "@validationEnterDateBeforeToday": {
+    "description": "Enter a date on or before today"
+  },
+  "commonEnterValid10DigitMobile": "Enter a valid 10-digit mobile number",
+  "@commonEnterValid10DigitMobile": {
+    "description": "Enter a valid 10-digit mobile number"
+  },
+  "validationEnterValid12DigitAadhaar": "Enter a valid 12-digit Aadhaar number",
+  "@validationEnterValid12DigitAadhaar": {
+    "description": "Enter a valid 12-digit Aadhaar number"
+  },
+  "validationEnterValidIfscCode": "Enter a valid IFSC code",
+  "@validationEnterValidIfscCode": {
+    "description": "Enter a valid IFSC code"
+  },
+  "validationEnterValidPanAbcde1234f": "Enter a valid PAN (ABCDE1234F)",
+  "@validationEnterValidPanAbcde1234f": {
+    "description": "Enter a valid PAN (ABCDE1234F)"
+  },
+  "validationEnterValidUpiId": "Enter a valid UPI ID",
+  "@validationEnterValidUpiId": {
+    "description": "Enter a valid UPI ID"
+  },
+  "validationEnterValidEmailAddress": "Enter a valid email address",
+  "@validationEnterValidEmailAddress": {
+    "description": "Enter a valid email address"
+  },
+  "deploymentEnterTransactionReferencePaidWith": "Enter the transaction reference you paid with",
+  "@deploymentEnterTransactionReferencePaidWith": {
+    "description": "Enter the transaction reference you paid with"
+  },
+  "earningsEveningSurge": "Evening surge",
+  "@earningsEveningSurge": {
+    "description": "Evening surge"
+  },
+  "supportEveryMondayMorningAgainstNach": "Every Monday morning against your NACH mandate. If the wallet ",
+  "@supportEveryMondayMorningAgainstNach": {
+    "description": "Every Monday morning against your NACH mandate. If the wallet "
+  },
+  "allocationEveryLineNeedsLabelAmount": "Every line needs a label and an amount above zero",
+  "@allocationEveryLineNeedsLabelAmount": {
+    "description": "Every line needs a label and an amount above zero"
+  },
+  "homeExtra15TripOkhlaPhase": "Extra ₹15 a trip in Okhla Phase II and Jasola this evening.",
+  "@homeExtra15TripOkhlaPhase": {
+    "description": "Extra ₹15 a trip in Okhla Phase II and Jasola this evening."
+  },
+  "rentalsFailed": "Failed",
+  "@rentalsFailed": {
+    "description": "Failed"
+  },
+  "commonFather": "Father",
+  "@commonFather": {
+    "description": "Father"
+  },
+  "scooterFitnessCertificate": "Fitness certificate",
+  "@scooterFitnessCertificate": {
+    "description": "Fitness certificate"
+  },
+  "deploymentFlaggedByRider": "Flagged by rider",
+  "@deploymentFlaggedByRider": {
+    "description": "Flagged by rider"
+  },
+  "commonFriend": "Friend",
+  "@commonFriend": {
+    "description": "Friend"
+  },
+  "allocationFront": "Front",
+  "@allocationFront": {
+    "description": "Front"
+  },
+  "maintenanceFrontTyreWornPastWear": "Front tyre worn past the wear bar.",
+  "@maintenanceFrontTyreWornPastWear": {
+    "description": "Front tyre worn past the wear bar."
+  },
+  "supportGeneral": "General",
+  "@supportGeneral": {
+    "description": "General"
+  },
+  "onboardingIntroGetStarted": "Get started",
+  "@onboardingIntroGetStarted": {
+    "description": "Get started"
+  },
+  "commonGoodAfternoon": "Good afternoon",
+  "@commonGoodAfternoon": {
+    "description": "Good afternoon"
+  },
+  "commonGoodEvening": "Good evening",
+  "@commonGoodEvening": {
+    "description": "Good evening"
+  },
+  "commonGoodMorning": "Good morning",
+  "@commonGoodMorning": {
+    "description": "Good morning"
+  },
+  "allocationHandoverCompletedWithoutPairing": "Handover completed without pairing",
+  "@allocationHandoverCompletedWithoutPairing": {
+    "description": "Handover completed without pairing"
+  },
+  "allocationHealthy": "Healthy",
+  "@allocationHealthy": {
+    "description": "Healthy"
+  },
+  "allocationHeartbeatStale": "Heartbeat stale",
+  "@allocationHeartbeatStale": {
+    "description": "Heartbeat stale"
+  },
+  "scooterHelmet": "Helmet",
+  "@scooterHelmet": {
+    "description": "Helmet"
+  },
+  "allocationHelmetHandedOver": "Helmet handed over",
+  "@allocationHelmetHandedOver": {
+    "description": "Helmet handed over"
+  },
+  "commonHigh": "High",
+  "@commonHigh": {
+    "description": "High"
+  },
+  "commonHighPriority": "High priority",
+  "@commonHighPriority": {
+    "description": "High priority"
+  },
+  "allocationHornMirrors": "Horn and mirrors",
+  "@allocationHornMirrors": {
+    "description": "Horn and mirrors"
+  },
+  "supportHowSoonCanIWithdraw": "How soon can I withdraw my earnings?",
+  "@supportHowSoonCanIWithdraw": {
+    "description": "How soon can I withdraw my earnings?"
+  },
+  "allocationIdle": "Idle",
+  "@allocationIdle": {
+    "description": "Idle"
+  },
+  "deploymentInspection": "Inspection",
+  "@deploymentInspection": {
+    "description": "Inspection"
+  },
+  "deploymentInspectionAccepted": "Inspection accepted",
+  "@deploymentInspectionAccepted": {
+    "description": "Inspection accepted"
+  },
+  "allocationInspectionAcceptedTraining": "Inspection accepted · training",
+  "@allocationInspectionAcceptedTraining": {
+    "description": "Inspection accepted · training"
+  },
+  "allocationInspectionSentRider": "Inspection sent to rider",
+  "@allocationInspectionSentRider": {
+    "description": "Inspection sent to rider"
+  },
+  "allocationInspectionSentRider2": "Inspection sent to the rider",
+  "@allocationInspectionSentRider2": {
+    "description": "Inspection sent to the rider"
+  },
+  "errorInspectionWithRider": "Inspection with rider",
+  "@errorInspectionWithRider": {
+    "description": "Inspection with rider"
+  },
+  "commonInsurance": "Insurance",
+  "@commonInsurance": {
+    "description": "Insurance"
+  },
+  "scooterIotOffline": "IoT offline",
+  "@scooterIotOffline": {
+    "description": "IoT offline"
+  },
+  "scooterIotOnline": "IoT online",
+  "@scooterIotOnline": {
+    "description": "IoT online"
+  },
+  "maintenanceIssueCloseUp": "Issue close-up",
+  "@maintenanceIssueCloseUp": {
+    "description": "Issue close-up"
+  },
+  "deploymentItemsMarkedAsProblemGo": "Items marked as a problem go to your fleet manager with your notes. The handover continues on the rest.",
+  "@deploymentItemsMarkedAsProblemGo": {
+    "description": "Items marked as a problem go to your fleet manager with your notes. The handover continues on the rest."
+  },
+  "commonJpgPngPdfUp5": "JPG, PNG or PDF · up to 5 MB",
+  "@commonJpgPngPdfUp5": {
+    "description": "JPG, PNG or PDF · up to 5 MB"
+  },
+  "ridersJoined": "Joined",
+  "@ridersJoined": {
+    "description": "Joined"
+  },
+  "allocationLeftSide": "Left side",
+  "@allocationLeftSide": {
+    "description": "Left side"
+  },
+  "supportLicenceReUploadAfterRenewal": "Licence re-upload after renewal",
+  "@supportLicenceReUploadAfterRenewal": {
+    "description": "Licence re-upload after renewal"
+  },
+  "allocationLightsIndicators": "Lights and indicators",
+  "@allocationLightsIndicators": {
+    "description": "Lights and indicators"
+  },
+  "commonLowPriority": "Low priority",
+  "@commonLowPriority": {
+    "description": "Low priority"
+  },
+  "rentalsMaintenanceCover": "Maintenance cover",
+  "@rentalsMaintenanceCover": {
+    "description": "Maintenance cover"
+  },
+  "commonManager": "Manager",
+  "@commonManager": {
+    "description": "Manager"
+  },
+  "commonMandatory": "Mandatory",
+  "@commonMandatory": {
+    "description": "Mandatory"
+  },
+  "deploymentMandatoryModule": "Mandatory module",
+  "@deploymentMandatoryModule": {
+    "description": "Mandatory module"
+  },
+  "allocationMapDeviceFirst": "Map a device first",
+  "@allocationMapDeviceFirst": {
+    "description": "Map a device first"
+  },
+  "homeMarkAttendanceStartScooter": "Mark attendance to start the scooter",
+  "@homeMarkAttendanceStartScooter": {
+    "description": "Mark attendance to start the scooter"
+  },
+  "homeMarkYourselfPresentSwitchVehicle": "Mark yourself present to switch the vehicle on.",
+  "@homeMarkYourselfPresentSwitchVehicle": {
+    "description": "Mark yourself present to switch the vehicle on."
+  },
+  "homeMarkedAbsentScooterNowDisabled": "Marked absent. The scooter is now disabled.",
+  "@homeMarkedAbsentScooterNowDisabled": {
+    "description": "Marked absent. The scooter is now disabled."
+  },
+  "hubMarkedAbsentShiftClosed": "Marked absent. Your shift is closed.",
+  "@hubMarkedAbsentShiftClosed": {
+    "description": "Marked absent. Your shift is closed."
+  },
+  "homeMarkedPresent": "Marked present",
+  "@homeMarkedPresent": {
+    "description": "Marked present"
+  },
+  "commonMarkedPresentShiftHasStarted": "Marked present. Your shift has started.",
+  "@commonMarkedPresentShiftHasStarted": {
+    "description": "Marked present. Your shift has started."
+  },
+  "earningsMeasuredByVehicleOdometerNot": "Measured by the vehicle odometer, not the app.",
+  "@earningsMeasuredByVehicleOdometerNot": {
+    "description": "Measured by the vehicle odometer, not the app."
+  },
+  "earningsMonthly": "Monthly",
+  "@earningsMonthly": {
+    "description": "Monthly"
+  },
+  "commonMother": "Mother",
+  "@commonMother": {
+    "description": "Mother"
+  },
+  "allocationNameWorkPartnerWorkshopInspected": "Name the work partner or workshop that inspected the vehicle",
+  "@allocationNameWorkPartnerWorkshopInspected": {
+    "description": "Name the work partner or workshop that inspected the vehicle"
+  },
+  "allocationNever": "Never",
+  "@allocationNever": {
+    "description": "Never"
+  },
+  "onboardingIntroNext": "Next",
+  "@onboardingIntroNext": {
+    "description": "Next"
+  },
+  "hubNoHubAssigned": "No hub is assigned to you.",
+  "@hubNoHubAssigned": {
+    "description": "No hub is assigned to you."
+  },
+  "commonNoInternetConnection": "No internet connection.",
+  "@commonNoInternetConnection": {
+    "description": "No internet connection."
+  },
+  "scooterNoScooterHasBeenAllocated": "No scooter has been allocated to you yet.",
+  "@scooterNoScooterHasBeenAllocated": {
+    "description": "No scooter has been allocated to you yet."
+  },
+  "maintenanceNoVendorsAvailableReassignRight": "No vendors available to reassign right now.",
+  "@maintenanceNoVendorsAvailableReassignRight": {
+    "description": "No vendors available to reassign right now."
+  },
+  "commonNormal": "Normal",
+  "@commonNormal": {
+    "description": "Normal"
+  },
+  "commonNormalPriority": "Normal priority",
+  "@commonNormalPriority": {
+    "description": "Normal priority"
+  },
+  "commonNotFound": "Not found.",
+  "@commonNotFound": {
+    "description": "Not found."
+  },
+  "allocationNotMapped": "Not mapped",
+  "@allocationNotMapped": {
+    "description": "Not mapped"
+  },
+  "homeNotMarkedPresent": "Not marked present",
+  "@homeNotMarkedPresent": {
+    "description": "Not marked present"
+  },
+  "onboardingNotProvided": "Not provided",
+  "@onboardingNotProvided": {
+    "description": "Not provided"
+  },
+  "maintenanceNoteAdded": "Note added.",
+  "@maintenanceNoteAdded": {
+    "description": "Note added."
+  },
+  "walletNothingMatchesFilterYet": "Nothing matches this filter yet.",
+  "@walletNothingMatchesFilterYet": {
+    "description": "Nothing matches this filter yet."
+  },
+  "notificationsNothingNewNeedsAttention": "Nothing new needs your attention",
+  "@notificationsNothingNewNeedsAttention": {
+    "description": "Nothing new needs your attention"
+  },
+  "supportNothingOpenRightNow": "Nothing open right now",
+  "@supportNothingOpenRightNow": {
+    "description": "Nothing open right now"
+  },
+  "onboardingNothingFillStep": "Nothing to fill in on this step.",
+  "@onboardingNothingFillStep": {
+    "description": "Nothing to fill in on this step."
+  },
+  "commonOffline": "Offline",
+  "@commonOffline": {
+    "description": "Offline"
+  },
+  "earningsOneClearedSchemeSoAchieved": "One cleared scheme, so the achieved state is on screen.",
+  "@earningsOneClearedSchemeSoAchieved": {
+    "description": "One cleared scheme, so the achieved state is on screen."
+  },
+  "commonOptional": "Optional",
+  "@commonOptional": {
+    "description": "Optional"
+  },
+  "deploymentOptionalModule": "Optional module",
+  "@deploymentOptionalModule": {
+    "description": "Optional module"
+  },
+  "commonOther": "Other",
+  "@commonOther": {
+    "description": "Other"
+  },
+  "maintenancePadsMeasured12Mm": "Pads measured at 1.2 mm",
+  "@maintenancePadsMeasured12Mm": {
+    "description": "Pads measured at 1.2 mm"
+  },
+  "rentalsPaid": "Paid",
+  "@rentalsPaid": {
+    "description": "Paid"
+  },
+  "rentalsPaid2": "Paid on",
+  "@rentalsPaid2": {
+    "description": "Paid on"
+  },
+  "deploymentPairIotUnit": "Pair the IoT unit",
+  "@deploymentPairIotUnit": {
+    "description": "Pair the IoT unit"
+  },
+  "commonPaired": "Paired",
+  "@commonPaired": {
+    "description": "Paired"
+  },
+  "errorPairingIotDevice": "Pairing the IoT device",
+  "@errorPairingIotDevice": {
+    "description": "Pairing the IoT device"
+  },
+  "ridePairingScooter": "Pairing your scooter",
+  "@ridePairingScooter": {
+    "description": "Pairing your scooter"
+  },
+  "maintenancePanelResprayedRefitted": "Panel resprayed and refitted",
+  "@maintenancePanelResprayedRefitted": {
+    "description": "Panel resprayed and refitted"
+  },
+  "rideParkedLocked": "Parked and locked.",
+  "@rideParkedLocked": {
+    "description": "Parked and locked."
+  },
+  "deploymentPayScooter": "Pay for your scooter",
+  "@deploymentPayScooter": {
+    "description": "Pay for your scooter"
+  },
+  "supportPaymentWallet": "Payment or wallet",
+  "@supportPaymentWallet": {
+    "description": "Payment or wallet"
+  },
+  "errorPaymentPending": "Payment pending",
+  "@errorPaymentPending": {
+    "description": "Payment pending"
+  },
+  "allocationPaymentRequested": "Payment requested",
+  "@allocationPaymentRequested": {
+    "description": "Payment requested"
+  },
+  "allocationPaymentRequestedRiderSeesNow": "Payment requested — the rider sees it now",
+  "@allocationPaymentRequestedRiderSeesNow": {
+    "description": "Payment requested — the rider sees it now"
+  },
+  "deploymentPaymentSubmitted": "Payment submitted",
+  "@deploymentPaymentSubmitted": {
+    "description": "Payment submitted"
+  },
+  "allocationPaymentVerified": "Payment verified",
+  "@allocationPaymentVerified": {
+    "description": "Payment verified"
+  },
+  "commonPending": "Pending",
+  "@commonPending": {
+    "description": "Pending"
+  },
+  "earningsPerfectWeek": "Perfect week",
+  "@earningsPerfectWeek": {
+    "description": "Perfect week"
+  },
+  "scooterPhoneMount": "Phone mount",
+  "@scooterPhoneMount": {
+    "description": "Phone mount"
+  },
+  "allocationPhotoAttached": "Photo attached",
+  "@allocationPhotoAttached": {
+    "description": "Photo attached"
+  },
+  "onboardingPleaseFixHighlightedFieldsBefore": "Please fix the highlighted fields before continuing",
+  "@onboardingPleaseFixHighlightedFieldsBefore": {
+    "description": "Please fix the highlighted fields before continuing"
+  },
+  "maintenancePreDelivery": "Pre-delivery",
+  "@maintenancePreDelivery": {
+    "description": "Pre-delivery"
+  },
+  "commonPresent": "Present",
+  "@commonPresent": {
+    "description": "Present"
+  },
+  "supportRaiseBatteryChargingTicketSwap": "Raise a Battery or charging ticket and swap at the nearest hub. ",
+  "@supportRaiseBatteryChargingTicketSwap": {
+    "description": "Raise a Battery or charging ticket and swap at the nearest hub. "
+  },
+  "maintenanceRaisingMaintenanceJobNeedsApi": "Raising a maintenance job needs an API that does not exist yet.",
+  "@maintenanceRaisingMaintenanceJobNeedsApi": {
+    "description": "Raising a maintenance job needs an API that does not exist yet."
+  },
+  "deploymentReadThroughModuleWithTeam": "Read through this module with your team lead before you ride.",
+  "@deploymentReadThroughModuleWithTeam": {
+    "description": "Read through this module with your team lead before you ride."
+  },
+  "maintenanceRearBrakeBitesLateSqueals": "Rear brake bites late and squeals under load.",
+  "@maintenanceRearBrakeBitesLateSqueals": {
+    "description": "Rear brake bites late and squeals under load."
+  },
+  "supportRearTyrePunctureNearAshram": "Rear tyre puncture near Ashram",
+  "@supportRearTyrePunctureNearAshram": {
+    "description": "Rear tyre puncture near Ashram"
+  },
+  "earningsReferRider": "Refer a rider",
+  "@earningsReferRider": {
+    "description": "Refer a rider"
+  },
+  "deploymentReferenceReceiptNumber": "Reference or receipt number",
+  "@deploymentReferenceReceiptNumber": {
+    "description": "Reference or receipt number"
+  },
+  "deploymentReferenceSubmittedWaitingVerification": "Reference submitted — waiting for verification",
+  "@deploymentReferenceSubmittedWaitingVerification": {
+    "description": "Reference submitted — waiting for verification"
+  },
+  "supportReferralBonusSunilNotCredited": "Referral bonus for Sunil not credited",
+  "@supportReferralBonusSunilNotCredited": {
+    "description": "Referral bonus for Sunil not credited"
+  },
+  "scooterRegistrationCertificate": "Registration certificate",
+  "@scooterRegistrationCertificate": {
+    "description": "Registration certificate"
+  },
+  "commonRejectedUploadAgain": "Rejected — upload again",
+  "@commonRejectedUploadAgain": {
+    "description": "Rejected — upload again"
+  },
+  "homeRent": "Rent",
+  "@homeRent": {
+    "description": "Rent"
+  },
+  "rentalsRentCollectedAutomaticallyFromLinked": "Rent is collected automatically from your linked bank account on the debit date above.",
+  "@rentalsRentCollectedAutomaticallyFromLinked": {
+    "description": "Rent is collected automatically from your linked bank account on the debit date above."
+  },
+  "maintenanceReplacementSetOrdered": "Replacement set ordered",
+  "@maintenanceReplacementSetOrdered": {
+    "description": "Replacement set ordered"
+  },
+  "deploymentRequired": "Required",
+  "@deploymentRequired": {
+    "description": "Required"
+  },
+  "supportResponseWithin1Day": "Response within 1 day",
+  "@supportResponseWithin1Day": {
+    "description": "Response within 1 day"
+  },
+  "supportResponseWithin30Min": "Response within 30 min",
+  "@supportResponseWithin30Min": {
+    "description": "Response within 30 min"
+  },
+  "supportResponseWithin4Hours": "Response within 4 hours",
+  "@supportResponseWithin4Hours": {
+    "description": "Response within 4 hours"
+  },
+  "hubReturn": "Return",
+  "@hubReturn": {
+    "description": "Return"
+  },
+  "allocationReturnInitiated": "Return initiated",
+  "@allocationReturnInitiated": {
+    "description": "Return initiated"
+  },
+  "allocationReturnStartedCodesSentRider": "Return started — codes sent to the rider and to you",
+  "@allocationReturnStartedCodesSentRider": {
+    "description": "Return started — codes sent to the rider and to you"
+  },
+  "onboardingReview": "Review",
+  "@onboardingReview": {
+    "description": "Review"
+  },
+  "deploymentRide": "Ride",
+  "@deploymentRide": {
+    "description": "Ride"
+  },
+  "earningsRideBetween6Pm9": "Ride between 6 pm and 9 pm in Okhla",
+  "@earningsRideBetween6Pm9": {
+    "description": "Ride between 6 pm and 9 pm in Okhla"
+  },
+  "rideRideSafeHelmetLightsChecked": "Ride safe. Helmet on, lights checked.",
+  "@rideRideSafeHelmetLightsChecked": {
+    "description": "Ride safe. Helmet on, lights checked."
+  },
+  "allocationRiding": "Riding",
+  "@allocationRiding": {
+    "description": "Riding"
+  },
+  "homeRidingLate": "Riding late",
+  "@homeRidingLate": {
+    "description": "Riding late"
+  },
+  "allocationRightSide": "Right side",
+  "@allocationRightSide": {
+    "description": "Right side"
+  },
+  "supportRoadsideWithin45Min": "Roadside within 45 min",
+  "@supportRoadsideWithin45Min": {
+    "description": "Roadside within 45 min"
+  },
+  "maintenanceScheduledService": "Scheduled service",
+  "@maintenanceScheduledService": {
+    "description": "Scheduled service"
+  },
+  "homeScooter": "Scooter",
+  "@homeScooter": {
+    "description": "Scooter"
+  },
+  "deploymentScooterReserved": "Scooter reserved",
+  "@deploymentScooterReserved": {
+    "description": "Scooter reserved"
+  },
+  "maintenanceScuffedSidePanelAfterParking": "Scuffed side panel after a parking knock.",
+  "@maintenanceScuffedSidePanelAfterParking": {
+    "description": "Scuffed side panel after a parking knock."
+  },
+  "commonSearch": "Search",
+  "@commonSearch": {
+    "description": "Search"
+  },
+  "allocationSearchRiderNameCodeMobile": "Search rider name, code or mobile",
+  "@allocationSearchRiderNameCodeMobile": {
+    "description": "Search rider name, code or mobile"
+  },
+  "allocationSearchRiderVehicle": "Search rider or vehicle",
+  "@allocationSearchRiderVehicle": {
+    "description": "Search rider or vehicle"
+  },
+  "commonSelectDate": "Select a date",
+  "@commonSelectDate": {
+    "description": "Select a date"
+  },
+  "maintenanceSelectJobType": "Select a job type",
+  "@maintenanceSelectJobType": {
+    "description": "Select a job type"
+  },
+  "maintenanceSelectVehicleJob": "Select the vehicle this job is for",
+  "@maintenanceSelectVehicleJob": {
+    "description": "Select the vehicle this job is for"
+  },
+  "hubService": "Service",
+  "@hubService": {
+    "description": "Service"
+  },
+  "homeServiceDue240Km": "Service due in 240 km",
+  "@homeServiceDue240Km": {
+    "description": "Service due in 240 km"
+  },
+  "maintenanceServicePartner": "Service partner",
+  "@maintenanceServicePartner": {
+    "description": "Service partner"
+  },
+  "commonSignBeforeReadingClientConfiguration": "Sign in before reading the client configuration.",
+  "@commonSignBeforeReadingClientConfiguration": {
+    "description": "Sign in before reading the client configuration."
+  },
+  "commonSignContinue": "Sign in to continue.",
+  "@commonSignContinue": {
+    "description": "Sign in to continue."
+  },
+  "commonSister": "Sister",
+  "@commonSister": {
+    "description": "Sister"
+  },
+  "earningsSixDaysPresentWithNo": "Six days present with no late returns",
+  "@earningsSixDaysPresentWithNo": {
+    "description": "Six days present with no late returns"
+  },
+  "onboardingSomeStepsStillIncompleteGo": "Some steps are still incomplete. Go back and finish them.",
+  "@onboardingSomeStepsStillIncompleteGo": {
+    "description": "Some steps are still incomplete. Go back and finish them."
+  },
+  "supportSomethingElse": "Something else",
+  "@supportSomethingElse": {
+    "description": "Something else"
+  },
+  "hubSomethingWentWrong": "Something went wrong.",
+  "@hubSomethingWentWrong": {
+    "description": "Something went wrong."
+  },
+  "commonSomethingWentWrongPleaseTry": "Something went wrong. Please try again.",
+  "@commonSomethingWentWrongPleaseTry": {
+    "description": "Something went wrong. Please try again."
+  },
+  "commonSpouse": "Spouse",
+  "@commonSpouse": {
+    "description": "Spouse"
+  },
+  "commonSubmitInspection": "Submit inspection",
+  "@commonSubmitInspection": {
+    "description": "Submit inspection"
+  },
+  "deploymentSubmitWithProblemsFlagged": "Submit with problems flagged?",
+  "@deploymentSubmitWithProblemsFlagged": {
+    "description": "Submit with problems flagged?"
+  },
+  "homeSurgeOkhlaTill9Pm": "Surge in Okhla till 9 pm",
+  "@homeSurgeOkhlaTill9Pm": {
+    "description": "Surge in Okhla till 9 pm"
+  },
+  "commonTakeOneNowChooseFrom": "Take one now, or choose from your gallery",
+  "@commonTakeOneNowChooseFrom": {
+    "description": "Take one now, or choose from your gallery"
+  },
+  "rideTalkingIotUnitKeepPhone": "Talking to the IoT unit. Keep your phone close.",
+  "@rideTalkingIotUnitKeepPhone": {
+    "description": "Talking to the IoT unit. Keep your phone close."
+  },
+  "supportTellUsWhatHappenedAttach": "Tell us what happened and attach a photo if it helps. ",
+  "@supportTellUsWhatHappenedAttach": {
+    "description": "Tell us what happened and attach a photo if it helps. "
+  },
+  "supportTellUsWhatAbout": "Tell us what this is about",
+  "@supportTellUsWhatAbout": {
+    "description": "Tell us what this is about"
+  },
+  "authCodeDidNotVerifyPlease": "That code did not verify. Please try again.",
+  "@authCodeDidNotVerifyPlease": {
+    "description": "That code did not verify. Please try again."
+  },
+  "onboardingDateBirthNotValid": "That date of birth is not valid",
+  "@onboardingDateBirthNotValid": {
+    "description": "That date of birth is not valid"
+  },
+  "errorDidNotLookRight": "That did not look right.",
+  "@errorDidNotLookRight": {
+    "description": "That did not look right."
+  },
+  "maintenanceJobNoLongerBoard": "That job is no longer on the board.",
+  "@maintenanceJobNoLongerBoard": {
+    "description": "That job is no longer on the board."
+  },
+  "allocationReturnHasAlreadyBeenStarted": "The return has already been started on the server. You can finish it later from the Returns tab.",
+  "@allocationReturnHasAlreadyBeenStarted": {
+    "description": "The return has already been started on the server. You can finish it later from the Returns tab."
+  },
+  "allocationRiderCompletingSafetyTrainingTheir": "The rider is completing the safety training in their app. Pairing opens once every mandatory module is done.",
+  "@allocationRiderCompletingSafetyTrainingTheir": {
+    "description": "The rider is completing the safety training in their app. Pairing opens once every mandatory module is done."
+  },
+  "allocationRiderGoingThroughChecklistTheir": "The rider is going through your checklist in their app. Items they reject come back with a note.",
+  "@allocationRiderGoingThroughChecklistTheir": {
+    "description": "The rider is going through your checklist in their app. Items they reject come back with a note."
+  },
+  "errorServerTookTooLongAnswer": "The server took too long to answer.",
+  "@errorServerTookTooLongAnswer": {
+    "description": "The server took too long to answer."
+  },
+  "allocationClientRequiresNoInspectionPhotos": "This client requires no inspection photos. You can write up the checklist now.",
+  "@allocationClientRequiresNoInspectionPhotos": {
+    "description": "This client requires no inspection photos. You can write up the checklist now."
+  },
+  "validationField": "This field",
+  "@validationField": {
+    "description": "This field"
+  },
+  "commonOwnNumberUseDifferentOne": "This is your own number. Use a different one.",
+  "@commonOwnNumberUseDifferentOne": {
+    "description": "This is your own number. Use a different one."
+  },
+  "allocationRiderNoLongerWaitingVehicle": "This rider is no longer waiting for a vehicle.",
+  "@allocationRiderNoLongerWaitingVehicle": {
+    "description": "This rider is no longer waiting for a vehicle."
+  },
+  "commonTooManyAttemptsWaitMoment": "Too many attempts. Wait a moment.",
+  "@commonTooManyAttemptsWaitMoment": {
+    "description": "Too many attempts. Wait a moment."
+  },
+  "scooterToolkit": "Toolkit",
+  "@scooterToolkit": {
+    "description": "Toolkit"
+  },
+  "maintenanceTrackerDropsOffBetweenOkhla": "Tracker drops off between Okhla and Jasola.",
+  "@maintenanceTrackerDropsOffBetweenOkhla": {
+    "description": "Tracker drops off between Okhla and Jasola."
+  },
+  "deploymentTrainingComplete": "Training complete",
+  "@deploymentTrainingComplete": {
+    "description": "Training complete"
+  },
+  "allocationTrainingDonePairing": "Training done · pairing",
+  "@allocationTrainingDonePairing": {
+    "description": "Training done · pairing"
+  },
+  "errorTrainingProgress": "Training in progress",
+  "@errorTrainingProgress": {
+    "description": "Training in progress"
+  },
+  "supportTripsLostSwapDoNot": "Trips lost to a swap do not count against your incentive target.",
+  "@supportTripsLostSwapDoNot": {
+    "description": "Trips lost to a swap do not count against your incentive target."
+  },
+  "maintenanceTwoWheelerWorkshop": "Two-wheeler workshop",
+  "@maintenanceTwoWheelerWorkshop": {
+    "description": "Two-wheeler workshop"
+  },
+  "maintenanceTyres": "Tyres",
+  "@maintenanceTyres": {
+    "description": "Tyres"
+  },
+  "allocationTyresPressure": "Tyres and pressure",
+  "@allocationTyresPressure": {
+    "description": "Tyres and pressure"
+  },
+  "deploymentUpiTransactionIdEG": "UPI transaction ID, e.g. 4284 7192 3456",
+  "@deploymentUpiTransactionIdEG": {
+    "description": "UPI transaction ID, e.g. 4284 7192 3456"
+  },
+  "maintenanceUnassigned": "Unassigned",
+  "@maintenanceUnassigned": {
+    "description": "Unassigned"
+  },
+  "errorUnknown": "Unknown",
+  "@errorUnknown": {
+    "description": "Unknown"
+  },
+  "notificationsUnread": "Unread",
+  "@notificationsUnread": {
+    "description": "Unread"
+  },
+  "commonUpload": "Upload",
+  "@commonUpload": {
+    "description": "Upload"
+  },
+  "allocationUploadEvidenceContinue": "Upload evidence to continue",
+  "@allocationUploadEvidenceContinue": {
+    "description": "Upload evidence to continue"
+  },
+  "commonUploaded": "Uploaded",
+  "@commonUploaded": {
+    "description": "Uploaded"
+  },
+  "rideVehicleOff": "Vehicle is OFF",
+  "@rideVehicleOff": {
+    "description": "Vehicle is OFF"
+  },
+  "rideVehicle": "Vehicle is ON",
+  "@rideVehicle": {
+    "description": "Vehicle is ON"
+  },
+  "homeVehicleOff": "Vehicle off",
+  "@homeVehicleOff": {
+    "description": "Vehicle off"
+  },
+  "homeVehicle": "Vehicle on",
+  "@homeVehicle": {
+    "description": "Vehicle on"
+  },
+  "rentalsVehicleRent": "Vehicle rent",
+  "@rentalsVehicleRent": {
+    "description": "Vehicle rent"
+  },
+  "ridersVerified": "Verified",
+  "@ridersVerified": {
+    "description": "Verified"
+  },
+  "allocationVerifyPayment": "Verify payment",
+  "@allocationVerifyPayment": {
+    "description": "Verify payment"
+  },
+  "deploymentWaitingAllocation": "Waiting for an allocation",
+  "@deploymentWaitingAllocation": {
+    "description": "Waiting for an allocation"
+  },
+  "allocationWaitingRiderAcceptInspection": "Waiting for rider to accept inspection",
+  "@allocationWaitingRiderAcceptInspection": {
+    "description": "Waiting for rider to accept inspection"
+  },
+  "allocationWaitingRiderFinishTraining": "Waiting for rider to finish training",
+  "@allocationWaitingRiderFinishTraining": {
+    "description": "Waiting for rider to finish training"
+  },
+  "allocationWaitingRiderPairBypass": "Waiting for rider to pair — or bypass",
+  "@allocationWaitingRiderPairBypass": {
+    "description": "Waiting for rider to pair — or bypass"
+  },
+  "allocationWaitingRiderInspection": "Waiting for rider: inspection",
+  "@allocationWaitingRiderInspection": {
+    "description": "Waiting for rider: inspection"
+  },
+  "allocationWaitingRiderTraining": "Waiting for rider: training",
+  "@allocationWaitingRiderTraining": {
+    "description": "Waiting for rider: training"
+  },
+  "allocationWaitingRider": "Waiting on the rider",
+  "@allocationWaitingRider": {
+    "description": "Waiting on the rider"
+  },
+  "allocationWaitingRiderPageRefreshesIts": "Waiting on the rider — this page refreshes on its own.",
+  "@allocationWaitingRiderPageRefreshesIts": {
+    "description": "Waiting on the rider — this page refreshes on its own."
+  },
+  "earningsWeekly": "Weekly",
+  "@earningsWeekly": {
+    "description": "Weekly"
+  },
+  "earningsWeeklyDistance": "Weekly distance",
+  "@earningsWeeklyDistance": {
+    "description": "Weekly distance"
+  },
+  "commonWeeklyPlan": "Weekly plan",
+  "@commonWeeklyPlan": {
+    "description": "Weekly plan"
+  },
+  "supportWhatHappensIfBatteryDies": "What happens if the battery dies mid-shift?",
+  "@supportWhatHappensIfBatteryDies": {
+    "description": "What happens if the battery dies mid-shift?"
+  },
+  "supportWhenDoesMyRentGet": "When does my rent get debited?",
+  "@supportWhenDoesMyRentGet": {
+    "description": "When does my rent get debited?"
+  },
+  "maintenanceWideShot": "Wide shot",
+  "@maintenanceWideShot": {
+    "description": "Wide shot"
+  },
+  "ridersWithHubSince": "With the hub since",
+  "@ridersWithHubSince": {
+    "description": "With the hub since"
+  },
+  "hubWorkingLate": "Working late",
+  "@hubWorkingLate": {
+    "description": "Working late"
+  },
+  "supportYesWeeklyMonthlyPlansDaily": "Yes, on weekly and monthly plans. Daily plans return to the hub ",
+  "@supportYesWeeklyMonthlyPlansDaily": {
+    "description": "Yes, on weekly and monthly plans. Daily plans return to the hub "
+  },
+  "notificationsAllCaughtUp": "You are all caught up",
+  "@notificationsAllCaughtUp": {
+    "description": "You are all caught up"
+  },
+  "deploymentConfirmEveryItemHasBeen": "You confirm every item has been checked with your team lead and the scooter is fit to ride.",
+  "@deploymentConfirmEveryItemHasBeen": {
+    "description": "You confirm every item has been checked with your team lead and the scooter is fit to ride."
+  },
+  "commonHaveAlreadyUsedNumberAnother": "You have already used this number for another reference",
+  "@commonHaveAlreadyUsedNumberAnother": {
+    "description": "You have already used this number for another reference"
+  },
+  "commonAccountCannotDo": "Your account cannot do that.",
+  "@commonAccountCannotDo": {
+    "description": "Your account cannot do that."
+  },
+  "deploymentFleetManagerHasNotAsked": "Your fleet manager has not asked for a payment yet.",
+  "@deploymentFleetManagerHasNotAsked": {
+    "description": "Your fleet manager has not asked for a payment yet."
+  },
+  "deploymentFleetManagerHasNotSubmitted": "Your fleet manager has not submitted the inspection yet.",
+  "@deploymentFleetManagerHasNotSubmitted": {
+    "description": "Your fleet manager has not submitted the inspection yet."
+  },
+  "walletLedgerWillFillUpAs": "Your ledger will fill up as you ride and earn.",
+  "@walletLedgerWillFillUpAs": {
+    "description": "Your ledger will fill up as you ride and earn."
+  },
+  "earningsReferralCompletes20Trips": "Your referral completes 20 trips",
+  "@earningsReferralCompletes20Trips": {
+    "description": "Your referral completes 20 trips"
+  },
+  "rideScooterConnectedUsePowerButton": "Your scooter is connected. Use the power button to switch it on.",
+  "@rideScooterConnectedUsePowerButton": {
+    "description": "Your scooter is connected. Use the power button to switch it on."
+  },
+  "commonSessionHasExpiredPleaseSign": "Your session has expired. Please sign in again.",
+  "@commonSessionHasExpiredPleaseSign": {
+    "description": "Your session has expired. Please sign in again."
+  },
+  "errorSessionHasExpiredSignAgain": "Your session has expired. Sign in again.",
+  "@errorSessionHasExpiredSignAgain": {
+    "description": "Your session has expired. Sign in again."
+  },
+  "supportTeamLeadSeesStraightAway": "Your team lead sees it straight away.",
+  "@supportTeamLeadSeesStraightAway": {
+    "description": "Your team lead sees it straight away."
+  },
+  "onboardingNoStepsConfigured": "Your fleet operator's package has no onboarding steps configured yet. Ask them to set up rider onboarding, then sign in again.",
+  "@onboardingNoStepsConfigured": {
+    "description": "Your fleet operator's package has no onboarding steps configured yet. Ask them to set up rider onboarding, then sign in again."
+  },
+  "commonSon": "Son",
+  "@commonSon": {
+    "description": "Son"
+  }
+}

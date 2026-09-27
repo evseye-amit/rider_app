@@ -34,11 +34,11 @@ class _SupportView extends StatelessWidget {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: tr('Could not load support'),
+                title: context.l10n.supportCouldNotLoadSupport,
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: tr('Try again'),
+                actionLabel: context.l10n.commonTryAgain,
                 onAction: () => context.read<SupportCubit>().refresh(),
               ),
             ),
@@ -62,18 +62,18 @@ class _SupportView extends StatelessWidget {
   List<Widget> _content(BuildContext context, SupportOverview overview) {
     return [
       ModuleCard(
-        title: tr('Need help with something?'),
+        title: context.l10n.supportNeedHelpWithSomething,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Tell us what happened and attach a photo if it helps. '
-              'Your team lead sees it straight away.',
+              context.l10n.supportTellUsWhatHappenedAttach +
+                  context.l10n.supportTeamLeadSeesStraightAway,
               style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5),
             ),
             const Gap.lg(),
             PrimaryButton(
-              label: tr('Raise a ticket'),
+              label: context.l10n.supportRaiseTicket,
               icon: Icons.add_rounded,
               onPressed: () => _raiseTicket(context),
             ),
@@ -83,12 +83,12 @@ class _SupportView extends StatelessWidget {
       const Gap.lg(),
 
       ModuleCard(
-        title: tr('Your tickets'),
+        title: context.l10n.supportTickets,
         child: overview.tickets.isEmpty
             ? EmptyState(
                 compact: true,
-                title: tr('No tickets yet'),
-                message: tr('Raise one above if something needs attention.'),
+                title: context.l10n.supportNoTicketsYet,
+                message: context.l10n.supportRaiseOneAboveIfSomething,
                 icon: Icons.confirmation_num_outlined,
               )
             : Column(
@@ -96,7 +96,7 @@ class _SupportView extends StatelessWidget {
                 children: [
                   Text(
                     overview.openTickets.isEmpty
-                        ? 'Nothing open right now'
+                        ? context.l10n.supportNothingOpenRightNow
                         : '${overview.openTickets.length} open',
                     style: AppText.bodySmall.copyWith(
                       fontSize: 12,
@@ -109,7 +109,7 @@ class _SupportView extends StatelessWidget {
                       ticket: ticket,
                       categoryLabel:
                           overview.categoryFor(ticket.categoryKey)?.label ??
-                          'General',
+                          context.l10n.supportGeneral,
                     ),
                     if (ticket != overview.tickets.last)
                       Divider(
@@ -129,12 +129,12 @@ class _SupportView extends StatelessWidget {
                       child: Column(
                         children: [
                           KeyValueRow(
-                            label: tr('Repairs across your tickets'),
+                            label: context.l10n.supportRepairsAcrossTickets,
                             value: Fmt.money(overview.totalRepairCost),
                             icon: Icons.build_rounded,
                           ),
                           KeyValueRow(
-                            label: tr('Borne by you'),
+                            label: context.l10n.supportBorneBy,
                             value: Fmt.money(overview.riderBorneCost),
                             icon: Icons.account_balance_wallet_rounded,
                             valueColor:
@@ -183,7 +183,7 @@ class _SupportBand extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(tr('Support'),
+                  Text(context.l10n.commonSupport,
                     style: AppText.bodySmall.copyWith(
                       fontSize: 12,
                       color: AppColors.onInkSecondary,
@@ -205,7 +205,7 @@ class _SupportBand extends StatelessWidget {
           ],
         ),
         const Gap.xxl(),
-        Text(tr('Open tickets'),
+        Text(context.l10n.supportOpenTickets,
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),
@@ -231,7 +231,7 @@ class _SupportBand extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: tr('Open'),
+                  label: context.l10n.commonOpen,
                   value: '$open',
                   icon: Icons.pending_actions_rounded,
                 ),
@@ -240,7 +240,7 @@ class _SupportBand extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: tr('Resolved'),
+                  label: context.l10n.supportResolved,
                   value: '$resolved',
                   icon: Icons.check_circle_rounded,
                 ),
@@ -310,7 +310,7 @@ class _TicketRow extends StatelessWidget {
                       ),
                       const SizedBox(width: Insets.sm),
                       StatusChip(
-                        label: open ? 'Open' : 'Resolved',
+                        label: open ? context.l10n.commonOpen : context.l10n.supportResolved,
                         tone: open ? StatusTone.warning : StatusTone.success,
                         dense: true,
                       ),

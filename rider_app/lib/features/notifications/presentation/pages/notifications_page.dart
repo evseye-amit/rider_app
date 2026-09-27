@@ -35,7 +35,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   final TextEditingController _searchController = TextEditingController();
   String _query = '';
   int _filterIndex = 0;
-  static const List<String> _filters = ['All', 'Unread'];
+  static List<String> get _filters => ['All', LocaleController.strings.notificationsUnread];
 
   @override
   void initState() {
@@ -70,13 +70,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     if (_error != null) {
       return AppScaffold(
-        title: tr('Notifications'),
+        title: context.l10n.notificationsNotifications,
         body: EmptyState(
-          title: tr('Could not load notifications'),
+          title: context.l10n.notificationsCouldNotLoadNotifications,
           message: _error,
           icon: Icons.cloud_off_rounded,
           tone: AppColors.danger,
-          actionLabel: tr('Try again'),
+          actionLabel: context.l10n.commonTryAgain,
           onAction: () {
             setState(() => _error = null);
             _load();
@@ -86,7 +86,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
     }
     if (_items == null) {
       return AppScaffold(
-        title: tr('Notifications'),
+        title: context.l10n.notificationsNotifications,
         body: _NotificationsSkeleton(),
       );
     }
@@ -120,15 +120,15 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 child: Center(
                   child: ArtBlock(
                     art: BrandArt.empty,
-                    title: tr('All clear'),
-                    message: tr('New earnings, reminders and alerts will show up here.'),
+                    title: context.l10n.notificationsAllClear,
+                    message: context.l10n.notificationsNewEarningsRemindersAlertsWill,
                   ),
                 ),
               ),
             ]
           : [
               AppSearchField(
-                hint: tr('Search notifications'),
+                hint: context.l10n.notificationsSearchNotifications,
                 controller: _searchController,
                 onChanged: (v) => setState(() => _query = v),
               ),
@@ -145,13 +145,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   padding: EdgeInsets.symmetric(vertical: Insets.xxl),
                   child: EmptyState(
                     compact: true,
-                    title: tr('No matching notifications'),
+                    title: context.l10n.notificationsNoMatchingNotifications,
                     icon: Icons.search_off_rounded,
                   ),
                 ),
               if (today.isNotEmpty) ...[
                 ModuleCard(
-                  title: tr('Today'),
+                  title: context.l10n.notificationsToday,
                   child: Column(
                     children: [
                       for (final item in today) ...[
@@ -168,7 +168,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
               ],
               if (earlier.isNotEmpty)
                 ModuleCard(
-                  title: tr('Earlier'),
+                  title: context.l10n.notificationsEarlier,
                   child: Column(
                     children: [
                       for (final item in earlier) ...[
@@ -215,7 +215,7 @@ class _Band extends StatelessWidget {
             ),
             const SizedBox(width: Insets.md),
             Expanded(
-              child: Text(tr('Notifications'),
+              child: Text(context.l10n.notificationsNotifications,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.titleLarge.copyWith(
@@ -234,7 +234,7 @@ class _Band extends StatelessWidget {
         const Gap.xl(),
 
         Text(
-          unread == 0 ? 'You are all caught up' : '$unread unread',
+          unread == 0 ? context.l10n.notificationsAllCaughtUp : '$unread unread',
           style: AppText.displaySmall.copyWith(
             fontSize: 26,
             color: AppColors.onInk,
@@ -243,7 +243,7 @@ class _Band extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           unread == 0
-              ? 'Nothing new needs your attention'
+              ? context.l10n.notificationsNothingNewNeedsAttention
               : '$total notifications in your inbox',
           style: AppText.bodySmall.copyWith(color: AppColors.onInkSecondary),
         ),

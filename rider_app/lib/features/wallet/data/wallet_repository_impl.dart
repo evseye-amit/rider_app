@@ -48,7 +48,7 @@ class WalletRepositoryImpl implements WalletRepository {
       id: p.id,
       type: TransactionType.debit,
       category: 'deposit',
-      title: items.isEmpty ? 'Deployment payment' : items,
+      title: items.isEmpty ? LocaleController.strings.walletDeploymentPayment : items,
       subtitle: switch (p.status) {
         'PAID' => 'Verified by your fleet manager$vehicle',
         'SUBMITTED' => 'Reference ${p.providerReference ?? ''} awaiting verification$vehicle',

@@ -27,11 +27,11 @@ class IncentivesBand extends StatelessWidget {
               onTap: () => Navigator.of(context).maybePop(),
             ),
           ),
-          subtitle: tr('Bonuses you can still clear this week'),
-          title: tr('Incentives'),
+          subtitle: context.l10n.earningsBonusesCanStillClearWeek,
+          title: context.l10n.commonIncentives,
         ),
         const Gap.xxl(),
-        Text(tr('Earned this week'),
+        Text(context.l10n.earningsEarnedWeek,
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),
@@ -59,7 +59,7 @@ class IncentivesBand extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: tr('Active schemes'),
+                  label: context.l10n.earningsActiveSchemes,
                   value: '$activeCount',
                   icon: Icons.emoji_events_rounded,
                 ),
@@ -68,7 +68,7 @@ class IncentivesBand extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: tr('Cleared'),
+                  label: context.l10n.earningsCleared,
                   value: '$achievedCount',
                   icon: Icons.check_circle_rounded,
                 ),
@@ -134,7 +134,7 @@ class IncentiveSchemeCard extends StatelessWidget {
                         ),
                         if (dimmed)
                           StatusChip(
-                            label: tr('Achieved'),
+                            label: context.l10n.earningsAchieved,
                             tone: StatusTone.success,
                             icon: Icons.check_circle_rounded,
                             dense: true,
@@ -175,7 +175,7 @@ class IncentiveSchemeCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     dimmed
-                        ? 'Completed — reward credited to your wallet.'
+                        ? context.l10n.earningsCompletedRewardCreditedWallet
                         : '${scheme.target - scheme.current} more ${scheme.unit} to go',
                     style: AppText.bodySmall.copyWith(fontSize: 12),
                   ),
@@ -188,7 +188,7 @@ class IncentiveSchemeCard extends StatelessWidget {
               color: tone,
               label:
                   '${scheme.current.toInt()} of ${scheme.target.toInt()} ${scheme.unit}',
-              trailingLabel: dimmed ? 'Done' : Fmt.percent(scheme.progress),
+              trailingLabel: dimmed ? context.l10n.deploymentDone : Fmt.percent(scheme.progress),
             ),
           const SizedBox(height: Insets.md),
           Row(
@@ -213,7 +213,7 @@ class IncentiveSchemeCard extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () => _showTerms(context),
-                child: Text(tr('Terms'),
+                child: Text(context.l10n.earningsTerms,
                   style: AppText.bodySmall.copyWith(
                     fontSize: 11.5,
                     fontWeight: FontWeight.w800,
@@ -234,7 +234,7 @@ class IncentiveSchemeCard extends StatelessWidget {
     AppSheet.show(
       context,
       title: scheme.title,
-      subtitle: tr('Terms & conditions'),
+      subtitle: context.l10n.earningsTermsConditions,
       child: Padding(
         padding: const EdgeInsets.only(bottom: Insets.lg),
         child: Text(

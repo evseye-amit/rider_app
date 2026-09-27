@@ -19,7 +19,7 @@ class ScooterRepositoryImpl implements ScooterRepository {
         final DeploymentAllocation? allocation = value.allocation;
         final DeploymentFleet? fleet = allocation?.fleet;
         if (allocation == null || fleet == null) {
-          return const Result.err(NotFoundFailure('No scooter has been allocated to you yet.'));
+          return Result.err(NotFoundFailure(LocaleController.strings.scooterNoScooterHasBeenAllocated));
         }
         return Result.ok(_vehicle(allocation, fleet, value.status));
     }
@@ -51,7 +51,7 @@ class ScooterRepositoryImpl implements ScooterRepository {
       tyrePressureFront: 32,
       tyrePressureRear: 36,
       iot: VehicleIot(
-        deviceId: fleet.iotDeviceNumber ?? (status.isDeployed ? 'Paired' : '—'),
+        deviceId: fleet.iotDeviceNumber ?? (status.isDeployed ? LocaleController.strings.commonPaired : '—'),
         online: status.isDeployed,
         signal: status.isDeployed ? 3 : 0,
         lastPing: status.isDeployed ? 'a moment ago' : '—',
@@ -60,35 +60,35 @@ class ScooterRepositoryImpl implements ScooterRepository {
       documents: [
         VehicleDocument(
           key: 'rc',
-          label: 'Registration certificate',
+          label: LocaleController.strings.scooterRegistrationCertificate,
           validTill: DateTime(Demo.now.year + 4, 3, 31),
           status: 'valid',
         ),
         VehicleDocument(
           key: 'insurance',
-          label: 'Insurance',
-          validTill: Demo.today().add(const Duration(days: 23)),
+          label: LocaleController.strings.commonInsurance,
+          validTill: Demo.today().add(Duration(days: 23)),
           status: 'expiring',
         ),
         VehicleDocument(
           key: 'permit',
-          label: 'Commercial permit',
+          label: LocaleController.strings.scooterCommercialPermit,
           validTill: DateTime(Demo.now.year + 1, 11, 30),
           status: 'valid',
         ),
         VehicleDocument(
           key: 'puc',
-          label: 'Fitness certificate',
+          label: LocaleController.strings.scooterFitnessCertificate,
           validTill: DateTime(Demo.now.year + 2, 6, 15),
           status: 'valid',
         ),
       ],
-      accessories: const [
-        VehicleAccessory(key: 'helmet', label: 'Helmet', present: true),
-        VehicleAccessory(key: 'charger', label: 'Charger', present: true),
-        VehicleAccessory(key: 'toolkit', label: 'Toolkit', present: true),
-        VehicleAccessory(key: 'phone_mount', label: 'Phone mount', present: true),
-        VehicleAccessory(key: 'delivery_box', label: 'Delivery box', present: false),
+      accessories: [
+        VehicleAccessory(key: 'helmet', label: LocaleController.strings.scooterHelmet, present: true),
+        VehicleAccessory(key: 'charger', label: LocaleController.strings.scooterCharger, present: true),
+        VehicleAccessory(key: 'toolkit', label: LocaleController.strings.scooterToolkit, present: true),
+        VehicleAccessory(key: 'phone_mount', label: LocaleController.strings.scooterPhoneMount, present: true),
+        VehicleAccessory(key: 'delivery_box', label: LocaleController.strings.scooterDeliveryBox, present: false),
       ],
       recentTrips: _trips(),
     );

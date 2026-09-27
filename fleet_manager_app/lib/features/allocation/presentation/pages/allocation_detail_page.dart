@@ -64,13 +64,13 @@ class _DetailView extends StatelessWidget {
         }
         if (state.status == DeploymentDetailStatus.failure || state.request == null) {
           return AppScaffold(
-            title: tr('Handover'),
+            title: context.l10n.commonHandover,
             body: EmptyState(
-              title: tr('Could not load this handover'),
+              title: context.l10n.allocationCouldNotLoadHandover,
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: tr('Try again'),
+              actionLabel: context.l10n.commonTryAgain,
               onAction: () => context.read<DeploymentDetailCubit>().load(),
             ),
           );
@@ -102,12 +102,12 @@ class _Loaded extends StatelessWidget {
       bottomNavigationBar: _Footer(state: state),
       children: [
         OverlapModuleCard(
-          title: tr('Rider'),
+          title: context.l10n.allocationRider,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               KeyValueRow(
-                label: tr('Mobile'),
+                label: context.l10n.commonMobile,
                 value: rider == null ? '—' : Fmt.phone(rider.mobile),
                 icon: Icons.phone_rounded,
                 trailing: rider == null
@@ -124,26 +124,26 @@ class _Loaded extends StatelessWidget {
                         },
                       ),
               ),
-              KeyValueRow(label: tr('Rider code'), value: (rider?.riderCode ?? '').isEmpty ? '—' : rider!.riderCode!, icon: Icons.badge_rounded),
-              KeyValueRow(label: tr('City'), value: rider?.city ?? '—', icon: Icons.place_rounded),
+              KeyValueRow(label: context.l10n.allocationRiderCode, value: (rider?.riderCode ?? '').isEmpty ? '—' : rider!.riderCode!, icon: Icons.badge_rounded),
+              KeyValueRow(label: context.l10n.commonCity, value: rider?.city ?? '—', icon: Icons.place_rounded),
               if (request.createdAt != null)
-                KeyValueRow(label: tr('Reserved on'), value: Fmt.dateTime(request.createdAt!), icon: Icons.schedule_rounded),
+                KeyValueRow(label: context.l10n.allocationReserved2, value: Fmt.dateTime(request.createdAt!), icon: Icons.schedule_rounded),
             ],
           ),
         ),
         const Gap.lg(),
 
         ModuleCard(
-          title: tr('Vehicle'),
+          title: context.l10n.commonVehicle,
           leading: const IconTile(icon: Icons.electric_scooter_rounded, solid: true, size: 28),
           child: Column(
             children: [
-              KeyValueRow(label: tr('Number'), value: fleet?.vehicleNumber ?? '—', icon: Icons.confirmation_number_rounded),
-              KeyValueRow(label: tr('Model'), value: fleet?.modelName ?? '—', icon: Icons.two_wheeler_rounded),
-              KeyValueRow(label: tr('Fleet code'), value: fleet?.fleetCode ?? '—', icon: Icons.qr_code_rounded),
+              KeyValueRow(label: context.l10n.allocationNumber, value: fleet?.vehicleNumber ?? '—', icon: Icons.confirmation_number_rounded),
+              KeyValueRow(label: context.l10n.commonModel, value: fleet?.modelName ?? '—', icon: Icons.two_wheeler_rounded),
+              KeyValueRow(label: context.l10n.allocationFleetCode, value: fleet?.fleetCode ?? '—', icon: Icons.qr_code_rounded),
               KeyValueRow(
-                label: tr('IoT device'),
-                value: fleet?.iotDeviceNumber ?? 'Not mapped',
+                label: context.l10n.allocationIotDevice,
+                value: fleet?.iotDeviceNumber ?? context.l10n.allocationNotMapped,
                 icon: Icons.sensors_rounded,
                 valueColor: fleet?.iotDeviceNumber == null ? AppColors.warning : null,
               ),
@@ -153,7 +153,7 @@ class _Loaded extends StatelessWidget {
         const Gap.lg(),
 
         ModuleCard(
-          title: tr('Handover'),
+          title: context.l10n.commonHandover,
           leading: const IconTile(icon: Icons.timeline_rounded, solid: true, size: 28),
           child: DeploymentTimeline(status: status, workflow: request.workflow),
         ),
@@ -166,8 +166,8 @@ class _Loaded extends StatelessWidget {
           ArtBlock(
             art: BrandArt.success,
             artSize: 120,
-            title: tr('Deployed'),
-            message: tr('The rider paired the scooter and is on the road. This handover is complete.'),
+            title: context.l10n.allocationDeployed,
+            message: context.l10n.allocationRiderPairedScooterRoadHandover,
           ),
       ],
     );
@@ -217,7 +217,7 @@ class _Band extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    request.rider?.name ?? 'Rider',
+                    request.rider?.name ?? context.l10n.allocationRider,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.displaySmall.copyWith(fontSize: 22, color: AppColors.onInk),
@@ -237,9 +237,9 @@ class _Band extends StatelessWidget {
         const Gap.lg(),
         Text(
           status.waitsOnRider
-              ? 'Waiting on the rider — this page refreshes on its own.'
+              ? context.l10n.allocationWaitingRiderPageRefreshesIts
               : status.isDeployed
-                  ? 'Complete.'
+                  ? context.l10n.allocationComplete2
                   : 'Your move: ${_nextActionLabel(status).toLowerCase()}.',
           style: AppText.bodySmall.copyWith(color: AppColors.onInkMuted),
         ),
@@ -249,15 +249,15 @@ class _Band extends StatelessWidget {
 }
 
 String _nextActionLabel(DeploymentStatus status) => switch (status) {
-      DeploymentStatus.riderWaiting => 'Ask for payment',
-      DeploymentStatus.fleetRequested => 'Ask for payment',
-      DeploymentStatus.paymentPending => 'Verify payment',
-      DeploymentStatus.paymentPaid => 'Submit inspection',
-      DeploymentStatus.pdiPendingRider => 'Waiting for rider to accept inspection',
-      DeploymentStatus.trainingPending => 'Waiting for rider to finish training',
-      DeploymentStatus.devicePairingPending => 'Waiting for rider to pair — or bypass',
-      DeploymentStatus.deployed => 'Deployed',
-      DeploymentStatus.unknown => 'Refresh',
+      DeploymentStatus.riderWaiting => LocaleController.strings.allocationAskPayment,
+      DeploymentStatus.fleetRequested => LocaleController.strings.allocationAskPayment,
+      DeploymentStatus.paymentPending => LocaleController.strings.allocationVerifyPayment,
+      DeploymentStatus.paymentPaid => LocaleController.strings.commonSubmitInspection,
+      DeploymentStatus.pdiPendingRider => LocaleController.strings.allocationWaitingRiderAcceptInspection,
+      DeploymentStatus.trainingPending => LocaleController.strings.allocationWaitingRiderFinishTraining,
+      DeploymentStatus.devicePairingPending => LocaleController.strings.allocationWaitingRiderPairBypass,
+      DeploymentStatus.deployed => LocaleController.strings.allocationDeployed,
+      DeploymentStatus.unknown => LocaleController.strings.commonRefresh,
     };
 
 class _EvidenceCard extends StatelessWidget {
@@ -269,7 +269,7 @@ class _EvidenceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final AllocationEvidence? e = evidence;
     return ModuleCard(
-      title: tr('Inspection evidence'),
+      title: context.l10n.allocationInspectionEvidence,
       leading: IconTile(
         icon: Icons.photo_library_rounded,
         tone: e == null ? AppColors.textMuted : (e.isComplete ? AppColors.success : AppColors.warning),
@@ -283,7 +283,7 @@ class _EvidenceCard extends StatelessWidget {
               children: [
                 Text(
                   e.requiredPhotoTypes.isEmpty
-                      ? 'This client requires no inspection photos. You can write up the checklist now.'
+                      ? context.l10n.allocationClientRequiresNoInspectionPhotos
                       : e.isComplete
                           ? 'All ${e.requiredPhotoTypes.length} required photos are on file.'
                           : 'Missing: ${e.missingPhotoTypes.join(', ')}. Upload them against the inspection before submitting.',
@@ -304,30 +304,30 @@ class _IotCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final IotHealth? h = health;
     return ModuleCard(
-      title: tr('IoT unit'),
+      title: context.l10n.commonIotUnit,
       leading: IconTile(
         icon: Icons.sensors_rounded,
         tone: h == null ? AppColors.textMuted : (h.isHealthy ? AppColors.success : AppColors.warning),
         solid: true,
         size: 28,
       ),
-      actionLabel: tr('Refresh'),
+      actionLabel: context.l10n.commonRefresh,
       onAction: () => context.read<DeploymentDetailCubit>().refreshIotHealth(),
       child: h == null
           ? const ShimmerBox(height: 60)
           : Column(
               children: [
-                KeyValueRow(label: tr('Device'), value: h.deviceNumber, icon: Icons.qr_code_2_rounded),
+                KeyValueRow(label: context.l10n.allocationDevice, value: h.deviceNumber, icon: Icons.qr_code_2_rounded),
                 KeyValueRow(
-                  label: tr('Heartbeat'),
-                  value: h.heartbeatAt == null ? 'Never' : '${Fmt.relative(h.heartbeatAt!)}${h.heartbeatFresh ? '' : ' · stale'}',
+                  label: context.l10n.allocationHeartbeat,
+                  value: h.heartbeatAt == null ? context.l10n.allocationNever : '${Fmt.relative(h.heartbeatAt!)}${h.heartbeatFresh ? '' : ' · stale'}',
                   icon: Icons.favorite_rounded,
                   valueColor: h.heartbeatFresh ? AppColors.success : AppColors.warning,
                 ),
-                KeyValueRow(label: tr('SIM'), value: '${h.simStatus}${h.simLastFour == null ? '' : ' · ••${h.simLastFour}'}', icon: Icons.sim_card_rounded),
+                KeyValueRow(label: context.l10n.allocationSim, value: '${h.simStatus}${h.simLastFour == null ? '' : ' · ••${h.simLastFour}'}', icon: Icons.sim_card_rounded),
                 KeyValueRow(
-                  label: tr('Condition'),
-                  value: h.isHealthy ? 'Healthy' : 'Attention required',
+                  label: context.l10n.allocationCondition,
+                  value: h.isHealthy ? context.l10n.allocationHealthy : context.l10n.allocationAttentionRequired,
                   icon: Icons.health_and_safety_rounded,
                   valueColor: h.isHealthy ? AppColors.success : AppColors.warning,
                 ),
@@ -355,8 +355,8 @@ class _RiderTurnCard extends StatelessWidget {
           Expanded(
             child: Text(
               pdi
-                  ? 'The rider is going through your checklist in their app. Items they reject come back with a note.'
-                  : 'The rider is completing the safety training in their app. Pairing opens once every mandatory module is done.',
+                  ? context.l10n.allocationRiderGoingThroughChecklistTheir
+                  : context.l10n.allocationRiderCompletingSafetyTrainingTheir,
               style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5),
             ),
           ),
@@ -377,24 +377,24 @@ class _Footer extends StatelessWidget {
     final DeploymentDetailCubit cubit = context.read<DeploymentDetailCubit>();
     if (state.deployment == DeploymentStatus.riderWaiting && !await cubit.requestFleet()) return;
     final bool ok = await cubit.askPayment(items);
-    if (ok && context.mounted) AppSnack.success(context, 'Payment requested — the rider sees it now');
+    if (ok && context.mounted) AppSnack.success(context, context.l10n.allocationPaymentRequestedRiderSeesNow);
   }
 
   Future<void> _verifyPayment(BuildContext context) async {
     final DeploymentPayment? payment = null;
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: tr('Payment received?'),
+      title: context.l10n.allocationPaymentReceived,
       message: payment == null
-          ? 'Confirm you have received the amount the rider submitted a reference for. This cannot be undone.'
+          ? context.l10n.allocationConfirmHaveReceivedAmountRider
           : 'Confirm ${Fmt.money(payment.amount)} was received.',
-      confirmLabel: tr('Mark as paid'),
+      confirmLabel: context.l10n.allocationMarkAsPaid,
       icon: Icons.payments_rounded,
       tone: AppColors.success,
     );
     if (!confirmed || !context.mounted) return;
     final bool ok = await context.read<DeploymentDetailCubit>().verifyPayment();
-    if (ok && context.mounted) AppSnack.success(context, 'Payment verified');
+    if (ok && context.mounted) AppSnack.success(context, context.l10n.allocationPaymentVerified);
   }
 
   Future<void> _submitPdi(BuildContext context) async {
@@ -402,15 +402,15 @@ class _Footer extends StatelessWidget {
     if (result == null || !context.mounted) return;
     final bool ok =
         await context.read<DeploymentDetailCubit>().submitPdi(workPartnerName: result.partner, checklist: result.items);
-    if (ok && context.mounted) AppSnack.success(context, 'Inspection sent to the rider');
+    if (ok && context.mounted) AppSnack.success(context, context.l10n.allocationInspectionSentRider2);
   }
 
   Future<void> _bypass(BuildContext context) async {
     final TextEditingController controller = TextEditingController();
     final String? remarks = await AppSheet.show<String>(
       context,
-      title: tr('Bypass pairing?'),
-      subtitle: tr('Completes the handover without the rider pairing the device'),
+      title: context.l10n.allocationBypassPairing,
+      subtitle: context.l10n.allocationCompletesHandoverWithoutRiderPairing,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -419,21 +419,21 @@ class _Footer extends StatelessWidget {
             style: AppText.bodySmall.copyWith(height: 1.5),
           ),
           const Gap.lg(),
-          AppTextField(label: tr('Reason'), hint: tr('e.g. Unit not powering on; workshop ticket raised'), maxLines: 3, controller: controller, autofocus: true),
+          AppTextField(label: context.l10n.allocationReason, hint: context.l10n.maintenanceHintUnitNotPowering, maxLines: 3, controller: controller, autofocus: true),
         ],
       ),
       footer: PrimaryButton(
-        label: tr('Bypass and deploy'),
+        label: context.l10n.allocationBypassDeploy,
         icon: Icons.warning_amber_rounded,
         onPressed: () => Navigator.of(context).pop(controller.text.trim()),
       ),
     );
     if (remarks == null || remarks.isEmpty || !context.mounted) {
-      if (remarks != null && remarks.isEmpty && context.mounted) AppSnack.error(context, 'A reason is required to bypass');
+      if (remarks != null && remarks.isEmpty && context.mounted) AppSnack.error(context, context.l10n.allocationReasonRequiredBypass);
       return;
     }
     final bool ok = await context.read<DeploymentDetailCubit>().bypassPairing(remarks);
-    if (ok && context.mounted) AppSnack.success(context, 'Handover completed without pairing');
+    if (ok && context.mounted) AppSnack.success(context, context.l10n.allocationHandoverCompletedWithoutPairing);
   }
 
   @override
@@ -442,19 +442,19 @@ class _Footer extends StatelessWidget {
     final bool evidenceReady = state.evidence == null || state.evidence!.isComplete;
 
     final (String label, IconData icon, VoidCallback? onPressed) = switch (status) {
-      DeploymentStatus.riderWaiting => ('Ask for payment', Icons.receipt_long_rounded, () => _askPayment(context)),
-      DeploymentStatus.fleetRequested => ('Ask for payment', Icons.receipt_long_rounded, () => _askPayment(context)),
-      DeploymentStatus.paymentPending => ('Verify payment', Icons.payments_rounded, () => _verifyPayment(context)),
+      DeploymentStatus.riderWaiting => (context.l10n.allocationAskPayment, Icons.receipt_long_rounded, () => _askPayment(context)),
+      DeploymentStatus.fleetRequested => (context.l10n.allocationAskPayment, Icons.receipt_long_rounded, () => _askPayment(context)),
+      DeploymentStatus.paymentPending => (context.l10n.allocationVerifyPayment, Icons.payments_rounded, () => _verifyPayment(context)),
       DeploymentStatus.paymentPaid => (
-          evidenceReady ? 'Submit inspection' : 'Upload evidence to continue',
+          evidenceReady ? context.l10n.commonSubmitInspection : context.l10n.allocationUploadEvidenceContinue,
           Icons.fact_check_rounded,
           evidenceReady ? () => _submitPdi(context) : null,
         ),
-      DeploymentStatus.pdiPendingRider => ('Waiting for rider: inspection', Icons.hourglass_top_rounded, null),
-      DeploymentStatus.trainingPending => ('Waiting for rider: training', Icons.hourglass_top_rounded, null),
-      DeploymentStatus.devicePairingPending => ('Bypass pairing', Icons.sensors_off_rounded, () => _bypass(context)),
-      DeploymentStatus.deployed => ('Deployed', Icons.verified_rounded, null),
-      DeploymentStatus.unknown => ('Refresh', Icons.refresh_rounded, () => context.read<DeploymentDetailCubit>().load()),
+      DeploymentStatus.pdiPendingRider => (context.l10n.allocationWaitingRiderInspection, Icons.hourglass_top_rounded, null),
+      DeploymentStatus.trainingPending => (context.l10n.allocationWaitingRiderTraining, Icons.hourglass_top_rounded, null),
+      DeploymentStatus.devicePairingPending => (context.l10n.allocationBypassPairing2, Icons.sensors_off_rounded, () => _bypass(context)),
+      DeploymentStatus.deployed => (context.l10n.allocationDeployed, Icons.verified_rounded, null),
+      DeploymentStatus.unknown => (context.l10n.commonRefresh, Icons.refresh_rounded, () => context.read<DeploymentDetailCubit>().load()),
     };
 
     return Container(
@@ -479,8 +479,8 @@ class _PaymentSheet extends StatefulWidget {
 
   static Future<List<PaymentLineItem>?> show(BuildContext context) => AppSheet.show<List<PaymentLineItem>>(
         context,
-        title: tr('Ask for payment'),
-        subtitle: tr('What the rider pays before the handover'),
+        title: context.l10n.allocationAskPayment,
+        subtitle: context.l10n.allocationWhatRiderPaysBeforeHandover,
         child: const _PaymentSheet(),
       );
 
@@ -490,11 +490,23 @@ class _PaymentSheet extends StatefulWidget {
 
 class _PaymentSheetState extends State<_PaymentSheet> {
   final List<(TextEditingController, TextEditingController)> _rows = [
-    (TextEditingController(text: tr('Rental fee (week)')), TextEditingController(text: '700')),
-    (TextEditingController(text: tr('Security deposit')), TextEditingController(text: '3000')),
-    (TextEditingController(text: tr('Onboarding fee')), TextEditingController(text: '500')),
+    (TextEditingController(), TextEditingController(text: '700')),
+    (TextEditingController(), TextEditingController(text: '3000')),
+    (TextEditingController(), TextEditingController(text: '500')),
   ];
+  bool _seeded = false;
   String? _error;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_seeded) return;
+    _seeded = true;
+    final AppL10n l10n = context.l10n;
+    _rows[0].$1.text = l10n.allocationRentalFeeWeek;
+    _rows[1].$1.text = l10n.allocationSecurityDeposit;
+    _rows[2].$1.text = l10n.allocationOnboardingFee;
+  }
 
   @override
   void dispose() {
@@ -514,13 +526,13 @@ class _PaymentSheetState extends State<_PaymentSheet> {
       final num? a = num.tryParse(amount.text.trim());
       if (l.isEmpty && (amount.text.trim().isEmpty)) continue;
       if (l.isEmpty || a == null || a <= 0) {
-        setState(() => _error = 'Every line needs a label and an amount above zero');
+        setState(() => _error = context.l10n.allocationEveryLineNeedsLabelAmount);
         return;
       }
       items.add(PaymentLineItem(label: l, amount: a));
     }
     if (items.isEmpty) {
-      setState(() => _error = 'Add at least one line');
+      setState(() => _error = context.l10n.allocationAddLeastOneLine);
       return;
     }
     Navigator.of(context).pop(items);
@@ -535,12 +547,12 @@ class _PaymentSheetState extends State<_PaymentSheet> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(flex: 3, child: AppTextField(label: tr('Item'), controller: _rows[i].$1, onChanged: (_) => setState(() => _error = null))),
+              Expanded(flex: 3, child: AppTextField(label: context.l10n.allocationItem, controller: _rows[i].$1, onChanged: (_) => setState(() => _error = null))),
               const SizedBox(width: Insets.md),
               Expanded(
                 flex: 2,
                 child: AppTextField(
-                  label: tr('Amount'),
+                  label: context.l10n.allocationAmount,
                   controller: _rows[i].$2,
                   keyboardType: const TextInputType.numberWithOptions(decimal: true),
                   prefixText: '₹',
@@ -552,19 +564,19 @@ class _PaymentSheetState extends State<_PaymentSheet> {
           const Gap.md(),
         ],
         GhostButton(
-          label: tr('Add a line'),
+          label: context.l10n.allocationAddLine,
           icon: Icons.add_rounded,
           onPressed: () => setState(() => _rows.add((TextEditingController(), TextEditingController()))),
         ),
-        const Gap.md(),
-        KeyValueRow(label: tr('Total'), value: Fmt.money(_total), valueStyle: AppText.titleMedium),
+        Gap.md(),
+        KeyValueRow(label: context.l10n.commonTotal, value: Fmt.money(_total), valueStyle: AppText.titleMedium),
         if (_error != null) ...[
-          const Gap.sm(),
+          Gap.sm(),
           Text(_error!, style: AppText.bodySmall.copyWith(color: AppColors.danger)),
         ],
-        const Gap.lg(),
-        PrimaryButton(label: tr('Send payment request'), icon: Icons.send_rounded, onPressed: _submit),
-        const Gap.md(),
+        Gap.lg(),
+        PrimaryButton(label: context.l10n.allocationSendPaymentRequest, icon: Icons.send_rounded, onPressed: _submit),
+        Gap.md(),
       ],
     );
   }
@@ -576,9 +588,9 @@ class _PdiSheet extends StatefulWidget {
   static Future<({String partner, List<PdiChecklistItem> items})?> show(BuildContext context) =>
       AppSheet.show<({String partner, List<PdiChecklistItem> items})>(
         context,
-        title: tr('Pre-delivery inspection'),
-        subtitle: tr('The checklist the rider will accept item by item'),
-        child: const _PdiSheet(),
+        title: context.l10n.commonPreDeliveryInspection,
+        subtitle: context.l10n.allocationChecklistRiderWillAcceptItem,
+        child: _PdiSheet(),
       );
 
   @override
@@ -586,14 +598,14 @@ class _PdiSheet extends StatefulWidget {
 }
 
 class _PdiSheetState extends State<_PdiSheet> {
-  static const List<String> _defaults = [
-    'Brakes',
-    'Tyres and pressure',
-    'Lights and indicators',
-    'Horn and mirrors',
-    'Battery charge and charger',
-    'Body and paintwork',
-    'Helmet handed over',
+  static List<String> get _defaults => [
+    LocaleController.strings.commonBrakes,
+    LocaleController.strings.allocationTyresPressure,
+    LocaleController.strings.allocationLightsIndicators,
+    LocaleController.strings.allocationHornMirrors,
+    LocaleController.strings.allocationBatteryChargeCharger,
+    LocaleController.strings.allocationBodyPaintwork,
+    LocaleController.strings.allocationHelmetHandedOver,
   ];
 
   final TextEditingController _partner = TextEditingController();
@@ -613,14 +625,14 @@ class _PdiSheetState extends State<_PdiSheet> {
   void _submit() {
     final String partner = _partner.text.trim();
     if (partner.isEmpty) {
-      setState(() => _error = 'Name the work partner or workshop that inspected the vehicle');
+      setState(() => _error = context.l10n.allocationNameWorkPartnerWorkshopInspected);
       return;
     }
     final List<PdiChecklistItem> items = [
       for (final e in _items.entries) PdiChecklistItem(code: _code(e.key), label: e.key, mandatory: e.value),
     ];
     if (items.isEmpty) {
-      setState(() => _error = 'Add at least one item');
+      setState(() => _error = context.l10n.allocationAddLeastOneItem);
       return;
     }
     Navigator.of(context).pop((partner: partner, items: items));
@@ -632,27 +644,27 @@ class _PdiSheetState extends State<_PdiSheet> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         AppTextField(
-          label: tr('Work partner'),
-          hint: tr('e.g. Sharma Auto Works'),
-          helper: tr('The workshop or technician who inspected the vehicle'),
+          label: context.l10n.allocationWorkPartner,
+          hint: context.l10n.allocationHintWorkPartner,
+          helper: context.l10n.allocationWorkshopTechnicianWhoInspectedVehicle,
           controller: _partner,
           onChanged: (_) => setState(() => _error = null),
         ),
         const Gap.lg(),
-        const GroupLabel('Checklist · tap to toggle mandatory'),
+        GroupLabel(context.l10n.allocationChecklistTapToggleMandatory),
         const Gap.md(),
         for (final label in _items.keys.toList()) ...[
           AppCheckTile(
             value: _items[label]!,
             onChanged: (v) => setState(() => _items[label] = v),
             title: label,
-            subtitle: _items[label]! ? 'Mandatory' : 'Optional',
+            subtitle: _items[label]! ? context.l10n.commonMandatory : context.l10n.commonOptional,
           ),
           const Gap.sm(),
         ],
         Row(
           children: [
-            Expanded(child: AppTextField(label: tr('Add an item'), controller: _custom)),
+            Expanded(child: AppTextField(label: context.l10n.allocationAddItem, controller: _custom)),
             const SizedBox(width: Insets.md),
             CircleIconButton(
               icon: Icons.add_rounded,
@@ -672,7 +684,7 @@ class _PdiSheetState extends State<_PdiSheet> {
           Text(_error!, style: AppText.bodySmall.copyWith(color: AppColors.danger)),
         ],
         const Gap.lg(),
-        PrimaryButton(label: tr('Send to rider'), icon: Icons.send_rounded, onPressed: _submit),
+        PrimaryButton(label: context.l10n.allocationSendRider, icon: Icons.send_rounded, onPressed: _submit),
         const Gap.md(),
       ],
     );

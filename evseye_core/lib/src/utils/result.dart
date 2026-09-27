@@ -1,3 +1,5 @@
+import '../l10n/locale_controller.dart';
+
 sealed class Result<T> {
   const Result();
 
@@ -40,9 +42,14 @@ final class Err<T> extends Result<T> {
 }
 
 sealed class Failure {
-  const Failure(this.message);
+  const Failure([this._message]);
 
-  final String message;
+  final String? _message;
+
+  /// Message shown to the user, resolved in the active locale.
+  String get message => _message ?? defaultMessage;
+
+  String get defaultMessage;
 
   String get code;
 
@@ -51,14 +58,20 @@ sealed class Failure {
 }
 
 final class NetworkFailure extends Failure {
-  const NetworkFailure([super.message = 'No internet connection.']);
+  const NetworkFailure([super._message]);
+
+  @override
+  String get defaultMessage => LocaleController.strings.commonNoInternetConnection;
 
   @override
   String get code => 'network';
 }
 
 final class ServerFailure extends Failure {
-  const ServerFailure([super.message = 'Something went wrong. Please try again.', this.status]);
+  const ServerFailure([super._message, this.status]);
+
+  @override
+  String get defaultMessage => LocaleController.strings.commonSomethingWentWrongPleaseTry;
 
   final int? status;
 
@@ -67,14 +80,20 @@ final class ServerFailure extends Failure {
 }
 
 final class AuthFailure extends Failure {
-  const AuthFailure([super.message = 'Your session has expired. Please sign in again.']);
+  const AuthFailure([super._message]);
+
+  @override
+  String get defaultMessage => LocaleController.strings.commonSessionHasExpiredPleaseSign;
 
   @override
   String get code => 'auth';
 }
 
 final class ValidationFailure extends Failure {
-  const ValidationFailure(super.message, {this.fieldErrors = const {}});
+  const ValidationFailure(super._message, {this.fieldErrors = const {}});
+
+  @override
+  String get defaultMessage => LocaleController.strings.hubSomethingWentWrong;
 
   final Map<String, String> fieldErrors;
 
@@ -83,35 +102,50 @@ final class ValidationFailure extends Failure {
 }
 
 final class CacheFailure extends Failure {
-  const CacheFailure([super.message = 'Could not read local data.']);
+  const CacheFailure([super._message]);
+
+  @override
+  String get defaultMessage => LocaleController.strings.commonCouldNotReadLocalData;
 
   @override
   String get code => 'cache';
 }
 
 final class NotFoundFailure extends Failure {
-  const NotFoundFailure([super.message = 'Not found.']);
+  const NotFoundFailure([super._message]);
+
+  @override
+  String get defaultMessage => LocaleController.strings.commonNotFound;
 
   @override
   String get code => 'not_found';
 }
 
 final class ForbiddenFailure extends Failure {
-  const ForbiddenFailure([super.message = 'Your account cannot do that.']);
+  const ForbiddenFailure([super._message]);
+
+  @override
+  String get defaultMessage => LocaleController.strings.commonAccountCannotDo;
 
   @override
   String get code => 'forbidden';
 }
 
 final class UnauthorizedFailure extends Failure {
-  const UnauthorizedFailure([super.message = 'Sign in to continue.']);
+  const UnauthorizedFailure([super._message]);
+
+  @override
+  String get defaultMessage => LocaleController.strings.commonSignContinue;
 
   @override
   String get code => 'unauthorized';
 }
 
 final class RateLimitFailure extends Failure {
-  const RateLimitFailure([super.message = 'Too many attempts. Wait a moment.']);
+  const RateLimitFailure([super._message]);
+
+  @override
+  String get defaultMessage => LocaleController.strings.commonTooManyAttemptsWaitMoment;
 
   @override
   String get code => 'rate_limit';

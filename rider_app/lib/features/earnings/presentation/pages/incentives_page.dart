@@ -42,23 +42,23 @@ class _IncentivesView extends StatelessWidget {
           children: state.status == IncentivesStatus.failure
               ? [
                   EmptyState(
-                    title: tr('Could not load your incentives'),
+                    title: context.l10n.earningsCouldNotLoadIncentives,
                     message: state.message,
                     icon: Icons.cloud_off_rounded,
                     tone: AppColors.danger,
-                    actionLabel: tr('Try again'),
+                    actionLabel: context.l10n.commonTryAgain,
                     onAction: () => context.read<IncentivesCubit>().refresh(),
                   ),
                 ]
               : overview == null
               ? const [_IncentivesSkeleton()]
-              : _content(overview),
+              : _content(context, overview),
         );
       },
     );
   }
 
-  List<Widget> _content(IncentivesOverview overview) {
+  List<Widget> _content(BuildContext context, IncentivesOverview overview) {
     final List<IncentiveScheme> active = overview.active;
     final List<IncentiveScheme> achieved = overview.achieved;
 
@@ -66,8 +66,8 @@ class _IncentivesView extends StatelessWidget {
       PhotoPanel(
         photo: BrandPhoto.money,
         height: 130,
-        title: tr('Turn extra trips into extra pay'),
-        subtitle: tr('Clear a scheme this week and it lands in your wallet instantly'),
+        title: context.l10n.earningsTurnExtraTripsIntoExtra,
+        subtitle: context.l10n.earningsClearSchemeWeekLandsWallet,
       ),
       const Gap.lg(),
 
@@ -76,12 +76,12 @@ class _IncentivesView extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: Insets.xl),
           child: ArtBlock(
             art: BrandArt.success,
-            title: tr('No active schemes right now'),
-            message: tr('Check back tomorrow for new incentives.'),
+            title: context.l10n.earningsNoActiveSchemesRightNow,
+            message: context.l10n.earningsCheckBackTomorrowNewIncentives,
           ),
         )
       else ...[
-        SectionHeader(title: tr('Active schemes')),
+        SectionHeader(title: context.l10n.earningsActiveSchemes),
         const Gap.lg(),
         for (final scheme in active) ...[
           IncentiveSchemeCard(
@@ -96,8 +96,8 @@ class _IncentivesView extends StatelessWidget {
       if (achieved.isNotEmpty) ...[
         const Gap.xxl(),
         SectionHeader(
-          title: tr('Achieved'),
-          subtitle: tr('Already cleared and credited'),
+          title: context.l10n.earningsAchieved,
+          subtitle: context.l10n.earningsAlreadyClearedCredited,
         ),
         const Gap.lg(),
         for (final scheme in achieved) ...[

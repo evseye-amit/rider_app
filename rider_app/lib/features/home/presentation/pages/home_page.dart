@@ -39,11 +39,11 @@ class _HomeView extends StatelessWidget {
               drawer: const RiderDrawer(),
               body: SafeArea(
                 child: EmptyState(
-                  title: tr('Could not load your dashboard'),
+                  title: context.l10n.homeCouldNotLoadDashboard,
                   message: state.message,
                   icon: Icons.cloud_off_rounded,
                   tone: AppColors.danger,
-                  actionLabel: tr('Try again'),
+                  actionLabel: context.l10n.commonTryAgain,
                   onAction: () => context.read<HomeCubit>().refresh(),
                 ),
               ),
@@ -69,18 +69,18 @@ class _HomeView extends StatelessWidget {
   List<Widget> _content(BuildContext context, HomeSummary summary) {
     return [
       BalanceStrip(
-        label: tr('Paid to date'),
+        label: context.l10n.commonPaidDate,
         amount: Fmt.money(summary.walletBalance),
-        caption: tr('Deposits and handover fees'),
+        caption: context.l10n.homeDepositsHandoverFees,
         onTapBalance: () => context.go(Routes.wallet),
         actions: [
           StripAction(
-            label: tr('Withdraw'),
+            label: context.l10n.homeWithdraw,
             icon: Icons.south_west_rounded,
             onTap: () => context.go(Routes.wallet),
           ),
           StripAction(
-            label: tr('History'),
+            label: context.l10n.homeHistory,
             icon: Icons.receipt_long_rounded,
             onTap: () => context.go(Routes.wallet),
           ),
@@ -89,7 +89,7 @@ class _HomeView extends StatelessWidget {
       const Gap.lg(),
 
       ModuleCard(
-        title: tr('Yesterday at a glance'),
+        title: context.l10n.commonYesterdayGlance,
 
         padding: const EdgeInsets.all(Insets.md),
         child: GridView(
@@ -104,7 +104,7 @@ class _HomeView extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             StatCard(
-              label: tr('Incentive earned'),
+              label: context.l10n.homeIncentiveEarned,
               value: Fmt.money(summary.incentiveEarned),
               caption: 'of ${Fmt.money(summary.incentiveTarget)} target',
               icon: Icons.emoji_events_rounded,
@@ -113,7 +113,7 @@ class _HomeView extends StatelessWidget {
               onTap: () => context.push(Routes.incentives),
             ),
             StatCard(
-              label: tr('Rent due'),
+              label: context.l10n.homeRentDue,
               value: Fmt.money(summary.rentDue),
               caption: summary.rentDueDate == null
                   ? summary.rentPlan
@@ -138,15 +138,15 @@ class _Band extends StatelessWidget {
 
   String get _greeting {
     final int h = DateTime.now().hour;
-    if (h < 12) return 'Good morning';
-    if (h < 17) return 'Good afternoon';
-    if (h < 21) return 'Good evening';
-    return 'Riding late';
+    if (h < 12) return LocaleController.strings.commonGoodMorning;
+    if (h < 17) return LocaleController.strings.commonGoodAfternoon;
+    if (h < 21) return LocaleController.strings.commonGoodEvening;
+    return LocaleController.strings.homeRidingLate;
   }
 
   @override
   Widget build(BuildContext context) {
-    final String name = session.profile['shortName']?.toString() ?? 'Rider';
+    final String name = session.profile['shortName']?.toString() ?? context.l10n.allocationRider;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -257,7 +257,7 @@ class _Band extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: tr('Trips'),
+                  label: context.l10n.homeTrips,
                   value: '${summary?.tripsToday ?? 0}',
                   icon: Icons.route_rounded,
                 ),
@@ -266,7 +266,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: tr('Distance'),
+                  label: context.l10n.homeDistance,
                   value: Fmt.distanceKm(summary?.distanceTodayKm ?? 0),
                   icon: Icons.near_me_rounded,
                 ),
@@ -275,7 +275,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: tr('Online'),
+                  label: context.l10n.homeOnline,
                   value: Fmt.duration(
                     Duration(minutes: session.present ? (summary?.onlineMinutes ?? 0) : 0),
                   ),
@@ -293,9 +293,9 @@ class _Band extends StatelessWidget {
     if (!next) {
       final bool confirmed = await AppDialog.confirm(
         context,
-        title: tr('Mark yourself absent?'),
-        message: tr('Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans.'),
-        confirmLabel: tr('Mark absent'),
+        title: context.l10n.homeMarkYourselfAbsent,
+        message: context.l10n.homeShiftWillEndScooterWill,
+        confirmLabel: context.l10n.homeMarkAbsent,
         icon: Icons.person_off_rounded,
         destructive: true,
       );
@@ -305,8 +305,8 @@ class _Band extends StatelessWidget {
     session.setAttendance(next);
     if (!context.mounted) return;
     next
-        ? AppSnack.success(context, 'Marked present. Your shift has started.')
-        : AppSnack.warning(context, 'Marked absent. The scooter is now disabled.');
+        ? AppSnack.success(context, context.l10n.commonMarkedPresentShiftHasStarted)
+        : AppSnack.warning(context, context.l10n.homeMarkedAbsentScooterNowDisabled);
   }
 }
 

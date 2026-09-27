@@ -1,36 +1,36 @@
 import 'package:intl/intl.dart';
 
 abstract final class Fmt {
-  static final NumberFormat _inr = NumberFormat.currency(
-    locale: 'en_IN',
-    symbol: '₹',
-    decimalDigits: 0,
-  );
-  static final NumberFormat _inrPaise = NumberFormat.currency(
-    locale: 'en_IN',
-    symbol: '₹',
-    decimalDigits: 2,
-  );
-  static final NumberFormat _compact = NumberFormat.compactCurrency(
-    locale: 'en_IN',
-    symbol: '₹',
-    decimalDigits: 1,
-  );
+  static String get _locale {
+    final String? active = Intl.defaultLocale;
+    if (active == null || active.isEmpty || active.startsWith('en')) return 'en_IN';
+    return active;
+  }
 
-  static String money(num value, {bool paise = false}) =>
-      paise ? _inrPaise.format(value) : _inr.format(value);
+  static final Map<String, NumberFormat> _money = <String, NumberFormat>{};
+  static final Map<String, NumberFormat> _moneyPaise = <String, NumberFormat>{};
+  static final Map<String, NumberFormat> _moneyCompact = <String, NumberFormat>{};
 
-  static String moneyCompact(num value) => _compact.format(value);
+  static NumberFormat _cached(Map<String, NumberFormat> cache, NumberFormat Function(String) build) =>
+      cache.putIfAbsent(_locale, () => build(_locale));
 
-  static String number(num value) => NumberFormat.decimalPattern('en_IN').format(value);
+  static String money(num value, {bool paise = false}) => paise
+      ? _cached(_moneyPaise, (l) => NumberFormat.currency(locale: l, symbol: '₹', decimalDigits: 2)).format(value)
+      : _cached(_money, (l) => NumberFormat.currency(locale: l, symbol: '₹', decimalDigits: 0)).format(value);
 
-  static String date(DateTime d) => DateFormat('dd MMM yyyy').format(d);
+  static String moneyCompact(num value) =>
+      _cached(_moneyCompact, (l) => NumberFormat.compactCurrency(locale: l, symbol: '₹', decimalDigits: 1))
+          .format(value);
 
-  static String dateTime(DateTime d) => DateFormat('dd MMM, h:mm a').format(d);
+  static String number(num value) => NumberFormat.decimalPattern(_locale).format(value);
 
-  static String time(DateTime d) => DateFormat('h:mm a').format(d);
+  static String date(DateTime d) => DateFormat('dd MMM yyyy', _locale).format(d);
 
-  static String weekday(DateTime d) => DateFormat('EEE').format(d);
+  static String dateTime(DateTime d) => DateFormat('dd MMM, h:mm a', _locale).format(d);
+
+  static String time(DateTime d) => DateFormat('h:mm a', _locale).format(d);
+
+  static String weekday(DateTime d) => DateFormat('EEE', _locale).format(d);
 
   static String duration(Duration d) {
     final int h = d.inHours;

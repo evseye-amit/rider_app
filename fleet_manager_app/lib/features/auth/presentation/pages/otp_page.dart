@@ -106,7 +106,7 @@ class _OtpPageState extends State<OtpPage> {
       art: BrandArt.manager,
       artSize: 170,
       showBack: true,
-      title: tr('Verify your number'),
+      title: context.l10n.authVerifyNumber,
       subtitle: 'Enter the 6-digit code sent to +91 ${widget.mobile}',
       children: [
         OtpInput(hasError: _hasError, onCompleted: _verify),
@@ -118,7 +118,7 @@ class _OtpPageState extends State<OtpPage> {
               const SizedBox(width: Insets.xs + 2),
               Expanded(
                 child: Text(
-                  _error ?? 'That code did not verify. Please try again.',
+                  _error ?? context.l10n.authCodeDidNotVerifyPlease,
                   style: AppText.bodySmall.copyWith(color: AppColors.danger, fontSize: 12.5),
                 ),
               ),
@@ -136,7 +136,7 @@ class _OtpPageState extends State<OtpPage> {
                 child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
               ),
               const SizedBox(width: Insets.sm),
-              Text(tr('Verifying…'), style: AppText.bodySmall),
+              Text(context.l10n.authVerifying, style: AppText.bodySmall),
             ],
           ),
         ],
@@ -147,7 +147,7 @@ class _OtpPageState extends State<OtpPage> {
           runSpacing: Insets.sm,
           children: [
             GhostButton(
-              label: tr('Edit number'),
+              label: context.l10n.authEditNumber,
               icon: Icons.edit_rounded,
               onPressed: () => Navigator.of(context).maybePop(),
             ),
@@ -165,7 +165,7 @@ class _OtpPageState extends State<OtpPage> {
             const Icon(Icons.lock_outline_rounded, size: 14, color: AppColors.textMuted),
             const SizedBox(width: Insets.sm - 2),
             Flexible(
-              child: Text(tr('Your session is encrypted end-to-end'),
+              child: Text(context.l10n.authSessionEncryptedEndEnd,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,

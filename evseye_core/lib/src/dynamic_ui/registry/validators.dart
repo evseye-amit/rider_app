@@ -1,5 +1,6 @@
 import '../models/validation_rule.dart';
 
+import '../../l10n/locale_controller.dart';
 final RegExp _emailRe = RegExp(r'^[\w.+-]+@[\w-]+\.[\w.-]+$');
 final RegExp _mobileRe = RegExp(r'^[6-9]\d{9}$');
 final RegExp _aadhaarRe = RegExp(r'^\d{4}\s?\d{4}\s?\d{4}$');
@@ -13,7 +14,7 @@ String? validateValue(
   Object? Function(String key)? lookup,
   String? label,
 }) {
-  final String name = label ?? 'This field';
+  final String name = label ?? LocaleController.strings.validationField;
   final String text = value?.toString().trim() ?? '';
 
   for (final rule in rules) {
@@ -30,16 +31,16 @@ String? validateValue(
         '$name must be at most ${_int(rule.value)} characters',
       'pattern' when text.isNotEmpty && !RegExp(rule.value.toString()).hasMatch(text) =>
         'Enter a valid $name',
-      'email' when text.isNotEmpty && !_emailRe.hasMatch(text) => 'Enter a valid email address',
+      'email' when text.isNotEmpty && !_emailRe.hasMatch(text) => LocaleController.strings.validationEnterValidEmailAddress,
       'mobile' when text.isNotEmpty && !_mobileRe.hasMatch(text) =>
-        'Enter a valid 10-digit mobile number',
+        LocaleController.strings.commonEnterValid10DigitMobile,
       'aadhaar' when text.isNotEmpty && !_aadhaarRe.hasMatch(text) =>
-        'Enter a valid 12-digit Aadhaar number',
+        LocaleController.strings.validationEnterValid12DigitAadhaar,
       'pan' when text.isNotEmpty && !_panRe.hasMatch(text.toUpperCase()) =>
-        'Enter a valid PAN (ABCDE1234F)',
+        LocaleController.strings.validationEnterValidPanAbcde1234f,
       'ifsc' when text.isNotEmpty && !_ifscRe.hasMatch(text.toUpperCase()) =>
-        'Enter a valid IFSC code',
-      'upi' when text.isNotEmpty && !_upiRe.hasMatch(text) => 'Enter a valid UPI ID',
+        LocaleController.strings.validationEnterValidIfscCode,
+      'upi' when text.isNotEmpty && !_upiRe.hasMatch(text) => LocaleController.strings.validationEnterValidUpiId,
       'min' when _num(value) != null && _num(value)! < _num(rule.value)! =>
         '$name must be at least ${rule.value}',
       'max' when _num(value) != null && _num(value)! > _num(rule.value)! =>
@@ -62,7 +63,7 @@ String? _futureDate(String text) {
   if (date == null) return null;
   final DateTime now = DateTime.now();
   final DateTime today = DateTime(now.year, now.month, now.day);
-  return date.isAfter(today) ? null : 'Enter a date later than today';
+  return date.isAfter(today) ? null : LocaleController.strings.validationEnterDateLaterThanToday;
 }
 
 String? _pastDate(String text) {
@@ -71,7 +72,7 @@ String? _pastDate(String text) {
   if (date == null) return null;
   final DateTime now = DateTime.now();
   final DateTime today = DateTime(now.year, now.month, now.day);
-  return date.isAfter(today) ? 'Enter a date on or before today' : null;
+  return date.isAfter(today) ? LocaleController.strings.validationEnterDateBeforeToday : null;
 }
 
 String? _minAge(String text, int min) {

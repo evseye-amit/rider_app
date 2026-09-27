@@ -6,6 +6,8 @@ import '../theme/app_typography.dart';
 import 'pressable.dart';
 import 'status_chip.dart';
 
+import '../l10n/locale_controller.dart';
+
 enum UploadState { empty, uploading, uploaded, rejected }
 
 class UploadTile extends StatelessWidget {
@@ -62,9 +64,7 @@ class UploadTile extends StatelessWidget {
                   width: 42,
                   height: 42,
                   decoration: BoxDecoration(
-                    color: state == UploadState.empty
-                        ? AppColors.surfaceMuted
-                        : AppColors.surface,
+                    color: state == UploadState.empty ? AppColors.surfaceMuted : AppColors.surface,
                     borderRadius: Corners.brSm,
                   ),
                   child: Icon(icon, size: 20, color: tone),
@@ -90,10 +90,10 @@ class UploadTile extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         switch (state) {
-                          UploadState.uploaded => fileName ?? 'Uploaded',
+                          UploadState.uploaded => fileName ?? context.l10n.commonUploaded,
                           UploadState.uploading => 'Uploading… ${(progress * 100).round()}%',
-                          UploadState.rejected => rejectReason ?? 'Rejected — upload again',
-                          UploadState.empty => hint ?? 'JPG, PNG or PDF · up to 5 MB',
+                          UploadState.rejected => rejectReason ?? context.l10n.commonRejectedUploadAgain,
+                          UploadState.empty => hint ?? context.l10n.commonJpgPngPdfUp5,
                         },
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -114,12 +114,9 @@ class UploadTile extends StatelessWidget {
                 else
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: Insets.md, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryWash,
-                      borderRadius: Corners.pill,
-                    ),
+                    decoration: BoxDecoration(color: AppColors.primaryWash, borderRadius: Corners.pill),
                     child: Text(
-                      state == UploadState.rejected ? 'Retry' : 'Upload',
+                      state == UploadState.rejected ? context.l10n.commonRetry : context.l10n.commonUpload,
                       style: AppText.bodySmall.copyWith(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w800,
@@ -214,10 +211,15 @@ class PhotoSlot extends StatelessWidget {
                   ),
                 ),
                 if (captured)
-                  const Positioned(
+                  Positioned(
                     top: 6,
                     right: 6,
-                    child: StatusChip(label: 'Retake', tone: StatusTone.neutral, dense: true, showDot: false),
+                    child: StatusChip(
+                      label: context.l10n.commonRetake,
+                      tone: StatusTone.neutral,
+                      dense: true,
+                      showDot: false,
+                    ),
                   )
                 else if (required)
                   Positioned(
@@ -226,10 +228,7 @@ class PhotoSlot extends StatelessWidget {
                     child: Container(
                       width: 6,
                       height: 6,
-                      decoration: const BoxDecoration(
-                        color: AppColors.danger,
-                        shape: BoxShape.circle,
-                      ),
+                      decoration: const BoxDecoration(color: AppColors.danger, shape: BoxShape.circle),
                     ),
                   ),
               ],
@@ -257,10 +256,7 @@ class _DashedBorderPainter extends CustomPainter {
     for (final metric in path.computeMetrics()) {
       double distance = 0;
       while (distance < metric.length) {
-        canvas.drawPath(
-          metric.extractPath(distance, (distance + dash).clamp(0, metric.length)),
-          paint,
-        );
+        canvas.drawPath(metric.extractPath(distance, (distance + dash).clamp(0, metric.length)), paint);
         distance += dash + gap;
       }
     }

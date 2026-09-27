@@ -17,7 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final SessionController session = sl<SessionController>();
     final Map<String, Object?> r = session.profile;
 
-    final String name = r['name']?.toString() ?? 'Rider';
+    final String name = r['name']?.toString() ?? context.l10n.allocationRider;
     final String riderCode = r['riderCode']?.toString() ?? '—';
     final num rating = (r['rating'] as num?) ?? 0;
     final DateTime? joinedOn = DateTime.tryParse(
@@ -34,17 +34,17 @@ class _ProfilePageState extends State<ProfilePage> {
         _SectionCard(
           icon: Icons.badge_rounded,
           tone: AppColors.primary,
-          title: tr('Personal details'),
+          title: context.l10n.profilePersonalDetails,
           rows: [
-            _DetailRow(label: tr('Full name'), value: name),
+            _DetailRow(label: context.l10n.commonFullName, value: name),
             _DetailRow(
-              label: tr('Mobile'),
+              label: context.l10n.commonMobile,
               value: Fmt.phone(r['mobile']?.toString() ?? ''),
             ),
 
-            _DetailRow(label: tr('Email'), value: r['email']?.toString() ?? '—'),
+            _DetailRow(label: context.l10n.profileEmail, value: r['email']?.toString() ?? '—'),
             _DetailRow(
-              label: tr('Joined on'),
+              label: context.l10n.profileJoined,
               value: joinedOn == null ? '—' : Fmt.date(joinedOn),
             ),
           ],
@@ -54,12 +54,12 @@ class _ProfilePageState extends State<ProfilePage> {
         _SectionCard(
           icon: Icons.location_on_rounded,
           tone: AppColors.primary,
-          title: tr('Address & hub'),
+          title: context.l10n.profileAddressHub,
           rows: [
-            _DetailRow(label: tr('City'), value: r['city']?.toString() ?? '—'),
-            _DetailRow(label: tr('Hub'), value: r['hub']?.toString() ?? '—'),
+            _DetailRow(label: context.l10n.commonCity, value: r['city']?.toString() ?? '—'),
+            _DetailRow(label: context.l10n.profileHub, value: r['hub']?.toString() ?? '—'),
             _DetailRow(
-              label: tr('Hub code'),
+              label: context.l10n.profileHubCode,
               value: r['hubCode']?.toString() ?? '—',
             ),
           ],
@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
         const Gap.lg(),
 
         ModuleCard(
-          title: tr('Team lead'),
+          title: context.l10n.commonTeamLead,
           child: Row(
             children: [
               AppAvatar(name: r['teamLead']?.toString() ?? '?', size: 44),
@@ -136,7 +136,7 @@ class _Band extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Text(tr('Profile'),
+            Text(context.l10n.commonProfile,
               style: AppText.titleLarge.copyWith(
                 fontSize: 17,
                 color: AppColors.onInk,

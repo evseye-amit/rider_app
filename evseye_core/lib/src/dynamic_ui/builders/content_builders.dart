@@ -14,6 +14,7 @@ import '../../widgets/step_progress.dart';
 import '../registry/widget_registry.dart';
 import 'node_utils.dart';
 
+import '../../l10n/locale_controller.dart';
 Map<String, NodeBuilder> contentBuilders(WidgetRegistry r) => {
       'text': (context, node, scope) => Text(
             node.text(scope, 'text'),
@@ -259,7 +260,7 @@ Map<String, NodeBuilder> contentBuilders(WidgetRegistry r) => {
             ),
           ),
       'primaryButton': (context, node, scope) => PrimaryButton(
-            label: node.text(scope, 'label', 'Continue'),
+            label: node.text(scope, 'label', context.l10n.authContinue),
             icon: node.props['icon'] == null
                 ? null
                 : NodeTokens.icon(node.props['icon'] as String?),

@@ -11,10 +11,10 @@ StatusTone jobStatusTone(String status) => switch (status) {
     };
 
 String jobStatusLabel(String status) => switch (status) {
-      'overdue' => 'Overdue',
-      'inProgress' => 'In progress',
-      'closed' => 'Closed',
-      _ => 'Open',
+      'overdue' => LocaleController.strings.maintenanceOverdue,
+      'inProgress' => LocaleController.strings.maintenanceProgress,
+      'closed' => LocaleController.strings.maintenanceClosed,
+      _ => LocaleController.strings.commonOpen,
     };
 
 StatusTone jobPriorityTone(String priority) => switch (priority.toLowerCase()) {
@@ -24,9 +24,9 @@ StatusTone jobPriorityTone(String priority) => switch (priority.toLowerCase()) {
     };
 
 String jobPriorityLabel(String priority) => switch (priority.toLowerCase()) {
-      'high' => 'High priority',
-      'low' => 'Low priority',
-      _ => 'Normal priority',
+      'high' => LocaleController.strings.commonHighPriority,
+      'low' => LocaleController.strings.commonLowPriority,
+      _ => LocaleController.strings.commonNormalPriority,
     };
 
 class OverlapModuleCard extends StatelessWidget {
@@ -130,7 +130,7 @@ class JobRowTile extends StatelessWidget {
                   borderRadius: BorderRadius.horizontal(left: Corners.lg),
                 ),
               ),
-            Expanded(child: Padding(padding: const EdgeInsets.all(Insets.lg), child: _body(overdue))),
+            Expanded(child: Padding(padding: const EdgeInsets.all(Insets.lg), child: _body(context, overdue))),
           ],
         ),
       ),
@@ -139,7 +139,7 @@ class JobRowTile extends StatelessWidget {
     return Pressable(onTap: onTap, scale: 0.99, child: card);
   }
 
-  Widget _body(bool overdue) {
+  Widget _body(BuildContext context, bool overdue) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -189,7 +189,7 @@ class JobRowTile extends StatelessWidget {
                               borderRadius: Corners.pill,
                             ),
                             child: Text(
-                              job.type,
+                              maintenanceTypeLabel(context, job.type),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: AppText.bodySmall.copyWith(fontSize: 10.5, fontWeight: FontWeight.w700),
@@ -252,7 +252,7 @@ class JobRowTile extends StatelessWidget {
                   ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 130),
                     child: Text(
-                      job.assignedTo ?? 'Unassigned',
+                      job.assignedTo ?? LocaleController.strings.maintenanceUnassigned,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppText.bodySmall.copyWith(fontSize: 11.5),

@@ -7,6 +7,7 @@ import '../theme/app_dimens.dart';
 import '../theme/app_typography.dart';
 import 'pressable.dart';
 
+import '../l10n/locale_controller.dart';
 class AppTextField extends StatefulWidget {
   const AppTextField({
     this.label,
@@ -310,7 +311,7 @@ class AppPickerField extends StatelessWidget {
                 ],
                 Expanded(
                   child: Text(
-                    hasValue ? value! : (hint ?? 'Select'),
+                    hasValue ? value! : (hint ?? context.l10n.commonSelect),
                     overflow: TextOverflow.ellipsis,
                     style: AppText.bodyLarge.copyWith(
                       color: hasValue ? AppColors.textPrimary : AppColors.textMuted,
@@ -430,14 +431,14 @@ class OtpInput extends StatelessWidget {
 
 class AppSearchField extends StatelessWidget {
   const AppSearchField({
-    this.hint = 'Search',
+    this.hint,
     this.onChanged,
     this.controller,
     this.trailing,
     super.key,
   });
 
-  final String hint;
+  final String? hint;
   final ValueChanged<String>? onChanged;
   final TextEditingController? controller;
   final Widget? trailing;
@@ -463,7 +464,7 @@ class AppSearchField extends StatelessWidget {
               cursorColor: AppColors.cyan,
               style: AppText.bodyMedium.copyWith(color: AppColors.textPrimary),
               decoration: InputDecoration(
-                hintText: hint,
+                hintText: hint ?? context.l10n.commonSearch,
                 hintStyle: AppText.bodyMedium.copyWith(color: AppColors.textMuted),
                 filled: false,
                 isDense: true,

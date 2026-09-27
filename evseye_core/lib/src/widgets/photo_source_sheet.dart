@@ -9,19 +9,23 @@ import '../theme/app_typography.dart';
 import 'buttons.dart';
 import 'pressable.dart';
 
+import '../l10n/locale_controller.dart';
+
 enum PhotoSource { camera, gallery }
 
 abstract final class PhotoSourceSheet {
   static Future<File?> pick(
     BuildContext context, {
-    String title = 'Add a photo',
-    String subtitle = 'Take one now, or choose from your gallery',
+    String? title,
+    String? subtitle,
   }) async {
+    final String sheetTitle = title ?? context.l10n.commonAddPhoto;
+    final String sheetSubtitle = subtitle ?? context.l10n.commonTakeOneNowChooseFrom;
     final PhotoSource? source = await showModalBottomSheet<PhotoSource>(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (context) => _Sheet(title: title, subtitle: subtitle),
+      builder: (context) => _Sheet(title: sheetTitle, subtitle: sheetSubtitle),
     );
     if (source == null || !context.mounted) return null;
     return capture(source);
@@ -30,9 +34,7 @@ abstract final class PhotoSourceSheet {
   static Future<File?> capture(PhotoSource source) async {
     final ImagePicker picker = ImagePicker();
     final XFile? shot = await picker.pickImage(
-      source: source == PhotoSource.camera
-          ? ImageSource.camera
-          : ImageSource.gallery,
+      source: source == PhotoSource.camera ? ImageSource.camera : ImageSource.gallery,
 
       maxWidth: 2000,
       maxHeight: 2000,
@@ -67,17 +69,14 @@ class _Sheet extends StatelessWidget {
           children: [
             Text(title, style: AppText.titleLarge.copyWith(fontSize: 18)),
             const SizedBox(height: Insets.xs),
-            Text(
-              subtitle,
-              style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
-            ),
+            Text(subtitle, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45)),
             const SizedBox(height: Insets.xl),
             Row(
               children: [
                 Expanded(
                   child: _SourceButton(
                     icon: Icons.photo_camera_rounded,
-                    label: 'Camera',
+                    label: context.l10n.commonCamera,
                     onTap: () => Navigator.of(context).pop(PhotoSource.camera),
                   ),
                 ),
@@ -85,17 +84,14 @@ class _Sheet extends StatelessWidget {
                 Expanded(
                   child: _SourceButton(
                     icon: Icons.photo_library_rounded,
-                    label: 'Gallery',
+                    label: context.l10n.commonGallery,
                     onTap: () => Navigator.of(context).pop(PhotoSource.gallery),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: Insets.md),
-            GhostButton(
-              label: 'Cancel',
-              onPressed: () => Navigator.of(context).pop(),
-            ),
+            GhostButton(label: context.l10n.commonCancel, onPressed: () => Navigator.of(context).pop()),
           ],
         ),
       ),
@@ -104,11 +100,7 @@ class _Sheet extends StatelessWidget {
 }
 
 class _SourceButton extends StatelessWidget {
-  const _SourceButton({
-    required this.icon,
-    required this.label,
-    required this.onTap,
-  });
+  const _SourceButton({required this.icon, required this.label, required this.onTap});
 
   final IconData icon;
   final String label;
@@ -130,13 +122,7 @@ class _SourceButton extends StatelessWidget {
           children: [
             Icon(icon, size: 28, color: AppColors.primary),
             const SizedBox(height: Insets.sm),
-            Text(
-              label,
-              style: AppText.titleSmall.copyWith(
-                fontSize: 13.5,
-                color: AppColors.primary,
-              ),
-            ),
+            Text(label, style: AppText.titleSmall.copyWith(fontSize: 13.5, color: AppColors.primary)),
           ],
         ),
       ),

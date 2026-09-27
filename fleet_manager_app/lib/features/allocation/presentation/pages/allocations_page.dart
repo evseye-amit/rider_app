@@ -53,11 +53,11 @@ class _AllocationsViewState extends State<_AllocationsView> {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: tr('Could not load allocations'),
+                title: context.l10n.allocationCouldNotLoadAllocations,
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: tr('Try again'),
+                actionLabel: context.l10n.commonTryAgain,
                 onAction: () => context.read<AllocationsCubit>().refresh(),
               ),
             ),
@@ -71,23 +71,23 @@ class _AllocationsViewState extends State<_AllocationsView> {
           onRefresh: () => context.read<AllocationsCubit>().refresh(),
           band: DeskBand(
             icon: Icons.swap_horiz_rounded,
-            title: tr('Allocation'),
-            subtitle: tr('Match a waiting rider with a vehicle, then walk the handover through'),
+            title: context.l10n.commonAllocation,
+            subtitle: context.l10n.allocationMatchWaitingRiderWithVehicle,
             stats: [
               DeskStat(
-                label: tr('Waiting'),
+                label: context.l10n.allocationWaiting,
                 value: '${board?.pending.length ?? 0}',
                 icon: Icons.hourglass_top_rounded,
                 alert: (board?.pending.length ?? 0) > 0,
               ),
               DeskStat(
-                label: tr('Your move'),
+                label: context.l10n.allocationMove,
                 value: '${board?.needingAction ?? 0}',
                 icon: Icons.touch_app_rounded,
                 alert: (board?.needingAction ?? 0) > 0,
               ),
               DeskStat(
-                label: tr('On road'),
+                label: context.l10n.allocationRoad,
                 value: '${board?.active.length ?? 0}',
                 icon: Icons.electric_scooter_rounded,
               ),
@@ -123,7 +123,7 @@ class _AllocationsViewState extends State<_AllocationsView> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SegmentedTabs(
-                items: const ['Waiting', 'In progress', 'On road'],
+                items: [context.l10n.allocationWaiting, context.l10n.maintenanceProgress, context.l10n.allocationRoad],
                 selectedIndex: _tab,
                 onChanged: (i) => setState(() => _tab = i),
                 counts: {0: board.pending.length, 1: board.inProgress.length, 2: board.active.length},
@@ -131,9 +131,9 @@ class _AllocationsViewState extends State<_AllocationsView> {
               const Gap.lg(),
               AppSearchField(
                 hint: switch (_tab) {
-                  0 => 'Search rider name, code or mobile',
-                  1 => 'Search rider or vehicle',
-                  _ => 'Search rider or vehicle number',
+                  0 => context.l10n.allocationSearchRiderNameCodeMobile,
+                  1 => context.l10n.allocationSearchRiderVehicle,
+                  _ => context.l10n.allocationSearchRiderVehicleNumber,
                 },
                 controller: _searchController,
                 onChanged: (v) => setState(() => _query = v),
@@ -165,8 +165,8 @@ class _PendingList extends StatelessWidget {
         child: ArtBlock(
           art: BrandArt.empty,
           artSize: 130,
-          title: tr('Nobody waiting'),
-          message: tr('Every onboarded rider in your hubs has a vehicle or a handover under way.'),
+          title: context.l10n.allocationNobodyWaiting,
+          message: context.l10n.allocationEveryOnboardedRiderHubsHas,
         ),
       );
     }
@@ -197,8 +197,8 @@ class _InProgressList extends StatelessWidget {
         child: ArtBlock(
           art: BrandArt.empty,
           artSize: 130,
-          title: tr('No handovers in progress'),
-          message: tr('Allocate a vehicle to a waiting rider to start one.'),
+          title: context.l10n.allocationNoHandoversProgress,
+          message: context.l10n.allocationAllocateVehicleWaitingRiderStart,
         ),
       );
     }
@@ -229,8 +229,8 @@ class _ActiveList extends StatelessWidget {
         child: ArtBlock(
           art: BrandArt.empty,
           artSize: 130,
-          title: tr('No vehicles out'),
-          message: tr('Nothing is currently allocated to a rider.'),
+          title: context.l10n.allocationNoVehiclesOut,
+          message: context.l10n.allocationNothingCurrentlyAllocatedRider,
         ),
       );
     }
@@ -252,14 +252,14 @@ class _ActiveList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          KeyValueRow(label: tr('Vehicle'), value: '${r.vehicleNumber} · ${r.model}'),
-          KeyValueRow(label: tr('Allocated on'), value: Fmt.date(r.allocatedOn)),
-          KeyValueRow(label: tr('Status'), value: r.status == 'riding' ? 'Riding' : 'Idle'),
+          KeyValueRow(label: context.l10n.commonVehicle, value: '${r.vehicleNumber} · ${r.model}'),
+          KeyValueRow(label: context.l10n.commonAllocated, value: Fmt.date(r.allocatedOn)),
+          KeyValueRow(label: context.l10n.commonStatus, value: r.status == 'riding' ? context.l10n.allocationRiding : context.l10n.allocationIdle),
           const Gap.lg(),
         ],
       ),
       footer: SecondaryButton(
-        label: tr('Start a return'),
+        label: context.l10n.allocationStartReturn,
         icon: Icons.assignment_return_rounded,
         onPressed: () {
           Navigator.of(context).pop();

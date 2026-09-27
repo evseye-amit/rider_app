@@ -1,6 +1,7 @@
 import '../utils/result.dart';
 import 'api_client.dart';
 
+import '../l10n/locale_controller.dart';
 enum RiderScreen {
   onboarding,
   waiting,
@@ -50,15 +51,15 @@ enum DeploymentStatus {
       };
 
   String get label => switch (this) {
-        riderWaiting => 'Vehicle reserved',
-        fleetRequested => 'Vehicle reserved',
-        paymentPending => 'Payment pending',
-        paymentPaid => 'Payment received',
-        pdiPendingRider => 'Inspection with rider',
-        trainingPending => 'Training in progress',
-        devicePairingPending => 'Pairing the IoT device',
-        deployed => 'Deployed',
-        unknown => 'Unknown',
+        riderWaiting => LocaleController.strings.allocationVehicleReserved,
+        fleetRequested => LocaleController.strings.allocationVehicleReserved,
+        paymentPending => LocaleController.strings.errorPaymentPending,
+        paymentPaid => LocaleController.strings.deploymentPaymentReceived,
+        pdiPendingRider => LocaleController.strings.errorInspectionWithRider,
+        trainingPending => LocaleController.strings.errorTrainingProgress,
+        devicePairingPending => LocaleController.strings.errorPairingIotDevice,
+        deployed => LocaleController.strings.allocationDeployed,
+        unknown => LocaleController.strings.errorUnknown,
       };
 }
 

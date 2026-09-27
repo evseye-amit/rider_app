@@ -13,7 +13,7 @@ abstract final class LegalLink {
       mode: LaunchMode.externalApplication,
     );
     if (ok || !context.mounted) return;
-    AppSnack.error(context, 'Could not open the document. Try again.');
+    AppSnack.error(context, context.l10n.commonCouldNotOpenDocumentTry);
   }
 
   const LegalLink._();

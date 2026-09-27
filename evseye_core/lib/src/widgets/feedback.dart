@@ -6,6 +6,7 @@ import '../theme/app_typography.dart';
 import 'buttons.dart';
 import 'section_header.dart';
 
+import '../l10n/locale_controller.dart';
 abstract final class AppSnack {
   static void show(
     BuildContext context,
@@ -177,12 +178,14 @@ abstract final class AppDialog {
     BuildContext context, {
     required String title,
     required String message,
-    String confirmLabel = 'Confirm',
-    String cancelLabel = 'Cancel',
+    String? confirmLabel,
+    String? cancelLabel,
     IconData icon = Icons.help_rounded,
     Color tone = AppColors.primary,
     bool destructive = false,
   }) async {
+    final String confirmText = confirmLabel ?? context.l10n.commonConfirm;
+    final String cancelText = cancelLabel ?? context.l10n.commonCancel;
     final Color accent = destructive ? AppColors.danger : tone;
     final bool? result = await showDialog<bool>(
       context: context,
@@ -221,7 +224,7 @@ abstract final class AppDialog {
                 children: [
                   Expanded(
                     child: SecondaryButton(
-                      label: cancelLabel,
+                      label: cancelText,
                       size: AppButtonSize.medium,
                       onPressed: () => Navigator.of(context).pop(false),
                     ),
@@ -229,7 +232,7 @@ abstract final class AppDialog {
                   const SizedBox(width: Insets.md),
                   Expanded(
                     child: PrimaryButton(
-                      label: confirmLabel,
+                      label: confirmText,
                       size: AppButtonSize.medium,
                       fillColor: destructive ? AppColors.danger : null,
                       onPressed: () => Navigator.of(context).pop(true),

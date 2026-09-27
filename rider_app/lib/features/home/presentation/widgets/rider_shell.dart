@@ -59,7 +59,7 @@ class _RiderShellState extends State<RiderShell> {
             if (!session.present) {
               AppSnack.warning(
                 context,
-                'Mark yourself present to switch the vehicle on.',
+                context.l10n.homeMarkYourselfPresentSwitchVehicle,
               );
               return;
             }
@@ -74,14 +74,19 @@ class _RiderShellState extends State<RiderShell> {
 }
 
 enum RiderTab {
-  home('Home', Icons.dashboard_rounded, Icons.dashboard_outlined),
-  scooter('Scooter', Icons.electric_scooter_rounded, Icons.electric_scooter_outlined),
-  wallet('Wallet', Icons.account_balance_wallet_rounded, Icons.account_balance_wallet_outlined),
-  support('Support', Icons.support_agent_rounded, Icons.support_agent_outlined);
+  home(Icons.dashboard_rounded, Icons.dashboard_outlined),
+  scooter(Icons.electric_scooter_rounded, Icons.electric_scooter_outlined),
+  wallet(Icons.account_balance_wallet_rounded, Icons.account_balance_wallet_outlined),
+  support(Icons.support_agent_rounded, Icons.support_agent_outlined);
 
-  const RiderTab(this.label, this.activeIcon, this.icon);
+  const RiderTab(this.activeIcon, this.icon);
 
-  final String label;
+  String label(AppL10n l10n) => switch (this) {
+        RiderTab.home => l10n.hubHome,
+        RiderTab.scooter => l10n.homeScooter,
+        RiderTab.wallet => l10n.commonWallet,
+        RiderTab.support => l10n.commonSupport,
+      };
   final IconData activeIcon;
   final IconData icon;
 }
@@ -227,7 +232,7 @@ class _BarItem extends StatelessWidget {
                 fontWeight: active ? FontWeight.w800 : FontWeight.w600,
                 color: active ? AppColors.textPrimary : AppColors.textMuted,
               ),
-              child: Text(tab.label),
+              child: Text(tab.label(context.l10n)),
             ),
             const Spacer(),
           ],

@@ -26,6 +26,7 @@ Future<void> configureDependencies() async {
   final TokenStore tokens = TokenStore();
   await tokens.load();
   sl.registerSingleton<TokenStore>(tokens);
+  sl.registerSingleton<LocaleController>(LocaleController());
   sl.registerSingleton<ApiClient>(ApiClient(tokens: tokens));
   sl.registerSingleton<AuthApi>(AuthApi(sl<ApiClient>(), tokens));
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));

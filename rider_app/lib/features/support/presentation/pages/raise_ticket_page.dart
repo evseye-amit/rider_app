@@ -66,12 +66,12 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
 
   bool _validate() {
     setState(() {
-      _categoryError = _categoryKey == null ? 'Choose a category' : null;
+      _categoryError = _categoryKey == null ? context.l10n.supportChooseCategory : null;
       _subjectError = _subject.text.trim().isEmpty
-          ? 'Tell us what this is about'
+          ? context.l10n.supportTellUsWhatAbout
           : null;
       _descriptionError = _description.text.trim().length < 10
-          ? 'Add a few more details (10+ characters)'
+          ? context.l10n.supportAddFewMoreDetails10
           : null;
     });
     return _categoryError == null &&
@@ -82,8 +82,8 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
   Future<void> _pickCategory(List<SupportCategory> categories) async {
     final String? picked = await AppSheet.show<String>(
       context,
-      title: tr('Choose a category'),
-      subtitle: tr('This decides who picks up your ticket and how fast'),
+      title: context.l10n.supportChooseCategory,
+      subtitle: context.l10n.supportDecidesWhoPicksUpTicket,
       child: Column(
         children: [
           for (final c in categories) ...[
@@ -144,10 +144,10 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
             : categoryTileTone(selected.key);
 
         return AppScaffold(
-          title: tr('Raise a ticket'),
-          subtitle: tr('The more detail you give, the faster we can help'),
+          title: context.l10n.supportRaiseTicket,
+          subtitle: context.l10n.supportMoreDetailGiveFasterCan,
           footer: PrimaryButton(
-            label: tr('Submit ticket'),
+            label: context.l10n.supportSubmitTicket,
             icon: Icons.send_rounded,
             loading: submitting,
             onPressed: loadingCategories
@@ -180,10 +180,10 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           AppPickerField(
-                            label: tr('Category'),
+                            label: context.l10n.commonCategory,
                             required: true,
                             value: selected?.label,
-                            hint: tr('Select a category'),
+                            hint: context.l10n.supportSelectCategory,
                             errorText: _categoryError,
                             onTap: () => _pickCategory(state.categories),
                             prefixIcon: selected == null
@@ -192,10 +192,10 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                           ),
                           const Gap.lg(),
                           AppTextField(
-                            label: tr('Subject'),
+                            label: context.l10n.supportSubject,
                             required: true,
                             controller: _subject,
-                            hint: tr('One line that sums up the issue'),
+                            hint: context.l10n.supportOneLineSumsUpIssue,
                             errorText: _subjectError,
                             textCapitalization: TextCapitalization.sentences,
                             onChanged: (_) {
@@ -209,17 +209,17 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                     ),
                     const Gap.lg(),
                     ModuleCard(
-                      title: tr('Tell us more'),
+                      title: context.l10n.supportTellUsMore,
                       leading: const IconTile(
                         icon: Icons.notes_rounded,
                         tone: AppColors.primary,
                         solid: true,
                       ),
                       child: AppTextField(
-                        label: tr('Description'),
+                        label: context.l10n.supportDescription,
                         required: true,
                         controller: _description,
-                        hint: tr('What happened, and since when?'),
+                        hint: context.l10n.supportWhatHappenedSinceWhen,
                         maxLines: 5,
                         errorText: _descriptionError,
                         textCapitalization: TextCapitalization.sentences,
@@ -232,7 +232,7 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                     ),
                     const Gap.lg(),
                     ModuleCard(
-                      title: tr('Photos (optional)'),
+                      title: context.l10n.supportPhotosOptional,
                       leading: const IconTile(
                         icon: Icons.photo_camera_rounded,
                         tone: AppColors.primary,
@@ -258,7 +258,7 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                     ),
                     const Gap.lg(),
                     ModuleCard(
-                      title: tr('Vehicle impact'),
+                      title: context.l10n.supportVehicleImpact,
                       leading: const IconTile(
                         icon: Icons.warning_amber_rounded,
                         tone: AppColors.amber,
@@ -267,8 +267,8 @@ class _RaiseTicketViewState extends State<_RaiseTicketView> {
                       child: AppCheckTile(
                         value: _vehicleAffected,
                         onChanged: (v) => setState(() => _vehicleAffected = v),
-                        title: tr('The vehicle is affected'),
-                        subtitle: tr('Turn this on if you cannot ride safely until this is fixed'),
+                        title: context.l10n.supportVehicleAffected,
+                        subtitle: context.l10n.supportTurnIfCannotRideSafely,
                       ),
                     ),
                   ],

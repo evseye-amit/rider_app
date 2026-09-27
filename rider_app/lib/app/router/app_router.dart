@@ -1,3 +1,4 @@
+import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -151,9 +152,9 @@ class _RouteErrorPage extends StatelessWidget {
             children: [
               const Icon(Icons.explore_off_rounded, size: 44),
               const SizedBox(height: 16),
-              Text('No screen at $location', textAlign: TextAlign.center),
+              Text(context.l10n.routerNoScreenAt(location), textAlign: TextAlign.center),
               const SizedBox(height: 16),
-              TextButton(onPressed: () => context.go(Routes.home), child: const Text('Go home')),
+              TextButton(onPressed: () => context.go(Routes.home), child: Text(context.l10n.appGoHome)),
             ],
           ),
         ),

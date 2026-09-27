@@ -9,6 +9,8 @@ import 'brand_photo.dart';
 import 'illustrations.dart';
 import 'pressable.dart';
 
+import '../l10n/locale_controller.dart';
+
 class AuthSheetScaffold extends StatelessWidget {
   const AuthSheetScaffold({
     required this.title,
@@ -148,8 +150,7 @@ class _Hero extends StatelessWidget {
             child: Center(
               child: LayoutBuilder(
                 builder: (context, c) {
-                  final double size =
-                      math.min(c.maxWidth * 0.68, c.maxHeight / hero.aspect);
+                  final double size = math.min(c.maxWidth * 0.68, c.maxHeight / hero.aspect);
                   return Stack(
                     alignment: Alignment.center,
                     children: [
@@ -186,15 +187,9 @@ class _Hero extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.18),
                         shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.white.withValues(alpha: 0.24),
-                        ),
+                        border: Border.all(color: Colors.white.withValues(alpha: 0.24)),
                       ),
-                      child: const Icon(
-                        Icons.arrow_back_rounded,
-                        size: 20,
-                        color: Colors.white,
-                      ),
+                      child: const Icon(Icons.arrow_back_rounded, size: 20, color: Colors.white),
                     ),
                   ),
                 const Spacer(),
@@ -204,10 +199,7 @@ class _Hero extends StatelessWidget {
                       onTap: onBandAction,
                       scale: 0.95,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: Insets.lg,
-                          vertical: Insets.sm + 1,
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: Insets.lg, vertical: Insets.sm + 1),
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.18),
                           borderRadius: Corners.pill,
@@ -217,10 +209,7 @@ class _Hero extends StatelessWidget {
                           bandAction!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppText.titleSmall.copyWith(
-                            fontSize: 12.5,
-                            color: Colors.white,
-                          ),
+                          style: AppText.titleSmall.copyWith(fontSize: 12.5, color: Colors.white),
                         ),
                       ),
                     ),
@@ -267,18 +256,14 @@ class _Sheet extends StatelessWidget {
           MediaQuery.viewInsetsOf(context).bottom + Insets.x3l,
         ),
         child: Column(
-          crossAxisAlignment:
-              centerTitle ? CrossAxisAlignment.center : CrossAxisAlignment.stretch,
+          crossAxisAlignment: centerTitle ? CrossAxisAlignment.center : CrossAxisAlignment.stretch,
           children: [
             Center(
               child: Container(
                 width: 38,
                 height: 4,
                 margin: const EdgeInsets.only(bottom: Insets.xl),
-                decoration: BoxDecoration(
-                  color: AppColors.strokeStrong,
-                  borderRadius: Corners.pill,
-                ),
+                decoration: BoxDecoration(color: AppColors.strokeStrong, borderRadius: Corners.pill),
               ),
             ),
             Text(
@@ -352,8 +337,7 @@ class OnboardingFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color dotOn = onDark ? Colors.white : AppColors.primary;
-    final Color dotOff =
-        onDark ? Colors.white.withValues(alpha: 0.34) : AppColors.strokeStrong;
+    final Color dotOff = onDark ? Colors.white.withValues(alpha: 0.34) : AppColors.strokeStrong;
 
     return Row(
       children: [
@@ -363,10 +347,7 @@ class OnboardingFooter extends StatelessWidget {
             curve: Motion.enter,
             width: i == index ? 24 : 8,
             height: 8,
-            decoration: BoxDecoration(
-              color: i == index ? dotOn : dotOff,
-              borderRadius: Corners.pill,
-            ),
+            decoration: BoxDecoration(color: i == index ? dotOn : dotOff, borderRadius: Corners.pill),
           ),
           const SizedBox(width: Insets.sm - 2),
         ],
@@ -377,7 +358,7 @@ class OnboardingFooter extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: Insets.md, vertical: Insets.sm),
               child: Text(
-                'Skip',
+                context.l10n.commonSkip,
                 style: AppText.titleSmall.copyWith(
                   fontSize: 13,
                   color: onDark ? Colors.white.withValues(alpha: 0.78) : AppColors.textMuted,

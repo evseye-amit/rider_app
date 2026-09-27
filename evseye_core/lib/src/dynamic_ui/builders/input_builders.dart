@@ -14,6 +14,7 @@ import '../registry/dynamic_ui_scope.dart';
 import '../registry/widget_registry.dart';
 import 'node_utils.dart';
 
+import '../../l10n/locale_controller.dart';
 Map<String, NodeBuilder> inputBuilders(WidgetRegistry r) => {
       'textField': (context, node, scope) => _Field(
             node: node,
@@ -85,7 +86,7 @@ Map<String, NodeBuilder> inputBuilders(WidgetRegistry r) => {
                   initial: DateTime.tryParse(value ?? '') ??
                       (future ? first : DateTime(now.year - 22, now.month, now.day)),
                   title: node.text(scope, 'label').isEmpty
-                      ? 'Select a date'
+                      ? context.l10n.commonSelectDate
                       : node.text(scope, 'label'),
                 );
                 if (picked != null) {
@@ -325,7 +326,7 @@ Future<void> _openOptions(
   if (options.isEmpty) return;
   final String? picked = await AppSheet.show<String>(
     context,
-    title: node.text(scope, 'label', 'Select'),
+    title: node.text(scope, 'label', context.l10n.commonSelect),
     child: Column(
       children: spaced(
         options

@@ -49,21 +49,21 @@ class ShiftStatusStrip extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      present ? 'Marked present' : 'Not marked present',
+                      present ? context.l10n.homeMarkedPresent : context.l10n.homeNotMarkedPresent,
                       style: AppText.titleMedium.copyWith(fontSize: 15),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       present
                           ? 'Shift running · ${Fmt.duration(Duration(minutes: onlineMinutes))} online'
-                          : 'Mark attendance to start the scooter',
+                          : context.l10n.homeMarkAttendanceStartScooter,
                       style: AppText.bodySmall.copyWith(fontSize: 12),
                     ),
                   ],
                 ),
               ),
               StatusChip(
-                label: vehicleOn ? 'Vehicle on' : 'Vehicle off',
+                label: vehicleOn ? context.l10n.homeVehicle : context.l10n.homeVehicleOff,
                 tone: vehicleOn ? StatusTone.brand : StatusTone.neutral,
                 dense: true,
               ),
@@ -110,7 +110,7 @@ class IncentiveCard extends StatelessWidget {
                   children: [
                     Text(
                       achieved
-                          ? 'Bonus unlocked'
+                          ? context.l10n.homeBonusUnlocked
                           : '$remaining more ${remaining == 1 ? 'trip' : 'trips'} to your bonus',
                       style: AppText.titleMedium.copyWith(fontSize: 14.5),
                     ),
@@ -188,7 +188,7 @@ class VehicleCard extends StatelessWidget {
                     ),
                     const SizedBox(width: Insets.sm),
                     StatusChip(
-                      label: iotOnline ? 'Online' : 'Offline',
+                      label: iotOnline ? context.l10n.homeOnline : context.l10n.commonOffline,
                       tone: iotOnline ? StatusTone.success : StatusTone.danger,
                       dense: true,
                     ),
@@ -202,7 +202,7 @@ class VehicleCard extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Row(
                     children: [
-                      MetricPill(icon: Icons.near_me_rounded, value: '$rangeKm', label: tr('km left')),
+                      MetricPill(icon: Icons.near_me_rounded, value: '$rangeKm', label: context.l10n.commonKmLeft),
                       const SizedBox(width: Insets.sm),
                       const Icon(Icons.chevron_right_rounded, size: 18, color: AppColors.textMuted),
                     ],
@@ -304,13 +304,13 @@ class WeeklyEarningsChart extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(tr('This week'), style: AppText.label),
+                    Text(context.l10n.commonWeek, style: AppText.label),
                     const SizedBox(height: Insets.xs),
                     Text(Fmt.money(total), style: AppText.numeric.copyWith(fontSize: 24)),
                   ],
                 ),
               ),
-              StatusChip(label: tr('Mon – Sun'), tone: StatusTone.neutral, dense: true, showDot: false),
+              StatusChip(label: context.l10n.homeMonSun, tone: StatusTone.neutral, dense: true, showDot: false),
             ],
           ),
           const SizedBox(height: Insets.xl),

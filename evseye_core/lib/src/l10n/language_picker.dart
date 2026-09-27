@@ -6,35 +6,34 @@ import '../theme/app_typography.dart';
 import '../widgets/buttons.dart';
 import '../widgets/feedback.dart';
 import '../widgets/pressable.dart';
-import 'app_locale.dart';
+import 'locale_controller.dart';
 
-class LanguagePicker {
-  const LanguagePicker._();
+class LanguagePicker extends StatefulWidget {
+  const LanguagePicker({required this.selected, super.key});
 
-  static Future<AppLocale?> show(BuildContext context, {bool firstRun = false}) {
+  final AppLocale selected;
+
+  static Future<AppLocale?> show(
+    BuildContext context, {
+    required AppLocale selected,
+    bool firstRun = false,
+  }) {
+    final AppL10nLabels labels = AppL10nLabels(context);
     return AppSheet.show<AppLocale>(
       context,
-      title: tr('Choose your language'),
-      subtitle: firstRun
-          ? tr('You can change it later from the menu.')
-          : tr('The app will change right away.'),
+      title: labels.title,
+      subtitle: firstRun ? labels.firstRunSubtitle : labels.subtitle,
       isDismissible: !firstRun,
-      child: _LanguageList(firstRun: firstRun),
+      child: LanguagePicker(selected: selected),
     );
   }
-}
-
-class _LanguageList extends StatefulWidget {
-  const _LanguageList({required this.firstRun});
-
-  final bool firstRun;
 
   @override
-  State<_LanguageList> createState() => _LanguageListState();
+  State<LanguagePicker> createState() => _LanguagePickerState();
 }
 
-class _LanguageListState extends State<_LanguageList> {
-  AppLocale _selected = AppLocaleController.instance.locale;
+class _LanguagePickerState extends State<LanguagePicker> {
+  late AppLocale _selected = widget.selected;
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +51,24 @@ class _LanguageListState extends State<_LanguageList> {
           ),
         const SizedBox(height: Insets.md),
         PrimaryButton(
-          label: tr('Save'),
+          label: AppL10nLabels(context).save,
           onPressed: () => Navigator.of(context).pop(_selected),
         ),
         const SizedBox(height: Insets.sm),
       ],
     );
   }
+}
+
+class AppL10nLabels {
+  AppL10nLabels(this.context);
+
+  final BuildContext context;
+
+  String get title => context.l10n.commonChooseLanguage;
+  String get subtitle => context.l10n.commonAppWillChangeRightAway;
+  String get firstRunSubtitle => context.l10n.commonCanChangeLaterFromMenu;
+  String get save => context.l10n.commonSave;
 }
 
 class _LanguageTile extends StatelessWidget {
@@ -90,15 +100,11 @@ class _LanguageTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    option.nativeName,
-                    style: AppText.titleMedium.copyWith(color: AppColors.textPrimary),
-                  ),
+                  Text(option.nativeName,
+                      style: AppText.titleMedium.copyWith(color: AppColors.textPrimary)),
                   const SizedBox(height: 2),
-                  Text(
-                    option.englishName,
-                    style: AppText.bodySmall.copyWith(color: AppColors.textSecondary),
-                  ),
+                  Text(option.englishName,
+                      style: AppText.bodySmall.copyWith(color: AppColors.textSecondary)),
                 ],
               ),
             ),

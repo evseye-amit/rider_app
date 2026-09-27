@@ -12,14 +12,14 @@ import '../../domain/usecases/get_vendor_options.dart';
 import '../../domain/usecases/raise_maintenance_job.dart';
 import '../cubit/raise_maintenance_cubit.dart';
 
-const List<String> _jobTypes = [
-  'Scheduled service',
-  'Battery',
-  'Brakes',
-  'Tyres',
+List<String> _jobTypes = [
+  LocaleController.strings.maintenanceScheduledService,
+  LocaleController.strings.maintenanceBattery,
+  LocaleController.strings.commonBrakes,
+  LocaleController.strings.maintenanceTyres,
   'IoT',
-  'Body',
-  'Other',
+  LocaleController.strings.maintenanceBody,
+  LocaleController.strings.commonOther,
 ];
 
 class RaiseMaintenancePage extends StatelessWidget {
@@ -88,7 +88,7 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
       builder: (context, state) {
         if (state.isLoading) {
           return AppScaffold(
-            title: tr('Raise a job'),
+            title: context.l10n.maintenanceRaiseJob,
             body: PageBody(children: const [
               ShimmerBox(height: 108, borderRadius: Corners.brLg),
               Gap.xl(),
@@ -102,13 +102,13 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
         }
         if (state.status == RaiseMaintenanceStatus.failure) {
           return AppScaffold(
-            title: tr('Raise a job'),
+            title: context.l10n.maintenanceRaiseJob,
             body: EmptyState(
-              title: tr('Could not load the form'),
+              title: context.l10n.maintenanceCouldNotLoadForm,
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: tr('Try again'),
+              actionLabel: context.l10n.commonTryAgain,
               onAction: () => context.read<RaiseMaintenanceCubit>().load(),
             ),
           );
@@ -117,10 +117,10 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
         _prefill(state.vehicles);
 
         return AppScaffold(
-          title: tr('Raise a job'),
-          subtitle: tr('Send a vehicle to the workshop'),
+          title: context.l10n.maintenanceRaiseJob,
+          subtitle: context.l10n.maintenanceSendVehicleWorkshop,
           footer: PrimaryButton(
-            label: tr('Raise job'),
+            label: context.l10n.maintenanceRaiseJob2,
             icon: Icons.build_rounded,
             loading: state.submitting,
             onPressed: state.submitting ? null : () => _submit(context, state),
@@ -130,17 +130,17 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
               PhotoPanel(
                 photo: BrandPhoto.service,
                 height: 132,
-                title: tr('Send it to the workshop'),
-                subtitle: tr('A technician picks this up as soon as it is raised.'),
+                title: context.l10n.maintenanceSendWorkshop,
+                subtitle: context.l10n.maintenanceTechnicianPicksUpAsSoon,
               ),
               const Gap.lg(),
               ModuleCard(
-                title: tr('Vehicle'),
+                title: context.l10n.commonVehicle,
                 leading: const IconTile(icon: Icons.electric_scooter_rounded, tone: AppColors.primary, size: 28),
                 child: AppPickerField(
-                  label: tr('Vehicle'),
+                  label: context.l10n.commonVehicle,
                   required: true,
-                  hint: tr('Select a vehicle'),
+                  hint: context.l10n.maintenanceSelectVehicle,
                   value: _vehicle == null ? null : '${_vehicle!.number} · ${_vehicle!.model}',
                   errorText: _vehicleError,
                   prefixIcon: Icons.electric_scooter_rounded,
@@ -150,15 +150,15 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
               const Gap.lg(),
 
               ModuleCard(
-                title: tr('Job details'),
+                title: context.l10n.maintenanceJobDetails,
                 leading: const IconTile(icon: Icons.assignment_rounded, tone: AppColors.primary, size: 28),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppPickerField(
-                      label: tr('Job type'),
+                      label: context.l10n.maintenanceJobType,
                       required: true,
-                      hint: tr('What kind of job is this'),
+                      hint: context.l10n.maintenanceWhatKindJob,
                       value: _jobType,
                       errorText: _jobTypeError,
                       prefixIcon: Icons.category_rounded,
@@ -171,8 +171,8 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
                     ),
                     const Gap.lg(),
                     AppTextField(
-                      label: tr('Issue description'),
-                      hint: tr('What is wrong with the vehicle'),
+                      label: context.l10n.maintenanceIssueDescription,
+                      hint: context.l10n.maintenanceWhatWrongWithVehicle,
                       required: true,
                       maxLines: 4,
                       controller: _issueController,
@@ -181,12 +181,12 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
                     ),
                     const Gap.lg(),
                     AppTextField(
-                      label: tr('Odometer reading'),
-                      hint: tr('e.g. 9420'),
+                      label: context.l10n.maintenanceOdometerReading,
+                      hint: context.l10n.maintenanceHintOdometer,
                       keyboardType: TextInputType.number,
                       prefixIcon: Icons.speed_rounded,
                       controller: _odometerController,
-                      helper: tr('In kilometres, as shown on the cluster.'),
+                      helper: context.l10n.maintenanceKilometresAsShownCluster,
                     ),
                   ],
                 ),
@@ -194,11 +194,11 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
               const Gap.lg(),
 
               ModuleCard(
-                title: tr('Vendor'),
+                title: context.l10n.maintenanceVendor,
                 leading: const IconTile(icon: Icons.build_rounded, tone: AppColors.primary, size: 28),
                 child: AppPickerField(
-                  label: tr('Assign to'),
-                  hint: tr('Choose later'),
+                  label: context.l10n.maintenanceAssign,
+                  hint: context.l10n.maintenanceChooseLater,
                   value: _vendor,
                   prefixIcon: Icons.storefront_rounded,
                   onTap: () => _pickVendor(context, state.vendors),
@@ -207,7 +207,7 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
               const Gap.lg(),
 
               ModuleCard(
-                title: tr('Photo evidence'),
+                title: context.l10n.maintenancePhotoEvidence,
                 leading: const IconTile(icon: Icons.photo_camera_rounded, tone: AppColors.primary, size: 28),
                 child: GridView.count(
                   crossAxisCount: 3,
@@ -220,9 +220,9 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
                     for (final slot in _photoSlots)
                       PhotoSlot(
                         label: switch (slot) {
-                          'issue' => 'Issue close-up',
-                          'context' => 'Wide shot',
-                          _ => 'Odometer',
+                          'issue' => context.l10n.maintenanceIssueCloseUp,
+                          'context' => context.l10n.maintenanceWideShot,
+                          _ => context.l10n.commonOdometer,
                         },
                         captured: _photos.contains(slot),
                         onTap: () {
@@ -244,7 +244,7 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
   Future<void> _pickVehicle(BuildContext context, List<VehicleOption> vehicles) async {
     final VehicleOption? picked = await AppSheet.show<VehicleOption>(
       context,
-      title: tr('Select a vehicle'),
+      title: context.l10n.maintenanceSelectVehicle,
       child: Column(
         children: [
           for (final v in vehicles)
@@ -266,7 +266,7 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
   Future<void> _pickJobType(BuildContext context) async {
     final String? picked = await AppSheet.show<String>(
       context,
-      title: tr('Job type'),
+      title: context.l10n.maintenanceJobType,
       child: Column(
         children: [
           for (final t in _jobTypes)
@@ -287,8 +287,8 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
   Future<void> _pickVendor(BuildContext context, List<VendorOption> vendors) async {
     final String? picked = await AppSheet.show<String>(
       context,
-      title: tr('Assign a vendor'),
-      subtitle: tr('You can also assign this later'),
+      title: context.l10n.maintenanceAssignVendor,
+      subtitle: context.l10n.maintenanceCanAlsoAssignLater,
       child: Column(
         children: [
           for (final v in vendors)
@@ -309,9 +309,9 @@ class _RaiseMaintenanceViewState extends State<_RaiseMaintenanceView> {
 
   Future<void> _submit(BuildContext context, RaiseMaintenanceState state) async {
     setState(() {
-      _vehicleError = _vehicle == null ? 'Select the vehicle this job is for' : null;
-      _jobTypeError = _jobType == null ? 'Select a job type' : null;
-      _issueError = _issueController.text.trim().isEmpty ? 'Describe the issue' : null;
+      _vehicleError = _vehicle == null ? context.l10n.maintenanceSelectVehicleJob : null;
+      _jobTypeError = _jobType == null ? context.l10n.maintenanceSelectJobType : null;
+      _issueError = _issueController.text.trim().isEmpty ? context.l10n.maintenanceDescribeIssue : null;
     });
     if (_vehicleError != null || _jobTypeError != null || _issueError != null) return;
 
@@ -349,7 +349,7 @@ class _PrioritySelector extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(tr('Priority'), style: AppText.label),
+        Text(context.l10n.maintenancePriority, style: AppText.label),
         const SizedBox(height: Insets.sm),
         Row(
           children: [

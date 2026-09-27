@@ -2,6 +2,7 @@ import '../config/feature_flags.dart';
 import '../utils/result.dart';
 import 'api_client.dart';
 
+import '../l10n/locale_controller.dart';
 class ClientModule {
   const ClientModule({
     required this.code,
@@ -76,8 +77,8 @@ class ConfigApi {
   Future<Result<ClientConfig>> fetch(String clientId) {
     if (clientId.isEmpty) {
       return Future.value(
-        const Result.err(
-          UnauthorizedFailure('Sign in before reading the client configuration.'),
+        Result.err(
+          UnauthorizedFailure(LocaleController.strings.commonSignBeforeReadingClientConfiguration),
         ),
       );
     }

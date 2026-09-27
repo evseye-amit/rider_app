@@ -62,7 +62,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
       setState(() => _flow = flow);
     } on Object {
       if (!mounted) return;
-      setState(() => _flowError = 'Could not load the de-allocation flow.');
+      setState(() => _flowError = context.l10n.allocationCouldNotLoadDeAllocation2);
     }
   }
 
@@ -70,13 +70,13 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
   Widget build(BuildContext context) {
     if (_flowError != null) {
       return AppScaffold(
-        title: tr('De-allocate vehicle'),
+        title: context.l10n.allocationDeAllocateVehicle,
         body: EmptyState(
-          title: tr('Could not load the de-allocation flow'),
+          title: context.l10n.allocationCouldNotLoadDeAllocation,
           message: _flowError,
           icon: Icons.cloud_off_rounded,
           tone: AppColors.danger,
-          actionLabel: tr('Try again'),
+          actionLabel: context.l10n.commonTryAgain,
           onAction: () {
             setState(() => _flowError = null);
             _loadFlow();
@@ -89,7 +89,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
       builder: (context, state) {
         if (_flow == null || state.isLoading) {
           return AppScaffold(
-            title: tr('De-allocate vehicle'),
+            title: context.l10n.allocationDeAllocateVehicle,
             body: PageBody(children: const [
               ShimmerBox(height: 40, borderRadius: Corners.pill),
               Gap.xl(),
@@ -101,13 +101,13 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
         }
         if (state.status == DeallocationFlowStatus.failure || state.request == null) {
           return AppScaffold(
-            title: tr('De-allocate vehicle'),
+            title: context.l10n.allocationDeAllocateVehicle,
             body: EmptyState(
-              title: tr('Could not load this return'),
+              title: context.l10n.allocationCouldNotLoadReturn,
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: tr('Try again'),
+              actionLabel: context.l10n.commonTryAgain,
               onAction: () => context.read<DeallocationFlowCubit>().load(),
             ),
           );
@@ -145,7 +145,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
                 note: _stepIndex == flow.steps.length - 1 ? _verificationNote(request) : null,
               ),
             ),
-            if (_busy) Positioned.fill(child: LoadingOverlay(message: tr('Talking to the server…'))),
+            if (_busy) Positioned.fill(child: LoadingOverlay(message: context.l10n.allocationTalkingServer)),
           ],
         );
       },
@@ -155,7 +155,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
   String _verificationNote(DeallocationRequest request) {
     final String me = sl<SessionController>().mobile;
     return _riderOtp == null
-        ? 'Codes are sent when this step opens.'
+        ? context.l10n.allocationCodesSentWhenStepOpens
         : 'Codes sent to the rider (${Fmt.phone(request.mobile)}) and to you (${me.isEmpty ? 'your number' : Fmt.phone(me)}).';
   }
 
@@ -172,7 +172,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
       case 'pickFile':
 
         _form.setValue(node.fieldKey, 'capture_${DateTime.now().millisecondsSinceEpoch}.jpg');
-        AppSnack.success(context, 'Photo attached');
+        AppSnack.success(context, context.l10n.allocationPhotoAttached);
         break;
       case 'navigate':
         if (action.target != null) context.push(action.target!);
@@ -238,7 +238,7 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
       }
       _riderOtp = codes[0].valueOrNull;
       _operatorOtp = codes[1].valueOrNull;
-      AppSnack.success(context, 'Return started — codes sent to the rider and to you');
+      AppSnack.success(context, context.l10n.allocationReturnStartedCodesSentRider);
       return true;
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -248,9 +248,9 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
   Future<void> _complete(BuildContext context, DeallocationRequest request) async {
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: tr('Complete this de-allocation?'),
+      title: context.l10n.allocationCompleteDeAllocation,
       message: '${request.vehicleNumber} will be taken back from ${request.riderName} and the allocation closed.',
-      confirmLabel: tr('Complete'),
+      confirmLabel: context.l10n.allocationComplete,
       icon: Icons.check_circle_rounded,
       tone: AppColors.success,
     );
@@ -308,12 +308,12 @@ class _DeallocationFlowViewState extends State<_DeallocationFlowView> {
     }
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: tr('Abandon this de-allocation?'),
+      title: context.l10n.allocationAbandonDeAllocation,
       message: _inspectionId == null
           ? 'The photos and assessment entered for ${request.vehicleNumber} will be lost.'
-          : 'The return has already been started on the server. You can finish it later from the Returns tab.',
-      confirmLabel: tr('Abandon'),
-      cancelLabel: tr('Keep going'),
+          : context.l10n.allocationReturnHasAlreadyBeenStarted,
+      confirmLabel: context.l10n.allocationAbandon,
+      cancelLabel: context.l10n.allocationKeepGoing,
       destructive: true,
     );
     if (confirmed && context.mounted) context.pop();

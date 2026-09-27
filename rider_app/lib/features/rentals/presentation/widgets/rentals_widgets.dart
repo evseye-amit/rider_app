@@ -18,9 +18,9 @@ StatusTone invoiceTone(InvoiceStatus status) => switch (status) {
 };
 
 String invoiceLabel(InvoiceStatus status) => switch (status) {
-  InvoiceStatus.paid => 'Paid',
+  InvoiceStatus.paid => LocaleController.strings.rentalsPaid,
   InvoiceStatus.due => 'Due',
-  InvoiceStatus.failed => 'Failed',
+  InvoiceStatus.failed => LocaleController.strings.rentalsFailed,
 };
 
 class RentalsBand extends StatelessWidget {
@@ -42,12 +42,12 @@ class RentalsBand extends StatelessWidget {
               onTap: () => Navigator.of(context).maybePop(),
             ),
           ),
-          subtitle: tr('Your plan, auto-debit and rent receipts'),
-          title: tr('Rentals'),
+          subtitle: context.l10n.rentalsPlanAutoDebitRentReceipts,
+          title: context.l10n.rentalsRentals,
         ),
         const Gap.xxl(),
         Text(
-          p?.name ?? 'Current plan',
+          p?.name ?? context.l10n.rentalsCurrentPlan,
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),
@@ -93,7 +93,7 @@ class RentalsBand extends StatelessWidget {
               Expanded(
                 flex: 6,
                 child: InkStat(
-                  label: tr('Next debit'),
+                  label: context.l10n.rentalsNextDebit,
                   value: p == null ? '—' : Fmt.date(p.nextDebitDate),
                   icon: Icons.event_rounded,
                 ),
@@ -103,7 +103,7 @@ class RentalsBand extends StatelessWidget {
               Expanded(
                 flex: 4,
                 child: InkStat(
-                  label: tr('Debits in'),
+                  label: context.l10n.rentalsDebits,
                   value: p == null ? '—' : countdownLabel(p.timeToDebit),
                   icon: Icons.timer_outlined,
                 ),
@@ -113,7 +113,7 @@ class RentalsBand extends StatelessWidget {
               Expanded(
                 flex: 4,
                 child: InkStat(
-                  label: tr('Auto-debit'),
+                  label: context.l10n.rentalsAutoDebit,
                   value: p == null ? '—' : (p.autoDebitEnabled ? 'On' : 'Off'),
                   icon: Icons.autorenew_rounded,
                 ),
@@ -162,7 +162,7 @@ class PlanCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(tr('Auto-debit mandate'),
+                    Text(context.l10n.rentalsAutoDebitMandate,
                       style: AppText.titleMedium.copyWith(fontSize: 15),
                     ),
                     const SizedBox(height: 2),
@@ -197,8 +197,8 @@ class PlanCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   active
-                      ? 'Rent is collected automatically from your linked bank account on the debit date above.'
-                      : 'Auto-debit is not active — settle upcoming invoices manually until the mandate is restored.',
+                      ? context.l10n.rentalsRentCollectedAutomaticallyFromLinked
+                      : context.l10n.rentalsAutoDebitNotActiveSettle,
                   style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.5),
                 ),
               ),
@@ -315,14 +315,14 @@ class InvoiceReceiptBody extends StatelessWidget {
         Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
         const SizedBox(height: Insets.sm),
         KeyValueRow(
-          label: tr('Total'),
+          label: context.l10n.commonTotal,
           value: Fmt.money(invoice.amount),
           valueStyle: AppText.numeric.copyWith(fontSize: 18),
         ),
         const Gap.lg(),
-        KeyValueRow(label: tr('Billing period'), value: invoice.periodLabel),
+        KeyValueRow(label: context.l10n.rentalsBillingPeriod, value: invoice.periodLabel),
         KeyValueRow(
-          label: invoice.paidOn != null ? 'Paid on' : 'Due on',
+          label: invoice.paidOn != null ? context.l10n.rentalsPaid2 : context.l10n.rentalsDue,
           value: Fmt.date(invoice.paidOn ?? invoice.dueDate),
         ),
         const Gap.lg(),

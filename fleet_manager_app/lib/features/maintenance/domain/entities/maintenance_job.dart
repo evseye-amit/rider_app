@@ -1,3 +1,5 @@
+import 'package:evseye_core/evseye_core.dart';
+import 'package:flutter/widgets.dart';
 import 'package:equatable/equatable.dart';
 
 class MaintenanceJob extends Equatable {
@@ -84,3 +86,13 @@ class MaintenanceJob extends Equatable {
         notes,
       ];
 }
+
+String maintenanceTypeLabel(BuildContext context, String code) => switch (code) {
+      'BRAKES' => context.l10n.commonBrakes,
+      'BATTERY' => context.l10n.maintenanceBattery,
+      'TYRES' => context.l10n.maintenanceTyres,
+      'BODY' => context.l10n.maintenanceBody,
+      'PRE_DELIVERY' => context.l10n.maintenancePreDelivery,
+      'SERVICE' => context.l10n.hubService,
+      _ => code,
+    };

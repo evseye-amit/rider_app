@@ -68,7 +68,7 @@ class EarningsRepositoryImpl implements EarningsRepository {
     return [
       for (int i = 0; i < amounts.length; i++)
         EarningsBar(
-          label: i == amounts.length - 1 ? 'This week' : 'W${i + 1}',
+          label: i == amounts.length - 1 ? LocaleController.strings.commonWeek : 'W${i + 1}',
           amount: amounts[i],
           trips: trips[i],
           date: today.subtract(Duration(days: 7 * (amounts.length - 1 - i))),
@@ -100,8 +100,8 @@ class EarningsRepositoryImpl implements EarningsRepository {
         schemes: [
           IncentiveScheme(
             id: 'daily_trips',
-            title: 'Daily trip target',
-            description: 'Complete 20 trips today',
+            title: LocaleController.strings.earningsDailyTripTarget,
+            description: LocaleController.strings.earningsComplete20TripsToday,
             icon: 'trophy',
             tone: 'primary',
             current: Demo.tripsToday,
@@ -109,12 +109,12 @@ class EarningsRepositoryImpl implements EarningsRepository {
             unit: 'trips',
             rewardAmount: Demo.incentiveTarget,
             expiresAt: Demo.today().add(const Duration(days: 1)),
-            terms: 'Cancelled trips do not count. Credited by midnight.',
+            terms: LocaleController.strings.earningsCancelledTripsDoNotCount,
           ),
           IncentiveScheme(
             id: 'evening_surge',
-            title: 'Evening surge',
-            description: 'Ride between 6 pm and 9 pm in Okhla',
+            title: LocaleController.strings.earningsEveningSurge,
+            description: LocaleController.strings.earningsRideBetween6Pm9,
             icon: 'bolt',
             tone: 'warning',
             current: 4,
@@ -126,8 +126,8 @@ class EarningsRepositoryImpl implements EarningsRepository {
           ),
           IncentiveScheme(
             id: 'weekly_distance',
-            title: 'Weekly distance',
-            description: 'Cover 400 km this week',
+            title: LocaleController.strings.earningsWeeklyDistance,
+            description: LocaleController.strings.earningsCover400KmWeek,
             icon: 'route',
             tone: 'info',
             current: 362,
@@ -135,12 +135,12 @@ class EarningsRepositoryImpl implements EarningsRepository {
             unit: 'km',
             rewardAmount: 400,
             expiresAt: Demo.nextWeekday(DateTime.monday),
-            terms: 'Measured by the vehicle odometer, not the app.',
+            terms: LocaleController.strings.earningsMeasuredByVehicleOdometerNot,
           ),
           IncentiveScheme(
             id: 'perfect_week',
-            title: 'Perfect week',
-            description: 'Six days present with no late returns',
+            title: LocaleController.strings.earningsPerfectWeek,
+            description: LocaleController.strings.earningsSixDaysPresentWithNo,
             icon: 'star',
             tone: 'success',
             current: 6,
@@ -148,12 +148,12 @@ class EarningsRepositoryImpl implements EarningsRepository {
             unit: 'days',
             rewardAmount: 600,
             expiresAt: Demo.nextWeekday(DateTime.monday),
-            terms: 'One cleared scheme, so the achieved state is on screen.',
+            terms: LocaleController.strings.earningsOneClearedSchemeSoAchieved,
           ),
           IncentiveScheme(
             id: 'referral',
-            title: 'Refer a rider',
-            description: 'Your referral completes 20 trips',
+            title: LocaleController.strings.earningsReferRider,
+            description: LocaleController.strings.earningsReferralCompletes20Trips,
             icon: 'group',
             tone: 'cyan',
             current: 1,

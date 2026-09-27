@@ -72,7 +72,7 @@ class HubCubit extends Cubit<HubState> {
           status: HubStatus.failure,
           message: summary.failureOrNull?.message ??
               profile.failureOrNull?.message ??
-              'Something went wrong.',
+              LocaleController.strings.hubSomethingWentWrong,
         ),
       );
       return;
@@ -102,7 +102,7 @@ class HubCubit extends Cubit<HubState> {
           status: HubStatus.failure,
           message: failed?.failureOrNull?.message ??
               profile.failureOrNull?.message ??
-              'Something went wrong.',
+              LocaleController.strings.hubSomethingWentWrong,
         ),
       );
       return;

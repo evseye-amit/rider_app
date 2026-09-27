@@ -35,11 +35,11 @@ class _RentalsView extends StatelessWidget {
           children: state.status == RentalsStatus.failure
               ? [
                   EmptyState(
-                    title: tr('Could not load your rent plan'),
+                    title: context.l10n.rentalsCouldNotLoadRentPlan,
                     message: state.message,
                     icon: Icons.cloud_off_rounded,
                     tone: AppColors.danger,
-                    actionLabel: tr('Try again'),
+                    actionLabel: context.l10n.commonTryAgain,
                     onAction: () => context.read<RentalsCubit>().refresh(),
                   ),
                 ]
@@ -59,17 +59,17 @@ class _RentalsView extends StatelessWidget {
       PhotoPanel(
         photo: BrandPhoto.money,
         height: 130,
-        title: tr('Rent, handled automatically'),
-        subtitle: tr('Auto-debit keeps every cycle paid on time, no manual transfers'),
+        title: context.l10n.rentalsRentHandledAutomatically,
+        subtitle: context.l10n.rentalsAutoDebitKeepsEveryCycle,
       ),
       const Gap.lg(),
 
       ModuleCard(
-        title: tr('Invoice history'),
+        title: context.l10n.rentalsInvoiceHistory,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(tr('Tap a receipt to see the full breakdown'),
+            Text(context.l10n.rentalsTapReceiptSeeFullBreakdown,
               style: AppText.bodySmall.copyWith(
                 fontSize: 12,
                 color: AppColors.textSecondary,
@@ -80,8 +80,8 @@ class _RentalsView extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: Insets.md),
                 child: EmptyState(
-                  title: tr('No invoices yet'),
-                  message: tr('Your rent receipts will appear here.'),
+                  title: context.l10n.rentalsNoInvoicesYet,
+                  message: context.l10n.rentalsRentReceiptsWillAppearHere,
                   icon: Icons.receipt_long_rounded,
                   compact: true,
                 ),
@@ -107,11 +107,11 @@ class _RentalsView extends StatelessWidget {
   Future<void> _openReceipt(BuildContext context, RentalInvoice invoice) {
     return AppSheet.show(
       context,
-      title: tr('Rent receipt'),
+      title: context.l10n.rentalsRentReceipt,
       subtitle: invoice.periodLabel,
       child: InvoiceReceiptBody(invoice: invoice),
       footer: SecondaryButton(
-        label: tr('Download PDF'),
+        label: context.l10n.rentalsDownloadPdf,
         icon: Icons.download_rounded,
         onPressed: () {
           Navigator.of(context).pop();

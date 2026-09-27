@@ -45,11 +45,11 @@ class _HomeView extends StatelessWidget {
             drawer: const FleetDrawer(),
             body: SafeArea(
               child: EmptyState(
-                title: tr('Could not load your hub'),
+                title: context.l10n.hubCouldNotLoadHub,
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: tr('Try again'),
+                actionLabel: context.l10n.commonTryAgain,
                 onAction: () => context.read<HubCubit>().refresh(),
               ),
             ),
@@ -93,7 +93,7 @@ class _HomeView extends StatelessWidget {
       const Gap.lg(),
 
       ModuleCard(
-        title: tr('Yesterday at a glance'),
+        title: context.l10n.commonYesterdayGlance,
         padding: const EdgeInsets.all(Insets.md),
         child: GridView(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -107,7 +107,7 @@ class _HomeView extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             StatCard(
-              label: tr('Waiting to allocate'),
+              label: context.l10n.hubWaitingAllocate,
               value: '${summary.pendingAllocations}',
               caption: '${summary.todayAllocations} done today',
               icon: Icons.swap_horiz_rounded,
@@ -115,7 +115,7 @@ class _HomeView extends StatelessWidget {
               onTap: () => context.go(Routes.allocations),
             ),
             StatCard(
-              label: tr('Returns to clear'),
+              label: context.l10n.hubReturnsClear,
               value: '${summary.pendingDeallocations}',
               caption: '${summary.todayDeallocations} done today',
               icon: Icons.assignment_return_rounded,
@@ -123,7 +123,7 @@ class _HomeView extends StatelessWidget {
               onTap: () => context.go(Routes.deallocations),
             ),
             StatCard(
-              label: tr('Riders present'),
+              label: context.l10n.hubRidersPresent,
               value: '${summary.ridersPresent}',
               caption: 'of ${summary.ridersActive} active',
               icon: Icons.groups_rounded,
@@ -131,7 +131,7 @@ class _HomeView extends StatelessWidget {
               onTap: () => context.go(Routes.team),
             ),
             StatCard(
-              label: tr('Open jobs'),
+              label: context.l10n.hubOpenJobs,
               value: '${summary.openMaintenance}',
               caption: summary.overdueMaintenance > 0
                   ? '${summary.overdueMaintenance} overdue'
@@ -155,18 +155,18 @@ class _Band extends StatelessWidget {
 
   String get _greeting {
     final int h = DateTime.now().hour;
-    if (h < 12) return 'Good morning';
-    if (h < 17) return 'Good afternoon';
-    if (h < 21) return 'Good evening';
-    return 'Working late';
+    if (h < 12) return LocaleController.strings.commonGoodMorning;
+    if (h < 17) return LocaleController.strings.commonGoodAfternoon;
+    if (h < 21) return LocaleController.strings.commonGoodEvening;
+    return LocaleController.strings.hubWorkingLate;
   }
 
 
   void _markAttendance(BuildContext context, SessionController session, bool next) {
     session.setAttendance(next);
     next
-        ? AppSnack.success(context, 'Marked present. Your shift has started.')
-        : AppSnack.info(context, 'Marked absent. Your shift is closed.');
+        ? AppSnack.success(context, context.l10n.commonMarkedPresentShiftHasStarted)
+        : AppSnack.info(context, context.l10n.hubMarkedAbsentShiftClosed);
   }
 
   @override
@@ -224,7 +224,7 @@ class _Band extends StatelessWidget {
           ],
         ),
         const Gap.xxl(),
-        Text(tr('Fleet utilisation'),
+        Text(context.l10n.hubFleetUtilisation,
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),
@@ -247,7 +247,7 @@ class _Band extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: tr('Uptime'),
+                  label: context.l10n.hubUptime,
                   value: summary == null ? '—' : Fmt.percent(summary!.uptime),
                   icon: Icons.bolt_rounded,
                 ),
@@ -256,7 +256,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: tr('On shift'),
+                  label: context.l10n.hubShift,
                   value: summary == null
                       ? '—'
                       : '${summary!.ridersPresent}/${summary!.ridersActive}',
@@ -267,7 +267,7 @@ class _Band extends StatelessWidget {
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: tr('Bays free'),
+                  label: context.l10n.hubBaysFree,
                   value: summary == null ? '—' : '$baysFree',
                   icon: Icons.ev_station_rounded,
                 ),

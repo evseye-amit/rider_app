@@ -4,7 +4,7 @@ import '../domain/entities/home_summary.dart';
 import '../domain/home_repository.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
-  const HomeRepositoryImpl(this._deployments);
+  HomeRepositoryImpl(this._deployments);
 
   final DeploymentApi _deployments;
 
@@ -26,7 +26,7 @@ class HomeRepositoryImpl implements HomeRepository {
         incentiveTripsTarget: 20,
         rentDue: 1750,
         rentDueDate: _nextWeekday(now, DateTime.monday),
-        rentPlan: 'Weekly plan',
+        rentPlan: LocaleController.strings.commonWeeklyPlan,
 
         walletBalance: walletBalance,
 
@@ -34,51 +34,51 @@ class HomeRepositoryImpl implements HomeRepository {
         distanceTodayKm: 62.4,
         onlineMinutes: 318,
 
-        weeklyEarnings: const [980, 1120, 860, 1340, 1210, 1490, 1240],
-        weeklyLabels: const ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        weeklyEarnings: [980, 1120, 860, 1340, 1210, 1490, 1240],
+        weeklyLabels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
 
-        announcements: const [
+        announcements: [
           Announcement(
             id: 'surge_okhla',
-            title: 'Surge in Okhla till 9 pm',
-            message: 'Extra ₹15 a trip in Okhla Phase II and Jasola this evening.',
+            title: LocaleController.strings.homeSurgeOkhlaTill9Pm,
+            message: LocaleController.strings.homeExtra15TripOkhlaPhase,
             tone: 'success',
             icon: 'bolt',
           ),
           Announcement(
             id: 'service_due',
-            title: 'Service due in 240 km',
-            message: 'Book a slot at the Okhla hub before the odometer hits 8,000 km.',
+            title: LocaleController.strings.homeServiceDue240Km,
+            message: LocaleController.strings.homeBookSlotOkhlaHubBefore,
             tone: 'warning',
             icon: 'build',
           ),
         ],
 
-        quickActions: const [
+        quickActions: [
           QuickAction(
             key: 'wallet',
-            label: 'Wallet',
+            label: LocaleController.strings.commonWallet,
             icon: 'wallet',
             tone: 'primary',
             route: '/wallet',
           ),
           QuickAction(
             key: 'rentals',
-            label: 'Rent',
+            label: LocaleController.strings.homeRent,
             icon: 'receipt',
             tone: 'primary',
             route: '/rentals',
           ),
           QuickAction(
             key: 'incentives',
-            label: 'Incentives',
+            label: LocaleController.strings.commonIncentives,
             icon: 'trophy',
             tone: 'success',
             route: '/incentives',
           ),
           QuickAction(
             key: 'support',
-            label: 'Support',
+            label: LocaleController.strings.commonSupport,
             icon: 'support',
             tone: 'info',
             route: '/support',

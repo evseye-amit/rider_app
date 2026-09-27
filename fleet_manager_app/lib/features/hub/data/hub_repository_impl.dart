@@ -110,7 +110,7 @@ class HubRepositoryImpl implements HubRepository {
           if (hub.code == hubCode) return Result.ok(hub);
         }
         return list.isEmpty
-            ? const Result.err(NotFoundFailure('No hub is assigned to you.'))
+            ? Result.err(NotFoundFailure(LocaleController.strings.hubNoHubAssigned))
             : Result.ok(list.first);
       },
     );

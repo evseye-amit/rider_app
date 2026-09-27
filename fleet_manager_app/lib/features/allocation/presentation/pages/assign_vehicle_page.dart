@@ -48,7 +48,7 @@ class _AssignVehicleViewState extends State<_AssignVehicleView> {
       title: 'Reserve ${vehicle.vehicleNumber}?',
       message: '${vehicle.vehicleNumber} will be reserved for ${rider.name}. The handover — vehicle request, '
           'payment, inspection, training and pairing — then runs from the allocation desk.',
-      confirmLabel: tr('Allocate vehicle'),
+      confirmLabel: context.l10n.allocationAllocateVehicle,
       icon: Icons.check_circle_rounded,
       tone: AppColors.success,
     );
@@ -64,7 +64,7 @@ class _AssignVehicleViewState extends State<_AssignVehicleView> {
         '&vehicle=${Uri.encodeComponent(vehicle.vehicleNumber)}&id=${allocation.id}',
       );
     } else {
-      AppSnack.error(context, cubit.state.message ?? 'Could not allocate the vehicle');
+      AppSnack.error(context, cubit.state.message ?? context.l10n.allocationCouldNotAllocateVehicle);
     }
   }
 
@@ -88,19 +88,19 @@ class _AssignVehicleViewState extends State<_AssignVehicleView> {
         }
         if (state.status == AssignVehicleStatus.failure || state.rider == null) {
           return AppScaffold(
-            title: tr('Assign a vehicle'),
+            title: context.l10n.allocationAssignVehicle,
             body: EmptyState(
-              title: tr('Could not load available vehicles'),
+              title: context.l10n.allocationCouldNotLoadAvailableVehicles,
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: tr('Try again'),
+              actionLabel: context.l10n.commonTryAgain,
               onAction: () => context.read<AssignVehicleCubit>().load(),
             ),
           );
         }
 
-        final List<String> hubs = ['All hubs', ...{for (final v in state.vehicles) v.hubName ?? '—'}.toList()..sort()];
+        final List<String> hubs = [context.l10n.allocationAllHubs, ...{for (final v in state.vehicles) v.hubName ?? '—'}.toList()..sort()];
         final int hubFilter = _hubFilter.clamp(0, hubs.length - 1);
         final List<EligibleFleet> filtered = state.vehicles
             .where((v) => hubFilter == 0 || (v.hubName ?? '—') == hubs[hubFilter])
@@ -142,8 +142,8 @@ class _AssignVehicleViewState extends State<_AssignVehicleView> {
                 child: ArtBlock(
                   art: BrandArt.empty,
                   artSize: 130,
-                  title: tr('No vehicles ready'),
-                  message: tr('A vehicle has to be available, onboarded and allocation-enabled in one of your hubs to appear here.'),
+                  title: context.l10n.allocationNoVehiclesReady,
+                  message: context.l10n.allocationVehicleHasAvailableOnboardedAllocation,
                 ),
               )
             else
@@ -186,7 +186,7 @@ class _Band extends StatelessWidget {
         PhotoPanel(
           photo: BrandPhoto.fleet,
           height: 132,
-          title: tr('Assign a vehicle'),
+          title: context.l10n.allocationAssignVehicle,
           subtitle: 'For ${rider.name}${(rider.riderCode ?? '').isEmpty ? '' : ' · ${rider.riderCode}'} · ${Fmt.phone(rider.mobile)}',
         ),
       ],
@@ -261,8 +261,8 @@ class _VehicleOptionCard extends StatelessWidget {
                   label: deviceOk
                       ? 'Online ${Fmt.relative(vehicle.iotLastHeartbeatAt!)}'
                       : vehicle.hasDevice
-                          ? 'Heartbeat stale'
-                          : 'Map a device first',
+                          ? context.l10n.allocationHeartbeatStale
+                          : context.l10n.allocationMapDeviceFirst,
                   tone: deviceOk ? StatusTone.success : StatusTone.warning,
                   dense: true,
                 ),
@@ -291,7 +291,7 @@ class _Footer extends StatelessWidget {
         border: Border(top: BorderSide(color: AppColors.stroke)),
       ),
       child: PrimaryButton(
-        label: selected == null ? 'Select a vehicle' : 'Allocate ${selected!.vehicleNumber}',
+        label: selected == null ? context.l10n.maintenanceSelectVehicle : 'Allocate ${selected!.vehicleNumber}',
         icon: Icons.swap_horiz_rounded,
         loading: busy,
         onPressed: onContinue,

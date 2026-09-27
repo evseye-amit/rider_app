@@ -182,7 +182,7 @@ class _PairingState extends State<_Pairing> with TickerProviderStateMixin {
                   AnimatedSwitcher(
                     duration: Motion.fast,
                     child: Text(
-                      _paired ? 'Paired' : 'Pairing your scooter',
+                      _paired ? context.l10n.commonPaired : context.l10n.ridePairingScooter,
                       key: ValueKey<bool>(_paired),
                       textAlign: TextAlign.center,
                       style: AppText.displaySmall.copyWith(fontSize: 22),
@@ -191,8 +191,8 @@ class _PairingState extends State<_Pairing> with TickerProviderStateMixin {
                   const Gap.sm(),
                   Text(
                     _paired
-                        ? 'Your scooter is connected. Use the power button to switch it on.'
-                        : 'Talking to the IoT unit. Keep your phone close.',
+                        ? context.l10n.rideScooterConnectedUsePowerButton
+                        : context.l10n.rideTalkingIotUnitKeepPhone,
                     textAlign: TextAlign.center,
                     style: AppText.bodyMedium.copyWith(fontSize: 13, height: 1.5),
                   ),

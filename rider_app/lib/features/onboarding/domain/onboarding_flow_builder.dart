@@ -3,42 +3,42 @@ import 'package:evseye_core/evseye_core.dart';
 abstract final class OnboardingFlowBuilder {
   const OnboardingFlowBuilder._();
 
-  static UiFlowConfig build(RiderOnboardingConfig config) {
+  static UiFlowConfig build(RiderOnboardingConfig config, AppL10n l10n) {
     final List<OnboardingStepConfig> steps = config.steps;
     return UiFlowConfig(
       id: 'rider_onboarding',
-      title: 'Rider onboarding',
-      meta: {'packageCode': config.packageCode, 'packageName': config.packageName, 'submitLabel': 'Submit application'},
+      title: l10n.onboardingRiderOnboarding,
+      meta: {'packageCode': config.packageCode, 'packageName': config.packageName, 'submitLabel': l10n.onboardingSubmitApplication},
       steps: [
-        for (int i = 0; i < steps.length; i++) _step(steps[i], isLast: i == steps.length - 1),
+        for (int i = 0; i < steps.length; i++) _step(steps[i], isLast: i == steps.length - 1, l10n: l10n),
       ],
     );
   }
 
-  static UiFlowStep _step(OnboardingStepConfig step, {required bool isLast}) {
+  static UiFlowStep _step(OnboardingStepConfig step, {required bool isLast, required AppL10n l10n}) {
     final List<UiNode> body = [];
 
-    final List<UiNode> inputs = [for (final f in step.inputs) _input(f)];
+    final List<UiNode> inputs = [for (final f in step.inputs) _input(f, l10n)];
     if (inputs.isNotEmpty) {
       body.add(UiNode(type: 'group', props: {'gap': 18}, children: inputs));
     }
 
-    final List<UiNode> uploads = [for (final f in step.uploads) _upload(f)];
+    final List<UiNode> uploads = [for (final f in step.uploads) _upload(f, l10n)];
     if (uploads.isNotEmpty) {
-      body.add(UiNode(type: 'group', props: {'title': 'Documents', 'icon': 'upload', 'gap': 14}, children: uploads));
+      body.add(UiNode(type: 'group', props: {'title': l10n.onboardingDocuments, 'icon': 'upload', 'gap': 14}, children: uploads));
     }
 
-    final List<UiNode> capabilities = [for (final f in step.capabilities) ..._capability(f)];
+    final List<UiNode> capabilities = [for (final f in step.capabilities) ..._capability(f, l10n)];
     if (capabilities.isNotEmpty) {
       body.add(UiNode(type: 'group', props: {'gap': 14}, children: capabilities));
     }
 
     if (body.isEmpty) {
-      body.add(const UiNode(
+      body.add(UiNode(
         type: 'banner',
         props: {
-          'title': 'Nothing to fill in here',
-          'message': 'This step is handled by your fleet operator. Continue to the next one.',
+          'title': l10n.onboardingNothingToFillHere,
+          'message': l10n.onboardingStepHandledByOperator,
           'tone': 'info',
           'icon': 'info',
         },
@@ -48,7 +48,7 @@ abstract final class OnboardingFlowBuilder {
     return UiFlowStep(
       key: step.stepCode,
       label: step.stepName,
-      shortLabel: _shortLabel(step.stepCode, step.stepName),
+      shortLabel: _shortLabel(step.stepCode, step.stepName, l10n),
       icon: _icon(step.stepCode),
       screen: UiScreenConfig(
         id: 'onboarding_${step.stepCode.toLowerCase()}',
@@ -58,7 +58,7 @@ abstract final class OnboardingFlowBuilder {
         footer: [
           UiNode(
             type: 'primaryButton',
-            props: {'label': isLast ? 'Review application' : 'Continue', 'icon': isLast ? 'checklist' : 'arrowForward'},
+            props: {'label': isLast ? l10n.onboardingReviewApplication : l10n.authContinue, 'icon': isLast ? 'checklist' : 'arrowForward'},
             action: const UiAction(type: 'next'),
           ),
         ],
@@ -75,8 +75,8 @@ abstract final class OnboardingFlowBuilder {
         c.contains('DUE');
   }
 
-  static UiNode _input(OnboardingFieldConfig f) {
-    final List<ValidationRule> rules = _rules(f);
+  static UiNode _input(OnboardingFieldConfig f, AppL10n l10n) {
+    final List<ValidationRule> rules = _rules(f, l10n);
     final Map<String, dynamic> props = {
       'key': f.fieldCode,
       'label': f.label,
@@ -124,9 +124,9 @@ abstract final class OnboardingFlowBuilder {
           validations: [
             ...rules,
             if (future && !rules.any((r) => r.type == 'futureDate'))
-              const ValidationRule(
+              ValidationRule(
                 type: 'futureDate',
-                message: 'This document has expired. Enter a date later than today.',
+                message: l10n.onboardingDocumentHasExpiredEnterDate,
               ),
           ],
         );
@@ -175,16 +175,16 @@ abstract final class OnboardingFlowBuilder {
     }
   }
 
-  static List<ValidationRule> _rules(OnboardingFieldConfig f) => [
+  static List<ValidationRule> _rules(OnboardingFieldConfig f, AppL10n l10n) => [
         if (f.required) ValidationRule(type: 'required', message: '${f.label} is required'),
         if (f.fieldType == 'MOBILE') const ValidationRule(type: 'mobile'),
         if (f.minLength != null) ValidationRule(type: 'minLength', value: f.minLength),
         if (f.maxLength != null) ValidationRule(type: 'maxLength', value: f.maxLength),
         if (f.pattern != null && f.fieldType != 'MOBILE')
-          ValidationRule(type: 'pattern', value: f.pattern, message: 'Enter a valid ${f.label}'),
+          ValidationRule(type: 'pattern', value: f.pattern, message: l10n.onboardingEnterValidField(f.label)),
       ];
 
-  static UiNode _upload(OnboardingFieldConfig f) {
+  static UiNode _upload(OnboardingFieldConfig f, AppL10n l10n) {
     final List<String> types = f.allowedFileTypes;
     final int? maxMb = f.maxFileSizeMb;
     final String hint = [
@@ -206,12 +206,12 @@ abstract final class OnboardingFlowBuilder {
       action: const UiAction(type: 'pickFile'),
       validations: [
         if (f.required)
-          ValidationRule(type: 'required', message: 'Add your ${f.label.toLowerCase()}'),
+          ValidationRule(type: 'required', message: l10n.onboardingAddYourField(f.label.toLowerCase())),
       ],
     );
   }
 
-  static List<UiNode> _capability(OnboardingFieldConfig f) {
+  static List<UiNode> _capability(OnboardingFieldConfig f, AppL10n l10n) {
     final String code = f.featureCode;
 
     if (code.contains('CAPTURE_REFERENCE')) {
@@ -223,13 +223,13 @@ abstract final class OnboardingFlowBuilder {
           id: f.formKey,
           props: {
             'key': f.formKey,
-            'label': f.configuration['label']?.toString() ?? 'References',
+            'label': f.configuration['label']?.toString() ?? l10n.onboardingReferences,
             'minCount': minCount,
             'maxCount': configured < minCount ? minCount : configured,
           },
           validations: [
             if (f.required)
-              const ValidationRule(type: 'required', message: 'Add at least one reference'),
+              ValidationRule(type: 'required', message: l10n.onboardingAddLeastOneReference),
           ],
         ),
       ];
@@ -251,22 +251,22 @@ abstract final class OnboardingFlowBuilder {
         UiNode(
           type: 'checkbox',
           id: f.formKey,
-          props: {'key': f.formKey, 'label': 'I have read and agree to the rider agreement'},
-          validations: const [ValidationRule(type: 'required', message: 'Accept the agreement to continue')],
+          props: {'key': f.formKey, 'label': l10n.onboardingAgreeToRiderAgreement},
+          validations: [ValidationRule(type: 'required', message: l10n.onboardingAcceptAgreementContinue)],
         ),
       ];
     }
     return const [];
   }
 
-  static String _shortLabel(String stepCode, String name) => switch (stepCode) {
-        'RIDER_PERSONAL_PROFILE' => 'Profile',
+  static String _shortLabel(String stepCode, String name, AppL10n l10n) => switch (stepCode) {
+        'RIDER_PERSONAL_PROFILE' => l10n.commonProfile,
         'RIDER_KYC' => 'KYC',
-        'RIDER_COMPLIANCE_ELIGIBILITY' => 'Eligibility',
-        'RIDER_COMMERCIALS' => 'Payments',
-        'RIDER_TRAINING' => 'Training',
-        'RIDER_AGREEMENT_ESIGN' => 'Agreement',
-        'RIDER_REVIEW_SUBMIT' => 'Review',
+        'RIDER_COMPLIANCE_ELIGIBILITY' => l10n.onboardingStepEligibility,
+        'RIDER_COMMERCIALS' => l10n.walletPayments,
+        'RIDER_TRAINING' => l10n.onboardingStepTraining,
+        'RIDER_AGREEMENT_ESIGN' => l10n.onboardingStepAgreement,
+        'RIDER_REVIEW_SUBMIT' => LocaleController.strings.onboardingReview,
         _ => name.split(RegExp(r'\s+')).first,
       };
 

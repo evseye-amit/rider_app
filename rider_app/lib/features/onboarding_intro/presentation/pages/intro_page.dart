@@ -80,7 +80,7 @@ class _IntroViewState extends State<_IntroView> {
                       child: state.isLastPage
                           ? null
                           : GhostButton(
-                              label: tr('Skip'),
+                              label: context.l10n.commonSkip,
                               color: AppColors.textMuted,
                               onPressed: () => context.go(Routes.login),
                             ),
@@ -105,7 +105,7 @@ class _IntroViewState extends State<_IntroView> {
                   child: OnboardingFooter(
                     count: state.slides.length,
                     index: state.page,
-                    label: state.isLastPage ? 'Get started' : 'Next',
+                    label: state.isLastPage ? context.l10n.onboardingIntroGetStarted : context.l10n.onboardingIntroNext,
                     onNext: () => _next(state),
                   ),
                 ),

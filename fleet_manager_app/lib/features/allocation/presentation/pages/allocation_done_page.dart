@@ -32,14 +32,14 @@ class _AllocationDonePageState extends State<AllocationDonePage>
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      title: tr('Vehicle reserved'),
+      title: context.l10n.allocationVehicleReserved,
       showBack: false,
 
       footer: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           PrimaryButton(
-            label: tr('Continue the handover'),
+            label: context.l10n.allocationContinueHandover,
             icon: Icons.arrow_forward_rounded,
             onPressed: widget.allocationId == null
                 ? () => context.go(Routes.allocations)
@@ -47,7 +47,7 @@ class _AllocationDonePageState extends State<AllocationDonePage>
           ),
           const Gap.md(),
           SecondaryButton(
-            label: tr('Back to the desk'),
+            label: context.l10n.allocationBackDesk,
             icon: Icons.swap_horiz_rounded,
             onPressed: () => context.go(Routes.allocations),
           ),
@@ -61,14 +61,14 @@ class _AllocationDonePageState extends State<AllocationDonePage>
               scale: CurvedAnimation(parent: _controller, curve: Motion.spring),
               child: ArtBlock(
                 art: BrandArt.success,
-                title: tr('Vehicle reserved'),
+                title: context.l10n.allocationVehicleReserved,
                 message: '${widget.vehicleNumber} is reserved for ${widget.riderName}. The handover starts now.',
               ),
             ),
           ),
           const Gap.xxl(),
           ModuleCard(
-            title: tr('What was allocated'),
+            title: context.l10n.allocationWhatWasAllocated,
             child: Row(
               children: [
                 const IconTile(icon: Icons.person_rounded, tone: AppColors.primary, size: 38),
@@ -86,31 +86,31 @@ class _AllocationDonePageState extends State<AllocationDonePage>
                     ],
                   ),
                 ),
-                StatusChip(label: tr('Reserved'), tone: StatusTone.brand, dense: true),
+                StatusChip(label: context.l10n.allocationReserved, tone: StatusTone.brand, dense: true),
               ],
             ),
           ),
           Gap.lg(),
           ModuleCard(
-            title: tr('What happens next'),
+            title: context.l10n.commonWhatHappensNext,
             child: Column(
               children: [
                 _NextStep(
                   icon: Icons.electric_scooter_rounded,
-                  title: tr('Request the vehicle'),
+                  title: context.l10n.allocationRequestVehicle,
                   message: 'Confirms the vehicle\'s photos are on file and its IoT unit is online.',
                 ),
                 Gap.md(),
                 _NextStep(
                   icon: Icons.receipt_long_rounded,
-                  title: tr('Payment'),
-                  message: tr('You raise the deposit and fees; the rider pays and submits the reference; you verify it.'),
+                  title: context.l10n.commonPayment,
+                  message: context.l10n.allocationRaiseDepositFeesRiderPays,
                 ),
                 Gap.md(),
                 _NextStep(
                   icon: Icons.fact_check_rounded,
-                  title: tr('Inspection, training, pairing'),
-                  message: tr('You write the PDI checklist; the rider accepts it, completes training and pairs the IoT unit.'),
+                  title: context.l10n.allocationInspectionTrainingPairing,
+                  message: context.l10n.allocationWritePdiChecklistRiderAccepts,
                 ),
               ],
             ),

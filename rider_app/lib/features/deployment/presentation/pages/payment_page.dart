@@ -30,7 +30,7 @@ class _PaymentView extends StatefulWidget {
 }
 
 class _PaymentViewState extends State<_PaymentView> {
-  static const List<String> _providers = ['UPI', 'Bank transfer', 'Cash at hub', 'Card'];
+  static List<String> get _providers => ['UPI', LocaleController.strings.deploymentBankTransfer, LocaleController.strings.deploymentCashHub, LocaleController.strings.deploymentCard];
 
   final TextEditingController _reference = TextEditingController();
   String _provider = _providers.first;
@@ -56,7 +56,7 @@ class _PaymentViewState extends State<_PaymentView> {
   Future<void> _submit(String allocationId) async {
     final String ref = _reference.text.trim();
     if (ref.length < 4) {
-      setState(() => _error = 'Enter the transaction reference you paid with');
+      setState(() => _error = context.l10n.deploymentEnterTransactionReferencePaidWith);
       return;
     }
     setState(() {
@@ -71,7 +71,7 @@ class _PaymentViewState extends State<_PaymentView> {
     switch (result) {
       case Ok<DeploymentPayment>(:final value):
         setState(() => _payment = value);
-        AppSnack.success(context, 'Reference submitted — waiting for verification');
+        AppSnack.success(context, context.l10n.deploymentReferenceSubmittedWaitingVerification);
         context.read<DeploymentCubit>().load(silent: true);
       case Err<DeploymentPayment>(:final failure):
         setState(() => _error = failure.message);
@@ -90,15 +90,15 @@ class _PaymentViewState extends State<_PaymentView> {
 
         if (state.status == DeploymentLoad.failure || allocationId == null) {
           return AppScaffold(
-            title: tr('Payment'),
+            title: context.l10n.commonPayment,
             showBack: false,
             body: state.isLoading
                 ? const PageBody(children: [ShimmerBox(height: 180, borderRadius: Corners.brXl)])
                 : EmptyState(
-                    title: tr('No payment to show'),
-                    message: state.message ?? 'Your fleet manager has not asked for a payment yet.',
+                    title: context.l10n.deploymentNoPaymentShow,
+                    message: state.message ?? context.l10n.deploymentFleetManagerHasNotAsked,
                     icon: Icons.receipt_long_rounded,
-                    actionLabel: tr('Refresh'),
+                    actionLabel: context.l10n.commonRefresh,
                     onAction: context.read<DeploymentCubit>().load,
                   ),
           );
@@ -108,7 +108,7 @@ class _PaymentViewState extends State<_PaymentView> {
         final bool submitted = payment?.isSubmitted == true;
 
         return AppScaffold(
-          title: submitted ? 'Payment submitted' : 'Pay for your scooter',
+          title: submitted ? context.l10n.deploymentPaymentSubmitted : context.l10n.deploymentPayScooter,
           subtitle: fleet == null ? null : '${fleet.vehicleNumber}${fleet.modelName == null ? '' : ' · ${fleet.modelName}'}',
           showBack: false,
           body: RefreshIndicator(
@@ -125,7 +125,7 @@ class _PaymentViewState extends State<_PaymentView> {
                     _Submitted(payment: payment)
                   else ...[
                     ModuleCard(
-                      title: tr('How did you pay?'),
+                      title: context.l10n.deploymentHowDidPay,
                       leading: const IconTile(icon: Icons.payments_rounded, solid: true, size: 28),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -138,9 +138,9 @@ class _PaymentViewState extends State<_PaymentView> {
                           ),
                           const Gap.lg(),
                           AppTextField(
-                            label: tr('Transaction reference'),
-                            hint: _provider == 'UPI' ? 'UPI transaction ID, e.g. 4284 7192 3456' : 'Reference or receipt number',
-                            helper: tr('Your fleet manager checks this against what they received.'),
+                            label: context.l10n.deploymentTransactionReference,
+                            hint: _provider == 'UPI' ? context.l10n.deploymentUpiTransactionIdEG : context.l10n.deploymentReferenceReceiptNumber,
+                            helper: context.l10n.deploymentFleetManagerChecksAgainstWhat,
                             controller: _reference,
                             errorText: _error,
                             prefixIcon: Icons.tag_rounded,
@@ -176,7 +176,7 @@ class _Bill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ModuleCard(
-      title: tr('Amount due'),
+      title: context.l10n.deploymentAmountDue,
       leading: const IconTile(icon: Icons.receipt_long_rounded, solid: true, size: 28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +185,7 @@ class _Bill extends StatelessWidget {
           const Gap.md(),
           for (final item in payment.items) KeyValueRow(label: item.label, value: Fmt.money(item.amount)),
           const Divider(),
-          KeyValueRow(label: tr('Total'), value: Fmt.money(payment.amount), valueStyle: AppText.titleSmall),
+          KeyValueRow(label: context.l10n.commonTotal, value: Fmt.money(payment.amount), valueStyle: AppText.titleSmall),
           if (payment.createdAt != null) ...[
             const Gap.sm(),
             Text('Requested ${Fmt.relative(payment.createdAt!)}', style: AppText.bodySmall.copyWith(color: AppColors.textMuted)),
@@ -208,7 +208,7 @@ class _Submitted extends StatelessWidget {
         ArtBlock(
           art: BrandArt.success,
           artSize: 140,
-          title: tr('Reference submitted'),
+          title: context.l10n.deploymentReferenceSubmitted,
           message: 'Your fleet manager is checking ${payment.provider ?? 'the payment'} reference '
               '${payment.providerReference ?? ''}. This screen moves on the moment it is verified.',
         ),
@@ -216,11 +216,11 @@ class _Submitted extends StatelessWidget {
         ModuleCard(
           child: Column(
             children: [
-              KeyValueRow(label: tr('Paid via'), value: payment.provider ?? '—', icon: Icons.payments_rounded),
-              KeyValueRow(label: tr('Reference'), value: payment.providerReference ?? '—', icon: Icons.tag_rounded),
+              KeyValueRow(label: context.l10n.deploymentPaidVia, value: payment.provider ?? '—', icon: Icons.payments_rounded),
+              KeyValueRow(label: context.l10n.deploymentReference, value: payment.providerReference ?? '—', icon: Icons.tag_rounded),
               if (payment.submittedAt != null)
-                KeyValueRow(label: tr('Submitted'), value: Fmt.dateTime(payment.submittedAt!), icon: Icons.schedule_rounded),
-              KeyValueRow(label: tr('Status'), value: 'Awaiting verification', icon: Icons.hourglass_top_rounded),
+                KeyValueRow(label: context.l10n.deploymentSubmitted, value: Fmt.dateTime(payment.submittedAt!), icon: Icons.schedule_rounded),
+              KeyValueRow(label: context.l10n.commonStatus, value: context.l10n.deploymentAwaitingVerification, icon: Icons.hourglass_top_rounded),
             ],
           ),
         ),

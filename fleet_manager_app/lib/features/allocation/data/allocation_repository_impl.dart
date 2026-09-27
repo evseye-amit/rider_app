@@ -47,7 +47,7 @@ class AllocationRepositoryImpl implements AllocationRepository {
         for (final r in riders) {
           if (r.id == riderId) return Result.ok(r);
         }
-        return const Result.err(NotFoundFailure('This rider is no longer waiting for a vehicle.'));
+        return Result.err(NotFoundFailure(LocaleController.strings.allocationRiderNoLongerWaitingVehicle));
       },
     );
   }
@@ -190,7 +190,7 @@ class AllocationRepositoryImpl implements AllocationRepository {
       mobile: rider['mobile']?.toString() ?? '',
       vehicleNumber: fleet['vehicleNumber']?.toString() ?? '—',
       model: fleet['modelName']?.toString() ?? '',
-      reason: row['status'] == 'ACTIVE' ? 'Active allocation' : 'Return initiated',
+      reason: row['status'] == 'ACTIVE' ? LocaleController.strings.allocationActiveAllocation : LocaleController.strings.allocationReturnInitiated,
       raisedOn: DateTime.tryParse(row['updatedAt']?.toString() ?? '') ?? DateTime.now(),
       teamLead: '',
       priority: 'normal',

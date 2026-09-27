@@ -15,31 +15,48 @@ import '../models/ui_node.dart';
 import '../registry/dynamic_ui_scope.dart';
 import '../registry/widget_registry.dart';
 import 'node_utils.dart';
+import '../../l10n/locale_controller.dart';
 
+/// Stable relationship codes. The label shown to the rider is resolved from
+/// [relationLabel]; the code is what gets stored and compared.
 const List<String> kRelationOptions = [
-  'Spouse',
-  'Father',
-  'Mother',
-  'Son',
-  'Daughter',
-  'Brother',
-  'Sister',
-  'Friend',
-  'Colleague',
-  'Other',
+  'SPOUSE',
+  'FATHER',
+  'MOTHER',
+  'SON',
+  'DAUGHTER',
+  'BROTHER',
+  'SISTER',
+  'FRIEND',
+  'COLLEAGUE',
+  'OTHER',
 ];
 
+String relationLabel(BuildContext context, String code) => switch (code) {
+  'SPOUSE' => context.l10n.commonSpouse,
+  'FATHER' => context.l10n.commonFather,
+  'MOTHER' => context.l10n.commonMother,
+  'SON' => context.l10n.commonSon,
+  'DAUGHTER' => context.l10n.commonDaughter,
+  'BROTHER' => context.l10n.commonBrother,
+  'SISTER' => context.l10n.commonSister,
+  'FRIEND' => context.l10n.commonFriend,
+  'COLLEAGUE' => context.l10n.commonColleague,
+  'OTHER' => context.l10n.commonOther,
+  _ => code,
+};
+
 Map<String, NodeBuilder> compositeBuilders() => {
-      'bankAccountField': (context, node, scope) => _BankAccountField(node: node, scope: scope),
-      'referenceField': (context, node, scope) => _ReferenceField(node: node, scope: scope),
-      'nomineeField': (context, node, scope) => _NomineeField(node: node, scope: scope),
-    };
+  'bankAccountField': (context, node, scope) => _BankAccountField(node: node, scope: scope),
+  'referenceField': (context, node, scope) => _ReferenceField(node: node, scope: scope),
+  'nomineeField': (context, node, scope) => _NomineeField(node: node, scope: scope),
+};
 
 Future<String?> showRelationPicker(BuildContext context, {String? selected}) async {
   final String? picked = await AppSheet.show<String>(
     context,
-    title: 'Relationship',
-    subtitle: 'How are they related to you?',
+    title: context.l10n.commonRelationship,
+    subtitle: context.l10n.commonHowTheyRelated,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -47,8 +64,8 @@ Future<String?> showRelationPicker(BuildContext context, {String? selected}) asy
           Padding(
             padding: const EdgeInsets.only(bottom: Insets.sm),
             child: AppRadioTile(
-              title: option,
-              selected: option == selected,
+              title: relationLabel(context, option),
+              selected: relationLabel(context, option) == selected,
               onTap: () => Navigator.of(context).pop(option),
             ),
           ),
@@ -56,8 +73,9 @@ Future<String?> showRelationPicker(BuildContext context, {String? selected}) asy
       ],
     ),
   );
-  if (picked != 'Other') return picked;
+  if (picked == null) return null;
   if (!context.mounted) return null;
+  if (picked != 'OTHER') return relationLabel(context, picked);
   return _askCustomRelation(context);
 }
 
@@ -65,19 +83,19 @@ Future<String?> _askCustomRelation(BuildContext context) {
   final TextEditingController controller = TextEditingController();
   return AppSheet.show<String>(
     context,
-    title: 'Other relationship',
-    subtitle: 'Tell us how they are related to you',
+    title: context.l10n.commonOtherRelationship,
+    subtitle: context.l10n.commonTellUsHowTheyRelated,
     child: Padding(
       padding: const EdgeInsets.only(bottom: Insets.md),
       child: AppTextField(
-        label: 'Relationship',
-        hint: 'e.g. Guardian',
+        label: context.l10n.commonRelationship,
+        hint: context.l10n.commonHintGuardian,
         controller: controller,
         autofocus: true,
       ),
     ),
     footer: PrimaryButton(
-      label: 'Save',
+      label: context.l10n.commonSave,
       icon: Icons.check_rounded,
       onPressed: () {
         final String text = controller.text.trim();
@@ -116,7 +134,7 @@ class _BankAccountFieldState extends State<_BankAccountField> {
     final String a = _account.text.trim();
     final String b = _confirm.text.trim();
     if (a.isEmpty || b.isEmpty) return null;
-    return a == b ? null : 'Account numbers do not match';
+    return a == b ? null : context.l10n.commonAccountNumbersDoNotMatch;
   }
 
   void _sync() {
@@ -129,7 +147,7 @@ class _BankAccountFieldState extends State<_BankAccountField> {
 
   @override
   Widget build(BuildContext context) {
-    final String label = widget.node.text(widget.scope, 'label', 'Bank account number');
+    final String label = widget.node.text(widget.scope, 'label', context.l10n.commonBankAccountNumber);
     final String? error = widget.scope.form.errorOf(widget.node.fieldKey) ?? _mismatch;
     final bool matched = _account.text.trim().isNotEmpty && _mismatch == null;
 
@@ -138,30 +156,24 @@ class _BankAccountFieldState extends State<_BankAccountField> {
       children: [
         AppTextField(
           label: label,
-          hint: 'Enter your account number',
+          hint: context.l10n.commonEnterAccountNumber,
           controller: _account,
           required: true,
           obscureText: true,
           keyboardType: TextInputType.number,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            LengthLimitingTextInputFormatter(18),
-          ],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(18)],
           blockClipboard: true,
           onChanged: (_) => _sync(),
         ),
         const Gap.lg(),
         AppTextField(
-          label: 'Confirm account number',
-          hint: 'Type it again',
+          label: context.l10n.commonConfirmAccountNumber,
+          hint: context.l10n.commonTypeAgain,
           controller: _confirm,
           required: true,
           obscureText: true,
           keyboardType: TextInputType.number,
-          inputFormatters: [
-            FilteringTextInputFormatter.digitsOnly,
-            LengthLimitingTextInputFormatter(18),
-          ],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(18)],
           blockClipboard: true,
           errorText: error,
           onChanged: (_) => _sync(),
@@ -173,7 +185,7 @@ class _BankAccountFieldState extends State<_BankAccountField> {
               const Icon(Icons.check_circle_rounded, size: 15, color: AppColors.success),
               const SizedBox(width: 4),
               Text(
-                'Account numbers match',
+                context.l10n.commonAccountNumbersMatch,
                 style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.success),
               ),
             ],
@@ -198,10 +210,10 @@ class _ReferenceEntry {
   _ReferenceEntry({this.name = '', this.mobile = '', this.relation = ''});
 
   factory _ReferenceEntry.fromJson(Map<String, dynamic> json) => _ReferenceEntry(
-        name: json['name']?.toString() ?? '',
-        mobile: json['mobile']?.toString() ?? '',
-        relation: json['relation']?.toString() ?? '',
-      );
+    name: json['name']?.toString() ?? '',
+    mobile: json['mobile']?.toString() ?? '',
+    relation: json['relation']?.toString() ?? '',
+  );
 
   String name;
   String mobile;
@@ -234,8 +246,7 @@ class _ReferenceFieldState extends State<_ReferenceField> {
   int get _minCount => (widget.node.props['minCount'] as num?)?.toInt() ?? 1;
   int get _maxCount => (widget.node.props['maxCount'] as num?)?.toInt() ?? 3;
 
-  String get _ownMobile =>
-      _digits(widget.scope.resolvePath('mobile')?.toString() ?? '');
+  String get _ownMobile => _digits(widget.scope.resolvePath('mobile')?.toString() ?? '');
 
   static String _digits(String value) {
     final String d = value.replaceAll(RegExp(r'\D'), '');
@@ -246,11 +257,11 @@ class _ReferenceFieldState extends State<_ReferenceField> {
     final _ReferenceEntry entry = _entries[index];
     final String mobile = _digits(entry.mobile);
     if (mobile.isEmpty) return null;
-    if (mobile.length != 10) return 'Enter a valid 10-digit mobile number';
-    if (mobile == _ownMobile) return 'This is your own number. Use a different one.';
+    if (mobile.length != 10) return context.l10n.commonEnterValid10DigitMobile;
+    if (mobile == _ownMobile) return context.l10n.commonOwnNumberUseDifferentOne;
     for (int i = 0; i < _entries.length; i++) {
       if (i != index && _digits(_entries[i].mobile) == mobile) {
-        return 'You have already used this number for another reference';
+        return context.l10n.commonHaveAlreadyUsedNumberAnother;
       }
     }
     return null;
@@ -283,7 +294,7 @@ class _ReferenceFieldState extends State<_ReferenceField> {
               ),
               if (_entries.length > _minCount)
                 GhostButton(
-                  label: 'Remove',
+                  label: context.l10n.commonRemove,
                   icon: Icons.close_rounded,
                   onPressed: () {
                     _entries.removeAt(i);
@@ -294,8 +305,8 @@ class _ReferenceFieldState extends State<_ReferenceField> {
           ),
           const Gap.sm(),
           AppTextField(
-            label: 'Full name',
-            hint: 'Their name',
+            label: context.l10n.commonFullName,
+            hint: context.l10n.commonTheirName,
             initialValue: _entries[i].name,
             required: true,
             textCapitalization: TextCapitalization.words,
@@ -306,7 +317,7 @@ class _ReferenceFieldState extends State<_ReferenceField> {
           ),
           const Gap.md(),
           AppTextField(
-            label: 'Mobile number',
+            label: context.l10n.commonMobileNumber,
             hint: '98765 43210',
             initialValue: _entries[i].mobile,
             required: true,
@@ -322,12 +333,11 @@ class _ReferenceFieldState extends State<_ReferenceField> {
           ),
           const Gap.md(),
           AppPickerField(
-            label: 'Relationship',
-            hint: 'Select',
+            label: context.l10n.commonRelationship,
+            hint: context.l10n.commonSelect,
             value: _entries[i].relation.isEmpty ? null : _entries[i].relation,
             onTap: () async {
-              final String? picked =
-                  await showRelationPicker(context, selected: _entries[i].relation);
+              final String? picked = await showRelationPicker(context, selected: _entries[i].relation);
               if (picked != null) {
                 _entries[i].relation = picked;
                 _sync();
@@ -338,7 +348,7 @@ class _ReferenceFieldState extends State<_ReferenceField> {
         if (_entries.length < _maxCount) ...[
           const Gap.lg(),
           SecondaryButton(
-            label: 'Add another reference',
+            label: context.l10n.commonAddAnotherReference,
             icon: Icons.person_add_alt_rounded,
             onPressed: () {
               _entries.add(_ReferenceEntry());
@@ -355,10 +365,10 @@ class _NomineeEntry {
   _NomineeEntry({this.name = '', this.relation = '', this.share = 0});
 
   factory _NomineeEntry.fromJson(Map<String, dynamic> json) => _NomineeEntry(
-        name: json['name']?.toString() ?? '',
-        relation: json['relation']?.toString() ?? '',
-        share: num.tryParse(json['share']?.toString() ?? '') ?? 0,
-      );
+    name: json['name']?.toString() ?? '',
+    relation: json['relation']?.toString() ?? '',
+    share: num.tryParse(json['share']?.toString() ?? '') ?? 0,
+  );
 
   String name;
   String relation;
@@ -406,9 +416,7 @@ class _NomineeFieldState extends State<_NomineeField> {
 
   void _sync() {
     final List<_NomineeEntry> filled = _entries.where((e) => !e.isEmpty).toList();
-    final bool complete = filled.isNotEmpty &&
-        _total == 100 &&
-        filled.every((e) => e.name.trim().isNotEmpty);
+    final bool complete = filled.isNotEmpty && _total == 100 && filled.every((e) => e.name.trim().isNotEmpty);
     widget.scope.form.setValue(
       widget.node.fieldKey,
       complete ? jsonEncode([for (final e in filled) e.toJson()]) : '',
@@ -443,7 +451,7 @@ class _NomineeFieldState extends State<_NomineeField> {
               ),
               if (_entries.length > 1)
                 GhostButton(
-                  label: 'Remove',
+                  label: context.l10n.commonRemove,
                   icon: Icons.close_rounded,
                   onPressed: () {
                     _entries.removeAt(i);
@@ -454,8 +462,8 @@ class _NomineeFieldState extends State<_NomineeField> {
           ),
           const Gap.sm(),
           AppTextField(
-            label: 'Full name',
-            hint: 'Their name',
+            label: context.l10n.commonFullName,
+            hint: context.l10n.commonTheirName,
             initialValue: _entries[i].name,
             required: true,
             textCapitalization: TextCapitalization.words,
@@ -466,12 +474,11 @@ class _NomineeFieldState extends State<_NomineeField> {
           ),
           const Gap.md(),
           AppPickerField(
-            label: 'Relationship',
-            hint: 'Select',
+            label: context.l10n.commonRelationship,
+            hint: context.l10n.commonSelect,
             value: _entries[i].relation.isEmpty ? null : _entries[i].relation,
             onTap: () async {
-              final String? picked =
-                  await showRelationPicker(context, selected: _entries[i].relation);
+              final String? picked = await showRelationPicker(context, selected: _entries[i].relation);
               if (picked != null) {
                 _entries[i].relation = picked;
                 _sync();
@@ -480,16 +487,13 @@ class _NomineeFieldState extends State<_NomineeField> {
           ),
           const Gap.md(),
           AppTextField(
-            label: 'Share',
+            label: context.l10n.commonShare,
             hint: '0 - 100',
             initialValue: _entries[i].share == 0 ? '' : '${_entries[i].share}',
             required: true,
             keyboardType: TextInputType.number,
             suffixText: '%',
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              LengthLimitingTextInputFormatter(3),
-            ],
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(3)],
             onChanged: (v) {
               _entries[i].share = num.tryParse(v) ?? 0;
               _sync();
@@ -509,11 +513,11 @@ class _NomineeFieldState extends State<_NomineeField> {
                 : 'Reduce a share by ${-remaining}% so the total comes to 100%.',
           )
         else
-          const _ShareNotice(
+          _ShareNotice(
             tone: AppColors.success,
             icon: Icons.check_circle_rounded,
-            title: 'Shares add up to 100%',
-            message: 'Your nomination is complete.',
+            title: context.l10n.commonSharesAddUp100,
+            message: context.l10n.commonNominationComplete,
           ),
         if (remaining != 0) ...[
           const Gap.md(),
@@ -522,7 +526,7 @@ class _NomineeFieldState extends State<_NomineeField> {
               if (remaining > 0 && _entries.length < _maxCount) ...[
                 Expanded(
                   child: SecondaryButton(
-                    label: 'Add nominee',
+                    label: context.l10n.commonAddNominee,
                     icon: Icons.person_add_alt_rounded,
                     onPressed: () {
                       _entries.add(_NomineeEntry(share: remaining));
@@ -534,7 +538,7 @@ class _NomineeFieldState extends State<_NomineeField> {
               ],
               Expanded(
                 child: SecondaryButton(
-                  label: 'Make it 100%',
+                  label: context.l10n.commonMake100,
                   icon: Icons.auto_fix_high_rounded,
                   onPressed: _balanceToHundred,
                 ),
@@ -548,12 +552,7 @@ class _NomineeFieldState extends State<_NomineeField> {
 }
 
 class _ShareNotice extends StatelessWidget {
-  const _ShareNotice({
-    required this.title,
-    required this.message,
-    required this.tone,
-    required this.icon,
-  });
+  const _ShareNotice({required this.title, required this.message, required this.tone, required this.icon});
 
   final String title;
   final String message;
@@ -562,23 +561,23 @@ class _ShareNotice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => AccentCard(
-        accent: tone,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, size: 18, color: tone),
-            const SizedBox(width: Insets.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: AppText.titleSmall.copyWith(fontSize: 13)),
-                  const SizedBox(height: 2),
-                  Text(message, style: AppText.bodySmall.copyWith(fontSize: 11.5, height: 1.45)),
-                ],
-              ),
-            ),
-          ],
+    accent: tone,
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(icon, size: 18, color: tone),
+        const SizedBox(width: Insets.md),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: AppText.titleSmall.copyWith(fontSize: 13)),
+              const SizedBox(height: 2),
+              Text(message, style: AppText.bodySmall.copyWith(fontSize: 11.5, height: 1.45)),
+            ],
+          ),
         ),
-      );
+      ],
+    ),
+  );
 }

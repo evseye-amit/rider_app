@@ -5,14 +5,16 @@ import '../theme/app_colors.dart';
 import '../theme/app_dimens.dart';
 import '../theme/app_typography.dart';
 
+import '../l10n/locale_controller.dart';
+
 class AttendanceToggle extends StatelessWidget {
   const AttendanceToggle({
     required this.present,
     required this.onChanged,
     this.width = 104,
     this.height = 36,
-    this.presentLabel = 'Present',
-    this.absentLabel = 'Absent',
+    this.presentLabel,
+    this.absentLabel,
     this.enabled = true,
     super.key,
   });
@@ -21,8 +23,8 @@ class AttendanceToggle extends StatelessWidget {
   final ValueChanged<bool> onChanged;
   final double width;
   final double height;
-  final String presentLabel;
-  final String absentLabel;
+  final String? presentLabel;
+  final String? absentLabel;
   final bool enabled;
 
   @override
@@ -32,7 +34,7 @@ class AttendanceToggle extends StatelessWidget {
 
     return Semantics(
       toggled: present,
-      label: 'Attendance',
+      label: context.l10n.commonAttendance,
       child: GestureDetector(
         onTap: enabled
             ? () {
@@ -64,7 +66,9 @@ class AttendanceToggle extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      present ? presentLabel : absentLabel,
+                      present
+                          ? (presentLabel ?? context.l10n.commonPresent)
+                          : (absentLabel ?? context.l10n.commonAbsent),
                       maxLines: 1,
                       style: AppText.bodySmall.copyWith(
                         fontSize: 11.5,

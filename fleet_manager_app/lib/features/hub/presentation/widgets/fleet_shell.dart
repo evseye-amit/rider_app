@@ -25,15 +25,21 @@ class FleetShell extends StatelessWidget {
 }
 
 enum FleetTab {
-  home('Hub', Icons.dashboard_rounded, Icons.dashboard_outlined),
-  allocations('Allocate', Icons.swap_horiz_rounded, Icons.swap_horiz_outlined),
-  deallocations('Return', Icons.assignment_return_rounded, Icons.assignment_return_outlined),
-  team('Team', Icons.groups_rounded, Icons.groups_outlined),
-  maintenance('Service', Icons.build_rounded, Icons.build_outlined);
+  home(Icons.dashboard_rounded, Icons.dashboard_outlined),
+  allocations(Icons.swap_horiz_rounded, Icons.swap_horiz_outlined),
+  deallocations(Icons.assignment_return_rounded, Icons.assignment_return_outlined),
+  team(Icons.groups_rounded, Icons.groups_outlined),
+  maintenance(Icons.build_rounded, Icons.build_outlined);
 
-  const FleetTab(this.label, this.activeIcon, this.icon);
+  const FleetTab(this.activeIcon, this.icon);
 
-  final String label;
+  String label(AppL10n l10n) => switch (this) {
+        FleetTab.home => l10n.profileHub,
+        FleetTab.allocations => l10n.hubAllocate,
+        FleetTab.deallocations => l10n.hubReturn,
+        FleetTab.team => l10n.ridersTeam,
+        FleetTab.maintenance => l10n.hubService,
+      };
   final IconData activeIcon;
   final IconData icon;
 }
@@ -123,7 +129,7 @@ class _BarItem extends StatelessWidget {
                 fontWeight: active ? FontWeight.w800 : FontWeight.w600,
                 color: active ? AppColors.textPrimary : AppColors.textMuted,
               ),
-              child: Text(tab.label, maxLines: 1, overflow: TextOverflow.ellipsis),
+              child: Text(tab.label(context.l10n), maxLines: 1, overflow: TextOverflow.ellipsis),
             ),
             const Spacer(),
           ],

@@ -67,13 +67,13 @@ class _MaintenanceDetailViewState extends State<_MaintenanceDetailView> {
         }
         if (state.status == MaintenanceDetailStatus.failure || state.job == null) {
           return AppScaffold(
-            title: tr('Job'),
+            title: context.l10n.maintenanceJob,
             body: EmptyState(
-              title: tr('Could not load this job'),
+              title: context.l10n.maintenanceCouldNotLoadJob,
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: tr('Try again'),
+              actionLabel: context.l10n.commonTryAgain,
               onAction: () => context.read<MaintenanceDetailCubit>().load(),
             ),
           );
@@ -85,12 +85,12 @@ class _MaintenanceDetailViewState extends State<_MaintenanceDetailView> {
 }
 
 (int, int) _costBreakdown(String type) => switch (type) {
-      'Battery' => (4200, 800),
-      'Brakes' => (550, 350),
-      'Tyres' => (1800, 200),
+      'BATTERY' => (4200, 800),
+      'BRAKES' => (550, 350),
+      'TYRES' => (1800, 200),
       'IoT' => (900, 300),
-      'Body' => (1200, 600),
-      'Pre-delivery' => (200, 150),
+      'BODY' => (1200, 600),
+      'PRE_DELIVERY' => (200, 150),
       _ => (650, 450),
     };
 
@@ -135,7 +135,7 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: tr('Issue'),
+            title: context.l10n.maintenanceIssue,
             leading: const IconTile(icon: Icons.report_problem_rounded, tone: AppColors.primary, size: 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,18 +144,18 @@ class _Loaded extends StatelessWidget {
                 const SizedBox(height: Insets.md),
                 Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
                 const SizedBox(height: Insets.md),
-                KeyValueRow(label: tr('Odometer'), value: '${Fmt.number(job.odometerKm)} km', icon: Icons.speed_rounded),
+                KeyValueRow(label: context.l10n.commonOdometer, value: '${Fmt.number(job.odometerKm)} km', icon: Icons.speed_rounded),
                 if (job.rider != null)
-                  KeyValueRow(label: tr('Rider on file'), value: job.rider!, icon: Icons.person_rounded),
+                  KeyValueRow(label: context.l10n.maintenanceRiderFile, value: job.rider!, icon: Icons.person_rounded),
                 if (job.bay != null)
-                  KeyValueRow(label: tr('Bay'), value: job.bay!, icon: Icons.garage_rounded),
+                  KeyValueRow(label: context.l10n.maintenanceBay, value: job.bay!, icon: Icons.garage_rounded),
               ],
             ),
           ),
           const Gap.lg(),
 
           ModuleCard(
-            title: tr('Assigned vendor'),
+            title: context.l10n.maintenanceAssignedVendor,
             leading: const IconTile(icon: Icons.handyman_rounded, tone: AppColors.primary, size: 28),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,14 +169,14 @@ class _Loaded extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            job.assignedTo ?? 'Unassigned',
+                            job.assignedTo ?? context.l10n.maintenanceUnassigned,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppText.titleSmall.copyWith(fontSize: 14),
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            job.assignedTo == null ? 'Assign a vendor to start work' : 'Service partner',
+                            job.assignedTo == null ? context.l10n.maintenanceAssignVendorStartWork : context.l10n.maintenanceServicePartner,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppText.bodySmall.copyWith(fontSize: 11.5),
@@ -205,7 +205,7 @@ class _Loaded extends StatelessWidget {
                         },
                       ),
                     GhostButton(
-                      label: tr('Reassign'),
+                      label: context.l10n.maintenanceReassign,
                       icon: Icons.swap_horiz_rounded,
                       onPressed: job.isClosed ? null : () => _openReassignSheet(context),
                     ),
@@ -217,35 +217,35 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: tr('Job timeline'),
+            title: context.l10n.maintenanceJobTimeline,
             leading: const IconTile(icon: Icons.timeline_rounded, tone: AppColors.primary, size: 28),
             child: Column(
               children: [
                 _TimelineRow(
                   icon: Icons.flag_rounded,
-                  title: tr('Raised'),
+                  title: context.l10n.commonRaised,
                   time: Fmt.dateTime(job.openedOn),
                   done: true,
                   isLast: false,
                 ),
                 _TimelineRow(
                   icon: Icons.assignment_ind_rounded,
-                  title: job.assignedTo == null ? 'Awaiting vendor assignment' : 'Assigned to ${job.assignedTo}',
-                  time: job.assignedTo == null ? 'Pending' : 'Done',
+                  title: job.assignedTo == null ? context.l10n.maintenanceAwaitingVendorAssignment : 'Assigned to ${job.assignedTo}',
+                  time: job.assignedTo == null ? context.l10n.commonPending : context.l10n.deploymentDone,
                   done: job.assignedTo != null,
                   isLast: false,
                 ),
                 _TimelineRow(
                   icon: Icons.build_circle_rounded,
-                  title: tr('In progress'),
-                  time: job.status == 'inProgress' || job.isClosed ? 'Done' : 'Pending',
+                  title: context.l10n.maintenanceProgress,
+                  time: job.status == 'inProgress' || job.isClosed ? context.l10n.deploymentDone : context.l10n.commonPending,
                   done: job.status == 'inProgress' || job.isClosed,
                   isLast: false,
                 ),
                 _TimelineRow(
                   icon: Icons.check_circle_rounded,
-                  title: tr('Closed'),
-                  time: job.isClosed ? Fmt.dateTime(job.closedOn ?? job.dueOn) : 'Pending',
+                  title: context.l10n.maintenanceClosed,
+                  time: job.isClosed ? Fmt.dateTime(job.closedOn ?? job.dueOn) : context.l10n.commonPending,
                   done: job.isClosed,
                   isLast: true,
                 ),
@@ -255,15 +255,15 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: tr('Cost breakdown'),
+            title: context.l10n.maintenanceCostBreakdown,
             leading: const IconTile(icon: Icons.receipt_long_rounded, tone: AppColors.primary, size: 28),
             child: Column(
               children: [
-                KeyValueRow(label: tr('Parts'), value: Fmt.money(parts)),
-                KeyValueRow(label: tr('Labour'), value: Fmt.money(labour)),
+                KeyValueRow(label: context.l10n.maintenanceParts, value: Fmt.money(parts)),
+                KeyValueRow(label: context.l10n.maintenanceLabour, value: Fmt.money(labour)),
                 const Divider(color: AppColors.stroke, height: Insets.xl),
                 KeyValueRow(
-                  label: tr('Total'),
+                  label: context.l10n.commonTotal,
                   value: Fmt.money(total),
                   valueStyle: AppText.numeric.copyWith(fontSize: 17, color: AppColors.primary),
                 ),
@@ -273,7 +273,7 @@ class _Loaded extends StatelessWidget {
           const Gap.lg(),
 
           ModuleCard(
-            title: tr('Photo evidence'),
+            title: context.l10n.maintenancePhotoEvidence,
             leading: const IconTile(icon: Icons.photo_camera_rounded, tone: AppColors.primary, size: 28),
             child: GridView.count(
               crossAxisCount: 3,
@@ -283,22 +283,22 @@ class _Loaded extends StatelessWidget {
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                PhotoSlot(label: tr('Issue'), captured: true),
-                PhotoSlot(label: tr('In progress'), captured: job.status == 'inProgress' || job.isClosed),
-                PhotoSlot(label: tr('Completed'), captured: job.isClosed),
+                PhotoSlot(label: context.l10n.maintenanceIssue, captured: true),
+                PhotoSlot(label: context.l10n.maintenanceProgress, captured: job.status == 'inProgress' || job.isClosed),
+                PhotoSlot(label: context.l10n.maintenanceCompleted, captured: job.isClosed),
               ],
             ),
           ),
           const Gap.lg(),
 
           ModuleCard(
-            title: tr('Notes'),
-            actionLabel: tr('Add note'),
+            title: context.l10n.maintenanceNotes,
+            actionLabel: context.l10n.maintenanceAddNote2,
             onAction: job.isClosed ? null : () => _openAddNoteSheet(context),
             child: job.notes.isEmpty
                 ? EmptyState(
-                    title: tr('No notes yet'),
-                    message: tr('Updates from the workshop will show up here.'),
+                    title: context.l10n.maintenanceNoNotesYet,
+                    message: context.l10n.maintenanceUpdatesFromWorkshopWillShow,
                     icon: Icons.notes_rounded,
                     compact: true,
                   )
@@ -328,9 +328,9 @@ class _Loaded extends StatelessWidget {
   Future<void> _confirmClose(BuildContext context) async {
     final bool confirmed = await AppDialog.confirm(
       context,
-      title: tr('Close this job?'),
+      title: context.l10n.maintenanceCloseJob2,
       message: '${job.id} will be marked closed. This cannot be undone from here.',
-      confirmLabel: tr('Close job'),
+      confirmLabel: context.l10n.maintenanceCloseJob,
       icon: Icons.check_circle_rounded,
       tone: AppColors.success,
     );
@@ -343,7 +343,7 @@ class _Loaded extends StatelessWidget {
     final MaintenanceDetailCubit cubit = context.read<MaintenanceDetailCubit>();
     final String? picked = await AppSheet.show<String>(
       context,
-      title: tr('Update status'),
+      title: context.l10n.maintenanceUpdateStatus,
       subtitle: job.id,
       child: Column(
         children: [
@@ -368,12 +368,12 @@ class _Loaded extends StatelessWidget {
   Future<void> _openReassignSheet(BuildContext context) async {
     final MaintenanceDetailCubit cubit = context.read<MaintenanceDetailCubit>();
     if (vendors.isEmpty) {
-      AppSnack.warning(context, 'No vendors available to reassign right now.');
+      AppSnack.warning(context, context.l10n.maintenanceNoVendorsAvailableReassignRight);
       return;
     }
     final String? picked = await AppSheet.show<String>(
       context,
-      title: tr('Reassign vendor'),
+      title: context.l10n.maintenanceReassignVendor,
       subtitle: job.id,
       child: Column(
         children: [
@@ -401,23 +401,23 @@ class _Loaded extends StatelessWidget {
     final TextEditingController controller = TextEditingController();
     final String? note = await AppSheet.show<String>(
       context,
-      title: tr('Add a note'),
+      title: context.l10n.maintenanceAddNote,
       subtitle: job.id,
       child: AppTextField(
-        label: tr('Note'),
-        hint: tr('What happened, or what is needed next'),
+        label: context.l10n.maintenanceNote,
+        hint: context.l10n.maintenanceWhatHappenedWhatNeededNext,
         maxLines: 4,
         controller: controller,
         autofocus: true,
       ),
       footer: PrimaryButton(
-        label: tr('Save note'),
+        label: context.l10n.maintenanceSaveNote,
         onPressed: () => Navigator.of(context).pop(controller.text),
       ),
     );
     if (note != null && note.trim().isNotEmpty && context.mounted) {
       cubit.addNote(note);
-      AppSnack.success(context, 'Note added.');
+      AppSnack.success(context, context.l10n.maintenanceNoteAdded);
     }
   }
 }
@@ -515,7 +515,7 @@ class _Band extends StatelessWidget {
         ),
         const Gap.xl(),
         Text(
-          '${job.id} · ${job.type}',
+          '\${job.id} · \${maintenanceTypeLabel(context, job.type)}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.onInkSecondary),
@@ -561,7 +561,7 @@ class _Footer extends StatelessWidget {
         children: [
           Expanded(
             child: SecondaryButton(
-              label: tr('Update status'),
+              label: context.l10n.maintenanceUpdateStatus,
               size: AppButtonSize.medium,
               onPressed: onUpdateStatus,
             ),
@@ -569,7 +569,7 @@ class _Footer extends StatelessWidget {
           const SizedBox(width: Insets.md),
           Expanded(
             child: PrimaryButton(
-              label: tr('Close job'),
+              label: context.l10n.maintenanceCloseJob,
               icon: Icons.check_circle_rounded,
               size: AppButtonSize.medium,
               onPressed: onClose,

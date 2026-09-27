@@ -54,7 +54,7 @@ class _TrainingViewState extends State<_TrainingView> {
     await AppSheet.show<void>(
       context,
       title: item.title,
-      subtitle: item.isMandatory ? 'Mandatory' : 'Optional',
+      subtitle: item.isMandatory ? context.l10n.commonMandatory : context.l10n.commonOptional,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -74,11 +74,11 @@ class _TrainingViewState extends State<_TrainingView> {
               ),
             ),
           const Gap.lg(),
-          Text(item.description ?? 'Read through this module with your team lead before you ride.', style: AppText.bodyMedium.copyWith(height: 1.55)),
+          Text(item.description ?? context.l10n.deploymentReadThroughModuleWithTeam, style: AppText.bodyMedium.copyWith(height: 1.55)),
           const Gap.lg(),
         ],
       ),
-      footer: PrimaryButton(label: tr('Done'), icon: Icons.check_rounded, onPressed: () => Navigator.of(context).pop()),
+      footer: PrimaryButton(label: context.l10n.deploymentDone, icon: Icons.check_rounded, onPressed: () => Navigator.of(context).pop()),
     );
     if (!mounted || item.viewed) return;
     final Result<DeploymentWorkflow> marked =
@@ -98,7 +98,7 @@ class _TrainingViewState extends State<_TrainingView> {
     setState(() => _finishing = false);
     switch (result) {
       case Ok<DeploymentWorkflow>():
-        AppSnack.success(context, 'Training complete');
+        AppSnack.success(context, context.l10n.deploymentTrainingComplete);
         await context.read<DeploymentCubit>().load(silent: true);
       case Err<DeploymentWorkflow>(:final failure):
         AppSnack.error(context, failure.message);
@@ -114,14 +114,14 @@ class _TrainingViewState extends State<_TrainingView> {
 
         if (state.status == DeploymentLoad.failure || (allocationId == null && !state.isLoading)) {
           return AppScaffold(
-            title: tr('Safety training'),
+            title: context.l10n.deploymentSafetyTraining,
             showBack: false,
             body: EmptyState(
-              title: tr('Could not load training'),
+              title: context.l10n.deploymentCouldNotLoadTraining,
               message: state.message,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
-              actionLabel: tr('Try again'),
+              actionLabel: context.l10n.commonTryAgain,
               onAction: context.read<DeploymentCubit>().load,
             ),
           );
@@ -132,11 +132,11 @@ class _TrainingViewState extends State<_TrainingView> {
         final int viewed = items?.where((i) => i.viewed).length ?? 0;
 
         return AppScaffold(
-          title: tr('Safety training'),
+          title: context.l10n.deploymentSafetyTraining,
           subtitle: items == null ? null : '$viewed of ${items.length} completed',
           showBack: false,
           footer: PrimaryButton(
-            label: tr('Finish training'),
+            label: context.l10n.deploymentFinishTraining,
             icon: Icons.school_rounded,
             loading: _finishing,
             onPressed: ready && !_finishing && allocationId != null ? () => _finish(context, allocationId) : null,
@@ -145,11 +145,11 @@ class _TrainingViewState extends State<_TrainingView> {
             children: [
               if (_error != null)
                 EmptyState(
-                  title: tr('Training unavailable'),
+                  title: context.l10n.deploymentTrainingUnavailable,
                   message: _error,
                   icon: Icons.school_outlined,
                   tone: AppColors.warning,
-                  actionLabel: tr('Retry'),
+                  actionLabel: context.l10n.commonRetry,
                   onAction: allocationId == null ? null : () => _load(allocationId, force: true),
                 )
               else if (items == null)
@@ -159,7 +159,7 @@ class _TrainingViewState extends State<_TrainingView> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(tr('Open each module and read it through. Mandatory ones must be completed before you can finish.'),
+                      Text(context.l10n.deploymentOpenEachModuleReadThrough,
                           style: AppText.bodySmall.copyWith(height: 1.5)),
                       const Gap.lg(),
                       LabeledProgress(
@@ -173,10 +173,10 @@ class _TrainingViewState extends State<_TrainingView> {
                 for (final item in items) ...[
                   AppNavTile(
                     title: item.title,
-                    subtitle: item.description ?? (item.isMandatory ? 'Mandatory module' : 'Optional module'),
+                    subtitle: item.description ?? (item.isMandatory ? context.l10n.deploymentMandatoryModule : context.l10n.deploymentOptionalModule),
                     icon: item.viewed ? Icons.check_circle_rounded : Icons.play_circle_fill_rounded,
                     iconColor: item.viewed ? AppColors.success : AppColors.primary,
-                    badge: item.isMandatory && !item.viewed ? 'Required' : null,
+                    badge: item.isMandatory && !item.viewed ? context.l10n.deploymentRequired : null,
                     onTap: allocationId == null ? null : () => _open(context, allocationId, item),
                   ),
                   const Gap.sm(),

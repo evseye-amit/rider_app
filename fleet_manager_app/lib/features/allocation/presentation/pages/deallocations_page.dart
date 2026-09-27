@@ -11,7 +11,7 @@ import '../../domain/usecases/get_allocation_board.dart';
 import '../cubit/allocations_cubit.dart';
 import '../widgets/allocation_widgets.dart';
 
-const List<String> _priorityFilters = ['All', 'High', 'Normal', 'Low'];
+List<String> _priorityFilters = ['All', LocaleController.strings.commonHigh, LocaleController.strings.commonNormal, 'Low'];
 
 class DeallocationsPage extends StatelessWidget {
   const DeallocationsPage({super.key});
@@ -66,11 +66,11 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
             backgroundColor: AppColors.canvas,
             body: SafeArea(
               child: EmptyState(
-                title: tr('Could not load returns'),
+                title: context.l10n.allocationCouldNotLoadReturns,
                 message: state.message,
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
-                actionLabel: tr('Try again'),
+                actionLabel: context.l10n.commonTryAgain,
                 onAction: () => context.read<AllocationsCubit>().refresh(),
               ),
             ),
@@ -85,17 +85,17 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
           onRefresh: () => context.read<AllocationsCubit>().refresh(),
           band: DeskBand(
             icon: Icons.assignment_return_rounded,
-            title: tr('De-allocation'),
-            subtitle: tr('Take a vehicle back and put it on the shelf'),
+            title: context.l10n.commonDeAllocation,
+            subtitle: context.l10n.allocationTakeVehicleBackPutShelf,
             stats: [
               DeskStat(
-                label: tr('In the queue'),
+                label: context.l10n.allocationQueue,
                 value: '$waiting',
                 icon: Icons.assignment_return_rounded,
                 alert: waiting > 0,
               ),
               DeskStat(
-                label: tr('Out on road'),
+                label: context.l10n.allocationOutRoad,
                 value: '${board?.active.length ?? 0}',
                 icon: Icons.electric_scooter_rounded,
               ),
@@ -126,7 +126,7 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               AppSearchField(
-                hint: tr('Search rider or vehicle number'),
+                hint: context.l10n.allocationSearchRiderVehicleNumber,
                 controller: _searchController,
                 onChanged: (q) => setState(() => _query = q),
               ),
@@ -147,8 +147,8 @@ class _DeallocationsViewState extends State<_DeallocationsView> {
             child: ArtBlock(
               art: BrandArt.empty,
               artSize: 130,
-              title: tr('Nothing to take back'),
-              message: tr('Every de-allocation request has been processed.'),
+              title: context.l10n.allocationNothingTakeBack,
+              message: context.l10n.allocationEveryDeAllocationRequestHas,
             ),
           )
         else

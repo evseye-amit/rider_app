@@ -1,12 +1,13 @@
 import 'package:equatable/equatable.dart';
 
+import 'package:evseye_core/evseye_core.dart';
 enum RiderState { active, onboarding, exited }
 
 extension RiderStateX on RiderState {
   String get label => switch (this) {
-        RiderState.active => 'Active',
-        RiderState.onboarding => 'Onboarding',
-        RiderState.exited => 'Exited',
+        RiderState.active => LocaleController.strings.ridersActive,
+        RiderState.onboarding => LocaleController.strings.ridersOnboarding,
+        RiderState.exited => LocaleController.strings.ridersExited,
       };
 }
 
