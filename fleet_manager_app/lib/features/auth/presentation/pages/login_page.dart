@@ -77,6 +77,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return AuthSheetScaffold(
+      trailing: LanguageChip(
+        controller: sl<LocaleController>(),
+        onChanged: (_) => setState(() {}),
+      ),
       art: BrandArt.manager,
       artSize: 200,
       title: context.l10n.authSignRunHub,

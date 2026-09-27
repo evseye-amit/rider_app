@@ -85,9 +85,14 @@ class LocaleController extends ChangeNotifier {
   /// [BuildContext] such as network error mapping and form validators.
   static AppL10n strings = lookupAppL10n(const Locale('en'));
 
+  /// Language tag sent as `Accept-Language`, so the API answers in the
+  /// language the person picked.
+  static String activeLanguageTag = AppLocale.english.code;
+
   void _applyIntlDefault() {
     Intl.defaultLocale = _locale == AppLocale.english ? 'en_IN' : _locale.code;
     strings = lookupAppL10n(_locale.locale);
+    activeLanguageTag = _locale.code;
   }
 
   Future<void> _write(Future<void> Function(SharedPreferences prefs) action) async {

@@ -9,6 +9,7 @@ export 'src/theme/app_typography.dart';
 export 'src/l10n/generated/app_localizations.dart';
 export 'src/l10n/config_messages.dart';
 export 'src/l10n/locale_controller.dart';
+export 'src/l10n/language_chip.dart';
 export 'src/l10n/language_picker.dart';
 export 'src/widgets/app_scaffold.dart';
 export 'src/widgets/auth_sheet.dart';

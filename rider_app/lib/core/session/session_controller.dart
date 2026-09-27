@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/foundation.dart';
 
@@ -25,6 +26,7 @@ class SessionController extends ChangeNotifier {
     required GetOnboarding getOnboarding,
     required GetCurrentDeployment getCurrentDeployment,
     required TokenStore tokens,
+    required LocaleController locale,
   })  : _config = config,
         _enrollRider = enrollRider,
         _requestOtp = requestOtp,
@@ -33,10 +35,15 @@ class SessionController extends ChangeNotifier {
         _signOut = signOut,
         _getOnboarding = getOnboarding,
         _getCurrentDeployment = getCurrentDeployment,
-        _tokens = tokens;
+        _tokens = tokens,
+        _locale = locale {
+    _locale.addListener(_onLocaleChanged);
+  }
 
   final UiConfigService _config;
   final TokenStore _tokens;
+  final LocaleController _locale;
+  AppLocale? _lastLocale;
   final EnrollRider _enrollRider;
   final RequestOtp _requestOtp;
   final VerifyOtp _verifyOtp;
@@ -174,6 +181,21 @@ class SessionController extends ChangeNotifier {
     if (!config.isComplete) return RiderStage.onboarding;
     if (deployment.allocation != null) return riderStageFrom(deployment.screen);
     return riderStageFrom(RiderScreen.parse(config.screen));
+  }
+
+  /// The API renders onboarding copy in the requested language, so a change
+  /// is picked up by refetching rather than by rebuilding the widget tree.
+  void _onLocaleChanged() {
+    if (_lastLocale == _locale.current) return;
+    _lastLocale = _locale.current;
+    if (_user == null) return;
+    _config.invalidate();
+    unawaited(_reloadForLocale());
+  }
+
+  Future<void> _reloadForLocale() async {
+    if (_onboarding != null) await loadOnboarding();
+    await refreshState();
   }
 
   Future<Result<RiderOnboardingConfig>> loadOnboarding() async {
@@ -325,4 +347,10 @@ class SessionController extends ChangeNotifier {
           ...data,
         },
       );
+
+  @override
+  void dispose() {
+    _locale.removeListener(_onLocaleChanged);
+    super.dispose();
+  }
 }

@@ -69,6 +69,7 @@ Future<void> configureDependencies() async {
       getOnboarding: GetOnboarding(sl()),
       getCurrentDeployment: GetCurrentDeployment(sl()),
       tokens: sl<TokenStore>(),
+      locale: sl<LocaleController>(),
     ),
   );
 

@@ -23,6 +23,7 @@ class AuthSheetScaffold extends StatelessWidget {
     this.onBack,
     this.bandAction,
     this.onBandAction,
+    this.trailing,
     this.bandColor = AppColors.ink,
     this.centerTitle = true,
     this.sheetRadius = 34,
@@ -44,6 +45,9 @@ class AuthSheetScaffold extends StatelessWidget {
 
   final String? bandAction;
   final VoidCallback? onBandAction;
+
+  /// Rendered at the top right of the brand band, beside any band action.
+  final Widget? trailing;
 
   final Color bandColor;
   final bool centerTitle;
@@ -81,6 +85,7 @@ class AuthSheetScaffold extends StatelessWidget {
 
                   bottomClearance: _overlap + sheetRadius,
                   showBack: showBack,
+                  trailing: trailing,
                   onBack: onBack,
                   bandAction: bandAction,
                   onBandAction: onBandAction,
@@ -115,6 +120,7 @@ class _Hero extends StatelessWidget {
     required this.topInset,
     required this.bottomClearance,
     required this.showBack,
+    required this.trailing,
     required this.onBack,
     required this.bandAction,
     required this.onBandAction,
@@ -126,6 +132,7 @@ class _Hero extends StatelessWidget {
   final double topInset;
   final double bottomClearance;
   final bool showBack;
+  final Widget? trailing;
   final VoidCallback? onBack;
   final String? bandAction;
   final VoidCallback? onBandAction;
@@ -170,7 +177,7 @@ class _Hero extends StatelessWidget {
             ),
           ),
 
-        if (showBack || bandAction != null)
+        if (showBack || bandAction != null || trailing != null)
           Positioned(
             top: topInset + Insets.sm,
             left: Insets.gutter,
@@ -193,6 +200,8 @@ class _Hero extends StatelessWidget {
                     ),
                   ),
                 const Spacer(),
+                if (trailing != null) trailing!,
+                if (trailing != null && bandAction != null) const SizedBox(width: Insets.sm),
                 if (bandAction != null)
                   Flexible(
                     child: Pressable(

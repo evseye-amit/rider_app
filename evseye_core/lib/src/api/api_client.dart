@@ -52,6 +52,7 @@ class ApiClient {
           if (token != null && token.isNotEmpty && options.extra['skipAuth'] != true) {
             options.headers['Authorization'] = 'Bearer $token';
           }
+          options.headers['Accept-Language'] = LocaleController.activeLanguageTag;
           handler.next(options);
         },
       ),

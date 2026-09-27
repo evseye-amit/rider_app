@@ -83,6 +83,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return AuthSheetScaffold(
+      trailing: LanguageChip(
+        controller: sl<LocaleController>(),
+        onChanged: (_) => setState(() {}),
+      ),
       photo: BrandPhoto.rider,
       artSize: 210,
       title: context.l10n.authWelcomeBack,
