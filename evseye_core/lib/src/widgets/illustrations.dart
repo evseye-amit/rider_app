@@ -55,7 +55,7 @@ class BrandIllustration extends StatelessWidget {
       fit: BoxFit.contain,
       filterQuality: FilterQuality.medium,
 
-      errorBuilder: (_, __, ___) => SizedBox(width: size, height: height),
+      errorBuilder: (_, _, _) => SizedBox(width: size, height: height),
     );
 
     return SizedBox(

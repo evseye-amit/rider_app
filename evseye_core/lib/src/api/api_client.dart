@@ -119,7 +119,7 @@ class ApiClient {
       if (res.statusCode == 401 && !skipAuth && !isRetry && _tokens.hasSession) {
         final bool refreshed = await _refreshOnce();
         if (refreshed) {
-          return _send<T>(method, path, body: body, query: query, parse: parse, isRetry: true);
+          return await _send<T>(method, path, body: body, query: query, parse: parse, isRetry: true);
         }
         onSessionExpired?.call();
         return const Result.err(UnauthorizedFailure('Your session has expired. Sign in again.'));

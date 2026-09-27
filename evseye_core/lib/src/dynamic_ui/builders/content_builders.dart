@@ -55,9 +55,9 @@ Map<String, NodeBuilder> contentBuilders(WidgetRegistry r) => {
         final double? h = (node.props['height'] as num?)?.toDouble();
         final Widget img = src.startsWith('http')
             ? Image.network(src, fit: fit, height: h,
-                errorBuilder: (_, __, ___) => const SizedBox.shrink())
+                errorBuilder: (_, _, _) => const SizedBox.shrink())
             : Image.asset(src, fit: fit, height: h,
-                errorBuilder: (_, __, ___) => const SizedBox.shrink());
+                errorBuilder: (_, _, _) => const SizedBox.shrink());
         return ClipRRect(borderRadius: Corners.brMd, child: img);
       },
       'illustration': (context, node, scope) => Center(

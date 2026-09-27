@@ -173,7 +173,7 @@ class HeroStatCard extends StatelessWidget {
                     style: AppText.label.copyWith(color: AppColors.textSecondary),
                   ),
                 ),
-                if (trailing != null) trailing!,
+                ?trailing,
               ],
             ),
             const SizedBox(height: Insets.lg),
