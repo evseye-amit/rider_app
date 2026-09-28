@@ -30,7 +30,6 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
   final Set<String> _uploading = {};
 
   RiderOnboardingConfig? _config;
-  UiFlowConfig? _flow;
   int _stepIndex = 0;
   bool _saving = false;
   String? _loadError;
@@ -64,9 +63,10 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
     _apply(config);
   }
 
+  UiFlowConfig _buildFlow(RiderOnboardingConfig config) => OnboardingFlowBuilder.build(config, context.l10n);
+
   void _apply(RiderOnboardingConfig config, {int? jumpTo}) {
     final RiderSession session = ref.read(riderSessionProvider);
-    final UiFlowConfig flow = OnboardingFlowBuilder.build(config, context.l10n);
 
     for (final MapEntry<String, Object?> entry in config.progress.values.entries) {
       if (_form.valueOf(entry.key) == null && entry.value != null) {
@@ -84,8 +84,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
     final int resume = jumpTo ?? config.resumeIndex;
     setState(() {
       _config = config;
-      _flow = flow;
-      _stepIndex = flow.steps.isEmpty ? 0 : resume.clamp(0, flow.steps.length - 1);
+      _stepIndex = config.steps.isEmpty ? 0 : resume.clamp(0, config.steps.length - 1);
       _loadError = null;
     });
   }
@@ -160,7 +159,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
   Future<void> _advance() async {
     if (_saving) return;
     final RiderOnboardingConfig config = _config!;
-    final UiFlowConfig flow = _flow!;
+    final UiFlowConfig flow = _buildFlow(config);
     final UiFlowStep step = flow.steps[_stepIndex];
     final bool valid = _form.validateNodes(step.screen.body, isVisible: _scope.isVisible);
     if (!valid) {
@@ -242,8 +241,8 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
 
   @override
   Widget build(BuildContext context) {
-    final UiFlowConfig? flow = _flow;
-    if (flow == null) {
+    final RiderOnboardingConfig? config = _config;
+    if (config == null) {
       return Scaffold(
         backgroundColor: AppColors.canvas,
         body: SafeArea(
@@ -264,6 +263,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
       );
     }
 
+    final UiFlowConfig flow = _buildFlow(config);
     if (flow.steps.isEmpty) {
       return Scaffold(
         backgroundColor: AppColors.canvas,

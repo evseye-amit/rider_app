@@ -23,25 +23,37 @@ class OnboardingFieldConfig {
     this.configuration = const {},
   });
 
-  factory OnboardingFieldConfig.fromJson(Map<String, dynamic> json) => OnboardingFieldConfig(
-        featureCode: json['featureCode']?.toString() ?? '',
-        fieldCode: json['fieldCode']?.toString() ?? '',
-        storageKey: json['storageKey']?.toString() ?? '',
-        fieldName: json['fieldName']?.toString() ?? '',
-        label: json['label']?.toString() ?? json['fieldName']?.toString() ?? '',
-        description: json['description']?.toString(),
-        placeholder: json['placeholder']?.toString(),
-        fieldType: (json['fieldType']?.toString() ?? 'TEXT').toUpperCase(),
-        dataType: json['dataType']?.toString(),
-        required: json['required'] == true,
-        readOnly: json['readOnly'] == true,
-        disabled: json['disabled'] == true,
-        editable: json['editable'] != false,
-        isUpload: json['isUpload'] == true,
-        sequence: (json['sequence'] as num?)?.toInt() ?? 0,
-        validation: Map<String, dynamic>.from(json['validation'] as Map? ?? const {}),
-        configuration: Map<String, dynamic>.from(json['configuration'] as Map? ?? const {}),
-      );
+  factory OnboardingFieldConfig.fromJson(Map<String, dynamic> json) {
+    final Map<String, dynamic> configuration = Map<String, dynamic>.from(json['configuration'] as Map? ?? const {});
+
+    Object? pick(String key) => configuration[key] ?? json[key];
+
+    final String fieldType = (pick('fieldType')?.toString() ?? 'TEXT').toUpperCase();
+    final String name = json['name']?.toString() ?? json['fieldName']?.toString() ?? '';
+
+    return OnboardingFieldConfig(
+      featureCode: json['featureCode']?.toString() ?? '',
+      fieldCode: json['fieldCode']?.toString() ?? '',
+      storageKey: pick('storageKey')?.toString() ?? '',
+      fieldName: name,
+      label: pick('label')?.toString() ?? name,
+      description: json['description']?.toString(),
+      placeholder: pick('placeholder')?.toString(),
+      fieldType: fieldType,
+      dataType: pick('dataType')?.toString(),
+      required: pick('required') == true,
+      readOnly: pick('readOnly') == true,
+      disabled: pick('disabled') == true,
+      editable: pick('editable') != false,
+      isUpload:
+          fieldType == 'UPLOAD' ||
+          json['isUpload'] == true ||
+          json['billingUnit']?.toString().toUpperCase() == 'UPLOAD',
+      sequence: (json['sequence'] as num?)?.toInt() ?? 0,
+      validation: Map<String, dynamic>.from((configuration['validation'] ?? json['validation']) as Map? ?? const {}),
+      configuration: configuration,
+    );
+  }
 
   final String featureCode;
 
@@ -103,16 +115,16 @@ class OnboardingStepConfig {
   });
 
   factory OnboardingStepConfig.fromJson(Map<String, dynamic> json) => OnboardingStepConfig(
-        stepId: json['stepId']?.toString() ?? '',
-        stepCode: json['stepCode']?.toString() ?? '',
-        stepName: json['stepName']?.toString() ?? '',
-        description: json['description']?.toString(),
-        sequence: (json['sequence'] as num?)?.toInt() ?? 0,
-        enabled: json['enabled'] != false && json['active'] != false,
-        fields: (json['fields'] as List<dynamic>? ?? const [])
-            .map((e) => OnboardingFieldConfig.fromJson(Map<String, dynamic>.from(e as Map)))
-            .toList(growable: false),
-      );
+    stepId: json['stepId']?.toString() ?? '',
+    stepCode: json['stepCode']?.toString() ?? '',
+    stepName: json['stepName']?.toString() ?? '',
+    description: json['description']?.toString(),
+    sequence: (json['sequence'] as num?)?.toInt() ?? 0,
+    enabled: json['enabled'] != false && json['active'] != false,
+    fields: (json['fields'] as List<dynamic>? ?? const [])
+        .map((e) => OnboardingFieldConfig.fromJson(Map<String, dynamic>.from(e as Map)))
+        .toList(growable: false),
+  );
 
   final String stepId;
 
@@ -138,12 +150,12 @@ class OnboardingProgress {
   });
 
   factory OnboardingProgress.fromJson(Map<String, dynamic> json) => OnboardingProgress(
-        currentStepId: json['currentStepId']?.toString(),
-        completedStepIds: _strings(json['completedStepIds']),
-        skippedStepIds: _strings(json['skippedStepIds']),
-        values: Map<String, Object?>.from(json['values'] as Map? ?? const {}),
-        completed: json['completed'] == true,
-      );
+    currentStepId: json['currentStepId']?.toString(),
+    completedStepIds: _strings(json['completedStepIds']),
+    skippedStepIds: _strings(json['skippedStepIds']),
+    values: Map<String, Object?>.from(json['values'] as Map? ?? const {}),
+    completed: json['completed'] == true,
+  );
 
   static const OnboardingProgress empty = OnboardingProgress(
     currentStepId: null,
@@ -178,13 +190,13 @@ class RiderOnboardingConfig {
 
   factory RiderOnboardingConfig.fromJson(Map<String, dynamic> json) {
     final Map<String, dynamic> pkg = Map<String, dynamic>.from(json['package'] as Map? ?? const {});
-    final Map<String, dynamic> onboarding =
-        Map<String, dynamic>.from(json['onboarding'] as Map? ?? const {});
-    final List<OnboardingStepConfig> steps = (onboarding['steps'] as List<dynamic>? ?? const [])
-        .map((e) => OnboardingStepConfig.fromJson(Map<String, dynamic>.from(e as Map)))
-        .where((s) => s.enabled)
-        .toList()
-      ..sort((a, b) => a.sequence.compareTo(b.sequence));
+    final Map<String, dynamic> onboarding = Map<String, dynamic>.from(json['onboarding'] as Map? ?? const {});
+    final List<OnboardingStepConfig> steps =
+        (onboarding['steps'] as List<dynamic>? ?? const [])
+            .map((e) => OnboardingStepConfig.fromJson(Map<String, dynamic>.from(e as Map)))
+            .where((s) => s.enabled)
+            .toList()
+          ..sort((a, b) => a.sequence.compareTo(b.sequence));
     return RiderOnboardingConfig(
       packageId: pkg['id']?.toString() ?? '',
       packageCode: pkg['code']?.toString() ?? '',
@@ -216,7 +228,10 @@ class RiderOnboardingConfig {
     return steps.isEmpty ? 0 : steps.length - 1;
   }
 
-  Set<String> get fieldCodes => {for (final s in steps) for (final f in s.inputs) f.fieldCode};
+  Set<String> get fieldCodes => {
+    for (final s in steps)
+      for (final f in s.inputs) f.fieldCode,
+  };
 
   String? value(String fieldCode) {
     final Object? v = progress.values[fieldCode];
@@ -230,10 +245,10 @@ class RiderEnrollment {
   const RiderEnrollment({required this.clientId, required this.userId, required this.phone});
 
   factory RiderEnrollment.fromJson(Map<String, dynamic> json) => RiderEnrollment(
-        clientId: json['clientId']?.toString() ?? '',
-        userId: json['userId']?.toString() ?? '',
-        phone: json['phone']?.toString() ?? '',
-      );
+    clientId: json['clientId']?.toString() ?? '',
+    userId: json['userId']?.toString() ?? '',
+    phone: json['phone']?.toString() ?? '',
+  );
 
   final String clientId;
   final String userId;
@@ -249,18 +264,15 @@ class RiderAppApi {
     return _client.post<RiderEnrollment>(
       '/rider-app/enroll',
       skipAuth: true,
-      body: {
-        'phone': _normalise(mobile),
-        'companyCode': companyCode ?? ApiEnv.companyCode,
-      },
+      body: {'phone': _normalise(mobile), 'companyCode': companyCode ?? ApiEnv.companyCode},
       parse: (data) => RiderEnrollment.fromJson(Map<String, dynamic>.from(data as Map)),
     );
   }
 
   Future<Result<RiderOnboardingConfig>> onboarding() => _client.get<RiderOnboardingConfig>(
-        '/rider-app/onboarding',
-        parse: (data) => RiderOnboardingConfig.fromJson(Map<String, dynamic>.from(data as Map)),
-      );
+    '/rider-app/onboarding',
+    parse: (data) => RiderOnboardingConfig.fromJson(Map<String, dynamic>.from(data as Map)),
+  );
 
   Future<Result<RiderOnboardingConfig>> saveStep(String stepId, Map<String, Object?> values) {
     return _client.post<RiderOnboardingConfig>(
