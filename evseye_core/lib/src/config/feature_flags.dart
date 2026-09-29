@@ -48,17 +48,40 @@ abstract final class FeatureKeys {
   static const String iotTelemetry = 'IOT_TELEMETRY';
 
   static const Set<String> backendCatalogue = {
-    mobileLoginOtp, emailLoginOtp,
-    ageVerification, addressVerification, aadharVerification, panVerification,
-    drivingLicenceVerification, bankVerification, backgroundVerification,
-    policeVerification, referenceCheck, emergencyContact, medicalDeclaration,
-    profilePhoto, ageProofDocument, addressProofDocument, aadharProofDocument,
-    panProofDocument, drivingLicenceProofDocument, bankProofDocument,
+    mobileLoginOtp,
+    emailLoginOtp,
+    ageVerification,
+    addressVerification,
+    aadharVerification,
+    panVerification,
+    drivingLicenceVerification,
+    bankVerification,
+    backgroundVerification,
+    policeVerification,
+    referenceCheck,
+    emergencyContact,
+    medicalDeclaration,
+    profilePhoto,
+    ageProofDocument,
+    addressProofDocument,
+    aadharProofDocument,
+    panProofDocument,
+    drivingLicenceProofDocument,
+    bankProofDocument,
     medicalProofDocument,
     faceLivenessCheck,
-    hubSelection, planSelection, securityDeposit, onBoardingFees, upiCapture,
-    nachEmandate, insuranceNominee, agreementESign, pdiChecklist, devicePairing,
-    referralBenefit, training,
+    hubSelection,
+    planSelection,
+    securityDeposit,
+    onBoardingFees,
+    upiCapture,
+    nachEmandate,
+    insuranceNominee,
+    agreementESign,
+    pdiChecklist,
+    devicePairing,
+    referralBenefit,
+    training,
   };
 
   const FeatureKeys._();
@@ -67,11 +90,12 @@ abstract final class FeatureKeys {
 @immutable
 class FeatureFlags {
   const FeatureFlags({
-    this._flags = const {},
-    this._settings = const {},
+    Map<String, bool> flags = const {},
+    Map<String, dynamic> settings = const {},
     this.packageName = '',
     this.clientCode = '',
-  });
+  }) : _flags = flags,
+       _settings = settings;
 
   final Map<String, bool> _flags;
   final Map<String, dynamic> _settings;
@@ -112,14 +136,13 @@ class FeatureFlags {
   }
 
   FeatureFlags copyWith({Map<String, bool>? flags, Map<String, dynamic>? settings}) => FeatureFlags(
-        flags: flags ?? _flags,
-        settings: settings ?? _settings,
-        packageName: packageName,
-        clientCode: clientCode,
-      );
+    flags: flags ?? _flags,
+    settings: settings ?? _settings,
+    packageName: packageName,
+    clientCode: clientCode,
+  );
 
-  FeatureFlags withOverride(String key, bool value) =>
-      copyWith(flags: {..._flags, key: value});
+  FeatureFlags withOverride(String key, bool value) => copyWith(flags: {..._flags, key: value});
 
   @override
   bool operator ==(Object other) =>

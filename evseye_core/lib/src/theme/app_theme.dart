@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -71,20 +70,13 @@ abstract final class AppTheme {
           statusBarBrightness: Brightness.light,
         ),
       ),
-      dividerTheme: const DividerThemeData(
-        color: AppColors.stroke,
-        thickness: 1,
-        space: 1,
-      ),
+      dividerTheme: const DividerThemeData(color: AppColors.stroke, thickness: 1, space: 1),
       cardTheme: const CardThemeData(
         color: AppColors.surface,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: Corners.brLg,
-          side: Strokes.hairline,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: Corners.brLg, side: Strokes.hairline),
       ),
       iconTheme: const IconThemeData(color: AppColors.textSecondary, size: 22),
       listTileTheme: const ListTileThemeData(

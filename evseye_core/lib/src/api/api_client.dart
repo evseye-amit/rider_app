@@ -8,23 +8,22 @@ import '../l10n/l10n.dart';
 import '../utils/result.dart';
 import 'api_env.dart';
 import 'token_store.dart';
-class ApiClient {
-  ApiClient({
-    required this._tokens,
-    Dio? dio,
-    String? baseUrl,
-    bool? logRequests,
-  })  : _dio = dio ??
-            Dio(
-              BaseOptions(
-                baseUrl: baseUrl ?? ApiEnv.baseUrl,
-                connectTimeout: const Duration(seconds: 15),
-                receiveTimeout: const Duration(seconds: 20),
-                sendTimeout: const Duration(seconds: 20),
 
-                validateStatus: (_) => true,
-              ),
-            ) {
+class ApiClient {
+  ApiClient({required TokenStore tokens, Dio? dio, String? baseUrl, bool? logRequests})
+    : _tokens = tokens,
+      _dio =
+          dio ??
+          Dio(
+            BaseOptions(
+              baseUrl: baseUrl ?? ApiEnv.baseUrl,
+              connectTimeout: const Duration(seconds: 15),
+              receiveTimeout: const Duration(seconds: 20),
+              sendTimeout: const Duration(seconds: 20),
+
+              validateStatus: (_) => true,
+            ),
+          ) {
     if (logRequests ?? kDebugMode) {
       _dio.interceptors.add(
         PrettyDioLogger(
@@ -66,14 +65,9 @@ class ApiClient {
 
   Dio get raw => _dio;
 
-  static bool _carriesCredentials(String path) =>
-      path.endsWith('/auth/otp/verify') || path.endsWith('/auth/refresh');
+  static bool _carriesCredentials(String path) => path.endsWith('/auth/otp/verify') || path.endsWith('/auth/refresh');
 
-  Future<Result<T>> get<T>(
-    String path, {
-    Map<String, dynamic>? query,
-    T Function(dynamic data)? parse,
-  }) =>
+  Future<Result<T>> get<T>(String path, {Map<String, dynamic>? query, T Function(dynamic data)? parse}) =>
       _send<T>('GET', path, query: query, parse: parse);
 
   Future<Result<T>> post<T>(
@@ -82,8 +76,7 @@ class ApiClient {
     Map<String, dynamic>? query,
     T Function(dynamic data)? parse,
     bool skipAuth = false,
-  }) =>
-      _send<T>('POST', path, body: body, query: query, parse: parse, skipAuth: skipAuth);
+  }) => _send<T>('POST', path, body: body, query: query, parse: parse, skipAuth: skipAuth);
 
   Future<Result<T>> patch<T>(String path, {Object? body, T Function(dynamic data)? parse}) =>
       _send<T>('PATCH', path, body: body, parse: parse);
@@ -91,8 +84,7 @@ class ApiClient {
   Future<Result<T>> put<T>(String path, {Object? body, T Function(dynamic data)? parse}) =>
       _send<T>('PUT', path, body: body, parse: parse);
 
-  Future<Result<T>> delete<T>(String path, {T Function(dynamic data)? parse}) =>
-      _send<T>('DELETE', path, parse: parse);
+  Future<Result<T>> delete<T>(String path, {T Function(dynamic data)? parse}) => _send<T>('DELETE', path, parse: parse);
 
   Future<Result<T>> _send<T>(
     String method,
@@ -156,8 +148,7 @@ class ApiClient {
       );
       final int status = res.statusCode ?? 0;
       if (status < 200 || status >= 300) return false;
-      final Map<String, dynamic> data =
-          Map<String, dynamic>.from((res.data as Map)['data'] as Map);
+      final Map<String, dynamic> data = Map<String, dynamic>.from((res.data as Map)['data'] as Map);
       await _tokens.save(
         accessToken: data['accessToken'] as String,
         refreshToken: data['refreshToken'] as String? ?? refresh,
@@ -188,10 +179,8 @@ class ApiClient {
     return switch (e.type) {
       DioExceptionType.connectionTimeout ||
       DioExceptionType.sendTimeout ||
-      DioExceptionType.receiveTimeout =>
-        NetworkFailure(ActiveLocale.strings.errorServerTookTooLongAnswer),
-      DioExceptionType.connectionError =>
-        NetworkFailure(ActiveLocale.strings.errorCouldNotReachServerCheck),
+      DioExceptionType.receiveTimeout => NetworkFailure(ActiveLocale.strings.errorServerTookTooLongAnswer),
+      DioExceptionType.connectionError => NetworkFailure(ActiveLocale.strings.errorCouldNotReachServerCheck),
       _ => ServerFailure(e.message ?? ActiveLocale.strings.commonSomethingWentWrongPleaseTry),
     };
   }
