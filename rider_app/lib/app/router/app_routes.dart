@@ -22,6 +22,9 @@ abstract final class Routes {
   static const String profile = '/profile';
   static const String notifications = '/notifications';
   static const String raiseTicket = '/support/raise';
+  static const String payments = '/payments';
+  static const String vehicleExchanges = '/vehicle-exchanges';
+  static const String vehicleExchangeDetail = '/vehicle-exchanges/detail';
 
   const Routes._();
 }

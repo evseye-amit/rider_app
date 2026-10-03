@@ -74,6 +74,18 @@ class RiderDrawer extends ConsumerWidget {
                         context.go(Routes.support);
                       },
                     ),
+                    _DrawerItem(
+                      icon: Icons.account_balance_rounded,
+                      label: context.l10n.paymentsTitle,
+                      subtitle: context.l10n.paymentsSubtitle,
+                      onTap: () => _go(context, Routes.payments),
+                    ),
+                    _DrawerItem(
+                      icon: Icons.swap_horiz_rounded,
+                      label: context.l10n.exchangeTitle,
+                      subtitle: context.l10n.exchangeSubtitle,
+                      onTap: () => _go(context, Routes.vehicleExchanges),
+                    ),
                     const SizedBox(height: Insets.md),
                     _DrawerItem(
                       icon: Icons.language_rounded,

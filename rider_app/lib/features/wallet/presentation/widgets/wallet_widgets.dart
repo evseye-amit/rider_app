@@ -1,37 +1,68 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/wallet_summary.dart';
+import '../../domain/entities/wallet_overview.dart';
 
-IconData categoryIcon(String category) => switch (category) {
-  'trip' => Icons.route_rounded,
-  'incentive' => Icons.emoji_events_rounded,
-  'rent' => Icons.receipt_long_rounded,
-  'penalty' => Icons.report_gmailerrorred_rounded,
-  'payout' => Icons.account_balance_rounded,
-  'referral' => Icons.group_add_rounded,
-  'deposit' => Icons.savings_rounded,
+IconData walletEntryIcon(WalletEntryKind kind) => switch (kind) {
+  WalletEntryKind.topUp => Icons.add_circle_rounded,
+  WalletEntryKind.reward ||
+  WalletEntryKind.referralReward ||
+  WalletEntryKind.selfSubmissionReward => Icons.emoji_events_rounded,
+  WalletEntryKind.refund || WalletEntryKind.securityDepositRefund || WalletEntryKind.reversal => Icons.undo_rounded,
+  WalletEntryKind.rental => Icons.receipt_long_rounded,
+  WalletEntryKind.payment => Icons.account_balance_rounded,
+  WalletEntryKind.securityDeposit ||
+  WalletEntryKind.securityDepositDeduction ||
+  WalletEntryKind.securityDepositForfeiture => Icons.savings_rounded,
+  WalletEntryKind.penalty || WalletEntryKind.trafficChallan => Icons.report_gmailerrorred_rounded,
+  WalletEntryKind.repairCharge || WalletEntryKind.serviceCharge => Icons.build_rounded,
+  WalletEntryKind.batteryCharge || WalletEntryKind.swapCharge => Icons.battery_charging_full_rounded,
+  WalletEntryKind.onboardingFee || WalletEntryKind.exchangeFee => Icons.assignment_rounded,
+  WalletEntryKind.accessoryCharge || WalletEntryKind.lostEquipmentCharge => Icons.inventory_2_rounded,
   _ => Icons.swap_horiz_rounded,
 };
 
-Color categoryColor(String category) => AppColors.primary;
+String walletEntryLabel(AppL10n l10n, WalletEntryKind kind) => switch (kind) {
+  WalletEntryKind.topUp => l10n.walletKindTopUp,
+  WalletEntryKind.reward ||
+  WalletEntryKind.referralReward ||
+  WalletEntryKind.selfSubmissionReward => l10n.walletKindReward,
+  WalletEntryKind.refund || WalletEntryKind.securityDepositRefund || WalletEntryKind.reversal => l10n.walletKindRefund,
+  WalletEntryKind.rental => l10n.walletKindRental,
+  WalletEntryKind.payment => l10n.walletKindPayment,
+  WalletEntryKind.securityDeposit ||
+  WalletEntryKind.securityDepositDeduction ||
+  WalletEntryKind.securityDepositForfeiture => l10n.walletKindDeposit,
+  WalletEntryKind.penalty || WalletEntryKind.trafficChallan => l10n.walletKindPenalty,
+  WalletEntryKind.repairCharge ||
+  WalletEntryKind.serviceCharge ||
+  WalletEntryKind.batteryCharge ||
+  WalletEntryKind.swapCharge => l10n.walletKindService,
+  _ => l10n.walletKindAdjustment,
+};
 
-StatusTone statusTone(String status) => switch (status) {
-  'settled' => StatusTone.success,
-  'pending' => StatusTone.warning,
-  'held' => StatusTone.warning,
-  'failed' => StatusTone.danger,
-  _ => StatusTone.neutral,
+StatusTone walletStateTone(WalletEntryState state) => switch (state) {
+  WalletEntryState.settled => StatusTone.success,
+  WalletEntryState.pending => StatusTone.warning,
+  WalletEntryState.failed => StatusTone.danger,
+  WalletEntryState.reversed => StatusTone.neutral,
+};
+
+String walletStateLabel(AppL10n l10n, WalletEntryState state) => switch (state) {
+  WalletEntryState.settled => l10n.walletStateSettled,
+  WalletEntryState.pending => l10n.walletStatePending,
+  WalletEntryState.failed => l10n.walletStateFailed,
+  WalletEntryState.reversed => l10n.walletStateReversed,
 };
 
 class WalletBand extends StatelessWidget {
-  const WalletBand({required this.summary, super.key});
+  const WalletBand({required this.overview, super.key});
 
-  final WalletSummary? summary;
+  final WalletOverview? overview;
 
   @override
   Widget build(BuildContext context) {
-    final WalletSummary? s = summary;
+    final WalletOverview? wallet = overview;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,9 +87,9 @@ class WalletBand extends StatelessWidget {
                 ],
               ),
             ),
-            if (s != null && s.pendingPayout > 0)
+            if (wallet != null && wallet.spendable.held > 0)
               StatusChip(
-                label: '${Fmt.money(s.pendingPayout)} pending',
+                label: '${Fmt.money(wallet.spendable.held)} ${context.l10n.walletOnHold}',
                 tone: StatusTone.warning,
                 solid: true,
                 dense: true,
@@ -66,10 +97,10 @@ class WalletBand extends StatelessWidget {
           ],
         ),
         const Gap.xxl(),
-        Text(context.l10n.commonPaidDate, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
+        Text(context.l10n.walletAvailable, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
         const Gap.sm(),
         Text(
-          s == null ? '—' : Fmt.money(s.balance),
+          wallet == null ? '—' : Fmt.money(wallet.spendable.available),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
@@ -86,27 +117,27 @@ class WalletBand extends StatelessWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: context.l10n.commonWeek,
-                  value: s == null ? '—' : Fmt.money(s.deductedThisWeek),
-                  icon: Icons.north_east_rounded,
+                  label: context.l10n.walletCash,
+                  value: wallet == null ? '—' : Fmt.money(wallet.cash.available),
+                  icon: Icons.payments_rounded,
                 ),
               ),
               const InkDivider(),
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: context.l10n.walletDueNow,
-                  value: s == null ? '—' : Fmt.money(s.pendingPayout),
-                  icon: Icons.schedule_rounded,
+                  label: context.l10n.commonIncentives,
+                  value: wallet == null ? '—' : Fmt.money(wallet.rewards.available),
+                  icon: Icons.emoji_events_rounded,
                 ),
               ),
               const InkDivider(),
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: context.l10n.walletPayments,
-                  value: s == null ? '—' : '${s.transactions.length}',
-                  icon: Icons.receipt_long_rounded,
+                  label: context.l10n.walletDeposit,
+                  value: wallet == null ? '—' : Fmt.money(wallet.depositBucket.total),
+                  icon: Icons.savings_rounded,
                 ),
               ),
             ],
@@ -117,85 +148,16 @@ class WalletBand extends StatelessWidget {
   }
 }
 
-class WeekSummaryRow extends StatelessWidget {
-  const WeekSummaryRow({required this.credited, required this.deducted, required this.incentives, super.key});
+class WalletEntryTile extends StatelessWidget {
+  const WalletEntryTile({required this.entry, this.onTap, super.key});
 
-  final num credited;
-  final num deducted;
-  final num incentives;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _WeekTile(
-            label: context.l10n.walletCredited,
-            value: Fmt.money(credited),
-            icon: Icons.south_west_rounded,
-            color: AppColors.mint,
-          ),
-        ),
-        _VDiv(),
-        Expanded(
-          child: _WeekTile(
-            label: context.l10n.walletDeducted,
-            value: Fmt.money(deducted),
-            icon: Icons.north_east_rounded,
-            color: AppColors.danger,
-          ),
-        ),
-        _VDiv(),
-        Expanded(
-          child: _WeekTile(
-            label: context.l10n.commonIncentives,
-            value: Fmt.money(incentives),
-            icon: Icons.emoji_events_rounded,
-            color: AppColors.warning,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _VDiv extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => Container(width: 1, height: 44, color: AppColors.stroke.withValues(alpha: 0.6));
-}
-
-class _WeekTile extends StatelessWidget {
-  const _WeekTile({required this.label, required this.value, required this.icon, required this.color});
-
-  final String label;
-  final String value;
-  final IconData icon;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Icon(icon, size: 15, color: color),
-        const SizedBox(height: Insets.sm - 2),
-        Text(value, style: AppText.numericSmall.copyWith(fontSize: 14.5)),
-        const SizedBox(height: 1),
-        Text(label, style: AppText.bodySmall.copyWith(fontSize: 10.5)),
-      ],
-    );
-  }
-}
-
-class TransactionTile extends StatelessWidget {
-  const TransactionTile({required this.transaction, this.onTap, super.key});
-
-  final WalletTransaction transaction;
+  final WalletEntry entry;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final Color tone = categoryColor(transaction.category);
-    final String sign = transaction.isCredit ? '+' : '−';
+    final String sign = entry.isCredit ? '+' : '−';
+    final Color tone = entry.isCredit ? AppColors.mint : AppColors.danger;
 
     return Pressable(
       onTap: onTap,
@@ -204,21 +166,21 @@ class TransactionTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: Insets.sm + 2),
         child: Row(
           children: [
-            IconTile(icon: categoryIcon(transaction.category), tone: tone, size: 38),
+            IconTile(icon: walletEntryIcon(entry.kind), tone: AppColors.primary, size: 38),
             const SizedBox(width: Insets.md),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    transaction.title,
+                    entry.description ?? walletEntryLabel(context.l10n, entry.kind),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.titleSmall.copyWith(fontSize: 13.5),
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    '${transaction.subtitle} · ${Fmt.relative(transaction.at)}',
+                    '${walletEntryLabel(context.l10n, entry.kind)} · ${Fmt.relative(entry.at)}',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.bodySmall.copyWith(fontSize: 11.5),
@@ -231,16 +193,13 @@ class TransactionTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  '$sign${Fmt.money(transaction.amount)}',
-                  style: AppText.numericSmall.copyWith(
-                    fontSize: 14,
-                    color: transaction.isCredit ? AppColors.mint : AppColors.danger,
-                  ),
+                  '$sign${Fmt.money(entry.amount)}',
+                  style: AppText.numericSmall.copyWith(fontSize: 14, color: tone),
                 ),
                 const SizedBox(height: 3),
                 StatusChip(
-                  label: transaction.status,
-                  tone: statusTone(transaction.status),
+                  label: walletStateLabel(context.l10n, entry.state),
+                  tone: walletStateTone(entry.state),
                   dense: true,
                   showDot: false,
                 ),
@@ -253,63 +212,73 @@ class TransactionTile extends StatelessWidget {
   }
 }
 
-class TransactionDetailBody extends StatelessWidget {
-  const TransactionDetailBody({required this.transaction, super.key});
+class WalletEntryDetailBody extends StatelessWidget {
+  const WalletEntryDetailBody({required this.entry, super.key});
 
-  final WalletTransaction transaction;
+  final WalletEntry entry;
 
   @override
   Widget build(BuildContext context) {
-    final Color tone = categoryColor(transaction.category);
+    final Color tone = entry.isCredit ? AppColors.mint : AppColors.danger;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Container(
-              width: 46,
-              height: 46,
-              decoration: BoxDecoration(color: AppColors.washFor(tone), borderRadius: Corners.brMd),
-              child: Icon(categoryIcon(transaction.category), size: 22, color: tone),
-            ),
-            const SizedBox(width: Insets.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(transaction.title, style: AppText.titleMedium.copyWith(fontSize: 16)),
-                  const SizedBox(height: 2),
-                  Text(transaction.subtitle, style: AppText.bodySmall.copyWith(fontSize: 12.5)),
-                ],
-              ),
-            ),
-          ],
-        ),
-        const Gap.xl(),
         Center(
           child: Text(
-            '${transaction.isCredit ? '+' : '−'}${Fmt.money(transaction.amount)}',
-            style: AppText.numericLarge.copyWith(
-              fontSize: 32,
-              color: transaction.isCredit ? AppColors.mint : AppColors.danger,
-            ),
+            '${entry.isCredit ? '+' : '−'}${Fmt.money(entry.amount)}',
+            style: AppText.numericLarge.copyWith(fontSize: 32, color: tone),
           ),
         ),
         const Gap.xl(),
         Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-        KeyValueRow(label: context.l10n.walletReferenceId, value: transaction.id.toUpperCase()),
-        KeyValueRow(label: context.l10n.commonCategory, value: _titleCase(transaction.category)),
-        KeyValueRow(label: context.l10n.walletDateTime, value: Fmt.dateTime(transaction.at)),
+        KeyValueRow(label: context.l10n.walletReferenceId, value: entry.reference),
+        KeyValueRow(label: context.l10n.commonCategory, value: walletEntryLabel(context.l10n, entry.kind)),
+        KeyValueRow(label: context.l10n.walletDateTime, value: Fmt.dateTime(entry.at)),
         KeyValueRow(
           label: context.l10n.commonStatus,
-          value: _titleCase(transaction.status),
-          valueColor: statusTone(transaction.status).color,
+          value: walletStateLabel(context.l10n, entry.state),
+          valueColor: walletStateTone(entry.state).color,
         ),
+        if (entry.description != null) ...[
+          const Gap.md(),
+          Text(entry.description!, style: AppText.bodyMedium.copyWith(fontSize: 13, height: 1.5)),
+        ],
         const Gap.lg(),
       ],
     );
   }
+}
 
-  static String _titleCase(String s) => s.isEmpty ? s : '${s[0].toUpperCase()}${s.substring(1)}';
+class WalletDepositCard extends StatelessWidget {
+  const WalletDepositCard({required this.deposit, super.key});
+
+  final WalletDeposit deposit;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Insets.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          LabeledProgress(
+            value: deposit.fundedProgress,
+            label: '${Fmt.money(deposit.funded)} of ${Fmt.money(deposit.required_)}',
+            trailingLabel: Fmt.percent(deposit.fundedProgress),
+          ),
+          const Gap.sm(),
+          Row(
+            children: [
+              Expanded(child: Text(context.l10n.walletRefundable, style: AppText.bodySmall.copyWith(fontSize: 11.5))),
+              Text(
+                Fmt.money(deposit.refundable),
+                style: AppText.numericSmall.copyWith(fontSize: 13, color: AppColors.mint),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }
