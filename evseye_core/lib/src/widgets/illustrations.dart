@@ -18,8 +18,8 @@ enum BrandArt {
 
   manager('manager'),
 
-  introEarnings('intro_earnings'),
-  introRide('scooter'),
+  introLogo('intro_logo'),
+  introRide('intro_ride'),
   introSupport('intro_support');
 
   const BrandArt(this.file);

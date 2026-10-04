@@ -592,13 +592,13 @@
   "@appGoHome": {
     "description": "Go home"
   },
-  "appPinkRidesOps": "Pink Rides Ops",
-  "@appPinkRidesOps": {
-    "description": "Pink Rides Ops"
+  "appNameFleet": "Pink FM app",
+  "@appNameFleet": {
+    "description": "Launcher and window title of the fleet manager app."
   },
-  "appPinkRidesRental": "Pink Rides Rental",
-  "@appPinkRidesRental": {
-    "description": "Pink Rides Rental"
+  "appNameRider": "Pink Rider App",
+  "@appNameRider": {
+    "description": "Launcher and window title of the rider app."
   },
   "authChangeNumber": "Change number",
   "@authChangeNumber": {

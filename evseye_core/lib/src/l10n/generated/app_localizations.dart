@@ -982,17 +982,17 @@ abstract class AppL10n {
   /// **'Go home'**
   String get appGoHome;
 
-  /// Pink Rides Ops
+  /// Launcher and window title of the fleet manager app.
   ///
   /// In en, this message translates to:
-  /// **'Pink Rides Ops'**
-  String get appPinkRidesOps;
+  /// **'Pink FM app'**
+  String get appNameFleet;
 
-  /// Pink Rides Rental
+  /// Launcher and window title of the rider app.
   ///
   /// In en, this message translates to:
-  /// **'Pink Rides Rental'**
-  String get appPinkRidesRental;
+  /// **'Pink Rider App'**
+  String get appNameRider;
 
   /// Change number
   ///

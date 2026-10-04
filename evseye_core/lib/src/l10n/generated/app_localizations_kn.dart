@@ -465,10 +465,10 @@ class AppL10nKn extends AppL10n {
   String get appGoHome => 'ಮುಖಪುಟಕ್ಕೆ ಹೋಗಿ';
 
   @override
-  String get appPinkRidesOps => 'Pink Rides Ops';
+  String get appNameFleet => 'Pink FM app';
 
   @override
-  String get appPinkRidesRental => 'Pink Rides Rental';
+  String get appNameRider => 'Pink Rider App';
 
   @override
   String get authChangeNumber => 'ಸಂಖ್ಯೆ ಬದಲಾಯಿಸಿ';

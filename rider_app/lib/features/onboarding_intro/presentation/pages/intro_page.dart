@@ -10,7 +10,7 @@ import '../../domain/entities/intro_slide.dart';
 import '../providers/intro_slides_provider.dart';
 
 const Map<String, BrandArt> _slideArt = {
-  'earn': BrandArt.introEarnings,
+  'earn': BrandArt.introLogo,
   'vehicle': BrandArt.introRide,
   'support': BrandArt.introSupport,
 };

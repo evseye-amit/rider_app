@@ -463,10 +463,10 @@ class AppL10nHi extends AppL10n {
   String get appGoHome => 'होम पर जाएं';
 
   @override
-  String get appPinkRidesOps => 'Pink Rides Ops';
+  String get appNameFleet => 'Pink FM app';
 
   @override
-  String get appPinkRidesRental => 'Pink Rides Rental';
+  String get appNameRider => 'Pink Rider App';
 
   @override
   String get authChangeNumber => 'नंबर बदलें';

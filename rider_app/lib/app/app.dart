@@ -12,7 +12,7 @@ class RiderApp extends ConsumerWidget {
     final AppLocale locale = ref.watch(localeProvider.select((p) => p.locale));
 
     return MaterialApp.router(
-      onGenerateTitle: (context) => context.l10n.appPinkRidesRental,
+      onGenerateTitle: (context) => context.l10n.appNameRider,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.light,

@@ -12,7 +12,7 @@ class FleetManagerApp extends ConsumerWidget {
     final AppLocale locale = ref.watch(localeProvider.select((p) => p.locale));
 
     return MaterialApp.router(
-      onGenerateTitle: (context) => context.l10n.appPinkRidesOps,
+      onGenerateTitle: (context) => context.l10n.appNameFleet,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       darkTheme: AppTheme.light,
