@@ -87,6 +87,7 @@ class _OnboardingPreviewPageState extends ConsumerState<OnboardingPreviewPage> {
     return HeroScaffold(
       bandColor: AppColors.ink,
       bottomPadding: 120,
+      pinBand: true,
       band: _Band(packageName: config.packageName, filled: filled, total: total),
       bottomNavigationBar: Container(
         padding: EdgeInsets.fromLTRB(

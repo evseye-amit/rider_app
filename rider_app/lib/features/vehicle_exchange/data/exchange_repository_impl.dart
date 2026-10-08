@@ -1,12 +1,14 @@
 import 'package:evseye_core/evseye_core.dart';
 
 import '../domain/entities/exchange_request.dart';
+import '../domain/entities/rental_agreement.dart';
 import '../domain/exchange_repository.dart';
 
 class ExchangeRepositoryImpl implements ExchangeRepository {
-  const ExchangeRepositoryImpl(this._api);
+  const ExchangeRepositoryImpl(this._api, this._agreements);
 
   final VehicleExchangeApi _api;
+  final RentalAgreementsApi _agreements;
 
   @override
   Future<Result<List<ExchangeRequest>>> list() async =>
@@ -16,6 +18,20 @@ class ExchangeRepositoryImpl implements ExchangeRepository {
   Future<Result<ExchangeRequest>> details(String id) async => (await _api.details(id)).map(_request);
 
   @override
+  Future<Result<RentalAgreement?>> activeAgreement() async => (await _agreements.list()).map(
+    (items) => switch (items.where((item) => item.isActive).firstOrNull) {
+      final RentalAgreementDto active => RentalAgreement(
+        id: active.id,
+        number: active.agreementNumber,
+        rent: active.recurringAmount,
+        period: RentPeriod.parse(active.rentalPeriodType),
+        scooterName: _scooterName(active.vehicleModel, active.vehicleVariant),
+      ),
+      null => null,
+    },
+  );
+
+  @override
   Future<Result<ExchangeRequest>> request({
     required String agreementId,
     required String reasonCode,
@@ -23,49 +39,60 @@ class ExchangeRepositoryImpl implements ExchangeRepository {
   }) async => (await _api.request(agreementId: agreementId, reasonCode: reasonCode, reason: reason)).map(_request);
 
   @override
-  Future<Result<ExchangeRequest>> acceptOffer({
-    required String id,
-    required String offerId,
-    required String offerHash,
-  }) async => (await _api.accept(id: id, offerId: offerId, offerHash: offerHash)).map(_request);
+  Future<Result<void>> acceptOffer({required String id, required String offerId, required String offerHash}) =>
+      _api.accept(id: id, offerId: offerId, offerHash: offerHash);
 
   @override
-  Future<Result<ExchangeRequest>> rejectOffer({
-    required String id,
-    required String offerId,
-    required String reason,
-  }) async => (await _api.rejectOffer(id: id, offerId: offerId, reason: reason)).map(_request);
+  Future<Result<void>> rejectOffer({required String id, required String offerId, required String reason}) =>
+      _api.rejectOffer(id: id, offerId: offerId, reason: reason);
 
   @override
-  Future<Result<ExchangeRequest>> cancel(String id) async => (await _api.cancel(id)).map(_request);
+  Future<Result<void>> cancel(String id) => _api.cancel(id);
+
+  @override
+  Future<Result<List<AgreementRevision>>> agreementHistory(String agreementId) async =>
+      (await _api.agreementVersions(agreementId)).map(
+        (versions) => [
+          for (final AgreementVersion version in versions.reversed)
+            AgreementRevision(
+              number: version.versionNumber,
+              rent: version.recurringAmount,
+              effectiveFrom: version.effectiveFrom,
+              state: switch (version.status) {
+                'ACTIVE' => RevisionState.current,
+                'PENDING' => RevisionState.pending,
+                _ => RevisionState.previous,
+              },
+              scooterName: _scooterName(version.vehicleModel, version.vehicleVariant),
+            ),
+        ],
+      );
 
   static ExchangeRequest _request(VehicleExchange exchange) => ExchangeRequest(
     id: exchange.id,
     agreementId: exchange.agreementId,
-    stage: _stage(exchange.status),
-    statusCode: exchange.status.wire,
+    status: _status(exchange.status),
     reasonCode: exchange.reasonCode,
     createdAt: exchange.createdAt,
     reason: exchange.reason,
-    effectiveAt: exchange.effectiveAt ?? exchange.proposedEffectiveAt,
-    reservationExpiresAt: exchange.reservationExpiresAt,
+    oldScooterReturned: exchange.oldVehicleReturned,
     completedAt: exchange.completedAt,
-    canCancel: exchange.status.canCancel,
+    canCancel: exchange.canCancel,
     offers: [for (final VehicleExchangeOffer offer in exchange.offers) _offer(offer)],
   );
 
-  static ExchangeStage _stage(VehicleExchangeStatus status) => switch (status) {
-    VehicleExchangeStatus.requested => ExchangeStage.requested,
-    VehicleExchangeStatus.approved || VehicleExchangeStatus.replacementSelected => ExchangeStage.inReview,
-    VehicleExchangeStatus.offerPresented => ExchangeStage.offerReady,
-    VehicleExchangeStatus.accepted => ExchangeStage.accepted,
-    VehicleExchangeStatus.returnPending ||
-    VehicleExchangeStatus.depositPending ||
-    VehicleExchangeStatus.handoverPending => ExchangeStage.awaitingHandover,
-    VehicleExchangeStatus.completed => ExchangeStage.completed,
-    VehicleExchangeStatus.rejected ||
-    VehicleExchangeStatus.cancelled ||
-    VehicleExchangeStatus.expired => ExchangeStage.closed,
+  static ExchangeStatus _status(VehicleExchangeStatus status) => switch (status) {
+    VehicleExchangeStatus.requested => ExchangeStatus.requested,
+    VehicleExchangeStatus.approved => ExchangeStatus.approved,
+    VehicleExchangeStatus.returnPending => ExchangeStatus.returnPending,
+    VehicleExchangeStatus.replacementSelected => ExchangeStatus.replacementSelected,
+    VehicleExchangeStatus.offerPresented => ExchangeStatus.offerPresented,
+    VehicleExchangeStatus.accepted || VehicleExchangeStatus.depositPending => ExchangeStatus.depositPending,
+    VehicleExchangeStatus.handoverPending => ExchangeStatus.handoverPending,
+    VehicleExchangeStatus.completed => ExchangeStatus.completed,
+    VehicleExchangeStatus.rejected => ExchangeStatus.rejected,
+    VehicleExchangeStatus.cancelled => ExchangeStatus.cancelled,
+    VehicleExchangeStatus.expired => ExchangeStatus.expired,
   };
 
   static ExchangeOffer _offer(VehicleExchangeOffer offer) => ExchangeOffer(
@@ -76,17 +103,27 @@ class ExchangeRepositoryImpl implements ExchangeRepository {
     termsVersion: offer.termsVersion,
     expiresAt: offer.expiresAt,
     isPresented: offer.isPresented,
-    rentDifference: _amount(offer.commercialDifference, const ['rent', 'rentDelta', 'rentDifference']),
-    depositDifference: _amount(offer.commercialDifference, const ['deposit', 'depositDelta', 'depositDifference']),
+    isAccepted: offer.status == VehicleExchangeOfferStatus.accepted,
+    quote: _quote(offer.quote),
   );
 
-  static num? _amount(Map<String, dynamic> source, List<String> keys) {
-    for (final String key in keys) {
-      final Object? value = source[key];
-      if (value is num) return value;
-      final num? parsed = num.tryParse(value?.toString() ?? '');
-      if (parsed != null) return parsed;
-    }
-    return null;
+  static ExchangeQuote _quote(ExchangeQuoteDto quote) => ExchangeQuote(
+    newRent: quote.recurringAmount,
+    rentAdjustment: quote.rentAdjustment,
+    depositMoved: quote.depositTransfer,
+    depositToPay: quote.depositAdditional,
+    depositExcess: quote.depositExcess,
+    refundsExcess: quote.refundsExcess,
+    fee: quote.exchangeFee,
+    feeWaived: quote.feeWaived,
+    period: RentPeriod.parse(quote.rentalPeriod),
+    scooterName: _scooterName(quote.vehicleModel, quote.vehicleVariant),
+    hubName: quote.hubName,
+    newRentFrom: quote.billingStartAt,
+  );
+
+  static String? _scooterName(String? model, String? variant) {
+    final String name = [?model, ?variant].join(' ').trim();
+    return name.isEmpty ? null : name;
   }
 }

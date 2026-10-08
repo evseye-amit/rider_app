@@ -77,6 +77,7 @@ class _WaitingPageState extends ConsumerState<WaitingPage> with SingleTickerProv
     if (deployment.hasError) {
       return AppScaffold(
         title: context.l10n.deploymentPreparingScooter,
+        backgroundColor: AppColors.ink,
         showBack: false,
         actions: [IconButton(icon: const Icon(Icons.logout_rounded), onPressed: _signOut)],
         body: EmptyState(
@@ -94,6 +95,7 @@ class _WaitingPageState extends ConsumerState<WaitingPage> with SingleTickerProv
     if (current == null) {
       return AppScaffold(
         title: context.l10n.deploymentPreparingScooter,
+        backgroundColor: AppColors.ink,
         showBack: false,
         body: const PageBody(
           children: [
@@ -110,6 +112,7 @@ class _WaitingPageState extends ConsumerState<WaitingPage> with SingleTickerProv
 
     return AppScaffold(
       title: context.l10n.deploymentPreparingScooter,
+      backgroundColor: AppColors.ink,
       subtitle: current.status == DeploymentStatus.unknown
           ? context.l10n.deploymentWaitingAllocation
           : current.status.label,

@@ -174,7 +174,7 @@ class _Band extends StatelessWidget {
         ),
         const Gap.lg(),
         PhotoPanel(
-          photo: BrandPhoto.fleet,
+          photo: BrandPhoto.evScooter,
           height: 132,
           title: context.l10n.allocationAssignVehicle,
           subtitle: 'For ${rider.name}$riderCode · ${Fmt.phone(rider.mobile)}',
@@ -211,7 +211,7 @@ class _VehicleOptionCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const PhotoThumb(photo: BrandPhoto.fleet, size: 44),
+                const PhotoThumb(photo: BrandPhoto.evScooter, size: 44),
                 const SizedBox(width: Insets.md),
                 Expanded(
                   child: Column(

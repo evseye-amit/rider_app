@@ -168,6 +168,12 @@ class AppL10nEn extends AppL10n {
   String get allocationFleetCode => 'Fleet code';
 
   @override
+  String get allocationFleetOnlyBody => 'Scooter assignment is done with the hub\'s fleet manager login.';
+
+  @override
+  String get allocationFleetOnlyTitle => 'Not available for this login';
+
+  @override
   String get allocationFront => 'Front';
 
   @override
@@ -1427,13 +1433,34 @@ class AppL10nEn extends AppL10n {
   String get errorUnknown => 'Unknown';
 
   @override
+  String get esignAddNameFirst => 'Add your full name in the profile step first';
+
+  @override
+  String get esignSigned => 'Signed';
+
+  @override
+  String get esignTapToSign => 'Tap to sign';
+
+  @override
+  String get esignTitle => 'Your e-signature';
+
+  @override
+  String get esignYourName => 'Your name';
+
+  @override
   String get exchangeAcceptConfirm => 'Accepting means you agree to the new terms for this scooter.';
 
   @override
   String get exchangeAccepted => 'Offer accepted';
 
   @override
+  String get exchangeAcceptedOfferTitle => 'Your new plan';
+
+  @override
   String get exchangeAcceptOffer => 'Accept offer';
+
+  @override
+  String get exchangeAgreementHistory => 'Agreement history';
 
   @override
   String get exchangeCancelConfirm => 'This exchange request will be closed.';
@@ -1445,28 +1472,341 @@ class AppL10nEn extends AppL10n {
   String get exchangeCancelRequest => 'Cancel request';
 
   @override
+  String get exchangeChooseReason => 'Why do you need an exchange?';
+
+  @override
   String get exchangeCompleted => 'Completed';
+
+  @override
+  String get exchangeConsent => 'I have read and agree to the updated terms';
 
   @override
   String get exchangeCouldNotLoad => 'Could not load exchanges';
 
   @override
-  String get exchangeDepositChange => 'Deposit change';
+  String get exchangeCurrentScooter => 'Current scooter';
+
+  @override
+  String exchangeDepositDue(String amount) {
+    return 'Pay $amount more deposit before you collect your new scooter.';
+  }
+
+  @override
+  String get exchangeDepositHeld => 'Extra deposit kept by hub';
+
+  @override
+  String get exchangeDepositMoved => 'Deposit moved over';
+
+  @override
+  String get exchangeDepositRefund => 'Deposit refund';
+
+  @override
+  String get exchangeDepositToPay => 'Extra deposit to pay';
+
+  @override
+  String get exchangeDeskApprove => 'Approve request';
+
+  @override
+  String get exchangeDeskApproved => 'Request approved';
+
+  @override
+  String get exchangeDeskChangeScooter => 'Change scooter';
+
+  @override
+  String get exchangeDeskChooseScooter => 'Choose replacement scooter';
+
+  @override
+  String get exchangeDeskComplete => 'Complete exchange';
+
+  @override
+  String get exchangeDeskConfirmReturn => 'Confirm scooter returned';
+
+  @override
+  String exchangeDeskDepositDue(String amount) {
+    return 'The rider still has to pay $amount more deposit.';
+  }
+
+  @override
+  String get exchangeDeskDepositsSettled => 'Deposits settled';
+
+  @override
+  String get exchangeDeskEmptyBody => 'When a rider asks for a different scooter, the request shows up here.';
+
+  @override
+  String get exchangeDeskExchangeCompleted => 'Exchange completed';
+
+  @override
+  String get exchangeDeskGuideChoose => 'The old scooter is back. Choose a replacement scooter for the rider.';
+
+  @override
+  String get exchangeDeskGuideDeposits => 'The rider accepted. Settle the deposits to move on to the handover.';
+
+  @override
+  String get exchangeDeskGuideReview => 'Check the request, then approve or reject it.';
+
+  @override
+  String get exchangeDeskGuideSendOffer => 'Check the offer below and send it to the rider.';
+
+  @override
+  String get exchangeDeskGuideStartHandover => 'Deposits are settled. Start the handover of the new scooter.';
+
+  @override
+  String get exchangeDeskGuideStartReturn => 'Start the return of the rider\'s current scooter.';
+
+  @override
+  String get exchangeDeskHandoverHint =>
+      'The hub\'s fleet manager hands over the new scooter through the normal allocation steps. Once the scooter is active with the rider, complete the exchange.';
+
+  @override
+  String get exchangeDeskHandoverStarted => 'Handover started';
+
+  @override
+  String get exchangeDeskNeedsAction => 'Needs action';
+
+  @override
+  String get exchangeDeskNoScooters => 'No scooters are available right now.';
+
+  @override
+  String get exchangeDeskOfferPreview => 'Offer preview';
+
+  @override
+  String get exchangeDeskOfferSent => 'Offer sent to rider';
+
+  @override
+  String get exchangeDeskOpenReturn => 'Open return';
+
+  @override
+  String get exchangeDeskReject => 'Reject request';
+
+  @override
+  String get exchangeDeskRejectedDone => 'Request rejected';
+
+  @override
+  String get exchangeDeskRejectSubtitle => 'Tell the rider why this can\'t be approved.';
+
+  @override
+  String get exchangeDeskReplacement => 'Replacement scooter';
+
+  @override
+  String exchangeDeskReservedUntil(String time) {
+    return 'Until $time';
+  }
+
+  @override
+  String get exchangeDeskReserveScooter => 'Reserve this scooter';
+
+  @override
+  String get exchangeDeskReturnConfirmed => 'Return confirmed';
+
+  @override
+  String get exchangeDeskReturnHint =>
+      'Finish the return in Returns: verify the rider\'s OTP and complete the inspection. Then confirm it here.';
+
+  @override
+  String get exchangeDeskReturnStarted => 'Return started';
+
+  @override
+  String get exchangeDeskRiderNote => 'Rider\'s note';
+
+  @override
+  String get exchangeDeskScooterReserved => 'Scooter reserved';
+
+  @override
+  String get exchangeDeskSendOffer => 'Send offer to rider';
+
+  @override
+  String get exchangeDeskSettleDeposits => 'Settle deposits';
+
+  @override
+  String get exchangeDeskStartHandover => 'Start handover';
+
+  @override
+  String get exchangeDeskStartReturn => 'Start scooter return';
+
+  @override
+  String get exchangeDeskStatusOfferSent => 'Offer sent';
+
+  @override
+  String get exchangeDeskStatusReserved => 'Scooter reserved';
+
+  @override
+  String get exchangeDeskSubtitle => 'Riders asking for a different scooter';
+
+  @override
+  String get exchangeDeskWaitingRider => 'Offer sent. Waiting for the rider to accept it in their app.';
+
+  @override
+  String get exchangeDeskWithRider => 'Waiting for rider';
+
+  @override
+  String get exchangeDetails => 'Request details';
 
   @override
   String get exchangeDetailTitle => 'Exchange request';
 
   @override
-  String get exchangeEffective => 'Changes from';
+  String get exchangeErrorAlreadyReturned => 'The old scooter has already been returned.';
+
+  @override
+  String get exchangeErrorBillingChanged => 'Billing changed after the offer was accepted. Please contact support.';
+
+  @override
+  String get exchangeErrorCannotCancel =>
+      'Your scooter has already been returned, so this request can\'t be cancelled here. Please contact your hub.';
+
+  @override
+  String get exchangeErrorChanged => 'This request was just updated. Pull down to refresh and try again.';
+
+  @override
+  String get exchangeErrorDepositsUnsettled => 'Deposits aren\'t settled yet. Settle the deposits first.';
+
+  @override
+  String get exchangeErrorDisabled => 'Vehicle exchange isn\'t open right now. Please contact your hub.';
+
+  @override
+  String get exchangeErrorDuesPending =>
+      'Clear your pending dues first. Breakdown and safety exchanges are still allowed.';
+
+  @override
+  String get exchangeErrorHandoverUnfinished =>
+      'The new scooter hasn\'t been handed over yet. Finish the handover steps first.';
+
+  @override
+  String get exchangeErrorHoldExpired => 'The scooter hold expired. Choose the replacement again.';
+
+  @override
+  String get exchangeErrorInspectionUnfinished => 'Complete the return inspection first.';
+
+  @override
+  String get exchangeErrorNoRental => 'We couldn\'t find an active rental for you.';
+
+  @override
+  String get exchangeErrorNoScooter => 'You need a scooter assigned to you to request an exchange.';
+
+  @override
+  String get exchangeErrorNoTerms => 'Rider terms aren\'t set up. Ask an admin to publish one active set of terms.';
+
+  @override
+  String get exchangeErrorNotFound => 'This exchange request no longer exists.';
+
+  @override
+  String get exchangeErrorOfferClosed => 'This offer is no longer open.';
+
+  @override
+  String get exchangeErrorOfferInvalid => 'We couldn\'t verify this offer. Ask your hub to send it again.';
+
+  @override
+  String get exchangeErrorRecordsMissing => 'Some records for this exchange are missing. Please contact support.';
+
+  @override
+  String get exchangeErrorRentalInactive => 'Your rental isn\'t active, so an exchange can\'t be requested.';
+
+  @override
+  String get exchangeErrorReturnFirst => 'Finish the old scooter\'s return before choosing a replacement.';
+
+  @override
+  String get exchangeErrorReturnUnfinished =>
+      'The return isn\'t finished yet. Verify the rider\'s OTP and complete the return first.';
+
+  @override
+  String get exchangeErrorSameScooter => 'Pick a different scooter from the rider\'s current one.';
+
+  @override
+  String get exchangeErrorScooterReserved => 'That scooter is reserved for another exchange.';
+
+  @override
+  String get exchangeErrorScooterUnavailable => 'That scooter is no longer available. Pick another one.';
+
+  @override
+  String get exchangeErrorSecurityChange =>
+      'This scooter needs a different security deposit. Change the deposit separately first.';
+
+  @override
+  String get exchangeErrorSecurityTopUp => 'The rider\'s security deposit needs a top-up before completing.';
+
+  @override
+  String get exchangeErrorStale => 'Your rental changed after this offer was made. Ask your hub for a new offer.';
+
+  @override
+  String get exchangeErrorTooSoon => 'You\'ve had this scooter for too short a time. Please try again in a few days.';
+
+  @override
+  String get exchangeExtraRentNow => 'Extra rent now';
+
+  @override
+  String get exchangeFee => 'Exchange fee';
+
+  @override
+  String get exchangeFeeWaived => 'Waived';
+
+  @override
+  String get exchangeHubReason => 'Reason from hub';
 
   @override
   String get exchangeNeedsYou => 'Needs your answer';
 
   @override
+  String get exchangeNewRent => 'New rent';
+
+  @override
+  String get exchangeNewRentFrom => 'New rent starts';
+
+  @override
+  String get exchangeNewScooter => 'New scooter';
+
+  @override
+  String get exchangeNextApproved => 'Approved. Your hub will ask you to bring your current scooter in for a check.';
+
+  @override
+  String get exchangeNextCancelled => 'This request was cancelled.';
+
+  @override
+  String get exchangeNextChoosing => 'Your old scooter is returned. Your hub is picking a replacement for you.';
+
+  @override
+  String get exchangeNextCompleted => 'Exchange complete. Enjoy your new scooter!';
+
+  @override
+  String get exchangeNextDeposit => 'Offer accepted. Your hub is settling the deposit for your new scooter.';
+
+  @override
+  String get exchangeNextExpired => 'This request expired before it was completed.';
+
+  @override
+  String get exchangeNextHandover => 'Your new scooter is ready. Collect it from the hub.';
+
+  @override
+  String get exchangeNextOffer => 'Your offer is ready. Check the details and accept or reject it.';
+
+  @override
+  String get exchangeNextRejected => 'Your hub couldn\'t approve this request.';
+
+  @override
+  String get exchangeNextRequested => 'Your hub will review your request soon.';
+
+  @override
+  String get exchangeNextReserved => 'A replacement scooter is reserved for you. Your offer will be ready soon.';
+
+  @override
+  String get exchangeNextReturn => 'Return your current scooter at the hub so they can inspect it.';
+
+  @override
   String get exchangeNone => 'No exchange requests';
 
   @override
-  String get exchangeNoneMessage => 'If your scooter has a problem, your hub can start an exchange for you.';
+  String get exchangeNoneMessage => 'If your scooter has a problem, request an exchange and your hub will help.';
+
+  @override
+  String get exchangeNoRentalBody => 'You can request an exchange once a scooter is rented to you.';
+
+  @override
+  String get exchangeNoRentalTitle => 'No active rental';
+
+  @override
+  String get exchangeNoteHint => 'Describe the problem (optional)';
+
+  @override
+  String get exchangeNoteLabel => 'Note for your hub';
 
   @override
   String get exchangeNotes => 'Your note';
@@ -1484,7 +1824,28 @@ class AppL10nEn extends AppL10n {
   String get exchangeOpen => 'In progress';
 
   @override
+  String get exchangeOpenExists => 'You already have an exchange in progress.';
+
+  @override
   String get exchangePast => 'Finished';
+
+  @override
+  String get exchangePerDay => '/ day';
+
+  @override
+  String get exchangePerFortnight => '/ 2 weeks';
+
+  @override
+  String get exchangePerMonth => '/ month';
+
+  @override
+  String get exchangePerQuarter => '/ 3 months';
+
+  @override
+  String get exchangePerWeek => '/ week';
+
+  @override
+  String get exchangeProgress => 'Progress';
 
   @override
   String get exchangeRaised => 'Raised';
@@ -1499,13 +1860,28 @@ class AppL10nEn extends AppL10n {
   String get exchangeReasonBreakdown => 'Breakdown';
 
   @override
+  String get exchangeReasonBreakdownHint => 'It stopped working or keeps breaking down';
+
+  @override
+  String get exchangeReasonOtherHint => 'Something else';
+
+  @override
   String get exchangeReasonSafety => 'Safety swap';
+
+  @override
+  String get exchangeReasonSafetyHint => 'A safety check needs a different scooter';
 
   @override
   String get exchangeReasonUnsafe => 'Not safe to ride';
 
   @override
+  String get exchangeReasonUnsafeHint => 'Brakes, lights or tyres don\'t feel safe';
+
+  @override
   String get exchangeReasonUpgrade => 'Upgrade';
+
+  @override
+  String get exchangeReasonUpgradeHint => 'You\'d like a different model';
 
   @override
   String get exchangeRejected => 'Offer rejected';
@@ -1523,13 +1899,25 @@ class AppL10nEn extends AppL10n {
   String get exchangeRejectSubtitle => 'Tell your hub why, so they can send a better one.';
 
   @override
-  String get exchangeRentChange => 'Rent change';
+  String get exchangeRentalCouldNotLoad => 'Could not load your rental';
+
+  @override
+  String get exchangeRentCredit => 'Rent credit';
+
+  @override
+  String get exchangeRequestAction => 'Request an exchange';
+
+  @override
+  String get exchangeRequestSent => 'Exchange request sent';
+
+  @override
+  String get exchangeRequestSubtitle => 'Tell your hub why you need a different scooter.';
+
+  @override
+  String get exchangeSendRequest => 'Send request';
 
   @override
   String get exchangeStageAccepted => 'Accepted';
-
-  @override
-  String get exchangeStageClosed => 'Closed';
 
   @override
   String get exchangeStageCompleted => 'Completed';
@@ -1538,13 +1926,46 @@ class AppL10nEn extends AppL10n {
   String get exchangeStageHandover => 'Handover';
 
   @override
-  String get exchangeStageInReview => 'Being checked';
-
-  @override
   String get exchangeStageOfferReady => 'Offer ready';
 
   @override
   String get exchangeStageRequested => 'Requested';
+
+  @override
+  String get exchangeStatusApproved => 'Approved';
+
+  @override
+  String get exchangeStatusCancelled => 'Cancelled';
+
+  @override
+  String get exchangeStatusChoosing => 'Choosing scooter';
+
+  @override
+  String get exchangeStatusExpired => 'Expired';
+
+  @override
+  String get exchangeStatusRejected => 'Rejected';
+
+  @override
+  String get exchangeStatusReturn => 'Return scooter';
+
+  @override
+  String get exchangeStepApproval => 'Hub approval';
+
+  @override
+  String get exchangeStepDeposit => 'Deposit';
+
+  @override
+  String get exchangeStepHandover => 'Get new scooter';
+
+  @override
+  String get exchangeStepOffer => 'Replacement offer';
+
+  @override
+  String get exchangeStepRequested => 'Request sent';
+
+  @override
+  String get exchangeStepReturn => 'Return old scooter';
 
   @override
   String get exchangeSubtitle => 'Ask for a different scooter';
@@ -1553,7 +1974,20 @@ class AppL10nEn extends AppL10n {
   String get exchangeTitle => 'Vehicle exchange';
 
   @override
-  String get exchangeWaitingOnHub => 'Your hub is working on this. We will tell you when there is an offer.';
+  String get exchangeVersionCurrent => 'Current';
+
+  @override
+  String exchangeVersionFrom(String date) {
+    return 'From $date';
+  }
+
+  @override
+  String exchangeVersionNumber(String number) {
+    return 'Version $number';
+  }
+
+  @override
+  String get exchangeVersionPrevious => 'Previous';
 
   @override
   String get homeBonusUnlocked => 'Bonus unlocked';
@@ -1698,6 +2132,9 @@ class AppL10nEn extends AppL10n {
   String get hubRidersPresent => 'Riders present';
 
   @override
+  String get hubsCouldNotLoad => 'Could not load nearby hubs';
+
+  @override
   String get hubService => 'Service';
 
   @override
@@ -1707,7 +2144,16 @@ class AppL10nEn extends AppL10n {
   String get hubShowThisHub => 'Show this hub';
 
   @override
+  String get hubsNoneBody => 'There are no active hubs within reach of your location.';
+
+  @override
+  String get hubsNoneTitle => 'No hubs near you';
+
+  @override
   String get hubSomethingWentWrong => 'Something went wrong.';
+
+  @override
+  String get hubsSubtitle => 'Closest hubs to you';
 
   @override
   String get hubUptime => 'Uptime';
@@ -1759,6 +2205,18 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get introVehicleTitle => 'Your scooter,\nfully connected';
+
+  @override
+  String get legalTermsAgree => 'I have read and agree to the Terms & Conditions';
+
+  @override
+  String get legalTermsCouldNotLoad => 'Could not load the terms';
+
+  @override
+  String get legalTermsSubtitle => 'Please read these terms before you continue.';
+
+  @override
+  String get legalTermsTitle => 'Terms & Conditions';
 
   @override
   String get maintenanceAddNote => 'Add a note';
@@ -2023,6 +2481,58 @@ class AppL10nEn extends AppL10n {
   String get maintenanceWideShot => 'Wide shot';
 
   @override
+  String get mapsAllowLocation => 'Allow location';
+
+  @override
+  String mapsAway(String distance) {
+    return '$distance away';
+  }
+
+  @override
+  String get mapsCouldNotOpenMaps => 'Could not open Google Maps';
+
+  @override
+  String get mapsLocating => 'Finding your location…';
+
+  @override
+  String get mapsLocationDeniedBody => 'We use your location to show hubs and swap stations near you.';
+
+  @override
+  String get mapsLocationDeniedTitle => 'Allow location access';
+
+  @override
+  String get mapsLocationOffBody => 'Turn on location services to see places near you.';
+
+  @override
+  String get mapsLocationOffTitle => 'Location is turned off';
+
+  @override
+  String get mapsLocationUnavailable => 'Could not find your location';
+
+  @override
+  String mapsMinutes(String minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get mapsNavigate => 'Navigate';
+
+  @override
+  String get mapsOpenSettings => 'Open settings';
+
+  @override
+  String get navBatterySwap => 'Battery swap';
+
+  @override
+  String get navNearbyHubs => 'Nearby hubs';
+
+  @override
+  String get navReferEarn => 'Refer & earn';
+
+  @override
+  String get navScooterDetails => 'Scooter details';
+
+  @override
   String get notificationsAllCaughtUp => 'You are all caught up';
 
   @override
@@ -2160,6 +2670,18 @@ class AppL10nEn extends AppL10n {
   String get onboardingReferences => 'References';
 
   @override
+  String get onboardingReferralApplied => 'Applied';
+
+  @override
+  String get onboardingReferralApply => 'Apply';
+
+  @override
+  String get onboardingReferralCodeApplied => 'Referral code applied';
+
+  @override
+  String get onboardingReferralTapApply => 'Tap Apply to use this code, or clear it';
+
+  @override
   String get onboardingReview => 'Review';
 
   @override
@@ -2170,6 +2692,9 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get onboardingSaving => 'Saving…';
+
+  @override
+  String get onboardingSignAgreementContinue => 'Sign the agreement to continue';
 
   @override
   String get onboardingSomeStepsStillIncompleteGo => 'Some steps are still incomplete. Go back and finish them.';
@@ -2305,6 +2830,101 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get profilePersonalDetails => 'Personal details';
+
+  @override
+  String get referCodeCopied => 'Referral code copied';
+
+  @override
+  String get referCopyCode => 'Copy code';
+
+  @override
+  String get referCouldNotLoad => 'Could not load refer & earn';
+
+  @override
+  String get referFriendGets => 'Your friend gets';
+
+  @override
+  String get referInvited => 'Invited';
+
+  @override
+  String get referNoCampaignBody => 'Check back soon for new rewards.';
+
+  @override
+  String get referNoCampaignTitle => 'No referral campaign right now';
+
+  @override
+  String get referNoReferralsBody => 'Share your code to invite riders.';
+
+  @override
+  String get referNoReferralsTitle => 'No referrals yet';
+
+  @override
+  String get referPaid => 'Paid';
+
+  @override
+  String get referPending => 'Pending';
+
+  @override
+  String get referQualified => 'Qualified';
+
+  @override
+  String get referRegistered => 'Registered';
+
+  @override
+  String get referShareInvite => 'Share invite';
+
+  @override
+  String get referStatusActivated => 'Activated';
+
+  @override
+  String get referStatusCancelled => 'Cancelled';
+
+  @override
+  String get referStatusDisqualified => 'Disqualified';
+
+  @override
+  String get referStatusExpired => 'Expired';
+
+  @override
+  String get referStatusInProgress => 'In progress';
+
+  @override
+  String get referStatusKycVerified => 'KYC verified';
+
+  @override
+  String get referStatusPaid => 'Reward paid';
+
+  @override
+  String get referStatusRejected => 'Rejected';
+
+  @override
+  String get referStatusRewardApproved => 'Reward approved';
+
+  @override
+  String get referStatusRewardPending => 'Reward pending';
+
+  @override
+  String get referStatusUnderReview => 'Under review';
+
+  @override
+  String get referSubtitle => 'Invite riders and earn rewards';
+
+  @override
+  String get referTotalEarned => 'Total earned';
+
+  @override
+  String referValidTill(String date) {
+    return 'Valid till $date';
+  }
+
+  @override
+  String get referYouGet => 'You get';
+
+  @override
+  String get referYourCode => 'Your referral code';
+
+  @override
+  String get referYourReferrals => 'Your referrals';
 
   @override
   String get rentalsAutoDebit => 'Auto-debit';
@@ -2739,6 +3359,26 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get supportYesWeeklyMonthlyPlansDaily => 'Yes, on weekly and monthly plans. Daily plans return to the hub ';
+
+  @override
+  String get swapCouldNotLoad => 'Could not load swap stations';
+
+  @override
+  String get swapNoneBody => 'We could not find any battery swap stations right now.';
+
+  @override
+  String get swapNoneTitle => 'No swap stations found';
+
+  @override
+  String get swapSubtitle => 'Swap stations closest to you';
+
+  @override
+  String get swapTitle => 'Battery swapping';
+
+  @override
+  String swapUnits(String count) {
+    return 'Units: $count';
+  }
 
   @override
   String get validationEnterDateBeforeToday => 'Enter a date on or before today';

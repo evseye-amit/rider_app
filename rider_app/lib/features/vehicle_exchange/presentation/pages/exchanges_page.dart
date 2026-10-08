@@ -11,11 +11,14 @@ import '../widgets/exchange_widgets.dart';
 class ExchangesPage extends ConsumerWidget {
   const ExchangesPage({super.key});
 
+  void _open(BuildContext context, ExchangeRequest request) =>
+      context.push('${Routes.vehicleExchangeDetail}?id=${request.id}');
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<ExchangeRequest>> exchanges = ref.watch(exchangesProvider);
 
-    if (exchanges.hasError) {
+    if (exchanges.hasError && !exchanges.hasValue) {
       return AppScaffold(
         title: context.l10n.exchangeTitle,
         body: EmptyState(
@@ -30,12 +33,19 @@ class ExchangesPage extends ConsumerWidget {
     }
 
     final List<ExchangeRequest>? requests = exchanges.value;
-    final List<ExchangeRequest> open = [...?requests?.where((request) => request.stage.isOpen)];
-    final List<ExchangeRequest> past = [...?requests?.where((request) => !request.stage.isOpen)];
+    final List<ExchangeRequest> open = [...?requests?.where((request) => request.status.isOpen)];
+    final List<ExchangeRequest> past = [...?requests?.where((request) => !request.status.isOpen)];
 
     return AppScaffold(
       title: context.l10n.exchangeTitle,
       subtitle: context.l10n.exchangeSubtitle,
+      footer: requests != null && open.isEmpty
+          ? PrimaryButton(
+              label: context.l10n.exchangeRequestAction,
+              icon: Icons.swap_horiz_rounded,
+              onPressed: () => context.push(Routes.vehicleExchangeRequest),
+            )
+          : null,
       body: requests == null
           ? const PageBody(
               children: [
@@ -65,22 +75,20 @@ class ExchangesPage extends ConsumerWidget {
                           SectionHeader(title: context.l10n.exchangeOpen),
                           const Gap.lg(),
                           for (final ExchangeRequest request in open) ...[
-                            ExchangeTile(
-                              request: request,
-                              onOpen: () => context.push('${Routes.vehicleExchangeDetail}?id=${request.id}'),
-                            ),
+                            ExchangeTile(request: request, onOpen: () => _open(context, request)),
                             const Gap.md(),
                           ],
+                          Text(
+                            context.l10n.exchangeOpenExists,
+                            style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.textMuted),
+                          ),
                         ],
                         if (past.isNotEmpty) ...[
-                          const Gap.lg(),
+                          const Gap.xl(),
                           SectionHeader(title: context.l10n.exchangePast),
                           const Gap.lg(),
                           for (final ExchangeRequest request in past) ...[
-                            ExchangeTile(
-                              request: request,
-                              onOpen: () => context.push('${Routes.vehicleExchangeDetail}?id=${request.id}'),
-                            ),
+                            ExchangeTile(request: request, onOpen: () => _open(context, request)),
                             const Gap.md(),
                           ],
                         ],

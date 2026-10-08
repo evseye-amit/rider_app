@@ -69,6 +69,8 @@ class WalletBand extends StatelessWidget {
       children: [
         Row(
           children: [
+            InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
+            const SizedBox(width: Insets.md),
             const IconTile(icon: Icons.account_balance_wallet_rounded, tone: AppColors.primary, solid: true, size: 44),
             const SizedBox(width: Insets.md),
             Expanded(

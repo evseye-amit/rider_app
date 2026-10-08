@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
@@ -5,7 +7,7 @@ import '../theme/app_dimens.dart';
 
 class SplashArtwork extends StatelessWidget {
   const SplashArtwork({
-    this.asset = 'assets/images/splash_screen.png',
+    this.asset = logo,
     this.progress,
     super.key,
   });
@@ -16,6 +18,28 @@ class SplashArtwork extends StatelessWidget {
 
   static const Color ground = Color(0xFFFFFFFF);
 
+  static const String logo = 'assets/images/app_icon_foreground.png';
+
+  static const double logoSize = 256;
+
+  static Future<void> precache({String asset = logo}) {
+    final Completer<void> decoded = Completer<void>();
+    final ImageStream stream = AssetImage(asset).resolve(ImageConfiguration.empty);
+    late final ImageStreamListener listener;
+
+    void finish() {
+      stream.removeListener(listener);
+      if (!decoded.isCompleted) decoded.complete();
+    }
+
+    listener = ImageStreamListener((image, _) {
+      image.dispose();
+      finish();
+    }, onError: (_, _) => finish());
+    stream.addListener(listener);
+    return decoded.future;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -25,8 +49,9 @@ class SplashArtwork extends StatelessWidget {
         Center(
           child: Image.asset(
             asset,
+            width: logoSize,
+            height: logoSize,
             fit: BoxFit.contain,
-            alignment: Alignment.center,
             filterQuality: FilterQuality.medium,
           ),
         ),

@@ -25,6 +25,7 @@ class AppScaffold extends StatelessWidget {
     this.extendBodyBehindAppBar = false,
     this.resizeToAvoidBottomInset = true,
     this.centerTitle = false,
+    this.backgroundColor,
     super.key,
   });
 
@@ -47,6 +48,7 @@ class AppScaffold extends StatelessWidget {
   final bool extendBodyBehindAppBar;
   final bool resizeToAvoidBottomInset;
   final bool centerTitle;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +64,7 @@ class AppScaffold extends StatelessWidget {
       floatingActionButtonLocation: floatingActionButtonLocation,
       body: GradientBackground(
         showBlooms: showBlooms,
+        color: backgroundColor,
         child: SafeArea(
           bottom: false,
           child: Column(

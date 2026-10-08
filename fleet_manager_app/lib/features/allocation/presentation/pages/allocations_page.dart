@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
+import '../../../../core/session/fleet_session_provider.dart';
 import '../../domain/entities/active_allocation.dart';
 import '../../domain/entities/allocation_board.dart';
 import '../providers/allocation_board_provider.dart';
@@ -32,6 +33,19 @@ class _AllocationsPageState extends ConsumerState<AllocationsPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!ref.watch(fleetSessionProvider.select((session) => session.isFleetManager))) {
+      return Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: EmptyState(
+            title: context.l10n.allocationFleetOnlyTitle,
+            message: context.l10n.allocationFleetOnlyBody,
+            icon: Icons.lock_outline_rounded,
+          ),
+        ),
+      );
+    }
+
     final AsyncValue<AllocationBoard> allocations = ref.watch(allocationBoardProvider);
 
     if (allocations.hasError) {

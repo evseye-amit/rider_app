@@ -39,12 +39,6 @@ class LocaleNotifier extends Notifier<LocalePreference> {
     await _preferences.setString(_localeKey, locale.code);
     await _preferences.setBool(_promptedKey, true);
   }
-
-  Future<void> markPrompted() async {
-    if (state.hasBeenPrompted) return;
-    state = state.copyWith(hasBeenPrompted: true);
-    await _preferences.setBool(_promptedKey, true);
-  }
 }
 
 final localeProvider = NotifierProvider<LocaleNotifier, LocalePreference>(LocaleNotifier.new);

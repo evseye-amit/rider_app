@@ -7,6 +7,7 @@ import '../theme/app_typography.dart';
 enum BrandArt {
   scooter('scooter'),
   rider('delivery_scooter'),
+  evScooter('ev_scooter'),
   hub('hub'),
   charging('charging'),
   wallet('wallet'),
@@ -19,7 +20,6 @@ enum BrandArt {
   manager('manager'),
 
   introLogo('intro_logo'),
-  introRide('intro_ride'),
   introSupport('intro_support');
 
   const BrandArt(this.file);
@@ -110,7 +110,7 @@ class IconTile extends StatelessWidget {
               ]
             : null,
       ),
-      child: Icon(icon, size: size * 0.48, color: solid ? AppColors.onInkTone(tone) : tone),
+      child: Icon(icon, size: size * 0.48, color: solid ? Colors.white : tone),
     );
   }
 }

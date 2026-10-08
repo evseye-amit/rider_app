@@ -3,6 +3,9 @@ import 'package:evseye_core/evseye_core.dart';
 abstract final class OnboardingFlowBuilder {
   const OnboardingFlowBuilder._();
 
+  static const String referralCodeKey = 'REFERRAL_CODE';
+  static const String referralAppliedKey = 'REFERRAL_CODE_APPLIED';
+
   static UiFlowConfig build(RiderOnboardingConfig config, AppL10n l10n) {
     final List<OnboardingStepConfig> steps = config.steps;
     return UiFlowConfig(
@@ -41,6 +44,8 @@ abstract final class OnboardingFlowBuilder {
       body.add(UiNode(type: 'group', props: {'gap': 14}, children: capabilities));
     }
 
+    final List<UiNode> signatures = [for (final f in step.capabilities) ?_signature(f, l10n)];
+
     if (body.isEmpty) {
       body.add(
         UiNode(
@@ -66,6 +71,7 @@ abstract final class OnboardingFlowBuilder {
         subtitle: step.description,
         body: body,
         footer: [
+          ...signatures,
           UiNode(
             type: 'primaryButton',
             props: {
@@ -91,6 +97,39 @@ abstract final class OnboardingFlowBuilder {
       'label': f.label,
       if (f.placeholder != null) 'hint': f.placeholder,
     };
+
+    if (_isAadhaarNumber(f)) {
+      return UiNode(
+        type: 'textField',
+        id: f.fieldCode,
+        props: {...props, 'keyboard': 'number', 'maxLength': _aadhaarDigits, 'icon': _inputIcon(f.fieldCode)},
+        enabledWhen: f.isEnabled ? null : const UiCondition(flag: '__NEVER__'),
+        validations: [
+          ...rules,
+          const ValidationRule(type: 'aadhaar'),
+        ],
+      );
+    }
+
+    if (f.fieldCode == referralCodeKey) {
+      return UiNode(
+        type: 'referralCode',
+        id: f.fieldCode,
+        props: {
+          ...props,
+          'icon': 'gift',
+          'caps': true,
+          'maxLength': _referralCodeLength,
+          'appliedKey': referralAppliedKey,
+        },
+        action: const UiAction(type: 'applyReferral'),
+        enabledWhen: f.isEnabled ? null : const UiCondition(flag: '__NEVER__'),
+        validations: [
+          ...rules,
+          ValidationRule(type: 'match', value: referralAppliedKey, message: l10n.onboardingReferralTapApply),
+        ],
+      );
+    }
 
     switch (f.fieldType) {
       case 'BANK_ACCOUNT':
@@ -229,19 +268,26 @@ abstract final class OnboardingFlowBuilder {
       ];
     }
 
-    if (code.contains('AGREEMENT') || code.contains('E_SIGN')) {
+    if (_isAgreement(f)) {
       return [
         UiNode(type: 'termsBlock', props: {'body': l10n.onboardingAgreementBody, 'maxHeight': 200}),
-        UiNode(
-          type: 'checkbox',
-          id: f.formKey,
-          props: {'key': f.formKey, 'label': l10n.onboardingAgreeToRiderAgreement},
-          validations: [ValidationRule(type: 'required', message: l10n.onboardingAcceptAgreementContinue)],
-        ),
       ];
     }
     return const [];
   }
+
+  static UiNode? _signature(OnboardingFieldConfig f, AppL10n l10n) {
+    if (!_isAgreement(f)) return null;
+    return UiNode(
+      type: 'esign',
+      id: f.formKey,
+      props: {'key': f.formKey, 'nameKey': 'FULL_NAME'},
+      validations: [ValidationRule(type: 'required', message: l10n.onboardingSignAgreementContinue)],
+    );
+  }
+
+  static bool _isAgreement(OnboardingFieldConfig f) =>
+      f.featureCode.contains('AGREEMENT') || f.featureCode.contains('E_SIGN');
 
   static String _shortLabel(String stepCode, String name, AppL10n l10n) => switch (stepCode) {
     'RIDER_PERSONAL_PROFILE' => l10n.commonProfile,
@@ -278,4 +324,13 @@ abstract final class OnboardingFlowBuilder {
   }
 
   static bool _upperCase(String fieldCode) => fieldCode.contains('PAN') || fieldCode.contains('LICEN');
+
+  static const int _aadhaarDigits = 12;
+
+  static const int _referralCodeLength = 12;
+
+  static bool _isAadhaarNumber(OnboardingFieldConfig f) {
+    final String code = '${f.fieldCode} ${f.featureCode}'.toUpperCase();
+    return (code.contains('AADHAAR') || code.contains('AADHAR')) && !code.contains('NAME') && !code.contains('ADDRESS');
+  }
 }

@@ -5,10 +5,11 @@ import 'package:evseye_core/evseye_core.dart';
 import '../domain/onboarding_repository.dart';
 
 class OnboardingRepositoryImpl implements OnboardingRepository {
-  const OnboardingRepositoryImpl(this._riderApp, this._media);
+  const OnboardingRepositoryImpl(this._riderApp, this._media, this._referrals);
 
   final RiderAppApi _riderApp;
   final MediaApi _media;
+  final ReferralApi _referrals;
 
   @override
   Future<Result<RiderOnboardingConfig>> fetch() => _riderApp.onboarding();
@@ -29,4 +30,7 @@ class OnboardingRepositoryImpl implements OnboardingRepository {
         : 'image/jpeg';
     return _media.uploadOnboardingDocument(fieldCode: fieldCode, file: file, mimeType: mime);
   }
+
+  @override
+  Future<Result<void>> applyReferralCode(String code) => _referrals.attribute(code);
 }

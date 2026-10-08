@@ -1,5 +1,7 @@
 abstract final class Routes {
   static const String splash = '/';
+  static const String terms = '/terms';
+  static const String language = '/language';
   static const String login = '/login';
   static const String otp = '/otp';
 
@@ -18,6 +20,10 @@ abstract final class Routes {
 
   static const String maintenanceDetail = '/maintenance/job';
   static const String raiseMaintenance = '/maintenance/raise';
+
+  static const String exchanges = '/exchanges';
+  static const String exchangeDetail = '/exchanges/detail';
+  static const String exchangeReplacement = '/exchanges/replacement';
 
   const Routes._();
 }

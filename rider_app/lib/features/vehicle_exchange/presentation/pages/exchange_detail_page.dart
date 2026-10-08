@@ -20,20 +20,24 @@ class ExchangeDetailPage extends ConsumerStatefulWidget {
 class _ExchangeDetailPageState extends ConsumerState<ExchangeDetailPage> {
   bool _busy = false;
 
-  Future<void> _run(Future<Result<ExchangeRequest>> Function() action, String successMessage) async {
+  Future<void> _refresh() async {
+    ref.invalidate(exchangesProvider);
+    await ref.refreshQuietly(exchangeProvider(widget.exchangeId));
+  }
+
+  Future<void> _run(Future<Result<void>> Function() action, String successMessage) async {
     setState(() => _busy = true);
-    final Result<ExchangeRequest> result = await action();
+    final Result<void> result = await action();
     if (!mounted) return;
     setState(() => _busy = false);
 
     switch (result) {
-      case Ok<ExchangeRequest>():
-        ref.invalidate(exchangeProvider(widget.exchangeId));
-        ref.invalidate(exchangesProvider);
+      case Ok<void>():
         AppSnack.success(context, successMessage);
-      case Err<ExchangeRequest>(:final failure):
+      case Err<void>(:final failure):
         AppSnack.error(context, failure.message);
     }
+    await _refresh();
   }
 
   Future<void> _accept(ExchangeOffer offer) async {
@@ -60,18 +64,26 @@ class _ExchangeDetailPageState extends ConsumerState<ExchangeDetailPage> {
       context,
       title: context.l10n.exchangeRejectOffer,
       subtitle: context.l10n.exchangeRejectSubtitle,
-      child: AppTextField(
-        label: context.l10n.exchangeRejectReason,
-        maxLines: 3,
-        controller: controller,
-        autofocus: true,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+        child: AppTextField(
+          label: context.l10n.exchangeRejectReason,
+          maxLines: 3,
+          maxLength: 500,
+          controller: controller,
+          autofocus: true,
+          textCapitalization: TextCapitalization.sentences,
+        ),
       ),
-      footer: PrimaryButton(
-        label: context.l10n.exchangeRejectOffer,
-        icon: Icons.close_rounded,
-        onPressed: () => Navigator.of(context).pop(controller.text.trim()),
+      footer: Builder(
+        builder: (sheet) => PrimaryButton(
+          label: context.l10n.exchangeRejectOffer,
+          icon: Icons.close_rounded,
+          onPressed: () => Navigator.of(sheet).pop(controller.text.trim()),
+        ),
       ),
     );
+    controller.dispose();
     if (reason == null || !mounted) return;
     if (reason.isEmpty) {
       AppSnack.error(context, context.l10n.exchangeRejectReasonRequired);
@@ -101,112 +113,97 @@ class _ExchangeDetailPageState extends ConsumerState<ExchangeDetailPage> {
   @override
   Widget build(BuildContext context) {
     final AsyncValue<ExchangeRequest> exchange = ref.watch(exchangeProvider(widget.exchangeId));
-
-    if (exchange.isLoading && !exchange.hasValue) {
-      return AppScaffold(
-        title: context.l10n.exchangeDetailTitle,
-        body: const PageBody(
-          children: [
-            ShimmerBox(height: 140, borderRadius: Corners.brLg),
-            Gap.md(),
-            ShimmerBox(height: 200, borderRadius: Corners.brLg),
-          ],
-        ),
-      );
-    }
-
     final ExchangeRequest? request = exchange.value;
-    if (exchange.hasError || request == null) {
+
+    if (request == null) {
       return AppScaffold(
         title: context.l10n.exchangeDetailTitle,
-        body: EmptyState(
-          title: context.l10n.exchangeCouldNotLoad,
-          message: exchange.failureMessage,
-          icon: Icons.cloud_off_rounded,
-          tone: AppColors.danger,
-          actionLabel: context.l10n.commonTryAgain,
-          onAction: () => ref.invalidate(exchangeProvider(widget.exchangeId)),
-        ),
+        body: exchange.hasError
+            ? EmptyState(
+                title: context.l10n.exchangeCouldNotLoad,
+                message: exchange.failureMessage,
+                icon: Icons.cloud_off_rounded,
+                tone: AppColors.danger,
+                actionLabel: context.l10n.commonTryAgain,
+                onAction: () => ref.invalidate(exchangeProvider(widget.exchangeId)),
+              )
+            : const PageBody(
+                children: [
+                  ShimmerBox(height: 120, borderRadius: Corners.brLg),
+                  Gap.md(),
+                  ShimmerBox(height: 260, borderRadius: Corners.brLg),
+                ],
+              ),
       );
     }
 
-    final ExchangeOffer? offer = request.pendingOffer;
+    final ExchangeOffer? pending = request.pendingOffer;
+    final ExchangeOffer? accepted = request.acceptedOffer;
+    final String? note = request.status == ExchangeStatus.rejected ? null : request.reason;
+    final DateTime? completedAt = request.completedAt;
 
     return AppScaffold(
       title: context.l10n.exchangeDetailTitle,
       subtitle: exchangeReasonLabel(context.l10n, request.reasonCode),
-      body: PageBody(
-        children: [
-          ModuleCard(
-            title: context.l10n.commonStatus,
-            leading: const IconTile(icon: Icons.timeline_rounded, solid: true, size: 28),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                StatusChip(
-                  label: exchangeStageLabel(context.l10n, request.stage),
-                  tone: exchangeStageTone(request.stage),
-                  dense: true,
-                  solid: true,
-                ),
-                const Gap.md(),
-                KeyValueRow(
-                  label: context.l10n.exchangeRaised,
-                  value: Fmt.dateTime(request.createdAt),
-                  icon: Icons.schedule_rounded,
-                ),
-                KeyValueRow(
-                  label: context.l10n.exchangeReason,
-                  value: exchangeReasonLabel(context.l10n, request.reasonCode),
-                  icon: Icons.info_outline_rounded,
-                ),
-                if (request.reason != null && request.reason!.isNotEmpty)
-                  KeyValueRow(label: context.l10n.exchangeNotes, value: request.reason!),
-                if (request.effectiveAt != null)
-                  KeyValueRow(
-                    label: context.l10n.exchangeEffective,
-                    value: Fmt.date(request.effectiveAt!),
-                    icon: Icons.event_rounded,
-                  ),
-                if (request.completedAt != null)
-                  KeyValueRow(
-                    label: context.l10n.exchangeCompleted,
-                    value: Fmt.dateTime(request.completedAt!),
-                    icon: Icons.check_circle_rounded,
-                  ),
-              ],
-            ),
-          ),
-          const Gap.lg(),
-          if (offer != null)
-            ExchangeOfferCard(offer: offer, busy: _busy, onAccept: () => _accept(offer), onReject: () => _reject(offer))
-          else if (request.stage.isOpen)
-            AccentCard(
-              accent: AppColors.primary,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: PageBody(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: [
+            ExchangeStatusCard(request: request),
+            const Gap.lg(),
+            if (pending != null) ...[
+              ExchangeOfferCard(
+                key: ValueKey(pending.id),
+                offer: pending,
+                busy: _busy,
+                onAccept: () => _accept(pending),
+                onReject: () => _reject(pending),
+              ),
+              const Gap.lg(),
+            ] else if (accepted != null) ...[
+              AcceptedPlanCard(request: request, offer: accepted),
+              const Gap.lg(),
+            ],
+            ExchangeTimeline(request: request),
+            const Gap.lg(),
+            ModuleCard(
+              title: context.l10n.exchangeDetails,
+              leading: const IconTile(icon: Icons.info_outline_rounded, solid: true, size: 28),
+              child: Column(
                 children: [
-                  const Icon(Icons.hourglass_top_rounded, size: 19, color: AppColors.primary),
-                  const SizedBox(width: Insets.md),
-                  Expanded(
-                    child: Text(
-                      context.l10n.exchangeWaitingOnHub,
-                      style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5),
-                    ),
+                  KeyValueRow(
+                    label: context.l10n.exchangeReason,
+                    value: exchangeReasonLabel(context.l10n, request.reasonCode),
+                    icon: Icons.help_outline_rounded,
                   ),
+                  if (note != null && note.isNotEmpty)
+                    KeyValueRow(label: context.l10n.exchangeNotes, value: note, icon: Icons.notes_rounded),
+                  KeyValueRow(
+                    label: context.l10n.exchangeRaised,
+                    value: Fmt.dateTime(request.createdAt),
+                    icon: Icons.schedule_rounded,
+                  ),
+                  if (completedAt != null)
+                    KeyValueRow(
+                      label: context.l10n.exchangeCompleted,
+                      value: Fmt.dateTime(completedAt),
+                      icon: Icons.check_circle_rounded,
+                    ),
                 ],
               ),
             ),
-          if (request.canCancel) ...[
-            const Gap.xl(),
-            SecondaryButton(
-              label: context.l10n.exchangeCancelRequest,
-              icon: Icons.cancel_rounded,
-              onPressed: _busy ? null : _cancel,
-            ),
+            if (accepted != null) ...[const Gap.lg(), AgreementHistoryCard(agreementId: request.agreementId)],
+            if (request.canCancel) ...[
+              const Gap.xl(),
+              SecondaryButton(
+                label: context.l10n.exchangeCancelRequest,
+                icon: Icons.cancel_rounded,
+                onPressed: _busy ? null : _cancel,
+              ),
+            ],
           ],
-          const Gap.xl(),
-        ],
+        ),
       ),
     );
   }

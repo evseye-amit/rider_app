@@ -34,6 +34,11 @@ class FleetDrawer extends ConsumerWidget {
     context.go(route);
   }
 
+  void _open(BuildContext context, String route) {
+    Navigator.of(context).pop();
+    context.push(route);
+  }
+
   void _openDocument(BuildContext context) {
     Navigator.of(context).pop();
     LegalLink.open(context);
@@ -78,6 +83,13 @@ class FleetDrawer extends ConsumerWidget {
                       label: context.l10n.hubMaintenance,
                       onTap: () => _goTab(context, Routes.maintenance),
                     ),
+                    if (session.canManageExchanges)
+                      _Item(
+                        icon: Icons.published_with_changes_rounded,
+                        label: context.l10n.exchangeTitle,
+                        subtitle: context.l10n.exchangeDeskSubtitle,
+                        onTap: () => _open(context, Routes.exchanges),
+                      ),
                     const SizedBox(height: Insets.md),
                     _Item(
                       icon: Icons.language_rounded,

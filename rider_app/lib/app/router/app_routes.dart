@@ -1,6 +1,8 @@
 abstract final class Routes {
   static const String splash = '/';
   static const String intro = '/intro';
+  static const String terms = '/terms';
+  static const String language = '/language';
   static const String login = '/login';
   static const String otp = '/otp';
 
@@ -16,6 +18,9 @@ abstract final class Routes {
   static const String scooter = '/scooter';
   static const String wallet = '/wallet';
   static const String support = '/support';
+  static const String batterySwap = '/battery-swap';
+  static const String nearbyHubs = '/nearby-hubs';
+  static const String referEarn = '/refer-and-earn';
 
   static const String incentives = '/incentives';
   static const String rentals = '/rentals';
@@ -25,6 +30,7 @@ abstract final class Routes {
   static const String payments = '/payments';
   static const String vehicleExchanges = '/vehicle-exchanges';
   static const String vehicleExchangeDetail = '/vehicle-exchanges/detail';
+  static const String vehicleExchangeRequest = '/vehicle-exchanges/request';
 
   const Routes._();
 }

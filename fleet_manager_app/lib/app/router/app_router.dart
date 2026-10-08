@@ -13,6 +13,9 @@ import '../../features/allocation/presentation/pages/deallocation_flow_page.dart
 import '../../features/allocation/presentation/pages/deallocations_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_page.dart';
+import '../../features/exchanges/presentation/pages/choose_scooter_page.dart';
+import '../../features/exchanges/presentation/pages/exchange_case_page.dart';
+import '../../features/exchanges/presentation/pages/exchange_cases_page.dart';
 import '../../features/hub/presentation/pages/home_page.dart';
 import '../../features/hub/presentation/widgets/fleet_shell.dart';
 import '../../features/maintenance/presentation/pages/maintenance_detail_page.dart';
@@ -24,7 +27,7 @@ import 'app_routes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
-const Set<String> _publicPaths = {Routes.splash, Routes.login, Routes.otp};
+const Set<String> _publicPaths = {Routes.splash, Routes.terms, Routes.language, Routes.login, Routes.otp};
 
 final routerProvider = Provider<GoRouter>((ref) {
   final ValueNotifier<bool> signedIn = ValueNotifier<bool>(ref.read(fleetSessionProvider).isSignedIn);
@@ -35,12 +38,20 @@ final routerProvider = Provider<GoRouter>((ref) {
     navigatorKey: _rootNavigatorKey,
     initialLocation: Routes.splash,
     refreshListenable: signedIn,
-    redirect: (context, state) {
-      if (_publicPaths.contains(state.uri.path)) return null;
-      return signedIn.value ? null : Routes.login;
-    },
+    redirect: (context, state) => _redirect(signedIn.value, ref.read(pendingFirstRunStepProvider), state.uri.path),
     routes: [
       GoRoute(path: Routes.splash, name: 'splash', builder: (context, state) => const SplashPage()),
+      GoRoute(
+        path: Routes.terms,
+        name: 'terms',
+        builder: (context, state) =>
+            TermsAcceptancePage(document: LegalDocuments.terms, onAccepted: () => context.go(Routes.login)),
+      ),
+      GoRoute(
+        path: Routes.language,
+        name: 'language',
+        builder: (context, state) => LanguageSelectionPage(onSelected: () => context.go(Routes.login)),
+      ),
       GoRoute(path: Routes.login, name: 'login', builder: (context, state) => const LoginPage()),
       GoRoute(
         path: Routes.otp,
@@ -128,10 +139,33 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'raiseMaintenance',
         builder: (context, state) => RaiseMaintenancePage(vehicleNumber: state.uri.queryParameters['vehicle']),
       ),
+      GoRoute(path: Routes.exchanges, name: 'exchanges', builder: (context, state) => const ExchangeCasesPage()),
+      GoRoute(
+        path: Routes.exchangeDetail,
+        name: 'exchangeDetail',
+        builder: (context, state) => ExchangeCasePage(exchangeId: state.uri.queryParameters['id'] ?? ''),
+      ),
+      GoRoute(
+        path: Routes.exchangeReplacement,
+        name: 'exchangeReplacement',
+        builder: (context, state) => ChooseScooterPage(exchangeId: state.uri.queryParameters['id'] ?? ''),
+      ),
     ],
     errorBuilder: (context, state) => _RouteErrorPage(location: state.uri.toString()),
   );
 });
+
+String? _redirect(bool signedIn, FirstRunStep? firstRun, String path) {
+  if (path == Routes.login) return _firstRunRoute(firstRun);
+  if (_publicPaths.contains(path)) return null;
+  return signedIn ? null : Routes.login;
+}
+
+String? _firstRunRoute(FirstRunStep? step) => switch (step) {
+  FirstRunStep.terms => Routes.terms,
+  FirstRunStep.language => Routes.language,
+  null => null,
+};
 
 class _RouteErrorPage extends StatelessWidget {
   const _RouteErrorPage({required this.location});

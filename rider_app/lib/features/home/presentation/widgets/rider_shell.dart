@@ -1,56 +1,21 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/session/rider_session_provider.dart';
-import '../../../ride/presentation/widgets/pairing_flash.dart';
-import '../../../ride/presentation/widgets/vehicle_power_flash.dart';
-
-class RiderShell extends ConsumerWidget {
+class RiderShell extends StatelessWidget {
   const RiderShell({required this.navigationShell, super.key});
 
   final StatefulNavigationShell navigationShell;
 
-  void _onPowerTap(BuildContext context, WidgetRef ref) {
-    final RiderSession session = ref.read(riderSessionProvider);
-    final RiderSessionNotifier notifier = ref.read(riderSessionProvider.notifier);
-    if (session.pairing) return;
-
-    if (!session.scooterPaired) {
-      notifier.setPairing(true);
-      PairingFlash.show(context, onPaired: notifier.markPaired);
-      return;
-    }
-
-    HapticFeedback.mediumImpact();
-
-    if (!session.present) {
-      AppSnack.warning(context, context.l10n.homeMarkYourselfPresentSwitchVehicle);
-      return;
-    }
-    final bool next = !session.vehicleOn;
-    notifier.setVehicleOn(next);
-    VehiclePowerFlash.show(context, on: next);
-  }
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final RiderSession session = ref.watch(riderSessionProvider);
-
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.canvas,
       extendBody: true,
       body: navigationShell,
       bottomNavigationBar: RiderBottomBar(
         currentIndex: navigationShell.currentIndex,
-        vehicleOn: session.vehicleOn,
-        canRide: session.present,
-        paired: session.scooterPaired,
-        pairing: session.pairing,
         onTap: (index) => navigationShell.goBranch(index, initialLocation: index == navigationShell.currentIndex),
-        onPowerTap: () => _onPowerTap(context, ref),
       ),
     );
   }
@@ -58,91 +23,49 @@ class RiderShell extends ConsumerWidget {
 
 enum RiderTab {
   home(Icons.dashboard_rounded, Icons.dashboard_outlined),
+  batterySwap(Icons.battery_charging_full_rounded, Icons.battery_charging_full_outlined),
   scooter(Icons.electric_scooter_rounded, Icons.electric_scooter_outlined),
-  wallet(Icons.account_balance_wallet_rounded, Icons.account_balance_wallet_outlined),
-  support(Icons.support_agent_rounded, Icons.support_agent_outlined);
+  nearbyHubs(Icons.hub_rounded, Icons.hub_outlined),
+  referEarn(Icons.card_giftcard_rounded, Icons.card_giftcard_outlined);
 
   const RiderTab(this.activeIcon, this.icon);
 
   String label(AppL10n l10n) => switch (this) {
     RiderTab.home => l10n.hubHome,
-    RiderTab.scooter => l10n.homeScooter,
-    RiderTab.wallet => l10n.commonWallet,
-    RiderTab.support => l10n.commonSupport,
+    RiderTab.batterySwap => l10n.navBatterySwap,
+    RiderTab.scooter => l10n.navScooterDetails,
+    RiderTab.nearbyHubs => l10n.navNearbyHubs,
+    RiderTab.referEarn => l10n.navReferEarn,
   };
+
   final IconData activeIcon;
   final IconData icon;
 }
 
 class RiderBottomBar extends StatelessWidget {
-  const RiderBottomBar({
-    required this.currentIndex,
-    required this.onTap,
-    required this.onPowerTap,
-    this.vehicleOn = false,
-    this.canRide = false,
-    this.paired = false,
-    this.pairing = false,
-    super.key,
-  });
+  const RiderBottomBar({required this.currentIndex, required this.onTap, super.key});
 
   final int currentIndex;
   final ValueChanged<int> onTap;
-  final VoidCallback onPowerTap;
-  final bool vehicleOn;
-  final bool canRide;
-  final bool paired;
-  final bool pairing;
 
   static const double _barHeight = 68;
-  static const double _powerSize = 62;
 
   @override
   Widget build(BuildContext context) {
     final double bottomInset = MediaQuery.paddingOf(context).bottom;
 
-    return SizedBox(
-      height: _barHeight + bottomInset + _powerSize * 0.42,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        clipBehavior: Clip.none,
+    return Container(
+      height: _barHeight + bottomInset,
+      padding: EdgeInsets.only(bottom: bottomInset),
+      decoration: const BoxDecoration(
+        color: AppColors.surface,
+        border: Border(top: BorderSide(color: AppColors.stroke)),
+        boxShadow: [BoxShadow(color: Color(0x14122C52), blurRadius: 16, offset: Offset(0, -4))],
+      ),
+      child: Row(
         children: [
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              height: _barHeight + bottomInset,
-              padding: EdgeInsets.only(bottom: bottomInset),
-
-              decoration: const BoxDecoration(
-                color: AppColors.surface,
-                border: Border(top: BorderSide(color: AppColors.stroke)),
-                boxShadow: [BoxShadow(color: Color(0x14122C52), blurRadius: 16, offset: Offset(0, -4))],
-              ),
-              child: Row(
-                children: [
-                  _BarItem(tab: RiderTab.home, active: currentIndex == 0, onTap: () => onTap(0)),
-                  _BarItem(tab: RiderTab.scooter, active: currentIndex == 1, onTap: () => onTap(1)),
-                  const SizedBox(width: _powerSize + 16),
-                  _BarItem(tab: RiderTab.wallet, active: currentIndex == 3, onTap: () => onTap(3)),
-                  _BarItem(tab: RiderTab.support, active: currentIndex == 2, onTap: () => onTap(2)),
-                ],
-              ),
-            ),
-          ),
-
-          Positioned(
-            bottom: bottomInset + _barHeight - _powerSize * 0.58,
-            child: _PowerButton(
-              on: vehicleOn,
-              enabled: canRide,
-              paired: paired,
-              pairing: pairing,
-              size: _powerSize,
-              onTap: onPowerTap,
-            ),
-          ),
+          for (final RiderTab tab in RiderTab.values)
+            _BarItem(tab: tab, active: currentIndex == tab.index, onTap: () => onTap(tab.index)),
         ],
       ),
     );
@@ -186,143 +109,23 @@ class _BarItem extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 4),
-            AnimatedDefaultTextStyle(
-              duration: Motion.fast,
-              style: AppText.bodySmall.copyWith(
-                fontSize: 10.5,
-                fontWeight: active ? FontWeight.w800 : FontWeight.w600,
-                color: active ? AppColors.textPrimary : AppColors.textMuted,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: AnimatedDefaultTextStyle(
+                  duration: Motion.fast,
+                  style: AppText.bodySmall.copyWith(
+                    fontSize: 10.5,
+                    fontWeight: active ? FontWeight.w800 : FontWeight.w600,
+                    color: active ? AppColors.textPrimary : AppColors.textMuted,
+                  ),
+                  child: Text(tab.label(context.l10n), maxLines: 1),
+                ),
               ),
-              child: Text(tab.label(context.l10n)),
             ),
             const Spacer(),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _PowerButton extends StatefulWidget {
-  const _PowerButton({
-    required this.on,
-    required this.enabled,
-    required this.paired,
-    required this.pairing,
-    required this.size,
-    required this.onTap,
-  });
-
-  final bool on;
-  final bool enabled;
-  final bool paired;
-  final bool pairing;
-  final double size;
-  final VoidCallback onTap;
-
-  @override
-  State<_PowerButton> createState() => _PowerButtonState();
-}
-
-class _PowerButtonState extends State<_PowerButton> with SingleTickerProviderStateMixin {
-  late final AnimationController _pulse = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 1800),
-  );
-
-  bool get _live => widget.on || widget.pairing;
-
-  @override
-  void initState() {
-    super.initState();
-    if (_live) _pulse.repeat(reverse: true);
-  }
-
-  @override
-  void didUpdateWidget(_PowerButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (_live && !_pulse.isAnimating) {
-      _pulse.repeat(reverse: true);
-    } else if (!_live && _pulse.isAnimating) {
-      _pulse
-        ..stop()
-        ..value = 0;
-    }
-  }
-
-  @override
-  void dispose() {
-    _pulse.dispose();
-    super.dispose();
-  }
-
-  IconData get _icon {
-    if (!widget.paired) return widget.pairing ? Icons.bolt_rounded : Icons.bluetooth_searching_rounded;
-    return Icons.power_settings_new_rounded;
-  }
-
-  String get _label {
-    if (!widget.paired) return widget.pairing ? 'LINK' : 'PAIR';
-    return widget.on ? 'ON' : 'OFF';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final bool filled = widget.on || widget.pairing;
-    final Color fill = widget.on ? AppColors.mint : AppColors.primary;
-    final Color tone = widget.on ? AppColors.mint : AppColors.primary;
-
-    return Pressable(
-      onTap: widget.onTap,
-      scale: 0.9,
-      child: AnimatedBuilder(
-        animation: _pulse,
-        builder: (context, child) {
-          final double halo = _live ? 0.18 + _pulse.value * 0.16 : 0.14;
-          return Container(
-            width: widget.size + 12,
-            height: widget.size + 12,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.surface,
-              border: Border.all(color: AppColors.surface, width: 5),
-              boxShadow: [
-                BoxShadow(
-                  color: tone.withValues(alpha: halo),
-                  blurRadius: 14,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: child,
-          );
-        },
-        child: AnimatedContainer(
-          duration: Motion.normal,
-          width: widget.size,
-          height: widget.size,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-
-            color: filled ? fill : AppColors.surface,
-            border: Border.all(color: filled ? fill : AppColors.strokeStrong, width: 1.4),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(_icon, size: 23, color: filled ? Colors.white : AppColors.primary),
-              const SizedBox(height: 1),
-              Text(
-                _label,
-                style: AppText.overline.copyWith(
-                  fontSize: 8.5,
-                  letterSpacing: 1.1,
-                  color: filled ? Colors.white : AppColors.textMuted,
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

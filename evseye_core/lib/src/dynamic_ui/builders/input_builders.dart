@@ -5,10 +5,13 @@ import '../../l10n/l10n.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_dimens.dart';
 import '../../theme/app_typography.dart';
+import '../../widgets/buttons.dart';
 import '../../widgets/capture_tiles.dart';
 import '../../widgets/date_wheel.dart';
+import '../../widgets/esign.dart';
 import '../../widgets/feedback.dart';
 import '../../widgets/inputs.dart';
+import '../../widgets/status_chip.dart';
 import '../models/ui_action.dart';
 import '../models/ui_node.dart';
 import '../registry/dynamic_ui_scope.dart';
@@ -39,6 +42,52 @@ Map<String, NodeBuilder> inputBuilders(WidgetRegistry r) => {
               inputFormatters: _formatters(node),
               onChanged: (v) => scope.form.setValue(key, v),
             ),
+          ),
+      'referralCode': (context, node, scope) => _Field(
+            node: node,
+            scope: scope,
+            builder: (key, value, error, enabled) {
+              final String code = value?.trim() ?? '';
+              final bool busy = scope.isBusy(key);
+              final bool applied =
+                  code.isNotEmpty && scope.form.stringOf(node.props['appliedKey']?.toString() ?? '') == code;
+              return AppTextField(
+                label: node.text(scope, 'label'),
+                hint: node.props['hint'] == null ? null : node.text(scope, 'hint'),
+                errorText: error,
+                enabled: enabled,
+                readOnly: applied || busy,
+                initialValue: value,
+                required: _isRequired(node),
+                maxLength: (node.props['maxLength'] as num?)?.toInt(),
+                prefixIcon: node.props['icon'] == null
+                    ? null
+                    : NodeTokens.icon(node.props['icon'] as String?),
+                textCapitalization: TextCapitalization.characters,
+                inputFormatters: _formatters(node),
+                onChanged: (v) => scope.form.setValue(key, v),
+                suffix: applied
+                    ? StatusChip(
+                        label: context.l10n.onboardingReferralApplied,
+                        tone: StatusTone.success,
+                        icon: Icons.check_rounded,
+                        dense: true,
+                      )
+                    : PrimaryButton(
+                        label: context.l10n.onboardingReferralApply,
+                        size: AppButtonSize.small,
+                        expand: false,
+                        loading: busy,
+                        onPressed: enabled && code.isNotEmpty
+                            ? () => scope.onAction(
+                                  context,
+                                  node.action ?? const UiAction(type: 'applyReferral'),
+                                  node,
+                                )
+                            : null,
+                      ),
+              );
+            },
           ),
       'pickerField': (context, node, scope) => _Field(
             node: node,
@@ -104,6 +153,28 @@ Map<String, NodeBuilder> inputBuilders(WidgetRegistry r) => {
               errorText: error,
               onChanged: (v) => scope.form.setValue(key, v),
             ),
+          ),
+      'esign': (context, node, scope) => ListenableBuilder(
+            listenable: scope.form,
+            builder: (context, _) {
+              final String key = node.fieldKey;
+              final Object? value = scope.form.valueOf(key);
+              final String name = scope.form.stringOf(node.props['nameKey']?.toString() ?? '').trim();
+              return ESignCard(
+                name: name,
+                signature: value is ESignature ? value : null,
+                errorText: scope.form.errorOf(key),
+                enabled: scope.isEnabled(node),
+                onSign: () {
+                  if (name.isEmpty) {
+                    AppSnack.info(context, context.l10n.esignAddNameFirst);
+                    return;
+                  }
+                  HapticFeedback.selectionClick();
+                  scope.form.setValue(key, ESignature(name: name, signedAt: DateTime.now()));
+                },
+              );
+            },
           ),
       'switchTile': (context, node, scope) => _Field(
             node: node,

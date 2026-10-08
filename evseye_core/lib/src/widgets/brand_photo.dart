@@ -12,6 +12,8 @@ enum BrandPhoto {
 
   rider(BrandArt.rider),
 
+  evScooter(BrandArt.evScooter),
+
   charging(BrandArt.charging),
 
   service(BrandArt.service),

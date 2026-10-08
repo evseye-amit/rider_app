@@ -27,9 +27,9 @@ abstract final class AppColors {
   static const Color teal = Color(0xFF00B8D9);
   static const Color tealWash = Color(0xFFE1F7FB);
 
-  static const Color ink = Color(0xFFF475D0);
-  static const Color inkSoft = Color(0xFFF475D0);
-  static const Color inkDeep = Color(0xFFF475D0);
+  static const Color ink = primaryWash;
+  static const Color inkSoft = primaryWash;
+  static const Color inkDeep = primaryWash;
 
   static const Color onInk = Color(0xFF3D0A2C);
   static const Color onInkSecondary = Color(0xFF6B2453);

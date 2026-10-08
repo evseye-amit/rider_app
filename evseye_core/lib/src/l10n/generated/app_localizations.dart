@@ -400,6 +400,18 @@ abstract class AppL10n {
   /// **'Fleet code'**
   String get allocationFleetCode;
 
+  /// Scooter assignment is done with the hub's fleet manager login.
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter assignment is done with the hub\'s fleet manager login.'**
+  String get allocationFleetOnlyBody;
+
+  /// Not available for this login
+  ///
+  /// In en, this message translates to:
+  /// **'Not available for this login'**
+  String get allocationFleetOnlyTitle;
+
   /// Front
   ///
   /// In en, this message translates to:
@@ -2860,6 +2872,36 @@ abstract class AppL10n {
   /// **'Unknown'**
   String get errorUnknown;
 
+  /// Add your full name in the profile step first
+  ///
+  /// In en, this message translates to:
+  /// **'Add your full name in the profile step first'**
+  String get esignAddNameFirst;
+
+  /// Signed
+  ///
+  /// In en, this message translates to:
+  /// **'Signed'**
+  String get esignSigned;
+
+  /// Tap to sign
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to sign'**
+  String get esignTapToSign;
+
+  /// Your e-signature
+  ///
+  /// In en, this message translates to:
+  /// **'Your e-signature'**
+  String get esignTitle;
+
+  /// Your name
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get esignYourName;
+
   /// Accepting means you agree to the new terms for this scooter.
   ///
   /// In en, this message translates to:
@@ -2872,11 +2914,23 @@ abstract class AppL10n {
   /// **'Offer accepted'**
   String get exchangeAccepted;
 
+  /// Your new plan
+  ///
+  /// In en, this message translates to:
+  /// **'Your new plan'**
+  String get exchangeAcceptedOfferTitle;
+
   /// Accept offer
   ///
   /// In en, this message translates to:
   /// **'Accept offer'**
   String get exchangeAcceptOffer;
+
+  /// Agreement history
+  ///
+  /// In en, this message translates to:
+  /// **'Agreement history'**
+  String get exchangeAgreementHistory;
 
   /// This exchange request will be closed.
   ///
@@ -2896,11 +2950,23 @@ abstract class AppL10n {
   /// **'Cancel request'**
   String get exchangeCancelRequest;
 
+  /// Why do you need an exchange?
+  ///
+  /// In en, this message translates to:
+  /// **'Why do you need an exchange?'**
+  String get exchangeChooseReason;
+
   /// Completed
   ///
   /// In en, this message translates to:
   /// **'Completed'**
   String get exchangeCompleted;
+
+  /// I have read and agree to the updated terms
+  ///
+  /// In en, this message translates to:
+  /// **'I have read and agree to the updated terms'**
+  String get exchangeConsent;
 
   /// Could not load exchanges
   ///
@@ -2908,11 +2974,305 @@ abstract class AppL10n {
   /// **'Could not load exchanges'**
   String get exchangeCouldNotLoad;
 
-  /// Deposit change
+  /// Current scooter
   ///
   /// In en, this message translates to:
-  /// **'Deposit change'**
-  String get exchangeDepositChange;
+  /// **'Current scooter'**
+  String get exchangeCurrentScooter;
+
+  /// Pay {amount} more deposit before you collect your new scooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount} more deposit before you collect your new scooter.'**
+  String exchangeDepositDue(String amount);
+
+  /// Extra deposit kept by hub
+  ///
+  /// In en, this message translates to:
+  /// **'Extra deposit kept by hub'**
+  String get exchangeDepositHeld;
+
+  /// Deposit moved over
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit moved over'**
+  String get exchangeDepositMoved;
+
+  /// Deposit refund
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit refund'**
+  String get exchangeDepositRefund;
+
+  /// Extra deposit to pay
+  ///
+  /// In en, this message translates to:
+  /// **'Extra deposit to pay'**
+  String get exchangeDepositToPay;
+
+  /// Approve request
+  ///
+  /// In en, this message translates to:
+  /// **'Approve request'**
+  String get exchangeDeskApprove;
+
+  /// Request approved
+  ///
+  /// In en, this message translates to:
+  /// **'Request approved'**
+  String get exchangeDeskApproved;
+
+  /// Change scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Change scooter'**
+  String get exchangeDeskChangeScooter;
+
+  /// Choose replacement scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Choose replacement scooter'**
+  String get exchangeDeskChooseScooter;
+
+  /// Complete exchange
+  ///
+  /// In en, this message translates to:
+  /// **'Complete exchange'**
+  String get exchangeDeskComplete;
+
+  /// Confirm scooter returned
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm scooter returned'**
+  String get exchangeDeskConfirmReturn;
+
+  /// The rider still has to pay {amount} more deposit.
+  ///
+  /// In en, this message translates to:
+  /// **'The rider still has to pay {amount} more deposit.'**
+  String exchangeDeskDepositDue(String amount);
+
+  /// Deposits settled
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits settled'**
+  String get exchangeDeskDepositsSettled;
+
+  /// When a rider asks for a different scooter, the request shows up here.
+  ///
+  /// In en, this message translates to:
+  /// **'When a rider asks for a different scooter, the request shows up here.'**
+  String get exchangeDeskEmptyBody;
+
+  /// Exchange completed
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange completed'**
+  String get exchangeDeskExchangeCompleted;
+
+  /// The old scooter is back. Choose a replacement scooter for the rider.
+  ///
+  /// In en, this message translates to:
+  /// **'The old scooter is back. Choose a replacement scooter for the rider.'**
+  String get exchangeDeskGuideChoose;
+
+  /// The rider accepted. Settle the deposits to move on to the handover.
+  ///
+  /// In en, this message translates to:
+  /// **'The rider accepted. Settle the deposits to move on to the handover.'**
+  String get exchangeDeskGuideDeposits;
+
+  /// Check the request, then approve or reject it.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the request, then approve or reject it.'**
+  String get exchangeDeskGuideReview;
+
+  /// Check the offer below and send it to the rider.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the offer below and send it to the rider.'**
+  String get exchangeDeskGuideSendOffer;
+
+  /// Deposits are settled. Start the handover of the new scooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits are settled. Start the handover of the new scooter.'**
+  String get exchangeDeskGuideStartHandover;
+
+  /// Start the return of the rider's current scooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the return of the rider\'s current scooter.'**
+  String get exchangeDeskGuideStartReturn;
+
+  /// The hub's fleet manager hands over the new scooter through the normal allocation steps. Once the scooter is active with the rider, complete the exchange.
+  ///
+  /// In en, this message translates to:
+  /// **'The hub\'s fleet manager hands over the new scooter through the normal allocation steps. Once the scooter is active with the rider, complete the exchange.'**
+  String get exchangeDeskHandoverHint;
+
+  /// Handover started
+  ///
+  /// In en, this message translates to:
+  /// **'Handover started'**
+  String get exchangeDeskHandoverStarted;
+
+  /// Needs action
+  ///
+  /// In en, this message translates to:
+  /// **'Needs action'**
+  String get exchangeDeskNeedsAction;
+
+  /// No scooters are available right now.
+  ///
+  /// In en, this message translates to:
+  /// **'No scooters are available right now.'**
+  String get exchangeDeskNoScooters;
+
+  /// Offer preview
+  ///
+  /// In en, this message translates to:
+  /// **'Offer preview'**
+  String get exchangeDeskOfferPreview;
+
+  /// Offer sent to rider
+  ///
+  /// In en, this message translates to:
+  /// **'Offer sent to rider'**
+  String get exchangeDeskOfferSent;
+
+  /// Open return
+  ///
+  /// In en, this message translates to:
+  /// **'Open return'**
+  String get exchangeDeskOpenReturn;
+
+  /// Reject request
+  ///
+  /// In en, this message translates to:
+  /// **'Reject request'**
+  String get exchangeDeskReject;
+
+  /// Request rejected
+  ///
+  /// In en, this message translates to:
+  /// **'Request rejected'**
+  String get exchangeDeskRejectedDone;
+
+  /// Tell the rider why this can't be approved.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell the rider why this can\'t be approved.'**
+  String get exchangeDeskRejectSubtitle;
+
+  /// Replacement scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Replacement scooter'**
+  String get exchangeDeskReplacement;
+
+  /// Until {time}
+  ///
+  /// In en, this message translates to:
+  /// **'Until {time}'**
+  String exchangeDeskReservedUntil(String time);
+
+  /// Reserve this scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve this scooter'**
+  String get exchangeDeskReserveScooter;
+
+  /// Return confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Return confirmed'**
+  String get exchangeDeskReturnConfirmed;
+
+  /// Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish the return in Returns: verify the rider\'s OTP and complete the inspection. Then confirm it here.'**
+  String get exchangeDeskReturnHint;
+
+  /// Return started
+  ///
+  /// In en, this message translates to:
+  /// **'Return started'**
+  String get exchangeDeskReturnStarted;
+
+  /// Rider's note
+  ///
+  /// In en, this message translates to:
+  /// **'Rider\'s note'**
+  String get exchangeDeskRiderNote;
+
+  /// Scooter reserved
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter reserved'**
+  String get exchangeDeskScooterReserved;
+
+  /// Send offer to rider
+  ///
+  /// In en, this message translates to:
+  /// **'Send offer to rider'**
+  String get exchangeDeskSendOffer;
+
+  /// Settle deposits
+  ///
+  /// In en, this message translates to:
+  /// **'Settle deposits'**
+  String get exchangeDeskSettleDeposits;
+
+  /// Start handover
+  ///
+  /// In en, this message translates to:
+  /// **'Start handover'**
+  String get exchangeDeskStartHandover;
+
+  /// Start scooter return
+  ///
+  /// In en, this message translates to:
+  /// **'Start scooter return'**
+  String get exchangeDeskStartReturn;
+
+  /// Offer sent
+  ///
+  /// In en, this message translates to:
+  /// **'Offer sent'**
+  String get exchangeDeskStatusOfferSent;
+
+  /// Scooter reserved
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter reserved'**
+  String get exchangeDeskStatusReserved;
+
+  /// Riders asking for a different scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Riders asking for a different scooter'**
+  String get exchangeDeskSubtitle;
+
+  /// Offer sent. Waiting for the rider to accept it in their app.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer sent. Waiting for the rider to accept it in their app.'**
+  String get exchangeDeskWaitingRider;
+
+  /// Waiting for rider
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for rider'**
+  String get exchangeDeskWithRider;
+
+  /// Request details
+  ///
+  /// In en, this message translates to:
+  /// **'Request details'**
+  String get exchangeDetails;
 
   /// Exchange request
   ///
@@ -2920,11 +3280,191 @@ abstract class AppL10n {
   /// **'Exchange request'**
   String get exchangeDetailTitle;
 
-  /// Changes from
+  /// The old scooter has already been returned.
   ///
   /// In en, this message translates to:
-  /// **'Changes from'**
-  String get exchangeEffective;
+  /// **'The old scooter has already been returned.'**
+  String get exchangeErrorAlreadyReturned;
+
+  /// Billing changed after the offer was accepted. Please contact support.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing changed after the offer was accepted. Please contact support.'**
+  String get exchangeErrorBillingChanged;
+
+  /// Your scooter has already been returned, so this request can't be cancelled here. Please contact your hub.
+  ///
+  /// In en, this message translates to:
+  /// **'Your scooter has already been returned, so this request can\'t be cancelled here. Please contact your hub.'**
+  String get exchangeErrorCannotCancel;
+
+  /// This request was just updated. Pull down to refresh and try again.
+  ///
+  /// In en, this message translates to:
+  /// **'This request was just updated. Pull down to refresh and try again.'**
+  String get exchangeErrorChanged;
+
+  /// Deposits aren't settled yet. Settle the deposits first.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits aren\'t settled yet. Settle the deposits first.'**
+  String get exchangeErrorDepositsUnsettled;
+
+  /// Vehicle exchange isn't open right now. Please contact your hub.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle exchange isn\'t open right now. Please contact your hub.'**
+  String get exchangeErrorDisabled;
+
+  /// Clear your pending dues first. Breakdown and safety exchanges are still allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear your pending dues first. Breakdown and safety exchanges are still allowed.'**
+  String get exchangeErrorDuesPending;
+
+  /// The new scooter hasn't been handed over yet. Finish the handover steps first.
+  ///
+  /// In en, this message translates to:
+  /// **'The new scooter hasn\'t been handed over yet. Finish the handover steps first.'**
+  String get exchangeErrorHandoverUnfinished;
+
+  /// The scooter hold expired. Choose the replacement again.
+  ///
+  /// In en, this message translates to:
+  /// **'The scooter hold expired. Choose the replacement again.'**
+  String get exchangeErrorHoldExpired;
+
+  /// Complete the return inspection first.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the return inspection first.'**
+  String get exchangeErrorInspectionUnfinished;
+
+  /// We couldn't find an active rental for you.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t find an active rental for you.'**
+  String get exchangeErrorNoRental;
+
+  /// You need a scooter assigned to you to request an exchange.
+  ///
+  /// In en, this message translates to:
+  /// **'You need a scooter assigned to you to request an exchange.'**
+  String get exchangeErrorNoScooter;
+
+  /// Rider terms aren't set up. Ask an admin to publish one active set of terms.
+  ///
+  /// In en, this message translates to:
+  /// **'Rider terms aren\'t set up. Ask an admin to publish one active set of terms.'**
+  String get exchangeErrorNoTerms;
+
+  /// This exchange request no longer exists.
+  ///
+  /// In en, this message translates to:
+  /// **'This exchange request no longer exists.'**
+  String get exchangeErrorNotFound;
+
+  /// This offer is no longer open.
+  ///
+  /// In en, this message translates to:
+  /// **'This offer is no longer open.'**
+  String get exchangeErrorOfferClosed;
+
+  /// We couldn't verify this offer. Ask your hub to send it again.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t verify this offer. Ask your hub to send it again.'**
+  String get exchangeErrorOfferInvalid;
+
+  /// Some records for this exchange are missing. Please contact support.
+  ///
+  /// In en, this message translates to:
+  /// **'Some records for this exchange are missing. Please contact support.'**
+  String get exchangeErrorRecordsMissing;
+
+  /// Your rental isn't active, so an exchange can't be requested.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rental isn\'t active, so an exchange can\'t be requested.'**
+  String get exchangeErrorRentalInactive;
+
+  /// Finish the old scooter's return before choosing a replacement.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish the old scooter\'s return before choosing a replacement.'**
+  String get exchangeErrorReturnFirst;
+
+  /// The return isn't finished yet. Verify the rider's OTP and complete the return first.
+  ///
+  /// In en, this message translates to:
+  /// **'The return isn\'t finished yet. Verify the rider\'s OTP and complete the return first.'**
+  String get exchangeErrorReturnUnfinished;
+
+  /// Pick a different scooter from the rider's current one.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a different scooter from the rider\'s current one.'**
+  String get exchangeErrorSameScooter;
+
+  /// That scooter is reserved for another exchange.
+  ///
+  /// In en, this message translates to:
+  /// **'That scooter is reserved for another exchange.'**
+  String get exchangeErrorScooterReserved;
+
+  /// That scooter is no longer available. Pick another one.
+  ///
+  /// In en, this message translates to:
+  /// **'That scooter is no longer available. Pick another one.'**
+  String get exchangeErrorScooterUnavailable;
+
+  /// This scooter needs a different security deposit. Change the deposit separately first.
+  ///
+  /// In en, this message translates to:
+  /// **'This scooter needs a different security deposit. Change the deposit separately first.'**
+  String get exchangeErrorSecurityChange;
+
+  /// The rider's security deposit needs a top-up before completing.
+  ///
+  /// In en, this message translates to:
+  /// **'The rider\'s security deposit needs a top-up before completing.'**
+  String get exchangeErrorSecurityTopUp;
+
+  /// Your rental changed after this offer was made. Ask your hub for a new offer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rental changed after this offer was made. Ask your hub for a new offer.'**
+  String get exchangeErrorStale;
+
+  /// You've had this scooter for too short a time. Please try again in a few days.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve had this scooter for too short a time. Please try again in a few days.'**
+  String get exchangeErrorTooSoon;
+
+  /// Extra rent now
+  ///
+  /// In en, this message translates to:
+  /// **'Extra rent now'**
+  String get exchangeExtraRentNow;
+
+  /// Exchange fee
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange fee'**
+  String get exchangeFee;
+
+  /// Waived
+  ///
+  /// In en, this message translates to:
+  /// **'Waived'**
+  String get exchangeFeeWaived;
+
+  /// Reason from hub
+  ///
+  /// In en, this message translates to:
+  /// **'Reason from hub'**
+  String get exchangeHubReason;
 
   /// Needs your answer
   ///
@@ -2932,17 +3472,131 @@ abstract class AppL10n {
   /// **'Needs your answer'**
   String get exchangeNeedsYou;
 
+  /// New rent
+  ///
+  /// In en, this message translates to:
+  /// **'New rent'**
+  String get exchangeNewRent;
+
+  /// New rent starts
+  ///
+  /// In en, this message translates to:
+  /// **'New rent starts'**
+  String get exchangeNewRentFrom;
+
+  /// New scooter
+  ///
+  /// In en, this message translates to:
+  /// **'New scooter'**
+  String get exchangeNewScooter;
+
+  /// Approved. Your hub will ask you to bring your current scooter in for a check.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved. Your hub will ask you to bring your current scooter in for a check.'**
+  String get exchangeNextApproved;
+
+  /// This request was cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'This request was cancelled.'**
+  String get exchangeNextCancelled;
+
+  /// Your old scooter is returned. Your hub is picking a replacement for you.
+  ///
+  /// In en, this message translates to:
+  /// **'Your old scooter is returned. Your hub is picking a replacement for you.'**
+  String get exchangeNextChoosing;
+
+  /// Exchange complete. Enjoy your new scooter!
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange complete. Enjoy your new scooter!'**
+  String get exchangeNextCompleted;
+
+  /// Offer accepted. Your hub is settling the deposit for your new scooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer accepted. Your hub is settling the deposit for your new scooter.'**
+  String get exchangeNextDeposit;
+
+  /// This request expired before it was completed.
+  ///
+  /// In en, this message translates to:
+  /// **'This request expired before it was completed.'**
+  String get exchangeNextExpired;
+
+  /// Your new scooter is ready. Collect it from the hub.
+  ///
+  /// In en, this message translates to:
+  /// **'Your new scooter is ready. Collect it from the hub.'**
+  String get exchangeNextHandover;
+
+  /// Your offer is ready. Check the details and accept or reject it.
+  ///
+  /// In en, this message translates to:
+  /// **'Your offer is ready. Check the details and accept or reject it.'**
+  String get exchangeNextOffer;
+
+  /// Your hub couldn't approve this request.
+  ///
+  /// In en, this message translates to:
+  /// **'Your hub couldn\'t approve this request.'**
+  String get exchangeNextRejected;
+
+  /// Your hub will review your request soon.
+  ///
+  /// In en, this message translates to:
+  /// **'Your hub will review your request soon.'**
+  String get exchangeNextRequested;
+
+  /// A replacement scooter is reserved for you. Your offer will be ready soon.
+  ///
+  /// In en, this message translates to:
+  /// **'A replacement scooter is reserved for you. Your offer will be ready soon.'**
+  String get exchangeNextReserved;
+
+  /// Return your current scooter at the hub so they can inspect it.
+  ///
+  /// In en, this message translates to:
+  /// **'Return your current scooter at the hub so they can inspect it.'**
+  String get exchangeNextReturn;
+
   /// No exchange requests
   ///
   /// In en, this message translates to:
   /// **'No exchange requests'**
   String get exchangeNone;
 
-  /// If your scooter has a problem, your hub can start an exchange for you.
+  /// If your scooter has a problem, request an exchange and your hub will help.
   ///
   /// In en, this message translates to:
-  /// **'If your scooter has a problem, your hub can start an exchange for you.'**
+  /// **'If your scooter has a problem, request an exchange and your hub will help.'**
   String get exchangeNoneMessage;
+
+  /// You can request an exchange once a scooter is rented to you.
+  ///
+  /// In en, this message translates to:
+  /// **'You can request an exchange once a scooter is rented to you.'**
+  String get exchangeNoRentalBody;
+
+  /// No active rental
+  ///
+  /// In en, this message translates to:
+  /// **'No active rental'**
+  String get exchangeNoRentalTitle;
+
+  /// Describe the problem (optional)
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the problem (optional)'**
+  String get exchangeNoteHint;
+
+  /// Note for your hub
+  ///
+  /// In en, this message translates to:
+  /// **'Note for your hub'**
+  String get exchangeNoteLabel;
 
   /// Your note
   ///
@@ -2974,11 +3628,53 @@ abstract class AppL10n {
   /// **'In progress'**
   String get exchangeOpen;
 
+  /// You already have an exchange in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'You already have an exchange in progress.'**
+  String get exchangeOpenExists;
+
   /// Finished
   ///
   /// In en, this message translates to:
   /// **'Finished'**
   String get exchangePast;
+
+  /// / day
+  ///
+  /// In en, this message translates to:
+  /// **'/ day'**
+  String get exchangePerDay;
+
+  /// / 2 weeks
+  ///
+  /// In en, this message translates to:
+  /// **'/ 2 weeks'**
+  String get exchangePerFortnight;
+
+  /// / month
+  ///
+  /// In en, this message translates to:
+  /// **'/ month'**
+  String get exchangePerMonth;
+
+  /// / 3 months
+  ///
+  /// In en, this message translates to:
+  /// **'/ 3 months'**
+  String get exchangePerQuarter;
+
+  /// / week
+  ///
+  /// In en, this message translates to:
+  /// **'/ week'**
+  String get exchangePerWeek;
+
+  /// Progress
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get exchangeProgress;
 
   /// Raised
   ///
@@ -3004,11 +3700,29 @@ abstract class AppL10n {
   /// **'Breakdown'**
   String get exchangeReasonBreakdown;
 
+  /// It stopped working or keeps breaking down
+  ///
+  /// In en, this message translates to:
+  /// **'It stopped working or keeps breaking down'**
+  String get exchangeReasonBreakdownHint;
+
+  /// Something else
+  ///
+  /// In en, this message translates to:
+  /// **'Something else'**
+  String get exchangeReasonOtherHint;
+
   /// Safety swap
   ///
   /// In en, this message translates to:
   /// **'Safety swap'**
   String get exchangeReasonSafety;
+
+  /// A safety check needs a different scooter
+  ///
+  /// In en, this message translates to:
+  /// **'A safety check needs a different scooter'**
+  String get exchangeReasonSafetyHint;
 
   /// Not safe to ride
   ///
@@ -3016,11 +3730,23 @@ abstract class AppL10n {
   /// **'Not safe to ride'**
   String get exchangeReasonUnsafe;
 
+  /// Brakes, lights or tyres don't feel safe
+  ///
+  /// In en, this message translates to:
+  /// **'Brakes, lights or tyres don\'t feel safe'**
+  String get exchangeReasonUnsafeHint;
+
   /// Upgrade
   ///
   /// In en, this message translates to:
   /// **'Upgrade'**
   String get exchangeReasonUpgrade;
+
+  /// You'd like a different model
+  ///
+  /// In en, this message translates to:
+  /// **'You\'d like a different model'**
+  String get exchangeReasonUpgradeHint;
 
   /// Offer rejected
   ///
@@ -3052,23 +3778,47 @@ abstract class AppL10n {
   /// **'Tell your hub why, so they can send a better one.'**
   String get exchangeRejectSubtitle;
 
-  /// Rent change
+  /// Could not load your rental
   ///
   /// In en, this message translates to:
-  /// **'Rent change'**
-  String get exchangeRentChange;
+  /// **'Could not load your rental'**
+  String get exchangeRentalCouldNotLoad;
+
+  /// Rent credit
+  ///
+  /// In en, this message translates to:
+  /// **'Rent credit'**
+  String get exchangeRentCredit;
+
+  /// Request an exchange
+  ///
+  /// In en, this message translates to:
+  /// **'Request an exchange'**
+  String get exchangeRequestAction;
+
+  /// Exchange request sent
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange request sent'**
+  String get exchangeRequestSent;
+
+  /// Tell your hub why you need a different scooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell your hub why you need a different scooter.'**
+  String get exchangeRequestSubtitle;
+
+  /// Send request
+  ///
+  /// In en, this message translates to:
+  /// **'Send request'**
+  String get exchangeSendRequest;
 
   /// Accepted
   ///
   /// In en, this message translates to:
   /// **'Accepted'**
   String get exchangeStageAccepted;
-
-  /// Closed
-  ///
-  /// In en, this message translates to:
-  /// **'Closed'**
-  String get exchangeStageClosed;
 
   /// Completed
   ///
@@ -3082,12 +3832,6 @@ abstract class AppL10n {
   /// **'Handover'**
   String get exchangeStageHandover;
 
-  /// Being checked
-  ///
-  /// In en, this message translates to:
-  /// **'Being checked'**
-  String get exchangeStageInReview;
-
   /// Offer ready
   ///
   /// In en, this message translates to:
@@ -3099,6 +3843,78 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Requested'**
   String get exchangeStageRequested;
+
+  /// Approved
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get exchangeStatusApproved;
+
+  /// Cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get exchangeStatusCancelled;
+
+  /// Choosing scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Choosing scooter'**
+  String get exchangeStatusChoosing;
+
+  /// Expired
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get exchangeStatusExpired;
+
+  /// Rejected
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get exchangeStatusRejected;
+
+  /// Return scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Return scooter'**
+  String get exchangeStatusReturn;
+
+  /// Hub approval
+  ///
+  /// In en, this message translates to:
+  /// **'Hub approval'**
+  String get exchangeStepApproval;
+
+  /// Deposit
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit'**
+  String get exchangeStepDeposit;
+
+  /// Get new scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Get new scooter'**
+  String get exchangeStepHandover;
+
+  /// Replacement offer
+  ///
+  /// In en, this message translates to:
+  /// **'Replacement offer'**
+  String get exchangeStepOffer;
+
+  /// Request sent
+  ///
+  /// In en, this message translates to:
+  /// **'Request sent'**
+  String get exchangeStepRequested;
+
+  /// Return old scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Return old scooter'**
+  String get exchangeStepReturn;
 
   /// Ask for a different scooter
   ///
@@ -3112,11 +3928,29 @@ abstract class AppL10n {
   /// **'Vehicle exchange'**
   String get exchangeTitle;
 
-  /// Your hub is working on this. We will tell you when there is an offer.
+  /// Current
   ///
   /// In en, this message translates to:
-  /// **'Your hub is working on this. We will tell you when there is an offer.'**
-  String get exchangeWaitingOnHub;
+  /// **'Current'**
+  String get exchangeVersionCurrent;
+
+  /// From {date}
+  ///
+  /// In en, this message translates to:
+  /// **'From {date}'**
+  String exchangeVersionFrom(String date);
+
+  /// Version {number}
+  ///
+  /// In en, this message translates to:
+  /// **'Version {number}'**
+  String exchangeVersionNumber(String number);
+
+  /// Previous
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get exchangeVersionPrevious;
 
   /// Bonus unlocked
   ///
@@ -3400,6 +4234,12 @@ abstract class AppL10n {
   /// **'Riders present'**
   String get hubRidersPresent;
 
+  /// Could not load nearby hubs
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load nearby hubs'**
+  String get hubsCouldNotLoad;
+
   /// Service
   ///
   /// In en, this message translates to:
@@ -3418,11 +4258,29 @@ abstract class AppL10n {
   /// **'Show this hub'**
   String get hubShowThisHub;
 
+  /// There are no active hubs within reach of your location.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no active hubs within reach of your location.'**
+  String get hubsNoneBody;
+
+  /// No hubs near you
+  ///
+  /// In en, this message translates to:
+  /// **'No hubs near you'**
+  String get hubsNoneTitle;
+
   /// Something went wrong.
   ///
   /// In en, this message translates to:
   /// **'Something went wrong.'**
   String get hubSomethingWentWrong;
+
+  /// Closest hubs to you
+  ///
+  /// In en, this message translates to:
+  /// **'Closest hubs to you'**
+  String get hubsSubtitle;
 
   /// Uptime
   ///
@@ -3519,6 +4377,30 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Your scooter,\nfully connected'**
   String get introVehicleTitle;
+
+  /// I have read and agree to the Terms & Conditions
+  ///
+  /// In en, this message translates to:
+  /// **'I have read and agree to the Terms & Conditions'**
+  String get legalTermsAgree;
+
+  /// Could not load the terms
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load the terms'**
+  String get legalTermsCouldNotLoad;
+
+  /// Please read these terms before you continue.
+  ///
+  /// In en, this message translates to:
+  /// **'Please read these terms before you continue.'**
+  String get legalTermsSubtitle;
+
+  /// Terms & Conditions
+  ///
+  /// In en, this message translates to:
+  /// **'Terms & Conditions'**
+  String get legalTermsTitle;
 
   /// Add a note
   ///
@@ -4042,6 +4924,102 @@ abstract class AppL10n {
   /// **'Wide shot'**
   String get maintenanceWideShot;
 
+  /// Allow location
+  ///
+  /// In en, this message translates to:
+  /// **'Allow location'**
+  String get mapsAllowLocation;
+
+  /// {distance} away
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} away'**
+  String mapsAway(String distance);
+
+  /// Could not open Google Maps
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open Google Maps'**
+  String get mapsCouldNotOpenMaps;
+
+  /// Finding your location…
+  ///
+  /// In en, this message translates to:
+  /// **'Finding your location…'**
+  String get mapsLocating;
+
+  /// We use your location to show hubs and swap stations near you.
+  ///
+  /// In en, this message translates to:
+  /// **'We use your location to show hubs and swap stations near you.'**
+  String get mapsLocationDeniedBody;
+
+  /// Allow location access
+  ///
+  /// In en, this message translates to:
+  /// **'Allow location access'**
+  String get mapsLocationDeniedTitle;
+
+  /// Turn on location services to see places near you.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on location services to see places near you.'**
+  String get mapsLocationOffBody;
+
+  /// Location is turned off
+  ///
+  /// In en, this message translates to:
+  /// **'Location is turned off'**
+  String get mapsLocationOffTitle;
+
+  /// Could not find your location
+  ///
+  /// In en, this message translates to:
+  /// **'Could not find your location'**
+  String get mapsLocationUnavailable;
+
+  /// {minutes} min
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String mapsMinutes(String minutes);
+
+  /// Navigate
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate'**
+  String get mapsNavigate;
+
+  /// Open settings
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings'**
+  String get mapsOpenSettings;
+
+  /// Battery swap
+  ///
+  /// In en, this message translates to:
+  /// **'Battery swap'**
+  String get navBatterySwap;
+
+  /// Nearby hubs
+  ///
+  /// In en, this message translates to:
+  /// **'Nearby hubs'**
+  String get navNearbyHubs;
+
+  /// Refer & earn
+  ///
+  /// In en, this message translates to:
+  /// **'Refer & earn'**
+  String get navReferEarn;
+
+  /// Scooter details
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter details'**
+  String get navScooterDetails;
+
   /// You are all caught up
   ///
   /// In en, this message translates to:
@@ -4300,6 +5278,30 @@ abstract class AppL10n {
   /// **'References'**
   String get onboardingReferences;
 
+  /// Applied
+  ///
+  /// In en, this message translates to:
+  /// **'Applied'**
+  String get onboardingReferralApplied;
+
+  /// Apply
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get onboardingReferralApply;
+
+  /// Referral code applied
+  ///
+  /// In en, this message translates to:
+  /// **'Referral code applied'**
+  String get onboardingReferralCodeApplied;
+
+  /// Tap Apply to use this code, or clear it
+  ///
+  /// In en, this message translates to:
+  /// **'Tap Apply to use this code, or clear it'**
+  String get onboardingReferralTapApply;
+
   /// Review
   ///
   /// In en, this message translates to:
@@ -4323,6 +5325,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Saving…'**
   String get onboardingSaving;
+
+  /// Sign the agreement to continue
+  ///
+  /// In en, this message translates to:
+  /// **'Sign the agreement to continue'**
+  String get onboardingSignAgreementContinue;
 
   /// Some steps are still incomplete. Go back and finish them.
   ///
@@ -4587,6 +5595,192 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Personal details'**
   String get profilePersonalDetails;
+
+  /// Referral code copied
+  ///
+  /// In en, this message translates to:
+  /// **'Referral code copied'**
+  String get referCodeCopied;
+
+  /// Copy code
+  ///
+  /// In en, this message translates to:
+  /// **'Copy code'**
+  String get referCopyCode;
+
+  /// Could not load refer & earn
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load refer & earn'**
+  String get referCouldNotLoad;
+
+  /// Your friend gets
+  ///
+  /// In en, this message translates to:
+  /// **'Your friend gets'**
+  String get referFriendGets;
+
+  /// Invited
+  ///
+  /// In en, this message translates to:
+  /// **'Invited'**
+  String get referInvited;
+
+  /// Check back soon for new rewards.
+  ///
+  /// In en, this message translates to:
+  /// **'Check back soon for new rewards.'**
+  String get referNoCampaignBody;
+
+  /// No referral campaign right now
+  ///
+  /// In en, this message translates to:
+  /// **'No referral campaign right now'**
+  String get referNoCampaignTitle;
+
+  /// Share your code to invite riders.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your code to invite riders.'**
+  String get referNoReferralsBody;
+
+  /// No referrals yet
+  ///
+  /// In en, this message translates to:
+  /// **'No referrals yet'**
+  String get referNoReferralsTitle;
+
+  /// Paid
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get referPaid;
+
+  /// Pending
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get referPending;
+
+  /// Qualified
+  ///
+  /// In en, this message translates to:
+  /// **'Qualified'**
+  String get referQualified;
+
+  /// Registered
+  ///
+  /// In en, this message translates to:
+  /// **'Registered'**
+  String get referRegistered;
+
+  /// Share invite
+  ///
+  /// In en, this message translates to:
+  /// **'Share invite'**
+  String get referShareInvite;
+
+  /// Activated
+  ///
+  /// In en, this message translates to:
+  /// **'Activated'**
+  String get referStatusActivated;
+
+  /// Cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get referStatusCancelled;
+
+  /// Disqualified
+  ///
+  /// In en, this message translates to:
+  /// **'Disqualified'**
+  String get referStatusDisqualified;
+
+  /// Expired
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get referStatusExpired;
+
+  /// In progress
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get referStatusInProgress;
+
+  /// KYC verified
+  ///
+  /// In en, this message translates to:
+  /// **'KYC verified'**
+  String get referStatusKycVerified;
+
+  /// Reward paid
+  ///
+  /// In en, this message translates to:
+  /// **'Reward paid'**
+  String get referStatusPaid;
+
+  /// Rejected
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get referStatusRejected;
+
+  /// Reward approved
+  ///
+  /// In en, this message translates to:
+  /// **'Reward approved'**
+  String get referStatusRewardApproved;
+
+  /// Reward pending
+  ///
+  /// In en, this message translates to:
+  /// **'Reward pending'**
+  String get referStatusRewardPending;
+
+  /// Under review
+  ///
+  /// In en, this message translates to:
+  /// **'Under review'**
+  String get referStatusUnderReview;
+
+  /// Invite riders and earn rewards
+  ///
+  /// In en, this message translates to:
+  /// **'Invite riders and earn rewards'**
+  String get referSubtitle;
+
+  /// Total earned
+  ///
+  /// In en, this message translates to:
+  /// **'Total earned'**
+  String get referTotalEarned;
+
+  /// Valid till {date}
+  ///
+  /// In en, this message translates to:
+  /// **'Valid till {date}'**
+  String referValidTill(String date);
+
+  /// You get
+  ///
+  /// In en, this message translates to:
+  /// **'You get'**
+  String get referYouGet;
+
+  /// Your referral code
+  ///
+  /// In en, this message translates to:
+  /// **'Your referral code'**
+  String get referYourCode;
+
+  /// Your referrals
+  ///
+  /// In en, this message translates to:
+  /// **'Your referrals'**
+  String get referYourReferrals;
 
   /// Auto-debit
   ///
@@ -5445,6 +6639,42 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Yes, on weekly and monthly plans. Daily plans return to the hub '**
   String get supportYesWeeklyMonthlyPlansDaily;
+
+  /// Could not load swap stations
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load swap stations'**
+  String get swapCouldNotLoad;
+
+  /// We could not find any battery swap stations right now.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not find any battery swap stations right now.'**
+  String get swapNoneBody;
+
+  /// No swap stations found
+  ///
+  /// In en, this message translates to:
+  /// **'No swap stations found'**
+  String get swapNoneTitle;
+
+  /// Swap stations closest to you
+  ///
+  /// In en, this message translates to:
+  /// **'Swap stations closest to you'**
+  String get swapSubtitle;
+
+  /// Battery swapping
+  ///
+  /// In en, this message translates to:
+  /// **'Battery swapping'**
+  String get swapTitle;
+
+  /// Units: {count}
+  ///
+  /// In en, this message translates to:
+  /// **'Units: {count}'**
+  String swapUnits(String count);
 
   /// Enter a date on or before today
   ///

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/session/rider_session_provider.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_page.dart';
+import '../../features/battery_swap/presentation/pages/battery_swap_page.dart';
 import '../../features/deployment/presentation/pages/payment_page.dart';
 import '../../features/deployment/presentation/pages/pdi_page.dart';
 import '../../features/deployment/presentation/pages/training_page.dart';
@@ -13,23 +14,28 @@ import '../../features/deployment/presentation/pages/waiting_page.dart';
 import '../../features/earnings/presentation/pages/incentives_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/home/presentation/widgets/rider_shell.dart';
+import '../../features/nearby_hubs/presentation/pages/nearby_hubs_page.dart';
 import '../../features/notifications/presentation/pages/notifications_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_flow_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_preview_page.dart';
 import '../../features/onboarding_intro/presentation/pages/intro_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
+import '../../features/referrals/presentation/pages/refer_earn_page.dart';
 import '../../features/rentals/presentation/pages/rentals_page.dart';
 import '../../features/scooter/presentation/pages/scooter_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/support/presentation/pages/raise_ticket_page.dart';
 import '../../features/support/presentation/pages/support_page.dart';
+import '../../features/vehicle_exchange/presentation/pages/exchange_detail_page.dart';
+import '../../features/vehicle_exchange/presentation/pages/exchanges_page.dart';
+import '../../features/vehicle_exchange/presentation/pages/request_exchange_page.dart';
 import '../../features/wallet/presentation/pages/wallet_page.dart';
 import 'app_routes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final GlobalKey<NavigatorState> _homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 
-const Set<String> _publicPaths = {Routes.splash, Routes.intro, Routes.login, Routes.otp};
+const Set<String> _publicPaths = {Routes.splash, Routes.intro, Routes.terms, Routes.language, Routes.login, Routes.otp};
 
 final routerProvider = Provider<GoRouter>((ref) {
   final ValueNotifier<RiderStage> stage = ValueNotifier<RiderStage>(ref.read(riderSessionProvider).stage);
@@ -40,10 +46,21 @@ final routerProvider = Provider<GoRouter>((ref) {
     navigatorKey: _rootNavigatorKey,
     initialLocation: Routes.splash,
     refreshListenable: stage,
-    redirect: (context, state) => _redirect(stage.value, state.uri.path),
+    redirect: (context, state) => _redirect(stage.value, ref.read(pendingFirstRunStepProvider), state.uri.path),
     routes: [
       GoRoute(path: Routes.splash, name: 'splash', builder: (context, state) => const SplashPage()),
       GoRoute(path: Routes.intro, name: 'intro', builder: (context, state) => const IntroPage()),
+      GoRoute(
+        path: Routes.terms,
+        name: 'terms',
+        builder: (context, state) =>
+            TermsAcceptancePage(document: LegalDocuments.terms, onAccepted: () => context.go(Routes.login)),
+      ),
+      GoRoute(
+        path: Routes.language,
+        name: 'language',
+        builder: (context, state) => LanguageSelectionPage(onSelected: () => context.go(Routes.login)),
+      ),
       GoRoute(path: Routes.login, name: 'login', builder: (context, state) => const LoginPage()),
       GoRoute(
         path: Routes.otp,
@@ -90,27 +107,39 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [GoRoute(path: Routes.home, name: 'home', builder: (context, state) => const HomePage())],
           ),
           StatefulShellBranch(
-            routes: [GoRoute(path: Routes.scooter, name: 'scooter', builder: (context, state) => const ScooterPage())],
-          ),
-          StatefulShellBranch(
             routes: [
               GoRoute(
-                path: Routes.support,
-                name: 'support',
-                builder: (context, state) => const SupportPage(),
-                routes: [
-                  GoRoute(
-                    path: 'raise',
-                    name: 'raiseTicket',
-                    parentNavigatorKey: _rootNavigatorKey,
-                    builder: (context, state) => RaiseTicketPage(categoryKey: state.uri.queryParameters['category']),
-                  ),
-                ],
+                path: Routes.batterySwap,
+                name: 'batterySwap',
+                builder: (context, state) => const BatterySwapPage(),
               ),
             ],
           ),
           StatefulShellBranch(
-            routes: [GoRoute(path: Routes.wallet, name: 'wallet', builder: (context, state) => const WalletPage())],
+            routes: [GoRoute(path: Routes.scooter, name: 'scooter', builder: (context, state) => const ScooterPage())],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: Routes.nearbyHubs, name: 'nearbyHubs', builder: (context, state) => const NearbyHubsPage()),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(path: Routes.referEarn, name: 'referEarn', builder: (context, state) => const ReferEarnPage()),
+            ],
+          ),
+        ],
+      ),
+      GoRoute(path: Routes.wallet, name: 'wallet', builder: (context, state) => const WalletPage()),
+      GoRoute(
+        path: Routes.support,
+        name: 'support',
+        builder: (context, state) => const SupportPage(),
+        routes: [
+          GoRoute(
+            path: 'raise',
+            name: 'raiseTicket',
+            builder: (context, state) => RaiseTicketPage(categoryKey: state.uri.queryParameters['category']),
           ),
         ],
       ),
@@ -122,12 +151,28 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'notifications',
         builder: (context, state) => const NotificationsPage(),
       ),
+      GoRoute(
+        path: Routes.vehicleExchanges,
+        name: 'vehicleExchanges',
+        builder: (context, state) => const ExchangesPage(),
+      ),
+      GoRoute(
+        path: Routes.vehicleExchangeRequest,
+        name: 'vehicleExchangeRequest',
+        builder: (context, state) => const RequestExchangePage(),
+      ),
+      GoRoute(
+        path: Routes.vehicleExchangeDetail,
+        name: 'vehicleExchangeDetail',
+        builder: (context, state) => ExchangeDetailPage(exchangeId: state.uri.queryParameters['id'] ?? ''),
+      ),
     ],
     errorBuilder: (context, state) => _RouteErrorPage(location: state.uri.toString()),
   );
 });
 
-String? _redirect(RiderStage stage, String path) {
+String? _redirect(RiderStage stage, FirstRunStep? firstRun, String path) {
+  if (path == Routes.login) return _firstRunRoute(firstRun);
   if (_publicPaths.contains(path)) return null;
   return switch (stage) {
     RiderStage.signedOut => Routes.login,
@@ -140,6 +185,12 @@ String? _redirect(RiderStage stage, String path) {
     RiderStage.active => path.startsWith(Routes.onboarding) || path.startsWith('/deployment') ? Routes.home : null,
   };
 }
+
+String? _firstRunRoute(FirstRunStep? step) => switch (step) {
+  FirstRunStep.terms => Routes.terms,
+  FirstRunStep.language => Routes.language,
+  null => null,
+};
 
 class _RouteErrorPage extends StatelessWidget {
   const _RouteErrorPage({required this.location});

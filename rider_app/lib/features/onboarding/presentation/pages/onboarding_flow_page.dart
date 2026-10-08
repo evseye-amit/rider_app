@@ -27,7 +27,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
     initial: Map<String, Object?>.from(ref.read(onboardingDraftProvider)),
   );
 
-  final Set<String> _uploading = {};
+  final Set<String> _busy = {};
 
   RiderOnboardingConfig? _config;
   int _stepIndex = 0;
@@ -37,7 +37,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
   RiderSessionNotifier get _session => ref.read(riderSessionProvider.notifier);
 
   DynamicUiScope _scopeFor(RiderSession session) =>
-      session.scope(form: _form, onAction: _handleAction, busyFields: _uploading);
+      session.scope(form: _form, onAction: _handleAction, busyFields: _busy);
 
   DynamicUiScope get _scope => _scopeFor(ref.read(riderSessionProvider));
 
@@ -79,6 +79,10 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
     if (config.fieldCodes.contains('FULL_NAME') && _form.valueOf('FULL_NAME') == null) {
       final Object? name = session.profile['name'];
       if (name != null) _form.setValue('FULL_NAME', name, markTouched: false);
+    }
+    final String? savedReferral = config.value(OnboardingFlowBuilder.referralCodeKey);
+    if (savedReferral != null && _form.valueOf(OnboardingFlowBuilder.referralAppliedKey) == null) {
+      _form.setValue(OnboardingFlowBuilder.referralAppliedKey, savedReferral, markTouched: false);
     }
 
     final int resume = jumpTo ?? config.resumeIndex;
@@ -161,7 +165,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
     final RiderOnboardingConfig config = _config!;
     final UiFlowConfig flow = _buildFlow(config);
     final UiFlowStep step = flow.steps[_stepIndex];
-    final bool valid = _form.validateNodes(step.screen.body, isVisible: _scope.isVisible);
+    final bool valid = _form.validateNodes([...step.screen.body, ...step.screen.footer], isVisible: _scope.isVisible);
     if (!valid) {
       AppSnack.error(context, context.l10n.onboardingPleaseFixHighlightedFieldsBefore);
       return;
@@ -210,12 +214,12 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
     );
     if (file == null || !mounted) return;
 
-    setState(() => _uploading.add(key));
+    setState(() => _busy.add(key));
     final Result<RemotePhoto> result = await ref.read(uploadOnboardingDocumentProvider)(
       UploadDocumentParams(fieldCode: fieldCode, file: file),
     );
     if (!mounted) return;
-    setState(() => _uploading.remove(key));
+    setState(() => _busy.remove(key));
 
     switch (result) {
       case Ok<RemotePhoto>():
@@ -223,6 +227,36 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
         AppSnack.success(context, context.l10n.commonUploaded);
       case Err<RemotePhoto>(:final failure):
         AppSnack.error(context, failure.message);
+    }
+  }
+
+  Future<void> _applyReferral(UiNode node) async {
+    final String key = node.fieldKey;
+    final String code = _form.stringOf(key).trim();
+    final List<ValidationRule> format = [
+      for (final ValidationRule rule in node.validations)
+        if (rule.type != 'match') rule,
+    ];
+    final String? problem = validateValue(code, format, label: node.label);
+    if (problem != null) {
+      _form.setError(key, problem);
+      return;
+    }
+
+    FocusManager.instance.primaryFocus?.unfocus();
+    setState(() => _busy.add(key));
+    final Result<void> result = await ref.read(applyReferralCodeProvider)(code);
+    if (!mounted) return;
+    setState(() => _busy.remove(key));
+
+    switch (result) {
+      case Ok<void>():
+        _form.setValue(OnboardingFlowBuilder.referralAppliedKey, code);
+        _form.setError(key, null);
+        _persist();
+        AppSnack.success(context, context.l10n.onboardingReferralCodeApplied);
+      case Err<void>(:final failure):
+        _form.setError(key, failure.message);
     }
   }
 
@@ -234,6 +268,8 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
         _back();
       case 'pickFile':
         _capture(node);
+      case 'applyReferral':
+        _applyReferral(node);
       case 'navigate':
         if (action.target != null) context.push(action.target!);
     }
@@ -291,68 +327,61 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
           children: [
             Column(
               children: [
+                HeroBand(
+                  bottomRadius: 0,
+                  padding: const EdgeInsets.fromLTRB(Insets.gutter, Insets.md, Insets.gutter, Insets.sm + 2),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          InkCircleButton(icon: Icons.arrow_back_rounded, onTap: _back),
+                          const Spacer(),
+                          Text(
+                            'STEP ${_stepIndex + 1} OF ${flow.steps.length}',
+                            style: AppText.overline.copyWith(color: AppColors.onInkMuted),
+                          ),
+                        ],
+                      ),
+                      const Gap.xl(),
+                      Text(
+                        scope.interpolate(step.screen.title),
+                        style: AppText.displaySmall.copyWith(color: AppColors.onInk, fontSize: 25),
+                      ),
+                      if (step.screen.subtitle != null && step.screen.subtitle!.isNotEmpty) ...[
+                        const Gap.sm(),
+                        Text(
+                          scope.interpolate(step.screen.subtitle),
+                          style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.5),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    const Positioned(top: 0, left: 0, right: 0, height: 22, child: HeroBandEdge()),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: Insets.gutter),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: Insets.lg, vertical: Insets.lg),
+                        decoration: BoxDecoration(
+                          color: AppColors.surface,
+                          borderRadius: Corners.brXl,
+                          boxShadow: Shadows.floating,
+                        ),
+                        child: StepProgress(steps: labels, currentIndex: _stepIndex, compact: true),
+                      ),
+                    ),
+                  ],
+                ),
                 Expanded(
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        HeroBand(
-                          padding: const EdgeInsets.fromLTRB(Insets.gutter, Insets.md, Insets.gutter, Insets.x3l),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  InkCircleButton(icon: Icons.arrow_back_rounded, onTap: _back),
-                                  const Spacer(),
-                                  Text(
-                                    'STEP ${_stepIndex + 1} OF ${flow.steps.length}',
-                                    style: AppText.overline.copyWith(color: AppColors.onInkMuted),
-                                  ),
-                                ],
-                              ),
-                              const Gap.xl(),
-                              Text(
-                                scope.interpolate(step.screen.title),
-                                style: AppText.displaySmall.copyWith(color: AppColors.onInk, fontSize: 25),
-                              ),
-                              if (step.screen.subtitle != null && step.screen.subtitle!.isNotEmpty) ...[
-                                const Gap.sm(),
-                                Text(
-                                  scope.interpolate(step.screen.subtitle),
-                                  style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.5),
-                                ),
-                              ],
-                            ],
-                          ),
-                        ),
-                        Transform.translate(
-                          offset: const Offset(0, -22),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: Insets.gutter),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: Insets.lg, vertical: Insets.lg),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.surface,
-                                    borderRadius: Corners.brXl,
-                                    boxShadow: Shadows.floating,
-                                  ),
-                                  child: StepProgress(steps: labels, currentIndex: _stepIndex, compact: true),
-                                ),
-                                const Gap.lg(),
-                                ModuleCard(
-                                  child: DynamicNodeList(nodes: step.screen.body, scope: scope),
-                                ),
-                                const Gap.xl(),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                    padding: const EdgeInsets.fromLTRB(Insets.gutter, Insets.lg, Insets.gutter, Insets.xl),
+                    child: ModuleCard(
+                      child: DynamicNodeList(nodes: step.screen.body, scope: scope),
                     ),
                   ),
                 ),

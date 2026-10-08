@@ -5,6 +5,22 @@ DateTime? _date(Object? value) => value == null ? null : DateTime.tryParse(value
 
 String _text(Object? value) => value?.toString() ?? '';
 
+String? _textOrNull(Object? value) {
+  final String text = value?.toString().trim() ?? '';
+  return text.isEmpty ? null : text;
+}
+
+num _num(Object? value) => value is num ? value : num.tryParse(value?.toString() ?? '') ?? 0;
+
+Map<String, dynamic> _map(Object? value) => value is Map ? Map<String, dynamic>.from(value) : const <String, dynamic>{};
+
+List<VehicleExchange> _many(dynamic data) => (data as List<dynamic>? ?? const [])
+    .whereType<Map>()
+    .map((e) => VehicleExchange.fromJson(Map<String, dynamic>.from(e)))
+    .toList(growable: false);
+
+VehicleExchange _one(dynamic data) => VehicleExchange.fromJson(_map(data));
+
 enum VehicleExchangeStatus {
   requested('REQUESTED'),
   approved('APPROVED'),
@@ -65,6 +81,74 @@ enum VehicleExchangeOfferStatus {
   );
 }
 
+class ExchangeQuoteDto {
+  const ExchangeQuoteDto({
+    required this.currency,
+    required this.recurringAmount,
+    required this.rentAdjustment,
+    required this.depositTransfer,
+    required this.depositAdditional,
+    required this.depositExcess,
+    required this.exchangeFee,
+    required this.feeWaived,
+    this.vehicleModel,
+    this.vehicleVariant,
+    this.hubName,
+    this.rentalPeriod,
+    this.billingStartAt,
+    this.excessPolicy,
+  });
+
+  factory ExchangeQuoteDto.fromParts(Map<String, dynamic> pricing, Map<String, dynamic> difference) {
+    final Map<String, dynamic> vehicle = _map(pricing['vehicle']);
+    final Map<String, dynamic> rental = _map(pricing['rental']);
+    final Map<String, dynamic> proration = _map(difference['proration']);
+    final Map<String, dynamic> deposit = _map(difference['deposit']);
+    return ExchangeQuoteDto(
+      currency: _textOrNull(pricing['currency']) ?? 'INR',
+      recurringAmount: _num(_map(pricing['totals'])['recurringAmount']),
+      rentAdjustment: _num(proration['net']),
+      depositTransfer: _num(deposit['transfer']),
+      depositAdditional: _num(deposit['additionalRequired']),
+      depositExcess: _num(deposit['excess']),
+      exchangeFee: _num(difference['exchangeFee']),
+      feeWaived: difference['feeWaived'] == true,
+      vehicleModel: _textOrNull(vehicle['modelName']),
+      vehicleVariant: _textOrNull(vehicle['variantName']),
+      hubName: _textOrNull(_map(pricing['hub'])['name']),
+      rentalPeriod: _textOrNull(rental['period']),
+      billingStartAt: _date(difference['billingStartAt']),
+      excessPolicy: _textOrNull(difference['excessPolicy']),
+    );
+  }
+
+  factory ExchangeQuoteDto.fromPreview(Map<String, dynamic> json) => ExchangeQuoteDto.fromParts(_map(json['pricing']), {
+    'proration': json['proration'],
+    'billingStartAt': json['billingStartAt'],
+    'deposit': json['depositDifference'],
+    'excessPolicy': json['excessPolicy'],
+    'exchangeFee': json['exchangeFee'],
+    'feeWaived': json['feeWaived'],
+  });
+
+  final String currency;
+  final num recurringAmount;
+  final num rentAdjustment;
+  final num depositTransfer;
+  final num depositAdditional;
+  final num depositExcess;
+  final num exchangeFee;
+  final bool feeWaived;
+  final String? vehicleModel;
+  final String? vehicleVariant;
+  final String? hubName;
+  final String? rentalPeriod;
+  final DateTime? billingStartAt;
+  final String? excessPolicy;
+
+  bool get refundsExcess => excessPolicy == 'REFUND_REQUEST';
+}
+
 class VehicleExchangeOffer {
   const VehicleExchangeOffer({
     required this.id,
@@ -87,12 +171,8 @@ class VehicleExchangeOffer {
     termsSnapshot: _text(json['termsSnapshot']),
     termsVersion: _text(json['termsVersion']),
     expiresAt: _date(json['expiresAt']) ?? DateTime.now(),
-    commercialDifference: json['commercialDifference'] is Map
-        ? Map<String, dynamic>.from(json['commercialDifference'] as Map)
-        : const {},
-    pricingSnapshot: json['pricingSnapshot'] is Map
-        ? Map<String, dynamic>.from(json['pricingSnapshot'] as Map)
-        : const {},
+    commercialDifference: _map(json['commercialDifference']),
+    pricingSnapshot: _map(json['pricingSnapshot']),
     acceptedAt: _date(json['acceptedAt']),
   );
 
@@ -110,6 +190,8 @@ class VehicleExchangeOffer {
   bool get isPresented => status == VehicleExchangeOfferStatus.presented;
 
   bool get hasExpired => DateTime.now().isAfter(expiresAt);
+
+  ExchangeQuoteDto get quote => ExchangeQuoteDto.fromParts(pricingSnapshot, commercialDifference);
 }
 
 class VehicleExchange {
@@ -119,9 +201,17 @@ class VehicleExchange {
     required this.status,
     required this.reasonCode,
     required this.createdAt,
+    this.riderId,
     this.reason,
     this.oldVehicleId,
     this.replacementVehicleId,
+    this.oldAllocationId,
+    this.newAllocationId,
+    this.returnInspectionId,
+    this.agreementNumber,
+    this.rentalPeriodType,
+    this.durationValue,
+    this.durationUnit,
     this.proposedEffectiveAt,
     this.effectiveAt,
     this.reservationExpiresAt,
@@ -130,34 +220,54 @@ class VehicleExchange {
     this.offers = const [],
   });
 
-  factory VehicleExchange.fromJson(Map<String, dynamic> json) => VehicleExchange(
-    id: _text(json['id']),
-    agreementId: _text(json['agreementId']),
-    status: VehicleExchangeStatus.parse(json['status']),
-    reasonCode: _text(json['reasonCode']),
-    createdAt: _date(json['createdAt']) ?? DateTime.now(),
-    reason: json['reason']?.toString(),
-    oldVehicleId: json['oldVehicleId']?.toString(),
-    replacementVehicleId: json['replacementVehicleId']?.toString(),
-    proposedEffectiveAt: _date(json['proposedEffectiveAt']),
-    effectiveAt: _date(json['effectiveAt']),
-    reservationExpiresAt: _date(json['reservationExpiresAt']),
-    acceptedAt: _date(json['acceptedAt']),
-    completedAt: _date(json['completedAt']),
-    offers: (json['offers'] as List<dynamic>? ?? const [])
-        .whereType<Map>()
-        .map((e) => VehicleExchangeOffer.fromJson(Map<String, dynamic>.from(e)))
-        .toList(growable: false),
-  );
+  factory VehicleExchange.fromJson(Map<String, dynamic> json) {
+    final Map<String, dynamic> agreement = _map(json['agreement']);
+    final Map<String, dynamic> rental = _map(_map(agreement['pricingSnapshot'])['rental']);
+    return VehicleExchange(
+      id: _text(json['id']),
+      agreementId: _text(json['agreementId']),
+      status: VehicleExchangeStatus.parse(json['status']),
+      reasonCode: _text(json['reasonCode']),
+      createdAt: _date(json['createdAt']) ?? DateTime.now(),
+      riderId: _textOrNull(json['riderId']),
+      reason: json['reason']?.toString(),
+      oldVehicleId: _textOrNull(json['oldVehicleId']),
+      replacementVehicleId: _textOrNull(json['replacementVehicleId']),
+      oldAllocationId: _textOrNull(json['oldAllocationId']),
+      newAllocationId: _textOrNull(json['newAllocationId']),
+      returnInspectionId: _textOrNull(json['returnInspectionId']),
+      agreementNumber: _textOrNull(agreement['agreementNumber']),
+      rentalPeriodType: _textOrNull(agreement['rentalPeriodType']),
+      durationValue: (rental['durationValue'] as num?)?.toInt(),
+      durationUnit: _textOrNull(rental['durationUnit']),
+      proposedEffectiveAt: _date(json['proposedEffectiveAt']),
+      effectiveAt: _date(json['effectiveAt']),
+      reservationExpiresAt: _date(json['reservationExpiresAt']),
+      acceptedAt: _date(json['acceptedAt']),
+      completedAt: _date(json['completedAt']),
+      offers: (json['offers'] as List<dynamic>? ?? const [])
+          .whereType<Map>()
+          .map((e) => VehicleExchangeOffer.fromJson(Map<String, dynamic>.from(e)))
+          .toList(growable: false),
+    );
+  }
 
   final String id;
   final String agreementId;
   final VehicleExchangeStatus status;
   final String reasonCode;
   final DateTime createdAt;
+  final String? riderId;
   final String? reason;
   final String? oldVehicleId;
   final String? replacementVehicleId;
+  final String? oldAllocationId;
+  final String? newAllocationId;
+  final String? returnInspectionId;
+  final String? agreementNumber;
+  final String? rentalPeriodType;
+  final int? durationValue;
+  final String? durationUnit;
   final DateTime? proposedEffectiveAt;
   final DateTime? effectiveAt;
   final DateTime? reservationExpiresAt;
@@ -165,23 +275,59 @@ class VehicleExchange {
   final DateTime? completedAt;
   final List<VehicleExchangeOffer> offers;
 
+  bool get oldVehicleReturned => returnInspectionId != null;
+
+  bool get canCancel => status.canCancel && !oldVehicleReturned;
+
   VehicleExchangeOffer? get pendingOffer => offers.where((offer) => offer.isPresented && !offer.hasExpired).firstOrNull;
+
+  VehicleExchangeOffer? get acceptedOffer =>
+      offers.where((offer) => offer.status == VehicleExchangeOfferStatus.accepted).firstOrNull;
 }
 
 class AgreementVersion {
-  const AgreementVersion({required this.id, required this.versionNumber, required this.createdAt, this.reason});
+  const AgreementVersion({
+    required this.id,
+    required this.versionNumber,
+    required this.status,
+    required this.recurringAmount,
+    required this.effectiveFrom,
+    this.vehicleModel,
+    this.vehicleVariant,
+  });
 
-  factory AgreementVersion.fromJson(Map<String, dynamic> json) => AgreementVersion(
-    id: _text(json['id']),
-    versionNumber: (json['versionNumber'] as num?)?.toInt() ?? 0,
-    createdAt: _date(json['createdAt']) ?? DateTime.now(),
-    reason: json['changeReason']?.toString() ?? json['reason']?.toString(),
-  );
+  factory AgreementVersion.fromJson(Map<String, dynamic> json) {
+    final Map<String, dynamic> vehicle = _map(_map(json['pricingSnapshot'])['vehicle']);
+    return AgreementVersion(
+      id: _text(json['id']),
+      versionNumber: (json['versionNumber'] as num?)?.toInt() ?? 0,
+      status: _text(json['status']),
+      recurringAmount: _num(json['recurringAmount']),
+      effectiveFrom: _date(json['effectiveFrom']) ?? _date(json['createdAt']) ?? DateTime.now(),
+      vehicleModel: _textOrNull(vehicle['modelName']),
+      vehicleVariant: _textOrNull(vehicle['variantName']),
+    );
+  }
 
   final String id;
   final int versionNumber;
-  final DateTime createdAt;
-  final String? reason;
+  final String status;
+  final num recurringAmount;
+  final DateTime effectiveFrom;
+  final String? vehicleModel;
+  final String? vehicleVariant;
+}
+
+class DepositSettlementDto {
+  const DepositSettlementDto({required this.status, required this.additionalRequired});
+
+  factory DepositSettlementDto.fromJson(Map<String, dynamic> json) => DepositSettlementDto(
+    status: VehicleExchangeStatus.parse(json['status']),
+    additionalRequired: _num(json['additionalRequired']),
+  );
+
+  final VehicleExchangeStatus status;
+  final num additionalRequired;
 }
 
 class VehicleExchangeApi {
@@ -191,13 +337,7 @@ class VehicleExchangeApi {
 
   static const String _base = '/rider-app/vehicle-exchanges';
 
-  Future<Result<List<VehicleExchange>>> list() => _client.get<List<VehicleExchange>>(
-    _base,
-    parse: (data) => (data as List<dynamic>? ?? const [])
-        .whereType<Map>()
-        .map((e) => VehicleExchange.fromJson(Map<String, dynamic>.from(e)))
-        .toList(growable: false),
-  );
+  Future<Result<List<VehicleExchange>>> list() => _client.get<List<VehicleExchange>>(_base, parse: _many);
 
   Future<Result<VehicleExchange>> details(String id) => _client.get<VehicleExchange>('$_base/$id', parse: _one);
 
@@ -212,21 +352,13 @@ class VehicleExchangeApi {
         parse: _one,
       );
 
-  Future<Result<VehicleExchange>> accept({required String id, required String offerId, required String offerHash}) =>
-      _client.post<VehicleExchange>(
-        '$_base/$id/accept',
-        body: {'offerId': offerId, 'offerHash': offerHash, 'consent': true},
-        parse: _one,
-      );
+  Future<Result<void>> accept({required String id, required String offerId, required String offerHash}) =>
+      _client.post<void>('$_base/$id/accept', body: {'offerId': offerId, 'offerHash': offerHash, 'consent': true});
 
-  Future<Result<VehicleExchange>> rejectOffer({required String id, required String offerId, required String reason}) =>
-      _client.post<VehicleExchange>(
-        '$_base/$id/reject-offer',
-        body: {'offerId': offerId, 'reason': reason},
-        parse: _one,
-      );
+  Future<Result<void>> rejectOffer({required String id, required String offerId, required String reason}) =>
+      _client.post<void>('$_base/$id/reject-offer', body: {'offerId': offerId, 'reason': reason});
 
-  Future<Result<VehicleExchange>> cancel(String id) => _client.post<VehicleExchange>('$_base/$id/cancel', parse: _one);
+  Future<Result<void>> cancel(String id) => _client.post<void>('$_base/$id/cancel');
 
   Future<Result<List<AgreementVersion>>> agreementVersions(String agreementId) => _client.get<List<AgreementVersion>>(
     '$_base/agreements/$agreementId/versions',
@@ -235,6 +367,59 @@ class VehicleExchangeApi {
         .map((e) => AgreementVersion.fromJson(Map<String, dynamic>.from(e)))
         .toList(growable: false),
   );
+}
 
-  static VehicleExchange _one(dynamic data) => VehicleExchange.fromJson(Map<String, dynamic>.from(data as Map));
+class ExchangeOperationsApi {
+  const ExchangeOperationsApi(this._client);
+
+  final ApiClient _client;
+
+  static const String _base = '/vehicle-exchanges';
+
+  Future<Result<List<VehicleExchange>>> list() => _client.get<List<VehicleExchange>>(_base, parse: _many);
+
+  Future<Result<VehicleExchange>> details(String id) => _client.get<VehicleExchange>('$_base/$id', parse: _one);
+
+  Future<Result<void>> approve(String id) => _client.post<void>('$_base/$id/approve');
+
+  Future<Result<void>> reject(String id, {required String reason}) =>
+      _client.post<void>('$_base/$id/reject', body: {'reason': reason});
+
+  Future<Result<void>> startReturn(String id) => _client.post<void>('$_base/$id/return');
+
+  Future<Result<void>> confirmReturn(String id) => _client.post<void>('$_base/$id/confirm-return');
+
+  Future<Result<void>> selectReplacement(
+    String id, {
+    required String vehicleId,
+    required String rentalPeriodType,
+    String? hubId,
+    int? durationValue,
+    String? durationUnit,
+  }) => _client.post<void>(
+    '$_base/$id/replacement',
+    body: {
+      'vehicleId': vehicleId,
+      'rentalPeriodType': rentalPeriodType,
+      'hubId': ?hubId,
+      'durationValue': ?durationValue,
+      'durationUnit': ?durationUnit,
+    },
+  );
+
+  Future<Result<ExchangeQuoteDto>> preview(String id) =>
+      _client.get<ExchangeQuoteDto>('$_base/$id/preview', parse: (data) => ExchangeQuoteDto.fromPreview(_map(data)));
+
+  Future<Result<void>> sendOffer(String id) => _client.post<void>('$_base/$id/offer');
+
+  Future<Result<DepositSettlementDto>> settleDeposits(String id) => _client.post<DepositSettlementDto>(
+    '$_base/$id/reconcile-deposits',
+    parse: (data) => DepositSettlementDto.fromJson(_map(data)),
+  );
+
+  Future<Result<void>> startHandover(String id) => _client.post<void>('$_base/$id/handover');
+
+  Future<Result<void>> complete(String id) => _client.post<void>('$_base/$id/complete');
+
+  Future<Result<void>> cancel(String id) => _client.post<void>('$_base/$id/cancel');
 }

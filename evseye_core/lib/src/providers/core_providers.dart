@@ -5,8 +5,12 @@ import '../api/api_client.dart';
 import '../api/auth_api.dart';
 import '../api/deployment_api.dart';
 import '../api/media_api.dart';
+import '../api/referral_api.dart';
+import '../api/rental_agreements_api.dart';
 import '../api/rider_app_api.dart';
+import '../api/rider_hubs_api.dart';
 import '../api/rider_payments_api.dart';
+import '../api/swap_stations_api.dart';
 import '../api/token_store.dart';
 import '../api/vehicle_exchange_api.dart';
 import '../api/wallet_api.dart';
@@ -41,6 +45,20 @@ final vehicleExchangeApiProvider = Provider<VehicleExchangeApi>(
   (ref) => VehicleExchangeApi(ref.watch(apiClientProvider)),
 );
 
+final exchangeOperationsApiProvider = Provider<ExchangeOperationsApi>(
+  (ref) => ExchangeOperationsApi(ref.watch(apiClientProvider)),
+);
+
+final rentalAgreementsApiProvider = Provider<RentalAgreementsApi>(
+  (ref) => RentalAgreementsApi(ref.watch(apiClientProvider)),
+);
+
 final uiConfigServiceProvider = Provider<UiConfigService>((_) => UiConfigService());
+
+final riderHubsApiProvider = Provider<RiderHubsApi>((ref) => RiderHubsApi(ref.watch(apiClientProvider)));
+
+final referralApiProvider = Provider<ReferralApi>((ref) => ReferralApi(ref.watch(apiClientProvider)));
+
+final swapStationsApiProvider = Provider<SwapStationsApi>((_) => SwapStationsApi());
 
 Duration? noProviderRetry(int retryCount, Object error) => null;

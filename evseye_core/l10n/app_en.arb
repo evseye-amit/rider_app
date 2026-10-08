@@ -204,6 +204,14 @@
   "@allocationFleetCode": {
     "description": "Fleet code"
   },
+  "allocationFleetOnlyBody": "Scooter assignment is done with the hub's fleet manager login.",
+  "@allocationFleetOnlyBody": {
+    "description": "Scooter assignment is done with the hub's fleet manager login."
+  },
+  "allocationFleetOnlyTitle": "Not available for this login",
+  "@allocationFleetOnlyTitle": {
+    "description": "Not available for this login"
+  },
   "allocationFront": "Front",
   "@allocationFront": {
     "description": "Front"
@@ -1864,6 +1872,26 @@
   "@errorUnknown": {
     "description": "Unknown"
   },
+  "esignAddNameFirst": "Add your full name in the profile step first",
+  "@esignAddNameFirst": {
+    "description": "Add your full name in the profile step first"
+  },
+  "esignSigned": "Signed",
+  "@esignSigned": {
+    "description": "Signed"
+  },
+  "esignTapToSign": "Tap to sign",
+  "@esignTapToSign": {
+    "description": "Tap to sign"
+  },
+  "esignTitle": "Your e-signature",
+  "@esignTitle": {
+    "description": "Your e-signature"
+  },
+  "esignYourName": "Your name",
+  "@esignYourName": {
+    "description": "Your name"
+  },
   "exchangeAcceptConfirm": "Accepting means you agree to the new terms for this scooter.",
   "@exchangeAcceptConfirm": {
     "description": "Accepting means you agree to the new terms for this scooter."
@@ -1872,9 +1900,17 @@
   "@exchangeAccepted": {
     "description": "Offer accepted"
   },
+  "exchangeAcceptedOfferTitle": "Your new plan",
+  "@exchangeAcceptedOfferTitle": {
+    "description": "Your new plan"
+  },
   "exchangeAcceptOffer": "Accept offer",
   "@exchangeAcceptOffer": {
     "description": "Accept offer"
+  },
+  "exchangeAgreementHistory": "Agreement history",
+  "@exchangeAgreementHistory": {
+    "description": "Agreement history"
   },
   "exchangeCancelConfirm": "This exchange request will be closed.",
   "@exchangeCancelConfirm": {
@@ -1888,37 +1924,452 @@
   "@exchangeCancelRequest": {
     "description": "Cancel request"
   },
+  "exchangeChooseReason": "Why do you need an exchange?",
+  "@exchangeChooseReason": {
+    "description": "Why do you need an exchange?"
+  },
   "exchangeCompleted": "Completed",
   "@exchangeCompleted": {
     "description": "Completed"
+  },
+  "exchangeConsent": "I have read and agree to the updated terms",
+  "@exchangeConsent": {
+    "description": "I have read and agree to the updated terms"
   },
   "exchangeCouldNotLoad": "Could not load exchanges",
   "@exchangeCouldNotLoad": {
     "description": "Could not load exchanges"
   },
-  "exchangeDepositChange": "Deposit change",
-  "@exchangeDepositChange": {
-    "description": "Deposit change"
+  "exchangeCurrentScooter": "Current scooter",
+  "@exchangeCurrentScooter": {
+    "description": "Current scooter"
+  },
+  "exchangeDepositDue": "Pay {amount} more deposit before you collect your new scooter.",
+  "@exchangeDepositDue": {
+    "description": "Pay {amount} more deposit before you collect your new scooter.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "exchangeDepositHeld": "Extra deposit kept by hub",
+  "@exchangeDepositHeld": {
+    "description": "Extra deposit kept by hub"
+  },
+  "exchangeDepositMoved": "Deposit moved over",
+  "@exchangeDepositMoved": {
+    "description": "Deposit moved over"
+  },
+  "exchangeDepositRefund": "Deposit refund",
+  "@exchangeDepositRefund": {
+    "description": "Deposit refund"
+  },
+  "exchangeDepositToPay": "Extra deposit to pay",
+  "@exchangeDepositToPay": {
+    "description": "Extra deposit to pay"
+  },
+  "exchangeDeskApprove": "Approve request",
+  "@exchangeDeskApprove": {
+    "description": "Approve request"
+  },
+  "exchangeDeskApproved": "Request approved",
+  "@exchangeDeskApproved": {
+    "description": "Request approved"
+  },
+  "exchangeDeskChangeScooter": "Change scooter",
+  "@exchangeDeskChangeScooter": {
+    "description": "Change scooter"
+  },
+  "exchangeDeskChooseScooter": "Choose replacement scooter",
+  "@exchangeDeskChooseScooter": {
+    "description": "Choose replacement scooter"
+  },
+  "exchangeDeskComplete": "Complete exchange",
+  "@exchangeDeskComplete": {
+    "description": "Complete exchange"
+  },
+  "exchangeDeskConfirmReturn": "Confirm scooter returned",
+  "@exchangeDeskConfirmReturn": {
+    "description": "Confirm scooter returned"
+  },
+  "exchangeDeskDepositDue": "The rider still has to pay {amount} more deposit.",
+  "@exchangeDeskDepositDue": {
+    "description": "The rider still has to pay {amount} more deposit.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "exchangeDeskDepositsSettled": "Deposits settled",
+  "@exchangeDeskDepositsSettled": {
+    "description": "Deposits settled"
+  },
+  "exchangeDeskEmptyBody": "When a rider asks for a different scooter, the request shows up here.",
+  "@exchangeDeskEmptyBody": {
+    "description": "When a rider asks for a different scooter, the request shows up here."
+  },
+  "exchangeDeskExchangeCompleted": "Exchange completed",
+  "@exchangeDeskExchangeCompleted": {
+    "description": "Exchange completed"
+  },
+  "exchangeDeskGuideChoose": "The old scooter is back. Choose a replacement scooter for the rider.",
+  "@exchangeDeskGuideChoose": {
+    "description": "The old scooter is back. Choose a replacement scooter for the rider."
+  },
+  "exchangeDeskGuideDeposits": "The rider accepted. Settle the deposits to move on to the handover.",
+  "@exchangeDeskGuideDeposits": {
+    "description": "The rider accepted. Settle the deposits to move on to the handover."
+  },
+  "exchangeDeskGuideReview": "Check the request, then approve or reject it.",
+  "@exchangeDeskGuideReview": {
+    "description": "Check the request, then approve or reject it."
+  },
+  "exchangeDeskGuideSendOffer": "Check the offer below and send it to the rider.",
+  "@exchangeDeskGuideSendOffer": {
+    "description": "Check the offer below and send it to the rider."
+  },
+  "exchangeDeskGuideStartHandover": "Deposits are settled. Start the handover of the new scooter.",
+  "@exchangeDeskGuideStartHandover": {
+    "description": "Deposits are settled. Start the handover of the new scooter."
+  },
+  "exchangeDeskGuideStartReturn": "Start the return of the rider's current scooter.",
+  "@exchangeDeskGuideStartReturn": {
+    "description": "Start the return of the rider's current scooter."
+  },
+  "exchangeDeskHandoverHint": "The hub's fleet manager hands over the new scooter through the normal allocation steps. Once the scooter is active with the rider, complete the exchange.",
+  "@exchangeDeskHandoverHint": {
+    "description": "The hub's fleet manager hands over the new scooter through the normal allocation steps. Once the scooter is active with the rider, complete the exchange."
+  },
+  "exchangeDeskHandoverStarted": "Handover started",
+  "@exchangeDeskHandoverStarted": {
+    "description": "Handover started"
+  },
+  "exchangeDeskNeedsAction": "Needs action",
+  "@exchangeDeskNeedsAction": {
+    "description": "Needs action"
+  },
+  "exchangeDeskNoScooters": "No scooters are available right now.",
+  "@exchangeDeskNoScooters": {
+    "description": "No scooters are available right now."
+  },
+  "exchangeDeskOfferPreview": "Offer preview",
+  "@exchangeDeskOfferPreview": {
+    "description": "Offer preview"
+  },
+  "exchangeDeskOfferSent": "Offer sent to rider",
+  "@exchangeDeskOfferSent": {
+    "description": "Offer sent to rider"
+  },
+  "exchangeDeskOpenReturn": "Open return",
+  "@exchangeDeskOpenReturn": {
+    "description": "Open return"
+  },
+  "exchangeDeskReject": "Reject request",
+  "@exchangeDeskReject": {
+    "description": "Reject request"
+  },
+  "exchangeDeskRejectedDone": "Request rejected",
+  "@exchangeDeskRejectedDone": {
+    "description": "Request rejected"
+  },
+  "exchangeDeskRejectSubtitle": "Tell the rider why this can't be approved.",
+  "@exchangeDeskRejectSubtitle": {
+    "description": "Tell the rider why this can't be approved."
+  },
+  "exchangeDeskReplacement": "Replacement scooter",
+  "@exchangeDeskReplacement": {
+    "description": "Replacement scooter"
+  },
+  "exchangeDeskReservedUntil": "Until {time}",
+  "@exchangeDeskReservedUntil": {
+    "description": "Until {time}",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "exchangeDeskReserveScooter": "Reserve this scooter",
+  "@exchangeDeskReserveScooter": {
+    "description": "Reserve this scooter"
+  },
+  "exchangeDeskReturnConfirmed": "Return confirmed",
+  "@exchangeDeskReturnConfirmed": {
+    "description": "Return confirmed"
+  },
+  "exchangeDeskReturnHint": "Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here.",
+  "@exchangeDeskReturnHint": {
+    "description": "Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here."
+  },
+  "exchangeDeskReturnStarted": "Return started",
+  "@exchangeDeskReturnStarted": {
+    "description": "Return started"
+  },
+  "exchangeDeskRiderNote": "Rider's note",
+  "@exchangeDeskRiderNote": {
+    "description": "Rider's note"
+  },
+  "exchangeDeskScooterReserved": "Scooter reserved",
+  "@exchangeDeskScooterReserved": {
+    "description": "Scooter reserved"
+  },
+  "exchangeDeskSendOffer": "Send offer to rider",
+  "@exchangeDeskSendOffer": {
+    "description": "Send offer to rider"
+  },
+  "exchangeDeskSettleDeposits": "Settle deposits",
+  "@exchangeDeskSettleDeposits": {
+    "description": "Settle deposits"
+  },
+  "exchangeDeskStartHandover": "Start handover",
+  "@exchangeDeskStartHandover": {
+    "description": "Start handover"
+  },
+  "exchangeDeskStartReturn": "Start scooter return",
+  "@exchangeDeskStartReturn": {
+    "description": "Start scooter return"
+  },
+  "exchangeDeskStatusOfferSent": "Offer sent",
+  "@exchangeDeskStatusOfferSent": {
+    "description": "Offer sent"
+  },
+  "exchangeDeskStatusReserved": "Scooter reserved",
+  "@exchangeDeskStatusReserved": {
+    "description": "Scooter reserved"
+  },
+  "exchangeDeskSubtitle": "Riders asking for a different scooter",
+  "@exchangeDeskSubtitle": {
+    "description": "Riders asking for a different scooter"
+  },
+  "exchangeDeskWaitingRider": "Offer sent. Waiting for the rider to accept it in their app.",
+  "@exchangeDeskWaitingRider": {
+    "description": "Offer sent. Waiting for the rider to accept it in their app."
+  },
+  "exchangeDeskWithRider": "Waiting for rider",
+  "@exchangeDeskWithRider": {
+    "description": "Waiting for rider"
+  },
+  "exchangeDetails": "Request details",
+  "@exchangeDetails": {
+    "description": "Request details"
   },
   "exchangeDetailTitle": "Exchange request",
   "@exchangeDetailTitle": {
     "description": "Exchange request"
   },
-  "exchangeEffective": "Changes from",
-  "@exchangeEffective": {
-    "description": "Changes from"
+  "exchangeErrorAlreadyReturned": "The old scooter has already been returned.",
+  "@exchangeErrorAlreadyReturned": {
+    "description": "The old scooter has already been returned."
+  },
+  "exchangeErrorBillingChanged": "Billing changed after the offer was accepted. Please contact support.",
+  "@exchangeErrorBillingChanged": {
+    "description": "Billing changed after the offer was accepted. Please contact support."
+  },
+  "exchangeErrorCannotCancel": "Your scooter has already been returned, so this request can't be cancelled here. Please contact your hub.",
+  "@exchangeErrorCannotCancel": {
+    "description": "Your scooter has already been returned, so this request can't be cancelled here. Please contact your hub."
+  },
+  "exchangeErrorChanged": "This request was just updated. Pull down to refresh and try again.",
+  "@exchangeErrorChanged": {
+    "description": "This request was just updated. Pull down to refresh and try again."
+  },
+  "exchangeErrorDepositsUnsettled": "Deposits aren't settled yet. Settle the deposits first.",
+  "@exchangeErrorDepositsUnsettled": {
+    "description": "Deposits aren't settled yet. Settle the deposits first."
+  },
+  "exchangeErrorDisabled": "Vehicle exchange isn't open right now. Please contact your hub.",
+  "@exchangeErrorDisabled": {
+    "description": "Vehicle exchange isn't open right now. Please contact your hub."
+  },
+  "exchangeErrorDuesPending": "Clear your pending dues first. Breakdown and safety exchanges are still allowed.",
+  "@exchangeErrorDuesPending": {
+    "description": "Clear your pending dues first. Breakdown and safety exchanges are still allowed."
+  },
+  "exchangeErrorHandoverUnfinished": "The new scooter hasn't been handed over yet. Finish the handover steps first.",
+  "@exchangeErrorHandoverUnfinished": {
+    "description": "The new scooter hasn't been handed over yet. Finish the handover steps first."
+  },
+  "exchangeErrorHoldExpired": "The scooter hold expired. Choose the replacement again.",
+  "@exchangeErrorHoldExpired": {
+    "description": "The scooter hold expired. Choose the replacement again."
+  },
+  "exchangeErrorInspectionUnfinished": "Complete the return inspection first.",
+  "@exchangeErrorInspectionUnfinished": {
+    "description": "Complete the return inspection first."
+  },
+  "exchangeErrorNoRental": "We couldn't find an active rental for you.",
+  "@exchangeErrorNoRental": {
+    "description": "We couldn't find an active rental for you."
+  },
+  "exchangeErrorNoScooter": "You need a scooter assigned to you to request an exchange.",
+  "@exchangeErrorNoScooter": {
+    "description": "You need a scooter assigned to you to request an exchange."
+  },
+  "exchangeErrorNoTerms": "Rider terms aren't set up. Ask an admin to publish one active set of terms.",
+  "@exchangeErrorNoTerms": {
+    "description": "Rider terms aren't set up. Ask an admin to publish one active set of terms."
+  },
+  "exchangeErrorNotFound": "This exchange request no longer exists.",
+  "@exchangeErrorNotFound": {
+    "description": "This exchange request no longer exists."
+  },
+  "exchangeErrorOfferClosed": "This offer is no longer open.",
+  "@exchangeErrorOfferClosed": {
+    "description": "This offer is no longer open."
+  },
+  "exchangeErrorOfferInvalid": "We couldn't verify this offer. Ask your hub to send it again.",
+  "@exchangeErrorOfferInvalid": {
+    "description": "We couldn't verify this offer. Ask your hub to send it again."
+  },
+  "exchangeErrorRecordsMissing": "Some records for this exchange are missing. Please contact support.",
+  "@exchangeErrorRecordsMissing": {
+    "description": "Some records for this exchange are missing. Please contact support."
+  },
+  "exchangeErrorRentalInactive": "Your rental isn't active, so an exchange can't be requested.",
+  "@exchangeErrorRentalInactive": {
+    "description": "Your rental isn't active, so an exchange can't be requested."
+  },
+  "exchangeErrorReturnFirst": "Finish the old scooter's return before choosing a replacement.",
+  "@exchangeErrorReturnFirst": {
+    "description": "Finish the old scooter's return before choosing a replacement."
+  },
+  "exchangeErrorReturnUnfinished": "The return isn't finished yet. Verify the rider's OTP and complete the return first.",
+  "@exchangeErrorReturnUnfinished": {
+    "description": "The return isn't finished yet. Verify the rider's OTP and complete the return first."
+  },
+  "exchangeErrorSameScooter": "Pick a different scooter from the rider's current one.",
+  "@exchangeErrorSameScooter": {
+    "description": "Pick a different scooter from the rider's current one."
+  },
+  "exchangeErrorScooterReserved": "That scooter is reserved for another exchange.",
+  "@exchangeErrorScooterReserved": {
+    "description": "That scooter is reserved for another exchange."
+  },
+  "exchangeErrorScooterUnavailable": "That scooter is no longer available. Pick another one.",
+  "@exchangeErrorScooterUnavailable": {
+    "description": "That scooter is no longer available. Pick another one."
+  },
+  "exchangeErrorSecurityChange": "This scooter needs a different security deposit. Change the deposit separately first.",
+  "@exchangeErrorSecurityChange": {
+    "description": "This scooter needs a different security deposit. Change the deposit separately first."
+  },
+  "exchangeErrorSecurityTopUp": "The rider's security deposit needs a top-up before completing.",
+  "@exchangeErrorSecurityTopUp": {
+    "description": "The rider's security deposit needs a top-up before completing."
+  },
+  "exchangeErrorStale": "Your rental changed after this offer was made. Ask your hub for a new offer.",
+  "@exchangeErrorStale": {
+    "description": "Your rental changed after this offer was made. Ask your hub for a new offer."
+  },
+  "exchangeErrorTooSoon": "You've had this scooter for too short a time. Please try again in a few days.",
+  "@exchangeErrorTooSoon": {
+    "description": "You've had this scooter for too short a time. Please try again in a few days."
+  },
+  "exchangeExtraRentNow": "Extra rent now",
+  "@exchangeExtraRentNow": {
+    "description": "Extra rent now"
+  },
+  "exchangeFee": "Exchange fee",
+  "@exchangeFee": {
+    "description": "Exchange fee"
+  },
+  "exchangeFeeWaived": "Waived",
+  "@exchangeFeeWaived": {
+    "description": "Waived"
+  },
+  "exchangeHubReason": "Reason from hub",
+  "@exchangeHubReason": {
+    "description": "Reason from hub"
   },
   "exchangeNeedsYou": "Needs your answer",
   "@exchangeNeedsYou": {
     "description": "Needs your answer"
   },
+  "exchangeNewRent": "New rent",
+  "@exchangeNewRent": {
+    "description": "New rent"
+  },
+  "exchangeNewRentFrom": "New rent starts",
+  "@exchangeNewRentFrom": {
+    "description": "New rent starts"
+  },
+  "exchangeNewScooter": "New scooter",
+  "@exchangeNewScooter": {
+    "description": "New scooter"
+  },
+  "exchangeNextApproved": "Approved. Your hub will ask you to bring your current scooter in for a check.",
+  "@exchangeNextApproved": {
+    "description": "Approved. Your hub will ask you to bring your current scooter in for a check."
+  },
+  "exchangeNextCancelled": "This request was cancelled.",
+  "@exchangeNextCancelled": {
+    "description": "This request was cancelled."
+  },
+  "exchangeNextChoosing": "Your old scooter is returned. Your hub is picking a replacement for you.",
+  "@exchangeNextChoosing": {
+    "description": "Your old scooter is returned. Your hub is picking a replacement for you."
+  },
+  "exchangeNextCompleted": "Exchange complete. Enjoy your new scooter!",
+  "@exchangeNextCompleted": {
+    "description": "Exchange complete. Enjoy your new scooter!"
+  },
+  "exchangeNextDeposit": "Offer accepted. Your hub is settling the deposit for your new scooter.",
+  "@exchangeNextDeposit": {
+    "description": "Offer accepted. Your hub is settling the deposit for your new scooter."
+  },
+  "exchangeNextExpired": "This request expired before it was completed.",
+  "@exchangeNextExpired": {
+    "description": "This request expired before it was completed."
+  },
+  "exchangeNextHandover": "Your new scooter is ready. Collect it from the hub.",
+  "@exchangeNextHandover": {
+    "description": "Your new scooter is ready. Collect it from the hub."
+  },
+  "exchangeNextOffer": "Your offer is ready. Check the details and accept or reject it.",
+  "@exchangeNextOffer": {
+    "description": "Your offer is ready. Check the details and accept or reject it."
+  },
+  "exchangeNextRejected": "Your hub couldn't approve this request.",
+  "@exchangeNextRejected": {
+    "description": "Your hub couldn't approve this request."
+  },
+  "exchangeNextRequested": "Your hub will review your request soon.",
+  "@exchangeNextRequested": {
+    "description": "Your hub will review your request soon."
+  },
+  "exchangeNextReserved": "A replacement scooter is reserved for you. Your offer will be ready soon.",
+  "@exchangeNextReserved": {
+    "description": "A replacement scooter is reserved for you. Your offer will be ready soon."
+  },
+  "exchangeNextReturn": "Return your current scooter at the hub so they can inspect it.",
+  "@exchangeNextReturn": {
+    "description": "Return your current scooter at the hub so they can inspect it."
+  },
   "exchangeNone": "No exchange requests",
   "@exchangeNone": {
     "description": "No exchange requests"
   },
-  "exchangeNoneMessage": "If your scooter has a problem, your hub can start an exchange for you.",
+  "exchangeNoneMessage": "If your scooter has a problem, request an exchange and your hub will help.",
   "@exchangeNoneMessage": {
-    "description": "If your scooter has a problem, your hub can start an exchange for you."
+    "description": "If your scooter has a problem, request an exchange and your hub will help."
+  },
+  "exchangeNoRentalBody": "You can request an exchange once a scooter is rented to you.",
+  "@exchangeNoRentalBody": {
+    "description": "You can request an exchange once a scooter is rented to you."
+  },
+  "exchangeNoRentalTitle": "No active rental",
+  "@exchangeNoRentalTitle": {
+    "description": "No active rental"
+  },
+  "exchangeNoteHint": "Describe the problem (optional)",
+  "@exchangeNoteHint": {
+    "description": "Describe the problem (optional)"
+  },
+  "exchangeNoteLabel": "Note for your hub",
+  "@exchangeNoteLabel": {
+    "description": "Note for your hub"
   },
   "exchangeNotes": "Your note",
   "@exchangeNotes": {
@@ -1940,9 +2391,37 @@
   "@exchangeOpen": {
     "description": "In progress"
   },
+  "exchangeOpenExists": "You already have an exchange in progress.",
+  "@exchangeOpenExists": {
+    "description": "You already have an exchange in progress."
+  },
   "exchangePast": "Finished",
   "@exchangePast": {
     "description": "Finished"
+  },
+  "exchangePerDay": "/ day",
+  "@exchangePerDay": {
+    "description": "/ day"
+  },
+  "exchangePerFortnight": "/ 2 weeks",
+  "@exchangePerFortnight": {
+    "description": "/ 2 weeks"
+  },
+  "exchangePerMonth": "/ month",
+  "@exchangePerMonth": {
+    "description": "/ month"
+  },
+  "exchangePerQuarter": "/ 3 months",
+  "@exchangePerQuarter": {
+    "description": "/ 3 months"
+  },
+  "exchangePerWeek": "/ week",
+  "@exchangePerWeek": {
+    "description": "/ week"
+  },
+  "exchangeProgress": "Progress",
+  "@exchangeProgress": {
+    "description": "Progress"
   },
   "exchangeRaised": "Raised",
   "@exchangeRaised": {
@@ -1960,17 +2439,37 @@
   "@exchangeReasonBreakdown": {
     "description": "Breakdown"
   },
+  "exchangeReasonBreakdownHint": "It stopped working or keeps breaking down",
+  "@exchangeReasonBreakdownHint": {
+    "description": "It stopped working or keeps breaking down"
+  },
+  "exchangeReasonOtherHint": "Something else",
+  "@exchangeReasonOtherHint": {
+    "description": "Something else"
+  },
   "exchangeReasonSafety": "Safety swap",
   "@exchangeReasonSafety": {
     "description": "Safety swap"
+  },
+  "exchangeReasonSafetyHint": "A safety check needs a different scooter",
+  "@exchangeReasonSafetyHint": {
+    "description": "A safety check needs a different scooter"
   },
   "exchangeReasonUnsafe": "Not safe to ride",
   "@exchangeReasonUnsafe": {
     "description": "Not safe to ride"
   },
+  "exchangeReasonUnsafeHint": "Brakes, lights or tyres don't feel safe",
+  "@exchangeReasonUnsafeHint": {
+    "description": "Brakes, lights or tyres don't feel safe"
+  },
   "exchangeReasonUpgrade": "Upgrade",
   "@exchangeReasonUpgrade": {
     "description": "Upgrade"
+  },
+  "exchangeReasonUpgradeHint": "You'd like a different model",
+  "@exchangeReasonUpgradeHint": {
+    "description": "You'd like a different model"
   },
   "exchangeRejected": "Offer rejected",
   "@exchangeRejected": {
@@ -1992,17 +2491,33 @@
   "@exchangeRejectSubtitle": {
     "description": "Tell your hub why, so they can send a better one."
   },
-  "exchangeRentChange": "Rent change",
-  "@exchangeRentChange": {
-    "description": "Rent change"
+  "exchangeRentalCouldNotLoad": "Could not load your rental",
+  "@exchangeRentalCouldNotLoad": {
+    "description": "Could not load your rental"
+  },
+  "exchangeRentCredit": "Rent credit",
+  "@exchangeRentCredit": {
+    "description": "Rent credit"
+  },
+  "exchangeRequestAction": "Request an exchange",
+  "@exchangeRequestAction": {
+    "description": "Request an exchange"
+  },
+  "exchangeRequestSent": "Exchange request sent",
+  "@exchangeRequestSent": {
+    "description": "Exchange request sent"
+  },
+  "exchangeRequestSubtitle": "Tell your hub why you need a different scooter.",
+  "@exchangeRequestSubtitle": {
+    "description": "Tell your hub why you need a different scooter."
+  },
+  "exchangeSendRequest": "Send request",
+  "@exchangeSendRequest": {
+    "description": "Send request"
   },
   "exchangeStageAccepted": "Accepted",
   "@exchangeStageAccepted": {
     "description": "Accepted"
-  },
-  "exchangeStageClosed": "Closed",
-  "@exchangeStageClosed": {
-    "description": "Closed"
   },
   "exchangeStageCompleted": "Completed",
   "@exchangeStageCompleted": {
@@ -2012,10 +2527,6 @@
   "@exchangeStageHandover": {
     "description": "Handover"
   },
-  "exchangeStageInReview": "Being checked",
-  "@exchangeStageInReview": {
-    "description": "Being checked"
-  },
   "exchangeStageOfferReady": "Offer ready",
   "@exchangeStageOfferReady": {
     "description": "Offer ready"
@@ -2023,6 +2534,54 @@
   "exchangeStageRequested": "Requested",
   "@exchangeStageRequested": {
     "description": "Requested"
+  },
+  "exchangeStatusApproved": "Approved",
+  "@exchangeStatusApproved": {
+    "description": "Approved"
+  },
+  "exchangeStatusCancelled": "Cancelled",
+  "@exchangeStatusCancelled": {
+    "description": "Cancelled"
+  },
+  "exchangeStatusChoosing": "Choosing scooter",
+  "@exchangeStatusChoosing": {
+    "description": "Choosing scooter"
+  },
+  "exchangeStatusExpired": "Expired",
+  "@exchangeStatusExpired": {
+    "description": "Expired"
+  },
+  "exchangeStatusRejected": "Rejected",
+  "@exchangeStatusRejected": {
+    "description": "Rejected"
+  },
+  "exchangeStatusReturn": "Return scooter",
+  "@exchangeStatusReturn": {
+    "description": "Return scooter"
+  },
+  "exchangeStepApproval": "Hub approval",
+  "@exchangeStepApproval": {
+    "description": "Hub approval"
+  },
+  "exchangeStepDeposit": "Deposit",
+  "@exchangeStepDeposit": {
+    "description": "Deposit"
+  },
+  "exchangeStepHandover": "Get new scooter",
+  "@exchangeStepHandover": {
+    "description": "Get new scooter"
+  },
+  "exchangeStepOffer": "Replacement offer",
+  "@exchangeStepOffer": {
+    "description": "Replacement offer"
+  },
+  "exchangeStepRequested": "Request sent",
+  "@exchangeStepRequested": {
+    "description": "Request sent"
+  },
+  "exchangeStepReturn": "Return old scooter",
+  "@exchangeStepReturn": {
+    "description": "Return old scooter"
   },
   "exchangeSubtitle": "Ask for a different scooter",
   "@exchangeSubtitle": {
@@ -2032,9 +2591,31 @@
   "@exchangeTitle": {
     "description": "Vehicle exchange"
   },
-  "exchangeWaitingOnHub": "Your hub is working on this. We will tell you when there is an offer.",
-  "@exchangeWaitingOnHub": {
-    "description": "Your hub is working on this. We will tell you when there is an offer."
+  "exchangeVersionCurrent": "Current",
+  "@exchangeVersionCurrent": {
+    "description": "Current"
+  },
+  "exchangeVersionFrom": "From {date}",
+  "@exchangeVersionFrom": {
+    "description": "From {date}",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "exchangeVersionNumber": "Version {number}",
+  "@exchangeVersionNumber": {
+    "description": "Version {number}",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "exchangeVersionPrevious": "Previous",
+  "@exchangeVersionPrevious": {
+    "description": "Previous"
   },
   "homeBonusUnlocked": "Bonus unlocked",
   "@homeBonusUnlocked": {
@@ -2224,6 +2805,10 @@
   "@hubRidersPresent": {
     "description": "Riders present"
   },
+  "hubsCouldNotLoad": "Could not load nearby hubs",
+  "@hubsCouldNotLoad": {
+    "description": "Could not load nearby hubs"
+  },
   "hubService": "Service",
   "@hubService": {
     "description": "Service"
@@ -2236,9 +2821,21 @@
   "@hubShowThisHub": {
     "description": "Show this hub"
   },
+  "hubsNoneBody": "There are no active hubs within reach of your location.",
+  "@hubsNoneBody": {
+    "description": "There are no active hubs within reach of your location."
+  },
+  "hubsNoneTitle": "No hubs near you",
+  "@hubsNoneTitle": {
+    "description": "No hubs near you"
+  },
   "hubSomethingWentWrong": "Something went wrong.",
   "@hubSomethingWentWrong": {
     "description": "Something went wrong."
+  },
+  "hubsSubtitle": "Closest hubs to you",
+  "@hubsSubtitle": {
+    "description": "Closest hubs to you"
   },
   "hubUptime": "Uptime",
   "@hubUptime": {
@@ -2303,6 +2900,22 @@
   "introVehicleTitle": "Your scooter,\nfully connected",
   "@introVehicleTitle": {
     "description": "Your scooter, fully connected"
+  },
+  "legalTermsAgree": "I have read and agree to the Terms & Conditions",
+  "@legalTermsAgree": {
+    "description": "I have read and agree to the Terms & Conditions"
+  },
+  "legalTermsCouldNotLoad": "Could not load the terms",
+  "@legalTermsCouldNotLoad": {
+    "description": "Could not load the terms"
+  },
+  "legalTermsSubtitle": "Please read these terms before you continue.",
+  "@legalTermsSubtitle": {
+    "description": "Please read these terms before you continue."
+  },
+  "legalTermsTitle": "Terms & Conditions",
+  "@legalTermsTitle": {
+    "description": "Terms & Conditions"
   },
   "maintenanceAddNote": "Add a note",
   "@maintenanceAddNote": {
@@ -2652,6 +3265,80 @@
   "@maintenanceWideShot": {
     "description": "Wide shot"
   },
+  "mapsAllowLocation": "Allow location",
+  "@mapsAllowLocation": {
+    "description": "Allow location"
+  },
+  "mapsAway": "{distance} away",
+  "@mapsAway": {
+    "description": "{distance} away",
+    "placeholders": {
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "mapsCouldNotOpenMaps": "Could not open Google Maps",
+  "@mapsCouldNotOpenMaps": {
+    "description": "Could not open Google Maps"
+  },
+  "mapsLocating": "Finding your location…",
+  "@mapsLocating": {
+    "description": "Finding your location…"
+  },
+  "mapsLocationDeniedBody": "We use your location to show hubs and swap stations near you.",
+  "@mapsLocationDeniedBody": {
+    "description": "We use your location to show hubs and swap stations near you."
+  },
+  "mapsLocationDeniedTitle": "Allow location access",
+  "@mapsLocationDeniedTitle": {
+    "description": "Allow location access"
+  },
+  "mapsLocationOffBody": "Turn on location services to see places near you.",
+  "@mapsLocationOffBody": {
+    "description": "Turn on location services to see places near you."
+  },
+  "mapsLocationOffTitle": "Location is turned off",
+  "@mapsLocationOffTitle": {
+    "description": "Location is turned off"
+  },
+  "mapsLocationUnavailable": "Could not find your location",
+  "@mapsLocationUnavailable": {
+    "description": "Could not find your location"
+  },
+  "mapsMinutes": "{minutes} min",
+  "@mapsMinutes": {
+    "description": "{minutes} min",
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "mapsNavigate": "Navigate",
+  "@mapsNavigate": {
+    "description": "Navigate"
+  },
+  "mapsOpenSettings": "Open settings",
+  "@mapsOpenSettings": {
+    "description": "Open settings"
+  },
+  "navBatterySwap": "Battery swap",
+  "@navBatterySwap": {
+    "description": "Battery swap"
+  },
+  "navNearbyHubs": "Nearby hubs",
+  "@navNearbyHubs": {
+    "description": "Nearby hubs"
+  },
+  "navReferEarn": "Refer & earn",
+  "@navReferEarn": {
+    "description": "Refer & earn"
+  },
+  "navScooterDetails": "Scooter details",
+  "@navScooterDetails": {
+    "description": "Scooter details"
+  },
   "notificationsAllCaughtUp": "You are all caught up",
   "@notificationsAllCaughtUp": {
     "description": "You are all caught up"
@@ -2834,6 +3521,22 @@
   "@onboardingReferences": {
     "description": "References"
   },
+  "onboardingReferralApplied": "Applied",
+  "@onboardingReferralApplied": {
+    "description": "Applied"
+  },
+  "onboardingReferralApply": "Apply",
+  "@onboardingReferralApply": {
+    "description": "Apply"
+  },
+  "onboardingReferralCodeApplied": "Referral code applied",
+  "@onboardingReferralCodeApplied": {
+    "description": "Referral code applied"
+  },
+  "onboardingReferralTapApply": "Tap Apply to use this code, or clear it",
+  "@onboardingReferralTapApply": {
+    "description": "Tap Apply to use this code, or clear it"
+  },
   "onboardingReview": "Review",
   "@onboardingReview": {
     "description": "Review"
@@ -2849,6 +3552,10 @@
   "onboardingSaving": "Saving…",
   "@onboardingSaving": {
     "description": "Saving…"
+  },
+  "onboardingSignAgreementContinue": "Sign the agreement to continue",
+  "@onboardingSignAgreementContinue": {
+    "description": "Sign the agreement to continue"
   },
   "onboardingSomeStepsStillIncompleteGo": "Some steps are still incomplete. Go back and finish them.",
   "@onboardingSomeStepsStillIncompleteGo": {
@@ -3030,6 +3737,135 @@
   "profilePersonalDetails": "Personal details",
   "@profilePersonalDetails": {
     "description": "Personal details"
+  },
+  "referCodeCopied": "Referral code copied",
+  "@referCodeCopied": {
+    "description": "Referral code copied"
+  },
+  "referCopyCode": "Copy code",
+  "@referCopyCode": {
+    "description": "Copy code"
+  },
+  "referCouldNotLoad": "Could not load refer & earn",
+  "@referCouldNotLoad": {
+    "description": "Could not load refer & earn"
+  },
+  "referFriendGets": "Your friend gets",
+  "@referFriendGets": {
+    "description": "Your friend gets"
+  },
+  "referInvited": "Invited",
+  "@referInvited": {
+    "description": "Invited"
+  },
+  "referNoCampaignBody": "Check back soon for new rewards.",
+  "@referNoCampaignBody": {
+    "description": "Check back soon for new rewards."
+  },
+  "referNoCampaignTitle": "No referral campaign right now",
+  "@referNoCampaignTitle": {
+    "description": "No referral campaign right now"
+  },
+  "referNoReferralsBody": "Share your code to invite riders.",
+  "@referNoReferralsBody": {
+    "description": "Share your code to invite riders."
+  },
+  "referNoReferralsTitle": "No referrals yet",
+  "@referNoReferralsTitle": {
+    "description": "No referrals yet"
+  },
+  "referPaid": "Paid",
+  "@referPaid": {
+    "description": "Paid"
+  },
+  "referPending": "Pending",
+  "@referPending": {
+    "description": "Pending"
+  },
+  "referQualified": "Qualified",
+  "@referQualified": {
+    "description": "Qualified"
+  },
+  "referRegistered": "Registered",
+  "@referRegistered": {
+    "description": "Registered"
+  },
+  "referShareInvite": "Share invite",
+  "@referShareInvite": {
+    "description": "Share invite"
+  },
+  "referStatusActivated": "Activated",
+  "@referStatusActivated": {
+    "description": "Activated"
+  },
+  "referStatusCancelled": "Cancelled",
+  "@referStatusCancelled": {
+    "description": "Cancelled"
+  },
+  "referStatusDisqualified": "Disqualified",
+  "@referStatusDisqualified": {
+    "description": "Disqualified"
+  },
+  "referStatusExpired": "Expired",
+  "@referStatusExpired": {
+    "description": "Expired"
+  },
+  "referStatusInProgress": "In progress",
+  "@referStatusInProgress": {
+    "description": "In progress"
+  },
+  "referStatusKycVerified": "KYC verified",
+  "@referStatusKycVerified": {
+    "description": "KYC verified"
+  },
+  "referStatusPaid": "Reward paid",
+  "@referStatusPaid": {
+    "description": "Reward paid"
+  },
+  "referStatusRejected": "Rejected",
+  "@referStatusRejected": {
+    "description": "Rejected"
+  },
+  "referStatusRewardApproved": "Reward approved",
+  "@referStatusRewardApproved": {
+    "description": "Reward approved"
+  },
+  "referStatusRewardPending": "Reward pending",
+  "@referStatusRewardPending": {
+    "description": "Reward pending"
+  },
+  "referStatusUnderReview": "Under review",
+  "@referStatusUnderReview": {
+    "description": "Under review"
+  },
+  "referSubtitle": "Invite riders and earn rewards",
+  "@referSubtitle": {
+    "description": "Invite riders and earn rewards"
+  },
+  "referTotalEarned": "Total earned",
+  "@referTotalEarned": {
+    "description": "Total earned"
+  },
+  "referValidTill": "Valid till {date}",
+  "@referValidTill": {
+    "description": "Valid till {date}",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "referYouGet": "You get",
+  "@referYouGet": {
+    "description": "You get"
+  },
+  "referYourCode": "Your referral code",
+  "@referYourCode": {
+    "description": "Your referral code"
+  },
+  "referYourReferrals": "Your referrals",
+  "@referYourReferrals": {
+    "description": "Your referrals"
   },
   "rentalsAutoDebit": "Auto-debit",
   "@rentalsAutoDebit": {
@@ -3607,6 +4443,35 @@
   "supportYesWeeklyMonthlyPlansDaily": "Yes, on weekly and monthly plans. Daily plans return to the hub ",
   "@supportYesWeeklyMonthlyPlansDaily": {
     "description": "Yes, on weekly and monthly plans. Daily plans return to the hub "
+  },
+  "swapCouldNotLoad": "Could not load swap stations",
+  "@swapCouldNotLoad": {
+    "description": "Could not load swap stations"
+  },
+  "swapNoneBody": "We could not find any battery swap stations right now.",
+  "@swapNoneBody": {
+    "description": "We could not find any battery swap stations right now."
+  },
+  "swapNoneTitle": "No swap stations found",
+  "@swapNoneTitle": {
+    "description": "No swap stations found"
+  },
+  "swapSubtitle": "Swap stations closest to you",
+  "@swapSubtitle": {
+    "description": "Swap stations closest to you"
+  },
+  "swapTitle": "Battery swapping",
+  "@swapTitle": {
+    "description": "Battery swapping"
+  },
+  "swapUnits": "Units: {count}",
+  "@swapUnits": {
+    "description": "Units: {count}",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
   },
   "validationEnterDateBeforeToday": "Enter a date on or before today",
   "@validationEnterDateBeforeToday": {

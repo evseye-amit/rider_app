@@ -162,7 +162,8 @@ class ApiClient {
   Failure _failureFor(int status, dynamic body) {
     String? message;
     if (body is Map && body['error'] is Map) {
-      message = (body['error'] as Map)['message']?.toString();
+      final Map<dynamic, dynamic> error = body['error'] as Map;
+      message = _messageForCode(error['code']?.toString()) ?? error['message']?.toString();
     }
     return switch (status) {
       400 || 422 => ValidationFailure(message ?? ActiveLocale.strings.errorDidNotLookRight),
@@ -185,3 +186,41 @@ class ApiClient {
     };
   }
 }
+
+String? _messageForCode(String? code) => switch (code) {
+  'EXCHANGE_DISABLED' => ActiveLocale.strings.exchangeErrorDisabled,
+  'AGREEMENT_NOT_FOUND' => ActiveLocale.strings.exchangeErrorNoRental,
+  'AGREEMENT_NOT_ACTIVE' => ActiveLocale.strings.exchangeErrorRentalInactive,
+  'ACTIVE_ALLOCATION_REQUIRED' => ActiveLocale.strings.exchangeErrorNoScooter,
+  'MINIMUM_DAYS_NOT_MET' => ActiveLocale.strings.exchangeErrorTooSoon,
+  'COLLECTION_RESTRICTION_ACTIVE' => ActiveLocale.strings.exchangeErrorDuesPending,
+  'EXCHANGE_NOT_FOUND' => ActiveLocale.strings.exchangeErrorNotFound,
+  'EXCHANGE_STATE_CHANGED' || 'EXCHANGE_STATE_INVALID' => ActiveLocale.strings.exchangeErrorChanged,
+  'EXCHANGE_VERSION_STALE' => ActiveLocale.strings.exchangeErrorStale,
+  'EXCHANGE_OFFER_EXPIRED' => ActiveLocale.strings.exchangeOfferExpiredMessage,
+  'EXCHANGE_OFFER_NOT_PRESENTED' => ActiveLocale.strings.exchangeErrorOfferClosed,
+  'EXCHANGE_OFFER_INTEGRITY_FAILED' => ActiveLocale.strings.exchangeErrorOfferInvalid,
+  'EXCHANGE_CANCELLATION_REQUIRES_COMPENSATION' => ActiveLocale.strings.exchangeErrorCannotCancel,
+  'INVALID_EXCHANGE_INPUT' => ActiveLocale.strings.errorDidNotLookRight,
+  'OLD_RETURN_ASSESSMENT_REQUIRED' => ActiveLocale.strings.exchangeErrorReturnFirst,
+  'OLD_RETURN_ALREADY_COMPLETED' => ActiveLocale.strings.exchangeErrorAlreadyReturned,
+  'OLD_RETURN_NOT_COMPLETED' => ActiveLocale.strings.exchangeErrorReturnUnfinished,
+  'RETURN_INSPECTION_NOT_COMPLETED' => ActiveLocale.strings.exchangeErrorInspectionUnfinished,
+  'REPLACEMENT_NOT_AVAILABLE' => ActiveLocale.strings.exchangeErrorScooterUnavailable,
+  'REPLACEMENT_RESERVED' => ActiveLocale.strings.exchangeErrorScooterReserved,
+  'SAME_VEHICLE' => ActiveLocale.strings.exchangeErrorSameScooter,
+  'REPLACEMENT_HOLD_EXPIRED' => ActiveLocale.strings.exchangeErrorHoldExpired,
+  'RIDER_TERMS_NOT_CONFIGURED' => ActiveLocale.strings.exchangeErrorNoTerms,
+  'RIDER_SECURITY_CHANGE_REQUIRES_SEPARATE_AMENDMENT' => ActiveLocale.strings.exchangeErrorSecurityChange,
+  'RIDER_SECURITY_REPLENISHMENT_REQUIRED' => ActiveLocale.strings.exchangeErrorSecurityTopUp,
+  'EXCHANGE_DEPOSIT_OUTSTANDING' => ActiveLocale.strings.exchangeErrorDepositsUnsettled,
+  'NEW_HANDOVER_NOT_COMPLETED' => ActiveLocale.strings.exchangeErrorHandoverUnfinished,
+  'OLD_RENTAL_PAYMENT_NO_LONGER_VERIFIED' ||
+  'EXCHANGE_PRORATION_STALE' ||
+  'EXCHANGE_BILLING_CYCLE_STALE' => ActiveLocale.strings.exchangeErrorBillingChanged,
+  'COMMERCIAL_VERSION_MISSING' ||
+  'REPLACEMENT_SELECTION_MISSING' ||
+  'EXCHANGE_AMENDMENT_MISSING' ||
+  'EXCHANGE_OFFER_MISSING' => ActiveLocale.strings.exchangeErrorRecordsMissing,
+  _ => null,
+};

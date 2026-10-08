@@ -11,7 +11,7 @@ import '../providers/intro_slides_provider.dart';
 
 const Map<String, BrandArt> _slideArt = {
   'earn': BrandArt.introLogo,
-  'vehicle': BrandArt.introRide,
+  'vehicle': BrandArt.evScooter,
   'support': BrandArt.introSupport,
 };
 
@@ -114,7 +114,7 @@ class _Slide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BrandArt art = _slideArt[slide.key] ?? BrandArt.introRide;
+    final BrandArt art = _slideArt[slide.key] ?? BrandArt.evScooter;
 
     return LayoutBuilder(
       builder: (context, constraints) {

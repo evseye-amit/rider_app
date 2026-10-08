@@ -1,83 +1,43 @@
 import 'package:equatable/equatable.dart';
 
-enum ExchangeStage {
+enum ExchangeStatus {
   requested,
-  inReview,
-  offerReady,
-  accepted,
-  awaitingHandover,
+  approved,
+  returnPending,
+  replacementSelected,
+  offerPresented,
+  depositPending,
+  handoverPending,
   completed,
-  closed;
+  rejected,
+  cancelled,
+  expired;
 
-  bool get isOpen => this != ExchangeStage.completed && this != ExchangeStage.closed;
-
-  bool get needsRider => this == ExchangeStage.offerReady;
+  bool get isOpen => switch (this) {
+    ExchangeStatus.completed || ExchangeStatus.rejected || ExchangeStatus.cancelled || ExchangeStatus.expired => false,
+    _ => true,
+  };
 }
 
-class ExchangeOffer extends Equatable {
-  const ExchangeOffer({
-    required this.id,
-    required this.hash,
-    required this.termsTitle,
-    required this.termsBody,
-    required this.termsVersion,
-    required this.expiresAt,
-    required this.isPresented,
-    this.rentDifference,
-    this.depositDifference,
-  });
+enum ExchangeStep { requested, approval, returnScooter, offer, deposit, handover }
 
-  final String id;
-  final String hash;
-  final String termsTitle;
-  final String termsBody;
-  final String termsVersion;
-  final DateTime expiresAt;
-  final bool isPresented;
-  final num? rentDifference;
-  final num? depositDifference;
+enum RentPeriod {
+  daily,
+  weekly,
+  fortnightly,
+  monthly,
+  quarterly,
+  custom;
 
-  bool get hasExpired => DateTime.now().isAfter(expiresAt);
-
-  bool get isActionable => isPresented && !hasExpired;
-
-  @override
-  List<Object?> get props => [id, hash, termsTitle, termsVersion, expiresAt, isPresented];
-}
-
-class ExchangeRequest extends Equatable {
-  const ExchangeRequest({
-    required this.id,
-    required this.agreementId,
-    required this.stage,
-    required this.statusCode,
-    required this.reasonCode,
-    required this.createdAt,
-    this.reason,
-    this.effectiveAt,
-    this.reservationExpiresAt,
-    this.completedAt,
-    this.canCancel = false,
-    this.offers = const [],
-  });
-
-  final String id;
-  final String agreementId;
-  final ExchangeStage stage;
-  final String statusCode;
-  final String reasonCode;
-  final DateTime createdAt;
-  final String? reason;
-  final DateTime? effectiveAt;
-  final DateTime? reservationExpiresAt;
-  final DateTime? completedAt;
-  final bool canCancel;
-  final List<ExchangeOffer> offers;
-
-  ExchangeOffer? get pendingOffer => offers.where((offer) => offer.isActionable).firstOrNull;
-
-  @override
-  List<Object?> get props => [id, agreementId, stage, statusCode, reasonCode, createdAt, completedAt, offers];
+  static RentPeriod? parse(String? value) => switch (value) {
+    'DAILY' => RentPeriod.daily,
+    'WEEKLY' => RentPeriod.weekly,
+    'FORTNIGHTLY' => RentPeriod.fortnightly,
+    'MONTHLY' => RentPeriod.monthly,
+    'QUARTERLY' => RentPeriod.quarterly,
+    'CUSTOM' => RentPeriod.custom,
+    _ => null,
+  };
 }
 
 enum ExchangeReason {
@@ -90,4 +50,153 @@ enum ExchangeReason {
   const ExchangeReason(this.code);
 
   final String code;
+}
+
+class ExchangeQuote extends Equatable {
+  const ExchangeQuote({
+    required this.newRent,
+    required this.rentAdjustment,
+    required this.depositMoved,
+    required this.depositToPay,
+    required this.depositExcess,
+    required this.refundsExcess,
+    required this.fee,
+    required this.feeWaived,
+    this.period,
+    this.scooterName,
+    this.hubName,
+    this.newRentFrom,
+  });
+
+  final num newRent;
+  final num rentAdjustment;
+  final num depositMoved;
+  final num depositToPay;
+  final num depositExcess;
+  final bool refundsExcess;
+  final num fee;
+  final bool feeWaived;
+  final RentPeriod? period;
+  final String? scooterName;
+  final String? hubName;
+  final DateTime? newRentFrom;
+
+  @override
+  List<Object?> get props => [
+    newRent,
+    rentAdjustment,
+    depositMoved,
+    depositToPay,
+    depositExcess,
+    refundsExcess,
+    fee,
+    feeWaived,
+    period,
+    scooterName,
+    hubName,
+    newRentFrom,
+  ];
+}
+
+class ExchangeOffer extends Equatable {
+  const ExchangeOffer({
+    required this.id,
+    required this.hash,
+    required this.termsTitle,
+    required this.termsBody,
+    required this.termsVersion,
+    required this.expiresAt,
+    required this.isPresented,
+    required this.isAccepted,
+    required this.quote,
+  });
+
+  final String id;
+  final String hash;
+  final String termsTitle;
+  final String termsBody;
+  final String termsVersion;
+  final DateTime expiresAt;
+  final bool isPresented;
+  final bool isAccepted;
+  final ExchangeQuote quote;
+
+  bool get hasExpired => DateTime.now().isAfter(expiresAt);
+
+  bool get isActionable => isPresented && !hasExpired;
+
+  @override
+  List<Object?> get props => [id, hash, termsTitle, termsVersion, expiresAt, isPresented, isAccepted, quote];
+}
+
+class ExchangeRequest extends Equatable {
+  const ExchangeRequest({
+    required this.id,
+    required this.agreementId,
+    required this.status,
+    required this.reasonCode,
+    required this.createdAt,
+    this.reason,
+    this.oldScooterReturned = false,
+    this.completedAt,
+    this.canCancel = false,
+    this.offers = const [],
+  });
+
+  final String id;
+  final String agreementId;
+  final ExchangeStatus status;
+  final String reasonCode;
+  final DateTime createdAt;
+  final String? reason;
+  final bool oldScooterReturned;
+  final DateTime? completedAt;
+  final bool canCancel;
+  final List<ExchangeOffer> offers;
+
+  ExchangeOffer? get pendingOffer => offers.where((offer) => offer.isActionable).firstOrNull;
+
+  ExchangeOffer? get acceptedOffer => offers.where((offer) => offer.isAccepted).firstOrNull;
+
+  bool get needsRider => status == ExchangeStatus.offerPresented;
+
+  bool isStepDone(ExchangeStep step) {
+    final bool handedOver = status == ExchangeStatus.completed;
+    final bool depositSettled = handedOver || status == ExchangeStatus.handoverPending;
+    final bool offerAccepted = depositSettled || status == ExchangeStatus.depositPending || acceptedOffer != null;
+    final bool returned = oldScooterReturned || handedOver;
+    return switch (step) {
+      ExchangeStep.requested => true,
+      ExchangeStep.approval =>
+        returned ||
+            offerAccepted ||
+            switch (status) {
+              ExchangeStatus.approved ||
+              ExchangeStatus.returnPending ||
+              ExchangeStatus.replacementSelected ||
+              ExchangeStatus.offerPresented => true,
+              _ => false,
+            },
+      ExchangeStep.returnScooter => returned,
+      ExchangeStep.offer => offerAccepted,
+      ExchangeStep.deposit => depositSettled,
+      ExchangeStep.handover => handedOver,
+    };
+  }
+
+  ExchangeStep? get currentStep => ExchangeStep.values.where((step) => !isStepDone(step)).firstOrNull;
+
+  @override
+  List<Object?> get props => [
+    id,
+    agreementId,
+    status,
+    reasonCode,
+    createdAt,
+    reason,
+    oldScooterReturned,
+    completedAt,
+    canCancel,
+    offers,
+  ];
 }

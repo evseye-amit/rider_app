@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:evseye_core/evseye_core.dart';
 
-import '../entities/exchange_request.dart';
 import '../exchange_repository.dart';
 
 class AcceptOfferParams extends Equatable {
@@ -26,31 +25,31 @@ class RejectOfferParams extends Equatable {
   List<Object?> get props => [id, offerId, reason];
 }
 
-class AcceptExchangeOffer extends UseCase<ExchangeRequest, AcceptOfferParams> {
+class AcceptExchangeOffer extends UseCase<void, AcceptOfferParams> {
   const AcceptExchangeOffer(this._repository);
 
   final ExchangeRepository _repository;
 
   @override
-  Future<Result<ExchangeRequest>> call(AcceptOfferParams params) =>
+  Future<Result<void>> call(AcceptOfferParams params) =>
       _repository.acceptOffer(id: params.id, offerId: params.offerId, offerHash: params.offerHash);
 }
 
-class RejectExchangeOffer extends UseCase<ExchangeRequest, RejectOfferParams> {
+class RejectExchangeOffer extends UseCase<void, RejectOfferParams> {
   const RejectExchangeOffer(this._repository);
 
   final ExchangeRepository _repository;
 
   @override
-  Future<Result<ExchangeRequest>> call(RejectOfferParams params) =>
+  Future<Result<void>> call(RejectOfferParams params) =>
       _repository.rejectOffer(id: params.id, offerId: params.offerId, reason: params.reason);
 }
 
-class CancelExchange extends UseCase<ExchangeRequest, String> {
+class CancelExchange extends UseCase<void, String> {
   const CancelExchange(this._repository);
 
   final ExchangeRepository _repository;
 
   @override
-  Future<Result<ExchangeRequest>> call(String params) => _repository.cancel(params);
+  Future<Result<void>> call(String params) => _repository.cancel(params);
 }

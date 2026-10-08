@@ -276,6 +276,21 @@ class InkDivider extends StatelessWidget {
       Container(width: 1, height: height, color: AppColors.inkStroke);
 }
 
+class HeroBandEdge extends StatelessWidget {
+  const HeroBandEdge({this.color = AppColors.ink, this.radius = 30, super.key});
+
+  final Color color;
+  final double radius;
+
+  @override
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: BoxDecoration(
+      color: color,
+      borderRadius: BorderRadius.vertical(bottom: Radius.circular(radius)),
+    ),
+  );
+}
+
 class HeroScaffold extends StatelessWidget {
   const HeroScaffold({
     required this.band,
@@ -288,6 +303,7 @@ class HeroScaffold extends StatelessWidget {
     this.bottomNavigationBar,
     this.controller,
     this.onRefresh,
+    this.pinBand = false,
     super.key,
   });
 
@@ -305,8 +321,21 @@ class HeroScaffold extends StatelessWidget {
   final ScrollController? controller;
   final Future<void> Function()? onRefresh;
 
+  final bool pinBand;
+
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.canvas,
+      drawer: drawer,
+      extendBody: bottomNavigationBar != null,
+      bottomNavigationBar: bottomNavigationBar,
+      floatingActionButton: floatingAction,
+      body: pinBand ? _pinned() : _scrolling(context),
+    );
+  }
+
+  Widget _scrolling(BuildContext context) {
     final Widget body = SingleChildScrollView(
       controller: controller,
       physics: const AlwaysScrollableScrollPhysics(parent: ClampingScrollPhysics()),
@@ -342,33 +371,63 @@ class HeroScaffold extends StatelessWidget {
       ),
     );
 
-    return Scaffold(
-      backgroundColor: AppColors.canvas,
-      drawer: drawer,
-      extendBody: bottomNavigationBar != null,
-      bottomNavigationBar: bottomNavigationBar,
-      floatingActionButton: floatingAction,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: MediaQuery.paddingOf(context).top + 120,
-            child: ColoredBox(color: bandColor),
-          ),
-          Positioned.fill(
-            child: onRefresh == null
-                ? body
-                : RefreshIndicator(
-                    onRefresh: onRefresh!,
-                    color: AppColors.primary,
-                    backgroundColor: AppColors.surface,
-                    child: body,
-                  ),
-          ),
-        ],
-      ),
+    return Stack(
+      children: [
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          height: MediaQuery.paddingOf(context).top + 120,
+          child: ColoredBox(color: bandColor),
+        ),
+        Positioned.fill(child: _refreshable(body)),
+      ],
     );
   }
+
+  Widget _pinned() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        HeroBand(
+          color: bandColor,
+          bottomRadius: 0,
+          padding: const EdgeInsets.fromLTRB(Insets.gutter, Insets.md, Insets.gutter, Insets.xxl),
+          child: band,
+        ),
+        Expanded(
+          child: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                height: math.max(overlap, 0),
+                child: HeroBandEdge(color: bandColor),
+              ),
+              Positioned.fill(
+                child: _refreshable(
+                  SingleChildScrollView(
+                    controller: controller,
+                    physics: const AlwaysScrollableScrollPhysics(parent: ClampingScrollPhysics()),
+                    padding: EdgeInsets.fromLTRB(Insets.gutter, math.max(-overlap, 0), Insets.gutter, bottomPadding),
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _refreshable(Widget scrollable) => onRefresh == null
+      ? scrollable
+      : RefreshIndicator(
+          onRefresh: onRefresh!,
+          color: AppColors.primary,
+          backgroundColor: AppColors.surface,
+          child: scrollable,
+        );
 }

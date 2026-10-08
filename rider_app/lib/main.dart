@@ -24,6 +24,7 @@ Future<void> main() async {
 
   final SharedPreferences preferences = await SharedPreferences.getInstance();
   await ActiveLocale.initializeFormatting();
+  await SplashArtwork.precache();
 
   runApp(
     ProviderScope(

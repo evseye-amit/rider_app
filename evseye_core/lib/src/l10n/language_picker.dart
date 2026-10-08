@@ -13,17 +13,12 @@ class LanguagePicker extends StatefulWidget {
 
   final AppLocale selected;
 
-  static Future<AppLocale?> show(
-    BuildContext context, {
-    required AppLocale selected,
-    bool firstRun = false,
-  }) {
+  static Future<AppLocale?> show(BuildContext context, {required AppLocale selected}) {
     final AppL10nLabels labels = AppL10nLabels(context);
     return AppSheet.show<AppLocale>(
       context,
       title: labels.title,
-      subtitle: firstRun ? labels.firstRunSubtitle : labels.subtitle,
-      isDismissible: !firstRun,
+      subtitle: labels.subtitle,
       child: LanguagePicker(selected: selected),
     );
   }
@@ -40,21 +35,35 @@ class _LanguagePickerState extends State<LanguagePicker> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final AppLocale option in AppLocale.values)
-          Padding(
-            padding: const EdgeInsets.only(bottom: Insets.sm),
-            child: _LanguageTile(
-              option: option,
-              selected: option == _selected,
-              onTap: () => setState(() => _selected = option),
-            ),
-          ),
+        LanguageOptions(selected: _selected, onChanged: (option) => setState(() => _selected = option)),
         const SizedBox(height: Insets.md),
         PrimaryButton(
           label: AppL10nLabels(context).save,
           onPressed: () => Navigator.of(context).pop(_selected),
         ),
         const SizedBox(height: Insets.sm),
+      ],
+    );
+  }
+}
+
+class LanguageOptions extends StatelessWidget {
+  const LanguageOptions({required this.selected, required this.onChanged, super.key});
+
+  final AppLocale selected;
+  final ValueChanged<AppLocale> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (final AppLocale option in AppLocale.values)
+          Padding(
+            padding: const EdgeInsets.only(bottom: Insets.sm),
+            child: _LanguageTile(option: option, selected: option == selected, onTap: () => onChanged(option)),
+          ),
       ],
     );
   }

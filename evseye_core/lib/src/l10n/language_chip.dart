@@ -31,9 +31,9 @@ class LanguageChip extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: Insets.md, vertical: Insets.sm),
         decoration: BoxDecoration(
-          color: onInk ? Colors.white.withValues(alpha: 0.18) : AppColors.surfaceMuted,
+          color: onInk ? AppColors.primary : AppColors.surfaceMuted,
           borderRadius: Corners.pill,
-          border: Border.all(color: onInk ? Colors.white.withValues(alpha: 0.24) : AppColors.stroke),
+          border: Border.all(color: onInk ? AppColors.primary : AppColors.stroke),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

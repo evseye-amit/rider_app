@@ -167,6 +167,12 @@ class AppL10nKn extends AppL10n {
   String get allocationFleetCode => 'ಫ್ಲೀಟ್ ಕೋಡ್';
 
   @override
+  String get allocationFleetOnlyBody => 'ಸ್ಕೂಟರ್ ನೀಡುವ ಕೆಲಸ ಹಬ್‌ನ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಲಾಗಿನ್‌ನಿಂದ ಆಗುತ್ತದೆ.';
+
+  @override
+  String get allocationFleetOnlyTitle => 'ಈ ಲಾಗಿನ್‌ಗೆ ಲಭ್ಯವಿಲ್ಲ';
+
+  @override
   String get allocationFront => 'ಮುಂಭಾಗ';
 
   @override
@@ -1428,13 +1434,34 @@ class AppL10nKn extends AppL10n {
   String get errorUnknown => 'ಗೊತ್ತಿಲ್ಲ';
 
   @override
+  String get esignAddNameFirst => 'ಮೊದಲು ಪ್ರೊಫೈಲ್ ಹಂತದಲ್ಲಿ ನಿಮ್ಮ ಪೂರ್ಣ ಹೆಸರನ್ನು ಸೇರಿಸಿ';
+
+  @override
+  String get esignSigned => 'ಸಹಿ ಮಾಡಲಾಗಿದೆ';
+
+  @override
+  String get esignTapToSign => 'ಸಹಿ ಮಾಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ';
+
+  @override
+  String get esignTitle => 'ನಿಮ್ಮ ಇ-ಸಹಿ';
+
+  @override
+  String get esignYourName => 'ನಿಮ್ಮ ಹೆಸರು';
+
+  @override
   String get exchangeAcceptConfirm => 'ಸ್ವೀಕರಿಸಿದರೆ ಈ ಸ್ಕೂಟರ್‌ನ ಹೊಸ ನಿಯಮಗಳಿಗೆ ನೀವು ಒಪ್ಪಿದಂತೆ.';
 
   @override
   String get exchangeAccepted => 'ಆಫರ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ';
 
   @override
+  String get exchangeAcceptedOfferTitle => 'ನಿಮ್ಮ ಹೊಸ ಪ್ಲಾನ್';
+
+  @override
   String get exchangeAcceptOffer => 'ಆಫರ್ ಸ್ವೀಕರಿಸಿ';
+
+  @override
+  String get exchangeAgreementHistory => 'ಒಪ್ಪಂದದ ಇತಿಹಾಸ';
 
   @override
   String get exchangeCancelConfirm => 'ಈ ಮನವಿಯನ್ನು ಮುಚ್ಚಲಾಗುತ್ತದೆ.';
@@ -1446,28 +1473,341 @@ class AppL10nKn extends AppL10n {
   String get exchangeCancelRequest => 'ಮನವಿ ರದ್ದುಮಾಡಿ';
 
   @override
+  String get exchangeChooseReason => 'ನಿಮಗೆ ಬದಲಾವಣೆ ಯಾಕೆ ಬೇಕು?';
+
+  @override
   String get exchangeCompleted => 'ಪೂರ್ಣಗೊಂಡಿದೆ';
+
+  @override
+  String get exchangeConsent => 'ನಾನು ಹೊಸ ನಿಯಮಗಳನ್ನು ಓದಿದ್ದೇನೆ ಮತ್ತು ಒಪ್ಪುತ್ತೇನೆ';
 
   @override
   String get exchangeCouldNotLoad => 'ಬದಲಾವಣೆ ಮಾಹಿತಿ ಸಿಗಲಿಲ್ಲ';
 
   @override
-  String get exchangeDepositChange => 'ಠೇವಣಿ ಬದಲಾವಣೆ';
+  String get exchangeCurrentScooter => 'ಈಗಿನ ಸ್ಕೂಟರ್';
+
+  @override
+  String exchangeDepositDue(String amount) {
+    return 'ಹೊಸ ಸ್ಕೂಟರ್ ಪಡೆಯುವ ಮೊದಲು ಇನ್ನೂ $amount ಠೇವಣಿ ಪಾವತಿಸಿ.';
+  }
+
+  @override
+  String get exchangeDepositHeld => 'ಹಬ್ ಬಳಿ ಉಳಿದ ಹೆಚ್ಚುವರಿ ಠೇವಣಿ';
+
+  @override
+  String get exchangeDepositMoved => 'ವರ್ಗಾಯಿಸಿದ ಠೇವಣಿ';
+
+  @override
+  String get exchangeDepositRefund => 'ಠೇವಣಿ ಮರುಪಾವತಿ';
+
+  @override
+  String get exchangeDepositToPay => 'ಪಾವತಿಸಬೇಕಾದ ಹೆಚ್ಚುವರಿ ಠೇವಣಿ';
+
+  @override
+  String get exchangeDeskApprove => 'ಮನವಿ ಅನುಮೋದಿಸಿ';
+
+  @override
+  String get exchangeDeskApproved => 'ಮನವಿ ಅನುಮೋದಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskChangeScooter => 'ಸ್ಕೂಟರ್ ಬದಲಿಸಿ';
+
+  @override
+  String get exchangeDeskChooseScooter => 'ಬದಲಿ ಸ್ಕೂಟರ್ ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String get exchangeDeskComplete => 'ಬದಲಾವಣೆ ಪೂರ್ಣಗೊಳಿಸಿ';
+
+  @override
+  String get exchangeDeskConfirmReturn => 'ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿದೆ ಎಂದು ದೃಢೀಕರಿಸಿ';
+
+  @override
+  String exchangeDeskDepositDue(String amount) {
+    return 'ರೈಡರ್ ಇನ್ನೂ $amount ಠೇವಣಿ ಪಾವತಿಸಬೇಕಿದೆ.';
+  }
+
+  @override
+  String get exchangeDeskDepositsSettled => 'ಠೇವಣಿ ಹೊಂದಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskEmptyBody => 'ರೈಡರ್ ಬೇರೆ ಸ್ಕೂಟರ್ ಕೇಳಿದಾಗ, ಮನವಿ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
+
+  @override
+  String get exchangeDeskExchangeCompleted => 'ಬದಲಾವಣೆ ಪೂರ್ಣಗೊಂಡಿದೆ';
+
+  @override
+  String get exchangeDeskGuideChoose => 'ಹಳೆಯ ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿದೆ. ರೈಡರ್‌ಗೆ ಬದಲಿ ಸ್ಕೂಟರ್ ಆಯ್ಕೆಮಾಡಿ.';
+
+  @override
+  String get exchangeDeskGuideDeposits => 'ರೈಡರ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ. ಹಸ್ತಾಂತರಕ್ಕೆ ಮುಂದುವರಿಯಲು ಠೇವಣಿ ಹೊಂದಿಸಿ.';
+
+  @override
+  String get exchangeDeskGuideReview => 'ಮನವಿಯನ್ನು ಪರಿಶೀಲಿಸಿ, ನಂತರ ಅನುಮೋದಿಸಿ ಅಥವಾ ತಿರಸ್ಕರಿಸಿ.';
+
+  @override
+  String get exchangeDeskGuideSendOffer => 'ಕೆಳಗಿನ ಆಫರ್ ಪರಿಶೀಲಿಸಿ ಮತ್ತು ರೈಡರ್‌ಗೆ ಕಳುಹಿಸಿ.';
+
+  @override
+  String get exchangeDeskGuideStartHandover => 'ಠೇವಣಿ ಹೊಂದಿಸಲಾಗಿದೆ. ಹೊಸ ಸ್ಕೂಟರ್ ಹಸ್ತಾಂತರ ಶುರು ಮಾಡಿ.';
+
+  @override
+  String get exchangeDeskGuideStartReturn => 'ರೈಡರ್‌ನ ಈಗಿನ ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿಸುವಿಕೆ ಶುರು ಮಾಡಿ.';
+
+  @override
+  String get exchangeDeskHandoverHint =>
+      'ಹಬ್‌ನ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಸಾಮಾನ್ಯ ಹಂಚಿಕೆ ಹಂತಗಳ ಮೂಲಕ ಹೊಸ ಸ್ಕೂಟರ್ ನೀಡುತ್ತಾರೆ. ಸ್ಕೂಟರ್ ರೈಡರ್ ಬಳಿ ಸಕ್ರಿಯವಾದ ನಂತರ ಬದಲಾವಣೆ ಪೂರ್ಣಗೊಳಿಸಿ.';
+
+  @override
+  String get exchangeDeskHandoverStarted => 'ಹಸ್ತಾಂತರ ಶುರುವಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskNeedsAction => 'ಕ್ರಮ ಬೇಕು';
+
+  @override
+  String get exchangeDeskNoScooters => 'ಈಗ ಯಾವುದೇ ಸ್ಕೂಟರ್ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get exchangeDeskOfferPreview => 'ಆಫರ್ ಮುನ್ನೋಟ';
+
+  @override
+  String get exchangeDeskOfferSent => 'ರೈಡರ್‌ಗೆ ಆಫರ್ ಕಳುಹಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskOpenReturn => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ತೆರೆಯಿರಿ';
+
+  @override
+  String get exchangeDeskReject => 'ಮನವಿ ತಿರಸ್ಕರಿಸಿ';
+
+  @override
+  String get exchangeDeskRejectedDone => 'ಮನವಿ ತಿರಸ್ಕರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskRejectSubtitle => 'ಇದನ್ನು ಯಾಕೆ ಅನುಮೋದಿಸಲು ಆಗುವುದಿಲ್ಲ ಎಂದು ರೈಡರ್‌ಗೆ ತಿಳಿಸಿ.';
+
+  @override
+  String get exchangeDeskReplacement => 'ಬದಲಿ ಸ್ಕೂಟರ್';
+
+  @override
+  String exchangeDeskReservedUntil(String time) {
+    return '$time ವರೆಗೆ';
+  }
+
+  @override
+  String get exchangeDeskReserveScooter => 'ಈ ಸ್ಕೂಟರ್ ಕಾಯ್ದಿರಿಸಿ';
+
+  @override
+  String get exchangeDeskReturnConfirmed => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ದೃಢೀಕರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskReturnHint =>
+      'ರಿಟರ್ನ್‌ನಲ್ಲಿ ಹಿಂದಿರುಗಿಸುವಿಕೆ ಮುಗಿಸಿ: ರೈಡರ್ OTP ಪರಿಶೀಲಿಸಿ ಮತ್ತು ತಪಾಸಣೆ ಪೂರ್ಣಗೊಳಿಸಿ. ನಂತರ ಇಲ್ಲಿ ದೃಢೀಕರಿಸಿ.';
+
+  @override
+  String get exchangeDeskReturnStarted => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ಶುರುವಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskRiderNote => 'ರೈಡರ್ ಟಿಪ್ಪಣಿ';
+
+  @override
+  String get exchangeDeskScooterReserved => 'ಸ್ಕೂಟರ್ ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskSendOffer => 'ರೈಡರ್‌ಗೆ ಆಫರ್ ಕಳುಹಿಸಿ';
+
+  @override
+  String get exchangeDeskSettleDeposits => 'ಠೇವಣಿ ಹೊಂದಿಸಿ';
+
+  @override
+  String get exchangeDeskStartHandover => 'ಹಸ್ತಾಂತರ ಶುರು ಮಾಡಿ';
+
+  @override
+  String get exchangeDeskStartReturn => 'ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿಸುವಿಕೆ ಶುರು';
+
+  @override
+  String get exchangeDeskStatusOfferSent => 'ಆಫರ್ ಕಳುಹಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskStatusReserved => 'ಸ್ಕೂಟರ್ ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskSubtitle => 'ಬೇರೆ ಸ್ಕೂಟರ್ ಕೇಳುತ್ತಿರುವ ರೈಡರ್‌ಗಳು';
+
+  @override
+  String get exchangeDeskWaitingRider => 'ಆಫರ್ ಕಳುಹಿಸಲಾಗಿದೆ. ರೈಡರ್ ತಮ್ಮ ಆ್ಯಪ್‌ನಲ್ಲಿ ಸ್ವೀಕರಿಸುವುದನ್ನು ಕಾಯಲಾಗುತ್ತಿದೆ.';
+
+  @override
+  String get exchangeDeskWithRider => 'ರೈಡರ್‌ಗಾಗಿ ಕಾಯುತ್ತಿದೆ';
+
+  @override
+  String get exchangeDetails => 'ಮನವಿಯ ವಿವರಗಳು';
 
   @override
   String get exchangeDetailTitle => 'ಬದಲಾವಣೆ ಮನವಿ';
 
   @override
-  String get exchangeEffective => 'ಬದಲಾವಣೆ ದಿನಾಂಕ';
+  String get exchangeErrorAlreadyReturned => 'ಹಳೆಯ ಸ್ಕೂಟರ್ ಈಗಾಗಲೇ ಹಿಂದಿರುಗಿಸಲಾಗಿದೆ.';
+
+  @override
+  String get exchangeErrorBillingChanged => 'ಆಫರ್ ಸ್ವೀಕರಿಸಿದ ನಂತರ ಬಿಲ್ಲಿಂಗ್ ಬದಲಾಗಿದೆ. ದಯವಿಟ್ಟು ಸಪೋರ್ಟ್ ಸಂಪರ್ಕಿಸಿ.';
+
+  @override
+  String get exchangeErrorCannotCancel =>
+      'ನಿಮ್ಮ ಸ್ಕೂಟರ್ ಈಗಾಗಲೇ ಹಿಂದಿರುಗಿಸಲಾಗಿದೆ, ಆದ್ದರಿಂದ ಇಲ್ಲಿ ಮನವಿ ರದ್ದುಮಾಡಲು ಆಗುವುದಿಲ್ಲ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಹಬ್ ಅನ್ನು ಸಂಪರ್ಕಿಸಿ.';
+
+  @override
+  String get exchangeErrorChanged => 'ಈ ಮನವಿ ಈಗಷ್ಟೇ ಬದಲಾಗಿದೆ. ಕೆಳಗೆ ಎಳೆದು ರಿಫ್ರೆಶ್ ಮಾಡಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get exchangeErrorDepositsUnsettled => 'ಠೇವಣಿ ಇನ್ನೂ ಹೊಂದಿಸಿಲ್ಲ. ಮೊದಲು ಠೇವಣಿ ಹೊಂದಿಸಿ.';
+
+  @override
+  String get exchangeErrorDisabled => 'ಈಗ ವಾಹನ ಬದಲಾವಣೆ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಹಬ್ ಅನ್ನು ಸಂಪರ್ಕಿಸಿ.';
+
+  @override
+  String get exchangeErrorDuesPending =>
+      'ಮೊದಲು ನಿಮ್ಮ ಬಾಕಿ ಪಾವತಿಸಿ. ವಾಹನ ಕೆಟ್ಟಿದ್ದರೆ ಅಥವಾ ಸುರಕ್ಷತೆಗಾಗಿ ಬದಲಾವಣೆ ಈಗಲೂ ಸಾಧ್ಯ.';
+
+  @override
+  String get exchangeErrorHandoverUnfinished => 'ಹೊಸ ಸ್ಕೂಟರ್ ಇನ್ನೂ ಹಸ್ತಾಂತರಿಸಿಲ್ಲ. ಮೊದಲು ಹಸ್ತಾಂತರದ ಹಂತಗಳನ್ನು ಮುಗಿಸಿ.';
+
+  @override
+  String get exchangeErrorHoldExpired => 'ಸ್ಕೂಟರ್ ಕಾಯ್ದಿರಿಸುವಿಕೆ ಅವಧಿ ಮುಗಿದಿದೆ. ಬದಲಿಯನ್ನು ಮತ್ತೆ ಆಯ್ಕೆಮಾಡಿ.';
+
+  @override
+  String get exchangeErrorInspectionUnfinished => 'ಮೊದಲು ಹಿಂದಿರುಗಿಸುವಿಕೆ ತಪಾಸಣೆ ಪೂರ್ಣಗೊಳಿಸಿ.';
+
+  @override
+  String get exchangeErrorNoRental => 'ನಿಮ್ಮ ಸಕ್ರಿಯ ಬಾಡಿಗೆ ಕಂಡುಬಂದಿಲ್ಲ.';
+
+  @override
+  String get exchangeErrorNoScooter => 'ಬದಲಾವಣೆ ಮನವಿಗೆ ನಿಮಗೆ ಸ್ಕೂಟರ್ ನೀಡಿರಬೇಕು.';
+
+  @override
+  String get exchangeErrorNoTerms => 'ರೈಡರ್ ನಿಯಮಗಳು ಹೊಂದಿಸಿಲ್ಲ. ಒಂದು ಸಕ್ರಿಯ ನಿಯಮಾವಳಿ ಪ್ರಕಟಿಸಲು ಅಡ್ಮಿನ್‌ಗೆ ಹೇಳಿ.';
+
+  @override
+  String get exchangeErrorNotFound => 'ಈ ಬದಲಾವಣೆ ಮನವಿ ಈಗ ಇಲ್ಲ.';
+
+  @override
+  String get exchangeErrorOfferClosed => 'ಈ ಆಫರ್ ಈಗ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get exchangeErrorOfferInvalid => 'ಈ ಆಫರ್ ಪರಿಶೀಲಿಸಲು ಆಗಲಿಲ್ಲ. ನಿಮ್ಮ ಹಬ್‌ಗೆ ಮತ್ತೆ ಕಳುಹಿಸಲು ಹೇಳಿ.';
+
+  @override
+  String get exchangeErrorRecordsMissing => 'ಈ ಬದಲಾವಣೆಯ ಕೆಲವು ದಾಖಲೆಗಳು ಕಾಣೆಯಾಗಿವೆ. ದಯವಿಟ್ಟು ಸಪೋರ್ಟ್ ಸಂಪರ್ಕಿಸಿ.';
+
+  @override
+  String get exchangeErrorRentalInactive => 'ನಿಮ್ಮ ಬಾಡಿಗೆ ಸಕ್ರಿಯವಾಗಿಲ್ಲ, ಆದ್ದರಿಂದ ಬದಲಾವಣೆ ಮನವಿ ಕಳುಹಿಸಲು ಆಗುವುದಿಲ್ಲ.';
+
+  @override
+  String get exchangeErrorReturnFirst => 'ಬದಲಿ ಆಯ್ಕೆಮಾಡುವ ಮೊದಲು ಹಳೆಯ ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿಸುವಿಕೆ ಮುಗಿಸಿ.';
+
+  @override
+  String get exchangeErrorReturnUnfinished =>
+      'ಹಿಂದಿರುಗಿಸುವಿಕೆ ಇನ್ನೂ ಮುಗಿದಿಲ್ಲ. ಮೊದಲು ರೈಡರ್ OTP ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಹಿಂದಿರುಗಿಸುವಿಕೆ ಪೂರ್ಣಗೊಳಿಸಿ.';
+
+  @override
+  String get exchangeErrorSameScooter => 'ರೈಡರ್‌ನ ಈಗಿನ ಸ್ಕೂಟರ್‌ಗಿಂತ ಬೇರೆಯದನ್ನು ಆಯ್ಕೆಮಾಡಿ.';
+
+  @override
+  String get exchangeErrorScooterReserved => 'ಆ ಸ್ಕೂಟರ್ ಬೇರೆ ಬದಲಾವಣೆಗೆ ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.';
+
+  @override
+  String get exchangeErrorScooterUnavailable => 'ಆ ಸ್ಕೂಟರ್ ಈಗ ಲಭ್ಯವಿಲ್ಲ. ಬೇರೆಯದನ್ನು ಆಯ್ಕೆಮಾಡಿ.';
+
+  @override
+  String get exchangeErrorSecurityChange =>
+      'ಈ ಸ್ಕೂಟರ್‌ಗೆ ಬೇರೆ ಭದ್ರತಾ ಠೇವಣಿ ಬೇಕು. ಮೊದಲು ಠೇವಣಿಯನ್ನು ಪ್ರತ್ಯೇಕವಾಗಿ ಬದಲಿಸಿ.';
+
+  @override
+  String get exchangeErrorSecurityTopUp => 'ಪೂರ್ಣಗೊಳಿಸುವ ಮೊದಲು ರೈಡರ್ ಭದ್ರತಾ ಠೇವಣಿ ತುಂಬಬೇಕು.';
+
+  @override
+  String get exchangeErrorStale => 'ಈ ಆಫರ್ ನಂತರ ನಿಮ್ಮ ಬಾಡಿಗೆ ಬದಲಾಗಿದೆ. ನಿಮ್ಮ ಹಬ್‌ನಿಂದ ಹೊಸ ಆಫರ್ ಕೇಳಿ.';
+
+  @override
+  String get exchangeErrorTooSoon =>
+      'ಈ ಸ್ಕೂಟರ್ ನಿಮಗೆ ಸಿಕ್ಕಿ ಸ್ವಲ್ಪ ದಿನಗಳಷ್ಟೇ ಆಗಿದೆ. ಕೆಲವು ದಿನಗಳ ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get exchangeExtraRentNow => 'ಈಗ ಹೆಚ್ಚುವರಿ ಬಾಡಿಗೆ';
+
+  @override
+  String get exchangeFee => 'ಬದಲಾವಣೆ ಶುಲ್ಕ';
+
+  @override
+  String get exchangeFeeWaived => 'ಮನ್ನಾ';
+
+  @override
+  String get exchangeHubReason => 'ಹಬ್ ನೀಡಿದ ಕಾರಣ';
 
   @override
   String get exchangeNeedsYou => 'ನಿಮ್ಮ ಉತ್ತರ ಬೇಕು';
 
   @override
+  String get exchangeNewRent => 'ಹೊಸ ಬಾಡಿಗೆ';
+
+  @override
+  String get exchangeNewRentFrom => 'ಹೊಸ ಬಾಡಿಗೆ ಆರಂಭ';
+
+  @override
+  String get exchangeNewScooter => 'ಹೊಸ ಸ್ಕೂಟರ್';
+
+  @override
+  String get exchangeNextApproved => 'ಅನುಮೋದಿಸಲಾಗಿದೆ. ತಪಾಸಣೆಗಾಗಿ ಈಗಿನ ಸ್ಕೂಟರ್ ತರಲು ನಿಮ್ಮ ಹಬ್ ಹೇಳುತ್ತದೆ.';
+
+  @override
+  String get exchangeNextCancelled => 'ಈ ಮನವಿ ರದ್ದಾಗಿದೆ.';
+
+  @override
+  String get exchangeNextChoosing => 'ಹಳೆಯ ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ಹಬ್ ನಿಮಗಾಗಿ ಹೊಸ ಸ್ಕೂಟರ್ ಆಯ್ಕೆ ಮಾಡುತ್ತಿದೆ.';
+
+  @override
+  String get exchangeNextCompleted => 'ಬದಲಾವಣೆ ಪೂರ್ಣಗೊಂಡಿದೆ. ನಿಮ್ಮ ಹೊಸ ಸ್ಕೂಟರ್ ಆನಂದಿಸಿ!';
+
+  @override
+  String get exchangeNextDeposit => 'ಆಫರ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ಹಬ್ ಹೊಸ ಸ್ಕೂಟರ್‌ನ ಠೇವಣಿ ಹೊಂದಿಸುತ್ತಿದೆ.';
+
+  @override
+  String get exchangeNextExpired => 'ಈ ಮನವಿ ಪೂರ್ಣಗೊಳ್ಳುವ ಮೊದಲೇ ಅವಧಿ ಮುಗಿದಿದೆ.';
+
+  @override
+  String get exchangeNextHandover => 'ನಿಮ್ಮ ಹೊಸ ಸ್ಕೂಟರ್ ಸಿದ್ಧವಾಗಿದೆ. ಅದನ್ನು ಹಬ್‌ನಿಂದ ಪಡೆದುಕೊಳ್ಳಿ.';
+
+  @override
+  String get exchangeNextOffer => 'ನಿಮ್ಮ ಆಫರ್ ಸಿದ್ಧವಾಗಿದೆ. ವಿವರಗಳನ್ನು ನೋಡಿ ಸ್ವೀಕರಿಸಿ ಅಥವಾ ನಿರಾಕರಿಸಿ.';
+
+  @override
+  String get exchangeNextRejected => 'ನಿಮ್ಮ ಹಬ್ ಈ ಮನವಿಯನ್ನು ಅನುಮೋದಿಸಲು ಆಗಲಿಲ್ಲ.';
+
+  @override
+  String get exchangeNextRequested => 'ನಿಮ್ಮ ಹಬ್ ಶೀಘ್ರದಲ್ಲೇ ನಿಮ್ಮ ಮನವಿಯನ್ನು ಪರಿಶೀಲಿಸುತ್ತದೆ.';
+
+  @override
+  String get exchangeNextReserved => 'ನಿಮಗಾಗಿ ಹೊಸ ಸ್ಕೂಟರ್ ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ಆಫರ್ ಶೀಘ್ರದಲ್ಲೇ ಸಿದ್ಧವಾಗುತ್ತದೆ.';
+
+  @override
+  String get exchangeNextReturn => 'ಪರಿಶೀಲನೆಗಾಗಿ ಈಗಿನ ಸ್ಕೂಟರ್ ಅನ್ನು ಹಬ್‌ಗೆ ಹಿಂದಿರುಗಿಸಿ.';
+
+  @override
   String get exchangeNone => 'ಯಾವುದೇ ಮನವಿ ಇಲ್ಲ';
 
   @override
-  String get exchangeNoneMessage => 'ನಿಮ್ಮ ಸ್ಕೂಟರ್‌ನಲ್ಲಿ ಸಮಸ್ಯೆ ಇದ್ದರೆ, ನಿಮ್ಮ ಹಬ್ ನಿಮಗಾಗಿ ಬದಲಾವಣೆ ಶುರು ಮಾಡಬಹುದು.';
+  String get exchangeNoneMessage => 'ನಿಮ್ಮ ಸ್ಕೂಟರ್‌ನಲ್ಲಿ ಸಮಸ್ಯೆ ಇದ್ದರೆ, ಬದಲಾವಣೆಗೆ ಮನವಿ ಮಾಡಿ, ನಿಮ್ಮ ಹಬ್ ಸಹಾಯ ಮಾಡುತ್ತದೆ.';
+
+  @override
+  String get exchangeNoRentalBody => 'ಸ್ಕೂಟರ್ ಬಾಡಿಗೆಗೆ ಸಿಕ್ಕ ನಂತರ ನೀವು ಬದಲಾವಣೆಗೆ ಮನವಿ ಮಾಡಬಹುದು.';
+
+  @override
+  String get exchangeNoRentalTitle => 'ಸಕ್ರಿಯ ಬಾಡಿಗೆ ಇಲ್ಲ';
+
+  @override
+  String get exchangeNoteHint => 'ಸಮಸ್ಯೆಯನ್ನು ವಿವರಿಸಿ (ಐಚ್ಛಿಕ)';
+
+  @override
+  String get exchangeNoteLabel => 'ಹಬ್‌ಗೆ ಟಿಪ್ಪಣಿ';
 
   @override
   String get exchangeNotes => 'ನಿಮ್ಮ ಟಿಪ್ಪಣಿ';
@@ -1485,7 +1825,28 @@ class AppL10nKn extends AppL10n {
   String get exchangeOpen => 'ನಡೆಯುತ್ತಿದೆ';
 
   @override
+  String get exchangeOpenExists => 'ನಿಮ್ಮ ಒಂದು ಬದಲಾವಣೆ ಈಗಾಗಲೇ ನಡೆಯುತ್ತಿದೆ.';
+
+  @override
   String get exchangePast => 'ಮುಗಿದಿದೆ';
+
+  @override
+  String get exchangePerDay => '/ ದಿನ';
+
+  @override
+  String get exchangePerFortnight => '/ 2 ವಾರ';
+
+  @override
+  String get exchangePerMonth => '/ ತಿಂಗಳು';
+
+  @override
+  String get exchangePerQuarter => '/ 3 ತಿಂಗಳು';
+
+  @override
+  String get exchangePerWeek => '/ ವಾರ';
+
+  @override
+  String get exchangeProgress => 'ಪ್ರಗತಿ';
 
   @override
   String get exchangeRaised => 'ಸಲ್ಲಿಸಿದ್ದು';
@@ -1500,13 +1861,28 @@ class AppL10nKn extends AppL10n {
   String get exchangeReasonBreakdown => 'ವಾಹನ ಕೆಟ್ಟಿದೆ';
 
   @override
+  String get exchangeReasonBreakdownHint => 'ಸ್ಕೂಟರ್ ನಿಂತುಹೋಗಿದೆ ಅಥವಾ ಪದೇ ಪದೇ ಕೆಡುತ್ತಿದೆ';
+
+  @override
+  String get exchangeReasonOtherHint => 'ಬೇರೆ ಕಾರಣ';
+
+  @override
   String get exchangeReasonSafety => 'ಸುರಕ್ಷತೆ ಬದಲಾವಣೆ';
+
+  @override
+  String get exchangeReasonSafetyHint => 'ಸುರಕ್ಷತಾ ತಪಾಸಣೆಯ ಕಾರಣ ಬೇರೆ ಸ್ಕೂಟರ್ ಬೇಕು';
 
   @override
   String get exchangeReasonUnsafe => 'ಓಡಿಸಲು ಸುರಕ್ಷಿತವಲ್ಲ';
 
   @override
+  String get exchangeReasonUnsafeHint => 'ಬ್ರೇಕ್, ಲೈಟ್ ಅಥವಾ ಟೈರ್ ಸುರಕ್ಷಿತವಾಗಿಲ್ಲ';
+
+  @override
   String get exchangeReasonUpgrade => 'ಅಪ್‌ಗ್ರೇಡ್';
+
+  @override
+  String get exchangeReasonUpgradeHint => 'ನಿಮಗೆ ಬೇರೆ ಮಾದರಿ ಬೇಕು';
 
   @override
   String get exchangeRejected => 'ಆಫರ್ ನಿರಾಕರಿಸಲಾಗಿದೆ';
@@ -1524,13 +1900,25 @@ class AppL10nKn extends AppL10n {
   String get exchangeRejectSubtitle => 'ಕಾರಣವನ್ನು ನಿಮ್ಮ ಹಬ್‌ಗೆ ತಿಳಿಸಿ, ಅವರು ಉತ್ತಮವಾದದ್ದನ್ನು ಕಳುಹಿಸಬಹುದು.';
 
   @override
-  String get exchangeRentChange => 'ಬಾಡಿಗೆ ಬದಲಾವಣೆ';
+  String get exchangeRentalCouldNotLoad => 'ನಿಮ್ಮ ಬಾಡಿಗೆ ಲೋಡ್ ಆಗಲಿಲ್ಲ';
+
+  @override
+  String get exchangeRentCredit => 'ಬಾಡಿಗೆ ಕ್ರೆಡಿಟ್';
+
+  @override
+  String get exchangeRequestAction => 'ಬದಲಾವಣೆಗೆ ಮನವಿ ಮಾಡಿ';
+
+  @override
+  String get exchangeRequestSent => 'ಬದಲಾವಣೆ ಮನವಿ ಕಳುಹಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeRequestSubtitle => 'ನಿಮಗೆ ಬೇರೆ ಸ್ಕೂಟರ್ ಯಾಕೆ ಬೇಕು ಎಂದು ನಿಮ್ಮ ಹಬ್‌ಗೆ ತಿಳಿಸಿ.';
+
+  @override
+  String get exchangeSendRequest => 'ಮನವಿ ಕಳುಹಿಸಿ';
 
   @override
   String get exchangeStageAccepted => 'ಸ್ವೀಕರಿಸಲಾಗಿದೆ';
-
-  @override
-  String get exchangeStageClosed => 'ಮುಚ್ಚಲಾಗಿದೆ';
 
   @override
   String get exchangeStageCompleted => 'ಪೂರ್ಣಗೊಂಡಿದೆ';
@@ -1539,13 +1927,46 @@ class AppL10nKn extends AppL10n {
   String get exchangeStageHandover => 'ಹಸ್ತಾಂತರ';
 
   @override
-  String get exchangeStageInReview => 'ಪರಿಶೀಲನೆಯಲ್ಲಿದೆ';
-
-  @override
   String get exchangeStageOfferReady => 'ಆಫರ್ ಸಿದ್ಧ';
 
   @override
   String get exchangeStageRequested => 'ಮನವಿ ಸಲ್ಲಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeStatusApproved => 'ಅನುಮೋದಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeStatusCancelled => 'ರದ್ದಾಗಿದೆ';
+
+  @override
+  String get exchangeStatusChoosing => 'ಸ್ಕೂಟರ್ ಆಯ್ಕೆಯಾಗುತ್ತಿದೆ';
+
+  @override
+  String get exchangeStatusExpired => 'ಅವಧಿ ಮುಗಿದಿದೆ';
+
+  @override
+  String get exchangeStatusRejected => 'ತಿರಸ್ಕರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeStatusReturn => 'ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿಸಿ';
+
+  @override
+  String get exchangeStepApproval => 'ಹಬ್ ಅನುಮೋದನೆ';
+
+  @override
+  String get exchangeStepDeposit => 'ಠೇವಣಿ';
+
+  @override
+  String get exchangeStepHandover => 'ಹೊಸ ಸ್ಕೂಟರ್ ಪಡೆಯುವುದು';
+
+  @override
+  String get exchangeStepOffer => 'ಹೊಸ ಸ್ಕೂಟರ್ ಆಫರ್';
+
+  @override
+  String get exchangeStepRequested => 'ಮನವಿ ಕಳುಹಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeStepReturn => 'ಹಳೆಯ ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿಸುವುದು';
 
   @override
   String get exchangeSubtitle => 'ಬೇರೆ ಸ್ಕೂಟರ್‌ಗಾಗಿ ಕೇಳಿ';
@@ -1554,7 +1975,20 @@ class AppL10nKn extends AppL10n {
   String get exchangeTitle => 'ವಾಹನ ಬದಲಾವಣೆ';
 
   @override
-  String get exchangeWaitingOnHub => 'ನಿಮ್ಮ ಹಬ್ ಇದರ ಮೇಲೆ ಕೆಲಸ ಮಾಡುತ್ತಿದೆ. ಆಫರ್ ಬಂದಾಗ ನಾವು ತಿಳಿಸುತ್ತೇವೆ.';
+  String get exchangeVersionCurrent => 'ಪ್ರಸ್ತುತ';
+
+  @override
+  String exchangeVersionFrom(String date) {
+    return '$date ರಿಂದ';
+  }
+
+  @override
+  String exchangeVersionNumber(String number) {
+    return 'ಆವೃತ್ತಿ $number';
+  }
+
+  @override
+  String get exchangeVersionPrevious => 'ಹಿಂದಿನ';
 
   @override
   String get homeBonusUnlocked => 'ಬೋನಸ್ ತೆರೆದಿದೆ';
@@ -1699,6 +2133,9 @@ class AppL10nKn extends AppL10n {
   String get hubRidersPresent => 'ಹಾಜರಿರುವ ರೈಡರ್‌ಗಳು';
 
   @override
+  String get hubsCouldNotLoad => 'ಹತ್ತಿರದ ಹಬ್‌ಗಳು ತೆರೆಯಲಿಲ್ಲ';
+
+  @override
   String get hubService => 'ಸೇವೆ';
 
   @override
@@ -1708,7 +2145,16 @@ class AppL10nKn extends AppL10n {
   String get hubShowThisHub => 'ಈ ಹಬ್ ತೋರಿಸಿ';
 
   @override
+  String get hubsNoneBody => 'ನಿಮ್ಮ ಸ್ಥಳದ ಸಮೀಪದಲ್ಲಿ ಯಾವುದೇ ಸಕ್ರಿಯ ಹಬ್ ಇಲ್ಲ.';
+
+  @override
+  String get hubsNoneTitle => 'ನಿಮ್ಮ ಹತ್ತಿರ ಯಾವುದೇ ಹಬ್ ಇಲ್ಲ';
+
+  @override
   String get hubSomethingWentWrong => 'ಏನೋ ತಪ್ಪಾಗಿದೆ.';
+
+  @override
+  String get hubsSubtitle => 'ನಿಮಗೆ ಹತ್ತಿರದ ಹಬ್‌ಗಳು';
 
   @override
   String get hubUptime => 'ಚಾಲನೆಯ ಸಮಯ';
@@ -1759,6 +2205,18 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get introVehicleTitle => 'ನಿಮ್ಮ ಸ್ಕೂಟರ್,\nಸಂಪೂರ್ಣ ಸಂಪರ್ಕಿತ';
+
+  @override
+  String get legalTermsAgree => 'ನಾನು ನಿಯಮ ಮತ್ತು ಷರತ್ತುಗಳನ್ನು ಓದಿದ್ದೇನೆ ಮತ್ತು ಒಪ್ಪುತ್ತೇನೆ';
+
+  @override
+  String get legalTermsCouldNotLoad => 'ನಿಯಮಗಳು ತೆರೆಯಲಿಲ್ಲ';
+
+  @override
+  String get legalTermsSubtitle => 'ಮುಂದುವರಿಯುವ ಮೊದಲು ದಯವಿಟ್ಟು ಈ ನಿಯಮಗಳನ್ನು ಓದಿ.';
+
+  @override
+  String get legalTermsTitle => 'ನಿಯಮ ಮತ್ತು ಷರತ್ತುಗಳು';
 
   @override
   String get maintenanceAddNote => 'ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ';
@@ -2023,6 +2481,59 @@ class AppL10nKn extends AppL10n {
   String get maintenanceWideShot => 'ಪೂರ್ಣ ಫೋಟೋ';
 
   @override
+  String get mapsAllowLocation => 'ಅನುಮತಿ ನೀಡಿ';
+
+  @override
+  String mapsAway(String distance) {
+    return '$distance ದೂರ';
+  }
+
+  @override
+  String get mapsCouldNotOpenMaps => 'Google Maps ತೆರೆಯಲಿಲ್ಲ';
+
+  @override
+  String get mapsLocating => 'ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಹುಡುಕುತ್ತಿದ್ದೇವೆ…';
+
+  @override
+  String get mapsLocationDeniedBody =>
+      'ನಿಮ್ಮ ಹತ್ತಿರದ ಹಬ್‌ಗಳು ಮತ್ತು ಸ್ವಾಪ್ ಸ್ಟೇಷನ್‌ಗಳನ್ನು ತೋರಿಸಲು ನಾವು ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಬಳಸುತ್ತೇವೆ.';
+
+  @override
+  String get mapsLocationDeniedTitle => 'ಸ್ಥಳ ಪ್ರವೇಶಕ್ಕೆ ಅನುಮತಿ ನೀಡಿ';
+
+  @override
+  String get mapsLocationOffBody => 'ನಿಮ್ಮ ಹತ್ತಿರದ ಸ್ಥಳಗಳನ್ನು ನೋಡಲು ಸ್ಥಳ ಸೇವೆಗಳನ್ನು ಆನ್ ಮಾಡಿ.';
+
+  @override
+  String get mapsLocationOffTitle => 'ಸ್ಥಳ ಸೇವೆ ಆಫ್ ಆಗಿದೆ';
+
+  @override
+  String get mapsLocationUnavailable => 'ನಿಮ್ಮ ಸ್ಥಳ ಸಿಗಲಿಲ್ಲ';
+
+  @override
+  String mapsMinutes(String minutes) {
+    return '$minutes ನಿಮಿಷ';
+  }
+
+  @override
+  String get mapsNavigate => 'ದಾರಿ ತೋರಿಸಿ';
+
+  @override
+  String get mapsOpenSettings => 'ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ';
+
+  @override
+  String get navBatterySwap => 'ಬ್ಯಾಟರಿ ಸ್ವಾಪ್';
+
+  @override
+  String get navNearbyHubs => 'ಹತ್ತಿರದ ಹಬ್‌ಗಳು';
+
+  @override
+  String get navReferEarn => 'ರೆಫರ್ ಮಾಡಿ ಮತ್ತು ಗಳಿಸಿ';
+
+  @override
+  String get navScooterDetails => 'ಸ್ಕೂಟರ್ ವಿವರಗಳು';
+
+  @override
   String get notificationsAllCaughtUp => 'ನೀವು ಎಲ್ಲವನ್ನೂ ನೋಡಿ ಮುಗಿಸಿದ್ದೀರಿ';
 
   @override
@@ -2160,6 +2671,18 @@ class AppL10nKn extends AppL10n {
   String get onboardingReferences => 'ಉಲ್ಲೇಖಗಳು';
 
   @override
+  String get onboardingReferralApplied => 'ಅನ್ವಯಿಸಲಾಗಿದೆ';
+
+  @override
+  String get onboardingReferralApply => 'ಅನ್ವಯಿಸಿ';
+
+  @override
+  String get onboardingReferralCodeApplied => 'ರೆಫರಲ್ ಕೋಡ್ ಅನ್ವಯಿಸಲಾಗಿದೆ';
+
+  @override
+  String get onboardingReferralTapApply => 'ಈ ಕೋಡ್ ಬಳಸಲು ಅನ್ವಯಿಸಿ ಒತ್ತಿ, ಅಥವಾ ಅದನ್ನು ಅಳಿಸಿ';
+
+  @override
   String get onboardingReview => 'ಪರಿಶೀಲಿಸಿ';
 
   @override
@@ -2170,6 +2693,9 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get onboardingSaving => 'ಉಳಿಸಲಾಗುತ್ತಿದೆ…';
+
+  @override
+  String get onboardingSignAgreementContinue => 'ಮುಂದುವರಿಯಲು ಒಪ್ಪಂದಕ್ಕೆ ಸಹಿ ಮಾಡಿ';
 
   @override
   String get onboardingSomeStepsStillIncompleteGo => 'ಕೆಲವು ಹಂತಗಳು ಇನ್ನೂ ಅಪೂರ್ಣವಾಗಿವೆ. ಹಿಂದೆ ಹೋಗಿ ಪೂರ್ಣಗೊಳಿಸಿ.';
@@ -2304,6 +2830,101 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get profilePersonalDetails => 'ವೈಯಕ್ತಿಕ ವಿವರಗಳು';
+
+  @override
+  String get referCodeCopied => 'ರೆಫರಲ್ ಕೋಡ್ ನಕಲಿಸಲಾಗಿದೆ';
+
+  @override
+  String get referCopyCode => 'ಕೋಡ್ ನಕಲಿಸಿ';
+
+  @override
+  String get referCouldNotLoad => 'ರೆಫರ್ ಮತ್ತು ಗಳಿಕೆ ತೆರೆಯಲಿಲ್ಲ';
+
+  @override
+  String get referFriendGets => 'ನಿಮ್ಮ ಸ್ನೇಹಿತರಿಗೆ ಸಿಗುವುದು';
+
+  @override
+  String get referInvited => 'ಆಹ್ವಾನಿಸಲಾಗಿದೆ';
+
+  @override
+  String get referNoCampaignBody => 'ಹೊಸ ಬಹುಮಾನಗಳಿಗಾಗಿ ಶೀಘ್ರದಲ್ಲೇ ಮತ್ತೆ ನೋಡಿ.';
+
+  @override
+  String get referNoCampaignTitle => 'ಸದ್ಯಕ್ಕೆ ಯಾವುದೇ ರೆಫರಲ್ ಅಭಿಯಾನ ಇಲ್ಲ';
+
+  @override
+  String get referNoReferralsBody => 'ರೈಡರ್‌ಗಳನ್ನು ಆಹ್ವಾನಿಸಲು ನಿಮ್ಮ ಕೋಡ್ ಹಂಚಿಕೊಳ್ಳಿ.';
+
+  @override
+  String get referNoReferralsTitle => 'ಇನ್ನೂ ಯಾವುದೇ ರೆಫರಲ್ ಇಲ್ಲ';
+
+  @override
+  String get referPaid => 'ಪಾವತಿಸಲಾಗಿದೆ';
+
+  @override
+  String get referPending => 'ಬಾಕಿ';
+
+  @override
+  String get referQualified => 'ಅರ್ಹ';
+
+  @override
+  String get referRegistered => 'ನೋಂದಾಯಿತ';
+
+  @override
+  String get referShareInvite => 'ಆಹ್ವಾನ ಹಂಚಿಕೊಳ್ಳಿ';
+
+  @override
+  String get referStatusActivated => 'ಸಕ್ರಿಯಗೊಂಡಿದೆ';
+
+  @override
+  String get referStatusCancelled => 'ರದ್ದುಗೊಳಿಸಲಾಗಿದೆ';
+
+  @override
+  String get referStatusDisqualified => 'ಅನರ್ಹ';
+
+  @override
+  String get referStatusExpired => 'ಅವಧಿ ಮುಗಿದಿದೆ';
+
+  @override
+  String get referStatusInProgress => 'ಪ್ರಗತಿಯಲ್ಲಿದೆ';
+
+  @override
+  String get referStatusKycVerified => 'KYC ಪರಿಶೀಲಿಸಲಾಗಿದೆ';
+
+  @override
+  String get referStatusPaid => 'ಬಹುಮಾನ ಪಾವತಿಸಲಾಗಿದೆ';
+
+  @override
+  String get referStatusRejected => 'ತಿರಸ್ಕರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get referStatusRewardApproved => 'ಬಹುಮಾನ ಅನುಮೋದಿಸಲಾಗಿದೆ';
+
+  @override
+  String get referStatusRewardPending => 'ಬಹುಮಾನ ಬಾಕಿ';
+
+  @override
+  String get referStatusUnderReview => 'ಪರಿಶೀಲನೆಯಲ್ಲಿದೆ';
+
+  @override
+  String get referSubtitle => 'ರೈಡರ್‌ಗಳನ್ನು ಆಹ್ವಾನಿಸಿ ಮತ್ತು ಬಹುಮಾನ ಗಳಿಸಿ';
+
+  @override
+  String get referTotalEarned => 'ಒಟ್ಟು ಗಳಿಕೆ';
+
+  @override
+  String referValidTill(String date) {
+    return '$date ವರೆಗೆ ಮಾನ್ಯ';
+  }
+
+  @override
+  String get referYouGet => 'ನಿಮಗೆ ಸಿಗುವುದು';
+
+  @override
+  String get referYourCode => 'ನಿಮ್ಮ ರೆಫರಲ್ ಕೋಡ್';
+
+  @override
+  String get referYourReferrals => 'ನಿಮ್ಮ ರೆಫರಲ್‌ಗಳು';
 
   @override
   String get rentalsAutoDebit => 'ಸ್ವಯಂ ಕಡಿತ';
@@ -2742,6 +3363,26 @@ class AppL10nKn extends AppL10n {
   @override
   String get supportYesWeeklyMonthlyPlansDaily =>
       'ಹೌದು, ವಾರದ ಮತ್ತು ಮಾಸಿಕ ಯೋಜನೆಗಳಲ್ಲಿ. ದಿನದ ಯೋಜನೆಗಳಲ್ಲಿ ಹಬ್‌ಗೆ ಮರಳಿಸಬೇಕು ';
+
+  @override
+  String get swapCouldNotLoad => 'ಸ್ವಾಪ್ ಸ್ಟೇಷನ್‌ಗಳು ತೆರೆಯಲಿಲ್ಲ';
+
+  @override
+  String get swapNoneBody => 'ಸದ್ಯಕ್ಕೆ ಯಾವುದೇ ಬ್ಯಾಟರಿ ಸ್ವಾಪ್ ಸ್ಟೇಷನ್ ಸಿಗಲಿಲ್ಲ.';
+
+  @override
+  String get swapNoneTitle => 'ಯಾವುದೇ ಸ್ವಾಪ್ ಸ್ಟೇಷನ್ ಸಿಗಲಿಲ್ಲ';
+
+  @override
+  String get swapSubtitle => 'ನಿಮಗೆ ಹತ್ತಿರದ ಸ್ವಾಪ್ ಸ್ಟೇಷನ್‌ಗಳು';
+
+  @override
+  String get swapTitle => 'ಬ್ಯಾಟರಿ ಸ್ವಾಪಿಂಗ್';
+
+  @override
+  String swapUnits(String count) {
+    return 'ಘಟಕಗಳು: $count';
+  }
 
   @override
   String get validationEnterDateBeforeToday => 'ಇಂದು ಅಥವಾ ಅದಕ್ಕಿಂತ ಹಿಂದಿನ ದಿನಾಂಕ ಬರೆಯಿರಿ';

@@ -71,7 +71,7 @@ class RiderDrawer extends ConsumerWidget {
                       label: context.l10n.homeHelpSupport,
                       onTap: () {
                         Navigator.of(context).pop();
-                        context.go(Routes.support);
+                        context.push(Routes.support);
                       },
                     ),
                     _DrawerItem(

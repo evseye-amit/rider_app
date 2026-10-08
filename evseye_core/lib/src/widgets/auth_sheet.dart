@@ -18,6 +18,7 @@ class AuthSheetScaffold extends StatelessWidget {
     this.art,
     this.photo,
     this.artSize = 190,
+    this.showArtBackdrop = true,
     this.showBack = false,
     this.onBack,
     this.bandAction,
@@ -38,6 +39,8 @@ class AuthSheetScaffold extends StatelessWidget {
   final BrandPhoto? photo;
 
   final double artSize;
+
+  final bool showArtBackdrop;
 
   final bool showBack;
   final VoidCallback? onBack;
@@ -79,6 +82,7 @@ class AuthSheetScaffold extends StatelessWidget {
                 child: _Hero(
                   photo: photo,
                   art: art,
+                  showArtBackdrop: showArtBackdrop,
                   bandColor: bandColor,
                   topInset: topInset,
 
@@ -115,6 +119,7 @@ class _Hero extends StatelessWidget {
   const _Hero({
     required this.photo,
     required this.art,
+    required this.showArtBackdrop,
     required this.bandColor,
     required this.topInset,
     required this.bottomClearance,
@@ -127,6 +132,7 @@ class _Hero extends StatelessWidget {
 
   final BrandPhoto? photo;
   final BrandArt? art;
+  final bool showArtBackdrop;
   final Color bandColor;
   final double topInset;
   final double bottomClearance;
@@ -160,14 +166,15 @@ class _Hero extends StatelessWidget {
                   return Stack(
                     alignment: Alignment.center,
                     children: [
-                      Container(
-                        width: size * 1.02,
-                        height: size * 1.02,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.10),
-                          shape: BoxShape.circle,
+                      if (showArtBackdrop)
+                        Container(
+                          width: size * 1.02,
+                          height: size * 1.02,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.10),
+                            shape: BoxShape.circle,
+                          ),
                         ),
-                      ),
                       BrandIllustration(art: hero, size: size),
                     ],
                   );
@@ -193,9 +200,9 @@ class _Hero extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.18),
                         shape: BoxShape.circle,
-                        border: Border.all(color: Colors.white.withValues(alpha: 0.24)),
+                        border: Border.all(color: AppColors.inkStroke),
                       ),
-                      child: const Icon(Icons.arrow_back_rounded, size: 20, color: Colors.white),
+                      child: const Icon(Icons.arrow_back_rounded, size: 20, color: AppColors.onInk),
                     ),
                   ),
                 const Spacer(),
@@ -211,13 +218,13 @@ class _Hero extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.18),
                           borderRadius: Corners.pill,
-                          border: Border.all(color: Colors.white.withValues(alpha: 0.26)),
+                          border: Border.all(color: AppColors.inkStroke),
                         ),
                         child: Text(
                           bandAction!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppText.titleSmall.copyWith(fontSize: 12.5, color: Colors.white),
+                          style: AppText.titleSmall.copyWith(fontSize: 12.5, color: AppColors.onInk),
                         ),
                       ),
                     ),

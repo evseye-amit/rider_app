@@ -28,7 +28,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   void initState() {
     super.initState();
     _mobile.addListener(() => setState(() {}));
-    WidgetsBinding.instance.addPostFrameCallback((_) => _askLanguage());
   }
 
   @override
@@ -38,18 +37,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   bool get _valid => _mobilePattern.hasMatch(_mobile.text.trim());
-
-  Future<void> _askLanguage() async {
-    final LocalePreference preference = ref.read(localeProvider);
-    if (preference.hasBeenPrompted || !mounted) return;
-    final AppLocale? picked = await LanguagePicker.show(context, selected: preference.locale, firstRun: true);
-    final LocaleNotifier locale = ref.read(localeProvider.notifier);
-    if (picked == null) {
-      await locale.markPrompted();
-      return;
-    }
-    await locale.select(picked);
-  }
 
   Future<void> _continue() async {
     final String mobile = _mobile.text.trim();
@@ -81,8 +68,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Widget build(BuildContext context) {
     return AuthSheetScaffold(
       trailing: const LanguageChip(),
-      photo: BrandPhoto.rider,
+      art: BrandArt.evScooter,
       artSize: 210,
+      showArtBackdrop: false,
       title: context.l10n.authWelcomeBack,
       subtitle: context.l10n.authSignWithMobileNumberRegistered2,
       children: [

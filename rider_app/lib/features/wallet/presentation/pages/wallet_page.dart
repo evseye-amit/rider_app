@@ -67,7 +67,6 @@ class _WalletPageState extends ConsumerState<WalletPage> {
     final WalletOverview? wallet = overview.value;
 
     return HeroScaffold(
-      bottomPadding: 120,
       controller: _scrollController,
       onRefresh: () async {
         ref.invalidate(walletTransactionsProvider);

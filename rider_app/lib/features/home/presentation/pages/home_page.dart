@@ -36,8 +36,18 @@ class HomePage extends ConsumerWidget {
 
     return HeroScaffold(
       drawer: const RiderDrawer(),
-      bottomPadding: 120,
+      bottomPadding: 190,
       onRefresh: () => ref.refreshQuietly(homeSummaryProvider),
+      floatingAction: Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
+        child: FloatingActionButton(
+          onPressed: () => context.push(Routes.support),
+          tooltip: context.l10n.commonSupport,
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          child: const Icon(Icons.support_agent_rounded),
+        ),
+      ),
       band: _Band(summary: data),
       children: data == null ? const [_HomeSkeleton()] : _content(context, data),
     );
@@ -49,17 +59,17 @@ class HomePage extends ConsumerWidget {
         label: context.l10n.commonPaidDate,
         amount: Fmt.money(summary.walletBalance),
         caption: context.l10n.homeDepositsHandoverFees,
-        onTapBalance: () => context.go(Routes.wallet),
+        onTapBalance: () => context.push(Routes.wallet),
         actions: [
           StripAction(
             label: context.l10n.homeWithdraw,
             icon: Icons.south_west_rounded,
-            onTap: () => context.go(Routes.wallet),
+            onTap: () => context.push(Routes.wallet),
           ),
           StripAction(
             label: context.l10n.homeHistory,
             icon: Icons.receipt_long_rounded,
-            onTap: () => context.go(Routes.wallet),
+            onTap: () => context.push(Routes.wallet),
           ),
         ],
       ),
@@ -181,47 +191,61 @@ class _Band extends ConsumerWidget {
           ],
         ),
         const Gap.xxl(),
-        Text(context.l10n.homeTodaysEarnings, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
-        const Gap.sm(),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Flexible(
-              child: Text(
-                summary == null ? '—' : Fmt.money(summary!.todayEarnings),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
+        Pressable(
+          onTap: () => context.push(Routes.wallet),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Text(context.l10n.homeTodaysEarnings, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
+                  const SizedBox(width: 2),
+                  const Icon(Icons.chevron_right_rounded, size: 16, color: AppColors.onInkSecondary),
+                ],
               ),
-            ),
-            const SizedBox(width: Insets.md),
-            if (summary != null && summary!.earningsDelta.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 6),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: AppColors.onInkMint.withValues(alpha: 0.16),
-                    borderRadius: Corners.pill,
+              const Gap.sm(),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Flexible(
+                    child: Text(
+                      summary == null ? '—' : Fmt.money(summary!.todayEarnings),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
+                    ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.trending_up_rounded, size: 12, color: AppColors.onInkMint),
-                      const SizedBox(width: 3),
-                      Text(
-                        summary!.earningsDelta,
-                        style: AppText.bodySmall.copyWith(
-                          fontSize: 11,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.onInkMint,
+                  const SizedBox(width: Insets.md),
+                  if (summary != null && summary!.earningsDelta.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 6),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: AppColors.onInkMint.withValues(alpha: 0.16),
+                          borderRadius: Corners.pill,
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.trending_up_rounded, size: 12, color: AppColors.onInkMint),
+                            const SizedBox(width: 3),
+                            Text(
+                              summary!.earningsDelta,
+                              style: AppText.bodySmall.copyWith(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.onInkMint,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                ],
               ),
-          ],
+            ],
+          ),
         ),
         const Gap.xl(),
         Container(

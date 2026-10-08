@@ -39,7 +39,6 @@ class SupportPage extends ConsumerWidget {
     final SupportOverview? overview = support.value;
 
     return HeroScaffold(
-      bottomPadding: 120,
       onRefresh: () => ref.refreshQuietly(supportOverviewProvider),
       band: _SupportBand(overview: overview),
       children: overview == null ? const [_SupportSkeleton()] : _content(context, ref, overview),
@@ -142,6 +141,8 @@ class _SupportBand extends StatelessWidget {
       children: [
         Row(
           children: [
+            InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
+            const SizedBox(width: Insets.md),
             const IconTile(icon: Icons.support_agent_rounded, tone: AppColors.primary, solid: true, size: 44),
             const SizedBox(width: Insets.md),
             Expanded(

@@ -28,13 +28,16 @@ dependencies:
   url_launcher: ^6.3.1
   intl: ^0.20.2
   flutter_svg: ^2.0.17
+  google_maps_flutter: ^2.18.1
+  geolocator: ^14.1.1
+  share_plus: ^13.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.3
-  flutter_native_splash: ^2.4.6
+  flutter_native_splash: ^2.4.7
 
 flutter:
   uses-material-design: true
@@ -84,26 +87,11 @@ flutter_launcher_icons:
   adaptive_icon_foreground_inset: 20
 
 flutter_native_splash:
-  # The native launch screen shows the same poster the Dart splash does, on
-  # the poster's own paper white, so nothing changes colour between the OS
-  # screen and the first frame.
-  #
-  # `image` rather than `background_image`: a background image is painted with
-  # android:gravity="fill", which stretches it to the window. The poster is
-  # 4:5 and a phone is nearer 9:19.5, so filling it would squash the mark out
-  # of shape. Centred and undistorted is the honest option, and on iOS
-  # `scaleAspectFit` reproduces the Dart splash's BoxFit.contain exactly.
   color: "#FFFFFF"
-  image: assets/images/splash_screen.png
-  ios_content_mode: scaleAspectFit
+  image: assets/images/app_icon_foreground.png
   android_12:
-    # Android 12+ forces a centred icon on a solid ground — an arbitrary
-    # poster is ignored there, so the launcher mark on white is the closest
-    # match the platform allows.
-    image: assets/images/android12_splash_icon.png
     color: "#FFFFFF"
     icon_background_color: "#FFFFFF"
   android: true
   ios: true
   web: false
-  fullscreen: true
