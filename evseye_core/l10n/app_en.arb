@@ -56,10 +56,6 @@
   "@allocationAssignVehicle": {
     "description": "Assign a vehicle"
   },
-  "allocationAttentionRequired": "Attention required",
-  "@allocationAttentionRequired": {
-    "description": "Attention required"
-  },
   "allocationBack": "Back",
   "@allocationBack": {
     "description": "Back"
@@ -75,22 +71,6 @@
   "allocationBodyPaintwork": "Body and paintwork",
   "@allocationBodyPaintwork": {
     "description": "Body and paintwork"
-  },
-  "allocationBypassDeploy": "Bypass and deploy",
-  "@allocationBypassDeploy": {
-    "description": "Bypass and deploy"
-  },
-  "allocationBypassExplainer": "Use this when the IoT unit cannot be paired at the hub. The unit's current health is recorded with your reason.",
-  "@allocationBypassExplainer": {
-    "description": "Use this when the IoT unit cannot be paired at the hub. The unit's current health is recorded with your reason."
-  },
-  "allocationBypassPairing": "Bypass pairing?",
-  "@allocationBypassPairing": {
-    "description": "Bypass pairing?"
-  },
-  "allocationBypassPairing2": "Bypass pairing",
-  "@allocationBypassPairing2": {
-    "description": "Bypass pairing"
   },
   "allocationChecklistRiderWillAcceptItem": "The checklist the rider will accept item by item",
   "@allocationChecklistRiderWillAcceptItem": {
@@ -123,14 +103,6 @@
   "allocationCompleteDeAllocation": "Complete this de-allocation?",
   "@allocationCompleteDeAllocation": {
     "description": "Complete this de-allocation?"
-  },
-  "allocationCompletesHandoverWithoutRiderPairing": "Completes the handover without the rider pairing the device",
-  "@allocationCompletesHandoverWithoutRiderPairing": {
-    "description": "Completes the handover without the rider pairing the device"
-  },
-  "allocationCondition": "Condition",
-  "@allocationCondition": {
-    "description": "Condition"
   },
   "allocationConfirmHaveReceivedAmountRider": "Confirm you have received the amount the rider submitted a reference for. This cannot be undone.",
   "@allocationConfirmHaveReceivedAmountRider": {
@@ -184,10 +156,6 @@
   "@allocationDeployed": {
     "description": "Deployed"
   },
-  "allocationDevice": "Device",
-  "@allocationDevice": {
-    "description": "Device"
-  },
   "allocationEveryDeAllocationRequestHas": "Every de-allocation request has been processed.",
   "@allocationEveryDeAllocationRequestHas": {
     "description": "Every de-allocation request has been processed."
@@ -216,17 +184,9 @@
   "@allocationFront": {
     "description": "Front"
   },
-  "allocationHandoverCompletedWithoutPairing": "Handover completed without pairing",
-  "@allocationHandoverCompletedWithoutPairing": {
-    "description": "Handover completed without pairing"
-  },
-  "allocationHealthy": "Healthy",
-  "@allocationHealthy": {
-    "description": "Healthy"
-  },
-  "allocationHeartbeat": "Heartbeat",
-  "@allocationHeartbeat": {
-    "description": "Heartbeat"
+  "allocationHandoverCompleteMessage": "Training is done and the scooter is with the rider. This handover is complete.",
+  "@allocationHandoverCompleteMessage": {
+    "description": "Training is done and the scooter is with the rider. This handover is complete."
   },
   "allocationHeartbeatStale": "Heartbeat stale",
   "@allocationHeartbeatStale": {
@@ -264,9 +224,9 @@
   "@allocationInspectionSentRider2": {
     "description": "Inspection sent to the rider"
   },
-  "allocationInspectionTrainingPairing": "Inspection, training, pairing",
-  "@allocationInspectionTrainingPairing": {
-    "description": "Inspection, training, pairing"
+  "allocationInspectionTraining": "Inspection and training",
+  "@allocationInspectionTraining": {
+    "description": "Inspection and training"
   },
   "allocationIotDevice": "IoT device",
   "@allocationIotDevice": {
@@ -308,10 +268,6 @@
   "@allocationNameWorkPartnerWorkshopInspected": {
     "description": "Name the work partner or workshop that inspected the vehicle"
   },
-  "allocationNever": "Never",
-  "@allocationNever": {
-    "description": "Never"
-  },
   "allocationNobodyWaiting": "Nobody waiting",
   "@allocationNobodyWaiting": {
     "description": "Nobody waiting"
@@ -331,10 +287,6 @@
   "allocationNothingTakeBack": "Nothing to take back",
   "@allocationNothingTakeBack": {
     "description": "Nothing to take back"
-  },
-  "allocationNotMapped": "Not mapped",
-  "@allocationNotMapped": {
-    "description": "Not mapped"
   },
   "allocationNoVehiclesOut": "No vehicles out",
   "@allocationNoVehiclesOut": {
@@ -400,10 +352,6 @@
   "@allocationReason": {
     "description": "Reason"
   },
-  "allocationReasonRequiredBypass": "A reason is required to bypass",
-  "@allocationReasonRequiredBypass": {
-    "description": "A reason is required to bypass"
-  },
   "allocationRentalFeeWeek": "Rental fee (week)",
   "@allocationRentalFeeWeek": {
     "description": "Rental fee (week)"
@@ -448,9 +396,9 @@
   "@allocationRiderCode": {
     "description": "Rider code"
   },
-  "allocationRiderCompletingSafetyTrainingTheir": "The rider is completing the safety training in their app. Pairing opens once every mandatory module is done.",
+  "allocationRiderCompletingSafetyTrainingTheir": "The rider is completing the safety training in their app. The scooter is handed over once every mandatory module is done.",
   "@allocationRiderCompletingSafetyTrainingTheir": {
-    "description": "The rider is completing the safety training in their app. Pairing opens once every mandatory module is done."
+    "description": "The rider is completing the safety training in their app. The scooter is handed over once every mandatory module is done."
   },
   "allocationRiderGoingThroughChecklistTheir": "The rider is going through your checklist in their app. Items they reject come back with a note.",
   "@allocationRiderGoingThroughChecklistTheir": {
@@ -459,10 +407,6 @@
   "allocationRiderNoLongerWaitingVehicle": "This rider is no longer waiting for a vehicle.",
   "@allocationRiderNoLongerWaitingVehicle": {
     "description": "This rider is no longer waiting for a vehicle."
-  },
-  "allocationRiderPairedScooterRoadHandover": "The rider paired the scooter and is on the road. This handover is complete.",
-  "@allocationRiderPairedScooterRoadHandover": {
-    "description": "The rider paired the scooter and is on the road. This handover is complete."
   },
   "allocationRiding": "Riding",
   "@allocationRiding": {
@@ -500,10 +444,6 @@
   "@allocationSendRider": {
     "description": "Send to rider"
   },
-  "allocationSim": "SIM",
-  "@allocationSim": {
-    "description": "SIM"
-  },
   "allocationStartReturn": "Start a return",
   "@allocationStartReturn": {
     "description": "Start a return"
@@ -515,10 +455,6 @@
   "allocationTalkingServer": "Talking to the server…",
   "@allocationTalkingServer": {
     "description": "Talking to the server…"
-  },
-  "allocationTrainingDonePairing": "Training done · pairing",
-  "@allocationTrainingDonePairing": {
-    "description": "Training done · pairing"
   },
   "allocationTyresPressure": "Tyres and pressure",
   "@allocationTyresPressure": {
@@ -568,10 +504,6 @@
   "@allocationWaitingRiderPageRefreshesIts": {
     "description": "Waiting on the rider — this page refreshes on its own."
   },
-  "allocationWaitingRiderPairBypass": "Waiting for rider to pair — or bypass",
-  "@allocationWaitingRiderPairBypass": {
-    "description": "Waiting for rider to pair — or bypass"
-  },
   "allocationWaitingRiderTraining": "Waiting for rider: training",
   "@allocationWaitingRiderTraining": {
     "description": "Waiting for rider: training"
@@ -592,9 +524,9 @@
   "@allocationWorkshopTechnicianWhoInspectedVehicle": {
     "description": "The workshop or technician who inspected the vehicle"
   },
-  "allocationWritePdiChecklistRiderAccepts": "You write the PDI checklist; the rider accepts it, completes training and pairs the IoT unit.",
+  "allocationWritePdiChecklistRiderAccepts": "You write the PDI checklist; the rider accepts it and completes training.",
   "@allocationWritePdiChecklistRiderAccepts": {
-    "description": "You write the PDI checklist; the rider accepts it, completes training and pairs the IoT unit."
+    "description": "You write the PDI checklist; the rider accepts it and completes training."
   },
   "appGoHome": "Go home",
   "@appGoHome": {
@@ -1017,10 +949,6 @@
   "commonPaidDate": "Paid to date",
   "@commonPaidDate": {
     "description": "Paid to date"
-  },
-  "commonPaired": "Paired",
-  "@commonPaired": {
-    "description": "Paired"
   },
   "commonPayment": "Payment",
   "@commonPayment": {
@@ -1615,10 +1543,6 @@
   "@deploymentPaidVia": {
     "description": "Paid via"
   },
-  "deploymentPairIotUnit": "Pair the IoT unit",
-  "@deploymentPairIotUnit": {
-    "description": "Pair the IoT unit"
-  },
   "deploymentPaymentReceived": "Payment received",
   "@deploymentPaymentReceived": {
     "description": "Payment received"
@@ -1847,10 +1771,6 @@
   "errorInspectionWithRider": "Inspection with rider",
   "@errorInspectionWithRider": {
     "description": "Inspection with rider"
-  },
-  "errorPairingIotDevice": "Pairing the IoT device",
-  "@errorPairingIotDevice": {
-    "description": "Pairing the IoT device"
   },
   "errorPaymentPending": "Payment pending",
   "@errorPaymentPending": {
@@ -3967,10 +3887,6 @@
   "@rentalsVehicleRent": {
     "description": "Vehicle rent"
   },
-  "ridePairingScooter": "Pairing your scooter",
-  "@ridePairingScooter": {
-    "description": "Pairing your scooter"
-  },
   "rideParkedLocked": "Parked and locked.",
   "@rideParkedLocked": {
     "description": "Parked and locked."
@@ -4054,10 +3970,6 @@
   "rideScooterConnectedUsePowerButton": "Your scooter is connected. Use the power button to switch it on.",
   "@rideScooterConnectedUsePowerButton": {
     "description": "Your scooter is connected. Use the power button to switch it on."
-  },
-  "rideTalkingIotUnitKeepPhone": "Talking to the IoT unit. Keep your phone close.",
-  "@rideTalkingIotUnitKeepPhone": {
-    "description": "Talking to the IoT unit. Keep your phone close."
   },
   "rideVehicle": "Vehicle is ON",
   "@rideVehicle": {

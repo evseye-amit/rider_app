@@ -51,7 +51,7 @@ class ScooterRepositoryImpl implements ScooterRepository {
       tyrePressureFront: 32,
       tyrePressureRear: 36,
       iot: VehicleIot(
-        deviceId: fleet.iotDeviceNumber ?? (status.isDeployed ? ActiveLocale.strings.commonPaired : '—'),
+        deviceId: fleet.iotDeviceNumber ?? '—',
         online: status.isDeployed,
         signal: status.isDeployed ? 3 : 0,
         lastPing: status.isDeployed ? 'a moment ago' : '—',

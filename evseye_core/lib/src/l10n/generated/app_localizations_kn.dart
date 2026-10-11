@@ -51,9 +51,6 @@ class AppL10nKn extends AppL10n {
   String get allocationAssignVehicle => 'ವಾಹನ ನಿಯೋಜಿಸಿ';
 
   @override
-  String get allocationAttentionRequired => 'ಗಮನ ಅಗತ್ಯ';
-
-  @override
   String get allocationBack => 'ಹಿಂದೆ';
 
   @override
@@ -64,19 +61,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationBodyPaintwork => 'ಬಾಡಿ ಮತ್ತು ಬಣ್ಣದ ಕೆಲಸ';
-
-  @override
-  String get allocationBypassDeploy => 'ಬಿಟ್ಟು ಮುಂದುವರಿಸಿ';
-
-  @override
-  String get allocationBypassExplainer =>
-      'ಸಾಧನವನ್ನು ಹಬ್‌ನಲ್ಲಿ ಜೋಡಿಸಲಾಗದಿದ್ದಾಗ ಇದನ್ನು ಬಳಸಿ. ಸಾಧನದ ಪ್ರಸ್ತುತ ಸ್ಥಿತಿ ನಿಮ್ಮ ಕಾರಣದೊಂದಿಗೆ ದಾಖಲಾಗುತ್ತದೆ.';
-
-  @override
-  String get allocationBypassPairing => 'ಜೋಡಣೆ ಬಿಟ್ಟುಬಿಡಬೇಕೆ?';
-
-  @override
-  String get allocationBypassPairing2 => 'ಜೋಡಣೆ ಬಿಟ್ಟುಬಿಡಿ';
 
   @override
   String get allocationChecklistRiderWillAcceptItem => 'ರೈಡರ್ ಒಂದೊಂದಾಗಿ ಒಪ್ಪಿಕೊಳ್ಳುವ ಪಟ್ಟಿ';
@@ -102,12 +86,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationCompleteDeAllocation => 'ಈ ಹಿಂಪಡೆಯುವಿಕೆ ಪೂರ್ಣಗೊಳಿಸಬೇಕೆ?';
-
-  @override
-  String get allocationCompletesHandoverWithoutRiderPairing => 'ರೈಡರ್ ಸಾಧನ ಜೋಡಿಸದೆಯೇ ಹಸ್ತಾಂತರ ಪೂರ್ಣಗೊಳಿಸುತ್ತದೆ';
-
-  @override
-  String get allocationCondition => 'ಸ್ಥಿತಿ';
 
   @override
   String get allocationConfirmHaveReceivedAmountRider =>
@@ -151,9 +129,6 @@ class AppL10nKn extends AppL10n {
   String get allocationDeployed => 'ನಿಯೋಜಿಸಲಾಗಿದೆ';
 
   @override
-  String get allocationDevice => 'ಸಾಧನ';
-
-  @override
   String get allocationEveryDeAllocationRequestHas => 'ಪ್ರತಿ ಹಿಂಪಡೆಯುವ ಮನವಿಯೂ ಪೂರ್ಣಗೊಂಡಿದೆ.';
 
   @override
@@ -176,13 +151,8 @@ class AppL10nKn extends AppL10n {
   String get allocationFront => 'ಮುಂಭಾಗ';
 
   @override
-  String get allocationHandoverCompletedWithoutPairing => 'ಜೋಡಣೆ ಇಲ್ಲದೆ ಹಸ್ತಾಂತರ ಪೂರ್ಣಗೊಂಡಿದೆ';
-
-  @override
-  String get allocationHealthy => 'ಆರೋಗ್ಯಕರ';
-
-  @override
-  String get allocationHeartbeat => 'ಸಂಕೇತ';
+  String get allocationHandoverCompleteMessage =>
+      'ತರಬೇತಿ ಮುಗಿದಿದೆ ಮತ್ತು ಸ್ಕೂಟರ್ ರೈಡರ್ ಬಳಿ ಇದೆ. ಈ ಹಸ್ತಾಂತರ ಪೂರ್ಣಗೊಂಡಿದೆ.';
 
   @override
   String get allocationHeartbeatStale => 'ಸಂಕೇತ ಹಳೆಯದು';
@@ -212,7 +182,7 @@ class AppL10nKn extends AppL10n {
   String get allocationInspectionSentRider2 => 'ಪರಿಶೀಲನೆ ರೈಡರ್‌ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ';
 
   @override
-  String get allocationInspectionTrainingPairing => 'ಪರಿಶೀಲನೆ, ತರಬೇತಿ, ಜೋಡಣೆ';
+  String get allocationInspectionTraining => 'ಪರಿಶೀಲನೆ ಮತ್ತು ತರಬೇತಿ';
 
   @override
   String get allocationIotDevice => 'ಸಾಧನ';
@@ -245,9 +215,6 @@ class AppL10nKn extends AppL10n {
   String get allocationNameWorkPartnerWorkshopInspected => 'ವಾಹನ ಪರಿಶೀಲಿಸಿದ ಕೆಲಸದ ಪಾಲುದಾರ ಅಥವಾ ವರ್ಕ್‌ಶಾಪ್ ಹೆಸರಿಸಿ';
 
   @override
-  String get allocationNever => 'ಎಂದಿಗೂ ಇಲ್ಲ';
-
-  @override
   String get allocationNobodyWaiting => 'ಯಾರೂ ಕಾಯುತ್ತಿಲ್ಲ';
 
   @override
@@ -261,9 +228,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationNothingTakeBack => 'ಹಿಂಪಡೆಯಲು ಏನೂ ಇಲ್ಲ';
-
-  @override
-  String get allocationNotMapped => 'ಜೋಡಿಸಿಲ್ಲ';
 
   @override
   String get allocationNoVehiclesOut => 'ಯಾವ ವಾಹನವೂ ಹೊರಗಿಲ್ಲ';
@@ -315,9 +279,6 @@ class AppL10nKn extends AppL10n {
   String get allocationReason => 'ಕಾರಣ';
 
   @override
-  String get allocationReasonRequiredBypass => 'ಬಿಟ್ಟುಬಿಡಲು ಕಾರಣ ಅಗತ್ಯ';
-
-  @override
   String get allocationRentalFeeWeek => 'ಬಾಡಿಗೆ (ವಾರ)';
 
   @override
@@ -353,7 +314,7 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationRiderCompletingSafetyTrainingTheir =>
-      'ರೈಡರ್ ತಮ್ಮ ಆ್ಯಪ್‌ನಲ್ಲಿ ಸುರಕ್ಷತಾ ತರಬೇತಿ ಮುಗಿಸುತ್ತಿದ್ದಾರೆ. ಪ್ರತಿ ಕಡ್ಡಾಯ ಪಾಠ ಮುಗಿದ ಮೇಲೆ ಜೋಡಣೆ ತೆರೆಯುತ್ತದೆ.';
+      'ರೈಡರ್ ತಮ್ಮ ಆ್ಯಪ್‌ನಲ್ಲಿ ಸುರಕ್ಷತಾ ತರಬೇತಿ ಮುಗಿಸುತ್ತಿದ್ದಾರೆ. ಪ್ರತಿ ಕಡ್ಡಾಯ ಪಾಠ ಮುಗಿದ ಮೇಲೆ ಸ್ಕೂಟರ್ ಹಸ್ತಾಂತರವಾಗುತ್ತದೆ.';
 
   @override
   String get allocationRiderGoingThroughChecklistTheir =>
@@ -361,10 +322,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationRiderNoLongerWaitingVehicle => 'ಈ ರೈಡರ್ ಈಗ ವಾಹನಕ್ಕಾಗಿ ಕಾಯುತ್ತಿಲ್ಲ.';
-
-  @override
-  String get allocationRiderPairedScooterRoadHandover =>
-      'ರೈಡರ್ ಸ್ಕೂಟರ್ ಜೋಡಿಸಿ ರಸ್ತೆಗೆ ಇಳಿದಿದ್ದಾರೆ. ಈ ಹಸ್ತಾಂತರ ಪೂರ್ಣಗೊಂಡಿದೆ.';
 
   @override
   String get allocationRiding => 'ಸವಾರಿಯಲ್ಲಿದೆ';
@@ -394,9 +351,6 @@ class AppL10nKn extends AppL10n {
   String get allocationSendRider => 'ರೈಡರ್‌ಗೆ ಕಳುಹಿಸಿ';
 
   @override
-  String get allocationSim => 'ಸಿಮ್';
-
-  @override
   String get allocationStartReturn => 'ಹಿಂತಿರುಗಿಸುವಿಕೆ ಪ್ರಾರಂಭಿಸಿ';
 
   @override
@@ -404,9 +358,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationTalkingServer => 'ಸರ್ವರ್ ಜೊತೆ ಸಂಪರ್ಕವಾಗುತ್ತಿದೆ…';
-
-  @override
-  String get allocationTrainingDonePairing => 'ತರಬೇತಿ ಮುಗಿದಿದೆ · ಜೋಡಣೆ';
 
   @override
   String get allocationTyresPressure => 'ಟೈರ್ ಮತ್ತು ಒತ್ತಡ';
@@ -446,9 +397,6 @@ class AppL10nKn extends AppL10n {
   String get allocationWaitingRiderPageRefreshesIts => 'ರೈಡರ್‌ಗಾಗಿ ಕಾಯುತ್ತಿದೆ, ಈ ಪುಟ ತಾನಾಗಿಯೇ ರಿಫ್ರೆಶ್ ಆಗುತ್ತದೆ.';
 
   @override
-  String get allocationWaitingRiderPairBypass => 'ರೈಡರ್ ಜೋಡಿಸುವುದಕ್ಕಾಗಿ ಕಾಯುತ್ತಿದೆ, ಅಥವಾ ಬಿಟ್ಟುಬಿಡಿ';
-
-  @override
   String get allocationWaitingRiderTraining => 'ರೈಡರ್‌ಗಾಗಿ ಕಾಯುತ್ತಿದೆ: ತರಬೇತಿ';
 
   @override
@@ -465,7 +413,7 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationWritePdiChecklistRiderAccepts =>
-      'ನೀವು ಪರಿಶೀಲನಾ ಪಟ್ಟಿ ಬರೆಯುತ್ತೀರಿ, ರೈಡರ್ ಅದನ್ನು ಒಪ್ಪಿ, ತರಬೇತಿ ಮುಗಿಸಿ, ಸಾಧನ ಜೋಡಿಸುತ್ತಾರೆ.';
+      'ನೀವು ಪರಿಶೀಲನಾ ಪಟ್ಟಿ ಬರೆಯುತ್ತೀರಿ, ರೈಡರ್ ಅದನ್ನು ಒಪ್ಪಿ ತರಬೇತಿ ಮುಗಿಸುತ್ತಾರೆ.';
 
   @override
   String get appGoHome => 'ಮುಖಪುಟಕ್ಕೆ ಹೋಗಿ';
@@ -781,9 +729,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get commonPaidDate => 'ಇಲ್ಲಿಯವರೆಗೆ ಪಾವತಿ';
-
-  @override
-  String get commonPaired => 'ಜೋಡಿಸಲಾಗಿದೆ';
 
   @override
   String get commonPayment => 'ಪಾವತಿ';
@@ -1241,9 +1186,6 @@ class AppL10nKn extends AppL10n {
   String get deploymentPaidVia => 'ಇದರ ಮೂಲಕ ಪಾವತಿ';
 
   @override
-  String get deploymentPairIotUnit => 'ಸಾಧನ ಜೋಡಿಸಿ';
-
-  @override
   String get deploymentPaymentReceived => 'ಪಾವತಿ ಸ್ವೀಕರಿಸಲಾಗಿದೆ';
 
   @override
@@ -1414,9 +1356,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get errorInspectionWithRider => 'ಪರಿಶೀಲನೆ ರೈಡರ್ ಬಳಿ';
-
-  @override
-  String get errorPairingIotDevice => 'ಸಾಧನ ಜೋಡಿಸಲಾಗುತ್ತಿದೆ';
 
   @override
   String get errorPaymentPending => 'ಪಾವತಿ ಬಾಕಿ';
@@ -3005,9 +2944,6 @@ class AppL10nKn extends AppL10n {
   String get rentalsVehicleRent => 'ವಾಹನದ ಬಾಡಿಗೆ';
 
   @override
-  String get ridePairingScooter => 'ನಿಮ್ಮ ಸ್ಕೂಟರ್ ಜೋಡಿಸಲಾಗುತ್ತಿದೆ';
-
-  @override
   String get rideParkedLocked => 'ನಿಲ್ಲಿಸಿ ಬೀಗ ಹಾಕಲಾಗಿದೆ.';
 
   @override
@@ -3069,9 +3005,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get rideScooterConnectedUsePowerButton => 'ನಿಮ್ಮ ಸ್ಕೂಟರ್ ಜೋಡಿಸಲಾಗಿದೆ. ಆನ್ ಮಾಡಲು ಪವರ್ ಬಟನ್ ಒತ್ತಿ.';
-
-  @override
-  String get rideTalkingIotUnitKeepPhone => 'ಸಾಧನದೊಂದಿಗೆ ಸಂಪರ್ಕವಾಗುತ್ತಿದೆ. ಫೋನ್ ಹತ್ತಿರ ಇಡಿ.';
 
   @override
   String get rideVehicle => 'ವಾಹನ ಆನ್ ಆಗಿದೆ';

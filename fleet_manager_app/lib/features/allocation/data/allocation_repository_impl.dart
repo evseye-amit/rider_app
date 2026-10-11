@@ -91,13 +91,6 @@ class AllocationRepositoryImpl implements AllocationRepository {
   }) => _deployments.submitPdi(allocationId, workPartnerName: workPartnerName, checklist: checklist);
 
   @override
-  Future<Result<IotHealth>> getIotHealth(String allocationId) => _deployments.iotHealth(allocationId);
-
-  @override
-  Future<Result<DeploymentWorkflow>> bypassPairing(String allocationId, String remarks) =>
-      _deployments.bypassPairing(allocationId, remarks);
-
-  @override
   Future<Result<DeallocationRequest>> getDeallocationRequest(String allocationId) => _api.get<DeallocationRequest>(
     '/allocations/$allocationId',
     parse: (data) => _returnFrom(Map<String, dynamic>.from(data as Map)),

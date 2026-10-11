@@ -13,8 +13,6 @@ class RiderSession extends Equatable {
     this.deployment,
     this.present = false,
     this.vehicleOn = false,
-    this.scooterPaired = false,
-    this.pairing = false,
   }) : flags = flags ?? FeatureFlags.empty,
        profile = _profileOf(onboarding: onboarding, deployment: deployment, mobile: mobile);
 
@@ -26,8 +24,6 @@ class RiderSession extends Equatable {
   final RiderDeployment? deployment;
   final bool present;
   final bool vehicleOn;
-  final bool scooterPaired;
-  final bool pairing;
   final Map<String, Object?> profile;
 
   bool get isSignedIn => stage != RiderStage.signedOut;
@@ -45,8 +41,6 @@ class RiderSession extends Equatable {
     RiderDeployment? deployment,
     bool? present,
     bool? vehicleOn,
-    bool? scooterPaired,
-    bool? pairing,
   }) => RiderSession(
     stage: stage ?? this.stage,
     user: user ?? this.user,
@@ -56,8 +50,6 @@ class RiderSession extends Equatable {
     deployment: deployment ?? this.deployment,
     present: present ?? this.present,
     vehicleOn: vehicleOn ?? this.vehicleOn,
-    scooterPaired: scooterPaired ?? this.scooterPaired,
-    pairing: pairing ?? this.pairing,
   );
 
   DynamicUiScope scope({
@@ -115,16 +107,5 @@ class RiderSession extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-    stage,
-    user,
-    flags,
-    mobile,
-    onboarding,
-    deployment,
-    present,
-    vehicleOn,
-    scooterPaired,
-    pairing,
-  ];
+  List<Object?> get props => [stage, user, flags, mobile, onboarding, deployment, present, vehicleOn];
 }

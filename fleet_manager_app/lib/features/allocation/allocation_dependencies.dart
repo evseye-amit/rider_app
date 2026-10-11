@@ -5,7 +5,6 @@ import 'data/allocation_repository_impl.dart';
 import 'domain/allocation_repository.dart';
 import 'domain/usecases/allocate_vehicle.dart';
 import 'domain/usecases/ask_payment.dart';
-import 'domain/usecases/bypass_pairing.dart';
 import 'domain/usecases/complete_deallocation.dart';
 import 'domain/usecases/complete_inspection.dart';
 import 'domain/usecases/get_allocation_board.dart';
@@ -13,7 +12,6 @@ import 'domain/usecases/get_allocation_evidence.dart';
 import 'domain/usecases/get_deallocation_request.dart';
 import 'domain/usecases/get_deployment_request.dart';
 import 'domain/usecases/get_eligible_fleets.dart';
-import 'domain/usecases/get_iot_health.dart';
 import 'domain/usecases/get_pending_rider.dart';
 import 'domain/usecases/initiate_deallocation.dart';
 import 'domain/usecases/request_deallocation_otp.dart';
@@ -50,8 +48,6 @@ final getAllocationEvidenceProvider = Provider<GetAllocationEvidence>(
   (ref) => GetAllocationEvidence(ref.watch(allocationRepositoryProvider)),
 );
 
-final getIotHealthProvider = Provider<GetIotHealth>((ref) => GetIotHealth(ref.watch(allocationRepositoryProvider)));
-
 final requestFleetProvider = Provider<RequestFleet>((ref) => RequestFleet(ref.watch(allocationRepositoryProvider)));
 
 final askPaymentProvider = Provider<AskPayment>((ref) => AskPayment(ref.watch(allocationRepositoryProvider)));
@@ -59,8 +55,6 @@ final askPaymentProvider = Provider<AskPayment>((ref) => AskPayment(ref.watch(al
 final verifyPaymentProvider = Provider<VerifyPayment>((ref) => VerifyPayment(ref.watch(allocationRepositoryProvider)));
 
 final submitPdiProvider = Provider<SubmitPdi>((ref) => SubmitPdi(ref.watch(allocationRepositoryProvider)));
-
-final bypassPairingProvider = Provider<BypassPairing>((ref) => BypassPairing(ref.watch(allocationRepositoryProvider)));
 
 final getDeallocationRequestProvider = Provider<GetDeallocationRequest>(
   (ref) => GetDeallocationRequest(ref.watch(allocationRepositoryProvider)),

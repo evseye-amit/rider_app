@@ -9,7 +9,6 @@ enum RiderStage {
   payment,
   pdi,
   training,
-  devicePairing,
   active;
 
   String get route => switch (this) {
@@ -19,7 +18,7 @@ enum RiderStage {
     payment => Routes.deploymentPayment,
     pdi => Routes.deploymentPdi,
     training => Routes.deploymentTraining,
-    devicePairing || active => Routes.home,
+    active => Routes.home,
   };
 
   static RiderStage fromScreen(RiderScreen screen) => switch (screen) {
@@ -28,7 +27,6 @@ enum RiderStage {
     RiderScreen.payment => payment,
     RiderScreen.pdi => pdi,
     RiderScreen.training => training,
-    RiderScreen.devicePairing => devicePairing,
     RiderScreen.home => active,
   };
 }

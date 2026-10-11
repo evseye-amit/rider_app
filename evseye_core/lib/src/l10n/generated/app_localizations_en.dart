@@ -51,9 +51,6 @@ class AppL10nEn extends AppL10n {
   String get allocationAssignVehicle => 'Assign a vehicle';
 
   @override
-  String get allocationAttentionRequired => 'Attention required';
-
-  @override
   String get allocationBack => 'Back';
 
   @override
@@ -64,19 +61,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationBodyPaintwork => 'Body and paintwork';
-
-  @override
-  String get allocationBypassDeploy => 'Bypass and deploy';
-
-  @override
-  String get allocationBypassExplainer =>
-      'Use this when the IoT unit cannot be paired at the hub. The unit\'s current health is recorded with your reason.';
-
-  @override
-  String get allocationBypassPairing => 'Bypass pairing?';
-
-  @override
-  String get allocationBypassPairing2 => 'Bypass pairing';
 
   @override
   String get allocationChecklistRiderWillAcceptItem => 'The checklist the rider will accept item by item';
@@ -103,13 +87,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationCompleteDeAllocation => 'Complete this de-allocation?';
-
-  @override
-  String get allocationCompletesHandoverWithoutRiderPairing =>
-      'Completes the handover without the rider pairing the device';
-
-  @override
-  String get allocationCondition => 'Condition';
 
   @override
   String get allocationConfirmHaveReceivedAmountRider =>
@@ -152,9 +129,6 @@ class AppL10nEn extends AppL10n {
   String get allocationDeployed => 'Deployed';
 
   @override
-  String get allocationDevice => 'Device';
-
-  @override
   String get allocationEveryDeAllocationRequestHas => 'Every de-allocation request has been processed.';
 
   @override
@@ -177,13 +151,8 @@ class AppL10nEn extends AppL10n {
   String get allocationFront => 'Front';
 
   @override
-  String get allocationHandoverCompletedWithoutPairing => 'Handover completed without pairing';
-
-  @override
-  String get allocationHealthy => 'Healthy';
-
-  @override
-  String get allocationHeartbeat => 'Heartbeat';
+  String get allocationHandoverCompleteMessage =>
+      'Training is done and the scooter is with the rider. This handover is complete.';
 
   @override
   String get allocationHeartbeatStale => 'Heartbeat stale';
@@ -213,7 +182,7 @@ class AppL10nEn extends AppL10n {
   String get allocationInspectionSentRider2 => 'Inspection sent to the rider';
 
   @override
-  String get allocationInspectionTrainingPairing => 'Inspection, training, pairing';
+  String get allocationInspectionTraining => 'Inspection and training';
 
   @override
   String get allocationIotDevice => 'IoT device';
@@ -248,9 +217,6 @@ class AppL10nEn extends AppL10n {
       'Name the work partner or workshop that inspected the vehicle';
 
   @override
-  String get allocationNever => 'Never';
-
-  @override
   String get allocationNobodyWaiting => 'Nobody waiting';
 
   @override
@@ -264,9 +230,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationNothingTakeBack => 'Nothing to take back';
-
-  @override
-  String get allocationNotMapped => 'Not mapped';
 
   @override
   String get allocationNoVehiclesOut => 'No vehicles out';
@@ -318,9 +281,6 @@ class AppL10nEn extends AppL10n {
   String get allocationReason => 'Reason';
 
   @override
-  String get allocationReasonRequiredBypass => 'A reason is required to bypass';
-
-  @override
   String get allocationRentalFeeWeek => 'Rental fee (week)';
 
   @override
@@ -356,7 +316,7 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationRiderCompletingSafetyTrainingTheir =>
-      'The rider is completing the safety training in their app. Pairing opens once every mandatory module is done.';
+      'The rider is completing the safety training in their app. The scooter is handed over once every mandatory module is done.';
 
   @override
   String get allocationRiderGoingThroughChecklistTheir =>
@@ -364,10 +324,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationRiderNoLongerWaitingVehicle => 'This rider is no longer waiting for a vehicle.';
-
-  @override
-  String get allocationRiderPairedScooterRoadHandover =>
-      'The rider paired the scooter and is on the road. This handover is complete.';
 
   @override
   String get allocationRiding => 'Riding';
@@ -397,9 +353,6 @@ class AppL10nEn extends AppL10n {
   String get allocationSendRider => 'Send to rider';
 
   @override
-  String get allocationSim => 'SIM';
-
-  @override
   String get allocationStartReturn => 'Start a return';
 
   @override
@@ -407,9 +360,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationTalkingServer => 'Talking to the server…';
-
-  @override
-  String get allocationTrainingDonePairing => 'Training done · pairing';
 
   @override
   String get allocationTyresPressure => 'Tyres and pressure';
@@ -449,9 +399,6 @@ class AppL10nEn extends AppL10n {
   String get allocationWaitingRiderPageRefreshesIts => 'Waiting on the rider — this page refreshes on its own.';
 
   @override
-  String get allocationWaitingRiderPairBypass => 'Waiting for rider to pair — or bypass';
-
-  @override
   String get allocationWaitingRiderTraining => 'Waiting for rider: training';
 
   @override
@@ -468,7 +415,7 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationWritePdiChecklistRiderAccepts =>
-      'You write the PDI checklist; the rider accepts it, completes training and pairs the IoT unit.';
+      'You write the PDI checklist; the rider accepts it and completes training.';
 
   @override
   String get appGoHome => 'Go home';
@@ -784,9 +731,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get commonPaidDate => 'Paid to date';
-
-  @override
-  String get commonPaired => 'Paired';
 
   @override
   String get commonPayment => 'Payment';
@@ -1241,9 +1185,6 @@ class AppL10nEn extends AppL10n {
   String get deploymentPaidVia => 'Paid via';
 
   @override
-  String get deploymentPairIotUnit => 'Pair the IoT unit';
-
-  @override
   String get deploymentPaymentReceived => 'Payment received';
 
   @override
@@ -1413,9 +1354,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get errorInspectionWithRider => 'Inspection with rider';
-
-  @override
-  String get errorPairingIotDevice => 'Pairing the IoT device';
 
   @override
   String get errorPaymentPending => 'Payment pending';
@@ -3004,9 +2942,6 @@ class AppL10nEn extends AppL10n {
   String get rentalsVehicleRent => 'Vehicle rent';
 
   @override
-  String get ridePairingScooter => 'Pairing your scooter';
-
-  @override
   String get rideParkedLocked => 'Parked and locked.';
 
   @override
@@ -3068,9 +3003,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get rideScooterConnectedUsePowerButton => 'Your scooter is connected. Use the power button to switch it on.';
-
-  @override
-  String get rideTalkingIotUnitKeepPhone => 'Talking to the IoT unit. Keep your phone close.';
 
   @override
   String get rideVehicle => 'Vehicle is ON';

@@ -36,8 +36,4 @@ class DeploymentRepositoryImpl implements DeploymentRepository {
 
   @override
   Future<Result<DeploymentWorkflow>> completeTraining(String allocationId) => _api.completeTraining(allocationId);
-
-  @override
-  Future<Result<DeploymentWorkflow>> pair(String allocationId, String deviceNumber) =>
-      _api.pair(allocationId, deviceNumber);
 }

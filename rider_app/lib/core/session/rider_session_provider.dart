@@ -9,7 +9,6 @@ import '../../features/deployment/deployment_dependencies.dart';
 import '../../features/onboarding/onboarding_dependencies.dart';
 import 'rider_session.dart';
 import 'rider_stage.dart';
-import 'scooter_pairing_store.dart';
 
 export 'rider_session.dart';
 export 'rider_stage.dart';
@@ -19,13 +18,11 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
 
   TokenStore get _tokens => ref.read(tokenStoreProvider);
 
-  ScooterPairingStore get _pairingStore => ref.read(scooterPairingStoreProvider);
-
   @override
   RiderSession build() {
     ref.read(apiClientProvider).onSessionExpired = handleSessionExpired;
     ref.listen(localeProvider.select((p) => p.locale), (_, _) => _onLocaleChanged());
-    return RiderSession(scooterPaired: _pairingStore.paired);
+    return RiderSession();
   }
 
   Future<void> bootstrap() async {
@@ -122,15 +119,6 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     state = state.copyWith(vehicleOn: on);
   }
 
-  void setPairing(bool pairing) {
-    state = state.copyWith(pairing: pairing);
-  }
-
-  Future<void> markPaired() async {
-    await _pairingStore.setPaired(true);
-    state = state.copyWith(scooterPaired: true, pairing: false);
-  }
-
   Future<void> signOut() async {
     await ref.read(signOutProvider)();
     _clearSession();
@@ -170,7 +158,6 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
   }
 
   void _clearSession() {
-    unawaited(_pairingStore.reset());
     state = RiderSession(flags: state.flags);
   }
 }

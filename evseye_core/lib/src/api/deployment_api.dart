@@ -7,7 +7,6 @@ enum RiderScreen {
   payment,
   pdi,
   training,
-  devicePairing,
   home;
 
   static RiderScreen parse(String? wire) => switch (wire?.toUpperCase()) {
@@ -15,7 +14,6 @@ enum RiderScreen {
         'PAYMENT' => RiderScreen.payment,
         'PDI' => RiderScreen.pdi,
         'TRAINING' => RiderScreen.training,
-        'DEVICE_PAIRING' => RiderScreen.devicePairing,
         'HOME' => RiderScreen.home,
         'WAITING' || 'WAITING_FOR_FLEET' => RiderScreen.waiting,
         _ => RiderScreen.waiting,
@@ -29,7 +27,6 @@ enum DeploymentStatus {
   paymentPaid('PAYMENT_PAID'),
   pdiPendingRider('PDI_PENDING_RIDER'),
   trainingPending('TRAINING_PENDING'),
-  devicePairingPending('DEVICE_PAIRING_PENDING'),
   deployed('DEPLOYED'),
   unknown('');
 
@@ -45,7 +42,7 @@ enum DeploymentStatus {
   bool get isDeployed => this == deployed;
 
   bool get waitsOnRider => switch (this) {
-        paymentPending || pdiPendingRider || trainingPending || devicePairingPending => true,
+        paymentPending || pdiPendingRider || trainingPending => true,
         _ => false,
       };
 
@@ -56,7 +53,6 @@ enum DeploymentStatus {
         paymentPaid => ActiveLocale.strings.deploymentPaymentReceived,
         pdiPendingRider => ActiveLocale.strings.errorInspectionWithRider,
         trainingPending => ActiveLocale.strings.errorTrainingProgress,
-        devicePairingPending => ActiveLocale.strings.errorPairingIotDevice,
         deployed => ActiveLocale.strings.allocationDeployed,
         unknown => ActiveLocale.strings.errorUnknown,
       };
@@ -105,9 +101,6 @@ class DeploymentWorkflow {
     this.paymentPaidAt,
     this.riderPdiAcceptedAt,
     this.trainingCompletedAt,
-    this.pairedAt,
-    this.pairingBypassedAt,
-    this.pairingBypassReason,
     this.createdAt,
     this.updatedAt,
   });
@@ -127,9 +120,6 @@ class DeploymentWorkflow {
         paymentPaidAt: _date(json['paymentPaidAt']),
         riderPdiAcceptedAt: _date(json['riderPdiAcceptedAt']),
         trainingCompletedAt: _date(json['trainingCompletedAt']),
-        pairedAt: _date(json['pairedAt']),
-        pairingBypassedAt: _date(json['pairingBypassedAt']),
-        pairingBypassReason: json['pairingBypassReason']?.toString(),
         createdAt: _date(json['createdAt']),
         updatedAt: _date(json['updatedAt']),
       );
@@ -144,9 +134,6 @@ class DeploymentWorkflow {
   final DateTime? paymentPaidAt;
   final DateTime? riderPdiAcceptedAt;
   final DateTime? trainingCompletedAt;
-  final DateTime? pairedAt;
-  final DateTime? pairingBypassedAt;
-  final String? pairingBypassReason;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 }
@@ -311,7 +298,8 @@ class DeploymentAllocation {
   final DeploymentFleet? fleet;
   final DeploymentWorkflow? workflow;
 
-  DeploymentStatus get deploymentStatus => workflow?.status ?? DeploymentStatus.unknown;
+  DeploymentStatus get deploymentStatus =>
+      workflow?.status ?? (status == 'ACTIVE' ? DeploymentStatus.deployed : DeploymentStatus.unknown);
 }
 
 class PaymentLineItem {
@@ -546,60 +534,6 @@ class EligibleFleet {
       iotLastHeartbeatAt != null && DateTime.now().difference(iotLastHeartbeatAt!) <= const Duration(minutes: 15);
 }
 
-class IotHealth {
-  const IotHealth({
-    required this.deploymentStatus,
-    required this.deviceNumber,
-    required this.heartbeatFresh,
-    required this.isOnline,
-    required this.simStatus,
-    required this.workingCondition,
-    this.imei,
-    this.model,
-    this.provider,
-    this.heartbeatAt,
-    this.heartbeatAgeSeconds,
-    this.simLastFour,
-  });
-
-  factory IotHealth.fromJson(Map<String, dynamic> json) {
-    final Map<String, dynamic> device = Map<String, dynamic>.from(json['device'] as Map? ?? const {});
-    final Map<String, dynamic> heartbeat = Map<String, dynamic>.from(json['heartbeat'] as Map? ?? const {});
-    final Map<String, dynamic> sim = Map<String, dynamic>.from(json['sim'] as Map? ?? const {});
-    return IotHealth(
-      deploymentStatus: DeploymentStatus.parse(json['deploymentStatus']?.toString()),
-      deviceNumber: device['deviceNumber']?.toString() ?? '',
-      imei: device['imei']?.toString(),
-      model: device['model']?.toString(),
-      provider: device['provider']?.toString(),
-      heartbeatAt: _date(heartbeat['receivedAt']),
-      heartbeatAgeSeconds: (heartbeat['ageSeconds'] as num?)?.toInt(),
-      heartbeatFresh: heartbeat['isFresh'] == true,
-      isOnline: heartbeat['isOnline'] == true,
-      simStatus: sim['status']?.toString() ?? 'UNKNOWN',
-      simLastFour: sim['numberLastFour']?.toString(),
-      workingCondition: json['workingCondition']?.toString() ?? 'ATTENTION_REQUIRED',
-    );
-  }
-
-  final DeploymentStatus deploymentStatus;
-  final String deviceNumber;
-  final String? imei;
-  final String? model;
-  final String? provider;
-  final DateTime? heartbeatAt;
-  final int? heartbeatAgeSeconds;
-  final bool heartbeatFresh;
-  final bool isOnline;
-
-  final String simStatus;
-  final String? simLastFour;
-
-  final String workingCondition;
-
-  bool get isHealthy => workingCondition == 'HEALTHY';
-}
-
 class AllocationEvidence {
   const AllocationEvidence({
     required this.inspectionId,
@@ -706,13 +640,6 @@ class DeploymentApi {
         parse: (data) => DeploymentWorkflow.fromJson(Map<String, dynamic>.from(data as Map)),
       );
 
-  Future<Result<DeploymentWorkflow>> pair(String allocationId, String deviceNumber) =>
-      _client.post<DeploymentWorkflow>(
-        '$_base/$allocationId/pair',
-        body: {'deviceNumber': deviceNumber},
-        parse: (data) => DeploymentWorkflow.fromJson(Map<String, dynamic>.from(data as Map)),
-      );
-
   Future<Result<List<PendingRider>>> pendingRiders() => _client.get<List<PendingRider>>(
         '$_base/fleet-manager/pending-riders',
         parse: (data) => (data as List<dynamic>)
@@ -781,18 +708,6 @@ class DeploymentApi {
           'workPartnerName': workPartnerName,
           'checklist': checklist.map((i) => i.toJson()).toList(growable: false),
         },
-        parse: (data) => DeploymentWorkflow.fromJson(Map<String, dynamic>.from(data as Map)),
-      );
-
-  Future<Result<IotHealth>> iotHealth(String allocationId) => _client.get<IotHealth>(
-        '$_base/$allocationId/iot-health',
-        parse: (data) => IotHealth.fromJson(Map<String, dynamic>.from(data as Map)),
-      );
-
-  Future<Result<DeploymentWorkflow>> bypassPairing(String allocationId, String remarks) =>
-      _client.post<DeploymentWorkflow>(
-        '$_base/$allocationId/pair/bypass',
-        body: {'remarks': remarks},
         parse: (data) => DeploymentWorkflow.fromJson(Map<String, dynamic>.from(data as Map)),
       );
 }

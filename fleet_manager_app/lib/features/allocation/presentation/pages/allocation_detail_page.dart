@@ -2,7 +2,9 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../app/router/app_routes.dart';
 import '../providers/deployment_detail_provider.dart';
 import '../widgets/allocation_widgets.dart';
 
@@ -128,12 +130,8 @@ class _Loaded extends ConsumerWidget {
                 value: fleet?.fleetCode ?? '—',
                 icon: Icons.qr_code_rounded,
               ),
-              KeyValueRow(
-                label: context.l10n.allocationIotDevice,
-                value: fleet?.iotDeviceNumber ?? context.l10n.allocationNotMapped,
-                icon: Icons.sensors_rounded,
-                valueColor: fleet?.iotDeviceNumber == null ? AppColors.warning : null,
-              ),
+              if (fleet?.iotDeviceNumber case final String device)
+                KeyValueRow(label: context.l10n.allocationIotDevice, value: device, icon: Icons.sensors_rounded),
             ],
           ),
         ),
@@ -145,8 +143,6 @@ class _Loaded extends ConsumerWidget {
         ),
         const Gap.lg(),
         if (status == DeploymentStatus.paymentPaid) _EvidenceCard(evidence: detail.evidence),
-        if (status == DeploymentStatus.devicePairingPending)
-          _IotCard(allocationId: allocationId, health: detail.iotHealth),
         if (status == DeploymentStatus.pdiPendingRider || status == DeploymentStatus.trainingPending)
           _RiderTurnCard(status: status),
         if (status.isDeployed)
@@ -154,7 +150,7 @@ class _Loaded extends ConsumerWidget {
             art: BrandArt.success,
             artSize: 120,
             title: context.l10n.allocationDeployed,
-            message: context.l10n.allocationRiderPairedScooterRoadHandover,
+            message: context.l10n.allocationHandoverCompleteMessage,
           ),
       ],
     );
@@ -167,7 +163,6 @@ String _nextActionLabel(AppL10n l10n, DeploymentStatus status) => switch (status
   DeploymentStatus.paymentPaid => l10n.commonSubmitInspection,
   DeploymentStatus.pdiPendingRider => l10n.allocationWaitingRiderAcceptInspection,
   DeploymentStatus.trainingPending => l10n.allocationWaitingRiderFinishTraining,
-  DeploymentStatus.devicePairingPending => l10n.allocationWaitingRiderPairBypass,
   DeploymentStatus.deployed => l10n.allocationDeployed,
   DeploymentStatus.unknown => l10n.commonRefresh,
 };
@@ -186,8 +181,10 @@ class _Band extends StatelessWidget {
         Row(
           children: [
             Builder(
-              builder: (context) =>
-                  InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
+              builder: (context) => InkCircleButton(
+                icon: Icons.arrow_back_rounded,
+                onTap: () => context.canPop() ? context.pop() : context.go(Routes.allocations),
+              ),
             ),
             const Spacer(),
             StatusChip(
@@ -274,64 +271,6 @@ class _EvidenceCard extends StatelessWidget {
   }
 }
 
-class _IotCard extends ConsumerWidget {
-  const _IotCard({required this.allocationId, required this.health});
-
-  final String allocationId;
-  final IotHealth? health;
-
-  Future<void> _refresh(BuildContext context, WidgetRef ref) async {
-    final Result<IotHealth> result = await ref.read(deploymentDetailProvider(allocationId).notifier).refreshIotHealth();
-    if (!context.mounted) return;
-    if (result case Err<IotHealth>(:final failure)) AppSnack.error(context, failure.message);
-  }
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final IotHealth? current = health;
-    return ModuleCard(
-      title: context.l10n.commonIotUnit,
-      leading: IconTile(
-        icon: Icons.sensors_rounded,
-        tone: current == null ? AppColors.textMuted : (current.isHealthy ? AppColors.success : AppColors.warning),
-        solid: true,
-        size: 28,
-      ),
-      actionLabel: context.l10n.commonRefresh,
-      onAction: () => _refresh(context, ref),
-      child: current == null
-          ? const ShimmerBox(height: 60)
-          : Column(
-              children: [
-                KeyValueRow(
-                  label: context.l10n.allocationDevice,
-                  value: current.deviceNumber,
-                  icon: Icons.qr_code_2_rounded,
-                ),
-                KeyValueRow(
-                  label: context.l10n.allocationHeartbeat,
-                  value: current.heartbeatAt == null
-                      ? context.l10n.allocationNever
-                      : '${Fmt.relative(current.heartbeatAt!)}${current.heartbeatFresh ? '' : ' · stale'}',
-                  icon: Icons.favorite_rounded,
-                  valueColor: current.heartbeatFresh ? AppColors.success : AppColors.warning,
-                ),
-                KeyValueRow(
-                  label: context.l10n.allocationSim,
-                  value: '${current.simStatus}${current.simLastFour == null ? '' : ' · ••${current.simLastFour}'}',
-                  icon: Icons.sim_card_rounded,
-                ),
-                KeyValueRow(
-                  label: context.l10n.allocationCondition,
-                  value: current.isHealthy ? context.l10n.allocationHealthy : context.l10n.allocationAttentionRequired,
-                  icon: Icons.health_and_safety_rounded,
-                  valueColor: current.isHealthy ? AppColors.success : AppColors.warning,
-                ),
-              ],
-            ),
-    );
-  }
-}
 
 class _RiderTurnCard extends StatelessWidget {
   const _RiderTurnCard({required this.status});
@@ -418,41 +357,6 @@ class _Footer extends ConsumerWidget {
     if (context.mounted) _announce(context, submitted, context.l10n.allocationInspectionSentRider2);
   }
 
-  Future<void> _bypass(BuildContext context, WidgetRef ref) async {
-    final TextEditingController controller = TextEditingController();
-    final String? remarks = await AppSheet.show<String>(
-      context,
-      title: context.l10n.allocationBypassPairing,
-      subtitle: context.l10n.allocationCompletesHandoverWithoutRiderPairing,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(context.l10n.allocationBypassExplainer, style: AppText.bodySmall.copyWith(height: 1.5)),
-          const Gap.lg(),
-          AppTextField(
-            label: context.l10n.allocationReason,
-            hint: context.l10n.maintenanceHintUnitNotPowering,
-            maxLines: 3,
-            controller: controller,
-            autofocus: true,
-          ),
-        ],
-      ),
-      footer: PrimaryButton(
-        label: context.l10n.allocationBypassDeploy,
-        icon: Icons.warning_amber_rounded,
-        onPressed: () => Navigator.of(context).pop(controller.text.trim()),
-      ),
-    );
-    if (remarks == null || !context.mounted) return;
-    if (remarks.isEmpty) {
-      AppSnack.error(context, context.l10n.allocationReasonRequiredBypass);
-      return;
-    }
-    final Result<void> bypassed = await _notifier(ref).bypassPairing(remarks);
-    if (context.mounted) _announce(context, bypassed, context.l10n.allocationHandoverCompletedWithoutPairing);
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final DeploymentStatus status = detail.status;
@@ -484,11 +388,6 @@ class _Footer extends ConsumerWidget {
         Icons.hourglass_top_rounded,
         null,
       ),
-      DeploymentStatus.devicePairingPending => (
-        context.l10n.allocationBypassPairing2,
-        Icons.sensors_off_rounded,
-        () => _bypass(context, ref),
-      ),
       DeploymentStatus.deployed => (context.l10n.allocationDeployed, Icons.verified_rounded, null),
       DeploymentStatus.unknown => (context.l10n.commonRefresh, Icons.refresh_rounded, () => _notifier(ref).refresh()),
     };
@@ -504,13 +403,7 @@ class _Footer extends ConsumerWidget {
         color: AppColors.canvas,
         border: Border(top: BorderSide(color: AppColors.stroke)),
       ),
-      child: PrimaryButton(
-        label: label,
-        icon: icon,
-        loading: detail.busy,
-        onPressed: detail.busy ? null : onPressed,
-        fillColor: status == DeploymentStatus.devicePairingPending ? AppColors.warning : null,
-      ),
+      child: PrimaryButton(label: label, icon: icon, loading: detail.busy, onPressed: detail.busy ? null : onPressed),
     );
   }
 }

@@ -181,7 +181,6 @@ String? _redirect(RiderStage stage, FirstRunStep? firstRun, String path) {
     RiderStage.payment ||
     RiderStage.pdi ||
     RiderStage.training => path == stage.route ? null : stage.route,
-    RiderStage.devicePairing ||
     RiderStage.active => path.startsWith(Routes.onboarding) || path.startsWith('/deployment') ? Routes.home : null,
   };
 }

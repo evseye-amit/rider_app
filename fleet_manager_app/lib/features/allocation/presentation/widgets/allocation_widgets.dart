@@ -243,12 +243,7 @@ class DeploymentTimeline extends StatelessWidget {
         context.l10n.allocationInspectionAcceptedTraining,
         workflow?.riderPdiAcceptedAt,
       ),
-      (
-        DeploymentStatus.devicePairingPending,
-        context.l10n.allocationTrainingDonePairing,
-        workflow?.trainingCompletedAt,
-      ),
-      (DeploymentStatus.deployed, context.l10n.allocationDeployed, workflow?.pairedAt ?? workflow?.pairingBypassedAt),
+      (DeploymentStatus.deployed, context.l10n.allocationDeployed, workflow?.trainingCompletedAt),
     ];
     final int current = status == DeploymentStatus.unknown ? -1 : status.step;
 

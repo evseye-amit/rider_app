@@ -51,9 +51,6 @@ class AppL10nTe extends AppL10n {
   String get allocationAssignVehicle => 'వాహనం అప్పగించండి';
 
   @override
-  String get allocationAttentionRequired => 'శ్రద్ధ అవసరం';
-
-  @override
   String get allocationBack => 'వెనక్కి';
 
   @override
@@ -64,19 +61,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationBodyPaintwork => 'బాడీ మరియు పెయింట్ పని';
-
-  @override
-  String get allocationBypassDeploy => 'వదిలేసి ముందుకు సాగండి';
-
-  @override
-  String get allocationBypassExplainer =>
-      'పరికరాన్ని హబ్‌లో జత చేయలేనప్పుడు దీన్ని వాడండి. పరికరం ప్రస్తుత స్థితి మీ కారణంతో నమోదవుతుంది.';
-
-  @override
-  String get allocationBypassPairing => 'జత చేయడం వదిలేయాలా?';
-
-  @override
-  String get allocationBypassPairing2 => 'జత చేయడం వదిలేయండి';
 
   @override
   String get allocationChecklistRiderWillAcceptItem => 'రైడర్ ఒక్కొక్కటిగా అంగీకరించే జాబితా';
@@ -102,12 +86,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationCompleteDeAllocation => 'ఈ వాపసును పూర్తి చేయాలా?';
-
-  @override
-  String get allocationCompletesHandoverWithoutRiderPairing => 'రైడర్ పరికరం జత చేయకుండానే అప్పగింత పూర్తి చేస్తుంది';
-
-  @override
-  String get allocationCondition => 'స్థితి';
 
   @override
   String get allocationConfirmHaveReceivedAmountRider =>
@@ -151,9 +129,6 @@ class AppL10nTe extends AppL10n {
   String get allocationDeployed => 'మోహరించబడింది';
 
   @override
-  String get allocationDevice => 'పరికరం';
-
-  @override
   String get allocationEveryDeAllocationRequestHas => 'ప్రతి వాపసు అభ్యర్థన పూర్తయింది.';
 
   @override
@@ -176,13 +151,7 @@ class AppL10nTe extends AppL10n {
   String get allocationFront => 'ముందు';
 
   @override
-  String get allocationHandoverCompletedWithoutPairing => 'జత చేయకుండానే అప్పగింత పూర్తయింది';
-
-  @override
-  String get allocationHealthy => 'బాగుంది';
-
-  @override
-  String get allocationHeartbeat => 'సంకేతం';
+  String get allocationHandoverCompleteMessage => 'శిక్షణ పూర్తయింది, స్కూటర్ రైడర్ వద్ద ఉంది. ఈ అప్పగింత పూర్తయింది.';
 
   @override
   String get allocationHeartbeatStale => 'సంకేతం పాతది';
@@ -212,7 +181,7 @@ class AppL10nTe extends AppL10n {
   String get allocationInspectionSentRider2 => 'తనిఖీ రైడర్‌కు పంపబడింది';
 
   @override
-  String get allocationInspectionTrainingPairing => 'తనిఖీ, శిక్షణ, జత చేయడం';
+  String get allocationInspectionTraining => 'తనిఖీ మరియు శిక్షణ';
 
   @override
   String get allocationIotDevice => 'పరికరం';
@@ -247,9 +216,6 @@ class AppL10nTe extends AppL10n {
       'వాహనాన్ని తనిఖీ చేసిన పని భాగస్వామి లేదా వర్క్‌షాప్ పేరు చెప్పండి';
 
   @override
-  String get allocationNever => 'ఎప్పుడూ లేదు';
-
-  @override
   String get allocationNobodyWaiting => 'ఎవరూ ఎదురుచూడటం లేదు';
 
   @override
@@ -263,9 +229,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationNothingTakeBack => 'వాపసు తీసుకోవడానికి ఏమీ లేదు';
-
-  @override
-  String get allocationNotMapped => 'జత చేయలేదు';
 
   @override
   String get allocationNoVehiclesOut => 'ఏ వాహనమూ బయట లేదు';
@@ -317,9 +280,6 @@ class AppL10nTe extends AppL10n {
   String get allocationReason => 'కారణం';
 
   @override
-  String get allocationReasonRequiredBypass => 'వదిలేయడానికి కారణం అవసరం';
-
-  @override
   String get allocationRentalFeeWeek => 'అద్దె (వారం)';
 
   @override
@@ -355,7 +315,7 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationRiderCompletingSafetyTrainingTheir =>
-      'రైడర్ తమ యాప్‌లో భద్రతా శిక్షణ పూర్తి చేస్తున్నారు. ప్రతి తప్పనిసరి పాఠం పూర్తయ్యాక జత చేయడం తెరుచుకుంటుంది.';
+      'రైడర్ తమ యాప్‌లో భద్రతా శిక్షణ పూర్తి చేస్తున్నారు. ప్రతి తప్పనిసరి పాఠం పూర్తయ్యాక స్కూటర్ అప్పగిస్తారు.';
 
   @override
   String get allocationRiderGoingThroughChecklistTheir =>
@@ -363,10 +323,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationRiderNoLongerWaitingVehicle => 'ఈ రైడర్ ఇప్పుడు వాహనం కోసం ఎదురుచూడటం లేదు.';
-
-  @override
-  String get allocationRiderPairedScooterRoadHandover =>
-      'రైడర్ స్కూటర్ జత చేసి రోడ్డుపైకి వెళ్ళారు. ఈ అప్పగింత పూర్తయింది.';
 
   @override
   String get allocationRiding => 'ప్రయాణంలో';
@@ -396,9 +352,6 @@ class AppL10nTe extends AppL10n {
   String get allocationSendRider => 'రైడర్‌కు పంపండి';
 
   @override
-  String get allocationSim => 'సిమ్';
-
-  @override
   String get allocationStartReturn => 'వాపసు మొదలుపెట్టండి';
 
   @override
@@ -406,9 +359,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationTalkingServer => 'సర్వర్‌తో సంబంధం జరుగుతోంది…';
-
-  @override
-  String get allocationTrainingDonePairing => 'శిక్షణ పూర్తి · జత చేయడం';
 
   @override
   String get allocationTyresPressure => 'టైర్లు మరియు గాలి';
@@ -448,9 +398,6 @@ class AppL10nTe extends AppL10n {
   String get allocationWaitingRiderPageRefreshesIts => 'రైడర్ కోసం వేచి ఉంది, ఈ పేజీ దానంతట అదే రిఫ్రెష్ అవుతుంది.';
 
   @override
-  String get allocationWaitingRiderPairBypass => 'రైడర్ జత చేయడం కోసం ఎదురుచూస్తోంది, లేదా వదిలేయండి';
-
-  @override
   String get allocationWaitingRiderTraining => 'రైడర్ కోసం వేచి ఉంది: శిక్షణ';
 
   @override
@@ -467,7 +414,7 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationWritePdiChecklistRiderAccepts =>
-      'మీరు తనిఖీ జాబితా రాస్తారు, రైడర్ దాన్ని అంగీకరించి, శిక్షణ పూర్తి చేసి, పరికరాన్ని జత చేస్తారు.';
+      'మీరు తనిఖీ జాబితా రాస్తారు, రైడర్ దాన్ని అంగీకరించి శిక్షణ పూర్తి చేస్తారు.';
 
   @override
   String get appGoHome => 'హోమ్‌కు వెళ్ళండి';
@@ -782,9 +729,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get commonPaidDate => 'ఇప్పటివరకు చెల్లింపు';
-
-  @override
-  String get commonPaired => 'జత అయింది';
 
   @override
   String get commonPayment => 'చెల్లింపు';
@@ -1240,9 +1184,6 @@ class AppL10nTe extends AppL10n {
   String get deploymentPaidVia => 'దీని ద్వారా చెల్లింపు';
 
   @override
-  String get deploymentPairIotUnit => 'పరికరాన్ని జత చేయండి';
-
-  @override
   String get deploymentPaymentReceived => 'చెల్లింపు అందింది';
 
   @override
@@ -1412,9 +1353,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get errorInspectionWithRider => 'తనిఖీ రైడర్ వద్ద';
-
-  @override
-  String get errorPairingIotDevice => 'పరికరం జత చేయబడుతోంది';
 
   @override
   String get errorPaymentPending => 'చెల్లింపు పెండింగ్';
@@ -3006,9 +2944,6 @@ class AppL10nTe extends AppL10n {
   String get rentalsVehicleRent => 'వాహన అద్దె';
 
   @override
-  String get ridePairingScooter => 'మీ స్కూటర్ జత చేయబడుతోంది';
-
-  @override
   String get rideParkedLocked => 'నిలిపి తాళం వేయబడింది.';
 
   @override
@@ -3070,9 +3005,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get rideScooterConnectedUsePowerButton => 'మీ స్కూటర్ జత అయింది. ఆన్ చేయడానికి పవర్ బటన్ నొక్కండి.';
-
-  @override
-  String get rideTalkingIotUnitKeepPhone => 'పరికరంతో సంబంధం జరుగుతోంది. ఫోన్ దగ్గరే ఉంచండి.';
 
   @override
   String get rideVehicle => 'వాహనం ఆన్‌లో ఉంది';

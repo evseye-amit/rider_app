@@ -36,7 +36,6 @@ abstract final class FeatureKeys {
   static const String insuranceNominee = 'INSURANCE_NOMINEE';
   static const String agreementESign = 'AGREEMENT_E_SIGN';
   static const String pdiChecklist = 'PDI_CHECKLIST';
-  static const String devicePairing = 'DEVICE_PAIRING';
 
   static const String referralBenefit = 'REFERRAL_BENEFIT';
   static const String training = 'TRAINING';
@@ -79,7 +78,6 @@ abstract final class FeatureKeys {
     insuranceNominee,
     agreementESign,
     pdiChecklist,
-    devicePairing,
     referralBenefit,
     training,
   };

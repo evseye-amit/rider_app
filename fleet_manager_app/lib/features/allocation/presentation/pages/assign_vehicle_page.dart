@@ -29,7 +29,7 @@ class _AssignVehiclePageState extends ConsumerState<AssignVehiclePage> {
       title: 'Reserve ${vehicle.vehicleNumber}?',
       message:
           '${vehicle.vehicleNumber} will be reserved for ${rider.name}. The handover — vehicle request, '
-          'payment, inspection, training and pairing — then runs from the allocation desk.',
+          'payment, inspection and training — then runs from the allocation desk.',
       confirmLabel: context.l10n.allocationAllocateVehicle,
       icon: Icons.check_circle_rounded,
       tone: AppColors.success,

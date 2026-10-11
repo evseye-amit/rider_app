@@ -178,12 +178,6 @@ abstract class AppL10n {
   /// **'Assign a vehicle'**
   String get allocationAssignVehicle;
 
-  /// Attention required
-  ///
-  /// In en, this message translates to:
-  /// **'Attention required'**
-  String get allocationAttentionRequired;
-
   /// Back
   ///
   /// In en, this message translates to:
@@ -207,30 +201,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Body and paintwork'**
   String get allocationBodyPaintwork;
-
-  /// Bypass and deploy
-  ///
-  /// In en, this message translates to:
-  /// **'Bypass and deploy'**
-  String get allocationBypassDeploy;
-
-  /// Use this when the IoT unit cannot be paired at the hub. The unit's current health is recorded with your reason.
-  ///
-  /// In en, this message translates to:
-  /// **'Use this when the IoT unit cannot be paired at the hub. The unit\'s current health is recorded with your reason.'**
-  String get allocationBypassExplainer;
-
-  /// Bypass pairing?
-  ///
-  /// In en, this message translates to:
-  /// **'Bypass pairing?'**
-  String get allocationBypassPairing;
-
-  /// Bypass pairing
-  ///
-  /// In en, this message translates to:
-  /// **'Bypass pairing'**
-  String get allocationBypassPairing2;
 
   /// The checklist the rider will accept item by item
   ///
@@ -279,18 +249,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Complete this de-allocation?'**
   String get allocationCompleteDeAllocation;
-
-  /// Completes the handover without the rider pairing the device
-  ///
-  /// In en, this message translates to:
-  /// **'Completes the handover without the rider pairing the device'**
-  String get allocationCompletesHandoverWithoutRiderPairing;
-
-  /// Condition
-  ///
-  /// In en, this message translates to:
-  /// **'Condition'**
-  String get allocationCondition;
 
   /// Confirm you have received the amount the rider submitted a reference for. This cannot be undone.
   ///
@@ -370,12 +328,6 @@ abstract class AppL10n {
   /// **'Deployed'**
   String get allocationDeployed;
 
-  /// Device
-  ///
-  /// In en, this message translates to:
-  /// **'Device'**
-  String get allocationDevice;
-
   /// Every de-allocation request has been processed.
   ///
   /// In en, this message translates to:
@@ -418,23 +370,11 @@ abstract class AppL10n {
   /// **'Front'**
   String get allocationFront;
 
-  /// Handover completed without pairing
+  /// Training is done and the scooter is with the rider. This handover is complete.
   ///
   /// In en, this message translates to:
-  /// **'Handover completed without pairing'**
-  String get allocationHandoverCompletedWithoutPairing;
-
-  /// Healthy
-  ///
-  /// In en, this message translates to:
-  /// **'Healthy'**
-  String get allocationHealthy;
-
-  /// Heartbeat
-  ///
-  /// In en, this message translates to:
-  /// **'Heartbeat'**
-  String get allocationHeartbeat;
+  /// **'Training is done and the scooter is with the rider. This handover is complete.'**
+  String get allocationHandoverCompleteMessage;
 
   /// Heartbeat stale
   ///
@@ -490,11 +430,11 @@ abstract class AppL10n {
   /// **'Inspection sent to the rider'**
   String get allocationInspectionSentRider2;
 
-  /// Inspection, training, pairing
+  /// Inspection and training
   ///
   /// In en, this message translates to:
-  /// **'Inspection, training, pairing'**
-  String get allocationInspectionTrainingPairing;
+  /// **'Inspection and training'**
+  String get allocationInspectionTraining;
 
   /// IoT device
   ///
@@ -556,12 +496,6 @@ abstract class AppL10n {
   /// **'Name the work partner or workshop that inspected the vehicle'**
   String get allocationNameWorkPartnerWorkshopInspected;
 
-  /// Never
-  ///
-  /// In en, this message translates to:
-  /// **'Never'**
-  String get allocationNever;
-
   /// Nobody waiting
   ///
   /// In en, this message translates to:
@@ -591,12 +525,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Nothing to take back'**
   String get allocationNothingTakeBack;
-
-  /// Not mapped
-  ///
-  /// In en, this message translates to:
-  /// **'Not mapped'**
-  String get allocationNotMapped;
 
   /// No vehicles out
   ///
@@ -694,12 +622,6 @@ abstract class AppL10n {
   /// **'Reason'**
   String get allocationReason;
 
-  /// A reason is required to bypass
-  ///
-  /// In en, this message translates to:
-  /// **'A reason is required to bypass'**
-  String get allocationReasonRequiredBypass;
-
   /// Rental fee (week)
   ///
   /// In en, this message translates to:
@@ -766,10 +688,10 @@ abstract class AppL10n {
   /// **'Rider code'**
   String get allocationRiderCode;
 
-  /// The rider is completing the safety training in their app. Pairing opens once every mandatory module is done.
+  /// The rider is completing the safety training in their app. The scooter is handed over once every mandatory module is done.
   ///
   /// In en, this message translates to:
-  /// **'The rider is completing the safety training in their app. Pairing opens once every mandatory module is done.'**
+  /// **'The rider is completing the safety training in their app. The scooter is handed over once every mandatory module is done.'**
   String get allocationRiderCompletingSafetyTrainingTheir;
 
   /// The rider is going through your checklist in their app. Items they reject come back with a note.
@@ -783,12 +705,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'This rider is no longer waiting for a vehicle.'**
   String get allocationRiderNoLongerWaitingVehicle;
-
-  /// The rider paired the scooter and is on the road. This handover is complete.
-  ///
-  /// In en, this message translates to:
-  /// **'The rider paired the scooter and is on the road. This handover is complete.'**
-  String get allocationRiderPairedScooterRoadHandover;
 
   /// Riding
   ///
@@ -844,12 +760,6 @@ abstract class AppL10n {
   /// **'Send to rider'**
   String get allocationSendRider;
 
-  /// SIM
-  ///
-  /// In en, this message translates to:
-  /// **'SIM'**
-  String get allocationSim;
-
   /// Start a return
   ///
   /// In en, this message translates to:
@@ -867,12 +777,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Talking to the server…'**
   String get allocationTalkingServer;
-
-  /// Training done · pairing
-  ///
-  /// In en, this message translates to:
-  /// **'Training done · pairing'**
-  String get allocationTrainingDonePairing;
 
   /// Tyres and pressure
   ///
@@ -946,12 +850,6 @@ abstract class AppL10n {
   /// **'Waiting on the rider — this page refreshes on its own.'**
   String get allocationWaitingRiderPageRefreshesIts;
 
-  /// Waiting for rider to pair — or bypass
-  ///
-  /// In en, this message translates to:
-  /// **'Waiting for rider to pair — or bypass'**
-  String get allocationWaitingRiderPairBypass;
-
   /// Waiting for rider: training
   ///
   /// In en, this message translates to:
@@ -982,10 +880,10 @@ abstract class AppL10n {
   /// **'The workshop or technician who inspected the vehicle'**
   String get allocationWorkshopTechnicianWhoInspectedVehicle;
 
-  /// You write the PDI checklist; the rider accepts it, completes training and pairs the IoT unit.
+  /// You write the PDI checklist; the rider accepts it and completes training.
   ///
   /// In en, this message translates to:
-  /// **'You write the PDI checklist; the rider accepts it, completes training and pairs the IoT unit.'**
+  /// **'You write the PDI checklist; the rider accepts it and completes training.'**
   String get allocationWritePdiChecklistRiderAccepts;
 
   /// Go home
@@ -1605,12 +1503,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Paid to date'**
   String get commonPaidDate;
-
-  /// Paired
-  ///
-  /// In en, this message translates to:
-  /// **'Paired'**
-  String get commonPaired;
 
   /// Payment
   ///
@@ -2494,12 +2386,6 @@ abstract class AppL10n {
   /// **'Paid via'**
   String get deploymentPaidVia;
 
-  /// Pair the IoT unit
-  ///
-  /// In en, this message translates to:
-  /// **'Pair the IoT unit'**
-  String get deploymentPairIotUnit;
-
   /// Payment received
   ///
   /// In en, this message translates to:
@@ -2835,12 +2721,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Inspection with rider'**
   String get errorInspectionWithRider;
-
-  /// Pairing the IoT device
-  ///
-  /// In en, this message translates to:
-  /// **'Pairing the IoT device'**
-  String get errorPairingIotDevice;
 
   /// Payment pending
   ///
@@ -5932,12 +5812,6 @@ abstract class AppL10n {
   /// **'Vehicle rent'**
   String get rentalsVehicleRent;
 
-  /// Pairing your scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Pairing your scooter'**
-  String get ridePairingScooter;
-
   /// Parked and locked.
   ///
   /// In en, this message translates to:
@@ -6063,12 +5937,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Your scooter is connected. Use the power button to switch it on.'**
   String get rideScooterConnectedUsePowerButton;
-
-  /// Talking to the IoT unit. Keep your phone close.
-  ///
-  /// In en, this message translates to:
-  /// **'Talking to the IoT unit. Keep your phone close.'**
-  String get rideTalkingIotUnitKeepPhone;
 
   /// Vehicle is ON
   ///

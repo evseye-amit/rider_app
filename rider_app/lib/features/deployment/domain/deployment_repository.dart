@@ -20,6 +20,4 @@ abstract interface class DeploymentRepository {
   Future<Result<DeploymentWorkflow>> markTrainingViewed(String allocationId, String contentCode);
 
   Future<Result<DeploymentWorkflow>> completeTraining(String allocationId);
-
-  Future<Result<DeploymentWorkflow>> pair(String allocationId, String deviceNumber);
 }

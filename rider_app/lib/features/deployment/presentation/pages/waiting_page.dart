@@ -190,7 +190,6 @@ class _Steps extends StatelessWidget {
     (DeploymentStatus.paymentPending, l10n.commonPayment),
     (DeploymentStatus.pdiPendingRider, l10n.deploymentInspection),
     (DeploymentStatus.trainingPending, l10n.onboardingStepTraining),
-    (DeploymentStatus.devicePairingPending, l10n.deploymentPairIotUnit),
     (DeploymentStatus.deployed, l10n.deploymentRide),
   ];
 

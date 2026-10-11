@@ -102,7 +102,7 @@ class _AllocationDonePageState extends State<AllocationDonePage> with SingleTick
                 Gap.md(),
                 _NextStep(
                   icon: Icons.fact_check_rounded,
-                  title: context.l10n.allocationInspectionTrainingPairing,
+                  title: context.l10n.allocationInspectionTraining,
                   message: context.l10n.allocationWritePdiChecklistRiderAccepts,
                 ),
               ],

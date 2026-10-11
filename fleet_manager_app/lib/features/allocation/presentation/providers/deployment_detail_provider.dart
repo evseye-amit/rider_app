@@ -6,33 +6,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../allocation_dependencies.dart';
 import '../../domain/usecases/ask_payment.dart';
-import '../../domain/usecases/bypass_pairing.dart';
 import '../../domain/usecases/submit_pdi.dart';
 
 class DeploymentDetail extends Equatable {
-  const DeploymentDetail({required this.request, this.evidence, this.iotHealth, this.busy = false});
+  const DeploymentDetail({required this.request, this.evidence, this.busy = false});
 
   final DeploymentAllocation request;
   final AllocationEvidence? evidence;
-  final IotHealth? iotHealth;
   final bool busy;
 
   DeploymentStatus get status => request.deploymentStatus;
 
-  DeploymentDetail copyWith({
-    DeploymentAllocation? request,
-    AllocationEvidence? evidence,
-    IotHealth? iotHealth,
-    bool? busy,
-  }) => DeploymentDetail(
-    request: request ?? this.request,
-    evidence: evidence ?? this.evidence,
-    iotHealth: iotHealth ?? this.iotHealth,
-    busy: busy ?? this.busy,
-  );
+  DeploymentDetail copyWith({DeploymentAllocation? request, AllocationEvidence? evidence, bool? busy}) =>
+      DeploymentDetail(request: request ?? this.request, evidence: evidence ?? this.evidence, busy: busy ?? this.busy);
 
   @override
-  List<Object?> get props => [request.id, status, request.updatedAt, evidence, iotHealth, busy];
+  List<Object?> get props => [request.id, status, request.updatedAt, evidence, busy];
 }
 
 class DeploymentDetailNotifier extends AsyncNotifier<DeploymentDetail> {
@@ -87,34 +76,17 @@ class DeploymentDetailNotifier extends AsyncNotifier<DeploymentDetail> {
         ),
       );
 
-  Future<Result<void>> bypassPairing(String remarks) => _perform(
-    () => ref.read(bypassPairingProvider)(BypassPairingParams(allocationId: _allocationId, remarks: remarks)),
-  );
-
-  Future<Result<IotHealth>> refreshIotHealth() async {
-    final Result<IotHealth> result = await ref.read(getIotHealthProvider)(_allocationId);
-    if (!ref.mounted) return result;
-    final DeploymentDetail? current = state.value;
-    if (current != null && result is Ok<IotHealth>) {
-      state = AsyncData(current.copyWith(iotHealth: result.value));
-    }
-    return result;
-  }
-
   Future<void> _loadSideData(DeploymentDetail detail) async {
     final DeploymentDetail enriched = switch (detail.status) {
       DeploymentStatus.paymentPaid => detail.copyWith(
         evidence: (await ref.read(getAllocationEvidenceProvider)(_allocationId)).valueOrNull,
-      ),
-      DeploymentStatus.devicePairingPending => detail.copyWith(
-        iotHealth: (await ref.read(getIotHealthProvider)(_allocationId)).valueOrNull,
       ),
       _ => detail,
     };
     if (!ref.mounted || enriched == detail) return;
     final DeploymentDetail? current = state.value;
     if (current != null) {
-      state = AsyncData(current.copyWith(evidence: enriched.evidence, iotHealth: enriched.iotHealth));
+      state = AsyncData(current.copyWith(evidence: enriched.evidence));
     }
   }
 

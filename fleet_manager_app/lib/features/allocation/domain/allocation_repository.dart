@@ -28,10 +28,6 @@ abstract interface class AllocationRepository {
     required List<PdiChecklistItem> checklist,
   });
 
-  Future<Result<IotHealth>> getIotHealth(String allocationId);
-
-  Future<Result<DeploymentWorkflow>> bypassPairing(String allocationId, String remarks);
-
   Future<Result<DeallocationRequest>> getDeallocationRequest(String allocationId);
 
   Future<Result<DeallocationStart>> initiateDeallocation(String allocationId);
