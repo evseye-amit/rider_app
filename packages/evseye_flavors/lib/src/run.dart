@@ -107,7 +107,7 @@ void _applyCore(Workspace workspace, Flavor flavor) {
     }
   }
   final String note = recoloured == 0 ? '' : ' ($recoloured recoloured to ${_hex(primary)})';
-  stdout.writeln('evseye_core: colours, names, logo, hero, ${art.length} illustrations$note');
+  stdout.writeln('evseye_core: colours, names, banner, ${art.length} illustrations$note');
 }
 
 String _hex(int argb) => '#${(argb & 0xFFFFFF).toRadixString(16).toUpperCase().padLeft(6, '0')}';

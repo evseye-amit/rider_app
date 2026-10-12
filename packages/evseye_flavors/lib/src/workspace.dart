@@ -14,7 +14,7 @@ const List<AppTarget> appTargets = [
   AppTarget(key: 'fleet', folder: 'fleet_manager_app'),
 ];
 
-const List<String> brandImages = ['logo.png', 'hero.png'];
+const List<String> brandImages = ['banner.png'];
 
 const List<String> iconImages = ['app_icon.png', 'app_icon_foreground.png'];
 

@@ -68,7 +68,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   Widget build(BuildContext context) {
     return AuthSheetScaffold(
       trailing: const LanguageChip(),
-      art: BrandArt.hero,
+      art: BrandArt.banner,
       artSize: 210,
       showArtBackdrop: false,
       title: context.l10n.authWelcomeBack,

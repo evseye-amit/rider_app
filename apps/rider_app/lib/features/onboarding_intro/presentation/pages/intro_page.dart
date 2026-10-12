@@ -10,8 +10,8 @@ import '../../domain/entities/intro_slide.dart';
 import '../providers/intro_slides_provider.dart';
 
 const Map<String, BrandArt> _slideArt = {
-  'earn': BrandArt.logo,
-  'vehicle': BrandArt.hero,
+  'earn': BrandArt.banner,
+  'vehicle': BrandArt.banner,
   'support': BrandArt.introSupport,
 };
 
@@ -114,7 +114,7 @@ class _Slide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BrandArt art = _slideArt[slide.key] ?? BrandArt.hero;
+    final BrandArt art = _slideArt[slide.key] ?? BrandArt.banner;
 
     return LayoutBuilder(
       builder: (context, constraints) {

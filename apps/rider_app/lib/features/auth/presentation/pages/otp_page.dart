@@ -109,7 +109,7 @@ class _OtpPageState extends ConsumerState<OtpPage> {
     return AuthSheetScaffold(
       showBack: true,
       onBack: () => context.pop(),
-      art: BrandArt.hero,
+      art: BrandArt.banner,
       artSize: 170,
       showArtBackdrop: false,
       title: context.l10n.authVerifyNumber,
