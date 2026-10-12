@@ -1,0 +1,194 @@
+import 'package:evseye_core/evseye_core.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../app/router/app_routes.dart';
+import '../../../../core/legal/legal_link.dart';
+import '../../../../core/session/rider_session_provider.dart';
+
+class LoginPage extends ConsumerStatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  ConsumerState<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends ConsumerState<LoginPage> {
+  static final RegExp _mobilePattern = RegExp(r'^[6-9]\d{9}$');
+
+  final TextEditingController _mobile = TextEditingController();
+
+  String? _error;
+  bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _mobile.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _mobile.dispose();
+    super.dispose();
+  }
+
+  bool get _valid => _mobilePattern.hasMatch(_mobile.text.trim());
+
+  Future<void> _continue() async {
+    final String mobile = _mobile.text.trim();
+    if (!_valid) {
+      setState(() => _error = context.l10n.commonEnterValid10DigitMobile);
+      return;
+    }
+    setState(() {
+      _error = null;
+      _loading = true;
+    });
+
+    final Result<OtpChallenge> result = await ref.read(riderSessionProvider.notifier).startSignIn(mobile);
+    if (!mounted) return;
+
+    switch (result) {
+      case Ok<OtpChallenge>(:final value):
+        await context.push('${Routes.otp}?mobile=$mobile&request=${value.otpRequestId}');
+        if (mounted) setState(() => _loading = false);
+      case Err<OtpChallenge>(:final failure):
+        setState(() {
+          _loading = false;
+          _error = failure.message;
+        });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AuthSheetScaffold(
+      trailing: const LanguageChip(),
+      art: BrandArt.hero,
+      artSize: 210,
+      showArtBackdrop: false,
+      title: context.l10n.authWelcomeBack,
+      subtitle: context.l10n.authSignWithMobileNumberRegistered2,
+      children: [
+        AppTextField(
+          label: context.l10n.commonMobileNumber,
+          hint: '98765 43210',
+          prefixText: '+91',
+          controller: _mobile,
+          keyboardType: TextInputType.phone,
+          maxLength: 10,
+          errorText: _error,
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(10)],
+          onSubmitted: (_) => _continue(),
+          suffix: _valid ? const Icon(Icons.check_circle_rounded, size: 20, color: AppColors.success) : null,
+        ),
+        const Gap.xl(),
+        PrimaryButton(
+          label: context.l10n.authContinue,
+          trailingIcon: Icons.arrow_forward_rounded,
+          loading: _loading,
+          onPressed: _valid ? _continue : null,
+        ),
+        const Gap.lg(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.lock_outline_rounded, size: 14, color: AppColors.textMuted),
+            const SizedBox(width: Insets.sm - 2),
+            Flexible(
+              child: Text(
+                context.l10n.authWillText6DigitCode,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.bodySmall.copyWith(fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+        const Gap.xxl(),
+        AuthDivider(label: context.l10n.authWhyRideWithUs),
+        const Gap.xl(),
+        const _TrustStrip(),
+        const Gap.xxl(),
+        const _LegalLine(),
+      ],
+    );
+  }
+}
+
+class _TrustStrip extends StatelessWidget {
+  const _TrustStrip();
+
+  @override
+  Widget build(BuildContext context) {
+    final List<(IconData, String)> items = [
+      (Icons.verified_user_rounded, context.l10n.authVerifiedOperators),
+      (Icons.bolt_rounded, context.l10n.authSameDayPayouts),
+      (Icons.support_agent_rounded, context.l10n.authRoadsideHelp),
+    ];
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (final (IconData icon, String label) in items) ...[
+          Expanded(
+            child: Column(
+              children: [
+                IconTile(icon: icon, tone: AppColors.primary, size: 46, solid: true),
+                const SizedBox(height: Insets.sm),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.bodySmall.copyWith(
+                    fontSize: 11.5,
+                    height: 1.3,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (label != items.last.$2) const SizedBox(width: Insets.sm),
+        ],
+      ],
+    );
+  }
+}
+
+class _LegalLine extends StatelessWidget {
+  const _LegalLine();
+
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle base = AppText.bodySmall.copyWith(fontSize: 12, height: 1.5);
+    final TextStyle link = base.copyWith(color: AppColors.primary, fontWeight: FontWeight.w700);
+
+    return Text.rich(
+      TextSpan(
+        style: base,
+        children: [
+          TextSpan(
+            text: context.l10n.commonTermsService,
+            style: link,
+            recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context),
+          ),
+          TextSpan(text: context.l10n.commonAnd),
+          TextSpan(
+            text: context.l10n.commonPrivacyPolicy,
+            style: link,
+            recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context),
+          ),
+          const TextSpan(text: '.'),
+        ],
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+}

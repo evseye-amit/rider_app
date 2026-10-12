@@ -1,0 +1,13 @@
+companyCode: yogmaya
+riderAppName: Pink Rider App
+fleetAppName: Pink FM app
+supportEmail: support@pinkrides.in
+colors:
+  primary: "#F475D0"
+  primaryBright: "#F475D0"
+  primaryDeep: "#F475D0"
+  primaryWash: "#FDECF8"
+  primaryInk: "#3D0A2C"
+  onInkSecondary: "#6B2453"
+  onInkMuted: "#854070"
+  textOnPrimary: "#3D0A2C"

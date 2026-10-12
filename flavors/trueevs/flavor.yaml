@@ -1,0 +1,13 @@
+companyCode: yogmaya
+riderAppName: "TrueEV's"
+fleetAppName: "TrueEV's Fleet"
+supportEmail: ""
+colors:
+  primary: "#0068D7"
+  primaryBright: "#02A6FA"
+  primaryDeep: "#0038A7"
+  primaryWash: "#E7F1FD"
+  primaryInk: "#00244D"
+  onInkSecondary: "#23477A"
+  onInkMuted: "#56709A"
+  textOnPrimary: "#FFFFFF"

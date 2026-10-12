@@ -1,0 +1,16 @@
+name: evseye
+
+packages:
+  - apps/*
+  - packages/*
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  get: melos exec -- flutter pub get
+  analyze: melos exec -- dart analyze .
+  format: melos exec -- dart format .
+  l10n: melos exec --scope=evseye_core -- flutter gen-l10n
+  flavor: dart run packages/evseye_flavors/bin/evseye_flavors.dart

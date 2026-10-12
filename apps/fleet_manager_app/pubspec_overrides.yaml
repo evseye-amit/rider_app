@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: evseye_core,evseye_flavors
+dependency_overrides:
+  evseye_core:
+    path: ../../packages/evseye_core
+  evseye_flavors:
+    path: ../../packages/evseye_flavors

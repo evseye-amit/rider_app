@@ -1,0 +1,13 @@
+companyCode: yogmaya
+riderAppName: Whizz Rider
+fleetAppName: Whizz Fleet
+supportEmail: ""
+colors:
+  primary: "#0062FF"
+  primaryBright: "#0092FF"
+  primaryDeep: "#013BFE"
+  primaryWash: "#E8F1FF"
+  primaryInk: "#06205C"
+  onInkSecondary: "#2C4A86"
+  onInkMuted: "#5A72A6"
+  textOnPrimary: "#FFFFFF"

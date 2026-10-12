@@ -1,0 +1,27 @@
+import 'package:evseye_core/evseye_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'router/app_router.dart';
+
+class RiderApp extends ConsumerWidget {
+  const RiderApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AppLocale locale = ref.watch(localeProvider.select((p) => p.locale));
+
+    return MaterialApp.router(
+      title: FlavorConfig.riderAppName,
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.light,
+      darkTheme: AppTheme.light,
+      themeMode: ThemeMode.dark,
+      routerConfig: ref.watch(routerProvider),
+      locale: locale.locale,
+      supportedLocales: AppL10n.supportedLocales,
+      localizationsDelegates: AppL10n.localizationsDelegates,
+      builder: (context, child) => MediaQuery.withNoTextScaling(child: child ?? const SizedBox()),
+    );
+  }
+}

@@ -1,0 +1,9 @@
+name: evseye_workspace
+description: EVSEYE monorepo — the rider and fleet manager apps and the packages they share.
+publish_to: none
+
+environment:
+  sdk: ^3.10.0
+
+dev_dependencies:
+  melos: ^6.3.3
