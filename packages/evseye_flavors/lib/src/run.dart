@@ -113,14 +113,17 @@ void _applyCore(Workspace workspace, Flavor flavor) {
 String _hex(int argb) => '#${(argb & 0xFFFFFF).toRadixString(16).toUpperCase().padLeft(6, '0')}';
 
 void _applyApp(Workspace workspace, Flavor flavor, AppTarget app) {
-  final String appName = flavor.appName(app);
+  final AppFlavor config = flavor.app(app);
   for (final String icon in iconImages) {
     _copy(flavor.file(app.key, icon), p.join(workspace.imagesDir(app), icon));
   }
-  _write(workspace.stringsFile(app), androidStringsSource(appName));
-  _update(workspace.manifestFile(app), manifestWithAppNameLabel);
-  _update(workspace.plistFile(app), (plist) => plistWithDisplayName(plist, appName));
-  stdout.writeln('${app.folder}: "$appName", launcher icon sources');
+  _write(workspace.stringsFile(app), androidStringsSource(config.appName));
+  _write(workspace.androidFlavorFile(app), androidFlavorSource(config));
+  _write(workspace.iosFlavorFile(app), iosFlavorSource(config));
+  stdout.writeln(
+    '${app.folder}: "${config.appName}", Android ${config.androidApplicationId}, '
+    'iOS ${config.iosBundleId}, version ${config.version}',
+  );
 }
 
 void _write(String path, String content) {
@@ -128,12 +131,6 @@ void _write(String path, String content) {
   if (file.existsSync() && file.readAsStringSync() == content) return;
   file.parent.createSync(recursive: true);
   file.writeAsStringSync(content);
-}
-
-void _update(String path, String Function(String content) change) {
-  final File file = File(path);
-  if (!file.existsSync()) throw FormatException('Missing ${p.basename(path)} at $path');
-  _write(path, change(file.readAsStringSync()));
 }
 
 void _copy(String from, String to) => _writeBytes(to, File(from).readAsBytesSync());

@@ -1,5 +1,5 @@
 name: evseye_flavors
-description: Applies a client flavor (names, colours, logo, hero, icons, splash and recoloured illustrations) to both EVSEYE apps.
+description: Applies a client flavor (names, package ids, versions, colours, logo, hero, icons, splash and recoloured illustrations) to both EVSEYE apps.
 publish_to: none
 version: 1.0.0
 

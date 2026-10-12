@@ -1,7 +1,15 @@
 companyCode: yogmaya
-riderAppName: "TrueEV's"
-fleetAppName: "TrueEV's Fleet"
 supportEmail: ""
+rider:
+  appName: "TrueEV's"
+  androidApplicationId: ai.evseye.trueevs.rider
+  iosBundleId: ai.evseye.trueevs.rider
+  version: "1.0.0+1"
+fleet:
+  appName: "TrueEV's Fleet"
+  androidApplicationId: ai.evseye.trueevs.fleet
+  iosBundleId: ai.evseye.trueevs.fleet
+  version: "1.0.0+1"
 colors:
   primary: "#0068D7"
   primaryBright: "#02A6FA"

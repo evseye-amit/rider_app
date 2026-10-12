@@ -15,7 +15,11 @@ flavors/<client>/           branding for each client
 ```bash
 dart pub global activate melos
 melos bootstrap
+melos run flavor pinkrides
 ```
+
+The last step generates the client files (icons, splash, colours, package IDs).
+They are not in git, so apply a client once after cloning.
 
 The rider app needs a Google Maps key in `apps/rider_app/.env` (see `.env.example`).
 
@@ -70,15 +74,18 @@ The client code comes from the applied flavor.
 
 Clients: `pinkrides` (default), `whizz`, `trueevs`.
 
+From either app folder (it switches both apps):
+
 ```bash
-melos run flavor whizz
+dart run evseye_flavors --flavor whizz
 ```
 
 Then stop and re-run the apps. Hot reload won't change the name, icon or splash.
+From the repo root, `melos run flavor whizz` does the same.
 
 ```
 flavors/<client>/
-├── flavor.yaml     client code, app names, support email, colours
+├── flavor.yaml     client code, app names, package IDs, versions, colours
 ├── logo.png        first intro slide
 ├── hero.png        intro, login and OTP
 ├── rider/          app_icon.png, app_icon_foreground.png (1024×1024)
@@ -86,6 +93,8 @@ flavors/<client>/
 ```
 
 The illustrations are recoloured to the client's `primary` colour automatically.
+Each client has its own package ID and version, so clients install as separate
+apps. Bump `version` in `flavor.yaml` before each release.
 
 ### Add a client
 
@@ -93,4 +102,4 @@ The illustrations are recoloured to the client's `primary` colour automatically.
 cp -R flavors/whizz flavors/acme
 ```
 
-Swap in the client's images, edit `flavor.yaml`, then run `melos run flavor acme`.
+Swap in the client's images, edit `flavor.yaml`, then run `dart run evseye_flavors --flavor acme`.

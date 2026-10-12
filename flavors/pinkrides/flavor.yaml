@@ -1,7 +1,15 @@
 companyCode: yogmaya
-riderAppName: Pink Rider App
-fleetAppName: Pink FM app
 supportEmail: support@pinkrides.in
+rider:
+  appName: Pink Rider App
+  androidApplicationId: ai.evseye.rider_app
+  iosBundleId: ai.evseye.riderApp
+  version: "1.0.0+1"
+fleet:
+  appName: Pink FM app
+  androidApplicationId: ai.evseye.fleet_manager_app
+  iosBundleId: ai.evseye.fleetManagerApp
+  version: "1.0.0+1"
 colors:
   primary: "#F475D0"
   primaryBright: "#F475D0"

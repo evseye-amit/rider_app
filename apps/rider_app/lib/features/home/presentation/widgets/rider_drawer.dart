@@ -123,7 +123,7 @@ class RiderDrawer extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: Insets.lg),
                 child: Text(
-                  '${context.l10n.commonVersion} 1.0.0',
+                  '${context.l10n.commonVersion} ${FlavorConfig.riderVersion}',
                   style: AppText.bodySmall.copyWith(fontSize: 11, color: AppColors.textMuted),
                 ),
               ),

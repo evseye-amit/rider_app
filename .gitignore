@@ -43,3 +43,16 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+packages/evseye_core/lib/src/flavor/flavor_config.dart
+packages/evseye_core/assets/art/
+apps/*/assets/images/app_icon.png
+apps/*/assets/images/app_icon_foreground.png
+apps/*/android/flavor.properties
+apps/*/android/app/src/main/res/values/strings.xml
+apps/*/android/app/src/main/res/mipmap-*/ic_launcher.png
+apps/*/android/app/src/main/res/drawable-*/ic_launcher_foreground.png
+apps/*/android/app/src/main/res/drawable*/splash.png
+apps/*/ios/Flutter/Flavor.xcconfig
+apps/*/ios/Runner/Assets.xcassets/AppIcon.appiconset/*.png
+apps/*/ios/Runner/Assets.xcassets/LaunchImage.imageset/*.png

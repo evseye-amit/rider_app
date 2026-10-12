@@ -37,12 +37,12 @@ class Workspace {
 
   String imagesDir(AppTarget app) => p.join(appDir(app), 'assets', 'images');
 
-  String manifestFile(AppTarget app) => p.join(appDir(app), 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
-
   String stringsFile(AppTarget app) =>
       p.join(appDir(app), 'android', 'app', 'src', 'main', 'res', 'values', 'strings.xml');
 
-  String plistFile(AppTarget app) => p.join(appDir(app), 'ios', 'Runner', 'Info.plist');
+  String androidFlavorFile(AppTarget app) => p.join(appDir(app), 'android', 'flavor.properties');
+
+  String iosFlavorFile(AppTarget app) => p.join(appDir(app), 'ios', 'Flutter', 'Flavor.xcconfig');
 
   List<String> get flavorNames {
     final Directory dir = Directory(flavorsDir);

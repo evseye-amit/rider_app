@@ -20,10 +20,34 @@ final RegExp _flavorName = RegExp(r'^[a-z][a-z0-9]*$');
 
 final RegExp _hexColour = RegExp(r'^#?([0-9a-fA-F]{6}|[0-9a-fA-F]{8})$');
 
+final RegExp _androidId = RegExp(r'^[a-zA-Z][a-zA-Z0-9_]*(\.[a-zA-Z][a-zA-Z0-9_]*)+$');
+
+final RegExp _iosId = RegExp(r'^[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+$');
+
+final RegExp _version = RegExp(r'^\d+\.\d+\.\d+\+\d+$');
+
 class FlavorException implements Exception {
   const FlavorException(this.problems);
 
   final List<String> problems;
+}
+
+class AppFlavor {
+  const AppFlavor({
+    required this.appName,
+    required this.androidApplicationId,
+    required this.iosBundleId,
+    required this.version,
+  });
+
+  final String appName;
+  final String androidApplicationId;
+  final String iosBundleId;
+  final String version;
+
+  String get versionName => version.split('+').first;
+
+  String get buildNumber => version.split('+').last;
 }
 
 class Flavor {
@@ -31,21 +55,19 @@ class Flavor {
     required this.name,
     required this.dir,
     required this.companyCode,
-    required this.riderAppName,
-    required this.fleetAppName,
     required this.supportEmail,
+    required this.apps,
     required this.palette,
   });
 
   final String name;
   final String dir;
   final String companyCode;
-  final String riderAppName;
-  final String fleetAppName;
   final String supportEmail;
+  final Map<String, AppFlavor> apps;
   final Map<String, int> palette;
 
-  String appName(AppTarget app) => app.key == 'rider' ? riderAppName : fleetAppName;
+  AppFlavor app(AppTarget target) => apps[target.key]!;
 
   String file(String first, [String? second]) => p.join(dir, first, second);
 
@@ -65,16 +87,47 @@ class Flavor {
     }
     final Map<Object?, Object?> yaml = document is Map ? document : const {};
 
-    String text(String key, {bool required = true}) {
-      final String value = yaml[key]?.toString().trim() ?? '';
-      if (value.isEmpty && required) problems.add('flavors/$name/flavor.yaml: "$key" is required.');
+    String text(
+      Map<Object?, Object?> section,
+      String key, {
+      String prefix = '',
+      bool required = true,
+      RegExp? format,
+      String? hint,
+    }) {
+      final String value = section[key]?.toString().trim() ?? '';
+      if (value.isEmpty) {
+        if (required) problems.add('flavors/$name/flavor.yaml: "$prefix$key" is required.');
+      } else if (format != null && !format.hasMatch(value)) {
+        problems.add('flavors/$name/flavor.yaml: "$prefix$key" must look like $hint.');
+      }
       return value;
     }
 
-    final String companyCode = text('companyCode');
-    final String riderAppName = text('riderAppName');
-    final String fleetAppName = text('fleetAppName');
-    final String supportEmail = text('supportEmail', required: false);
+    final String companyCode = text(yaml, 'companyCode');
+    final String supportEmail = text(yaml, 'supportEmail', required: false);
+
+    final Map<String, AppFlavor> apps = {};
+    for (final AppTarget target in appTargets) {
+      final Object? section = yaml[target.key];
+      if (section is! Map) {
+        problems.add('flavors/$name/flavor.yaml: the "${target.key}" section is required.');
+        continue;
+      }
+      final String prefix = '${target.key}.';
+      apps[target.key] = AppFlavor(
+        appName: text(section, 'appName', prefix: prefix),
+        androidApplicationId: text(
+          section,
+          'androidApplicationId',
+          prefix: prefix,
+          format: _androidId,
+          hint: 'com.company.app',
+        ),
+        iosBundleId: text(section, 'iosBundleId', prefix: prefix, format: _iosId, hint: 'com.company.app'),
+        version: text(section, 'version', prefix: prefix, format: _version, hint: '"1.0.0+1"'),
+      );
+    }
 
     final Object? colours = yaml['colors'];
     final Map<String, int> palette = {};
@@ -102,9 +155,8 @@ class Flavor {
       name: name,
       dir: dir,
       companyCode: companyCode,
-      riderAppName: riderAppName,
-      fleetAppName: fleetAppName,
       supportEmail: supportEmail,
+      apps: apps,
       palette: palette,
     );
   }

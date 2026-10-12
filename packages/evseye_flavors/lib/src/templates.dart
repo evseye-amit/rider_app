@@ -7,6 +7,8 @@ String flavorConfigSource(Flavor flavor) {
     'primaryOverlay': _withAlpha(primary, 0x1F),
     'primarySelection': _withAlpha(primary, 0x33),
   };
+  final AppFlavor rider = flavor.apps['rider']!;
+  final AppFlavor fleet = flavor.apps['fleet']!;
 
   final StringBuffer out = StringBuffer()
     ..writeln("import 'dart:ui';")
@@ -14,10 +16,12 @@ String flavorConfigSource(Flavor flavor) {
     ..writeln('abstract final class FlavorConfig {')
     ..writeln('  static const String name = ${_dartString(flavor.name)};')
     ..writeln('  static const String companyCode = ${_dartString(flavor.companyCode)};')
-    ..writeln()
-    ..writeln('  static const String riderAppName = ${_dartString(flavor.riderAppName)};')
-    ..writeln('  static const String fleetAppName = ${_dartString(flavor.fleetAppName)};')
     ..writeln('  static const String supportEmail = ${_dartString(flavor.supportEmail)};')
+    ..writeln()
+    ..writeln('  static const String riderAppName = ${_dartString(rider.appName)};')
+    ..writeln('  static const String riderVersion = ${_dartString(rider.versionName)};')
+    ..writeln('  static const String fleetAppName = ${_dartString(fleet.appName)};')
+    ..writeln('  static const String fleetVersion = ${_dartString(fleet.versionName)};')
     ..writeln();
   for (final MapEntry<String, int> colour in colours.entries) {
     out.writeln('  static const Color ${colour.key} = Color(${_hex(colour.value)});');
@@ -44,24 +48,16 @@ String androidStringsSource(String appName) {
       '</resources>\n';
 }
 
-String manifestWithAppNameLabel(String manifest) {
-  final int start = manifest.indexOf('<application');
-  if (start < 0) throw const FormatException('AndroidManifest.xml has no <application> element.');
-  final int end = manifest.indexOf('>', start);
-  final String tag = manifest.substring(start, end);
-  final RegExp label = RegExp(r'android:label="[^"]*"');
-  final String updated = label.hasMatch(tag)
-      ? tag.replaceFirst(label, 'android:label="@string/app_name"')
-      : tag.replaceFirst('<application', '<application\n        android:label="@string/app_name"');
-  return manifest.replaceRange(start, end, updated);
-}
+String androidFlavorSource(AppFlavor app) =>
+    'applicationId=${app.androidApplicationId}\n'
+    'versionName=${app.versionName}\n'
+    'versionCode=${app.buildNumber}\n';
 
-String plistWithDisplayName(String plist, String appName) {
-  final RegExp entry = RegExp(r'(<key>CFBundleDisplayName</key>\s*<string>)[^<]*(</string>)');
-  if (!entry.hasMatch(plist)) throw const FormatException('Info.plist has no CFBundleDisplayName string.');
-  final String escaped = appName.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
-  return plist.replaceFirstMapped(entry, (m) => '${m[1]}$escaped${m[2]}');
-}
+String iosFlavorSource(AppFlavor app) =>
+    'FLAVOR_BUNDLE_ID=${app.iosBundleId}\n'
+    'FLAVOR_APP_NAME=${app.appName}\n'
+    'FLUTTER_BUILD_NAME=${app.versionName}\n'
+    'FLUTTER_BUILD_NUMBER=${app.buildNumber}\n';
 
 int _withAlpha(int argb, int alpha) => (alpha << 24) | (argb & 0x00FFFFFF);
 

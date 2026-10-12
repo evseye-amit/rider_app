@@ -1,8 +1,16 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+}
+
+val clientFlavor = Properties().apply {
+    val file = rootProject.file("flavor.properties")
+    check(file.exists()) { "Missing android/flavor.properties. Apply a client first: dart run evseye_flavors --flavor <client>" }
+    file.inputStream().use { load(it) }
 }
 
 android {
@@ -21,13 +29,13 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "ai.evseye.fleet_manager_app"
+        applicationId = clientFlavor.getProperty("applicationId")
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        versionCode = clientFlavor.getProperty("versionCode").toInt()
+        versionName = clientFlavor.getProperty("versionName")
     }
 
     buildTypes {

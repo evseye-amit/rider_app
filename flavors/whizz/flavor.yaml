@@ -1,7 +1,15 @@
 companyCode: yogmaya
-riderAppName: Whizz Rider
-fleetAppName: Whizz Fleet
 supportEmail: ""
+rider:
+  appName: Whizz Rider
+  androidApplicationId: ai.evseye.whizz.rider
+  iosBundleId: ai.evseye.whizz.rider
+  version: "1.0.0+1"
+fleet:
+  appName: Whizz Fleet
+  androidApplicationId: ai.evseye.whizz.fleet
+  iosBundleId: ai.evseye.whizz.fleet
+  version: "1.0.0+1"
 colors:
   primary: "#0062FF"
   primaryBright: "#0092FF"
