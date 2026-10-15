@@ -49,13 +49,14 @@ class AuthApi {
   final ApiClient _client;
   final TokenStore _tokens;
 
-  Future<Result<OtpChallenge>> requestOtp(String mobile, {String? companyCode}) {
+  Future<Result<OtpChallenge>> requestOtp(String mobile, {String? companyCode, String? appCode}) {
     return _client.post<OtpChallenge>(
       '/auth/otp/request',
       skipAuth: true,
       body: {
         'phone': _normalise(mobile),
         'companyCode': companyCode ?? ApiEnv.companyCode,
+        'appCode': ?appCode,
       },
       parse: (data) => OtpChallenge.fromJson(Map<String, dynamic>.from(data as Map)),
     );

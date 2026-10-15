@@ -1,9 +1,12 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../app/router/app_routes.dart';
 import '../../domain/entities/wallet_overview.dart';
 import '../providers/wallet_provider.dart';
+import '../widgets/deposit_sheets.dart';
 import '../widgets/wallet_widgets.dart';
 
 enum _Filter { all, credits, debits }
@@ -31,7 +34,7 @@ class _WalletPageState extends ConsumerState<WalletPage> {
   List<WalletEntry> _apply(List<WalletEntry> all) {
     final Iterable<WalletEntry> byTab = switch (_filter) {
       _Filter.credits => all.where((entry) => entry.isCredit),
-      _Filter.debits => all.where((entry) => !entry.isCredit),
+      _Filter.debits => all.where((entry) => entry.isDebit),
       _Filter.all => all,
     };
     final String query = _query.trim().toLowerCase();
@@ -106,7 +109,8 @@ class _WalletPageState extends ConsumerState<WalletPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              for (final WalletDeposit deposit in wallet.deposits) WalletDepositCard(deposit: deposit),
+              for (final WalletDeposit deposit in wallet.deposits)
+                WalletDepositCard(deposit: deposit, onTap: () => showDepositSheet(context, deposit)),
               if (wallet.deposits.isEmpty)
                 KeyValueRow(label: context.l10n.commonTotal, value: Fmt.money(wallet.depositBucket.total)),
               Text(context.l10n.walletDepositReturnedSeparately, style: AppText.bodySmall.copyWith(fontSize: 11.5)),
@@ -150,9 +154,12 @@ class _Transactions extends ConsumerWidget {
     final List<WalletEntry> all = page.value ?? recent;
     final List<WalletEntry> shown = apply(all);
     final int credits = all.where((entry) => entry.isCredit).length;
+    final int debits = all.where((entry) => entry.isDebit).length;
 
     return ModuleCard(
       title: context.l10n.walletTransactions,
+      actionLabel: context.l10n.walletStatement,
+      onAction: () => context.push(Routes.walletStatement),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -163,9 +170,9 @@ class _Transactions extends ConsumerWidget {
           ),
           const Gap.md(),
           SegmentedTabs(
-            items: ['All', context.l10n.walletCredits, context.l10n.walletDebits],
+            items: [context.l10n.supportAll, context.l10n.walletCredits, context.l10n.walletDebits],
             selectedIndex: _Filter.values.indexOf(filter),
-            counts: {1: credits, 2: all.length - credits},
+            counts: {1: credits, 2: debits},
             onChanged: (index) => onFilterChanged(_Filter.values[index]),
           ),
           const Gap.md(),

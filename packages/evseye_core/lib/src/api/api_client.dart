@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -74,9 +75,40 @@ class ApiClient {
     String path, {
     Object? body,
     Map<String, dynamic>? query,
+    Map<String, String>? headers,
     T Function(dynamic data)? parse,
     bool skipAuth = false,
-  }) => _send<T>('POST', path, body: body, query: query, parse: parse, skipAuth: skipAuth);
+    bool refreshOnUnauthorized = true,
+  }) => _send<T>(
+    'POST',
+    path,
+    body: body,
+    query: query,
+    headers: headers,
+    parse: parse,
+    skipAuth: skipAuth,
+    refreshOnUnauthorized: refreshOnUnauthorized,
+  );
+
+  Future<void> ensureFreshSession() async {
+    final String? token = _tokens.accessToken;
+    if (token == null || token.isEmpty) return;
+    final DateTime? expiry = _expiryOf(token);
+    if (expiry == null || expiry.difference(DateTime.now()) > const Duration(minutes: 1)) return;
+    await _refreshOnce();
+  }
+
+  static DateTime? _expiryOf(String token) {
+    final List<String> parts = token.split('.');
+    if (parts.length != 3) return null;
+    try {
+      final Object? claims = jsonDecode(utf8.decode(base64Url.decode(base64Url.normalize(parts[1]))));
+      final Object? exp = claims is Map ? claims['exp'] : null;
+      return exp is num ? DateTime.fromMillisecondsSinceEpoch(exp.toInt() * 1000) : null;
+    } on Object {
+      return null;
+    }
+  }
 
   Future<Result<T>> patch<T>(String path, {Object? body, T Function(dynamic data)? parse}) =>
       _send<T>('PATCH', path, body: body, parse: parse);
@@ -91,8 +123,10 @@ class ApiClient {
     String path, {
     Object? body,
     Map<String, dynamic>? query,
+    Map<String, String>? headers,
     T Function(dynamic data)? parse,
     bool skipAuth = false,
+    bool refreshOnUnauthorized = true,
     bool isRetry = false,
   }) async {
     try {
@@ -102,16 +136,17 @@ class ApiClient {
         queryParameters: query,
         options: Options(
           method: method,
+          headers: headers,
           extra: {'skipAuth': skipAuth},
 
           contentType: body == null ? null : Headers.jsonContentType,
         ),
       );
 
-      if (res.statusCode == 401 && !skipAuth && !isRetry && _tokens.hasSession) {
+      if (res.statusCode == 401 && !skipAuth && refreshOnUnauthorized && !isRetry && _tokens.hasSession) {
         final bool refreshed = await _refreshOnce();
         if (refreshed) {
-          return await _send<T>(method, path, body: body, query: query, parse: parse, isRetry: true);
+          return await _send<T>(method, path, body: body, query: query, headers: headers, parse: parse, isRetry: true);
         }
         onSessionExpired?.call();
         return Result.err(UnauthorizedFailure(ActiveLocale.strings.errorSessionHasExpiredSignAgain));
@@ -163,7 +198,11 @@ class ApiClient {
     String? message;
     if (body is Map && body['error'] is Map) {
       final Map<dynamic, dynamic> error = body['error'] as Map;
-      message = _messageForCode(error['code']?.toString()) ?? error['message']?.toString();
+      final String? code = error['code']?.toString();
+      final String? raw = error['message']?.toString();
+      final bool rawIsCode = raw != null && RegExp(r'^[A-Z][A-Z0-9_]+$').hasMatch(raw);
+      final String? effective = code == 'HTTP_ERROR' && rawIsCode ? raw : code;
+      message = _messageForCode(effective) ?? (rawIsCode || raw == 'Internal server error' ? null : raw);
     }
     return switch (status) {
       400 || 422 => ValidationFailure(message ?? ActiveLocale.strings.errorDidNotLookRight),
@@ -191,7 +230,7 @@ String? _messageForCode(String? code) => switch (code) {
   'EXCHANGE_DISABLED' => ActiveLocale.strings.exchangeErrorDisabled,
   'AGREEMENT_NOT_FOUND' => ActiveLocale.strings.exchangeErrorNoRental,
   'AGREEMENT_NOT_ACTIVE' => ActiveLocale.strings.exchangeErrorRentalInactive,
-  'ACTIVE_ALLOCATION_REQUIRED' => ActiveLocale.strings.exchangeErrorNoScooter,
+  'ACTIVE_ALLOCATION_REQUIRED' => ActiveLocale.strings.errorActiveScooterRequired,
   'MINIMUM_DAYS_NOT_MET' => ActiveLocale.strings.exchangeErrorTooSoon,
   'COLLECTION_RESTRICTION_ACTIVE' => ActiveLocale.strings.exchangeErrorDuesPending,
   'EXCHANGE_NOT_FOUND' => ActiveLocale.strings.exchangeErrorNotFound,
@@ -222,5 +261,45 @@ String? _messageForCode(String? code) => switch (code) {
   'REPLACEMENT_SELECTION_MISSING' ||
   'EXCHANGE_AMENDMENT_MISSING' ||
   'EXCHANGE_OFFER_MISSING' => ActiveLocale.strings.exchangeErrorRecordsMissing,
+  'VEHICLE_NOT_AVAILABLE' => ActiveLocale.strings.exchangeErrorScooterUnavailable,
+  'BATTERY_PLAN_NOT_AVAILABLE' => ActiveLocale.strings.exchangeErrorBatteryPlan,
+  'RIDER_NOT_ELIGIBLE' => ActiveLocale.strings.exchangeErrorNotEligible,
+  'RATE_CARD_NOT_FOUND' ||
+  'RATE_CARD_VERSION_NOT_FOUND' ||
+  'RATE_CARD_AMBIGUOUS' ||
+  'RATE_CARD_VERSION_AMBIGUOUS' ||
+  'BASE_RENTAL_NOT_CONFIGURED' ||
+  'PRICING_RULE_CONFLICT' ||
+  'COMMERCIAL_CONFIGURATION_INVALID' ||
+  'INVALID_COMMERCIAL_PREVIEW_INPUT' => ActiveLocale.strings.exchangeErrorPricingSetup,
+  'RIDER_NOT_FOUND' => ActiveLocale.strings.errorRiderProfileMissing,
+  'VEHICLE_NOT_FOUND' || 'HUB_NOT_FOUND' || 'CLIENT_NOT_FOUND' => ActiveLocale.strings.commonNotFound,
+  'AGREEMENT_NOT_TERMINABLE' => ActiveLocale.strings.returnsErrorNotTerminable,
+  'RETURN_ALREADY_REQUESTED' => ActiveLocale.strings.returnsErrorAlreadyRequested,
+  'RETURN_NOT_CANCELLABLE' => ActiveLocale.strings.returnsErrorNotCancellable,
+  'RETURN_ALREADY_RECEIVED' => ActiveLocale.strings.returnsErrorAlreadyReceived,
+  'RETURN_NOT_RECEIVABLE' => ActiveLocale.strings.returnsErrorNotReceivable,
+  'RETURN_BEFORE_AGREEMENT' => ActiveLocale.strings.returnsErrorBeforeAgreement,
+  'PENALTY_CASE_IMMUTABLE' => ActiveLocale.strings.returnsErrorPenaltiesLocked,
+  'PENALTY_CASE_NOT_SUBMITTABLE' => ActiveLocale.strings.returnsErrorNotSubmittable,
+  'PENALTY_REVISION_REQUIRES_REPLACEMENT' => ActiveLocale.strings.returnsErrorRevisePenalties,
+  'PENALTY_NOT_DISPUTABLE' => ActiveLocale.strings.returnsErrorNotDisputable,
+  'PENALTY_OVERRIDE_NOT_ALLOWED' => ActiveLocale.strings.returnsErrorOverrideNotAllowed,
+  'PENALTY_MANAGER_APPROVAL_REQUIRED' => ActiveLocale.strings.returnsErrorSubmitFirst,
+  'PENALTY_STATE_CHANGED' ||
+  'PENALTY_REVISION_NOT_SUBMITTED' ||
+  'PENALTY_REVISION_CHANGED' => ActiveLocale.strings.returnsErrorStateChanged,
+  'VEHICLE_RETURN_REQUIRED' => ActiveLocale.strings.returnsErrorReceiveFirst,
+  'VEHICLE_RETURN_INSPECTION_REQUIRED' => ActiveLocale.strings.returnsErrorInspectFirst,
+  'RIDER_APPROVAL_NOT_PENDING' => ActiveLocale.strings.returnsErrorApprovalNotPending,
+  'SAFE_FOR_REUSE_REQUIRED' => ActiveLocale.strings.inspectionErrorSafeForReuse,
+  'UNSAFE_REASON_REQUIRED' => ActiveLocale.strings.inspectionErrorUnsafeReason,
+  'REFERRAL_CODE_INVALID' => ActiveLocale.strings.onboardingReferralNotFound,
+  'WALLET_NOT_FOUND' => ActiveLocale.strings.walletErrorNotFound,
+  'RECEIPT_NOT_FOUND' => ActiveLocale.strings.walletErrorReceiptNotFound,
+  'TRANSACTION_NOT_FOUND' => ActiveLocale.strings.walletErrorTransactionNotFound,
+  'SECURITY_DEPOSIT_NOT_FOUND' => ActiveLocale.strings.walletErrorDepositNotFound,
+  'INVALID_STATEMENT_PERIOD' => ActiveLocale.strings.walletErrorStatementPeriod,
+  'INVALID_PAGINATION' => ActiveLocale.strings.errorDidNotLookRight,
   _ => null,
 };

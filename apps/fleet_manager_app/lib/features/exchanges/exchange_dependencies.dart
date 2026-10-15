@@ -65,3 +65,11 @@ final completeExchangeProvider = Provider<CompleteExchange>(
 final cancelExchangeCaseProvider = Provider<CancelExchangeCase>(
   (ref) => CancelExchangeCase(ref.watch(exchangeDeskRepositoryProvider)),
 );
+
+final acceptOfferOnBehalfProvider = Provider<AcceptOfferOnBehalf>(
+  (ref) => AcceptOfferOnBehalf(ref.watch(exchangeDeskRepositoryProvider)),
+);
+
+final rejectOfferOnBehalfProvider = Provider<RejectOfferOnBehalf>(
+  (ref) => RejectOfferOnBehalf(ref.watch(exchangeDeskRepositoryProvider)),
+);

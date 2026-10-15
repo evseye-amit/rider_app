@@ -1,36 +1,52 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/entities/rental.dart';
+import '../providers/rentals_overview_provider.dart';
 
-String countdownLabel(Duration d) {
-  if (d.isNegative) return 'overdue';
-  final int days = d.inDays;
-  final int hours = d.inHours.remainder(24);
-  if (days > 0) return '${days}d ${hours}h';
-  return Fmt.duration(d);
+String billLabel(AppL10n l10n, BillStatus status) => switch (status) {
+  BillStatus.due => l10n.rentalsStatusDue,
+  BillStatus.partlyPaid => l10n.rentalsStatusPartlyPaid,
+  BillStatus.paid => l10n.rentalsPaid,
+  BillStatus.overdue => l10n.rentalsStatusOverdue,
+  BillStatus.voided => l10n.rentalsStatusVoid,
+  BillStatus.draft => l10n.rentalsStatusDraft,
+};
+
+StatusTone billTone(BillStatus status) => switch (status) {
+  BillStatus.paid => StatusTone.success,
+  BillStatus.due || BillStatus.partlyPaid => StatusTone.warning,
+  BillStatus.overdue => StatusTone.danger,
+  BillStatus.voided || BillStatus.draft => StatusTone.neutral,
+};
+
+String? periodSuffix(AppL10n l10n, String? period) => switch (period) {
+  'DAILY' => l10n.exchangePerDay,
+  'WEEKLY' => l10n.exchangePerWeek,
+  'FORTNIGHTLY' => l10n.exchangePerFortnight,
+  'MONTHLY' => l10n.exchangePerMonth,
+  'QUARTERLY' => l10n.exchangePerQuarter,
+  _ => null,
+};
+
+String billPeriod(Bill bill) {
+  final DateTime? start = bill.periodStart;
+  final DateTime? end = bill.periodEnd;
+  if (start == null || end == null) return Fmt.date(bill.createdAt);
+  return '${Fmt.date(start)} – ${Fmt.date(end)}';
 }
 
-StatusTone invoiceTone(InvoiceStatus status) => switch (status) {
-  InvoiceStatus.paid => StatusTone.success,
-  InvoiceStatus.due => StatusTone.warning,
-  InvoiceStatus.failed => StatusTone.danger,
-};
-
-String invoiceLabel(InvoiceStatus status) => switch (status) {
-  InvoiceStatus.paid => ActiveLocale.strings.rentalsPaid,
-  InvoiceStatus.due => 'Due',
-  InvoiceStatus.failed => ActiveLocale.strings.rentalsFailed,
-};
-
 class RentalsBand extends StatelessWidget {
-  const RentalsBand({required this.plan, super.key});
+  const RentalsBand({required this.overview, super.key});
 
-  final RentalPlan? plan;
+  final RentalsOverview? overview;
 
   @override
   Widget build(BuildContext context) {
-    final RentalPlan? p = plan;
+    final RentalPlan? plan = overview?.plan;
+    final BillingSummary? summary = overview?.summary;
+    final String? suffix = periodSuffix(context.l10n, plan?.period);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,12 +56,14 @@ class RentalsBand extends StatelessWidget {
             builder: (context) =>
                 InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
           ),
-          subtitle: context.l10n.rentalsPlanAutoDebitRentReceipts,
+          subtitle: context.l10n.rentalsSubtitle,
           title: context.l10n.rentalsRentals,
         ),
         const Gap.xxl(),
         Text(
-          p?.name ?? context.l10n.rentalsCurrentPlan,
+          plan == null ? context.l10n.rentalsCurrentPlan : [plan.agreementNumber, ?plan.scooterName].join(' · '),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: AppText.label.copyWith(color: AppColors.onInkSecondary),
         ),
         const Gap.sm(),
@@ -54,17 +72,19 @@ class RentalsBand extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                p == null ? '—' : Fmt.money(p.weeklyRent),
+                plan == null ? '—' : Fmt.money(plan.rent),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
               ),
             ),
-            const SizedBox(width: Insets.sm),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 6),
-              child: Text('/ week', style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary)),
-            ),
+            if (suffix != null) ...[
+              const SizedBox(width: Insets.sm),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 6),
+                child: Text(suffix, style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary)),
+              ),
+            ],
           ],
         ),
         const Gap.xl(),
@@ -78,21 +98,22 @@ class RentalsBand extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                flex: 6,
+                flex: 5,
                 child: InkStat(
-                  label: context.l10n.rentalsNextDebit,
-                  value: p == null ? '—' : Fmt.date(p.nextDebitDate),
-                  icon: Icons.event_rounded,
+                  label: context.l10n.rentalsOutstanding,
+                  value: summary == null ? '—' : Fmt.money(summary.outstanding),
+                  icon: Icons.receipt_long_rounded,
                 ),
               ),
               const InkDivider(),
               const SizedBox(width: Insets.md),
               Expanded(
-                flex: 4,
+                flex: 5,
                 child: InkStat(
-                  label: context.l10n.rentalsDebits,
-                  value: p == null ? '—' : countdownLabel(p.timeToDebit),
-                  icon: Icons.timer_outlined,
+                  label: context.l10n.rentalsStatusOverdue,
+                  value: summary == null ? '—' : Fmt.money(summary.overdue),
+                  icon: Icons.warning_amber_rounded,
+                  valueColor: (summary?.overdue ?? 0) > 0 ? AppColors.danger : null,
                 ),
               ),
               const InkDivider(),
@@ -101,7 +122,11 @@ class RentalsBand extends StatelessWidget {
                 flex: 4,
                 child: InkStat(
                   label: context.l10n.rentalsAutoDebit,
-                  value: p == null ? '—' : (p.autoDebitEnabled ? 'On' : 'Off'),
+                  value: summary == null
+                      ? '—'
+                      : summary.autoPay
+                      ? context.l10n.commonOn
+                      : context.l10n.commonOff,
                   icon: Icons.autorenew_rounded,
                 ),
               ),
@@ -113,66 +138,52 @@ class RentalsBand extends StatelessWidget {
   }
 }
 
-class PlanCard extends StatelessWidget {
-  const PlanCard({required this.plan, super.key});
+class AccountCard extends StatelessWidget {
+  const AccountCard({required this.summary, super.key});
 
-  final RentalPlan plan;
+  final BillingSummary summary;
 
   @override
   Widget build(BuildContext context) {
-    final bool active = plan.mandateStatus == 'active';
-    final Color tone = active
-        ? AppColors.success
-        : plan.mandateStatus == 'failed'
-        ? AppColors.danger
-        : AppColors.warning;
-
-    return Container(
-      decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.floating),
-      padding: const EdgeInsets.all(Insets.xl),
+    return ModuleCard(
+      title: context.l10n.rentalsYourAccount,
+      leading: const IconTile(icon: Icons.account_balance_rounded, solid: true, size: 28),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const IconTile(icon: Icons.verified_user_rounded, tone: AppColors.primary, solid: true),
-              const SizedBox(width: Insets.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(context.l10n.rentalsAutoDebitMandate, style: AppText.titleMedium.copyWith(fontSize: 15)),
-                    const SizedBox(height: 2),
-                    Text(plan.mandateRef, style: AppText.bodySmall.copyWith(fontSize: 12)),
-                  ],
-                ),
-              ),
-              StatusChip(
-                label: plan.mandateStatus[0].toUpperCase() + plan.mandateStatus.substring(1),
-                tone: active
-                    ? StatusTone.success
-                    : (plan.mandateStatus == 'failed' ? StatusTone.danger : StatusTone.warning),
-                dense: true,
-              ),
-            ],
+          KeyValueRow(
+            label: context.l10n.rentalsOutstanding,
+            value: Fmt.money(summary.outstanding, paise: true),
+            icon: Icons.receipt_long_rounded,
           ),
-          const SizedBox(height: Insets.lg),
-          Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-          const SizedBox(height: Insets.md),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(Icons.info_outline_rounded, size: 15, color: tone),
-              const SizedBox(width: Insets.sm),
-              Expanded(
-                child: Text(
-                  active
-                      ? context.l10n.rentalsRentCollectedAutomaticallyFromLinked
-                      : context.l10n.rentalsAutoDebitNotActiveSettle,
-                  style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.5),
-                ),
-              ),
-            ],
+          if (summary.overdue > 0)
+            KeyValueRow(
+              label: context.l10n.rentalsStatusOverdue,
+              value: Fmt.money(summary.overdue, paise: true),
+              icon: Icons.warning_amber_rounded,
+              valueColor: AppColors.danger,
+            ),
+          KeyValueRow(
+            label: context.l10n.rentalsDueLater,
+            value: Fmt.money(summary.dueLater, paise: true),
+            icon: Icons.event_rounded,
+          ),
+          if (summary.credit > 0)
+            KeyValueRow(
+              label: context.l10n.rentalsCredit,
+              value: Fmt.money(summary.credit, paise: true),
+              icon: Icons.savings_rounded,
+              valueColor: AppColors.success,
+            ),
+          if (summary.unallocated > 0)
+            KeyValueRow(
+              label: context.l10n.rentalsUnallocated,
+              value: Fmt.money(summary.unallocated, paise: true),
+              icon: Icons.payments_rounded,
+            ),
+          KeyValueRow(
+            label: context.l10n.rentalsDepositHeld,
+            value: Fmt.money(summary.depositHeld, paise: true),
+            icon: Icons.lock_rounded,
           ),
         ],
       ),
@@ -180,14 +191,21 @@ class PlanCard extends StatelessWidget {
   }
 }
 
-class InvoiceTile extends StatelessWidget {
-  const InvoiceTile({required this.invoice, this.onTap, super.key});
+class BillTile extends StatelessWidget {
+  const BillTile({required this.bill, this.onTap, super.key});
 
-  final RentalInvoice invoice;
+  final Bill bill;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
+    final DateTime? paidAt = bill.paidAt;
+    final DateTime? dueDate = bill.dueDate;
+    final String when = paidAt != null
+        ? '${context.l10n.rentalsPaid2} ${Fmt.date(paidAt)}'
+        : dueDate != null
+        ? '${context.l10n.rentalsDue} ${Fmt.date(dueDate)}'
+        : bill.number;
     return Pressable(
       onTap: onTap,
       scale: 0.99,
@@ -201,23 +219,20 @@ class InvoiceTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(invoice.periodLabel, style: AppText.titleSmall.copyWith(fontSize: 13.5)),
+                  Text(billPeriod(bill), style: AppText.titleSmall.copyWith(fontSize: 13.5)),
                   const SizedBox(height: 2),
-                  Text(
-                    invoice.paidOn != null ? 'Paid ${Fmt.date(invoice.paidOn!)}' : 'Due ${Fmt.date(invoice.dueDate)}',
-                    style: AppText.bodySmall.copyWith(fontSize: 11.5),
-                  ),
+                  Text(when, style: AppText.bodySmall.copyWith(fontSize: 11.5)),
                 ],
               ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(Fmt.money(invoice.amount), style: AppText.numericSmall.copyWith(fontSize: 14)),
+                Text(Fmt.money(bill.total), style: AppText.numericSmall.copyWith(fontSize: 14)),
                 const SizedBox(height: 3),
                 StatusChip(
-                  label: invoiceLabel(invoice.status),
-                  tone: invoiceTone(invoice.status),
+                  label: billLabel(context.l10n, bill.status),
+                  tone: billTone(bill.status),
                   dense: true,
                   showDot: false,
                 ),
@@ -232,45 +247,226 @@ class InvoiceTile extends StatelessWidget {
   }
 }
 
-class InvoiceReceiptBody extends StatelessWidget {
-  const InvoiceReceiptBody({required this.invoice, super.key});
+class BillSheetBody extends ConsumerWidget {
+  const BillSheetBody({required this.billId, super.key});
 
-  final RentalInvoice invoice;
+  final String billId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<BillDetail> detail = ref.watch(billProvider(billId));
+    final BillDetail? value = detail.value;
+    if (value == null) {
+      return detail.hasError
+          ? EmptyState(
+              compact: true,
+              title: context.l10n.rentalsCouldNotLoadBill,
+              message: detail.failureMessage,
+              icon: Icons.cloud_off_rounded,
+              tone: AppColors.danger,
+              actionLabel: context.l10n.commonTryAgain,
+              onAction: () => ref.invalidate(billProvider(billId)),
+            )
+          : const Padding(
+              padding: EdgeInsets.symmetric(vertical: Insets.x3l),
+              child: Center(
+                child: SizedBox.square(
+                  dimension: 26,
+                  child: CircularProgressIndicator(strokeWidth: 2.4, color: AppColors.primary),
+                ),
+              ),
+            );
+    }
+
+    final Bill bill = value.bill;
+    final DateTime? dueDate = bill.dueDate;
+    final DateTime? paidAt = bill.paidAt;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Expanded(child: Text(invoice.id, style: AppText.code.copyWith(fontSize: 14))),
-            StatusChip(label: invoiceLabel(invoice.status), tone: invoiceTone(invoice.status)),
+            Expanded(child: Text(bill.number, style: AppText.code.copyWith(fontSize: 14))),
+            StatusChip(label: billLabel(context.l10n, bill.status), tone: billTone(bill.status)),
           ],
         ),
         const Gap.lg(),
-        for (final item in invoice.items)
+        for (final BillLine line in value.lines)
           KeyValueRow(
-            label: item.label,
-            value: item.amount < 0 ? '−${Fmt.money(item.amount.abs())}' : Fmt.money(item.amount),
-            valueColor: item.amount < 0 ? AppColors.mint : null,
+            label: line.description,
+            value: line.isCredit
+                ? '−${Fmt.money(line.amount.abs(), paise: true)}'
+                : Fmt.money(line.amount, paise: true),
+            valueColor: line.isCredit ? AppColors.mint : null,
           ),
         const SizedBox(height: Insets.sm),
         Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
         const SizedBox(height: Insets.sm),
+        KeyValueRow(label: context.l10n.rentalsSubtotal, value: Fmt.money(value.subtotal, paise: true), dense: true),
+        if (value.credit > 0)
+          KeyValueRow(
+            label: context.l10n.rentalsCreditsApplied,
+            value: '−${Fmt.money(value.credit, paise: true)}',
+            valueColor: AppColors.mint,
+            dense: true,
+          ),
+        if (value.tax > 0)
+          KeyValueRow(label: context.l10n.rentalsTax, value: Fmt.money(value.tax, paise: true), dense: true),
         KeyValueRow(
           label: context.l10n.commonTotal,
-          value: Fmt.money(invoice.amount),
+          value: Fmt.money(bill.total, paise: true),
           valueStyle: AppText.numeric.copyWith(fontSize: 18),
         ),
-        const Gap.lg(),
-        KeyValueRow(label: context.l10n.rentalsBillingPeriod, value: invoice.periodLabel),
+        const SizedBox(height: Insets.sm),
+        Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
+        const SizedBox(height: Insets.sm),
+        KeyValueRow(label: context.l10n.rentalsPaidSoFar, value: Fmt.money(bill.paid, paise: true), dense: true),
+        if (value.walletPaid > 0)
+          KeyValueRow(
+            label: context.l10n.rentalsFromWallet,
+            value: Fmt.money(value.walletPaid, paise: true),
+            dense: true,
+          ),
+        if (value.settlementCredit > 0)
+          KeyValueRow(
+            label: context.l10n.rentalsCreditsApplied,
+            value: Fmt.money(value.settlementCredit, paise: true),
+            dense: true,
+          ),
         KeyValueRow(
-          label: invoice.paidOn != null ? context.l10n.rentalsPaid2 : context.l10n.rentalsDue,
-          value: Fmt.date(invoice.paidOn ?? invoice.dueDate),
+          label: context.l10n.rentalsStillDue,
+          value: Fmt.money(bill.outstanding, paise: true),
+          valueColor: bill.outstanding > 0 ? AppColors.danger : AppColors.success,
+          dense: true,
         ),
+        const Gap.md(),
+        KeyValueRow(label: context.l10n.rentalsBillingPeriod, value: billPeriod(bill), dense: true),
+        if (dueDate != null) KeyValueRow(label: context.l10n.rentalsDue, value: Fmt.date(dueDate), dense: true),
+        if (paidAt != null) KeyValueRow(label: context.l10n.rentalsPaid2, value: Fmt.date(paidAt), dense: true),
         const Gap.lg(),
       ],
     );
+  }
+}
+
+class LedgerTile extends StatelessWidget {
+  const LedgerTile({required this.line, super.key});
+
+  final LedgerLine line;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool incoming = line.net >= 0;
+    final (IconData icon, String kind) = switch (line.kind) {
+      LedgerKind.charge => (Icons.receipt_rounded, context.l10n.rentalsLedgerCharge),
+      LedgerKind.credit => (Icons.savings_rounded, context.l10n.rentalsLedgerCredit),
+      LedgerKind.payment => (Icons.payments_rounded, context.l10n.rentalsLedgerPayment),
+      LedgerKind.refund => (Icons.currency_exchange_rounded, context.l10n.rentalsLedgerRefund),
+      LedgerKind.adjustment => (Icons.tune_rounded, context.l10n.rentalsLedgerAdjustment),
+      LedgerKind.reversal => (Icons.undo_rounded, context.l10n.rentalsLedgerReversal),
+    };
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: Insets.sm + 2),
+      child: Row(
+        children: [
+          IconTile(icon: icon, tone: incoming ? AppColors.success : AppColors.primary, size: 38),
+          const SizedBox(width: Insets.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  line.description.isEmpty ? kind : line.description,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.titleSmall.copyWith(fontSize: 13.5),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  [kind, Fmt.date(line.at), if (line.isDeposit) context.l10n.rentalsLedgerDeposit].join(' · '),
+                  style: AppText.bodySmall.copyWith(fontSize: 11.5),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: Insets.sm),
+          Text(
+            '${incoming ? '+' : '−'}${Fmt.money(line.net.abs(), paise: true)}',
+            style: AppText.numericSmall.copyWith(
+              fontSize: 14,
+              color: incoming ? AppColors.success : AppColors.textPrimary,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ReceiptTile extends StatelessWidget {
+  const ReceiptTile({required this.receipt, super.key});
+
+  final PaymentReceipt receipt;
+
+  @override
+  Widget build(BuildContext context) {
+    final String? reference = receipt.reference;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: Insets.sm + 2),
+      child: Row(
+        children: [
+          const IconTile(icon: Icons.payments_rounded, tone: AppColors.success, size: 38),
+          const SizedBox(width: Insets.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(_humanize(receipt.method), style: AppText.titleSmall.copyWith(fontSize: 13.5)),
+                const SizedBox(height: 2),
+                Text(
+                  [
+                    Fmt.dateTime(receipt.receivedAt),
+                    if (receipt.invoiceCount > 0) context.l10n.rentalsReceiptInvoices(receipt.invoiceCount),
+                    ?reference,
+                  ].join(' · '),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppText.bodySmall.copyWith(fontSize: 11.5),
+                ),
+                if (receipt.refunded > 0) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    context.l10n.rentalsRefunded(Fmt.money(receipt.refunded, paise: true)),
+                    style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.warning),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(width: Insets.sm),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(Fmt.money(receipt.amount, paise: true), style: AppText.numericSmall.copyWith(fontSize: 14)),
+              if (!receipt.confirmed) ...[
+                const SizedBox(height: 3),
+                StatusChip(
+                  label: context.l10n.walletStatePending,
+                  tone: StatusTone.warning,
+                  dense: true,
+                  showDot: false,
+                ),
+              ],
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  static String _humanize(String code) {
+    final String spaced = code.replaceAll('_', ' ').trim().toLowerCase();
+    if (spaced.isEmpty) return '—';
+    return '${spaced[0].toUpperCase()}${spaced.substring(1)}';
   }
 }

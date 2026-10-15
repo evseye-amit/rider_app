@@ -19,8 +19,18 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
   Future<Result<PaymentAttemptDetail>> getAttempt(String id) async => (await _api.attempt(id)).map(_attempt);
 
   @override
-  Future<Result<List<PaymentAttemptDetail>>> getRefunds() async =>
-      (await _api.refunds()).map((attempts) => [for (final PaymentAttempt attempt in attempts) _attempt(attempt)]);
+  Future<Result<List<PaymentAttemptDetail>>> getRefunds() async => (await _api.refunds()).map(
+    (refunds) => [
+      for (final PaymentRefund refund in refunds)
+        PaymentAttemptDetail(
+          id: refund.id,
+          status: refund.status,
+          amount: refund.amount,
+          startedAt: refund.requestedAt,
+          completedAt: refund.completedAt,
+        ),
+    ],
+  );
 
   static PaymentsOverview _overview(PaymentsHome home) => PaymentsOverview(
     amountDue: home.amountDue,

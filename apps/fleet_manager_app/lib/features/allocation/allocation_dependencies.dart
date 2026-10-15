@@ -6,7 +6,6 @@ import 'domain/allocation_repository.dart';
 import 'domain/usecases/allocate_vehicle.dart';
 import 'domain/usecases/ask_payment.dart';
 import 'domain/usecases/complete_deallocation.dart';
-import 'domain/usecases/complete_inspection.dart';
 import 'domain/usecases/get_allocation_board.dart';
 import 'domain/usecases/get_allocation_evidence.dart';
 import 'domain/usecases/get_deallocation_request.dart';
@@ -70,10 +69,6 @@ final requestDeallocationOtpProvider = Provider<RequestDeallocationOtp>(
 
 final verifyDeallocationOtpProvider = Provider<VerifyDeallocationOtp>(
   (ref) => VerifyDeallocationOtp(ref.watch(allocationRepositoryProvider)),
-);
-
-final completeInspectionProvider = Provider<CompleteInspection>(
-  (ref) => CompleteInspection(ref.watch(allocationRepositoryProvider)),
 );
 
 final completeDeallocationProvider = Provider<CompleteDeallocation>(

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum WalletEntryDirection { credit, debit }
+enum WalletEntryDirection { credit, debit, unknown }
 
 enum WalletEntryKind {
   topUp('TOP_UP', WalletEntryDirection.credit),
@@ -25,8 +25,8 @@ enum WalletEntryKind {
   trafficChallan('TRAFFIC_CHALLAN', WalletEntryDirection.debit),
   accessoryCharge('ACCESSORY_CHARGE', WalletEntryDirection.debit),
   lostEquipmentCharge('LOST_EQUIPMENT_CHARGE', WalletEntryDirection.debit),
-  adjustment('ADJUSTMENT', WalletEntryDirection.debit),
-  unknown('', WalletEntryDirection.debit);
+  adjustment('ADJUSTMENT', WalletEntryDirection.unknown),
+  unknown('', WalletEntryDirection.unknown);
 
   const WalletEntryKind(this.wire, this.direction);
 
@@ -52,6 +52,8 @@ class WalletMoney extends Equatable {
   List<Object?> get props => [total, held, available];
 }
 
+enum WalletEntryOrigin { rewardExpiry, rewardReversal, other }
+
 class WalletEntry extends Equatable {
   const WalletEntry({
     required this.id,
@@ -61,6 +63,8 @@ class WalletEntry extends Equatable {
     required this.amount,
     required this.at,
     this.description,
+    this.referenceType,
+    this.referenceId,
   });
 
   final String id;
@@ -70,11 +74,46 @@ class WalletEntry extends Equatable {
   final num amount;
   final DateTime at;
   final String? description;
+  final String? referenceType;
+  final String? referenceId;
 
-  bool get isCredit => kind.direction == WalletEntryDirection.credit;
+  WalletEntryOrigin get origin => switch (referenceType) {
+    'REWARD_EXPIRY' => WalletEntryOrigin.rewardExpiry,
+    'REWARD_REVERSAL' => WalletEntryOrigin.rewardReversal,
+    _ => WalletEntryOrigin.other,
+  };
+
+  WalletEntryDirection get direction => origin == WalletEntryOrigin.other ? kind.direction : WalletEntryDirection.debit;
+
+  bool get isCredit => direction == WalletEntryDirection.credit;
+
+  bool get isDebit => direction == WalletEntryDirection.debit;
 
   @override
-  List<Object?> get props => [id, reference, kind, state, amount, at, description];
+  List<Object?> get props => [id, reference, kind, state, amount, at, description, referenceType, referenceId];
+}
+
+class DepositReturn extends Equatable {
+  const DepositReturn({
+    required this.id,
+    required this.amount,
+    required this.status,
+    required this.toWallet,
+    required this.requestedAt,
+    required this.returned,
+    this.completedAt,
+  });
+
+  final String id;
+  final num amount;
+  final String status;
+  final bool toWallet;
+  final DateTime requestedAt;
+  final bool returned;
+  final DateTime? completedAt;
+
+  @override
+  List<Object?> get props => [id, amount, status, toWallet, requestedAt, returned, completedAt];
 }
 
 class WalletDeposit extends Equatable {
@@ -85,6 +124,11 @@ class WalletDeposit extends Equatable {
     required this.funded,
     required this.held,
     required this.refundable,
+    this.outstanding = 0,
+    this.locked = 0,
+    this.deducted = 0,
+    this.refunded = 0,
+    this.returns = const [],
   });
 
   final String id;
@@ -93,11 +137,80 @@ class WalletDeposit extends Equatable {
   final num funded;
   final num held;
   final num refundable;
+  final num outstanding;
+  final num locked;
+  final num deducted;
+  final num refunded;
+  final List<DepositReturn> returns;
 
   double get fundedProgress => required_ <= 0 ? 0 : (funded / required_).clamp(0, 1).toDouble();
 
   @override
-  List<Object?> get props => [id, status, required_, funded, held, refundable];
+  List<Object?> get props => [
+    id,
+    status,
+    required_,
+    funded,
+    held,
+    refundable,
+    outstanding,
+    locked,
+    deducted,
+    refunded,
+    returns,
+  ];
+}
+
+class StatementLine extends Equatable {
+  const StatementLine({
+    required this.id,
+    required this.number,
+    required this.kind,
+    required this.description,
+    required this.at,
+    required this.change,
+    required this.depositChange,
+    required this.reversed,
+  });
+
+  final String id;
+  final String number;
+  final WalletEntryKind kind;
+  final String description;
+  final DateTime at;
+  final num change;
+  final num depositChange;
+  final bool reversed;
+
+  @override
+  List<Object?> get props => [id, number, kind, description, at, change, depositChange, reversed];
+}
+
+class WalletStatementView extends Equatable {
+  const WalletStatementView({
+    required this.reference,
+    required this.opening,
+    required this.moneyIn,
+    required this.moneyOut,
+    required this.closing,
+    required this.depositClosing,
+    required this.lines,
+    required this.total,
+  });
+
+  final String reference;
+  final num opening;
+  final num moneyIn;
+  final num moneyOut;
+  final num closing;
+  final num depositClosing;
+  final List<StatementLine> lines;
+  final int total;
+
+  bool get hasMore => lines.length < total;
+
+  @override
+  List<Object?> get props => [reference, opening, moneyIn, moneyOut, closing, depositClosing, lines, total];
 }
 
 class WalletOverview extends Equatable {

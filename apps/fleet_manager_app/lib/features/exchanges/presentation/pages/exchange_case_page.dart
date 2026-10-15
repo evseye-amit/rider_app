@@ -86,19 +86,130 @@ class _ExchangeCasePageState extends ConsumerState<ExchangeCasePage> {
 
   Future<void> _settleDeposits() async {
     setState(() => _busy = true);
-    final Result<num> result = await ref.read(settleExchangeDepositsProvider)(_id);
+    final Result<DepositOutcome> result = await ref.read(settleExchangeDepositsProvider)(_id);
     if (!mounted) return;
     setState(() => _busy = false);
     switch (result) {
-      case Ok<num>(:final value) when value > 0:
-        AppSnack.info(context, context.l10n.exchangeDeskDepositDue(Fmt.money(value)));
-      case Ok<num>():
+      case Ok<DepositOutcome>(:final value) when !value.settled:
+        if (value.securityShortfall > 0) {
+          AppSnack.warning(
+            context,
+            context.l10n.exchangeDeskDepositBreakdown(
+              Fmt.money(value.due),
+              Fmt.money(value.newDeposit),
+              Fmt.money(value.securityShortfall),
+            ),
+          );
+        } else {
+          AppSnack.info(context, context.l10n.exchangeDeskDepositDue(Fmt.money(value.due)));
+        }
+      case Ok<DepositOutcome>():
         AppSnack.success(context, context.l10n.exchangeDeskDepositsSettled);
-      case Err<num>(:final failure):
+      case Err<DepositOutcome>(:final failure):
         AppSnack.error(context, failure.message);
     }
     await _refresh();
   }
+
+  Future<String?> _askText({
+    required String title,
+    required String subtitle,
+    required String label,
+    required String action,
+    required IconData icon,
+    Color? fill,
+  }) async {
+    final TextEditingController controller = TextEditingController();
+    final String? value = await AppSheet.show<String>(
+      context,
+      title: title,
+      subtitle: subtitle,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+        child: AppTextField(
+          label: label,
+          maxLines: 3,
+          maxLength: 500,
+          controller: controller,
+          autofocus: true,
+          textCapitalization: TextCapitalization.sentences,
+        ),
+      ),
+      footer: Builder(
+        builder: (sheet) => PrimaryButton(
+          label: action,
+          icon: icon,
+          fillColor: fill,
+          onPressed: () => Navigator.of(sheet).pop(controller.text.trim()),
+        ),
+      ),
+    );
+    controller.dispose();
+    return value;
+  }
+
+  Future<void> _acceptForRider(CaseOffer offer) async {
+    final String? consent = await _askText(
+      title: context.l10n.exchangeDeskAcceptForRider,
+      subtitle: context.l10n.exchangeDeskConsentSubtitle,
+      label: context.l10n.exchangeDeskConsentReference,
+      action: context.l10n.commonContinue,
+      icon: Icons.arrow_forward_rounded,
+    );
+    if (consent == null || !mounted) return;
+    if (consent.isEmpty) {
+      AppSnack.error(context, context.l10n.exchangeDeskConsentNeeded);
+      return;
+    }
+    final String? reason = await _askText(
+      title: context.l10n.exchangeDeskAcceptForRider,
+      subtitle: context.l10n.exchangeDeskAssistedReasonSubtitle,
+      label: context.l10n.exchangeDeskAssistedReason,
+      action: context.l10n.exchangeDeskAcceptForRider,
+      icon: Icons.verified_rounded,
+      fill: AppColors.success,
+    );
+    if (reason == null || !mounted) return;
+    if (reason.isEmpty) {
+      AppSnack.error(context, context.l10n.exchangeDeskAssistedReasonNeeded);
+      return;
+    }
+    await _run(
+      () => ref.read(acceptOfferOnBehalfProvider)(
+        AssistedAcceptParams(id: _id, offer: offer, consentReference: consent, reason: reason),
+      ),
+      context.l10n.exchangeDeskAcceptedForRider,
+    );
+  }
+
+  Future<void> _declineForRider(CaseOffer offer) async {
+    final String? reason = await _askText(
+      title: context.l10n.exchangeDeskDeclineForRider,
+      subtitle: context.l10n.exchangeDeskDeclineSubtitle,
+      label: context.l10n.exchangeRejectReason,
+      action: context.l10n.exchangeDeskDeclineForRider,
+      icon: Icons.close_rounded,
+      fill: AppColors.danger,
+    );
+    if (reason == null || !mounted) return;
+    if (reason.isEmpty) {
+      AppSnack.error(context, context.l10n.exchangeRejectReasonRequired);
+      return;
+    }
+    await _run(
+      () => ref.read(rejectOfferOnBehalfProvider)(AssistedRejectParams(id: _id, offer: offer, reason: reason)),
+      context.l10n.exchangeDeskDeclinedForRider,
+    );
+  }
+
+  void _showTerms(CaseOffer offer) => AppSheet.show<void>(
+    context,
+    title: offer.termsTitle.isEmpty ? context.l10n.exchangeReadTerms : offer.termsTitle,
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: Insets.lg),
+      child: Text(plainTextFromHtml(offer.termsBody), style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.55)),
+    ),
+  );
 
   Future<void> _cancel() async {
     final bool confirmed = await AppDialog.confirm(
@@ -246,21 +357,46 @@ class _ExchangeCasePageState extends ConsumerState<ExchangeCasePage> {
         ),
       ],
       CaseStep.awaitRider => [
-        if (exchange.pendingOffer case final CaseOffer offer)
+        if (exchange.pendingOffer case final CaseOffer offer) ...[
           ModuleCard(
             title: context.l10n.exchangeOfferTitle,
             leading: const IconTile(icon: Icons.local_offer_rounded, solid: true, size: 28),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 CaseQuoteView(quote: offer.quote),
                 KeyValueRow(
                   label: context.l10n.exchangeOfferExpires,
                   value: Fmt.dateTime(offer.expiresAt),
                   icon: Icons.schedule_rounded,
+                  valueColor: offer.hasExpired ? AppColors.danger : null,
                 ),
+                if (offer.termsBody.isNotEmpty)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: GhostButton(
+                      label: context.l10n.exchangeReadTerms,
+                      icon: Icons.description_rounded,
+                      dense: true,
+                      onPressed: () => _showTerms(offer),
+                    ),
+                  ),
               ],
             ),
           ),
+          if (!offer.hasExpired) ...[
+            const Gap.md(),
+            Text(context.l10n.exchangeDeskAssistedHint, style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45)),
+            const Gap.md(),
+            primary(context.l10n.exchangeDeskAcceptForRider, Icons.verified_rounded, () => _acceptForRider(offer)),
+            const Gap.sm(),
+            SecondaryButton(
+              label: context.l10n.exchangeDeskDeclineForRider,
+              icon: Icons.close_rounded,
+              onPressed: _busy ? null : () => _declineForRider(offer),
+            ),
+          ],
+        ],
         const Gap.sm(),
         GhostButton(
           label: context.l10n.exchangeDeskChangeScooter,
@@ -287,13 +423,28 @@ class _ExchangeCasePageState extends ConsumerState<ExchangeCasePage> {
         ),
       ],
       CaseStep.finishHandover => [
+        if (exchange.newAllocationId case final String allocationId) ...[
+          SecondaryButton(
+            label: context.l10n.exchangeDeskOpenAllocation,
+            icon: Icons.open_in_new_rounded,
+            onPressed: () => context.push('${Routes.allocationDetail}?id=$allocationId'),
+          ),
+          const Gap.md(),
+        ],
         primary(
           context.l10n.exchangeDeskComplete,
           Icons.task_alt_rounded,
           () => _run(() => ref.read(completeExchangeProvider)(_id), context.l10n.exchangeDeskExchangeCompleted),
         ),
       ],
-      CaseStep.none => const [],
+      CaseStep.none => [
+        if (exchange.status == CaseStatus.completed && exchange.newAllocationId != null)
+          SecondaryButton(
+            label: context.l10n.exchangeDeskOpenAllocation,
+            icon: Icons.open_in_new_rounded,
+            onPressed: () => context.push('${Routes.allocationDetail}?id=${exchange.newAllocationId}'),
+          ),
+      ],
     };
     return actions.isEmpty ? const [] : [...actions, const Gap.xl()];
   }

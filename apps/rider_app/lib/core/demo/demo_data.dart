@@ -32,7 +32,6 @@ abstract final class Demo {
   static const num todayEarnings = 1240;
   static const num incentiveEarned = 320;
   static const num incentiveTarget = 500;
-  static const num weeklyRent = 1750;
 
   static const int tripsToday = 14;
   static const double distanceTodayKm = 62.4;

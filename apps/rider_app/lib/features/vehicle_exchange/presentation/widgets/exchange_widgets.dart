@@ -439,7 +439,7 @@ Future<void> showExchangeTerms(BuildContext context, ExchangeOffer offer) => App
   subtitle: offer.termsVersion,
   child: Padding(
     padding: const EdgeInsets.only(bottom: Insets.lg),
-    child: Text(offer.termsBody, style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.55)),
+    child: Text(plainTextFromHtml(offer.termsBody), style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.55)),
   ),
 );
 

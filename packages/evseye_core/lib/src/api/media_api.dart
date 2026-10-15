@@ -180,19 +180,58 @@ class MediaApi {
     );
   }
 
+  Future<Result<RemotePhoto>> uploadThrough({
+    required String intentPath,
+    required String photoType,
+    required String Function(String photoId) completePath,
+    required File file,
+    String mimeType = 'image/jpeg',
+    void Function(double progress)? onProgress,
+  }) async {
+    final Uint8List bytes = await file.readAsBytes();
+    final Result<Map<String, dynamic>> intent = await _client.post<Map<String, dynamic>>(
+      intentPath,
+      body: {
+        'photoType': photoType,
+        'mimeType': mimeType,
+        'fileName': _fileNameFor(photoType, mimeType),
+        'sizeBytes': bytes.length,
+      },
+      parse: (data) => Map<String, dynamic>.from(data as Map),
+    );
+    if (intent case Err<Map<String, dynamic>>(:final failure)) return Result.err(failure);
+
+    final Map<String, dynamic> payload = (intent as Ok<Map<String, dynamic>>).value;
+    final String photoId = Map<String, dynamic>.from(payload['photo'] as Map)['id'] as String;
+    final Result<bool> sent = await _putObject(
+      payload['uploadUrl'] as String,
+      bytes,
+      mimeType,
+      onProgress,
+      alwaysSendContentType: true,
+    );
+    if (sent case Err<bool>(:final failure)) return Result.err(failure);
+
+    return _client.post<RemotePhoto>(
+      completePath(photoId),
+      parse: (data) => RemotePhoto.fromJson(Map<String, dynamic>.from(data as Map)),
+    );
+  }
+
   Future<Result<bool>> _putObject(
     String uploadUrl,
     Uint8List bytes,
     String mimeType,
-    void Function(double progress)? onProgress,
-  ) async {
+    void Function(double progress)? onProgress, {
+    bool alwaysSendContentType = false,
+  }) async {
     try {
       final Dio plain = Dio();
       final Response<dynamic> put = await plain.put<dynamic>(
         uploadUrl,
         data: Stream<List<int>>.fromIterable([bytes]),
         options: Options(
-          headers: _signedHeaders(uploadUrl, mimeType, bytes.length),
+          headers: _signedHeaders(uploadUrl, mimeType, bytes.length, alwaysSendContentType),
           validateStatus: (_) => true,
         ),
         onSendProgress: (sentBytes, total) {
@@ -216,7 +255,7 @@ class MediaApi {
     );
   }
 
-  static Map<String, dynamic> _signedHeaders(String url, String mimeType, int length) {
+  static Map<String, dynamic> _signedHeaders(String url, String mimeType, int length, bool alwaysSendContentType) {
     final Set<String> signed = (Uri.parse(url).queryParameters['X-Amz-SignedHeaders'] ?? '')
         .split(';')
         .map((h) => h.trim().toLowerCase())
@@ -226,7 +265,7 @@ class MediaApi {
     final Map<String, dynamic> headers = <String, dynamic>{
       Headers.contentLengthHeader: length,
     };
-    if (signed.isEmpty || signed.contains('content-type')) {
+    if (alwaysSendContentType || signed.isEmpty || signed.contains('content-type')) {
       headers[Headers.contentTypeHeader] = mimeType;
     }
     if (signed.contains('x-amz-server-side-encryption')) {

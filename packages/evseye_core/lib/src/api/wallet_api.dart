@@ -113,15 +113,28 @@ class WalletSecurityDeposit {
     required this.fundedAmount,
     required this.heldAmount,
     required this.refundableAmount,
+    this.outstandingAmount = 0,
+    this.lockedAmount = 0,
+    this.deductedAmount = 0,
+    this.refundedAmount = 0,
+    this.returns = const [],
   });
 
   factory WalletSecurityDeposit.fromJson(Map<String, dynamic> json) => WalletSecurityDeposit(
     id: _text(json['id']),
     status: _text(json['status']),
-    requiredAmount: _money(json['requiredAmount'] ?? json['targetAmount']),
+    requiredAmount: _money(json['requiredAmount']),
     fundedAmount: _money(json['fundedAmount']),
     heldAmount: _money(json['heldAmount']),
     refundableAmount: _money(json['refundableAmount']),
+    outstandingAmount: _money(json['outstandingAmount']),
+    lockedAmount: _money(json['lockedAmount']),
+    deductedAmount: _money(json['deductedAmount']),
+    refundedAmount: _money(json['refundedAmount']),
+    returns: (json['returns'] as List<dynamic>? ?? const [])
+        .whereType<Map>()
+        .map((e) => WalletDepositReturn.fromJson(Map<String, dynamic>.from(e)))
+        .toList(growable: false),
   );
 
   final String id;
@@ -130,6 +143,149 @@ class WalletSecurityDeposit {
   final num fundedAmount;
   final num heldAmount;
   final num refundableAmount;
+  final num outstandingAmount;
+  final num lockedAmount;
+  final num deductedAmount;
+  final num refundedAmount;
+  final List<WalletDepositReturn> returns;
+}
+
+class WalletDepositReturn {
+  const WalletDepositReturn({
+    required this.id,
+    required this.amount,
+    required this.status,
+    required this.toWallet,
+    required this.requestedAt,
+    this.completedAt,
+  });
+
+  factory WalletDepositReturn.fromJson(Map<String, dynamic> json) => WalletDepositReturn(
+    id: _text(json['id']),
+    amount: _money(json['amount']),
+    status: _text(json['status']),
+    toWallet: json['destinationType']?.toString() == 'WALLET_CASH',
+    requestedAt: _date(json['requestedAt']) ?? DateTime.now(),
+    completedAt: _date(json['completedAt']),
+  );
+
+  final String id;
+  final num amount;
+  final String status;
+  final bool toWallet;
+  final DateTime requestedAt;
+  final DateTime? completedAt;
+
+  bool get isReturned => status == 'RETURNED';
+}
+
+class WalletStatementTotals {
+  const WalletStatementTotals({
+    required this.opening,
+    required this.credits,
+    required this.debits,
+    required this.closing,
+  });
+
+  factory WalletStatementTotals.fromJson(Object? raw) {
+    final Map<String, dynamic> json = raw is Map ? Map<String, dynamic>.from(raw) : const {};
+    return WalletStatementTotals(
+      opening: _money(json['opening']),
+      credits: _money(json['credits']),
+      debits: _money(json['debits']),
+      closing: _money(json['closing']),
+    );
+  }
+
+  final num opening;
+  final num credits;
+  final num debits;
+  final num closing;
+}
+
+class WalletStatementEntry {
+  const WalletStatementEntry({
+    required this.id,
+    required this.number,
+    required this.type,
+    required this.reversed,
+    required this.description,
+    required this.postedAt,
+    required this.spendableChange,
+    required this.depositChange,
+    this.referenceType,
+  });
+
+  factory WalletStatementEntry.fromJson(Map<String, dynamic> json) {
+    num spendable = 0;
+    num deposit = 0;
+    for (final Object? raw in json['movements'] as List<dynamic>? ?? const []) {
+      if (raw is! Map) continue;
+      final num amount = _money(raw['amount']);
+      if (raw['bucket']?.toString() == 'SECURITY_DEPOSIT') {
+        deposit += amount;
+      } else {
+        spendable += amount;
+      }
+    }
+    return WalletStatementEntry(
+      id: _text(json['id']),
+      number: _text(json['number']),
+      type: _text(json['type']),
+      reversed: json['status']?.toString() == 'REVERSED',
+      description: _text(json['description']),
+      postedAt: _date(json['postedAt'])?.toLocal() ?? DateTime.now(),
+      spendableChange: spendable,
+      depositChange: deposit,
+      referenceType: json['referenceType']?.toString(),
+    );
+  }
+
+  final String id;
+  final String number;
+  final String type;
+  final bool reversed;
+  final String description;
+  final DateTime postedAt;
+  final num spendableChange;
+  final num depositChange;
+  final String? referenceType;
+}
+
+class WalletStatement {
+  const WalletStatement({
+    required this.reference,
+    required this.currency,
+    required this.spendable,
+    required this.deposit,
+    required this.entries,
+    required this.total,
+  });
+
+  factory WalletStatement.fromJson(Map<String, dynamic> json) {
+    final Map<String, dynamic> buckets = json['buckets'] is Map
+        ? Map<String, dynamic>.from(json['buckets'] as Map)
+        : const {};
+    final Map<String, dynamic> meta = json['meta'] is Map ? Map<String, dynamic>.from(json['meta'] as Map) : const {};
+    return WalletStatement(
+      reference: _text(json['reference']),
+      currency: json['currency']?.toString() ?? 'INR',
+      spendable: WalletStatementTotals.fromJson(json['spendable']),
+      deposit: WalletStatementTotals.fromJson(buckets['SECURITY_DEPOSIT']),
+      entries: (json['transactions'] as List<dynamic>? ?? const [])
+          .whereType<Map>()
+          .map((e) => WalletStatementEntry.fromJson(Map<String, dynamic>.from(e)))
+          .toList(growable: false),
+      total: (meta['total'] as num?)?.toInt() ?? 0,
+    );
+  }
+
+  final String reference;
+  final String currency;
+  final WalletStatementTotals spendable;
+  final WalletStatementTotals deposit;
+  final List<WalletStatementEntry> entries;
+  final int total;
 }
 
 class RiderWalletSummary {
@@ -288,17 +444,34 @@ class WalletApi {
     parse: (data) => WalletLedgerEntry.fromJson(Map<String, dynamic>.from(data as Map)),
   );
 
-  Future<Result<List<WalletLedgerEntry>>> statement({DateTime? from, DateTime? to, int page = 1, int pageSize = 50}) =>
-      _client.get<List<WalletLedgerEntry>>(
-        '$_base/statements',
-        query: {
-          if (from != null) 'from': from.toIso8601String(),
-          if (to != null) 'to': to.toIso8601String(),
-          'page': page,
-          'pageSize': pageSize,
-        },
-        parse: (data) => _entries(data is Map ? (data['entries'] ?? data['transactions'] ?? const []) : data),
-      );
+  Future<Result<WalletStatement>> statement({
+    required DateTime from,
+    required DateTime to,
+    int page = 1,
+    int pageSize = 50,
+  }) => _client.get<WalletStatement>(
+    '$_base/statements',
+    query: {'from': _day(from), 'to': _day(to), 'page': page, 'pageSize': pageSize},
+    parse: (data) => WalletStatement.fromJson(Map<String, dynamic>.from(data as Map)),
+  );
+
+  Future<Result<List<WalletSecurityDeposit>>> securityDeposits() => _client.get<List<WalletSecurityDeposit>>(
+    '$_base/security-deposits',
+    parse: (data) => (data as List<dynamic>? ?? const [])
+        .whereType<Map>()
+        .map((e) => WalletSecurityDeposit.fromJson(Map<String, dynamic>.from(e)))
+        .toList(growable: false),
+  );
+
+  Future<Result<WalletSecurityDeposit>> securityDeposit(String id) => _client.get<WalletSecurityDeposit>(
+    '$_base/security-deposits/$id',
+    parse: (data) => WalletSecurityDeposit.fromJson(Map<String, dynamic>.from(data as Map)),
+  );
+
+  static String _day(DateTime value) {
+    final DateTime utc = DateTime.utc(value.year, value.month, value.day);
+    return '${utc.year.toString().padLeft(4, '0')}-${utc.month.toString().padLeft(2, '0')}-${utc.day.toString().padLeft(2, '0')}';
+  }
 
   Future<Result<WalletReceipt>> receipt(WalletReceiptKind kind, String id) => _client.get<WalletReceipt>(
     '$_base/receipts/${kind.path}/$id',

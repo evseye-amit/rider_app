@@ -60,6 +60,7 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     );
     if (result case Ok<AuthUser>(:final value)) {
       state = state.copyWith(user: value);
+      unawaited(ref.read(termsConsentProvider.notifier).recordAcceptance(value.id));
       await refreshState();
       await loadPackage();
     }

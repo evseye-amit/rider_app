@@ -34,9 +34,27 @@ class RiderDrawer extends ConsumerWidget {
     context.push(route);
   }
 
-  void _openDocument(BuildContext context) {
+  void _openDocument(BuildContext context, LegalKind kind) {
     Navigator.of(context).pop();
-    LegalLink.open(context);
+    LegalLink.open(context, kind);
+  }
+
+  void _showAbout(BuildContext context) {
+    Navigator.of(context).pop();
+    AppSheet.show<void>(
+      context,
+      title: context.l10n.commonAboutApp,
+      child: Column(
+        children: [
+          KeyValueRow(label: context.l10n.legalAppName, value: FlavorConfig.riderAppName, icon: Icons.apps_rounded),
+          KeyValueRow(
+            label: context.l10n.commonVersion,
+            value: FlavorConfig.riderVersion,
+            icon: Icons.info_outline_rounded,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -86,6 +104,12 @@ class RiderDrawer extends ConsumerWidget {
                       subtitle: context.l10n.exchangeSubtitle,
                       onTap: () => _go(context, Routes.vehicleExchanges),
                     ),
+                    _DrawerItem(
+                      icon: Icons.assignment_return_rounded,
+                      label: context.l10n.returnsTitle,
+                      subtitle: context.l10n.returnsSubtitle,
+                      onTap: () => _go(context, Routes.rideReturns),
+                    ),
                     const SizedBox(height: Insets.md),
                     _DrawerItem(
                       icon: Icons.language_rounded,
@@ -97,17 +121,17 @@ class RiderDrawer extends ConsumerWidget {
                     _DrawerItem(
                       icon: Icons.gavel_rounded,
                       label: context.l10n.commonTermsService,
-                      onTap: () => _openDocument(context),
+                      onTap: () => _openDocument(context, LegalKind.terms),
                     ),
                     _DrawerItem(
                       icon: Icons.privacy_tip_rounded,
                       label: context.l10n.commonPrivacyPolicy,
-                      onTap: () => _openDocument(context),
+                      onTap: () => _openDocument(context, LegalKind.privacy),
                     ),
                     _DrawerItem(
                       icon: Icons.info_rounded,
                       label: context.l10n.commonAboutApp,
-                      onTap: () => _openDocument(context),
+                      onTap: () => _showAbout(context),
                     ),
                     const SizedBox(height: Insets.xl),
                     _DrawerItem(

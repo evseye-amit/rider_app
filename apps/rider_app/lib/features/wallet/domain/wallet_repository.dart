@@ -12,4 +12,8 @@ abstract interface class WalletRepository {
   Future<Result<WithdrawalStatus>> getWithdrawalStatus();
 
   Future<Result<WalletReceipt>> getReceipt(WalletReceiptKind kind, String id);
+
+  Future<Result<WalletStatementView>> getStatement({required DateTime month, int page, int pageSize});
+
+  Future<Result<WalletDeposit>> getDeposit(String id);
 }

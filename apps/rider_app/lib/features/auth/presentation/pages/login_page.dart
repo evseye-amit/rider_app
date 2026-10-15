@@ -177,13 +177,13 @@ class _LegalLine extends StatelessWidget {
           TextSpan(
             text: context.l10n.commonTermsService,
             style: link,
-            recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context),
+            recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context, LegalKind.terms),
           ),
           TextSpan(text: context.l10n.commonAnd),
           TextSpan(
             text: context.l10n.commonPrivacyPolicy,
             style: link,
-            recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context),
+            recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context, LegalKind.privacy),
           ),
           const TextSpan(text: '.'),
         ],

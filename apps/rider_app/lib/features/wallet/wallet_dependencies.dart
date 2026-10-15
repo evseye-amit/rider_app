@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'data/wallet_repository_impl.dart';
 import 'domain/usecases/get_wallet_overview.dart';
 import 'domain/usecases/get_wallet_receipt.dart';
+import 'domain/usecases/get_wallet_statement.dart';
 import 'domain/usecases/get_wallet_transaction.dart';
 import 'domain/usecases/get_wallet_transactions.dart';
 import 'domain/usecases/get_withdrawal_status.dart';
@@ -31,4 +32,12 @@ final getWithdrawalStatusProvider = Provider<GetWithdrawalStatus>(
 
 final getWalletReceiptProvider = Provider<GetWalletReceipt>(
   (ref) => GetWalletReceipt(ref.watch(walletRepositoryProvider)),
+);
+
+final getWalletStatementProvider = Provider<GetWalletStatement>(
+  (ref) => GetWalletStatement(ref.watch(walletRepositoryProvider)),
+);
+
+final getSecurityDepositProvider = Provider<GetSecurityDeposit>(
+  (ref) => GetSecurityDeposit(ref.watch(walletRepositoryProvider)),
 );

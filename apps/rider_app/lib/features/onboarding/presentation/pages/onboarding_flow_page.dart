@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:evseye_core/evseye_core.dart';
@@ -120,9 +121,22 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
 
   Map<String, Object?> _stepValues(OnboardingStepConfig step) => {
     for (final OnboardingFieldConfig field in step.inputs)
-      if (_form.valueOf(field.fieldCode) != null && _form.valueOf(field.fieldCode).toString().trim().isNotEmpty)
-        field.fieldCode: _form.valueOf(field.fieldCode).toString().trim(),
+      if (_wireValue(field) case final Object value) field.fieldCode: value,
   };
+
+  Object? _wireValue(OnboardingFieldConfig field) {
+    final Object? raw = _form.valueOf(field.fieldCode);
+    if (raw == null) return null;
+    if (field.fieldType == 'REFERENCE') {
+      if (raw is List) return raw.isEmpty ? null : raw;
+      final String text = raw.toString().trim();
+      if (text.isEmpty) return null;
+      final Object? decoded = jsonDecode(text);
+      return decoded is List && decoded.isNotEmpty ? decoded : null;
+    }
+    final String text = raw.toString().trim();
+    return text.isEmpty ? null : text;
+  }
 
   String? _ageCheck(OnboardingStepConfig step) {
     final OnboardingFieldConfig? gate = step.fields

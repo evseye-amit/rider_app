@@ -14,6 +14,7 @@ class DeallocationRequest extends Equatable {
     required this.priority,
     this.allocationStatus = 'DEALLOCATION_INITIATED',
     this.postReturnInspectionId,
+    this.postReturnInspectionDone = false,
   });
 
   final String id;
@@ -32,6 +33,8 @@ class DeallocationRequest extends Equatable {
 
   final String? postReturnInspectionId;
 
+  final bool postReturnInspectionDone;
+
   bool get isInitiated => allocationStatus == 'DEALLOCATION_INITIATED';
 
   @override
@@ -48,5 +51,6 @@ class DeallocationRequest extends Equatable {
     priority,
     allocationStatus,
     postReturnInspectionId,
+    postReturnInspectionDone,
   ];
 }

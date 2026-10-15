@@ -131,10 +131,6 @@ class AllocationRepositoryImpl implements AllocationRepository {
   );
 
   @override
-  Future<Result<void>> completeInspection(String inspectionId) =>
-      _api.post<void>('/inspections/$inspectionId/complete', parse: (_) {});
-
-  @override
   Future<Result<void>> completeDeallocation(String allocationId) =>
       _api.post<void>('/allocations/$allocationId/deallocation/complete', parse: (_) {});
 
@@ -191,6 +187,9 @@ class AllocationRepositoryImpl implements AllocationRepository {
           .where((i) => i['type'] == 'POST_DEALLOCATION')
           .map((i) => i['id']?.toString())
           .firstOrNull,
+      postReturnInspectionDone: (row['inspections'] as List<dynamic>? ?? const []).whereType<Map>().any(
+        (i) => i['type'] == 'POST_DEALLOCATION' && i['status'] == 'COMPLETED',
+      ),
     );
   }
 

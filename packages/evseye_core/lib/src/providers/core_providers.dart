@@ -4,12 +4,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../api/api_client.dart';
 import '../api/auth_api.dart';
 import '../api/deployment_api.dart';
+import '../api/legal_api.dart';
 import '../api/media_api.dart';
 import '../api/referral_api.dart';
 import '../api/rental_agreements_api.dart';
+import '../api/ride_returns_api.dart';
 import '../api/rider_app_api.dart';
+import '../api/rider_billing_api.dart';
 import '../api/rider_hubs_api.dart';
 import '../api/rider_payments_api.dart';
+import '../api/support_api.dart';
 import '../api/swap_stations_api.dart';
 import '../api/token_store.dart';
 import '../api/vehicle_exchange_api.dart';
@@ -60,5 +64,21 @@ final riderHubsApiProvider = Provider<RiderHubsApi>((ref) => RiderHubsApi(ref.wa
 final referralApiProvider = Provider<ReferralApi>((ref) => ReferralApi(ref.watch(apiClientProvider)));
 
 final swapStationsApiProvider = Provider<SwapStationsApi>((_) => SwapStationsApi());
+
+final legalApiProvider = Provider<LegalApi>((ref) => LegalApi(ref.watch(apiClientProvider)));
+
+final riderSupportApiProvider = Provider<SupportApi>(
+  (ref) => SupportApi.rider(ref.watch(apiClientProvider), ref.watch(mediaApiProvider)),
+);
+
+final staffSupportApiProvider = Provider<SupportApi>(
+  (ref) => SupportApi.staff(ref.watch(apiClientProvider), ref.watch(mediaApiProvider)),
+);
+
+final rideReturnsApiProvider = Provider<RideReturnsApi>((ref) => RideReturnsApi(ref.watch(apiClientProvider)));
+
+final returnDeskApiProvider = Provider<ReturnDeskApi>((ref) => ReturnDeskApi(ref.watch(apiClientProvider)));
+
+final riderBillingApiProvider = Provider<RiderBillingApi>((ref) => RiderBillingApi(ref.watch(apiClientProvider)));
 
 Duration? noProviderRetry(int retryCount, Object error) => null;

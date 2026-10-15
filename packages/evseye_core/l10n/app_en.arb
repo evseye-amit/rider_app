@@ -754,6 +754,10 @@
   "@commonConfirmAccountNumber": {
     "description": "Confirm account number"
   },
+  "commonContinue": "Continue",
+  "@commonContinue": {
+    "description": "Continue"
+  },
   "commonCouldNotOpenDocumentTry": "Could not open the document. Try again.",
   "@commonCouldNotOpenDocumentTry": {
     "description": "Could not open the document. Try again."
@@ -854,6 +858,10 @@
   "@commonLanguage": {
     "description": "Language"
   },
+  "commonLoadMore": "Load more",
+  "@commonLoadMore": {
+    "description": "Load more"
+  },
   "commonLowPriority": "Low priority",
   "@commonLowPriority": {
     "description": "Low priority"
@@ -910,13 +918,25 @@
   "@commonNotFound": {
     "description": "Not found."
   },
+  "commonNow": "Now",
+  "@commonNow": {
+    "description": "Now"
+  },
   "commonOdometer": "Odometer",
   "@commonOdometer": {
     "description": "Odometer"
   },
+  "commonOff": "Off",
+  "@commonOff": {
+    "description": "Off"
+  },
   "commonOffline": "Offline",
   "@commonOffline": {
     "description": "Offline"
+  },
+  "commonOn": "On",
+  "@commonOn": {
+    "description": "On"
   },
   "commonOpen": "Open",
   "@commonOpen": {
@@ -1752,6 +1772,10 @@
   "@earningsWeeklyDistance": {
     "description": "Weekly distance"
   },
+  "errorActiveScooterRequired": "You need a scooter assigned to you for this.",
+  "@errorActiveScooterRequired": {
+    "description": "You need a scooter assigned to you for this."
+  },
   "errorCouldNotReachServerCheck": "Could not reach the server. Check your connection.",
   "@errorCouldNotReachServerCheck": {
     "description": "Could not reach the server. Check your connection."
@@ -1767,6 +1791,10 @@
   "errorPaymentPending": "Payment pending",
   "@errorPaymentPending": {
     "description": "Payment pending"
+  },
+  "errorRiderProfileMissing": "We couldn't find the rider profile.",
+  "@errorRiderProfileMissing": {
+    "description": "We couldn't find the rider profile."
   },
   "errorServerTookTooLongAnswer": "The server took too long to answer.",
   "@errorServerTookTooLongAnswer": {
@@ -1881,6 +1909,14 @@
   "@exchangeDepositToPay": {
     "description": "Extra deposit to pay"
   },
+  "exchangeDeskAcceptedForRider": "Offer accepted for the rider",
+  "@exchangeDeskAcceptedForRider": {
+    "description": "Offer accepted for the rider"
+  },
+  "exchangeDeskAcceptForRider": "Accept for the rider",
+  "@exchangeDeskAcceptForRider": {
+    "description": "Accept for the rider"
+  },
   "exchangeDeskApprove": "Approve request",
   "@exchangeDeskApprove": {
     "description": "Approve request"
@@ -1888,6 +1924,22 @@
   "exchangeDeskApproved": "Request approved",
   "@exchangeDeskApproved": {
     "description": "Request approved"
+  },
+  "exchangeDeskAssistedHint": "If the rider can't use the app, you can record their answer for them. Do this only with their clear consent.",
+  "@exchangeDeskAssistedHint": {
+    "description": "If the rider can't use the app, you can record their answer for them. Do this only with their clear consent."
+  },
+  "exchangeDeskAssistedReason": "Reason",
+  "@exchangeDeskAssistedReason": {
+    "description": "Reason"
+  },
+  "exchangeDeskAssistedReasonNeeded": "Add a reason for accepting on their behalf",
+  "@exchangeDeskAssistedReasonNeeded": {
+    "description": "Add a reason for accepting on their behalf"
+  },
+  "exchangeDeskAssistedReasonSubtitle": "Why is the rider not accepting in the app themselves?",
+  "@exchangeDeskAssistedReasonSubtitle": {
+    "description": "Why is the rider not accepting in the app themselves?"
   },
   "exchangeDeskChangeScooter": "Change scooter",
   "@exchangeDeskChangeScooter": {
@@ -1904,6 +1956,45 @@
   "exchangeDeskConfirmReturn": "Confirm scooter returned",
   "@exchangeDeskConfirmReturn": {
     "description": "Confirm scooter returned"
+  },
+  "exchangeDeskConsentNeeded": "Add how the rider gave consent",
+  "@exchangeDeskConsentNeeded": {
+    "description": "Add how the rider gave consent"
+  },
+  "exchangeDeskConsentReference": "Consent reference",
+  "@exchangeDeskConsentReference": {
+    "description": "Consent reference"
+  },
+  "exchangeDeskConsentSubtitle": "How did the rider agree? For example a signed form number or a recorded call.",
+  "@exchangeDeskConsentSubtitle": {
+    "description": "How did the rider agree? For example a signed form number or a recorded call."
+  },
+  "exchangeDeskDeclinedForRider": "Offer declined for the rider",
+  "@exchangeDeskDeclinedForRider": {
+    "description": "Offer declined for the rider"
+  },
+  "exchangeDeskDeclineForRider": "Rider declined",
+  "@exchangeDeskDeclineForRider": {
+    "description": "Rider declined"
+  },
+  "exchangeDeskDeclineSubtitle": "Record why the rider turned the offer down.",
+  "@exchangeDeskDeclineSubtitle": {
+    "description": "Record why the rider turned the offer down."
+  },
+  "exchangeDeskDepositBreakdown": "{total} is still due: {newDeposit} for the new scooter and {shortfall} to top up the rider's security deposit.",
+  "@exchangeDeskDepositBreakdown": {
+    "description": "Breakdown of deposit still due during an exchange",
+    "placeholders": {
+      "total": {
+        "type": "String"
+      },
+      "newDeposit": {
+        "type": "String"
+      },
+      "shortfall": {
+        "type": "String"
+      }
+    }
   },
   "exchangeDeskDepositDue": "The rider still has to pay {amount} more deposit.",
   "@exchangeDeskDepositDue": {
@@ -1973,6 +2064,10 @@
   "exchangeDeskOfferSent": "Offer sent to rider",
   "@exchangeDeskOfferSent": {
     "description": "Offer sent to rider"
+  },
+  "exchangeDeskOpenAllocation": "Open the new allocation",
+  "@exchangeDeskOpenAllocation": {
+    "description": "Open the new allocation"
   },
   "exchangeDeskOpenReturn": "Open return",
   "@exchangeDeskOpenReturn": {
@@ -2075,6 +2170,10 @@
   "@exchangeErrorAlreadyReturned": {
     "description": "The old scooter has already been returned."
   },
+  "exchangeErrorBatteryPlan": "The rider's battery plan isn't available for this scooter.",
+  "@exchangeErrorBatteryPlan": {
+    "description": "The rider's battery plan isn't available for this scooter."
+  },
   "exchangeErrorBillingChanged": "Billing changed after the offer was accepted. Please contact support.",
   "@exchangeErrorBillingChanged": {
     "description": "Billing changed after the offer was accepted. Please contact support."
@@ -2115,9 +2214,9 @@
   "@exchangeErrorNoRental": {
     "description": "We couldn't find an active rental for you."
   },
-  "exchangeErrorNoScooter": "You need a scooter assigned to you to request an exchange.",
-  "@exchangeErrorNoScooter": {
-    "description": "You need a scooter assigned to you to request an exchange."
+  "exchangeErrorNotEligible": "The rider isn't eligible for this scooter.",
+  "@exchangeErrorNotEligible": {
+    "description": "The rider isn't eligible for this scooter."
   },
   "exchangeErrorNoTerms": "Rider terms aren't set up. Ask an admin to publish one active set of terms.",
   "@exchangeErrorNoTerms": {
@@ -2134,6 +2233,10 @@
   "exchangeErrorOfferInvalid": "We couldn't verify this offer. Ask your hub to send it again.",
   "@exchangeErrorOfferInvalid": {
     "description": "We couldn't verify this offer. Ask your hub to send it again."
+  },
+  "exchangeErrorPricingSetup": "Pricing isn't set up for this scooter yet. Ask your operator to check the rate card.",
+  "@exchangeErrorPricingSetup": {
+    "description": "Pricing isn't set up for this scooter yet. Ask your operator to check the rate card."
   },
   "exchangeErrorRecordsMissing": "Some records for this exchange are missing. Please contact support.",
   "@exchangeErrorRecordsMissing": {
@@ -2761,6 +2864,14 @@
   "@hubWorkingLate": {
     "description": "Working late"
   },
+  "inspectionErrorSafeForReuse": "Say whether the scooter is safe to give out again.",
+  "@inspectionErrorSafeForReuse": {
+    "description": "Say whether the scooter is safe to give out again."
+  },
+  "inspectionErrorUnsafeReason": "Add why the scooter isn't safe to give out again.",
+  "@inspectionErrorUnsafeReason": {
+    "description": "Add why the scooter isn't safe to give out again."
+  },
   "introCouldNotLoad": "Could not load the intro slides.",
   "@introCouldNotLoad": {
     "description": "Could not load the intro slides."
@@ -2813,13 +2924,17 @@
   "@introVehicleTitle": {
     "description": "Your scooter, fully connected"
   },
+  "legalAppName": "App",
+  "@legalAppName": {
+    "description": "App"
+  },
+  "legalDocumentCouldNotLoad": "Could not load this document",
+  "@legalDocumentCouldNotLoad": {
+    "description": "Could not load this document"
+  },
   "legalTermsAgree": "I have read and agree to the Terms & Conditions",
   "@legalTermsAgree": {
     "description": "I have read and agree to the Terms & Conditions"
-  },
-  "legalTermsCouldNotLoad": "Could not load the terms",
-  "@legalTermsCouldNotLoad": {
-    "description": "Could not load the terms"
   },
   "legalTermsSubtitle": "Please read these terms before you continue.",
   "@legalTermsSubtitle": {
@@ -3445,6 +3560,10 @@
   "@onboardingReferralCodeApplied": {
     "description": "Referral code applied"
   },
+  "onboardingReferralNotFound": "We couldn't find a referral for that. Check the code or mobile number.",
+  "@onboardingReferralNotFound": {
+    "description": "We couldn't find a referral for that. Check the code or mobile number."
+  },
   "onboardingReferralTapApply": "Tap Apply to use this code, or clear it",
   "@onboardingReferralTapApply": {
     "description": "Tap Apply to use this code, or clear it"
@@ -3787,57 +3906,130 @@
   "@rentalsAutoDebitKeepsEveryCycle": {
     "description": "Auto-debit keeps every cycle paid on time, no manual transfers"
   },
-  "rentalsAutoDebitMandate": "Auto-debit mandate",
-  "@rentalsAutoDebitMandate": {
-    "description": "Auto-debit mandate"
-  },
-  "rentalsAutoDebitNotActiveSettle": "Auto-debit is not active — settle upcoming invoices manually until the mandate is restored.",
-  "@rentalsAutoDebitNotActiveSettle": {
-    "description": "Auto-debit is not active — settle upcoming invoices manually until the mandate is restored."
-  },
   "rentalsBillingPeriod": "Billing period",
   "@rentalsBillingPeriod": {
     "description": "Billing period"
+  },
+  "rentalsBills": "Bills",
+  "@rentalsBills": {
+    "description": "Bills"
+  },
+  "rentalsCouldNotLoadBill": "Could not load this bill",
+  "@rentalsCouldNotLoadBill": {
+    "description": "Could not load this bill"
+  },
+  "rentalsCouldNotLoadLedger": "Could not load your ledger",
+  "@rentalsCouldNotLoadLedger": {
+    "description": "Could not load your ledger"
+  },
+  "rentalsCouldNotLoadPayments": "Could not load your payments",
+  "@rentalsCouldNotLoadPayments": {
+    "description": "Could not load your payments"
   },
   "rentalsCouldNotLoadRentPlan": "Could not load your rent plan",
   "@rentalsCouldNotLoadRentPlan": {
     "description": "Could not load your rent plan"
   },
+  "rentalsCredit": "Credit available",
+  "@rentalsCredit": {
+    "description": "Credit available"
+  },
+  "rentalsCreditsApplied": "Credits applied",
+  "@rentalsCreditsApplied": {
+    "description": "Credits applied"
+  },
   "rentalsCurrentPlan": "Current plan",
   "@rentalsCurrentPlan": {
     "description": "Current plan"
   },
-  "rentalsDebits": "Debits in",
-  "@rentalsDebits": {
-    "description": "Debits in"
-  },
-  "rentalsDownloadPdf": "Download PDF",
-  "@rentalsDownloadPdf": {
-    "description": "Download PDF"
+  "rentalsDepositHeld": "Deposit held",
+  "@rentalsDepositHeld": {
+    "description": "Deposit held"
   },
   "rentalsDue": "Due on",
   "@rentalsDue": {
     "description": "Due on"
   },
-  "rentalsFailed": "Failed",
-  "@rentalsFailed": {
-    "description": "Failed"
+  "rentalsDueLater": "Due later",
+  "@rentalsDueLater": {
+    "description": "Due later"
+  },
+  "rentalsFromWallet": "From your wallet",
+  "@rentalsFromWallet": {
+    "description": "From your wallet"
   },
   "rentalsInvoiceHistory": "Invoice history",
   "@rentalsInvoiceHistory": {
     "description": "Invoice history"
   },
-  "rentalsMaintenanceCover": "Maintenance cover",
-  "@rentalsMaintenanceCover": {
-    "description": "Maintenance cover"
+  "rentalsLedger": "Ledger",
+  "@rentalsLedger": {
+    "description": "Ledger"
   },
-  "rentalsNextDebit": "Next debit",
-  "@rentalsNextDebit": {
-    "description": "Next debit"
+  "rentalsLedgerAdjustment": "Adjustment",
+  "@rentalsLedgerAdjustment": {
+    "description": "Adjustment"
+  },
+  "rentalsLedgerCharge": "Charge",
+  "@rentalsLedgerCharge": {
+    "description": "Charge"
+  },
+  "rentalsLedgerCredit": "Credit",
+  "@rentalsLedgerCredit": {
+    "description": "Credit"
+  },
+  "rentalsLedgerDeposit": "Deposit",
+  "@rentalsLedgerDeposit": {
+    "description": "Deposit"
+  },
+  "rentalsLedgerHint": "Every charge, payment and credit on your account, newest first.",
+  "@rentalsLedgerHint": {
+    "description": "Every charge, payment and credit on your account, newest first."
+  },
+  "rentalsLedgerPayment": "Payment",
+  "@rentalsLedgerPayment": {
+    "description": "Payment"
+  },
+  "rentalsLedgerRefund": "Refund",
+  "@rentalsLedgerRefund": {
+    "description": "Refund"
+  },
+  "rentalsLedgerReversal": "Reversal",
+  "@rentalsLedgerReversal": {
+    "description": "Reversal"
   },
   "rentalsNoInvoicesYet": "No invoices yet",
   "@rentalsNoInvoicesYet": {
     "description": "No invoices yet"
+  },
+  "rentalsNoLedger": "Nothing on your ledger yet",
+  "@rentalsNoLedger": {
+    "description": "Nothing on your ledger yet"
+  },
+  "rentalsNoLedgerBody": "Charges and payments will show up here as they happen.",
+  "@rentalsNoLedgerBody": {
+    "description": "Charges and payments will show up here as they happen."
+  },
+  "rentalsNoPayments": "No payments yet",
+  "@rentalsNoPayments": {
+    "description": "No payments yet"
+  },
+  "rentalsNoPaymentsBody": "Payments you make towards your bills will show up here.",
+  "@rentalsNoPaymentsBody": {
+    "description": "Payments you make towards your bills will show up here."
+  },
+  "rentalsOutstanding": "Outstanding",
+  "@rentalsOutstanding": {
+    "description": "Outstanding"
+  },
+  "rentalsOverdueNotice": "{amount} is overdue. Please pay it soon to keep riding without interruptions.",
+  "@rentalsOverdueNotice": {
+    "description": "Banner when the rider has overdue bills",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "rentalsPaid": "Paid",
   "@rentalsPaid": {
@@ -3847,17 +4039,35 @@
   "@rentalsPaid2": {
     "description": "Paid on"
   },
-  "rentalsPlanAutoDebitRentReceipts": "Your plan, auto-debit and rent receipts",
-  "@rentalsPlanAutoDebitRentReceipts": {
-    "description": "Your plan, auto-debit and rent receipts"
+  "rentalsPaidSoFar": "Paid so far",
+  "@rentalsPaidSoFar": {
+    "description": "Paid so far"
+  },
+  "rentalsPayments": "Payments",
+  "@rentalsPayments": {
+    "description": "Payments"
+  },
+  "rentalsReceiptInvoices": "{count} bill(s) settled",
+  "@rentalsReceiptInvoices": {
+    "description": "Number of bills a payment settled",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rentalsRefunded": "{amount} refunded",
+  "@rentalsRefunded": {
+    "description": "Amount refunded from a payment",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "rentalsRentals": "Rentals",
   "@rentalsRentals": {
     "description": "Rentals"
-  },
-  "rentalsRentCollectedAutomaticallyFromLinked": "Rent is collected automatically from your linked bank account on the debit date above.",
-  "@rentalsRentCollectedAutomaticallyFromLinked": {
-    "description": "Rent is collected automatically from your linked bank account on the debit date above."
   },
   "rentalsRentHandledAutomatically": "Rent, handled automatically",
   "@rentalsRentHandledAutomatically": {
@@ -3871,13 +4081,925 @@
   "@rentalsRentReceiptsWillAppearHere": {
     "description": "Your rent receipts will appear here."
   },
+  "rentalsStatusDraft": "Draft",
+  "@rentalsStatusDraft": {
+    "description": "Draft"
+  },
+  "rentalsStatusDue": "Due",
+  "@rentalsStatusDue": {
+    "description": "Due"
+  },
+  "rentalsStatusOverdue": "Overdue",
+  "@rentalsStatusOverdue": {
+    "description": "Overdue"
+  },
+  "rentalsStatusPartlyPaid": "Part paid",
+  "@rentalsStatusPartlyPaid": {
+    "description": "Part paid"
+  },
+  "rentalsStatusVoid": "Cancelled",
+  "@rentalsStatusVoid": {
+    "description": "Cancelled"
+  },
+  "rentalsStillDue": "Still due",
+  "@rentalsStillDue": {
+    "description": "Still due"
+  },
+  "rentalsSubtitle": "Your plan, bills and account history",
+  "@rentalsSubtitle": {
+    "description": "Your plan, bills and account history"
+  },
+  "rentalsSubtotal": "Subtotal",
+  "@rentalsSubtotal": {
+    "description": "Subtotal"
+  },
   "rentalsTapReceiptSeeFullBreakdown": "Tap a receipt to see the full breakdown",
   "@rentalsTapReceiptSeeFullBreakdown": {
     "description": "Tap a receipt to see the full breakdown"
   },
-  "rentalsVehicleRent": "Vehicle rent",
-  "@rentalsVehicleRent": {
-    "description": "Vehicle rent"
+  "rentalsTax": "Tax",
+  "@rentalsTax": {
+    "description": "Tax"
+  },
+  "rentalsUnallocated": "Payments not yet applied",
+  "@rentalsUnallocated": {
+    "description": "Payments not yet applied"
+  },
+  "rentalsYourAccount": "Your account",
+  "@rentalsYourAccount": {
+    "description": "Your account"
+  },
+  "returnDeskAddCharge": "Add a charge",
+  "@returnDeskAddCharge": {
+    "description": "Add a charge"
+  },
+  "returnDeskAdminApproved": "An admin approved these charges for the rider.",
+  "@returnDeskAdminApproved": {
+    "description": "An admin approved these charges for the rider."
+  },
+  "returnDeskApprove": "Approve",
+  "@returnDeskApprove": {
+    "description": "Approve"
+  },
+  "returnDeskApproveAndPost": "Approve and post charges",
+  "@returnDeskApproveAndPost": {
+    "description": "Approve and post charges"
+  },
+  "returnDeskApproveAsManager": "Approve as manager",
+  "@returnDeskApproveAsManager": {
+    "description": "Approve as manager"
+  },
+  "returnDeskApproveBodyPost": "{amount} will be added to the rider's bill.",
+  "@returnDeskApproveBodyPost": {
+    "description": "Confirmation when manager approval posts the charges",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "returnDeskApproveBodyWait": "Your approval is recorded. The charges post once the rider approves too.",
+  "@returnDeskApproveBodyWait": {
+    "description": "Your approval is recorded. The charges post once the rider approves too."
+  },
+  "returnDeskApproved": "Approval recorded",
+  "@returnDeskApproved": {
+    "description": "Approval recorded"
+  },
+  "returnDeskApproveForRider": "Approve for the rider",
+  "@returnDeskApproveForRider": {
+    "description": "Approve for the rider"
+  },
+  "returnDeskApproveTitle": "Approve these charges?",
+  "@returnDeskApproveTitle": {
+    "description": "Approve these charges?"
+  },
+  "returnDeskBackdateReason": "Why is it being entered late?",
+  "@returnDeskBackdateReason": {
+    "description": "Why is it being entered late?"
+  },
+  "returnDeskBackdateReasonNeeded": "Add a reason for the earlier time",
+  "@returnDeskBackdateReasonNeeded": {
+    "description": "Add a reason for the earlier time"
+  },
+  "returnDeskCaseTitle": "Return",
+  "@returnDeskCaseTitle": {
+    "description": "Return"
+  },
+  "returnDeskChargeDetails": "Details",
+  "@returnDeskChargeDetails": {
+    "description": "Details"
+  },
+  "returnDeskChargeDetailsHint": "What exactly is damaged or missing?",
+  "@returnDeskChargeDetailsHint": {
+    "description": "What exactly is damaged or missing?"
+  },
+  "returnDeskChargesHint": "Pick from the price list. Each charge needs details and at least one inspection photo as evidence.",
+  "@returnDeskChargesHint": {
+    "description": "Pick from the price list. Each charge needs details and at least one inspection photo as evidence."
+  },
+  "returnDeskChecklistHint": "A photo of the filled return checklist. Charges for missing items need it as evidence.",
+  "@returnDeskChecklistHint": {
+    "description": "A photo of the filled return checklist. Charges for missing items need it as evidence."
+  },
+  "returnDeskChecklistNeeded": "Missing-item charges need the return checklist photo as evidence.",
+  "@returnDeskChecklistNeeded": {
+    "description": "Missing-item charges need the return checklist photo as evidence."
+  },
+  "returnDeskChecklistPhoto": "Return checklist",
+  "@returnDeskChecklistPhoto": {
+    "description": "Return checklist"
+  },
+  "returnDeskClosedNoCharges": "Return closed with no charges",
+  "@returnDeskClosedNoCharges": {
+    "description": "Return closed with no charges"
+  },
+  "returnDeskCloseNoCharges": "Close with no charges",
+  "@returnDeskCloseNoCharges": {
+    "description": "Close with no charges"
+  },
+  "returnDeskCloseNoChargesBody": "The return closes and the rider isn't charged for this scooter.",
+  "@returnDeskCloseNoChargesBody": {
+    "description": "The return closes and the rider isn't charged for this scooter."
+  },
+  "returnDeskCouldNotLoad": "Could not load returns",
+  "@returnDeskCouldNotLoad": {
+    "description": "Could not load returns"
+  },
+  "returnDeskCouldNotLoadInspection": "Could not load the inspection",
+  "@returnDeskCouldNotLoadInspection": {
+    "description": "Could not load the inspection"
+  },
+  "returnDeskDamageHint": "Close-ups of any dents, scratches or broken parts. You can use them as evidence for charges.",
+  "@returnDeskDamageHint": {
+    "description": "Close-ups of any dents, scratches or broken parts. You can use them as evidence for charges."
+  },
+  "returnDeskDamagePhoto": "Damage photo",
+  "@returnDeskDamagePhoto": {
+    "description": "Damage photo"
+  },
+  "returnDeskDamagePhotos": "Damage photos",
+  "@returnDeskDamagePhotos": {
+    "description": "Damage photos"
+  },
+  "returnDeskDetailsNeeded": "Add the details",
+  "@returnDeskDetailsNeeded": {
+    "description": "Add the details"
+  },
+  "returnDeskDraftSaved": "Draft saved",
+  "@returnDeskDraftSaved": {
+    "description": "Draft saved"
+  },
+  "returnDeskEditCharge": "Edit charge",
+  "@returnDeskEditCharge": {
+    "description": "Edit charge"
+  },
+  "returnDeskEmpty": "No returns here",
+  "@returnDeskEmpty": {
+    "description": "No returns here"
+  },
+  "returnDeskEmptyBody": "Returns riders book at your hubs will show up here.",
+  "@returnDeskEmptyBody": {
+    "description": "Returns riders book at your hubs will show up here."
+  },
+  "returnDeskEvidence": "Evidence photos",
+  "@returnDeskEvidence": {
+    "description": "Evidence photos"
+  },
+  "returnDeskEvidenceNeeded": "Pick at least one photo as evidence",
+  "@returnDeskEvidenceNeeded": {
+    "description": "Pick at least one photo as evidence"
+  },
+  "returnDeskFilterReturned": "Returned",
+  "@returnDeskFilterReturned": {
+    "description": "Returned"
+  },
+  "returnDeskFilterToReceive": "To receive",
+  "@returnDeskFilterToReceive": {
+    "description": "To receive"
+  },
+  "returnDeskFinishInspection": "Finish inspection",
+  "@returnDeskFinishInspection": {
+    "description": "Finish inspection"
+  },
+  "returnDeskGuideApprove": "The rider's side is done. A fleet or operations manager approves next, and the charges post to the rider's bill.",
+  "@returnDeskGuideApprove": {
+    "description": "The rider's side is done. A fleet or operations manager approves next, and the charges post to the rider's bill."
+  },
+  "returnDeskGuideCancelled": "The rider cancelled this return. Nothing to do.",
+  "@returnDeskGuideCancelled": {
+    "description": "The rider cancelled this return. Nothing to do."
+  },
+  "returnDeskGuideCharges": "Add a charge for anything damaged or missing, then send them to the rider. If all is fine, close the return with no charges.",
+  "@returnDeskGuideCharges": {
+    "description": "Add a charge for anything damaged or missing, then send them to the rider. If all is fine, close the return with no charges."
+  },
+  "returnDeskGuideClosed": "This return is closed.",
+  "@returnDeskGuideClosed": {
+    "description": "This return is closed."
+  },
+  "returnDeskGuideDisputed": "The rider disputed the charges. Revise them and send them again.",
+  "@returnDeskGuideDisputed": {
+    "description": "The rider disputed the charges. Revise them and send them again."
+  },
+  "returnDeskGuideInspect": "The scooter is at the hub. Inspect it, take the photos and decide whether it can be rented again.",
+  "@returnDeskGuideInspect": {
+    "description": "The scooter is at the hub. Inspect it, take the photos and decide whether it can be rented again."
+  },
+  "returnDeskGuideReceive": "The rider plans to bring the scooter on {date}. Mark it received when it reaches the hub.",
+  "@returnDeskGuideReceive": {
+    "description": "Guide shown while a return is waiting to be received",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "returnDeskGuideWithRider": "The charges are with the rider to approve with a code sent to their phone.",
+  "@returnDeskGuideWithRider": {
+    "description": "The charges are with the rider to approve with a code sent to their phone."
+  },
+  "returnDeskInspectHint": "Take the photos, check the checklist and decide whether the scooter can go out again.",
+  "@returnDeskInspectHint": {
+    "description": "Take the photos, check the checklist and decide whether the scooter can go out again."
+  },
+  "returnDeskInspectionDone": "Inspection saved",
+  "@returnDeskInspectionDone": {
+    "description": "Inspection saved"
+  },
+  "returnDeskInspectionResult": "Inspection",
+  "@returnDeskInspectionResult": {
+    "description": "Inspection"
+  },
+  "returnDeskInspectTitle": "Inspect scooter",
+  "@returnDeskInspectTitle": {
+    "description": "Inspect scooter"
+  },
+  "returnDeskLoadingPhotos": "Loading the inspection photos. Try again in a moment.",
+  "@returnDeskLoadingPhotos": {
+    "description": "Loading the inspection photos. Try again in a moment."
+  },
+  "returnDeskManagerApproved": "Manager approved",
+  "@returnDeskManagerApproved": {
+    "description": "Manager approved"
+  },
+  "returnDeskMarkReceived": "Mark received",
+  "@returnDeskMarkReceived": {
+    "description": "Mark received"
+  },
+  "returnDeskNoInspection": "The inspection isn't ready yet. Pull down to refresh.",
+  "@returnDeskNoInspection": {
+    "description": "The inspection isn't ready yet. Pull down to refresh."
+  },
+  "returnDeskNoPhotoRules": "No photos are required here. Add a checklist or damage photos if they help.",
+  "@returnDeskNoPhotoRules": {
+    "description": "No photos are required here. Add a checklist or damage photos if they help."
+  },
+  "returnDeskNoPhotosYet": "No inspection photos yet. Add them on the inspection screen.",
+  "@returnDeskNoPhotosYet": {
+    "description": "No inspection photos yet. Add them on the inspection screen."
+  },
+  "returnDeskNoPrices": "No penalty prices are set up yet. Ask an admin to add them.",
+  "@returnDeskNoPrices": {
+    "description": "No penalty prices are set up yet. Ask an admin to add them."
+  },
+  "returnDeskOverridden": "Approved on the rider's behalf",
+  "@returnDeskOverridden": {
+    "description": "Approved on the rider's behalf"
+  },
+  "returnDeskOverrideReason": "Reason",
+  "@returnDeskOverrideReason": {
+    "description": "Reason"
+  },
+  "returnDeskOverrideReasonNeeded": "Add a reason for approving on the rider's behalf.",
+  "@returnDeskOverrideReasonNeeded": {
+    "description": "Add a reason for approving on the rider's behalf."
+  },
+  "returnDeskOverrideSubtitle": "Use this only when the rider can't approve. The reason is kept on record.",
+  "@returnDeskOverrideSubtitle": {
+    "description": "Use this only when the rider can't approve. The reason is kept on record."
+  },
+  "returnDeskPhotos": "Photos",
+  "@returnDeskPhotos": {
+    "description": "Photos"
+  },
+  "returnDeskPhotosHint": "Tap a tile to take that photo. Tiles with a red dot are required.",
+  "@returnDeskPhotosHint": {
+    "description": "Tap a tile to take that photo. Tiles with a red dot are required."
+  },
+  "returnDeskPhotosMissing": "Still needed: {names}",
+  "@returnDeskPhotosMissing": {
+    "description": "Required inspection photos not yet taken",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "returnDeskPickCharge": "Choose a charge from the price list",
+  "@returnDeskPickCharge": {
+    "description": "Choose a charge from the price list"
+  },
+  "returnDeskPosted": "Charges posted to the rider's bill on {date}.",
+  "@returnDeskPosted": {
+    "description": "When charges were posted",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "returnDeskReceived": "Scooter received",
+  "@returnDeskReceived": {
+    "description": "Scooter received"
+  },
+  "returnDeskReceivedAt": "Received at",
+  "@returnDeskReceivedAt": {
+    "description": "Received at"
+  },
+  "returnDeskReceivedEarlier": "It came in earlier",
+  "@returnDeskReceivedEarlier": {
+    "description": "It came in earlier"
+  },
+  "returnDeskReceivedEarlierHint": "Record the actual time if you are entering it late",
+  "@returnDeskReceivedEarlierHint": {
+    "description": "Record the actual time if you are entering it late"
+  },
+  "returnDeskReceivedOn": "Received {date}",
+  "@returnDeskReceivedOn": {
+    "description": "When the scooter was received at the hub",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "returnDeskReceiveHint": "Do this once the scooter is physically at the hub. The rental ends from the time you record.",
+  "@returnDeskReceiveHint": {
+    "description": "Do this once the scooter is physically at the hub. The rental ends from the time you record."
+  },
+  "returnDeskReceiveTitle": "Receive scooter",
+  "@returnDeskReceiveTitle": {
+    "description": "Receive scooter"
+  },
+  "returnDeskReceivingHub": "Receiving hub",
+  "@returnDeskReceivingHub": {
+    "description": "Receiving hub"
+  },
+  "returnDeskReviseHint": "Change or remove the disputed charges, then send them to the rider again.",
+  "@returnDeskReviseHint": {
+    "description": "Change or remove the disputed charges, then send them to the rider again."
+  },
+  "returnDeskRiderApproved": "The rider approved these charges.",
+  "@returnDeskRiderApproved": {
+    "description": "The rider approved these charges."
+  },
+  "returnDeskRiderDispute": "Rider's dispute",
+  "@returnDeskRiderDispute": {
+    "description": "Rider's dispute"
+  },
+  "returnDeskRiderNote": "Rider's note",
+  "@returnDeskRiderNote": {
+    "description": "Rider's note"
+  },
+  "returnDeskSafeNo": "Needs repair first",
+  "@returnDeskSafeNo": {
+    "description": "Needs repair first"
+  },
+  "returnDeskSafeNoHint": "It goes to maintenance and can't be allocated",
+  "@returnDeskSafeNoHint": {
+    "description": "It goes to maintenance and can't be allocated"
+  },
+  "returnDeskSafety": "Can it be rented again?",
+  "@returnDeskSafety": {
+    "description": "Can it be rented again?"
+  },
+  "returnDeskSafetyNeeded": "Choose whether the scooter can be rented again",
+  "@returnDeskSafetyNeeded": {
+    "description": "Choose whether the scooter can be rented again"
+  },
+  "returnDeskSafeYes": "Safe to rent again",
+  "@returnDeskSafeYes": {
+    "description": "Safe to rent again"
+  },
+  "returnDeskSafeYesHint": "It goes back to the available pool",
+  "@returnDeskSafeYesHint": {
+    "description": "It goes back to the available pool"
+  },
+  "returnDeskSaveCharge": "Save charge",
+  "@returnDeskSaveCharge": {
+    "description": "Save charge"
+  },
+  "returnDeskSaveDraft": "Save draft",
+  "@returnDeskSaveDraft": {
+    "description": "Save draft"
+  },
+  "returnDeskSendToRider": "Send to rider",
+  "@returnDeskSendToRider": {
+    "description": "Send to rider"
+  },
+  "returnDeskSendToRiderBody": "The rider sees these charges in their app and approves them with a code. You can't edit them while they're with the rider.",
+  "@returnDeskSendToRiderBody": {
+    "description": "The rider sees these charges in their app and approves them with a code. You can't edit them while they're with the rider."
+  },
+  "returnDeskSentToRider": "Charges sent to the rider",
+  "@returnDeskSentToRider": {
+    "description": "Charges sent to the rider"
+  },
+  "returnDeskStageApproval": "Needs approval",
+  "@returnDeskStageApproval": {
+    "description": "Needs approval"
+  },
+  "returnDeskStageAwaiting": "Awaiting scooter",
+  "@returnDeskStageAwaiting": {
+    "description": "Awaiting scooter"
+  },
+  "returnDeskStageCharges": "Add charges",
+  "@returnDeskStageCharges": {
+    "description": "Add charges"
+  },
+  "returnDeskStageInspect": "Inspect scooter",
+  "@returnDeskStageInspect": {
+    "description": "Inspect scooter"
+  },
+  "returnDeskStageWithRider": "With rider",
+  "@returnDeskStageWithRider": {
+    "description": "With rider"
+  },
+  "returnDeskStartInspection": "Start inspection",
+  "@returnDeskStartInspection": {
+    "description": "Start inspection"
+  },
+  "returnDeskSubtitle": "Scooters riders are handing back",
+  "@returnDeskSubtitle": {
+    "description": "Scooters riders are handing back"
+  },
+  "returnDeskTitle": "Return desk",
+  "@returnDeskTitle": {
+    "description": "Return desk"
+  },
+  "returnDeskUnsafeReason": "What needs fixing?",
+  "@returnDeskUnsafeReason": {
+    "description": "What needs fixing?"
+  },
+  "returnDeskUnsafeReasonNeeded": "Say what needs fixing",
+  "@returnDeskUnsafeReasonNeeded": {
+    "description": "Say what needs fixing"
+  },
+  "returnDeskWaitingManager": "A fleet or operations manager approves next.",
+  "@returnDeskWaitingManager": {
+    "description": "A fleet or operations manager approves next."
+  },
+  "returnDeskWaitingRider": "Waiting for {name} to approve with the code sent to their phone.",
+  "@returnDeskWaitingRider": {
+    "description": "Status while charges wait for the rider",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "returnsAgreement": "Agreement",
+  "@returnsAgreement": {
+    "description": "Agreement"
+  },
+  "returnsApproveCharges": "Approve charges",
+  "@returnsApproveCharges": {
+    "description": "Approve charges"
+  },
+  "returnsApproveSubtitle": "We sent a 6-digit code to your phone. Entering it approves charges of {amount}.",
+  "@returnsApproveSubtitle": {
+    "description": "Subtitle of the charges approval code sheet",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "returnsApproveTitle": "Enter the code",
+  "@returnsApproveTitle": {
+    "description": "Enter the code"
+  },
+  "returnsCancel": "Cancel return",
+  "@returnsCancel": {
+    "description": "Cancel return"
+  },
+  "returnsCancelBody": "You keep the scooter and your rental carries on as before.",
+  "@returnsCancelBody": {
+    "description": "You keep the scooter and your rental carries on as before."
+  },
+  "returnsCancelled": "Return cancelled",
+  "@returnsCancelled": {
+    "description": "Return cancelled"
+  },
+  "returnsCancelTitle": "Cancel this return?",
+  "@returnsCancelTitle": {
+    "description": "Cancel this return?"
+  },
+  "returnsCharges": "Charges",
+  "@returnsCharges": {
+    "description": "Charges"
+  },
+  "returnsChargesApproved": "Charges approved",
+  "@returnsChargesApproved": {
+    "description": "Charges approved"
+  },
+  "returnsChargesPending": "The hub is still inspecting the scooter. Charges, if any, will appear here.",
+  "@returnsChargesPending": {
+    "description": "The hub is still inspecting the scooter. Charges, if any, will appear here."
+  },
+  "returnsCodeExpired": "That code has expired. Ask for a new one.",
+  "@returnsCodeExpired": {
+    "description": "That code has expired. Ask for a new one."
+  },
+  "returnsCodeInvalid": "That code didn't work. Check it and try again.",
+  "@returnsCodeInvalid": {
+    "description": "That code didn't work. Check it and try again."
+  },
+  "returnsCouldNotLoad": "Could not load your returns",
+  "@returnsCouldNotLoad": {
+    "description": "Could not load your returns"
+  },
+  "returnsCouldNotLoadHubs": "Could not load hubs",
+  "@returnsCouldNotLoadHubs": {
+    "description": "Could not load hubs"
+  },
+  "returnsDate": "Return date",
+  "@returnsDate": {
+    "description": "Return date"
+  },
+  "returnsDetails": "Details",
+  "@returnsDetails": {
+    "description": "Details"
+  },
+  "returnsDetailTitle": "Return",
+  "@returnsDetailTitle": {
+    "description": "Return"
+  },
+  "returnsDisputeCharges": "Dispute charges",
+  "@returnsDisputeCharges": {
+    "description": "Dispute charges"
+  },
+  "returnsDisputeReason": "What's wrong?",
+  "@returnsDisputeReason": {
+    "description": "What's wrong?"
+  },
+  "returnsDisputeReasonRequired": "Add a reason so the hub team can review it.",
+  "@returnsDisputeReasonRequired": {
+    "description": "Add a reason so the hub team can review it."
+  },
+  "returnsDisputeSent": "Dispute sent to the hub team",
+  "@returnsDisputeSent": {
+    "description": "Dispute sent to the hub team"
+  },
+  "returnsDisputeSubtitle": "Tell the hub team what is wrong with these charges.",
+  "@returnsDisputeSubtitle": {
+    "description": "Tell the hub team what is wrong with these charges."
+  },
+  "returnsEndRentalBody": "Tell us when and where you will hand it back. The hub team checks it in, and any charges come to you for approval first.",
+  "@returnsEndRentalBody": {
+    "description": "Tell us when and where you will hand it back. The hub team checks it in, and any charges come to you for approval first."
+  },
+  "returnsEndRentalTitle": "Done with your scooter?",
+  "@returnsEndRentalTitle": {
+    "description": "Done with your scooter?"
+  },
+  "returnsErrorAlreadyReceived": "This scooter has already been received.",
+  "@returnsErrorAlreadyReceived": {
+    "description": "This scooter has already been received."
+  },
+  "returnsErrorAlreadyRequested": "A return is already requested for this rental.",
+  "@returnsErrorAlreadyRequested": {
+    "description": "A return is already requested for this rental."
+  },
+  "returnsErrorApprovalNotPending": "These penalties aren't waiting for your approval.",
+  "@returnsErrorApprovalNotPending": {
+    "description": "These penalties aren't waiting for your approval."
+  },
+  "returnsErrorBeforeAgreement": "The return time is before the rental started.",
+  "@returnsErrorBeforeAgreement": {
+    "description": "The return time is before the rental started."
+  },
+  "returnsErrorInspectFirst": "Finish the return inspection before adding penalties.",
+  "@returnsErrorInspectFirst": {
+    "description": "Finish the return inspection before adding penalties."
+  },
+  "returnsErrorNotCancellable": "This return can no longer be cancelled.",
+  "@returnsErrorNotCancellable": {
+    "description": "This return can no longer be cancelled."
+  },
+  "returnsErrorNotDisputable": "These penalties can't be disputed right now.",
+  "@returnsErrorNotDisputable": {
+    "description": "These penalties can't be disputed right now."
+  },
+  "returnsErrorNotReceivable": "This return was cancelled, so the scooter can't be received against it.",
+  "@returnsErrorNotReceivable": {
+    "description": "This return was cancelled, so the scooter can't be received against it."
+  },
+  "returnsErrorNotSubmittable": "These penalties can't be submitted right now.",
+  "@returnsErrorNotSubmittable": {
+    "description": "These penalties can't be submitted right now."
+  },
+  "returnsErrorNotTerminable": "This rental can't be returned right now.",
+  "@returnsErrorNotTerminable": {
+    "description": "This rental can't be returned right now."
+  },
+  "returnsErrorOverrideNotAllowed": "Rider approval can't be overridden at this stage.",
+  "@returnsErrorOverrideNotAllowed": {
+    "description": "Rider approval can't be overridden at this stage."
+  },
+  "returnsErrorPenaltiesLocked": "Penalties can't be edited while they're with the rider or already charged.",
+  "@returnsErrorPenaltiesLocked": {
+    "description": "Penalties can't be edited while they're with the rider or already charged."
+  },
+  "returnsErrorReceiveFirst": "Receive the scooter before adding penalties.",
+  "@returnsErrorReceiveFirst": {
+    "description": "Receive the scooter before adding penalties."
+  },
+  "returnsErrorRevisePenalties": "The rider disputed these penalties. Revise the list and submit it again.",
+  "@returnsErrorRevisePenalties": {
+    "description": "The rider disputed these penalties. Revise the list and submit it again."
+  },
+  "returnsErrorStateChanged": "These penalties just changed. Refresh and try again.",
+  "@returnsErrorStateChanged": {
+    "description": "These penalties just changed. Refresh and try again."
+  },
+  "returnsErrorSubmitFirst": "Submit the penalties before approving them.",
+  "@returnsErrorSubmitFirst": {
+    "description": "Submit the penalties before approving them."
+  },
+  "returnsEtaMinutes": "{minutes} min away",
+  "@returnsEtaMinutes": {
+    "description": "Travel time to a hub",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "returnsEvidenceCount": "{count} photo(s) as evidence",
+  "@returnsEvidenceCount": {
+    "description": "Number of evidence photos for a charge",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "returnsHandedOver": "Handed over",
+  "@returnsHandedOver": {
+    "description": "Handed over"
+  },
+  "returnsHub": "Return hub",
+  "@returnsHub": {
+    "description": "Return hub"
+  },
+  "returnsKindDamage": "Damage",
+  "@returnsKindDamage": {
+    "description": "Damage"
+  },
+  "returnsKindMissing": "Missing item",
+  "@returnsKindMissing": {
+    "description": "Missing item"
+  },
+  "returnsLocationForHubs": "We use your location to list the hubs closest to you.",
+  "@returnsLocationForHubs": {
+    "description": "We use your location to list the hubs closest to you."
+  },
+  "returnsNextCharges": "If anything is damaged or missing, you see the charges here and approve them with a code before they are billed.",
+  "@returnsNextCharges": {
+    "description": "If anything is damaged or missing, you see the charges here and approve them with a code before they are billed."
+  },
+  "returnsNextHandOver": "Bring the scooter, its battery and charger to the hub on the date you picked.",
+  "@returnsNextHandOver": {
+    "description": "Bring the scooter, its battery and charger to the hub on the date you picked."
+  },
+  "returnsNextInspection": "The hub team checks the scooter in and inspects it.",
+  "@returnsNextInspection": {
+    "description": "The hub team checks the scooter in and inspects it."
+  },
+  "returnsNoCharges": "No charges for this return.",
+  "@returnsNoCharges": {
+    "description": "No charges for this return."
+  },
+  "returnsNoHubsNearby": "No hubs found near you",
+  "@returnsNoHubsNearby": {
+    "description": "No hubs found near you"
+  },
+  "returnsNone": "No returns yet",
+  "@returnsNone": {
+    "description": "No returns yet"
+  },
+  "returnsNoneBody": "When you hand your scooter back, you can follow the return here.",
+  "@returnsNoneBody": {
+    "description": "When you hand your scooter back, you can follow the return here."
+  },
+  "returnsNoteAdminApproved": "An admin approved these charges on your behalf. The hub manager confirms them next. You can still dispute them.",
+  "@returnsNoteAdminApproved": {
+    "description": "An admin approved these charges on your behalf. The hub manager confirms them next. You can still dispute them."
+  },
+  "returnsNoteCancelled": "You cancelled this return. Your rental carries on as before.",
+  "@returnsNoteCancelled": {
+    "description": "You cancelled this return. Your rental carries on as before."
+  },
+  "returnsNoteDisputed": "You disputed these charges. The hub team will review them and may revise them.",
+  "@returnsNoteDisputed": {
+    "description": "You disputed these charges. The hub team will review them and may revise them."
+  },
+  "returnsNoteInspecting": "The hub has your scooter and is inspecting it. Any charges will show up here for your approval.",
+  "@returnsNoteInspecting": {
+    "description": "The hub has your scooter and is inspecting it. Any charges will show up here for your approval."
+  },
+  "returnsNoteNeedsYou": "The hub found the charges below. Approve them with a code we send to your phone, or dispute them.",
+  "@returnsNoteNeedsYou": {
+    "description": "The hub found the charges below. Approve them with a code we send to your phone, or dispute them."
+  },
+  "returnsNoteNoCharges": "Return closed. The scooter came back fine, so there are no charges.",
+  "@returnsNoteNoCharges": {
+    "description": "Return closed. The scooter came back fine, so there are no charges."
+  },
+  "returnsNoteRequested": "Take the scooter to the hub you picked on {date}. The hub team will check it in.",
+  "@returnsNoteRequested": {
+    "description": "Status note while a return is requested",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "returnsNotes": "Anything else?",
+  "@returnsNotes": {
+    "description": "Anything else?"
+  },
+  "returnsNoteSettled": "Return closed. Charges of {amount} were added to your bill.",
+  "@returnsNoteSettled": {
+    "description": "Status note when charges were posted",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "returnsNotesHint": "Optional note for the hub team",
+  "@returnsNotesHint": {
+    "description": "Optional note for the hub team"
+  },
+  "returnsNoteYouApproved": "You approved the charges. The hub manager confirms them next.",
+  "@returnsNoteYouApproved": {
+    "description": "You approved the charges. The hub manager confirms them next."
+  },
+  "returnsNothingToReturn": "Nothing to return right now",
+  "@returnsNothingToReturn": {
+    "description": "Nothing to return right now"
+  },
+  "returnsNothingToReturnBody": "You don't have an active rental, or a return for it is already in progress.",
+  "@returnsNothingToReturnBody": {
+    "description": "You don't have an active rental, or a return for it is already in progress."
+  },
+  "returnsPickDate": "Pick a return date",
+  "@returnsPickDate": {
+    "description": "Pick a return date"
+  },
+  "returnsPickHub": "Pick a hub",
+  "@returnsPickHub": {
+    "description": "Pick a hub"
+  },
+  "returnsPickHubSubtitle": "Hubs closest to you are at the top",
+  "@returnsPickHubSubtitle": {
+    "description": "Hubs closest to you are at the top"
+  },
+  "returnsPickReason": "Choose a reason",
+  "@returnsPickReason": {
+    "description": "Choose a reason"
+  },
+  "returnsPickRental": "Choose the rental to end",
+  "@returnsPickRental": {
+    "description": "Choose the rental to end"
+  },
+  "returnsPlannedFor": "Planned for {date}",
+  "@returnsPlannedFor": {
+    "description": "Planned return date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "returnsProgress": "Progress",
+  "@returnsProgress": {
+    "description": "Progress"
+  },
+  "returnsReason": "Reason",
+  "@returnsReason": {
+    "description": "Reason"
+  },
+  "returnsReasonChangingJob": "Changing jobs",
+  "@returnsReasonChangingJob": {
+    "description": "Changing jobs"
+  },
+  "returnsReasonNoLongerNeeded": "I don't need it anymore",
+  "@returnsReasonNoLongerNeeded": {
+    "description": "I don't need it anymore"
+  },
+  "returnsReasonRelocating": "Moving to another city",
+  "@returnsReasonRelocating": {
+    "description": "Moving to another city"
+  },
+  "returnsReasonTooExpensive": "Rent is too high",
+  "@returnsReasonTooExpensive": {
+    "description": "Rent is too high"
+  },
+  "returnsReasonVehicleIssues": "Problems with the scooter",
+  "@returnsReasonVehicleIssues": {
+    "description": "Problems with the scooter"
+  },
+  "returnsRental": "Rental",
+  "@returnsRental": {
+    "description": "Rental"
+  },
+  "returnsRequested": "Return requested. See you at the hub.",
+  "@returnsRequested": {
+    "description": "Return requested. See you at the hub."
+  },
+  "returnsRequestReturn": "Request a return",
+  "@returnsRequestReturn": {
+    "description": "Request a return"
+  },
+  "returnsRequestSubtitle": "Pick a date and the hub you will bring it to",
+  "@returnsRequestSubtitle": {
+    "description": "Pick a date and the hub you will bring it to"
+  },
+  "returnsSendDispute": "Send dispute",
+  "@returnsSendDispute": {
+    "description": "Send dispute"
+  },
+  "returnsStatusAwaitingManager": "With the hub manager",
+  "@returnsStatusAwaitingManager": {
+    "description": "With the hub manager"
+  },
+  "returnsStatusCancelled": "Cancelled",
+  "@returnsStatusCancelled": {
+    "description": "Cancelled"
+  },
+  "returnsStatusClosed": "Closed",
+  "@returnsStatusClosed": {
+    "description": "Closed"
+  },
+  "returnsStatusDisputed": "Disputed",
+  "@returnsStatusDisputed": {
+    "description": "Disputed"
+  },
+  "returnsStatusInspecting": "Being inspected",
+  "@returnsStatusInspecting": {
+    "description": "Being inspected"
+  },
+  "returnsStatusNeedsYou": "Your approval needed",
+  "@returnsStatusNeedsYou": {
+    "description": "Your approval needed"
+  },
+  "returnsStatusRequested": "Return requested",
+  "@returnsStatusRequested": {
+    "description": "Return requested"
+  },
+  "returnsStepClosed": "Return closed",
+  "@returnsStepClosed": {
+    "description": "Return closed"
+  },
+  "returnsStepHandedOver": "Scooter handed over",
+  "@returnsStepHandedOver": {
+    "description": "Scooter handed over"
+  },
+  "returnsStepInspection": "Inspection and charges",
+  "@returnsStepInspection": {
+    "description": "Inspection and charges"
+  },
+  "returnsStepRequested": "Return requested",
+  "@returnsStepRequested": {
+    "description": "Return requested"
+  },
+  "returnsSubtitle": "End your rental and hand the scooter back",
+  "@returnsSubtitle": {
+    "description": "End your rental and hand the scooter back"
+  },
+  "returnsTitle": "Return scooter",
+  "@returnsTitle": {
+    "description": "Return scooter"
+  },
+  "returnsWhenWhere": "When and where",
+  "@returnsWhenWhere": {
+    "description": "When and where"
+  },
+  "returnsWhy": "Why are you returning it?",
+  "@returnsWhy": {
+    "description": "Why are you returning it?"
+  },
+  "returnsYourDispute": "Your dispute",
+  "@returnsYourDispute": {
+    "description": "Your dispute"
+  },
+  "returnsYourReturns": "Your returns",
+  "@returnsYourReturns": {
+    "description": "Your returns"
   },
   "rideParkedLocked": "Parked and locked.",
   "@rideParkedLocked": {
@@ -4136,69 +5258,61 @@
   "@supportAddFewMoreDetails10": {
     "description": "Add a few more details (10+ characters)"
   },
-  "supportAnySettledBalanceCanWithdrawn": "Any settled balance can be withdrawn once a day. Payouts before ",
-  "@supportAnySettledBalanceCanWithdrawn": {
-    "description": "Any settled balance can be withdrawn once a day. Payouts before "
+  "supportAll": "All",
+  "@supportAll": {
+    "description": "All"
   },
   "supportBatteryCharging": "Battery or charging",
   "@supportBatteryCharging": {
     "description": "Battery or charging"
   },
-  "supportBatteryDrops20Within40": "Battery drops to 20% within 40 km",
-  "@supportBatteryDrops20Within40": {
-    "description": "Battery drops to 20% within 40 km"
-  },
-  "supportBorneBy": "Borne by you",
-  "@supportBorneBy": {
-    "description": "Borne by you"
-  },
   "supportBreakdownRoad": "Breakdown on the road",
   "@supportBreakdownRoad": {
     "description": "Breakdown on the road"
-  },
-  "supportCallBackWithin15Min": "Call back within 15 min",
-  "@supportCallBackWithin15Min": {
-    "description": "Call back within 15 min"
-  },
-  "supportCanIKeepScooterOvernight": "Can I keep the scooter overnight?",
-  "@supportCanIKeepScooterOvernight": {
-    "description": "Can I keep the scooter overnight?"
-  },
-  "supportChooseCategory": "Choose a category",
-  "@supportChooseCategory": {
-    "description": "Choose a category"
   },
   "supportCouldNotLoadSupport": "Could not load support",
   "@supportCouldNotLoadSupport": {
     "description": "Could not load support"
   },
-  "supportDecidesWhoPicksUpTicket": "This decides who picks up your ticket and how fast",
-  "@supportDecidesWhoPicksUpTicket": {
-    "description": "This decides who picks up your ticket and how fast"
+  "supportCouldNotLoadTicket": "Could not load this ticket",
+  "@supportCouldNotLoadTicket": {
+    "description": "Could not load this ticket"
   },
   "supportDescription": "Description",
   "@supportDescription": {
     "description": "Description"
   },
+  "supportDeskEmpty": "No tickets here",
+  "@supportDeskEmpty": {
+    "description": "No tickets here"
+  },
+  "supportDeskEmptyBody": "Tickets riders raise at your hubs will show up here.",
+  "@supportDeskEmptyBody": {
+    "description": "Tickets riders raise at your hubs will show up here."
+  },
+  "supportDeskSubtitle": "Rider tickets from your hubs",
+  "@supportDeskSubtitle": {
+    "description": "Rider tickets from your hubs"
+  },
+  "supportDeskTitle": "Support desk",
+  "@supportDeskTitle": {
+    "description": "Support desk"
+  },
   "supportDocumentsKyc": "Documents and KYC",
   "@supportDocumentsKyc": {
     "description": "Documents and KYC"
   },
-  "supportEveryMondayMorningAgainstNach": "Every Monday morning against your NACH mandate. If the wallet ",
-  "@supportEveryMondayMorningAgainstNach": {
-    "description": "Every Monday morning against your NACH mandate. If the wallet "
+  "supportHub": "Hub",
+  "@supportHub": {
+    "description": "Hub"
   },
-  "supportGeneral": "General",
-  "@supportGeneral": {
-    "description": "General"
+  "supportInProgress": "In progress",
+  "@supportInProgress": {
+    "description": "In progress"
   },
-  "supportHowSoonCanIWithdraw": "How soon can I withdraw my earnings?",
-  "@supportHowSoonCanIWithdraw": {
-    "description": "How soon can I withdraw my earnings?"
-  },
-  "supportLicenceReUploadAfterRenewal": "Licence re-upload after renewal",
-  "@supportLicenceReUploadAfterRenewal": {
-    "description": "Licence re-upload after renewal"
+  "supportMarkResolved": "Mark resolved",
+  "@supportMarkResolved": {
+    "description": "Mark resolved"
   },
   "supportMoreDetailGiveFasterCan": "The more detail you give, the faster we can help",
   "@supportMoreDetailGiveFasterCan": {
@@ -4220,6 +5334,15 @@
   "@supportOneLineSumsUpIssue": {
     "description": "One line that sums up the issue"
   },
+  "supportOpenCount": "{count} open",
+  "@supportOpenCount": {
+    "description": "Number of tickets that are not resolved yet",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "supportOpenTickets": "Open tickets",
   "@supportOpenTickets": {
     "description": "Open tickets"
@@ -4228,13 +5351,44 @@
   "@supportPaymentWallet": {
     "description": "Payment or wallet"
   },
+  "supportPdfAttachment": "PDF document",
+  "@supportPdfAttachment": {
+    "description": "PDF document"
+  },
+  "supportPhotosHint": "Add up to {count} photos if they help explain the issue.",
+  "@supportPhotosHint": {
+    "description": "Hint above the photo picker on the raise ticket screen",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "supportPhotosNotAttached": "Ticket raised, but {count} photo(s) could not be attached. You can add them from the ticket.",
+  "@supportPhotosNotAttached": {
+    "description": "Shown when the ticket was created but some photos failed to upload",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "supportPhotosOptional": "Photos (optional)",
   "@supportPhotosOptional": {
     "description": "Photos (optional)"
   },
-  "supportRaiseBatteryChargingTicketSwap": "Raise a Battery or charging ticket and swap at the nearest hub. ",
-  "@supportRaiseBatteryChargingTicketSwap": {
-    "description": "Raise a Battery or charging ticket and swap at the nearest hub. "
+  "supportPickTopic": "Pick a topic, or write your own subject below.",
+  "@supportPickTopic": {
+    "description": "Pick a topic, or write your own subject below."
+  },
+  "supportRaisedOn": "Raised on {date}",
+  "@supportRaisedOn": {
+    "description": "When the ticket was raised",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "supportRaiseOneAboveIfSomething": "Raise one above if something needs attention.",
   "@supportRaiseOneAboveIfSomething": {
@@ -4244,45 +5398,37 @@
   "@supportRaiseTicket": {
     "description": "Raise a ticket"
   },
-  "supportRearTyrePunctureNearAshram": "Rear tyre puncture near Ashram",
-  "@supportRearTyrePunctureNearAshram": {
-    "description": "Rear tyre puncture near Ashram"
+  "supportReopen": "Reopen",
+  "@supportReopen": {
+    "description": "Reopen"
   },
-  "supportReferralBonusSunilNotCredited": "Referral bonus for Sunil not credited",
-  "@supportReferralBonusSunilNotCredited": {
-    "description": "Referral bonus for Sunil not credited"
-  },
-  "supportRepairsAcrossTickets": "Repairs across your tickets",
-  "@supportRepairsAcrossTickets": {
-    "description": "Repairs across your tickets"
+  "supportResolveBody": "The rider can still reply. A reply from them reopens the ticket.",
+  "@supportResolveBody": {
+    "description": "The rider can still reply. A reply from them reopens the ticket."
   },
   "supportResolved": "Resolved",
   "@supportResolved": {
     "description": "Resolved"
   },
-  "supportResponseWithin1Day": "Response within 1 day",
-  "@supportResponseWithin1Day": {
-    "description": "Response within 1 day"
+  "supportResolvedReplyToReopen": "This ticket is resolved. Send a message if you still need help and it will reopen.",
+  "@supportResolvedReplyToReopen": {
+    "description": "This ticket is resolved. Send a message if you still need help and it will reopen."
   },
-  "supportResponseWithin30Min": "Response within 30 min",
-  "@supportResponseWithin30Min": {
-    "description": "Response within 30 min"
-  },
-  "supportResponseWithin4Hours": "Response within 4 hours",
-  "@supportResponseWithin4Hours": {
-    "description": "Response within 4 hours"
-  },
-  "supportRoadsideWithin45Min": "Roadside within 45 min",
-  "@supportRoadsideWithin45Min": {
-    "description": "Roadside within 45 min"
-  },
-  "supportSelectCategory": "Select a category",
-  "@supportSelectCategory": {
-    "description": "Select a category"
+  "supportResolveTitle": "Mark this ticket resolved?",
+  "@supportResolveTitle": {
+    "description": "Mark this ticket resolved?"
   },
   "supportSomethingElse": "Something else",
   "@supportSomethingElse": {
     "description": "Something else"
+  },
+  "supportStartWorking": "Start working",
+  "@supportStartWorking": {
+    "description": "Start working"
+  },
+  "supportStatusUpdated": "Ticket status updated",
+  "@supportStatusUpdated": {
+    "description": "Ticket status updated"
   },
   "supportSubject": "Subject",
   "@supportSubject": {
@@ -4291,6 +5437,10 @@
   "supportSubmitTicket": "Submit ticket",
   "@supportSubmitTicket": {
     "description": "Submit ticket"
+  },
+  "supportTeam": "Support team",
+  "@supportTeam": {
+    "description": "Support team"
   },
   "supportTeamLeadSeesStraightAway": "Your team lead sees it straight away.",
   "@supportTeamLeadSeesStraightAway": {
@@ -4308,45 +5458,46 @@
   "@supportTellUsWhatHappenedAttach": {
     "description": "Tell us what happened and attach a photo if it helps. "
   },
+  "supportTicket": "Ticket",
+  "@supportTicket": {
+    "description": "Ticket"
+  },
+  "supportTicketRaised": "Ticket raised. Our team is on it.",
+  "@supportTicketRaised": {
+    "description": "Ticket raised. Our team is on it."
+  },
+  "supportTicketReopened": "Ticket reopened. Our team will get back to you.",
+  "@supportTicketReopened": {
+    "description": "Ticket reopened. Our team will get back to you."
+  },
   "supportTickets": "Your tickets",
   "@supportTickets": {
     "description": "Your tickets"
   },
-  "supportTripsLostSwapDoNot": "Trips lost to a swap do not count against your incentive target.",
-  "@supportTripsLostSwapDoNot": {
-    "description": "Trips lost to a swap do not count against your incentive target."
-  },
-  "supportTurnIfCannotRideSafely": "Turn this on if you cannot ride safely until this is fixed",
-  "@supportTurnIfCannotRideSafely": {
-    "description": "Turn this on if you cannot ride safely until this is fixed"
-  },
-  "supportVehicleAffected": "The vehicle is affected",
-  "@supportVehicleAffected": {
-    "description": "The vehicle is affected"
-  },
-  "supportVehicleImpact": "Vehicle impact",
-  "@supportVehicleImpact": {
-    "description": "Vehicle impact"
+  "supportUpdated": "Updated {time}",
+  "@supportUpdated": {
+    "description": "When the ticket last changed, for example Updated 2h ago",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
   },
   "supportWhatHappenedSinceWhen": "What happened, and since when?",
   "@supportWhatHappenedSinceWhen": {
     "description": "What happened, and since when?"
   },
-  "supportWhatHappensIfBatteryDies": "What happens if the battery dies mid-shift?",
-  "@supportWhatHappensIfBatteryDies": {
-    "description": "What happens if the battery dies mid-shift?"
-  },
   "supportWhatsTheIssue": "What's the issue",
   "@supportWhatsTheIssue": {
     "description": "What's the issue"
   },
-  "supportWhenDoesMyRentGet": "When does my rent get debited?",
-  "@supportWhenDoesMyRentGet": {
-    "description": "When does my rent get debited?"
+  "supportWriteMessage": "Write a message",
+  "@supportWriteMessage": {
+    "description": "Write a message"
   },
-  "supportYesWeeklyMonthlyPlansDaily": "Yes, on weekly and monthly plans. Daily plans return to the hub ",
-  "@supportYesWeeklyMonthlyPlansDaily": {
-    "description": "Yes, on weekly and monthly plans. Daily plans return to the hub "
+  "supportYou": "You",
+  "@supportYou": {
+    "description": "You"
   },
   "swapCouldNotLoad": "Could not load swap stations",
   "@swapCouldNotLoad": {
@@ -4417,6 +5568,31 @@
   "@walletCash": {
     "description": "Cash"
   },
+  "walletClosingBalance": "Closing balance",
+  "@walletClosingBalance": {
+    "description": "Closing balance"
+  },
+  "walletCompletedOn": "Completed {date}",
+  "@walletCompletedOn": {
+    "description": "When a deposit return completed",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "walletCouldNotLoadDeposit": "Could not refresh the deposit details",
+  "@walletCouldNotLoadDeposit": {
+    "description": "Could not refresh the deposit details"
+  },
+  "walletCouldNotLoadReceipt": "Could not load the receipt",
+  "@walletCouldNotLoadReceipt": {
+    "description": "Could not load the receipt"
+  },
+  "walletCouldNotLoadStatement": "Could not load your statement",
+  "@walletCouldNotLoadStatement": {
+    "description": "Could not load your statement"
+  },
   "walletCouldNotLoadWallet": "Could not load your wallet",
   "@walletCouldNotLoadWallet": {
     "description": "Could not load your wallet"
@@ -4449,17 +5625,142 @@
   "@walletDeposit": {
     "description": "Deposit"
   },
+  "walletDepositDeducted": "Deducted",
+  "@walletDepositDeducted": {
+    "description": "Deducted"
+  },
+  "walletDepositHeld": "Held",
+  "@walletDepositHeld": {
+    "description": "Held"
+  },
+  "walletDepositLocked": "Locked for your rental",
+  "@walletDepositLocked": {
+    "description": "Locked for your rental"
+  },
+  "walletDepositMoved": "Deposit {amount}",
+  "@walletDepositMoved": {
+    "description": "Deposit part of a wallet movement",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "walletDepositPaidIn": "Paid in",
+  "@walletDepositPaidIn": {
+    "description": "Paid in"
+  },
+  "walletDepositRequired": "Required",
+  "@walletDepositRequired": {
+    "description": "Required"
+  },
+  "walletDepositReturnedAmount": "Returned",
+  "@walletDepositReturnedAmount": {
+    "description": "Returned"
+  },
   "walletDepositReturnedSeparately": "Your deposit comes back separately when you leave.",
   "@walletDepositReturnedSeparately": {
     "description": "Your deposit comes back separately when you leave."
+  },
+  "walletDepositReturns": "Returns",
+  "@walletDepositReturns": {
+    "description": "Returns"
+  },
+  "walletDepositStatusCancelled": "Cancelled",
+  "@walletDepositStatusCancelled": {
+    "description": "Cancelled"
+  },
+  "walletDepositStatusForfeited": "Forfeited",
+  "@walletDepositStatusForfeited": {
+    "description": "Forfeited"
+  },
+  "walletDepositStatusLocked": "Held for your rental",
+  "@walletDepositStatusLocked": {
+    "description": "Held for your rental"
+  },
+  "walletDepositStatusPaid": "Paid",
+  "@walletDepositStatusPaid": {
+    "description": "Paid"
+  },
+  "walletDepositStatusPartlyDeducted": "Partly deducted",
+  "@walletDepositStatusPartlyDeducted": {
+    "description": "Partly deducted"
+  },
+  "walletDepositStatusPartlyPaid": "Part paid",
+  "@walletDepositStatusPartlyPaid": {
+    "description": "Part paid"
+  },
+  "walletDepositStatusPending": "Awaiting payment",
+  "@walletDepositStatusPending": {
+    "description": "Awaiting payment"
+  },
+  "walletDepositStatusReturnable": "Ready to return",
+  "@walletDepositStatusReturnable": {
+    "description": "Ready to return"
+  },
+  "walletDepositStatusReturned": "Returned",
+  "@walletDepositStatusReturned": {
+    "description": "Returned"
+  },
+  "walletDepositStatusReturnRequested": "Return requested",
+  "@walletDepositStatusReturnRequested": {
+    "description": "Return requested"
+  },
+  "walletDepositToPay": "Still to pay",
+  "@walletDepositToPay": {
+    "description": "Still to pay"
+  },
+  "walletDestination": "Paid to",
+  "@walletDestination": {
+    "description": "Paid to"
   },
   "walletDueNow": "Due now",
   "@walletDueNow": {
     "description": "Due now"
   },
+  "walletErrorDepositNotFound": "This deposit isn't available.",
+  "@walletErrorDepositNotFound": {
+    "description": "This deposit isn't available."
+  },
+  "walletErrorNotFound": "Your wallet isn't set up yet.",
+  "@walletErrorNotFound": {
+    "description": "Your wallet isn't set up yet."
+  },
+  "walletErrorReceiptNotFound": "This receipt isn't available.",
+  "@walletErrorReceiptNotFound": {
+    "description": "This receipt isn't available."
+  },
+  "walletErrorStatementPeriod": "A statement isn't available for that period.",
+  "@walletErrorStatementPeriod": {
+    "description": "A statement isn't available for that period."
+  },
+  "walletErrorTransactionNotFound": "This transaction isn't available.",
+  "@walletErrorTransactionNotFound": {
+    "description": "This transaction isn't available."
+  },
   "walletExpiringSoon": "Expiring in 7 days",
   "@walletExpiringSoon": {
     "description": "Expiring in 7 days"
+  },
+  "walletFundedOf": "{funded} of {required}",
+  "@walletFundedOf": {
+    "description": "Deposit paid out of the required amount",
+    "placeholders": {
+      "funded": {
+        "type": "String"
+      },
+      "required": {
+        "type": "String"
+      }
+    }
+  },
+  "walletInvoicesSettled": "Bills settled",
+  "@walletInvoicesSettled": {
+    "description": "Bills settled"
+  },
+  "walletIssued": "Issued",
+  "@walletIssued": {
+    "description": "Issued"
   },
   "walletKindAdjustment": "Adjustment",
   "@walletKindAdjustment": {
@@ -4501,9 +5802,21 @@
   "@walletLedgerWillFillUpAs": {
     "description": "Your ledger will fill up as you ride and earn."
   },
+  "walletMethod": "Method",
+  "@walletMethod": {
+    "description": "Method"
+  },
   "walletMoney": "Your money",
   "@walletMoney": {
     "description": "Your money"
+  },
+  "walletMoneyIn": "Money in",
+  "@walletMoneyIn": {
+    "description": "Money in"
+  },
+  "walletMoneyOut": "Money out",
+  "@walletMoneyOut": {
+    "description": "Money out"
   },
   "walletNothingMatchesFilterYet": "Nothing matches this filter yet.",
   "@walletNothingMatchesFilterYet": {
@@ -4517,9 +5830,21 @@
   "@walletOnHold": {
     "description": "on hold"
   },
+  "walletOpeningBalance": "Opening balance",
+  "@walletOpeningBalance": {
+    "description": "Opening balance"
+  },
   "walletPayments": "Payments",
   "@walletPayments": {
     "description": "Payments"
+  },
+  "walletReceipt": "Receipt",
+  "@walletReceipt": {
+    "description": "Receipt"
+  },
+  "walletReceiptNumber": "Receipt number",
+  "@walletReceiptNumber": {
+    "description": "Receipt number"
   },
   "walletReferenceId": "Reference ID",
   "@walletReferenceId": {
@@ -4528,6 +5853,55 @@
   "walletRefundable": "Refundable",
   "@walletRefundable": {
     "description": "Refundable"
+  },
+  "walletRequestedOn": "Requested {date}",
+  "@walletRequestedOn": {
+    "description": "When a deposit return was requested",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "walletReturnApproved": "Approved",
+  "@walletReturnApproved": {
+    "description": "Approved"
+  },
+  "walletReturnCancelled": "Cancelled",
+  "@walletReturnCancelled": {
+    "description": "Cancelled"
+  },
+  "walletReturnDone": "Returned",
+  "@walletReturnDone": {
+    "description": "Returned"
+  },
+  "walletReturnFailed": "Failed",
+  "@walletReturnFailed": {
+    "description": "Failed"
+  },
+  "walletReturnProcessing": "Processing",
+  "@walletReturnProcessing": {
+    "description": "Processing"
+  },
+  "walletReturnRejected": "Rejected",
+  "@walletReturnRejected": {
+    "description": "Rejected"
+  },
+  "walletReturnRequested": "Requested",
+  "@walletReturnRequested": {
+    "description": "Requested"
+  },
+  "walletReturnReview": "Under review",
+  "@walletReturnReview": {
+    "description": "Under review"
+  },
+  "walletRewardExpired": "Reward expired",
+  "@walletRewardExpired": {
+    "description": "Reward expired"
+  },
+  "walletRewardReversed": "Reward taken back",
+  "@walletRewardReversed": {
+    "description": "Reward taken back"
   },
   "walletRewardsEarned": "Earned so far",
   "@walletRewardsEarned": {
@@ -4545,6 +5919,35 @@
   "@walletStateFailed": {
     "description": "Failed"
   },
+  "walletStatement": "Statement",
+  "@walletStatement": {
+    "description": "Statement"
+  },
+  "walletStatementEmpty": "Nothing this month",
+  "@walletStatementEmpty": {
+    "description": "Nothing this month"
+  },
+  "walletStatementEmptyBody": "Money that moves in or out of your wallet this month will show up here.",
+  "@walletStatementEmptyBody": {
+    "description": "Money that moves in or out of your wallet this month will show up here."
+  },
+  "walletStatementReference": "Statement ref {reference}",
+  "@walletStatementReference": {
+    "description": "Reference code of a wallet statement",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "walletStatementSubtitle": "Month by month, with exact money in and out",
+  "@walletStatementSubtitle": {
+    "description": "Month by month, with exact money in and out"
+  },
+  "walletStatementSummary": "This month",
+  "@walletStatementSummary": {
+    "description": "This month"
+  },
   "walletStatePending": "Pending",
   "@walletStatePending": {
     "description": "Pending"
@@ -4557,8 +5960,20 @@
   "@walletStateSettled": {
     "description": "Settled"
   },
+  "walletToBank": "To your bank account",
+  "@walletToBank": {
+    "description": "To your bank account"
+  },
+  "walletToWallet": "To your wallet",
+  "@walletToWallet": {
+    "description": "To your wallet"
+  },
   "walletTransactions": "Transactions",
   "@walletTransactions": {
     "description": "Transactions"
+  },
+  "walletViewReceipt": "Receipt",
+  "@walletViewReceipt": {
+    "description": "Receipt"
   }
 }

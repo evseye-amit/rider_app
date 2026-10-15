@@ -34,6 +34,23 @@ class WalletRepositoryImpl implements WalletRepository {
   @override
   Future<Result<WalletReceipt>> getReceipt(WalletReceiptKind kind, String id) => _api.receipt(kind, id);
 
+  @override
+  Future<Result<WalletStatementView>> getStatement({required DateTime month, int page = 1, int pageSize = 50}) async {
+    final DateTime now = DateTime.now().toUtc();
+    final DateTime today = DateTime.utc(now.year, now.month, now.day);
+    final DateTime from = DateTime.utc(month.year, month.month);
+    final DateTime end = DateTime.utc(month.year, month.month + 1, 0);
+    return (await _api.statement(
+      from: from,
+      to: end.isAfter(today) ? today : end,
+      page: page,
+      pageSize: pageSize,
+    )).map(_statement);
+  }
+
+  @override
+  Future<Result<WalletDeposit>> getDeposit(String id) async => (await _api.securityDeposit(id)).map(_deposit);
+
   static WalletOverview _overview(RiderWalletSummary summary) {
     final WalletBalance balance = summary.balance;
     return WalletOverview(
@@ -48,17 +65,7 @@ class WalletRepositoryImpl implements WalletRepository {
       depositBucket: _money(balance.securityDepositBucket),
       rewardsEarned: summary.rewardsEarned,
       rewardsExpiringSoon: summary.rewardsExpiringWithinSevenDays,
-      deposits: [
-        for (final WalletSecurityDeposit deposit in summary.securityDeposits)
-          WalletDeposit(
-            id: deposit.id,
-            status: deposit.status,
-            required_: deposit.requiredAmount,
-            funded: deposit.fundedAmount,
-            held: deposit.heldAmount,
-            refundable: deposit.refundableAmount,
-          ),
-      ],
+      deposits: [for (final WalletSecurityDeposit deposit in summary.securityDeposits) _deposit(deposit)],
       recentEntries: [for (final WalletLedgerEntry entry in summary.recentTransactions) _entry(entry)],
     );
   }
@@ -74,6 +81,56 @@ class WalletRepositoryImpl implements WalletRepository {
     amount: entry.amount,
     at: entry.postedAt ?? entry.createdAt,
     description: entry.description,
+    referenceType: entry.referenceType,
+    referenceId: entry.referenceId,
+  );
+
+  static WalletDeposit _deposit(WalletSecurityDeposit deposit) => WalletDeposit(
+    id: deposit.id,
+    status: deposit.status,
+    required_: deposit.requiredAmount,
+    funded: deposit.fundedAmount,
+    held: deposit.heldAmount,
+    refundable: deposit.refundableAmount,
+    outstanding: deposit.outstandingAmount,
+    locked: deposit.lockedAmount,
+    deducted: deposit.deductedAmount,
+    refunded: deposit.refundedAmount,
+    returns: [
+      for (final WalletDepositReturn item in deposit.returns)
+        DepositReturn(
+          id: item.id,
+          amount: item.amount,
+          status: item.status,
+          toWallet: item.toWallet,
+          requestedAt: item.requestedAt,
+          returned: item.isReturned,
+          completedAt: item.completedAt,
+        ),
+    ],
+  );
+
+  static WalletStatementView _statement(WalletStatement statement) => WalletStatementView(
+    reference: statement.reference,
+    opening: statement.spendable.opening,
+    moneyIn: statement.spendable.credits,
+    moneyOut: statement.spendable.debits,
+    closing: statement.spendable.closing,
+    depositClosing: statement.deposit.closing,
+    lines: [
+      for (final WalletStatementEntry entry in statement.entries)
+        StatementLine(
+          id: entry.id,
+          number: entry.number,
+          kind: WalletEntryKind.parse(entry.type),
+          description: entry.description,
+          at: entry.postedAt,
+          change: entry.spendableChange,
+          depositChange: entry.depositChange,
+          reversed: entry.reversed,
+        ),
+    ],
+    total: statement.total,
   );
 
   static WalletEntryState _state(String status) => switch (status) {

@@ -21,8 +21,13 @@ import '../../features/hub/presentation/widgets/fleet_shell.dart';
 import '../../features/maintenance/presentation/pages/maintenance_detail_page.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
 import '../../features/maintenance/presentation/pages/raise_maintenance_page.dart';
+import '../../features/returns/presentation/pages/return_case_page.dart';
+import '../../features/returns/presentation/pages/return_desk_page.dart';
+import '../../features/returns/presentation/pages/return_inspection_page.dart';
 import '../../features/riders/presentation/pages/team_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
+import '../../features/support/presentation/pages/desk_ticket_page.dart';
+import '../../features/support/presentation/pages/support_desk_page.dart';
 import 'app_routes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -45,7 +50,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.terms,
         name: 'terms',
         builder: (context, state) =>
-            TermsAcceptancePage(document: LegalDocuments.terms, onAccepted: () => context.go(Routes.login)),
+            TermsAcceptancePage(audience: LegalAudience.fleetManager, onAccepted: () => context.go(Routes.login)),
       ),
       GoRoute(
         path: Routes.language,
@@ -149,6 +154,26 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.exchangeReplacement,
         name: 'exchangeReplacement',
         builder: (context, state) => ChooseScooterPage(exchangeId: state.uri.queryParameters['id'] ?? ''),
+      ),
+      GoRoute(path: Routes.support, name: 'support', builder: (context, state) => const SupportDeskPage()),
+      GoRoute(
+        path: Routes.supportTicket,
+        name: 'supportTicket',
+        builder: (context, state) => DeskTicketPage(ticketId: state.uri.queryParameters['id'] ?? ''),
+      ),
+      GoRoute(path: Routes.returns, name: 'returns', builder: (context, state) => const ReturnDeskPage()),
+      GoRoute(
+        path: Routes.returnCase,
+        name: 'returnCase',
+        builder: (context, state) => ReturnCasePage(returnId: state.uri.queryParameters['id'] ?? ''),
+      ),
+      GoRoute(
+        path: Routes.returnInspection,
+        name: 'returnInspection',
+        builder: (context, state) => ReturnInspectionPage(
+          inspectionId: state.uri.queryParameters['id'] ?? '',
+          vehicleLabel: state.uri.queryParameters['vehicle'],
+        ),
       ),
     ],
     errorBuilder: (context, state) => _RouteErrorPage(location: state.uri.toString()),

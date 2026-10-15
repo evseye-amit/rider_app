@@ -1,83 +1,125 @@
 import 'package:evseye_core/evseye_core.dart';
 
-import '../../../core/demo/demo_data.dart';
 import '../domain/entities/rental.dart';
 import '../domain/rentals_repository.dart';
 
 class RentalsRepositoryImpl implements RentalsRepository {
-  const RentalsRepositoryImpl();
+  const RentalsRepositoryImpl(this._billing, this._agreements);
+
+  final RiderBillingApi _billing;
+  final RentalAgreementsApi _agreements;
 
   @override
   Future<Result<RentalsOverview>> getRentals() async {
+    final (overview, invoices, agreements) = await (_billing.overview(), _billing.invoices(), _agreements.list()).wait;
+    if (overview case Err<BillingOverviewDto>(:final failure)) return Result.err(failure);
+    if (invoices case Err<List<InvoiceDto>>(:final failure)) return Result.err(failure);
+    final BillingOverviewDto summary = (overview as Ok<BillingOverviewDto>).value;
+    final RentalAgreementDto? active = agreements.valueOrNull?.where((agreement) => agreement.isActive).firstOrNull;
     return Result.ok(
       RentalsOverview(
-        plan: RentalPlan(
-          name: ActiveLocale.strings.commonWeeklyPlan,
-          weeklyRent: Demo.weeklyRent,
-          nextDebitDate: Demo.nextWeekday(DateTime.monday),
-          autoDebitEnabled: true,
-          mandateStatus: 'active',
-          mandateRef: 'NACH/HDFC/0044219',
+        plan: active == null ? null : _plan(active),
+        summary: BillingSummary(
+          outstanding: summary.outstanding,
+          overdue: summary.overdue,
+          dueLater: summary.futureDue,
+          credit: summary.availableCredit,
+          depositHeld: summary.depositHeld,
+          unallocated: summary.unallocatedPayments,
+          autoPay: summary.autoPayEnabled,
         ),
-        invoices: _invoices(),
+        bills: [
+          for (final InvoiceDto invoice in (invoices as Ok<List<InvoiceDto>>).value)
+            if (invoice.status != BillingInvoiceStatus.draft) _bill(invoice),
+        ],
       ),
     );
   }
 
-  static List<RentalInvoice> _invoices() {
-    final DateTime nextMonday = Demo.nextWeekday(DateTime.monday);
+  @override
+  Future<Result<BillDetail>> bill(String id) async => (await _billing.invoice(id)).map(
+    (detail) => BillDetail(
+      bill: _bill(detail.invoice),
+      lines: [
+        for (final InvoiceLineDto line in detail.lines)
+          BillLine(description: line.description, amount: line.amount, isCredit: line.isCredit, tax: line.taxAmount),
+      ],
+      subtotal: detail.invoice.subtotal,
+      credit: detail.invoice.credit,
+      tax: detail.invoice.tax,
+      walletPaid: detail.walletPaid,
+      settlementCredit: detail.invoice.settlementCredit,
+    ),
+  );
 
-    RentalInvoice past(int weeksAgo, InvoiceStatus status, {num? amount}) {
-      final DateTime due = nextMonday.subtract(Duration(days: 7 * weeksAgo));
-      return RentalInvoice(
-        id: 'INV-${2140 - weeksAgo}',
-        periodLabel: _weekLabel(due),
-        amount: amount ?? Demo.weeklyRent,
-        dueDate: due,
-        paidOn: status == InvoiceStatus.paid ? due : null,
-        status: status,
-        items: _items(amount ?? Demo.weeklyRent),
-      );
-    }
+  @override
+  Future<Result<List<LedgerLine>>> ledger() async => (await _billing.ledger()).map(
+    (entries) => [
+      for (final LedgerEntryDto entry in entries)
+        LedgerLine(
+          id: entry.id,
+          kind: switch (entry.entryType) {
+            'CREDIT' => LedgerKind.credit,
+            'PAYMENT' => LedgerKind.payment,
+            'REFUND' => LedgerKind.refund,
+            'ADJUSTMENT' => LedgerKind.adjustment,
+            'REVERSAL' => LedgerKind.reversal,
+            _ => LedgerKind.charge,
+          },
+          description: entry.description,
+          debit: entry.debit,
+          credit: entry.credit,
+          at: entry.effectiveAt,
+          isDeposit: entry.isDepositLiability,
+        ),
+    ],
+  );
 
-    return [
-      RentalInvoice(
-        id: 'INV-2141',
-        periodLabel: _weekLabel(nextMonday),
-        amount: Demo.weeklyRent,
-        dueDate: nextMonday,
-        paidOn: null,
-        status: InvoiceStatus.due,
-        items: _items(Demo.weeklyRent),
-      ),
-      past(1, InvoiceStatus.paid),
-      past(2, InvoiceStatus.paid),
+  @override
+  Future<Result<List<PaymentReceipt>>> receipts() async => (await _billing.paymentReceipts()).map(
+    (receipts) => [
+      for (final PaymentReceiptDto receipt in receipts)
+        PaymentReceipt(
+          id: receipt.id,
+          amount: receipt.amount,
+          method: receipt.method,
+          confirmed: receipt.isConfirmed,
+          receivedAt: receipt.receivedAt,
+          invoiceCount: receipt.invoiceCount,
+          refunded: receipt.refunded,
+          reference: receipt.reference,
+        ),
+    ],
+  );
 
-      past(3, InvoiceStatus.failed),
-      past(4, InvoiceStatus.paid),
-      past(5, InvoiceStatus.paid),
-
-      past(6, InvoiceStatus.paid, amount: 1250),
-      past(7, InvoiceStatus.paid),
-      past(8, InvoiceStatus.paid),
-    ];
+  static RentalPlan _plan(RentalAgreementDto agreement) {
+    final String scooter = [?agreement.vehicleModel, ?agreement.vehicleVariant].join(' ').trim();
+    return RentalPlan(
+      agreementNumber: agreement.agreementNumber,
+      rent: agreement.recurringAmount,
+      period: agreement.rentalPeriodType,
+      scooterName: scooter.isEmpty ? null : scooter,
+    );
   }
 
-  static List<InvoiceLineItem> _items(num total) {
-    final num insurance = 120;
-    final num maintenance = 80;
-    return [
-      InvoiceLineItem(label: ActiveLocale.strings.rentalsVehicleRent, amount: total - insurance - maintenance),
-      InvoiceLineItem(label: ActiveLocale.strings.commonInsurance, amount: insurance),
-      InvoiceLineItem(label: ActiveLocale.strings.rentalsMaintenanceCover, amount: maintenance),
-    ];
-  }
-
-  static String _weekLabel(DateTime monday) {
-    const List<String> months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    final DateTime sunday = monday.add(const Duration(days: 6));
-    final String from = '${monday.day} ${months[monday.month - 1]}';
-    final String to = '${sunday.day} ${months[sunday.month - 1]}';
-    return '$from – $to';
-  }
+  static Bill _bill(InvoiceDto invoice) => Bill(
+    id: invoice.id,
+    number: invoice.number,
+    status: switch (invoice.status) {
+      BillingInvoiceStatus.finalized => BillStatus.due,
+      BillingInvoiceStatus.partiallyPaid => BillStatus.partlyPaid,
+      BillingInvoiceStatus.paid => BillStatus.paid,
+      BillingInvoiceStatus.overdue => BillStatus.overdue,
+      BillingInvoiceStatus.voided => BillStatus.voided,
+      BillingInvoiceStatus.draft => BillStatus.draft,
+    },
+    total: invoice.total,
+    paid: invoice.paid,
+    outstanding: invoice.outstanding,
+    createdAt: invoice.createdAt,
+    dueDate: invoice.dueDate,
+    paidAt: invoice.paidAt,
+    periodStart: invoice.periodStart,
+    periodEnd: invoice.periodEnd,
+  );
 }

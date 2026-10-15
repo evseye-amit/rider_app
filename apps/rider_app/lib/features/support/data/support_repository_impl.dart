@@ -1,153 +1,86 @@
+import 'dart:io';
+
 import 'package:evseye_core/evseye_core.dart';
 
-import '../../../core/demo/demo_data.dart';
-import '../domain/entities/support_overview.dart';
 import '../domain/entities/support_ticket.dart';
 import '../domain/support_repository.dart';
 
 class SupportRepositoryImpl implements SupportRepository {
-  SupportRepositoryImpl();
+  const SupportRepositoryImpl(this._api);
+
+  final SupportApi _api;
 
   @override
-  Future<Result<SupportOverview>> getOverview() async {
-    return Result.ok(
-      SupportOverview(
-        roadsideNumber: '1800 267 8899',
-        supportEmail: FlavorConfig.supportEmail,
-        hubName: Demo.hub,
-        teamLead: TeamLead(name: Demo.teamLead, mobile: Demo.teamLeadMobile, role: 'Team lead · ${Demo.hub}'),
-        categories: [
-          SupportCategory(
-            key: 'battery',
-            label: ActiveLocale.strings.supportBatteryCharging,
-            icon: 'battery',
-            tone: 'warning',
-            sla: ActiveLocale.strings.supportResponseWithin30Min,
+  Future<Result<TicketPage>> tickets({String? cursor}) async => (await _api.list(cursor: cursor)).map(
+    (page) =>
+        TicketPage(tickets: [for (final SupportTicketDto dto in page.items) _ticket(dto)], nextCursor: page.nextCursor),
+  );
+
+  @override
+  Future<Result<TicketThread>> ticket(String id) async => (await _api.detail(id)).map((detail) {
+    final String riderId = detail.ticket.createdById;
+    return TicketThread(
+      ticket: _ticket(detail.ticket),
+      messages: [
+        for (final SupportReplyDto reply in detail.replies)
+          TicketMessage(id: reply.id, body: reply.body, at: reply.createdAt, fromRider: reply.authorId == riderId),
+      ],
+      attachments: [
+        for (final SupportAttachmentDto photo in detail.attachments)
+          TicketAttachment(
+            id: photo.id,
+            at: photo.uploadedAt,
+            fromRider: photo.uploadedById == riderId,
+            isPdf: photo.isPdf,
           ),
-          SupportCategory(
-            key: 'breakdown',
-            label: ActiveLocale.strings.supportBreakdownRoad,
-            icon: 'build',
-            tone: 'danger',
-            sla: ActiveLocale.strings.supportRoadsideWithin45Min,
-          ),
-          SupportCategory(
-            key: 'payment',
-            label: ActiveLocale.strings.supportPaymentWallet,
-            icon: 'wallet',
-            tone: 'primary',
-            sla: ActiveLocale.strings.supportResponseWithin4Hours,
-          ),
-          SupportCategory(
-            key: 'documents',
-            label: ActiveLocale.strings.supportDocumentsKyc,
-            icon: 'document',
-            tone: 'info',
-            sla: ActiveLocale.strings.supportResponseWithin1Day,
-          ),
-          SupportCategory(
-            key: 'accident',
-            label: ActiveLocale.strings.supportAccidentTheft,
-            icon: 'shield',
-            tone: 'danger',
-            sla: ActiveLocale.strings.supportCallBackWithin15Min,
-          ),
-          SupportCategory(
-            key: 'other',
-            label: ActiveLocale.strings.supportSomethingElse,
-            icon: 'help',
-            tone: 'muted',
-            sla: ActiveLocale.strings.supportResponseWithin1Day,
-          ),
-        ],
-        tickets: _tickets(),
-        faqs: [
-          SupportFaq(
-            question: ActiveLocale.strings.supportWhenDoesMyRentGet,
-            answer: ActiveLocale.strings.supportEveryMondayMorningAgainstNach,
-          ),
-          SupportFaq(
-            question: ActiveLocale.strings.supportWhatHappensIfBatteryDies,
-            answer:
-                ActiveLocale.strings.supportRaiseBatteryChargingTicketSwap +
-                ActiveLocale.strings.supportTripsLostSwapDoNot,
-          ),
-          SupportFaq(
-            question: ActiveLocale.strings.supportHowSoonCanIWithdraw,
-            answer: ActiveLocale.strings.supportAnySettledBalanceCanWithdrawn,
-          ),
-          SupportFaq(
-            question: ActiveLocale.strings.supportCanIKeepScooterOvernight,
-            answer: ActiveLocale.strings.supportYesWeeklyMonthlyPlansDaily,
-          ),
-        ],
-      ),
+      ],
     );
+  });
+
+  @override
+  Future<Result<RaisedTicket>> raise({
+    required String subject,
+    required String message,
+    required List<File> photos,
+  }) async {
+    final Result<SupportTicketDto> created = await _api.create(subject: subject, message: message);
+    if (created case Err<SupportTicketDto>(:final failure)) return Result.err(failure);
+    final SupportTicketDto ticket = (created as Ok<SupportTicketDto>).value;
+    int failed = 0;
+    for (final File photo in photos) {
+      if (await _api.attach(ticket.id, photo, mimeType: _mimeOf(photo)) is Err) failed++;
+    }
+    return Result.ok(RaisedTicket(ticket: _ticket(ticket), failedPhotos: failed));
   }
 
-  static List<SupportTicket> _tickets() => [
-    SupportTicket(
-      id: 'TKT-4471',
-      categoryKey: 'battery',
-      title: ActiveLocale.strings.supportBatteryDrops20Within40,
-      status: TicketStatus.open,
-      createdAt: Demo.daysAgo(1),
-      updatedAt: Demo.hoursAgo(5),
-      messageCount: 4,
-      repairCost: 0,
-    ),
-    SupportTicket(
-      id: 'TKT-4462',
-      categoryKey: 'payment',
-      title: ActiveLocale.strings.supportReferralBonusSunilNotCredited,
-      status: TicketStatus.open,
-      createdAt: Demo.daysAgo(3),
-      updatedAt: Demo.daysAgo(2),
-      messageCount: 2,
-      repairCost: 0,
-    ),
-    SupportTicket(
-      id: 'TKT-4398',
-      categoryKey: 'documents',
-      title: ActiveLocale.strings.supportLicenceReUploadAfterRenewal,
-      status: TicketStatus.resolved,
-      createdAt: Demo.daysAgo(12),
-      updatedAt: Demo.daysAgo(10),
-      messageCount: 6,
-      repairCost: 0,
-    ),
-    SupportTicket(
-      id: 'TKT-4310',
-      categoryKey: 'breakdown',
-      title: ActiveLocale.strings.supportRearTyrePunctureNearAshram,
-      status: TicketStatus.resolved,
-      createdAt: Demo.daysAgo(21),
-      updatedAt: Demo.daysAgo(21),
-      messageCount: 3,
-      repairCost: 450,
-      costBorneByRider: true,
-    ),
-  ];
+  @override
+  Future<Result<TicketStatus>> reply(String id, String message) async => (await _api.reply(id, message)).map(_status);
 
   @override
-  Future<Result<SupportTicket>> raiseTicket({
-    required String categoryKey,
-    required String subject,
-    required String description,
-    required bool vehicleAffected,
-    required int photoCount,
-  }) async {
-    final DateTime now = Demo.now;
-    return Result.ok(
-      SupportTicket(
-        id: 'TKT-4472',
-        categoryKey: categoryKey,
-        title: subject,
-        status: TicketStatus.open,
-        createdAt: now,
-        updatedAt: now,
-        messageCount: 1,
-      ),
-    );
+  Future<Result<void>> attach(String id, File photo) async =>
+      (await _api.attach(id, photo, mimeType: _mimeOf(photo))).map((_) {});
+
+  @override
+  Future<Result<String>> attachmentUrl(String id, String attachmentId) => _api.attachmentUrl(id, attachmentId);
+
+  static SupportTicket _ticket(SupportTicketDto dto) => SupportTicket(
+    id: dto.id,
+    subject: dto.subject,
+    status: _status(dto.status),
+    lastActivityAt: dto.lastActivityAt,
+    createdAt: dto.createdAt,
+  );
+
+  static TicketStatus _status(SupportTicketStatus status) => switch (status) {
+    SupportTicketStatus.open => TicketStatus.open,
+    SupportTicketStatus.inProgress => TicketStatus.inProgress,
+    SupportTicketStatus.resolved => TicketStatus.resolved,
+  };
+
+  static String _mimeOf(File file) {
+    final String name = file.path.toLowerCase();
+    if (name.endsWith('.png')) return 'image/png';
+    if (name.endsWith('.webp')) return 'image/webp';
+    return 'image/jpeg';
   }
 }

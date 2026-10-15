@@ -40,8 +40,6 @@ abstract interface class AllocationRepository {
 
   Future<Result<void>> verifyDeallocationOtp(String allocationId, {required String otpRequestId, required String code});
 
-  Future<Result<void>> completeInspection(String inspectionId);
-
   Future<Result<void>> completeDeallocation(String allocationId);
 }
 

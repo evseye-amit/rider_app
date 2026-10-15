@@ -188,6 +188,12 @@ class ReferralApi {
   Future<Result<void>> attribute(String referralCode) =>
       _client.post<void>('$_base/attribute', body: {'referralCode': referralCode});
 
+  Future<Result<String>> resolveInput(String input) => _client.get<String>(
+    '$_base/resolve-input',
+    query: {'input': input},
+    parse: (data) => _map(data)['referralCode']?.toString() ?? '',
+  );
+
   Future<Result<List<ReferralDto>>> mine({int page = 1, int pageSize = 50}) => _client.get<List<ReferralDto>>(
     _base,
     query: {'page': page, 'pageSize': pageSize},

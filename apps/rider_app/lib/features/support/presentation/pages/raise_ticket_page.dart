@@ -1,126 +1,103 @@
+import 'dart:io';
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../domain/entities/support_overview.dart';
 import '../../domain/entities/support_ticket.dart';
 import '../../domain/usecases/raise_ticket.dart';
 import '../../support_dependencies.dart';
-import '../providers/support_overview_provider.dart';
-import '../widgets/support_widgets.dart';
 
 class RaiseTicketPage extends ConsumerStatefulWidget {
-  const RaiseTicketPage({this.categoryKey, super.key});
-
-  final String? categoryKey;
+  const RaiseTicketPage({super.key});
 
   @override
   ConsumerState<RaiseTicketPage> createState() => _RaiseTicketPageState();
 }
 
 class _RaiseTicketPageState extends ConsumerState<RaiseTicketPage> {
-  final TextEditingController _subject = TextEditingController();
-  final TextEditingController _description = TextEditingController();
-  final List<bool> _photoCaptured = [false, false, false];
+  static const int _maxPhotos = 3;
+  static const int _minMessage = 10;
 
-  late String? _categoryKey = widget.categoryKey;
-  bool _vehicleAffected = false;
+  final TextEditingController _subject = TextEditingController();
+  final TextEditingController _message = TextEditingController();
+  final List<File> _photos = [];
+
+  int? _topic;
   bool _submitting = false;
-  String? _categoryError;
   String? _subjectError;
-  String? _descriptionError;
+  String? _messageError;
 
   @override
   void dispose() {
     _subject.dispose();
-    _description.dispose();
+    _message.dispose();
     super.dispose();
   }
 
-  SupportCategory? _categoryOf(List<SupportCategory> categories, String? key) =>
-      categories.where((category) => category.key == key).firstOrNull;
+  List<_Topic> _topics(BuildContext context) => [
+    _Topic(Icons.battery_charging_full_rounded, context.l10n.supportBatteryCharging),
+    _Topic(Icons.car_crash_rounded, context.l10n.supportBreakdownRoad),
+    _Topic(Icons.account_balance_wallet_rounded, context.l10n.supportPaymentWallet),
+    _Topic(Icons.badge_rounded, context.l10n.supportDocumentsKyc),
+    _Topic(Icons.report_rounded, context.l10n.supportAccidentTheft),
+    _Topic(Icons.help_outline_rounded, context.l10n.supportSomethingElse, fillsSubject: false),
+  ];
+
+  void _pickTopic(List<_Topic> topics, int index) {
+    final String current = _subject.text.trim();
+    final int? previous = _topic;
+    final bool untouched = current.isEmpty || (previous != null && current == topics[previous].label);
+    setState(() {
+      _topic = index;
+      if (!untouched) return;
+      _subject.text = topics[index].fillsSubject ? topics[index].label : '';
+      _subjectError = null;
+    });
+  }
+
+  Future<void> _addPhoto() async {
+    final File? file = await PhotoSourceSheet.pick(context);
+    if (file == null || !mounted) return;
+    setState(() => _photos.add(file));
+  }
 
   bool _validate() {
     setState(() {
-      _categoryError = _categoryKey == null ? context.l10n.supportChooseCategory : null;
       _subjectError = _subject.text.trim().isEmpty ? context.l10n.supportTellUsWhatAbout : null;
-      _descriptionError = _description.text.trim().length < 10 ? context.l10n.supportAddFewMoreDetails10 : null;
+      _messageError = _message.text.trim().length < _minMessage ? context.l10n.supportAddFewMoreDetails10 : null;
     });
-    return _categoryError == null && _subjectError == null && _descriptionError == null;
+    return _subjectError == null && _messageError == null;
   }
-
-  Future<void> _pickCategory(List<SupportCategory> categories) async {
-    final String? picked = await AppSheet.show<String>(
-      context,
-      title: context.l10n.supportChooseCategory,
-      subtitle: context.l10n.supportDecidesWhoPicksUpTicket,
-      child: Column(
-        children: [
-          for (final SupportCategory category in categories) ...[
-            AppRadioTile(
-              selected: category.key == _categoryKey,
-              onTap: () => Navigator.of(context).pop(category.key),
-              title: category.label,
-              subtitle: category.sla,
-              leading: IconTile(
-                icon: NodeTokens.icon(category.icon),
-                tone: categoryTileTone(category.key),
-                solid: true,
-                size: 36,
-              ),
-            ),
-            if (category != categories.last) const Gap.sm(),
-          ],
-        ],
-      ),
-    );
-    if (picked != null) {
-      setState(() {
-        _categoryKey = picked;
-        _categoryError = null;
-      });
-    }
-  }
-
-  void _togglePhoto(int index) => setState(() => _photoCaptured[index] = !_photoCaptured[index]);
 
   Future<void> _submit() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (!_validate()) return;
     setState(() => _submitting = true);
 
-    final Result<SupportTicket> result = await ref.read(raiseTicketProvider)(
-      RaiseTicketParams(
-        categoryKey: _categoryKey!,
-        subject: _subject.text.trim(),
-        description: _description.text.trim(),
-        vehicleAffected: _vehicleAffected,
-        photoCount: _photoCaptured.where((captured) => captured).length,
-      ),
+    final Result<RaisedTicket> result = await ref.read(raiseTicketProvider)(
+      RaiseTicketParams(subject: _subject.text.trim(), message: _message.text.trim(), photos: List.of(_photos)),
     );
     if (!mounted) return;
     setState(() => _submitting = false);
 
     switch (result) {
-      case Ok<SupportTicket>(:final value):
-        Navigator.of(context).pop();
-        AppSnack.success(context, 'Ticket ${value.id} raised. Our team is on it.');
-      case Err<SupportTicket>(:final failure):
+      case Ok<RaisedTicket>(:final value):
+        if (value.failedPhotos > 0) {
+          AppSnack.warning(context, context.l10n.supportPhotosNotAttached(value.failedPhotos));
+        } else {
+          AppSnack.success(context, context.l10n.supportTicketRaised);
+        }
+        context.pop(value.ticket.id);
+      case Err<RaisedTicket>(:final failure):
         AppSnack.error(context, failure.message);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(supportOverviewProvider, (_, next) {
-      final String? message = next.failureMessage;
-      if (message != null) AppSnack.error(context, message);
-    });
-
-    final AsyncValue<SupportOverview> overview = ref.watch(supportOverviewProvider);
-    final List<SupportCategory> categories = overview.value?.categories ?? const [];
-    final bool loadingCategories = overview.isLoading && !overview.hasValue;
-    final SupportCategory? selected = _categoryOf(categories, _categoryKey);
-    final Color selectedTone = selected == null ? AppColors.primary : categoryTileTone(selected.key);
+    final List<_Topic> topics = _topics(context);
 
     return AppScaffold(
       title: context.l10n.supportRaiseTicket,
@@ -129,116 +106,122 @@ class _RaiseTicketPageState extends ConsumerState<RaiseTicketPage> {
         label: context.l10n.supportSubmitTicket,
         icon: Icons.send_rounded,
         loading: _submitting,
-        onPressed: loadingCategories || _submitting ? null : _submit,
+        onPressed: _submitting ? null : _submit,
       ),
-      body: loadingCategories
-          ? const _RaiseTicketSkeleton()
-          : PageBody(
+      body: PageBody(
+        children: [
+          ModuleCard(
+            title: context.l10n.supportWhatsTheIssue,
+            leading: const IconTile(icon: Icons.category_rounded, tone: AppColors.primary, solid: true),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ModuleCard(
-                  title: context.l10n.supportWhatsTheIssue,
-                  leading: IconTile(
-                    icon: selected == null ? Icons.category_rounded : NodeTokens.icon(selected.icon),
-                    tone: selectedTone,
-                    solid: true,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      AppPickerField(
-                        label: context.l10n.commonCategory,
-                        required: true,
-                        value: selected?.label,
-                        hint: context.l10n.supportSelectCategory,
-                        errorText: _categoryError,
-                        onTap: () => _pickCategory(categories),
-                        prefixIcon: selected == null ? Icons.category_rounded : NodeTokens.icon(selected.icon),
-                      ),
-                      const Gap.lg(),
-                      AppTextField(
-                        label: context.l10n.supportSubject,
-                        required: true,
-                        controller: _subject,
-                        hint: context.l10n.supportOneLineSumsUpIssue,
-                        errorText: _subjectError,
-                        textCapitalization: TextCapitalization.sentences,
-                        onChanged: (_) {
-                          if (_subjectError != null) setState(() => _subjectError = null);
-                        },
-                      ),
-                    ],
-                  ),
+                Text(context.l10n.supportPickTopic, style: AppText.bodySmall.copyWith(fontSize: 12.5)),
+                const Gap.md(),
+                Wrap(
+                  spacing: Insets.sm,
+                  runSpacing: Insets.sm,
+                  children: [
+                    for (int i = 0; i < topics.length; i++)
+                      _TopicChip(topic: topics[i], selected: _topic == i, onTap: () => _pickTopic(topics, i)),
+                  ],
                 ),
                 const Gap.lg(),
-                ModuleCard(
-                  title: context.l10n.supportTellUsMore,
-                  leading: const IconTile(icon: Icons.notes_rounded, tone: AppColors.primary, solid: true),
-                  child: AppTextField(
-                    label: context.l10n.supportDescription,
-                    required: true,
-                    controller: _description,
-                    hint: context.l10n.supportWhatHappenedSinceWhen,
-                    maxLines: 5,
-                    errorText: _descriptionError,
-                    textCapitalization: TextCapitalization.sentences,
-                    onChanged: (_) {
-                      if (_descriptionError != null) setState(() => _descriptionError = null);
-                    },
-                  ),
-                ),
-                const Gap.lg(),
-                ModuleCard(
-                  title: context.l10n.supportPhotosOptional,
-                  leading: const IconTile(icon: Icons.photo_camera_rounded, tone: AppColors.primary, solid: true),
-                  child: Row(
-                    children: [
-                      for (int i = 0; i < _photoCaptured.length; i++) ...[
-                        Expanded(
-                          child: PhotoSlot(
-                            label: 'Photo ${i + 1}',
-                            captured: _photoCaptured[i],
-                            required: false,
-                            onTap: () => _togglePhoto(i),
-                            onRetake: () => _togglePhoto(i),
-                          ),
-                        ),
-                        if (i != _photoCaptured.length - 1) const SizedBox(width: Insets.md),
-                      ],
-                    ],
-                  ),
-                ),
-                const Gap.lg(),
-                ModuleCard(
-                  title: context.l10n.supportVehicleImpact,
-                  leading: const IconTile(icon: Icons.warning_amber_rounded, tone: AppColors.amber, solid: true),
-                  child: AppCheckTile(
-                    value: _vehicleAffected,
-                    onChanged: (value) => setState(() => _vehicleAffected = value),
-                    title: context.l10n.supportVehicleAffected,
-                    subtitle: context.l10n.supportTurnIfCannotRideSafely,
-                  ),
+                AppTextField(
+                  label: context.l10n.supportSubject,
+                  required: true,
+                  controller: _subject,
+                  hint: context.l10n.supportOneLineSumsUpIssue,
+                  errorText: _subjectError,
+                  maxLength: 160,
+                  textCapitalization: TextCapitalization.sentences,
+                  onChanged: (_) {
+                    if (_subjectError != null) setState(() => _subjectError = null);
+                  },
                 ),
               ],
             ),
+          ),
+          const Gap.lg(),
+          ModuleCard(
+            title: context.l10n.supportTellUsMore,
+            leading: const IconTile(icon: Icons.notes_rounded, tone: AppColors.primary, solid: true),
+            child: AppTextField(
+              label: context.l10n.supportDescription,
+              required: true,
+              controller: _message,
+              hint: context.l10n.supportWhatHappenedSinceWhen,
+              maxLines: 6,
+              maxLength: 10000,
+              errorText: _messageError,
+              textCapitalization: TextCapitalization.sentences,
+              onChanged: (_) {
+                if (_messageError != null) setState(() => _messageError = null);
+              },
+            ),
+          ),
+          const Gap.lg(),
+          ModuleCard(
+            title: context.l10n.supportPhotosOptional,
+            leading: const IconTile(icon: Icons.photo_camera_rounded, tone: AppColors.primary, solid: true),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(context.l10n.supportPhotosHint(_maxPhotos), style: AppText.bodySmall.copyWith(fontSize: 12.5)),
+                const Gap.md(),
+                LocalPhotoGrid(
+                  photos: _photos,
+                  max: _maxPhotos,
+                  onAdd: _submitting ? null : _addPhoto,
+                  onRemove: _submitting ? null : (index) => setState(() => _photos.removeAt(index)),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _RaiseTicketSkeleton extends StatelessWidget {
-  const _RaiseTicketSkeleton();
+class _Topic {
+  const _Topic(this.icon, this.label, {this.fillsSubject = true});
+
+  final IconData icon;
+  final String label;
+  final bool fillsSubject;
+}
+
+class _TopicChip extends StatelessWidget {
+  const _TopicChip({required this.topic, required this.selected, required this.onTap});
+
+  final _Topic topic;
+  final bool selected;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return const PageBody(
-      children: [
-        ShimmerBox(height: 190, borderRadius: Corners.brLg),
-        Gap.xl(),
-        ShimmerBox(height: 150, borderRadius: Corners.brLg),
-        Gap.xl(),
-        ShimmerBox(height: 130, borderRadius: Corners.brLg),
-        Gap.xl(),
-        ShimmerBox(height: 96, borderRadius: Corners.brLg),
-      ],
+    final Color tone = selected ? AppColors.primary : AppColors.textSecondary;
+    return Pressable(
+      onTap: onTap,
+      scale: 0.96,
+      child: AnimatedContainer(
+        duration: Motion.fast,
+        padding: const EdgeInsets.symmetric(horizontal: Insets.md, vertical: Insets.sm),
+        decoration: BoxDecoration(
+          color: selected ? AppColors.primaryWash : AppColors.surface,
+          borderRadius: Corners.pill,
+          border: Border.all(color: selected ? AppColors.primary : AppColors.stroke),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(topic.icon, size: 16, color: tone),
+            const SizedBox(width: Insets.xs + 2),
+            Text(topic.label, style: AppText.titleSmall.copyWith(fontSize: 12.5, color: tone)),
+          ],
+        ),
+      ),
     );
   }
 }

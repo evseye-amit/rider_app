@@ -25,5 +25,12 @@ abstract final class Routes {
   static const String exchangeDetail = '/exchanges/detail';
   static const String exchangeReplacement = '/exchanges/replacement';
 
+  static const String support = '/support';
+  static const String supportTicket = '/support/ticket';
+
+  static const String returns = '/returns';
+  static const String returnCase = '/returns/case';
+  static const String returnInspection = '/returns/inspection';
+
   const Routes._();
 }

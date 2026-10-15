@@ -23,7 +23,16 @@ abstract interface class ExchangeDeskRepository {
 
   Future<Result<void>> sendOffer(String id);
 
-  Future<Result<num>> settleDeposits(String id);
+  Future<Result<DepositOutcome>> settleDeposits(String id);
+
+  Future<Result<void>> acceptOnBehalf(
+    String id,
+    CaseOffer offer, {
+    required String consentReference,
+    required String reason,
+  });
+
+  Future<Result<void>> rejectOnBehalf(String id, CaseOffer offer, {required String reason});
 
   Future<Result<void>> startHandover(String id);
 

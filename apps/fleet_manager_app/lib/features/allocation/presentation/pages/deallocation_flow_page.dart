@@ -29,6 +29,8 @@ class _DeallocationFlowPageState extends ConsumerState<DeallocationFlowPage> {
   String? _inspectionId;
   OtpChallenge? _riderOtp;
   OtpChallenge? _operatorOtp;
+  bool _codesVerified = false;
+  bool _inspected = false;
 
   UiFlowConfig? get _flow => ref.read(deallocationFlowConfigProvider).value;
 
@@ -221,44 +223,49 @@ class _DeallocationFlowPageState extends ConsumerState<DeallocationFlowPage> {
 
     setState(() => _busy = true);
     try {
-      final List<(OtpChallenge?, String, String)> codes = [
-        (_riderOtp, _form.stringOf('riderOtp'), 'rider'),
-        (_operatorOtp, _form.stringOf('teamLeadOtp'), 'operator'),
-      ];
-      final VerifyDeallocationOtp verifyOtp = ref.read(verifyDeallocationOtpProvider);
-      for (final (OtpChallenge? challenge, String code, String who) in codes) {
-        if (challenge == null) {
-          AppSnack.error(context, 'The $who code was never sent — go back a step and forward again.');
-          return;
+      if (!_codesVerified) {
+        final List<(OtpChallenge?, String, String)> codes = [
+          (_riderOtp, _form.stringOf('riderOtp'), 'rider'),
+          (_operatorOtp, _form.stringOf('teamLeadOtp'), 'operator'),
+        ];
+        final VerifyDeallocationOtp verifyOtp = ref.read(verifyDeallocationOtpProvider);
+        for (final (OtpChallenge? challenge, String code, String who) in codes) {
+          if (challenge == null) {
+            AppSnack.error(context, 'The $who code was never sent — go back a step and forward again.');
+            return;
+          }
+          final Result<void> verified = await verifyOtp(
+            VerifyDeallocationOtpParams(allocationId: request.id, otpRequestId: challenge.otpRequestId, code: code),
+          );
+          if (!mounted) return;
+          if (verified case Err<void>(:final failure)) {
+            AppSnack.error(context, 'The $who code was not accepted: ${failure.message}');
+            return;
+          }
         }
-        final Result<void> verified = await verifyOtp(
-          VerifyDeallocationOtpParams(allocationId: request.id, otpRequestId: challenge.otpRequestId, code: code),
-        );
-        if (!mounted) return;
-        if (verified case Err<void>(:final failure)) {
-          AppSnack.error(context, 'The $who code was not accepted: ${failure.message}');
-          return;
-        }
+        _codesVerified = true;
       }
 
       final String? inspectionId = _inspectionId;
-      if (inspectionId != null && inspectionId.isNotEmpty) {
-        final Result<void> inspected = await ref.read(completeInspectionProvider)(inspectionId);
-        if (!mounted) return;
-        if (inspected case Err<void>(:final failure) when failure is! ValidationFailure) {
-          AppSnack.error(context, failure.message);
-          return;
-        }
+      if (inspectionId != null && inspectionId.isNotEmpty && !_inspected && !request.postReturnInspectionDone) {
+        final bool? inspected = await context.push<bool>(
+          Uri(
+            path: Routes.returnInspection,
+            queryParameters: {'id': inspectionId, 'vehicle': request.vehicleNumber},
+          ).toString(),
+        );
+        if (!mounted || inspected != true) return;
+        _inspected = true;
       }
 
       final Result<void> done = await ref.read(completeDeallocationProvider)(request.id);
       if (!mounted) return;
       switch (done) {
-        case Err<void>(:final failure):
-          AppSnack.error(context, failure.message);
-        case Ok<void>():
+        case Ok<void>() || Err<void>(failure: NotFoundFailure()):
           context.go(Routes.allocations);
           AppSnack.success(context, '${request.vehicleNumber} de-allocated from ${request.riderName}.');
+        case Err<void>(:final failure):
+          AppSnack.error(context, failure.message);
       }
     } finally {
       if (mounted) setState(() => _busy = false);

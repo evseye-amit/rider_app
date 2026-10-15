@@ -28,6 +28,11 @@ class FleetSession extends Equatable {
   bool get canManageExchanges =>
       (user?.hasRole('OPERATIONS_MANAGER') ?? false) || (user?.hasRole('CLIENT_ADMIN') ?? false);
 
+  bool get canApprovePenalties =>
+      (user?.hasRole('FLEET_MANAGER') ?? false) || (user?.hasRole('OPERATIONS_MANAGER') ?? false);
+
+  bool get canOverridePenalties => user?.hasRole('CLIENT_ADMIN') ?? false;
+
   List<int> get activeHubIndexes {
     final List<int> valid = selectedHubIndexes.where((i) => i >= 0 && i < hubs.length).toList()..sort();
     return valid.isEmpty && hubs.isNotEmpty ? const [0] : valid;

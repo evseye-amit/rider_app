@@ -22,14 +22,19 @@ import '../../features/onboarding_intro/presentation/pages/intro_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/referrals/presentation/pages/refer_earn_page.dart';
 import '../../features/rentals/presentation/pages/rentals_page.dart';
+import '../../features/ride_returns/presentation/pages/request_return_page.dart';
+import '../../features/ride_returns/presentation/pages/return_detail_page.dart';
+import '../../features/ride_returns/presentation/pages/returns_page.dart';
 import '../../features/scooter/presentation/pages/scooter_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/support/presentation/pages/raise_ticket_page.dart';
 import '../../features/support/presentation/pages/support_page.dart';
+import '../../features/support/presentation/pages/ticket_thread_page.dart';
 import '../../features/vehicle_exchange/presentation/pages/exchange_detail_page.dart';
 import '../../features/vehicle_exchange/presentation/pages/exchanges_page.dart';
 import '../../features/vehicle_exchange/presentation/pages/request_exchange_page.dart';
 import '../../features/wallet/presentation/pages/wallet_page.dart';
+import '../../features/wallet/presentation/pages/wallet_statement_page.dart';
 import 'app_routes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -54,7 +59,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.terms,
         name: 'terms',
         builder: (context, state) =>
-            TermsAcceptancePage(document: LegalDocuments.terms, onAccepted: () => context.go(Routes.login)),
+            TermsAcceptancePage(audience: LegalAudience.rider, onAccepted: () => context.go(Routes.login)),
       ),
       GoRoute(
         path: Routes.language,
@@ -130,16 +135,24 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
-      GoRoute(path: Routes.wallet, name: 'wallet', builder: (context, state) => const WalletPage()),
+      GoRoute(
+        path: Routes.wallet,
+        name: 'wallet',
+        builder: (context, state) => const WalletPage(),
+        routes: [
+          GoRoute(path: 'statement', name: 'walletStatement', builder: (context, state) => const WalletStatementPage()),
+        ],
+      ),
       GoRoute(
         path: Routes.support,
         name: 'support',
         builder: (context, state) => const SupportPage(),
         routes: [
+          GoRoute(path: 'raise', name: 'raiseTicket', builder: (context, state) => const RaiseTicketPage()),
           GoRoute(
-            path: 'raise',
-            name: 'raiseTicket',
-            builder: (context, state) => RaiseTicketPage(categoryKey: state.uri.queryParameters['category']),
+            path: 'ticket',
+            name: 'supportTicket',
+            builder: (context, state) => TicketThreadPage(ticketId: state.uri.queryParameters['id'] ?? ''),
           ),
         ],
       ),
@@ -165,6 +178,17 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.vehicleExchangeDetail,
         name: 'vehicleExchangeDetail',
         builder: (context, state) => ExchangeDetailPage(exchangeId: state.uri.queryParameters['id'] ?? ''),
+      ),
+      GoRoute(path: Routes.rideReturns, name: 'rideReturns', builder: (context, state) => const ReturnsPage()),
+      GoRoute(
+        path: Routes.rideReturnRequest,
+        name: 'rideReturnRequest',
+        builder: (context, state) => const RequestReturnPage(),
+      ),
+      GoRoute(
+        path: Routes.rideReturnDetail,
+        name: 'rideReturnDetail',
+        builder: (context, state) => ReturnDetailPage(returnId: state.uri.queryParameters['id'] ?? ''),
       ),
     ],
     errorBuilder: (context, state) => _RouteErrorPage(location: state.uri.toString()),

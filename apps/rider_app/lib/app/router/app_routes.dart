@@ -17,6 +17,7 @@ abstract final class Routes {
   static const String home = '/home';
   static const String scooter = '/scooter';
   static const String wallet = '/wallet';
+  static const String walletStatement = '/wallet/statement';
   static const String support = '/support';
   static const String batterySwap = '/battery-swap';
   static const String nearbyHubs = '/nearby-hubs';
@@ -27,10 +28,14 @@ abstract final class Routes {
   static const String profile = '/profile';
   static const String notifications = '/notifications';
   static const String raiseTicket = '/support/raise';
+  static const String supportTicket = '/support/ticket';
   static const String payments = '/payments';
   static const String vehicleExchanges = '/vehicle-exchanges';
   static const String vehicleExchangeDetail = '/vehicle-exchanges/detail';
   static const String vehicleExchangeRequest = '/vehicle-exchanges/request';
+  static const String rideReturns = '/returns';
+  static const String rideReturnRequest = '/returns/request';
+  static const String rideReturnDetail = '/returns/detail';
 
   const Routes._();
 }

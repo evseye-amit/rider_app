@@ -135,10 +135,16 @@ abstract final class OnboardingFlowBuilder {
       case 'BANK_ACCOUNT':
         return UiNode(type: 'bankAccountField', id: f.fieldCode, props: {...props}, validations: rules);
       case 'REFERENCE':
+        final int minReferences = (f.configuration['minReferences'] as num?)?.toInt() ?? 1;
+        final int maxReferences = (f.configuration['maxReferences'] as num?)?.toInt() ?? 2;
         return UiNode(
           type: 'referenceField',
           id: f.fieldCode,
-          props: {...props, 'minCount': 1, 'maxCount': 3},
+          props: {
+            ...props,
+            'minCount': minReferences,
+            'maxCount': maxReferences < minReferences ? minReferences : maxReferences,
+          },
           validations: rules,
         );
       case 'NOMINEE':

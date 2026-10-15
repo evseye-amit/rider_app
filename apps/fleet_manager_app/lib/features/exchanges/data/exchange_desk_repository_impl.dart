@@ -60,6 +60,7 @@ class ExchangeDeskRepositoryImpl implements ExchangeDeskRepository {
       hubId: scooter.hubId,
       durationValue: custom ? exchange.durationValue : null,
       durationUnit: custom ? exchange.durationUnit : null,
+      batteryPlanId: exchange.batteryPlanId,
     );
   }
 
@@ -67,9 +68,29 @@ class ExchangeDeskRepositoryImpl implements ExchangeDeskRepository {
   Future<Result<void>> sendOffer(String id) => _exchanges.sendOffer(id);
 
   @override
-  Future<Result<num>> settleDeposits(String id) async => (await _exchanges.settleDeposits(
+  Future<Result<DepositOutcome>> settleDeposits(String id) async => (await _exchanges.settleDeposits(id)).map(
+    (settlement) => settlement.status == VehicleExchangeStatus.depositPending
+        ? DepositOutcome(due: settlement.additionalRequired, securityShortfall: settlement.riderSecurityShortfall)
+        : const DepositOutcome(due: 0, securityShortfall: 0),
+  );
+
+  @override
+  Future<Result<void>> acceptOnBehalf(
+    String id,
+    CaseOffer offer, {
+    required String consentReference,
+    required String reason,
+  }) => _exchanges.acceptOnBehalf(
     id,
-  )).map((settlement) => settlement.status == VehicleExchangeStatus.depositPending ? settlement.additionalRequired : 0);
+    offerId: offer.id,
+    offerHash: offer.hash,
+    consentReference: consentReference,
+    reason: reason,
+  );
+
+  @override
+  Future<Result<void>> rejectOnBehalf(String id, CaseOffer offer, {required String reason}) =>
+      _exchanges.rejectOfferOnBehalf(id, offerId: offer.id, reason: reason);
 
   @override
   Future<Result<void>> startHandover(String id) => _exchanges.startHandover(id);
@@ -135,6 +156,7 @@ class ExchangeDeskRepositoryImpl implements ExchangeDeskRepository {
       rentalPeriodType: exchange.rentalPeriodType,
       durationValue: exchange.durationValue,
       durationUnit: exchange.durationUnit,
+      batteryPlanId: exchange.batteryPlanId,
       pendingOffer: pending == null ? null : _offer(pending),
       acceptedOffer: accepted == null ? null : _offer(accepted),
       canCancel: exchange.canCancel,
@@ -155,8 +177,14 @@ class ExchangeDeskRepositoryImpl implements ExchangeDeskRepository {
     VehicleExchangeStatus.expired => CaseStatus.expired,
   };
 
-  static CaseOffer _offer(VehicleExchangeOffer offer) =>
-      CaseOffer(id: offer.id, expiresAt: offer.expiresAt, quote: _quote(offer.quote));
+  static CaseOffer _offer(VehicleExchangeOffer offer) => CaseOffer(
+    id: offer.id,
+    expiresAt: offer.expiresAt,
+    quote: _quote(offer.quote),
+    hash: offer.offerHash,
+    termsTitle: offer.termsTitle,
+    termsBody: offer.termsSnapshot,
+  );
 
   static CaseQuote _quote(ExchangeQuoteDto quote) {
     final String scooter = [?quote.vehicleModel, ?quote.vehicleVariant].join(' ').trim();

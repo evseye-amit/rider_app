@@ -584,6 +584,9 @@ class AppL10nKn extends AppL10n {
   String get commonConfirmAccountNumber => 'ಖಾತೆ ಸಂಖ್ಯೆ ಮತ್ತೆ ಬರೆಯಿರಿ';
 
   @override
+  String get commonContinue => 'ಮುಂದುವರಿಸಿ';
+
+  @override
   String get commonCouldNotOpenDocumentTry => 'ದಾಖಲೆ ತೆರೆಯಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
 
   @override
@@ -659,6 +662,9 @@ class AppL10nKn extends AppL10n {
   String get commonLanguage => 'ಭಾಷೆ';
 
   @override
+  String get commonLoadMore => 'ಇನ್ನಷ್ಟು ತೋರಿಸಿ';
+
+  @override
   String get commonLowPriority => 'ಕಡಿಮೆ ಆದ್ಯತೆ';
 
   @override
@@ -701,10 +707,19 @@ class AppL10nKn extends AppL10n {
   String get commonNotFound => 'ಸಿಗಲಿಲ್ಲ.';
 
   @override
+  String get commonNow => 'ಈಗ';
+
+  @override
   String get commonOdometer => 'ಓಡೋಮೀಟರ್';
 
   @override
+  String get commonOff => 'ಆಫ್';
+
+  @override
   String get commonOffline => 'ಆಫ್‌ಲೈನ್';
+
+  @override
+  String get commonOn => 'ಆನ್';
 
   @override
   String get commonOpen => 'ತೆರೆಯಿರಿ';
@@ -1343,6 +1358,9 @@ class AppL10nKn extends AppL10n {
   String get earningsWeeklyDistance => 'ವಾರದ ದೂರ';
 
   @override
+  String get errorActiveScooterRequired => 'ಇದಕ್ಕೆ ನಿಮಗೆ ಸ್ಕೂಟರ್ ನೀಡಿರಬೇಕು.';
+
+  @override
   String get errorCouldNotReachServerCheck => 'ಸರ್ವರ್ ಸಂಪರ್ಕ ಸಿಗಲಿಲ್ಲ. ನಿಮ್ಮ ಸಂಪರ್ಕ ಪರಿಶೀಲಿಸಿ.';
 
   @override
@@ -1353,6 +1371,9 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get errorPaymentPending => 'ಪಾವತಿ ಬಾಕಿ';
+
+  @override
+  String get errorRiderProfileMissing => 'ರೈಡರ್ ಪ್ರೊಫೈಲ್ ಸಿಗಲಿಲ್ಲ.';
 
   @override
   String get errorServerTookTooLongAnswer => 'ಸರ್ವರ್ ಉತ್ತರಿಸಲು ತುಂಬಾ ಸಮಯ ತೆಗೆದುಕೊಂಡಿತು.';
@@ -1438,10 +1459,29 @@ class AppL10nKn extends AppL10n {
   String get exchangeDepositToPay => 'ಪಾವತಿಸಬೇಕಾದ ಹೆಚ್ಚುವರಿ ಠೇವಣಿ';
 
   @override
+  String get exchangeDeskAcceptedForRider => 'ರೈಡರ್ ಪರವಾಗಿ ಆಫರ್ ಒಪ್ಪಿಕೊಳ್ಳಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskAcceptForRider => 'ರೈಡರ್ ಪರವಾಗಿ ಒಪ್ಪಿಕೊಳ್ಳಿ';
+
+  @override
   String get exchangeDeskApprove => 'ಮನವಿ ಅನುಮೋದಿಸಿ';
 
   @override
   String get exchangeDeskApproved => 'ಮನವಿ ಅನುಮೋದಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskAssistedHint =>
+      'ರೈಡರ್ ಆ್ಯಪ್ ಬಳಸಲು ಸಾಧ್ಯವಾಗದಿದ್ದರೆ, ಅವರ ಉತ್ತರವನ್ನು ನೀವು ದಾಖಲಿಸಬಹುದು. ಅವರ ಸ್ಪಷ್ಟ ಒಪ್ಪಿಗೆಯೊಂದಿಗೆ ಮಾತ್ರ ಮಾಡಿ.';
+
+  @override
+  String get exchangeDeskAssistedReason => 'ಕಾರಣ';
+
+  @override
+  String get exchangeDeskAssistedReasonNeeded => 'ಅವರ ಪರವಾಗಿ ಒಪ್ಪಲು ಕಾರಣ ಸೇರಿಸಿ';
+
+  @override
+  String get exchangeDeskAssistedReasonSubtitle => 'ರೈಡರ್ ತಾವೇ ಆ್ಯಪ್‌ನಲ್ಲಿ ಏಕೆ ಒಪ್ಪುತ್ತಿಲ್ಲ?';
 
   @override
   String get exchangeDeskChangeScooter => 'ಸ್ಕೂಟರ್ ಬದಲಿಸಿ';
@@ -1454,6 +1494,29 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get exchangeDeskConfirmReturn => 'ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿದೆ ಎಂದು ದೃಢೀಕರಿಸಿ';
+
+  @override
+  String get exchangeDeskConsentNeeded => 'ರೈಡರ್ ಹೇಗೆ ಒಪ್ಪಿಗೆ ನೀಡಿದರು ಎಂದು ಸೇರಿಸಿ';
+
+  @override
+  String get exchangeDeskConsentReference => 'ಒಪ್ಪಿಗೆಯ ಉಲ್ಲೇಖ';
+
+  @override
+  String get exchangeDeskConsentSubtitle => 'ರೈಡರ್ ಹೇಗೆ ಒಪ್ಪಿದರು? ಉದಾಹರಣೆಗೆ ಸಹಿ ಮಾಡಿದ ಫಾರ್ಮ್ ಸಂಖ್ಯೆ ಅಥವಾ ದಾಖಲಾದ ಕರೆ.';
+
+  @override
+  String get exchangeDeskDeclinedForRider => 'ರೈಡರ್ ಪರವಾಗಿ ಆಫರ್ ತಿರಸ್ಕರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskDeclineForRider => 'ರೈಡರ್ ನಿರಾಕರಿಸಿದರು';
+
+  @override
+  String get exchangeDeskDeclineSubtitle => 'ರೈಡರ್ ಆಫರ್ ಅನ್ನು ಏಕೆ ತಿರಸ್ಕರಿಸಿದರು ಎಂದು ದಾಖಲಿಸಿ.';
+
+  @override
+  String exchangeDeskDepositBreakdown(String total, String newDeposit, String shortfall) {
+    return '$total ಇನ್ನೂ ಬಾಕಿ ಇದೆ: ಹೊಸ ಸ್ಕೂಟರ್‌ಗೆ $newDeposit ಮತ್ತು ರೈಡರ್ ಭದ್ರತಾ ಠೇವಣಿ ಪೂರ್ಣಗೊಳಿಸಲು $shortfall.';
+  }
 
   @override
   String exchangeDeskDepositDue(String amount) {
@@ -1505,6 +1568,9 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get exchangeDeskOfferSent => 'ರೈಡರ್‌ಗೆ ಆಫರ್ ಕಳುಹಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskOpenAllocation => 'ಹೊಸ ಹಂಚಿಕೆಯನ್ನು ತೆರೆಯಿರಿ';
 
   @override
   String get exchangeDeskOpenReturn => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ತೆರೆಯಿರಿ';
@@ -1582,6 +1648,9 @@ class AppL10nKn extends AppL10n {
   String get exchangeErrorAlreadyReturned => 'ಹಳೆಯ ಸ್ಕೂಟರ್ ಈಗಾಗಲೇ ಹಿಂದಿರುಗಿಸಲಾಗಿದೆ.';
 
   @override
+  String get exchangeErrorBatteryPlan => 'ಈ ಸ್ಕೂಟರ್‌ಗೆ ರೈಡರ್‌ನ ಬ್ಯಾಟರಿ ಪ್ಲಾನ್ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
   String get exchangeErrorBillingChanged => 'ಆಫರ್ ಸ್ವೀಕರಿಸಿದ ನಂತರ ಬಿಲ್ಲಿಂಗ್ ಬದಲಾಗಿದೆ. ದಯವಿಟ್ಟು ಸಪೋರ್ಟ್ ಸಂಪರ್ಕಿಸಿ.';
 
   @override
@@ -1614,7 +1683,7 @@ class AppL10nKn extends AppL10n {
   String get exchangeErrorNoRental => 'ನಿಮ್ಮ ಸಕ್ರಿಯ ಬಾಡಿಗೆ ಕಂಡುಬಂದಿಲ್ಲ.';
 
   @override
-  String get exchangeErrorNoScooter => 'ಬದಲಾವಣೆ ಮನವಿಗೆ ನಿಮಗೆ ಸ್ಕೂಟರ್ ನೀಡಿರಬೇಕು.';
+  String get exchangeErrorNotEligible => 'ರೈಡರ್ ಈ ಸ್ಕೂಟರ್‌ಗೆ ಅರ್ಹರಲ್ಲ.';
 
   @override
   String get exchangeErrorNoTerms => 'ರೈಡರ್ ನಿಯಮಗಳು ಹೊಂದಿಸಿಲ್ಲ. ಒಂದು ಸಕ್ರಿಯ ನಿಯಮಾವಳಿ ಪ್ರಕಟಿಸಲು ಅಡ್ಮಿನ್‌ಗೆ ಹೇಳಿ.';
@@ -1627,6 +1696,9 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get exchangeErrorOfferInvalid => 'ಈ ಆಫರ್ ಪರಿಶೀಲಿಸಲು ಆಗಲಿಲ್ಲ. ನಿಮ್ಮ ಹಬ್‌ಗೆ ಮತ್ತೆ ಕಳುಹಿಸಲು ಹೇಳಿ.';
+
+  @override
+  String get exchangeErrorPricingSetup => 'ಈ ಸ್ಕೂಟರ್‌ಗೆ ಬೆಲೆ ಇನ್ನೂ ಹೊಂದಿಸಿಲ್ಲ. ರೇಟ್ ಕಾರ್ಡ್ ಪರಿಶೀಲಿಸಲು ಆಪರೇಟರ್‌ಗೆ ಹೇಳಿ.';
 
   @override
   String get exchangeErrorRecordsMissing => 'ಈ ಬದಲಾವಣೆಯ ಕೆಲವು ದಾಖಲೆಗಳು ಕಾಣೆಯಾಗಿವೆ. ದಯವಿಟ್ಟು ಸಪೋರ್ಟ್ ಸಂಪರ್ಕಿಸಿ.';
@@ -2099,6 +2171,12 @@ class AppL10nKn extends AppL10n {
   String get hubWorkingLate => 'ತಡವಾಗಿ ಕೆಲಸ';
 
   @override
+  String get inspectionErrorSafeForReuse => 'ಸ್ಕೂಟರ್ ಅನ್ನು ಮತ್ತೆ ನೀಡಲು ಸುರಕ್ಷಿತವೇ ಎಂದು ತಿಳಿಸಿ.';
+
+  @override
+  String get inspectionErrorUnsafeReason => 'ಸ್ಕೂಟರ್ ಅನ್ನು ಮತ್ತೆ ನೀಡಲು ಏಕೆ ಸುರಕ್ಷಿತವಲ್ಲ ಎಂದು ಸೇರಿಸಿ.';
+
+  @override
   String get introCouldNotLoad => 'ಪರಿಚಯ ಸ್ಲೈಡ್‌ಗಳು ತೆರೆಯಲಿಲ್ಲ.';
 
   @override
@@ -2140,10 +2218,13 @@ class AppL10nKn extends AppL10n {
   String get introVehicleTitle => 'ನಿಮ್ಮ ಸ್ಕೂಟರ್,\nಸಂಪೂರ್ಣ ಸಂಪರ್ಕಿತ';
 
   @override
-  String get legalTermsAgree => 'ನಾನು ನಿಯಮ ಮತ್ತು ಷರತ್ತುಗಳನ್ನು ಓದಿದ್ದೇನೆ ಮತ್ತು ಒಪ್ಪುತ್ತೇನೆ';
+  String get legalAppName => 'ಆ್ಯಪ್';
 
   @override
-  String get legalTermsCouldNotLoad => 'ನಿಯಮಗಳು ತೆರೆಯಲಿಲ್ಲ';
+  String get legalDocumentCouldNotLoad => 'ಈ ದಾಖಲೆಯನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
+  String get legalTermsAgree => 'ನಾನು ನಿಯಮ ಮತ್ತು ಷರತ್ತುಗಳನ್ನು ಓದಿದ್ದೇನೆ ಮತ್ತು ಒಪ್ಪುತ್ತೇನೆ';
 
   @override
   String get legalTermsSubtitle => 'ಮುಂದುವರಿಯುವ ಮೊದಲು ದಯವಿಟ್ಟು ಈ ನಿಯಮಗಳನ್ನು ಓದಿ.';
@@ -2613,6 +2694,9 @@ class AppL10nKn extends AppL10n {
   String get onboardingReferralCodeApplied => 'ರೆಫರಲ್ ಕೋಡ್ ಅನ್ವಯಿಸಲಾಗಿದೆ';
 
   @override
+  String get onboardingReferralNotFound => 'ಇದಕ್ಕೆ ಯಾವುದೇ ರೆಫರಲ್ ಸಿಗಲಿಲ್ಲ. ಕೋಡ್ ಅಥವಾ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ಪರಿಶೀಲಿಸಿ.';
+
+  @override
   String get onboardingReferralTapApply => 'ಈ ಕೋಡ್ ಬಳಸಲು ಅನ್ವಯಿಸಿ ಒತ್ತಿ, ಅಥವಾ ಅದನ್ನು ಅಳಿಸಿ';
 
   @override
@@ -2867,44 +2951,96 @@ class AppL10nKn extends AppL10n {
       'ಸ್ವಯಂ ಕಡಿತದಿಂದ ಪ್ರತಿ ಬಾರಿಯೂ ಸಮಯಕ್ಕೆ ಪಾವತಿ ಆಗುತ್ತದೆ, ನೀವೇ ಕಳುಹಿಸಬೇಕಾಗಿಲ್ಲ';
 
   @override
-  String get rentalsAutoDebitMandate => 'ಸ್ವಯಂ ಕಡಿತ ಅನುಮತಿ';
-
-  @override
-  String get rentalsAutoDebitNotActiveSettle =>
-      'ಸ್ವಯಂ ಕಡಿತ ಚಾಲ್ತಿಯಲ್ಲಿಲ್ಲ. ಅನುಮತಿ ಮರಳುವವರೆಗೆ ಮುಂದಿನ ಬಿಲ್‌ಗಳನ್ನು ನೀವೇ ಪಾವತಿಸಿ.';
-
-  @override
   String get rentalsBillingPeriod => 'ಬಿಲ್ ಅವಧಿ';
+
+  @override
+  String get rentalsBills => 'ಬಿಲ್‌ಗಳು';
+
+  @override
+  String get rentalsCouldNotLoadBill => 'ಈ ಬಿಲ್ ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
+  String get rentalsCouldNotLoadLedger => 'ನಿಮ್ಮ ಲೆಡ್ಜರ್ ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
+  String get rentalsCouldNotLoadPayments => 'ನಿಮ್ಮ ಪಾವತಿಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
 
   @override
   String get rentalsCouldNotLoadRentPlan => 'ನಿಮ್ಮ ಬಾಡಿಗೆ ಯೋಜನೆ ತೆರೆಯಲಿಲ್ಲ';
 
   @override
+  String get rentalsCredit => 'ಲಭ್ಯವಿರುವ ಕ್ರೆಡಿಟ್';
+
+  @override
+  String get rentalsCreditsApplied => 'ಅನ್ವಯಿಸಿದ ಕ್ರೆಡಿಟ್';
+
+  @override
   String get rentalsCurrentPlan => 'ಪ್ರಸ್ತುತ ಯೋಜನೆ';
 
   @override
-  String get rentalsDebits => 'ಕಡಿತ ಇದರಲ್ಲಿ';
-
-  @override
-  String get rentalsDownloadPdf => 'ಪಿಡಿಎಫ್ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ';
+  String get rentalsDepositHeld => 'ಇರಿಸಿದ ಠೇವಣಿ';
 
   @override
   String get rentalsDue => 'ಪಾವತಿ ದಿನಾಂಕ';
 
   @override
-  String get rentalsFailed => 'ವಿಫಲವಾಗಿದೆ';
+  String get rentalsDueLater => 'ನಂತರ ಪಾವತಿಸಬೇಕು';
+
+  @override
+  String get rentalsFromWallet => 'ನಿಮ್ಮ ವಾಲೆಟ್‌ನಿಂದ';
 
   @override
   String get rentalsInvoiceHistory => 'ಬಿಲ್ ಇತಿಹಾಸ';
 
   @override
-  String get rentalsMaintenanceCover => 'ನಿರ್ವಹಣಾ ರಕ್ಷಣೆ';
+  String get rentalsLedger => 'ಲೆಡ್ಜರ್';
 
   @override
-  String get rentalsNextDebit => 'ಮುಂದಿನ ಕಡಿತ';
+  String get rentalsLedgerAdjustment => 'ಹೊಂದಾಣಿಕೆ';
+
+  @override
+  String get rentalsLedgerCharge => 'ಶುಲ್ಕ';
+
+  @override
+  String get rentalsLedgerCredit => 'ಕ್ರೆಡಿಟ್';
+
+  @override
+  String get rentalsLedgerDeposit => 'ಠೇವಣಿ';
+
+  @override
+  String get rentalsLedgerHint => 'ನಿಮ್ಮ ಖಾತೆಯ ಪ್ರತಿ ಶುಲ್ಕ, ಪಾವತಿ ಮತ್ತು ಕ್ರೆಡಿಟ್, ಹೊಸದು ಮೊದಲು.';
+
+  @override
+  String get rentalsLedgerPayment => 'ಪಾವತಿ';
+
+  @override
+  String get rentalsLedgerRefund => 'ಮರುಪಾವತಿ';
+
+  @override
+  String get rentalsLedgerReversal => 'ಹಿಮ್ಮುಖ';
 
   @override
   String get rentalsNoInvoicesYet => 'ಇನ್ನೂ ಬಿಲ್ ಇಲ್ಲ';
+
+  @override
+  String get rentalsNoLedger => 'ನಿಮ್ಮ ಲೆಡ್ಜರ್‌ನಲ್ಲಿ ಇನ್ನೂ ಏನೂ ಇಲ್ಲ';
+
+  @override
+  String get rentalsNoLedgerBody => 'ಶುಲ್ಕ ಮತ್ತು ಪಾವತಿಗಳು ನಡೆದಂತೆ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
+
+  @override
+  String get rentalsNoPayments => 'ಇನ್ನೂ ಯಾವುದೇ ಪಾವತಿ ಇಲ್ಲ';
+
+  @override
+  String get rentalsNoPaymentsBody => 'ನಿಮ್ಮ ಬಿಲ್‌ಗಳಿಗೆ ಮಾಡುವ ಪಾವತಿಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
+
+  @override
+  String get rentalsOutstanding => 'ಬಾಕಿ';
+
+  @override
+  String rentalsOverdueNotice(String amount) {
+    return '$amount ಅವಧಿ ಮೀರಿದೆ. ಅಡಚಣೆಯಿಲ್ಲದೆ ಓಡಿಸಲು ಬೇಗ ಪಾವತಿಸಿ.';
+  }
 
   @override
   String get rentalsPaid => 'ಪಾವತಿಸಲಾಗಿದೆ';
@@ -2913,14 +3049,23 @@ class AppL10nKn extends AppL10n {
   String get rentalsPaid2 => 'ಪಾವತಿ ದಿನಾಂಕ';
 
   @override
-  String get rentalsPlanAutoDebitRentReceipts => 'ನಿಮ್ಮ ಯೋಜನೆ, ಸ್ವಯಂ ಕಡಿತ ಮತ್ತು ಬಾಡಿಗೆ ರಸೀದಿಗಳು';
+  String get rentalsPaidSoFar => 'ಇಲ್ಲಿಯವರೆಗೆ ಪಾವತಿಸಿದ್ದು';
+
+  @override
+  String get rentalsPayments => 'ಪಾವತಿಗಳು';
+
+  @override
+  String rentalsReceiptInvoices(int count) {
+    return '$count ಬಿಲ್(ಗಳು) ಪಾವತಿಯಾಗಿವೆ';
+  }
+
+  @override
+  String rentalsRefunded(String amount) {
+    return '$amount ಮರುಪಾವತಿಸಲಾಗಿದೆ';
+  }
 
   @override
   String get rentalsRentals => 'ಬಾಡಿಗೆ';
-
-  @override
-  String get rentalsRentCollectedAutomaticallyFromLinked =>
-      'ಬಾಡಿಗೆ ಮೇಲಿನ ದಿನಾಂಕದಂದು ನಿಮ್ಮ ಜೋಡಿಸಿದ ಬ್ಯಾಂಕ್ ಖಾತೆಯಿಂದ ತಾನಾಗಿಯೇ ಕಡಿತವಾಗುತ್ತದೆ.';
 
   @override
   String get rentalsRentHandledAutomatically => 'ಬಾಡಿಗೆ, ತಾನಾಗಿಯೇ ಕಡಿತವಾಗುತ್ತದೆ';
@@ -2932,10 +3077,691 @@ class AppL10nKn extends AppL10n {
   String get rentalsRentReceiptsWillAppearHere => 'ನಿಮ್ಮ ಬಾಡಿಗೆ ರಸೀದಿಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
 
   @override
+  String get rentalsStatusDraft => 'ಕರಡು';
+
+  @override
+  String get rentalsStatusDue => 'ಬಾಕಿ ಇದೆ';
+
+  @override
+  String get rentalsStatusOverdue => 'ಅವಧಿ ಮೀರಿದೆ';
+
+  @override
+  String get rentalsStatusPartlyPaid => 'ಭಾಗಶಃ ಪಾವತಿ';
+
+  @override
+  String get rentalsStatusVoid => 'ರದ್ದು';
+
+  @override
+  String get rentalsStillDue => 'ಇನ್ನೂ ಬಾಕಿ';
+
+  @override
+  String get rentalsSubtitle => 'ನಿಮ್ಮ ಪ್ಲಾನ್, ಬಿಲ್‌ಗಳು ಮತ್ತು ಖಾತೆಯ ಇತಿಹಾಸ';
+
+  @override
+  String get rentalsSubtotal => 'ಉಪಮೊತ್ತ';
+
+  @override
   String get rentalsTapReceiptSeeFullBreakdown => 'ಪೂರ್ಣ ವಿವರ ನೋಡಲು ರಸೀದಿ ಒತ್ತಿ';
 
   @override
-  String get rentalsVehicleRent => 'ವಾಹನದ ಬಾಡಿಗೆ';
+  String get rentalsTax => 'ತೆರಿಗೆ';
+
+  @override
+  String get rentalsUnallocated => 'ಇನ್ನೂ ಅನ್ವಯಿಸದ ಪಾವತಿಗಳು';
+
+  @override
+  String get rentalsYourAccount => 'ನಿಮ್ಮ ಖಾತೆ';
+
+  @override
+  String get returnDeskAddCharge => 'ಶುಲ್ಕ ಸೇರಿಸಿ';
+
+  @override
+  String get returnDeskAdminApproved => 'ರೈಡರ್ ಪರವಾಗಿ ಒಬ್ಬ ಅಡ್ಮಿನ್ ಈ ಶುಲ್ಕಗಳನ್ನು ಅನುಮೋದಿಸಿದ್ದಾರೆ.';
+
+  @override
+  String get returnDeskApprove => 'ಅನುಮೋದಿಸಿ';
+
+  @override
+  String get returnDeskApproveAndPost => 'ಅನುಮೋದಿಸಿ ಶುಲ್ಕ ಸೇರಿಸಿ';
+
+  @override
+  String get returnDeskApproveAsManager => 'ಮ್ಯಾನೇಜರ್ ಆಗಿ ಅನುಮೋದಿಸಿ';
+
+  @override
+  String returnDeskApproveBodyPost(String amount) {
+    return '$amount ರೈಡರ್ ಬಿಲ್‌ಗೆ ಸೇರಿಸಲಾಗುತ್ತದೆ.';
+  }
+
+  @override
+  String get returnDeskApproveBodyWait => 'ನಿಮ್ಮ ಅನುಮೋದನೆ ದಾಖಲಾಗುತ್ತದೆ. ರೈಡರ್ ಕೂಡ ಅನುಮೋದಿಸಿದಾಗ ಶುಲ್ಕ ಸೇರುತ್ತದೆ.';
+
+  @override
+  String get returnDeskApproved => 'ಅನುಮೋದನೆ ದಾಖಲಾಗಿದೆ';
+
+  @override
+  String get returnDeskApproveForRider => 'ರೈಡರ್ ಪರವಾಗಿ ಅನುಮೋದಿಸಿ';
+
+  @override
+  String get returnDeskApproveTitle => 'ಈ ಶುಲ್ಕಗಳನ್ನು ಅನುಮೋದಿಸಬೇಕೆ?';
+
+  @override
+  String get returnDeskBackdateReason => 'ಇದನ್ನು ಏಕೆ ತಡವಾಗಿ ದಾಖಲಿಸಲಾಗುತ್ತಿದೆ?';
+
+  @override
+  String get returnDeskBackdateReasonNeeded => 'ಹಿಂದಿನ ಸಮಯಕ್ಕೆ ಕಾರಣ ಸೇರಿಸಿ';
+
+  @override
+  String get returnDeskCaseTitle => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ';
+
+  @override
+  String get returnDeskChargeDetails => 'ವಿವರಗಳು';
+
+  @override
+  String get returnDeskChargeDetailsHint => 'ನಿಖರವಾಗಿ ಏನು ಹಾನಿಯಾಗಿದೆ ಅಥವಾ ಕಾಣೆಯಾಗಿದೆ?';
+
+  @override
+  String get returnDeskChargesHint =>
+      'ಬೆಲೆ ಪಟ್ಟಿಯಿಂದ ಆಯ್ಕೆಮಾಡಿ. ಪ್ರತಿ ಶುಲ್ಕಕ್ಕೆ ವಿವರ ಮತ್ತು ಕನಿಷ್ಠ ಒಂದು ಪರಿಶೀಲನಾ ಫೋಟೋ ಸಾಕ್ಷಿಯಾಗಿ ಬೇಕು.';
+
+  @override
+  String get returnDeskChecklistHint =>
+      'ಭರ್ತಿ ಮಾಡಿದ ಪರಿಶೀಲನಾ ಪಟ್ಟಿಯ ಫೋಟೋ. ಕಾಣೆಯಾದ ವಸ್ತುಗಳ ಶುಲ್ಕಕ್ಕೆ ಇದು ಸಾಕ್ಷಿಯಾಗಿ ಬೇಕು.';
+
+  @override
+  String get returnDeskChecklistNeeded => 'ಕಾಣೆಯಾದ ವಸ್ತುಗಳ ಶುಲ್ಕಕ್ಕೆ ಪರಿಶೀಲನಾ ಪಟ್ಟಿಯ ಫೋಟೋ ಸಾಕ್ಷಿಯಾಗಿ ಬೇಕು.';
+
+  @override
+  String get returnDeskChecklistPhoto => 'ಹಿಂದಿರುಗಿಸುವ ಪರಿಶೀಲನಾ ಪಟ್ಟಿ';
+
+  @override
+  String get returnDeskClosedNoCharges => 'ಶುಲ್ಕವಿಲ್ಲದೆ ಹಿಂದಿರುಗಿಸುವಿಕೆ ಮುಕ್ತಾಯವಾಯಿತು';
+
+  @override
+  String get returnDeskCloseNoCharges => 'ಶುಲ್ಕವಿಲ್ಲದೆ ಮುಕ್ತಾಯಗೊಳಿಸಿ';
+
+  @override
+  String get returnDeskCloseNoChargesBody =>
+      'ಹಿಂದಿರುಗಿಸುವಿಕೆ ಮುಕ್ತಾಯವಾಗುತ್ತದೆ, ಈ ಸ್ಕೂಟರ್‌ಗೆ ರೈಡರ್‌ಗೆ ಶುಲ್ಕ ವಿಧಿಸಲಾಗುವುದಿಲ್ಲ.';
+
+  @override
+  String get returnDeskCouldNotLoad => 'ಹಿಂದಿರುಗಿಸುವಿಕೆಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
+  String get returnDeskCouldNotLoadInspection => 'ಪರಿಶೀಲನೆ ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
+  String get returnDeskDamageHint =>
+      'ಯಾವುದೇ ತಗ್ಗು, ಗೀರು ಅಥವಾ ಮುರಿದ ಭಾಗಗಳ ಹತ್ತಿರದ ಫೋಟೋಗಳು. ಶುಲ್ಕಕ್ಕೆ ಸಾಕ್ಷಿಯಾಗಿ ಬಳಸಬಹುದು.';
+
+  @override
+  String get returnDeskDamagePhoto => 'ಹಾನಿಯ ಫೋಟೋ';
+
+  @override
+  String get returnDeskDamagePhotos => 'ಹಾನಿಯ ಫೋಟೋಗಳು';
+
+  @override
+  String get returnDeskDetailsNeeded => 'ವಿವರ ಸೇರಿಸಿ';
+
+  @override
+  String get returnDeskDraftSaved => 'ಕರಡು ಉಳಿಸಲಾಗಿದೆ';
+
+  @override
+  String get returnDeskEditCharge => 'ಶುಲ್ಕ ತಿದ್ದಿ';
+
+  @override
+  String get returnDeskEmpty => 'ಇಲ್ಲಿ ಯಾವುದೇ ಹಿಂದಿರುಗಿಸುವಿಕೆ ಇಲ್ಲ';
+
+  @override
+  String get returnDeskEmptyBody => 'ನಿಮ್ಮ ಹಬ್‌ಗಳಲ್ಲಿ ರೈಡರ್‌ಗಳು ಬುಕ್ ಮಾಡುವ ಹಿಂದಿರುಗಿಸುವಿಕೆಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
+
+  @override
+  String get returnDeskEvidence => 'ಸಾಕ್ಷಿ ಫೋಟೋಗಳು';
+
+  @override
+  String get returnDeskEvidenceNeeded => 'ಸಾಕ್ಷಿಗಾಗಿ ಕನಿಷ್ಠ ಒಂದು ಫೋಟೋ ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String get returnDeskFilterReturned => 'ಹಿಂದಿರುಗಿಸಲಾಗಿದೆ';
+
+  @override
+  String get returnDeskFilterToReceive => 'ಸ್ವೀಕರಿಸಬೇಕಾದವು';
+
+  @override
+  String get returnDeskFinishInspection => 'ಪರಿಶೀಲನೆ ಮುಗಿಸಿ';
+
+  @override
+  String get returnDeskGuideApprove =>
+      'ರೈಡರ್ ಕಡೆಯ ಕೆಲಸ ಮುಗಿದಿದೆ. ಮುಂದೆ ಫ್ಲೀಟ್ ಅಥವಾ ಆಪರೇಷನ್ಸ್ ಮ್ಯಾನೇಜರ್ ಅನುಮೋದಿಸುತ್ತಾರೆ, ಶುಲ್ಕ ರೈಡರ್ ಬಿಲ್‌ಗೆ ಸೇರುತ್ತದೆ.';
+
+  @override
+  String get returnDeskGuideCancelled => 'ರೈಡರ್ ಈ ಹಿಂದಿರುಗಿಸುವಿಕೆಯನ್ನು ರದ್ದುಗೊಳಿಸಿದ್ದಾರೆ. ಏನೂ ಮಾಡಬೇಕಿಲ್ಲ.';
+
+  @override
+  String get returnDeskGuideCharges =>
+      'ಹಾನಿಯಾದ ಅಥವಾ ಕಾಣೆಯಾದ ಯಾವುದಕ್ಕೂ ಶುಲ್ಕ ಸೇರಿಸಿ, ನಂತರ ರೈಡರ್‌ಗೆ ಕಳುಹಿಸಿ. ಎಲ್ಲವೂ ಸರಿಯಿದ್ದರೆ ಶುಲ್ಕವಿಲ್ಲದೆ ಮುಕ್ತಾಯಗೊಳಿಸಿ.';
+
+  @override
+  String get returnDeskGuideClosed => 'ಈ ಹಿಂದಿರುಗಿಸುವಿಕೆ ಮುಕ್ತಾಯವಾಗಿದೆ.';
+
+  @override
+  String get returnDeskGuideDisputed => 'ರೈಡರ್ ಶುಲ್ಕಗಳನ್ನು ಆಕ್ಷೇಪಿಸಿದ್ದಾರೆ. ಅವುಗಳನ್ನು ಪರಿಷ್ಕರಿಸಿ ಮತ್ತೆ ಕಳುಹಿಸಿ.';
+
+  @override
+  String get returnDeskGuideInspect =>
+      'ಸ್ಕೂಟರ್ ಹಬ್‌ನಲ್ಲಿದೆ. ಅದನ್ನು ಪರಿಶೀಲಿಸಿ, ಫೋಟೋ ತೆಗೆದು, ಮತ್ತೆ ಬಾಡಿಗೆಗೆ ನೀಡಬಹುದೇ ಎಂದು ನಿರ್ಧರಿಸಿ.';
+
+  @override
+  String returnDeskGuideReceive(String date) {
+    return 'ರೈಡರ್ $date ರಂದು ಸ್ಕೂಟರ್ ತರಲು ಯೋಜಿಸಿದ್ದಾರೆ. ಹಬ್ ತಲುಪಿದಾಗ ಸ್ವೀಕರಿಸಲಾಗಿದೆ ಎಂದು ಗುರುತಿಸಿ.';
+  }
+
+  @override
+  String get returnDeskGuideWithRider => 'ಶುಲ್ಕಗಳು ರೈಡರ್ ಬಳಿ ಇವೆ, ಅವರ ಫೋನ್‌ಗೆ ಬಂದ ಕೋಡ್ ಮೂಲಕ ಅನುಮೋದಿಸುತ್ತಾರೆ.';
+
+  @override
+  String get returnDeskInspectHint => 'ಫೋಟೋ ತೆಗೆದು, ಪರಿಶೀಲನಾ ಪಟ್ಟಿ ನೋಡಿ, ಸ್ಕೂಟರ್ ಮತ್ತೆ ನೀಡಬಹುದೇ ಎಂದು ನಿರ್ಧರಿಸಿ.';
+
+  @override
+  String get returnDeskInspectionDone => 'ಪರಿಶೀಲನೆ ಉಳಿಸಲಾಗಿದೆ';
+
+  @override
+  String get returnDeskInspectionResult => 'ಪರಿಶೀಲನೆ';
+
+  @override
+  String get returnDeskInspectTitle => 'ಸ್ಕೂಟರ್ ಪರಿಶೀಲನೆ';
+
+  @override
+  String get returnDeskLoadingPhotos => 'ಪರಿಶೀಲನಾ ಫೋಟೋಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ. ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get returnDeskManagerApproved => 'ಮ್ಯಾನೇಜರ್ ಅನುಮೋದಿಸಿದ್ದಾರೆ';
+
+  @override
+  String get returnDeskMarkReceived => 'ಸ್ವೀಕರಿಸಲಾಗಿದೆ ಎಂದು ಗುರುತಿಸಿ';
+
+  @override
+  String get returnDeskNoInspection => 'ಪರಿಶೀಲನೆ ಇನ್ನೂ ಸಿದ್ಧವಾಗಿಲ್ಲ. ರಿಫ್ರೆಶ್ ಮಾಡಲು ಕೆಳಗೆ ಎಳೆಯಿರಿ.';
+
+  @override
+  String get returnDeskNoPhotoRules =>
+      'ಇಲ್ಲಿ ಯಾವುದೇ ಫೋಟೋ ಕಡ್ಡಾಯವಿಲ್ಲ. ಸಹಾಯವಾದರೆ ಪರಿಶೀಲನಾ ಪಟ್ಟಿ ಅಥವಾ ಹಾನಿಯ ಫೋಟೋ ಸೇರಿಸಿ.';
+
+  @override
+  String get returnDeskNoPhotosYet => 'ಇನ್ನೂ ಯಾವುದೇ ಪರಿಶೀಲನಾ ಫೋಟೋ ಇಲ್ಲ. ಪರಿಶೀಲನಾ ಪರದೆಯಲ್ಲಿ ಸೇರಿಸಿ.';
+
+  @override
+  String get returnDeskNoPrices => 'ಇನ್ನೂ ದಂಡದ ಬೆಲೆಗಳನ್ನು ಹೊಂದಿಸಿಲ್ಲ. ಸೇರಿಸಲು ಅಡ್ಮಿನ್‌ಗೆ ಹೇಳಿ.';
+
+  @override
+  String get returnDeskOverridden => 'ರೈಡರ್ ಪರವಾಗಿ ಅನುಮೋದಿಸಲಾಗಿದೆ';
+
+  @override
+  String get returnDeskOverrideReason => 'ಕಾರಣ';
+
+  @override
+  String get returnDeskOverrideReasonNeeded => 'ರೈಡರ್ ಪರವಾಗಿ ಅನುಮೋದಿಸಲು ಕಾರಣ ಸೇರಿಸಿ.';
+
+  @override
+  String get returnDeskOverrideSubtitle => 'ರೈಡರ್ ಅನುಮೋದಿಸಲು ಸಾಧ್ಯವಾಗದಾಗ ಮಾತ್ರ ಇದನ್ನು ಬಳಸಿ. ಕಾರಣವನ್ನು ದಾಖಲಿಸಲಾಗುತ್ತದೆ.';
+
+  @override
+  String get returnDeskPhotos => 'ಫೋಟೋಗಳು';
+
+  @override
+  String get returnDeskPhotosHint => 'ಆ ಫೋಟೋ ತೆಗೆಯಲು ಟೈಲ್ ಟ್ಯಾಪ್ ಮಾಡಿ. ಕೆಂಪು ಚುಕ್ಕೆ ಇರುವವು ಕಡ್ಡಾಯ.';
+
+  @override
+  String returnDeskPhotosMissing(String names) {
+    return 'ಇನ್ನೂ ಬೇಕು: $names';
+  }
+
+  @override
+  String get returnDeskPickCharge => 'ಬೆಲೆ ಪಟ್ಟಿಯಿಂದ ಶುಲ್ಕ ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String returnDeskPosted(String date) {
+    return '$date ರಂದು ಶುಲ್ಕಗಳನ್ನು ರೈಡರ್ ಬಿಲ್‌ಗೆ ಸೇರಿಸಲಾಗಿದೆ.';
+  }
+
+  @override
+  String get returnDeskReceived => 'ಸ್ಕೂಟರ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get returnDeskReceivedAt => 'ಸ್ವೀಕರಿಸಿದ ಸಮಯ';
+
+  @override
+  String get returnDeskReceivedEarlier => 'ಇದು ಮೊದಲೇ ಬಂದಿತ್ತು';
+
+  @override
+  String get returnDeskReceivedEarlierHint => 'ತಡವಾಗಿ ದಾಖಲಿಸುತ್ತಿದ್ದರೆ ನಿಜವಾದ ಸಮಯ ನಮೂದಿಸಿ';
+
+  @override
+  String returnDeskReceivedOn(String date) {
+    return '$date ರಂದು ಸ್ವೀಕರಿಸಲಾಗಿದೆ';
+  }
+
+  @override
+  String get returnDeskReceiveHint =>
+      'ಸ್ಕೂಟರ್ ಹಬ್‌ಗೆ ಬಂದ ನಂತರವೇ ಇದನ್ನು ಮಾಡಿ. ನೀವು ದಾಖಲಿಸುವ ಸಮಯದಿಂದ ಬಾಡಿಗೆ ಮುಗಿಯುತ್ತದೆ.';
+
+  @override
+  String get returnDeskReceiveTitle => 'ಸ್ಕೂಟರ್ ಸ್ವೀಕರಿಸಿ';
+
+  @override
+  String get returnDeskReceivingHub => 'ಸ್ವೀಕರಿಸುವ ಹಬ್';
+
+  @override
+  String get returnDeskReviseHint => 'ಆಕ್ಷೇಪಿತ ಶುಲ್ಕಗಳನ್ನು ಬದಲಿಸಿ ಅಥವಾ ತೆಗೆದುಹಾಕಿ, ನಂತರ ರೈಡರ್‌ಗೆ ಮತ್ತೆ ಕಳುಹಿಸಿ.';
+
+  @override
+  String get returnDeskRiderApproved => 'ರೈಡರ್ ಈ ಶುಲ್ಕಗಳನ್ನು ಅನುಮೋದಿಸಿದ್ದಾರೆ.';
+
+  @override
+  String get returnDeskRiderDispute => 'ರೈಡರ್ ಆಕ್ಷೇಪ';
+
+  @override
+  String get returnDeskRiderNote => 'ರೈಡರ್ ಟಿಪ್ಪಣಿ';
+
+  @override
+  String get returnDeskSafeNo => 'ಮೊದಲು ರಿಪೇರಿ ಬೇಕು';
+
+  @override
+  String get returnDeskSafeNoHint => 'ಇದು ನಿರ್ವಹಣೆಗೆ ಹೋಗುತ್ತದೆ, ಹಂಚಿಕೆ ಮಾಡಲಾಗುವುದಿಲ್ಲ';
+
+  @override
+  String get returnDeskSafety => 'ಇದನ್ನು ಮತ್ತೆ ಬಾಡಿಗೆಗೆ ನೀಡಬಹುದೇ?';
+
+  @override
+  String get returnDeskSafetyNeeded => 'ಸ್ಕೂಟರ್ ಮತ್ತೆ ಬಾಡಿಗೆಗೆ ನೀಡಬಹುದೇ ಎಂದು ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String get returnDeskSafeYes => 'ಮತ್ತೆ ಬಾಡಿಗೆಗೆ ಸುರಕ್ಷಿತ';
+
+  @override
+  String get returnDeskSafeYesHint => 'ಇದು ಲಭ್ಯವಿರುವ ಸ್ಕೂಟರ್‌ಗಳಿಗೆ ಮರಳುತ್ತದೆ';
+
+  @override
+  String get returnDeskSaveCharge => 'ಶುಲ್ಕ ಉಳಿಸಿ';
+
+  @override
+  String get returnDeskSaveDraft => 'ಕರಡು ಉಳಿಸಿ';
+
+  @override
+  String get returnDeskSendToRider => 'ರೈಡರ್‌ಗೆ ಕಳುಹಿಸಿ';
+
+  @override
+  String get returnDeskSendToRiderBody =>
+      'ರೈಡರ್ ಈ ಶುಲ್ಕಗಳನ್ನು ತಮ್ಮ ಆ್ಯಪ್‌ನಲ್ಲಿ ನೋಡಿ ಕೋಡ್ ಮೂಲಕ ಅನುಮೋದಿಸುತ್ತಾರೆ. ರೈಡರ್ ಬಳಿ ಇರುವಾಗ ನೀವು ತಿದ್ದಲಾಗುವುದಿಲ್ಲ.';
+
+  @override
+  String get returnDeskSentToRider => 'ಶುಲ್ಕಗಳನ್ನು ರೈಡರ್‌ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ';
+
+  @override
+  String get returnDeskStageApproval => 'ಅನುಮೋದನೆ ಬೇಕು';
+
+  @override
+  String get returnDeskStageAwaiting => 'ಸ್ಕೂಟರ್‌ಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ';
+
+  @override
+  String get returnDeskStageCharges => 'ಶುಲ್ಕ ಸೇರಿಸಿ';
+
+  @override
+  String get returnDeskStageInspect => 'ಸ್ಕೂಟರ್ ಪರಿಶೀಲಿಸಿ';
+
+  @override
+  String get returnDeskStageWithRider => 'ರೈಡರ್ ಬಳಿ';
+
+  @override
+  String get returnDeskStartInspection => 'ಪರಿಶೀಲನೆ ಆರಂಭಿಸಿ';
+
+  @override
+  String get returnDeskSubtitle => 'ರೈಡರ್‌ಗಳು ಹಿಂದಿರುಗಿಸುತ್ತಿರುವ ಸ್ಕೂಟರ್‌ಗಳು';
+
+  @override
+  String get returnDeskTitle => 'ಹಿಂದಿರುಗಿಸುವ ಡೆಸ್ಕ್';
+
+  @override
+  String get returnDeskUnsafeReason => 'ಏನು ಸರಿಪಡಿಸಬೇಕು?';
+
+  @override
+  String get returnDeskUnsafeReasonNeeded => 'ಏನು ಸರಿಪಡಿಸಬೇಕು ಎಂದು ತಿಳಿಸಿ';
+
+  @override
+  String get returnDeskWaitingManager => 'ಮುಂದೆ ಫ್ಲೀಟ್ ಅಥವಾ ಆಪರೇಷನ್ಸ್ ಮ್ಯಾನೇಜರ್ ಅನುಮೋದಿಸುತ್ತಾರೆ.';
+
+  @override
+  String returnDeskWaitingRider(String name) {
+    return '$name ಅವರ ಫೋನ್‌ಗೆ ಕಳುಹಿಸಿದ ಕೋಡ್ ಮೂಲಕ ಅನುಮೋದನೆಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ.';
+  }
+
+  @override
+  String get returnsAgreement => 'ಒಪ್ಪಂದ';
+
+  @override
+  String get returnsApproveCharges => 'ಶುಲ್ಕಗಳನ್ನು ಅನುಮೋದಿಸಿ';
+
+  @override
+  String returnsApproveSubtitle(String amount) {
+    return 'ನಿಮ್ಮ ಫೋನ್‌ಗೆ 6 ಅಂಕಿಯ ಕೋಡ್ ಕಳುಹಿಸಿದ್ದೇವೆ. ಅದನ್ನು ನಮೂದಿಸಿದರೆ $amount ಶುಲ್ಕಗಳು ಅನುಮೋದನೆಯಾಗುತ್ತವೆ.';
+  }
+
+  @override
+  String get returnsApproveTitle => 'ಕೋಡ್ ನಮೂದಿಸಿ';
+
+  @override
+  String get returnsCancel => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ರದ್ದುಮಾಡಿ';
+
+  @override
+  String get returnsCancelBody => 'ಸ್ಕೂಟರ್ ನಿಮ್ಮ ಬಳಿಯೇ ಇರುತ್ತದೆ, ಬಾಡಿಗೆ ಮೊದಲಿನಂತೆ ಮುಂದುವರಿಯುತ್ತದೆ.';
+
+  @override
+  String get returnsCancelled => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ರದ್ದಾಗಿದೆ';
+
+  @override
+  String get returnsCancelTitle => 'ಈ ಹಿಂದಿರುಗಿಸುವಿಕೆ ರದ್ದುಮಾಡಬೇಕೆ?';
+
+  @override
+  String get returnsCharges => 'ಶುಲ್ಕಗಳು';
+
+  @override
+  String get returnsChargesApproved => 'ಶುಲ್ಕಗಳು ಅನುಮೋದನೆಯಾದವು';
+
+  @override
+  String get returnsChargesPending => 'ಹಬ್ ಇನ್ನೂ ಸ್ಕೂಟರ್ ಪರಿಶೀಲಿಸುತ್ತಿದೆ. ಶುಲ್ಕಗಳಿದ್ದರೆ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
+
+  @override
+  String get returnsCodeExpired => 'ಆ ಕೋಡ್ ಅವಧಿ ಮುಗಿದಿದೆ. ಹೊಸದನ್ನು ಕೇಳಿ.';
+
+  @override
+  String get returnsCodeInvalid => 'ಆ ಕೋಡ್ ಕೆಲಸ ಮಾಡಲಿಲ್ಲ. ಪರಿಶೀಲಿಸಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get returnsCouldNotLoad => 'ನಿಮ್ಮ ಹಿಂದಿರುಗಿಸುವಿಕೆಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
+  String get returnsCouldNotLoadHubs => 'ಹಬ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
+  String get returnsDate => 'ಹಿಂದಿರುಗಿಸುವ ದಿನಾಂಕ';
+
+  @override
+  String get returnsDetails => 'ವಿವರಗಳು';
+
+  @override
+  String get returnsDetailTitle => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ';
+
+  @override
+  String get returnsDisputeCharges => 'ಶುಲ್ಕಗಳನ್ನು ಆಕ್ಷೇಪಿಸಿ';
+
+  @override
+  String get returnsDisputeReason => 'ಏನು ತಪ್ಪಾಗಿದೆ?';
+
+  @override
+  String get returnsDisputeReasonRequired => 'ಹಬ್ ತಂಡ ಪರಿಶೀಲಿಸಲು ಕಾರಣವನ್ನು ಸೇರಿಸಿ.';
+
+  @override
+  String get returnsDisputeSent => 'ಆಕ್ಷೇಪವನ್ನು ಹಬ್ ತಂಡಕ್ಕೆ ಕಳುಹಿಸಲಾಗಿದೆ';
+
+  @override
+  String get returnsDisputeSubtitle => 'ಈ ಶುಲ್ಕಗಳಲ್ಲಿ ಏನು ತಪ್ಪಿದೆ ಎಂದು ಹಬ್ ತಂಡಕ್ಕೆ ತಿಳಿಸಿ.';
+
+  @override
+  String get returnsEndRentalBody =>
+      'ಅದನ್ನು ಯಾವಾಗ ಮತ್ತು ಎಲ್ಲಿ ಹಿಂದಿರುಗಿಸುತ್ತೀರಿ ಎಂದು ತಿಳಿಸಿ. ಹಬ್ ತಂಡ ಅದನ್ನು ಪರಿಶೀಲಿಸುತ್ತದೆ, ಯಾವುದೇ ಶುಲ್ಕ ಮೊದಲು ನಿಮ್ಮ ಅನುಮೋದನೆಗೆ ಬರುತ್ತದೆ.';
+
+  @override
+  String get returnsEndRentalTitle => 'ಸ್ಕೂಟರ್ ಬೇಕಾಗಿಲ್ಲವೇ?';
+
+  @override
+  String get returnsErrorAlreadyReceived => 'ಈ ಸ್ಕೂಟರ್ ಅನ್ನು ಈಗಾಗಲೇ ಸ್ವೀಕರಿಸಲಾಗಿದೆ.';
+
+  @override
+  String get returnsErrorAlreadyRequested => 'ಈ ಬಾಡಿಗೆಗೆ ಈಗಾಗಲೇ ಹಿಂತಿರುಗಿಸುವ ಮನವಿ ಇದೆ.';
+
+  @override
+  String get returnsErrorApprovalNotPending => 'ಈ ದಂಡಗಳು ನಿಮ್ಮ ಅನುಮೋದನೆಗೆ ಕಾಯುತ್ತಿಲ್ಲ.';
+
+  @override
+  String get returnsErrorBeforeAgreement => 'ಹಿಂತಿರುಗಿಸುವ ಸಮಯ ಬಾಡಿಗೆ ಆರಂಭಕ್ಕಿಂತ ಮೊದಲಿದೆ.';
+
+  @override
+  String get returnsErrorInspectFirst => 'ದಂಡ ಸೇರಿಸುವ ಮೊದಲು ಹಿಂತಿರುಗಿಸುವಿಕೆಯ ತಪಾಸಣೆ ಮುಗಿಸಿ.';
+
+  @override
+  String get returnsErrorNotCancellable => 'ಈ ಹಿಂತಿರುಗಿಸುವಿಕೆಯನ್ನು ಇನ್ನು ರದ್ದುಗೊಳಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get returnsErrorNotDisputable => 'ಈ ದಂಡಗಳನ್ನು ಈಗ ಆಕ್ಷೇಪಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get returnsErrorNotReceivable =>
+      'ಈ ಹಿಂತಿರುಗಿಸುವಿಕೆ ರದ್ದಾಗಿದೆ, ಆದ್ದರಿಂದ ಇದರ ಮೇಲೆ ಸ್ಕೂಟರ್ ಸ್ವೀಕರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get returnsErrorNotSubmittable => 'ಈ ದಂಡಗಳನ್ನು ಈಗ ಸಲ್ಲಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get returnsErrorNotTerminable => 'ಈ ಬಾಡಿಗೆಯನ್ನು ಈಗ ಹಿಂತಿರುಗಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get returnsErrorOverrideNotAllowed => 'ಈ ಹಂತದಲ್ಲಿ ರೈಡರ್ ಅನುಮೋದನೆಯನ್ನು ಓವರ್‌ರೈಡ್ ಮಾಡಲು ಸಾಧ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get returnsErrorPenaltiesLocked => 'ರೈಡರ್ ಬಳಿ ಇರುವಾಗ ಅಥವಾ ಶುಲ್ಕ ವಿಧಿಸಿದ ನಂತರ ದಂಡಗಳನ್ನು ಬದಲಾಯಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get returnsErrorReceiveFirst => 'ದಂಡ ಸೇರಿಸುವ ಮೊದಲು ಸ್ಕೂಟರ್ ಸ್ವೀಕರಿಸಿ.';
+
+  @override
+  String get returnsErrorRevisePenalties => 'ರೈಡರ್ ಈ ದಂಡಗಳನ್ನು ಆಕ್ಷೇಪಿಸಿದ್ದಾರೆ. ಪಟ್ಟಿಯನ್ನು ಪರಿಷ್ಕರಿಸಿ ಮತ್ತೆ ಸಲ್ಲಿಸಿ.';
+
+  @override
+  String get returnsErrorStateChanged => 'ಈ ದಂಡಗಳು ಈಗಷ್ಟೇ ಬದಲಾಗಿವೆ. ರಿಫ್ರೆಶ್ ಮಾಡಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get returnsErrorSubmitFirst => 'ಅನುಮೋದಿಸುವ ಮೊದಲು ದಂಡಗಳನ್ನು ಸಲ್ಲಿಸಿ.';
+
+  @override
+  String returnsEtaMinutes(int minutes) {
+    return '$minutes ನಿಮಿಷ ದೂರ';
+  }
+
+  @override
+  String returnsEvidenceCount(int count) {
+    return 'ಸಾಕ್ಷಿಯಾಗಿ $count ಫೋಟೋ(ಗಳು)';
+  }
+
+  @override
+  String get returnsHandedOver => 'ಹಸ್ತಾಂತರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get returnsHub => 'ಹಿಂದಿರುಗಿಸುವ ಹಬ್';
+
+  @override
+  String get returnsKindDamage => 'ಹಾನಿ';
+
+  @override
+  String get returnsKindMissing => 'ಕಾಣೆಯಾದ ವಸ್ತು';
+
+  @override
+  String get returnsLocationForHubs => 'ನಿಮಗೆ ಹತ್ತಿರದ ಹಬ್‌ಗಳನ್ನು ತೋರಿಸಲು ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಬಳಸುತ್ತೇವೆ.';
+
+  @override
+  String get returnsNextCharges =>
+      'ಏನಾದರೂ ಹಾನಿಯಾಗಿದ್ದರೆ ಅಥವಾ ಕಾಣೆಯಾಗಿದ್ದರೆ, ಶುಲ್ಕಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ ಮತ್ತು ಬಿಲ್ ಮಾಡುವ ಮೊದಲು ಕೋಡ್ ಮೂಲಕ ನೀವು ಅನುಮೋದಿಸುತ್ತೀರಿ.';
+
+  @override
+  String get returnsNextHandOver => 'ಆಯ್ಕೆ ಮಾಡಿದ ದಿನಾಂಕದಂದು ಸ್ಕೂಟರ್, ಅದರ ಬ್ಯಾಟರಿ ಮತ್ತು ಚಾರ್ಜರ್ ಅನ್ನು ಹಬ್‌ಗೆ ತನ್ನಿ.';
+
+  @override
+  String get returnsNextInspection => 'ಹಬ್ ತಂಡ ಸ್ಕೂಟರ್ ಅನ್ನು ಸ್ವೀಕರಿಸಿ ಪರಿಶೀಲಿಸುತ್ತದೆ.';
+
+  @override
+  String get returnsNoCharges => 'ಈ ಹಿಂದಿರುಗಿಸುವಿಕೆಗೆ ಯಾವುದೇ ಶುಲ್ಕವಿಲ್ಲ.';
+
+  @override
+  String get returnsNoHubsNearby => 'ನಿಮ್ಮ ಹತ್ತಿರ ಯಾವುದೇ ಹಬ್ ಸಿಗಲಿಲ್ಲ';
+
+  @override
+  String get returnsNone => 'ಇನ್ನೂ ಯಾವುದೇ ಹಿಂದಿರುಗಿಸುವಿಕೆ ಇಲ್ಲ';
+
+  @override
+  String get returnsNoneBody => 'ನೀವು ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿಸಿದಾಗ, ಅದರ ಸ್ಥಿತಿಯನ್ನು ಇಲ್ಲಿ ನೋಡಬಹುದು.';
+
+  @override
+  String get returnsNoteAdminApproved =>
+      'ನಿಮ್ಮ ಪರವಾಗಿ ಒಬ್ಬ ಅಡ್ಮಿನ್ ಈ ಶುಲ್ಕಗಳನ್ನು ಅನುಮೋದಿಸಿದ್ದಾರೆ. ಮುಂದೆ ಹಬ್ ಮ್ಯಾನೇಜರ್ ದೃಢೀಕರಿಸುತ್ತಾರೆ. ನೀವು ಇನ್ನೂ ಆಕ್ಷೇಪಿಸಬಹುದು.';
+
+  @override
+  String get returnsNoteCancelled =>
+      'ನೀವು ಈ ಹಿಂದಿರುಗಿಸುವಿಕೆಯನ್ನು ರದ್ದುಗೊಳಿಸಿದ್ದೀರಿ. ನಿಮ್ಮ ಬಾಡಿಗೆ ಮೊದಲಿನಂತೆ ಮುಂದುವರಿಯುತ್ತದೆ.';
+
+  @override
+  String get returnsNoteDisputed => 'ನೀವು ಈ ಶುಲ್ಕಗಳನ್ನು ಆಕ್ಷೇಪಿಸಿದ್ದೀರಿ. ಹಬ್ ತಂಡ ಅವುಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಪರಿಷ್ಕರಿಸಬಹುದು.';
+
+  @override
+  String get returnsNoteInspecting =>
+      'ನಿಮ್ಮ ಸ್ಕೂಟರ್ ಹಬ್‌ನಲ್ಲಿದೆ ಮತ್ತು ಪರಿಶೀಲನೆ ನಡೆಯುತ್ತಿದೆ. ಯಾವುದೇ ಶುಲ್ಕ ನಿಮ್ಮ ಅನುಮೋದನೆಗೆ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
+
+  @override
+  String get returnsNoteNeedsYou =>
+      'ಹಬ್ ಕೆಳಗಿನ ಶುಲ್ಕಗಳನ್ನು ಕಂಡುಹಿಡಿದಿದೆ. ನಿಮ್ಮ ಫೋನ್‌ಗೆ ಕಳುಹಿಸುವ ಕೋಡ್ ಮೂಲಕ ಅನುಮೋದಿಸಿ ಅಥವಾ ಆಕ್ಷೇಪಿಸಿ.';
+
+  @override
+  String get returnsNoteNoCharges => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ಪೂರ್ಣಗೊಂಡಿದೆ. ಸ್ಕೂಟರ್ ಸರಿಯಾಗಿ ಮರಳಿದೆ, ಹಾಗಾಗಿ ಯಾವುದೇ ಶುಲ್ಕವಿಲ್ಲ.';
+
+  @override
+  String returnsNoteRequested(String date) {
+    return '$date ರಂದು ಸ್ಕೂಟರ್ ಅನ್ನು ಆಯ್ಕೆ ಮಾಡಿದ ಹಬ್‌ಗೆ ತೆಗೆದುಕೊಂಡು ಹೋಗಿ. ಹಬ್ ತಂಡ ಅದನ್ನು ಸ್ವೀಕರಿಸುತ್ತದೆ.';
+  }
+
+  @override
+  String get returnsNotes => 'ಬೇರೆ ಏನಾದರೂ?';
+
+  @override
+  String returnsNoteSettled(String amount) {
+    return 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ಪೂರ್ಣಗೊಂಡಿದೆ. $amount ಶುಲ್ಕ ನಿಮ್ಮ ಬಿಲ್‌ಗೆ ಸೇರಿಸಲಾಗಿದೆ.';
+  }
+
+  @override
+  String get returnsNotesHint => 'ಹಬ್ ತಂಡಕ್ಕೆ ಐಚ್ಛಿಕ ಟಿಪ್ಪಣಿ';
+
+  @override
+  String get returnsNoteYouApproved =>
+      'ನೀವು ಶುಲ್ಕಗಳನ್ನು ಅನುಮೋದಿಸಿದ್ದೀರಿ. ಮುಂದೆ ಹಬ್ ಮ್ಯಾನೇಜರ್ ಅವುಗಳನ್ನು ದೃಢೀಕರಿಸುತ್ತಾರೆ.';
+
+  @override
+  String get returnsNothingToReturn => 'ಈಗ ಹಿಂದಿರುಗಿಸಲು ಏನೂ ಇಲ್ಲ';
+
+  @override
+  String get returnsNothingToReturnBody => 'ನಿಮಗೆ ಸಕ್ರಿಯ ಬಾಡಿಗೆ ಇಲ್ಲ, ಅಥವಾ ಅದರ ಹಿಂದಿರುಗಿಸುವಿಕೆ ಈಗಾಗಲೇ ನಡೆಯುತ್ತಿದೆ.';
+
+  @override
+  String get returnsPickDate => 'ಹಿಂದಿರುಗಿಸುವ ದಿನಾಂಕ ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String get returnsPickHub => 'ಹಬ್ ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String get returnsPickHubSubtitle => 'ನಿಮಗೆ ಹತ್ತಿರದ ಹಬ್‌ಗಳು ಮೇಲೆ ಇವೆ';
+
+  @override
+  String get returnsPickReason => 'ಒಂದು ಕಾರಣ ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String get returnsPickRental => 'ಮುಗಿಸಬೇಕಾದ ಬಾಡಿಗೆ ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String returnsPlannedFor(String date) {
+    return '$date ಕ್ಕೆ ಯೋಜಿಸಲಾಗಿದೆ';
+  }
+
+  @override
+  String get returnsProgress => 'ಪ್ರಗತಿ';
+
+  @override
+  String get returnsReason => 'ಕಾರಣ';
+
+  @override
+  String get returnsReasonChangingJob => 'ಕೆಲಸ ಬದಲಾಯಿಸುತ್ತಿದ್ದೇನೆ';
+
+  @override
+  String get returnsReasonNoLongerNeeded => 'ಇನ್ನು ಇದು ಬೇಕಾಗಿಲ್ಲ';
+
+  @override
+  String get returnsReasonRelocating => 'ಬೇರೆ ನಗರಕ್ಕೆ ಹೋಗುತ್ತಿದ್ದೇನೆ';
+
+  @override
+  String get returnsReasonTooExpensive => 'ಬಾಡಿಗೆ ತುಂಬಾ ಹೆಚ್ಚು';
+
+  @override
+  String get returnsReasonVehicleIssues => 'ಸ್ಕೂಟರ್‌ನಲ್ಲಿ ಸಮಸ್ಯೆಗಳು';
+
+  @override
+  String get returnsRental => 'ಬಾಡಿಗೆ';
+
+  @override
+  String get returnsRequested => 'ಹಿಂದಿರುಗಿಸುವ ವಿನಂತಿ ಸಲ್ಲಿಸಲಾಗಿದೆ. ಹಬ್‌ನಲ್ಲಿ ಭೇಟಿಯಾಗೋಣ.';
+
+  @override
+  String get returnsRequestReturn => 'ಹಿಂದಿರುಗಿಸಲು ವಿನಂತಿಸಿ';
+
+  @override
+  String get returnsRequestSubtitle => 'ದಿನಾಂಕ ಮತ್ತು ನೀವು ತರುವ ಹಬ್ ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String get returnsSendDispute => 'ಆಕ್ಷೇಪ ಕಳುಹಿಸಿ';
+
+  @override
+  String get returnsStatusAwaitingManager => 'ಹಬ್ ಮ್ಯಾನೇಜರ್ ಬಳಿ';
+
+  @override
+  String get returnsStatusCancelled => 'ರದ್ದಾಗಿದೆ';
+
+  @override
+  String get returnsStatusClosed => 'ಮುಕ್ತಾಯ';
+
+  @override
+  String get returnsStatusDisputed => 'ಆಕ್ಷೇಪಿಸಲಾಗಿದೆ';
+
+  @override
+  String get returnsStatusInspecting => 'ಪರಿಶೀಲನೆ ನಡೆಯುತ್ತಿದೆ';
+
+  @override
+  String get returnsStatusNeedsYou => 'ನಿಮ್ಮ ಅನುಮೋದನೆ ಬೇಕು';
+
+  @override
+  String get returnsStatusRequested => 'ಹಿಂದಿರುಗಿಸುವ ವಿನಂತಿ';
+
+  @override
+  String get returnsStepClosed => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ಪೂರ್ಣ';
+
+  @override
+  String get returnsStepHandedOver => 'ಸ್ಕೂಟರ್ ಹಸ್ತಾಂತರ';
+
+  @override
+  String get returnsStepInspection => 'ಪರಿಶೀಲನೆ ಮತ್ತು ಶುಲ್ಕಗಳು';
+
+  @override
+  String get returnsStepRequested => 'ಹಿಂದಿರುಗಿಸುವ ವಿನಂತಿ';
+
+  @override
+  String get returnsSubtitle => 'ನಿಮ್ಮ ಬಾಡಿಗೆ ಮುಗಿಸಿ ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿಸಿ';
+
+  @override
+  String get returnsTitle => 'ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿಸಿ';
+
+  @override
+  String get returnsWhenWhere => 'ಯಾವಾಗ ಮತ್ತು ಎಲ್ಲಿ';
+
+  @override
+  String get returnsWhy => 'ನೀವು ಇದನ್ನು ಏಕೆ ಹಿಂದಿರುಗಿಸುತ್ತಿದ್ದೀರಿ?';
+
+  @override
+  String get returnsYourDispute => 'ನಿಮ್ಮ ಆಕ್ಷೇಪ';
+
+  @override
+  String get returnsYourReturns => 'ನಿಮ್ಮ ಹಿಂದಿರುಗಿಸುವಿಕೆಗಳು';
 
   @override
   String get rideParkedLocked => 'ನಿಲ್ಲಿಸಿ ಬೀಗ ಹಾಕಲಾಗಿದೆ.';
@@ -3129,53 +3955,46 @@ class AppL10nKn extends AppL10n {
   String get supportAddFewMoreDetails10 => 'ಇನ್ನಷ್ಟು ವಿವರ ಬರೆಯಿರಿ (10+ ಅಕ್ಷರ)';
 
   @override
-  String get supportAnySettledBalanceCanWithdrawn => 'ಇತ್ಯರ್ಥಗೊಂಡ ಬಾಕಿಯನ್ನು ದಿನಕ್ಕೊಮ್ಮೆ ಹಿಂಪಡೆಯಬಹುದು. ಪಾವತಿ ';
+  String get supportAll => 'ಎಲ್ಲಾ';
 
   @override
   String get supportBatteryCharging => 'ಬ್ಯಾಟರಿ ಅಥವಾ ಚಾರ್ಜಿಂಗ್';
 
   @override
-  String get supportBatteryDrops20Within40 => '40 ಕಿಮೀಗೆ ಬ್ಯಾಟರಿ 20%ಕ್ಕೆ ಇಳಿಯುತ್ತದೆ';
-
-  @override
-  String get supportBorneBy => 'ನೀವು ಭರಿಸಬೇಕು';
-
-  @override
   String get supportBreakdownRoad => 'ರಸ್ತೆಯಲ್ಲಿ ಕೆಟ್ಟುಹೋಗಿದೆ';
-
-  @override
-  String get supportCallBackWithin15Min => '15 ನಿಮಿಷದಲ್ಲಿ ಮರು ಕರೆ';
-
-  @override
-  String get supportCanIKeepScooterOvernight => 'ಸ್ಕೂಟರ್ ಅನ್ನು ರಾತ್ರಿಯಿಡೀ ಇಟ್ಟುಕೊಳ್ಳಬಹುದೆ?';
-
-  @override
-  String get supportChooseCategory => 'ವರ್ಗ ಆರಿಸಿ';
 
   @override
   String get supportCouldNotLoadSupport => 'ಸಹಾಯ ತೆರೆಯಲಿಲ್ಲ';
 
   @override
-  String get supportDecidesWhoPicksUpTicket =>
-      'ನಿಮ್ಮ ದೂರನ್ನು ಯಾರು ಮತ್ತು ಎಷ್ಟು ಬೇಗ ಕೈಗೆತ್ತಿಕೊಳ್ಳುತ್ತಾರೆ ಎಂಬುದನ್ನು ಇದು ನಿರ್ಧರಿಸುತ್ತದೆ';
+  String get supportCouldNotLoadTicket => 'ಈ ಟಿಕೆಟ್ ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
 
   @override
   String get supportDescription => 'ವಿವರಣೆ';
 
   @override
+  String get supportDeskEmpty => 'ಇಲ್ಲಿ ಯಾವುದೇ ಟಿಕೆಟ್ ಇಲ್ಲ';
+
+  @override
+  String get supportDeskEmptyBody => 'ನಿಮ್ಮ ಹಬ್‌ಗಳಲ್ಲಿ ರೈಡರ್‌ಗಳು ಸಲ್ಲಿಸುವ ಟಿಕೆಟ್‌ಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
+
+  @override
+  String get supportDeskSubtitle => 'ನಿಮ್ಮ ಹಬ್‌ಗಳ ರೈಡರ್ ಟಿಕೆಟ್‌ಗಳು';
+
+  @override
+  String get supportDeskTitle => 'ಸಹಾಯ ಡೆಸ್ಕ್';
+
+  @override
   String get supportDocumentsKyc => 'ದಾಖಲೆಗಳು ಮತ್ತು ಕೆವೈಸಿ';
 
   @override
-  String get supportEveryMondayMorningAgainstNach => 'ಪ್ರತಿ ಸೋಮವಾರ ಬೆಳಿಗ್ಗೆ ನಿಮ್ಮ ನ್ಯಾಚ್ ಅನುಮತಿಯಿಂದ. ವ್ಯಾಲೆಟ್ ';
+  String get supportHub => 'ಹಬ್';
 
   @override
-  String get supportGeneral => 'ಸಾಮಾನ್ಯ';
+  String get supportInProgress => 'ಪ್ರಗತಿಯಲ್ಲಿದೆ';
 
   @override
-  String get supportHowSoonCanIWithdraw => 'ನನ್ನ ಗಳಿಕೆಯನ್ನು ಎಷ್ಟು ಬೇಗ ಹಿಂಪಡೆಯಬಹುದು?';
-
-  @override
-  String get supportLicenceReUploadAfterRenewal => 'ನವೀಕರಣದ ನಂತರ ಪರವಾನಗಿ ಮತ್ತೆ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ';
+  String get supportMarkResolved => 'ಪರಿಹರಿಸಲಾಗಿದೆ';
 
   @override
   String get supportMoreDetailGiveFasterCan => 'ನೀವು ಹೆಚ್ಚು ವಿವರ ನೀಡಿದಷ್ಟೂ ನಾವು ಬೇಗ ಸಹಾಯ ಮಾಡಬಹುದು';
@@ -3193,17 +4012,39 @@ class AppL10nKn extends AppL10n {
   String get supportOneLineSumsUpIssue => 'ಸಮಸ್ಯೆಯನ್ನು ಒಂದು ಸಾಲಿನಲ್ಲಿ ಬರೆಯಿರಿ';
 
   @override
+  String supportOpenCount(int count) {
+    return '$count ತೆರೆದಿವೆ';
+  }
+
+  @override
   String get supportOpenTickets => 'ತೆರೆದ ದೂರುಗಳು';
 
   @override
   String get supportPaymentWallet => 'ಪಾವತಿ ಅಥವಾ ವ್ಯಾಲೆಟ್';
 
   @override
+  String get supportPdfAttachment => 'PDF ದಾಖಲೆ';
+
+  @override
+  String supportPhotosHint(int count) {
+    return 'ಸಮಸ್ಯೆಯನ್ನು ವಿವರಿಸಲು ಸಹಾಯವಾದರೆ $count ಫೋಟೋಗಳವರೆಗೆ ಸೇರಿಸಿ.';
+  }
+
+  @override
+  String supportPhotosNotAttached(int count) {
+    return 'ಟಿಕೆಟ್ ಸಲ್ಲಿಸಲಾಗಿದೆ, ಆದರೆ $count ಫೋಟೋ(ಗಳನ್ನು) ಲಗತ್ತಿಸಲಾಗಲಿಲ್ಲ. ಟಿಕೆಟ್‌ನಿಂದ ಅವುಗಳನ್ನು ಸೇರಿಸಬಹುದು.';
+  }
+
+  @override
   String get supportPhotosOptional => 'ಫೋಟೋಗಳು (ಐಚ್ಛಿಕ)';
 
   @override
-  String get supportRaiseBatteryChargingTicketSwap =>
-      'ಬ್ಯಾಟರಿ ಅಥವಾ ಚಾರ್ಜಿಂಗ್ ದೂರು ದಾಖಲಿಸಿ ಹತ್ತಿರದ ಹಬ್‌ನಲ್ಲಿ ಬದಲಾಯಿಸಿ. ';
+  String get supportPickTopic => 'ಒಂದು ವಿಷಯ ಆರಿಸಿ, ಅಥವಾ ಕೆಳಗೆ ನಿಮ್ಮದೇ ವಿಷಯ ಬರೆಯಿರಿ.';
+
+  @override
+  String supportRaisedOn(String date) {
+    return '$date ರಂದು ಸಲ್ಲಿಸಲಾಗಿದೆ';
+  }
 
   @override
   String get supportRaiseOneAboveIfSomething => 'ಏನಾದರೂ ಸರಿಪಡಿಸಬೇಕಿದ್ದರೆ ಮೇಲೆ ದಾಖಲಿಸಿ.';
@@ -3212,40 +4053,38 @@ class AppL10nKn extends AppL10n {
   String get supportRaiseTicket => 'ದೂರು ದಾಖಲಿಸಿ';
 
   @override
-  String get supportRearTyrePunctureNearAshram => 'ಆಶ್ರಮದ ಬಳಿ ಹಿಂದಿನ ಟೈರ್ ಪಂಕ್ಚರ್';
+  String get supportReopen => 'ಮತ್ತೆ ತೆರೆಯಿರಿ';
 
   @override
-  String get supportReferralBonusSunilNotCredited => 'ಸುನಿಲ್ ಅವರ ರೆಫರಲ್ ಬೋನಸ್ ಜಮಾ ಆಗಿಲ್ಲ';
-
-  @override
-  String get supportRepairsAcrossTickets => 'ನಿಮ್ಮ ದೂರುಗಳ ದುರಸ್ತಿ';
+  String get supportResolveBody => 'ರೈಡರ್ ಇನ್ನೂ ಉತ್ತರಿಸಬಹುದು. ಅವರ ಉತ್ತರ ಟಿಕೆಟ್ ಅನ್ನು ಮತ್ತೆ ತೆರೆಯುತ್ತದೆ.';
 
   @override
   String get supportResolved => 'ಪರಿಹರಿಸಲಾಗಿದೆ';
 
   @override
-  String get supportResponseWithin1Day => '1 ದಿನದಲ್ಲಿ ಉತ್ತರ';
+  String get supportResolvedReplyToReopen =>
+      'ಈ ಟಿಕೆಟ್ ಪರಿಹರಿಸಲಾಗಿದೆ. ಇನ್ನೂ ಸಹಾಯ ಬೇಕಾದರೆ ಸಂದೇಶ ಕಳುಹಿಸಿ, ಅದು ಮತ್ತೆ ತೆರೆಯುತ್ತದೆ.';
 
   @override
-  String get supportResponseWithin30Min => '30 ನಿಮಿಷದಲ್ಲಿ ಉತ್ತರ';
-
-  @override
-  String get supportResponseWithin4Hours => '4 ಗಂಟೆಯಲ್ಲಿ ಉತ್ತರ';
-
-  @override
-  String get supportRoadsideWithin45Min => '45 ನಿಮಿಷದಲ್ಲಿ ರಸ್ತೆಬದಿ ನೆರವು';
-
-  @override
-  String get supportSelectCategory => 'ವರ್ಗ ಆರಿಸಿ';
+  String get supportResolveTitle => 'ಈ ಟಿಕೆಟ್ ಪರಿಹರಿಸಲಾಗಿದೆ ಎಂದು ಗುರುತಿಸಬೇಕೆ?';
 
   @override
   String get supportSomethingElse => 'ಬೇರೇನೋ';
+
+  @override
+  String get supportStartWorking => 'ಕೆಲಸ ಆರಂಭಿಸಿ';
+
+  @override
+  String get supportStatusUpdated => 'ಟಿಕೆಟ್ ಸ್ಥಿತಿ ನವೀಕರಿಸಲಾಗಿದೆ';
 
   @override
   String get supportSubject => 'ವಿಷಯ';
 
   @override
   String get supportSubmitTicket => 'ದೂರು ಸಲ್ಲಿಸಿ';
+
+  @override
+  String get supportTeam => 'ಸಹಾಯ ತಂಡ';
 
   @override
   String get supportTeamLeadSeesStraightAway => 'ನಿಮ್ಮ ತಂಡದ ಮುಖ್ಯಸ್ಥರು ಇದನ್ನು ತಕ್ಷಣ ನೋಡುತ್ತಾರೆ.';
@@ -3260,36 +4099,33 @@ class AppL10nKn extends AppL10n {
   String get supportTellUsWhatHappenedAttach => 'ಏನಾಯಿತು ಎಂದು ತಿಳಿಸಿ, ಸಹಾಯವಾಗುವುದಾದರೆ ಫೋಟೋ ಲಗತ್ತಿಸಿ. ';
 
   @override
+  String get supportTicket => 'ಟಿಕೆಟ್';
+
+  @override
+  String get supportTicketRaised => 'ಟಿಕೆಟ್ ಸಲ್ಲಿಸಲಾಗಿದೆ. ನಮ್ಮ ತಂಡ ಇದನ್ನು ನೋಡುತ್ತಿದೆ.';
+
+  @override
+  String get supportTicketReopened => 'ಟಿಕೆಟ್ ಮತ್ತೆ ತೆರೆಯಲಾಗಿದೆ. ನಮ್ಮ ತಂಡ ನಿಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸುತ್ತದೆ.';
+
+  @override
   String get supportTickets => 'ನಿಮ್ಮ ದೂರುಗಳು';
 
   @override
-  String get supportTripsLostSwapDoNot =>
-      'ಬ್ಯಾಟರಿ ಬದಲಾವಣೆಯಿಂದ ತಪ್ಪಿದ ಟ್ರಿಪ್‌ಗಳು ನಿಮ್ಮ ಪ್ರೋತ್ಸಾಹ ಗುರಿಗೆ ಲೆಕ್ಕಕ್ಕೆ ಬರುವುದಿಲ್ಲ.';
-
-  @override
-  String get supportTurnIfCannotRideSafely => 'ಇದನ್ನು ಸರಿಪಡಿಸದೆ ಸುರಕ್ಷಿತವಾಗಿ ಓಡಿಸಲಾಗದಿದ್ದರೆ ಇದನ್ನು ಆನ್ ಮಾಡಿ';
-
-  @override
-  String get supportVehicleAffected => 'ವಾಹನದ ಮೇಲೆ ಪರಿಣಾಮವಾಗಿದೆ';
-
-  @override
-  String get supportVehicleImpact => 'ವಾಹನದ ಮೇಲಿನ ಪರಿಣಾಮ';
+  String supportUpdated(String time) {
+    return '$time ನವೀಕರಿಸಲಾಗಿದೆ';
+  }
 
   @override
   String get supportWhatHappenedSinceWhen => 'ಏನಾಯಿತು, ಯಾವಾಗಿನಿಂದ?';
 
   @override
-  String get supportWhatHappensIfBatteryDies => 'ಪಾಳಿಯ ಮಧ್ಯೆ ಬ್ಯಾಟರಿ ಮುಗಿದರೆ ಏನಾಗುತ್ತದೆ?';
-
-  @override
   String get supportWhatsTheIssue => 'ಏನು ಸಮಸ್ಯೆ';
 
   @override
-  String get supportWhenDoesMyRentGet => 'ನನ್ನ ಬಾಡಿಗೆ ಯಾವಾಗ ಕಡಿತವಾಗುತ್ತದೆ?';
+  String get supportWriteMessage => 'ಸಂದೇಶ ಬರೆಯಿರಿ';
 
   @override
-  String get supportYesWeeklyMonthlyPlansDaily =>
-      'ಹೌದು, ವಾರದ ಮತ್ತು ಮಾಸಿಕ ಯೋಜನೆಗಳಲ್ಲಿ. ದಿನದ ಯೋಜನೆಗಳಲ್ಲಿ ಹಬ್‌ಗೆ ಮರಳಿಸಬೇಕು ';
+  String get supportYou => 'ನೀವು';
 
   @override
   String get swapCouldNotLoad => 'ಸ್ವಾಪ್ ಸ್ಟೇಷನ್‌ಗಳು ತೆರೆಯಲಿಲ್ಲ';
@@ -3342,6 +4178,23 @@ class AppL10nKn extends AppL10n {
   String get walletCash => 'ನಗದು';
 
   @override
+  String get walletClosingBalance => 'ಅಂತಿಮ ಬ್ಯಾಲೆನ್ಸ್';
+
+  @override
+  String walletCompletedOn(String date) {
+    return '$date ರಂದು ಪೂರ್ಣ';
+  }
+
+  @override
+  String get walletCouldNotLoadDeposit => 'ಠೇವಣಿ ವಿವರಗಳನ್ನು ರಿಫ್ರೆಶ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
+  String get walletCouldNotLoadReceipt => 'ರಸೀದಿ ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
+  String get walletCouldNotLoadStatement => 'ನಿಮ್ಮ ಸ್ಟೇಟ್‌ಮೆಂಟ್ ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
   String get walletCouldNotLoadWallet => 'ನಿಮ್ಮ ವ್ಯಾಲೆಟ್ ತೆರೆಯಲಿಲ್ಲ';
 
   @override
@@ -3366,13 +4219,101 @@ class AppL10nKn extends AppL10n {
   String get walletDeposit => 'ಠೇವಣಿ';
 
   @override
+  String get walletDepositDeducted => 'ಕಡಿತಗೊಳಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletDepositHeld => 'ಇರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletDepositLocked => 'ನಿಮ್ಮ ಬಾಡಿಗೆಗೆ ಲಾಕ್';
+
+  @override
+  String walletDepositMoved(String amount) {
+    return 'ಠೇವಣಿ $amount';
+  }
+
+  @override
+  String get walletDepositPaidIn => 'ಪಾವತಿಸಿದ್ದು';
+
+  @override
+  String get walletDepositRequired => 'ಅಗತ್ಯ ಮೊತ್ತ';
+
+  @override
+  String get walletDepositReturnedAmount => 'ಹಿಂದಿರುಗಿಸಲಾಗಿದೆ';
+
+  @override
   String get walletDepositReturnedSeparately => 'ನೀವು ಬಿಟ್ಟು ಹೋಗುವಾಗ ನಿಮ್ಮ ಠೇವಣಿ ಪ್ರತ್ಯೇಕವಾಗಿ ಹಿಂತಿರುಗುತ್ತದೆ.';
+
+  @override
+  String get walletDepositReturns => 'ಹಿಂದಿರುಗಿಸುವಿಕೆಗಳು';
+
+  @override
+  String get walletDepositStatusCancelled => 'ರದ್ದು';
+
+  @override
+  String get walletDepositStatusForfeited => 'ಮುಟ್ಟುಗೋಲು';
+
+  @override
+  String get walletDepositStatusLocked => 'ನಿಮ್ಮ ಬಾಡಿಗೆಗಾಗಿ ಇರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletDepositStatusPaid => 'ಪಾವತಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletDepositStatusPartlyDeducted => 'ಭಾಗಶಃ ಕಡಿತ';
+
+  @override
+  String get walletDepositStatusPartlyPaid => 'ಭಾಗಶಃ ಪಾವತಿ';
+
+  @override
+  String get walletDepositStatusPending => 'ಪಾವತಿಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ';
+
+  @override
+  String get walletDepositStatusReturnable => 'ಹಿಂದಿರುಗಿಸಲು ಸಿದ್ಧ';
+
+  @override
+  String get walletDepositStatusReturned => 'ಹಿಂದಿರುಗಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletDepositStatusReturnRequested => 'ಹಿಂದಿರುಗಿಸಲು ವಿನಂತಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletDepositToPay => 'ಇನ್ನೂ ಪಾವತಿಸಬೇಕು';
+
+  @override
+  String get walletDestination => 'ಯಾರಿಗೆ ಪಾವತಿಸಲಾಗಿದೆ';
 
   @override
   String get walletDueNow => 'ಈಗ ಪಾವತಿಸಬೇಕು';
 
   @override
+  String get walletErrorDepositNotFound => 'ಈ ಠೇವಣಿ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get walletErrorNotFound => 'ನಿಮ್ಮ ವಾಲೆಟ್ ಇನ್ನೂ ಸಿದ್ಧವಾಗಿಲ್ಲ.';
+
+  @override
+  String get walletErrorReceiptNotFound => 'ಈ ರಸೀದಿ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get walletErrorStatementPeriod => 'ಆ ಅವಧಿಗೆ ಸ್ಟೇಟ್‌ಮೆಂಟ್ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get walletErrorTransactionNotFound => 'ಈ ವ್ಯವಹಾರ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
   String get walletExpiringSoon => '7 ದಿನಗಳಲ್ಲಿ ಮುಗಿಯುತ್ತದೆ';
+
+  @override
+  String walletFundedOf(String funded, String required) {
+    return '$required ರಲ್ಲಿ $funded';
+  }
+
+  @override
+  String get walletInvoicesSettled => 'ಪಾವತಿಸಿದ ಬಿಲ್‌ಗಳು';
+
+  @override
+  String get walletIssued => 'ನೀಡಲಾಗಿದೆ';
 
   @override
   String get walletKindAdjustment => 'ಹೊಂದಾಣಿಕೆ';
@@ -3405,7 +4346,16 @@ class AppL10nKn extends AppL10n {
   String get walletLedgerWillFillUpAs => 'ನೀವು ಓಡಿಸಿ ಗಳಿಸಿದಂತೆ ನಿಮ್ಮ ಲೆಕ್ಕ ತುಂಬುತ್ತದೆ.';
 
   @override
+  String get walletMethod => 'ವಿಧಾನ';
+
+  @override
   String get walletMoney => 'ನಿಮ್ಮ ಹಣ';
+
+  @override
+  String get walletMoneyIn => 'ಬಂದ ಹಣ';
+
+  @override
+  String get walletMoneyOut => 'ಹೋದ ಹಣ';
 
   @override
   String get walletNothingMatchesFilterYet => 'ಈ ಶೋಧಕ್ಕೆ ಇನ್ನೂ ಏನೂ ಹೊಂದಿಲ್ಲ.';
@@ -3417,13 +4367,57 @@ class AppL10nKn extends AppL10n {
   String get walletOnHold => 'ತಡೆಹಿಡಿದಿದೆ';
 
   @override
+  String get walletOpeningBalance => 'ಆರಂಭಿಕ ಬ್ಯಾಲೆನ್ಸ್';
+
+  @override
   String get walletPayments => 'ಪಾವತಿಗಳು';
+
+  @override
+  String get walletReceipt => 'ರಸೀದಿ';
+
+  @override
+  String get walletReceiptNumber => 'ರಸೀದಿ ಸಂಖ್ಯೆ';
 
   @override
   String get walletReferenceId => 'ಉಲ್ಲೇಖ ಐಡಿ';
 
   @override
   String get walletRefundable => 'ಮರುಪಾವತಿ ಯೋಗ್ಯ';
+
+  @override
+  String walletRequestedOn(String date) {
+    return '$date ರಂದು ವಿನಂತಿ';
+  }
+
+  @override
+  String get walletReturnApproved => 'ಅನುಮೋದಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletReturnCancelled => 'ರದ್ದು';
+
+  @override
+  String get walletReturnDone => 'ಹಿಂದಿರುಗಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletReturnFailed => 'ವಿಫಲವಾಗಿದೆ';
+
+  @override
+  String get walletReturnProcessing => 'ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ';
+
+  @override
+  String get walletReturnRejected => 'ತಿರಸ್ಕರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletReturnRequested => 'ವಿನಂತಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletReturnReview => 'ಪರಿಶೀಲನೆಯಲ್ಲಿ';
+
+  @override
+  String get walletRewardExpired => 'ಬಹುಮಾನದ ಅವಧಿ ಮುಗಿದಿದೆ';
+
+  @override
+  String get walletRewardReversed => 'ಬಹುಮಾನ ಹಿಂಪಡೆಯಲಾಗಿದೆ';
 
   @override
   String get walletRewardsEarned => 'ಇಲ್ಲಿಯವರೆಗೆ ಗಳಿಸಿದ್ದು';
@@ -3438,6 +4432,26 @@ class AppL10nKn extends AppL10n {
   String get walletStateFailed => 'ವಿಫಲ';
 
   @override
+  String get walletStatement => 'ಸ್ಟೇಟ್‌ಮೆಂಟ್';
+
+  @override
+  String get walletStatementEmpty => 'ಈ ತಿಂಗಳು ಏನೂ ಇಲ್ಲ';
+
+  @override
+  String get walletStatementEmptyBody => 'ಈ ತಿಂಗಳು ನಿಮ್ಮ ವಾಲೆಟ್‌ಗೆ ಬರುವ ಅಥವಾ ಹೋಗುವ ಹಣ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
+
+  @override
+  String walletStatementReference(String reference) {
+    return 'ಸ್ಟೇಟ್‌ಮೆಂಟ್ ಉಲ್ಲೇಖ $reference';
+  }
+
+  @override
+  String get walletStatementSubtitle => 'ತಿಂಗಳುವಾರು, ನಿಖರವಾದ ಒಳಬರುವ ಮತ್ತು ಹೊರಹೋಗುವ ಹಣ';
+
+  @override
+  String get walletStatementSummary => 'ಈ ತಿಂಗಳು';
+
+  @override
   String get walletStatePending => 'ಬಾಕಿ';
 
   @override
@@ -3447,5 +4461,14 @@ class AppL10nKn extends AppL10n {
   String get walletStateSettled => 'ಪೂರ್ಣ';
 
   @override
+  String get walletToBank => 'ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಖಾತೆಗೆ';
+
+  @override
+  String get walletToWallet => 'ನಿಮ್ಮ ವಾಲೆಟ್‌ಗೆ';
+
+  @override
   String get walletTransactions => 'ವ್ಯವಹಾರಗಳು';
+
+  @override
+  String get walletViewReceipt => 'ರಸೀದಿ';
 }

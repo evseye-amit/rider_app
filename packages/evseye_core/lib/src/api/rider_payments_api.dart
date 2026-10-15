@@ -184,11 +184,46 @@ class RiderPaymentsApi {
     parse: (data) => PaymentAttempt.fromJson(Map<String, dynamic>.from(data as Map)),
   );
 
-  Future<Result<List<PaymentAttempt>>> refunds() => _client.get<List<PaymentAttempt>>(
+  Future<Result<List<PaymentRefund>>> refunds() => _client.get<List<PaymentRefund>>(
     '$_base/refunds',
     parse: (data) => (data as List<dynamic>? ?? const [])
         .whereType<Map>()
-        .map((e) => PaymentAttempt.fromJson(Map<String, dynamic>.from(e)))
+        .map((e) => PaymentRefund.fromJson(Map<String, dynamic>.from(e)))
         .toList(growable: false),
   );
+}
+
+class PaymentRefund {
+  const PaymentRefund({
+    required this.id,
+    required this.paymentId,
+    required this.status,
+    required this.amount,
+    required this.currency,
+    this.refundNumber,
+    this.requestedAt,
+    this.completedAt,
+  });
+
+  factory PaymentRefund.fromJson(Map<String, dynamic> json) => PaymentRefund(
+    id: _text(json['id']),
+    paymentId: _text(json['paymentId']),
+    status: _text(json['status']),
+    amount: _money(json['amount']),
+    currency: json['currency']?.toString() ?? 'INR',
+    refundNumber: json['refundNumber']?.toString(),
+    requestedAt: _date(json['requestedAt']),
+    completedAt: _date(json['completedAt']),
+  );
+
+  final String id;
+  final String paymentId;
+  final String status;
+  final num amount;
+  final String currency;
+  final String? refundNumber;
+  final DateTime? requestedAt;
+  final DateTime? completedAt;
+
+  bool get isSuccessful => status == 'SUCCESS';
 }

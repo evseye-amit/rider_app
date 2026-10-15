@@ -90,14 +90,40 @@ class CaseQuote extends Equatable {
 }
 
 class CaseOffer extends Equatable {
-  const CaseOffer({required this.id, required this.expiresAt, required this.quote});
+  const CaseOffer({
+    required this.id,
+    required this.expiresAt,
+    required this.quote,
+    this.hash = '',
+    this.termsTitle = '',
+    this.termsBody = '',
+  });
 
   final String id;
   final DateTime expiresAt;
   final CaseQuote quote;
+  final String hash;
+  final String termsTitle;
+  final String termsBody;
+
+  bool get hasExpired => !expiresAt.isAfter(DateTime.now());
 
   @override
-  List<Object?> get props => [id, expiresAt, quote];
+  List<Object?> get props => [id, expiresAt, quote, hash, termsTitle, termsBody];
+}
+
+class DepositOutcome extends Equatable {
+  const DepositOutcome({required this.due, required this.securityShortfall});
+
+  final num due;
+  final num securityShortfall;
+
+  bool get settled => due <= 0;
+
+  num get newDeposit => due - securityShortfall;
+
+  @override
+  List<Object?> get props => [due, securityShortfall];
 }
 
 class ExchangeCase extends Equatable {
@@ -119,6 +145,7 @@ class ExchangeCase extends Equatable {
     this.rentalPeriodType,
     this.durationValue,
     this.durationUnit,
+    this.batteryPlanId,
     this.pendingOffer,
     this.acceptedOffer,
     this.canCancel = false,
@@ -141,6 +168,7 @@ class ExchangeCase extends Equatable {
   final String? rentalPeriodType;
   final int? durationValue;
   final String? durationUnit;
+  final String? batteryPlanId;
   final CaseOffer? pendingOffer;
   final CaseOffer? acceptedOffer;
   final bool canCancel;
@@ -183,6 +211,7 @@ class ExchangeCase extends Equatable {
     rentalPeriodType,
     durationValue,
     durationUnit,
+    batteryPlanId,
     pendingOffer,
     acceptedOffer,
     canCancel,

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -35,7 +37,10 @@ class FleetSessionNotifier extends Notifier<FleetSession> {
     final Result<AuthUser> result = await ref.read(verifyOtpProvider)(
       VerifyOtpParams(otpRequestId: otpRequestId, code: code),
     );
-    if (result case Ok<AuthUser>(:final value)) await _openSession(value);
+    if (result case Ok<AuthUser>(:final value)) {
+      await _openSession(value);
+      unawaited(ref.read(termsConsentProvider.notifier).recordAcceptance(value.id));
+    }
     return result;
   }
 

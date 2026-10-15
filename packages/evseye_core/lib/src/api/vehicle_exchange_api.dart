@@ -77,7 +77,7 @@ enum VehicleExchangeOfferStatus {
 
   static VehicleExchangeOfferStatus parse(Object? value) => VehicleExchangeOfferStatus.values.firstWhere(
     (status) => status.wire == value?.toString(),
-    orElse: () => VehicleExchangeOfferStatus.presented,
+    orElse: () => VehicleExchangeOfferStatus.cancelled,
   );
 }
 
@@ -212,6 +212,7 @@ class VehicleExchange {
     this.rentalPeriodType,
     this.durationValue,
     this.durationUnit,
+    this.batteryPlanId,
     this.proposedEffectiveAt,
     this.effectiveAt,
     this.reservationExpiresAt,
@@ -222,7 +223,8 @@ class VehicleExchange {
 
   factory VehicleExchange.fromJson(Map<String, dynamic> json) {
     final Map<String, dynamic> agreement = _map(json['agreement']);
-    final Map<String, dynamic> rental = _map(_map(agreement['pricingSnapshot'])['rental']);
+    final Map<String, dynamic> pricing = _map(agreement['pricingSnapshot']);
+    final Map<String, dynamic> rental = _map(pricing['rental']);
     return VehicleExchange(
       id: _text(json['id']),
       agreementId: _text(json['agreementId']),
@@ -240,6 +242,7 @@ class VehicleExchange {
       rentalPeriodType: _textOrNull(agreement['rentalPeriodType']),
       durationValue: (rental['durationValue'] as num?)?.toInt(),
       durationUnit: _textOrNull(rental['durationUnit']),
+      batteryPlanId: _textOrNull(_map(pricing['batteryPlan'])['id']) ?? _textOrNull(agreement['batteryPlanId']),
       proposedEffectiveAt: _date(json['proposedEffectiveAt']),
       effectiveAt: _date(json['effectiveAt']),
       reservationExpiresAt: _date(json['reservationExpiresAt']),
@@ -268,6 +271,7 @@ class VehicleExchange {
   final String? rentalPeriodType;
   final int? durationValue;
   final String? durationUnit;
+  final String? batteryPlanId;
   final DateTime? proposedEffectiveAt;
   final DateTime? effectiveAt;
   final DateTime? reservationExpiresAt;
@@ -275,11 +279,16 @@ class VehicleExchange {
   final DateTime? completedAt;
   final List<VehicleExchangeOffer> offers;
 
-  bool get oldVehicleReturned => returnInspectionId != null;
+  bool get oldVehicleReturned => returnInspectionId != null && status != VehicleExchangeStatus.returnPending;
 
-  bool get canCancel => status.canCancel && !oldVehicleReturned;
+  bool get canCancel => status.canCancel && returnInspectionId == null;
 
-  VehicleExchangeOffer? get pendingOffer => offers.where((offer) => offer.isPresented && !offer.hasExpired).firstOrNull;
+  bool get reservationLapsed => reservationExpiresAt != null && DateTime.now().isAfter(reservationExpiresAt!);
+
+  VehicleExchangeOffer? get pendingOffer =>
+      reservationLapsed ? null : offers.where((offer) => offer.isPresented && !offer.hasExpired).firstOrNull;
+
+  VehicleExchangeOffer? get presentedOffer => offers.where((offer) => offer.isPresented).firstOrNull;
 
   VehicleExchangeOffer? get acceptedOffer =>
       offers.where((offer) => offer.status == VehicleExchangeOfferStatus.accepted).firstOrNull;
@@ -319,15 +328,17 @@ class AgreementVersion {
 }
 
 class DepositSettlementDto {
-  const DepositSettlementDto({required this.status, required this.additionalRequired});
+  const DepositSettlementDto({required this.status, required this.additionalRequired, this.riderSecurityShortfall = 0});
 
   factory DepositSettlementDto.fromJson(Map<String, dynamic> json) => DepositSettlementDto(
     status: VehicleExchangeStatus.parse(json['status']),
     additionalRequired: _num(json['additionalRequired']),
+    riderSecurityShortfall: _num(json['riderSecurityShortfall']),
   );
 
   final VehicleExchangeStatus status;
   final num additionalRequired;
+  final num riderSecurityShortfall;
 }
 
 class VehicleExchangeApi {
@@ -396,6 +407,7 @@ class ExchangeOperationsApi {
     String? hubId,
     int? durationValue,
     String? durationUnit,
+    String? batteryPlanId,
   }) => _client.post<void>(
     '$_base/$id/replacement',
     body: {
@@ -404,8 +416,29 @@ class ExchangeOperationsApi {
       'hubId': ?hubId,
       'durationValue': ?durationValue,
       'durationUnit': ?durationUnit,
+      'batteryPlanId': ?batteryPlanId,
     },
   );
+
+  Future<Result<void>> acceptOnBehalf(
+    String id, {
+    required String offerId,
+    required String offerHash,
+    required String consentReference,
+    required String reason,
+  }) => _client.post<void>(
+    '$_base/$id/accept',
+    body: {
+      'offerId': offerId,
+      'offerHash': offerHash,
+      'consent': true,
+      'riderConsentReference': consentReference,
+      'assistedReason': reason,
+    },
+  );
+
+  Future<Result<void>> rejectOfferOnBehalf(String id, {required String offerId, required String reason}) =>
+      _client.post<void>('$_base/$id/reject-offer', body: {'offerId': offerId, 'reason': reason});
 
   Future<Result<ExchangeQuoteDto>> preview(String id) =>
       _client.get<ExchangeQuoteDto>('$_base/$id/preview', parse: (data) => ExchangeQuoteDto.fromPreview(_map(data)));

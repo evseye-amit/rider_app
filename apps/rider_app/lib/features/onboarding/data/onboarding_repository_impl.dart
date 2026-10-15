@@ -32,5 +32,14 @@ class OnboardingRepositoryImpl implements OnboardingRepository {
   }
 
   @override
-  Future<Result<void>> applyReferralCode(String code) => _referrals.attribute(code);
+  Future<Result<void>> applyReferralCode(String input) async {
+    final String trimmed = input.trim();
+    if (RegExp(r'^EVS-', caseSensitive: false).hasMatch(trimmed)) return _referrals.attribute(trimmed.toUpperCase());
+    final Result<String> resolved = await _referrals.resolveInput(trimmed);
+    return switch (resolved) {
+      Ok<String>(:final value) when value.isNotEmpty => _referrals.attribute(value),
+      Ok<String>() => Result.err(ValidationFailure(ActiveLocale.strings.onboardingReferralNotFound)),
+      Err<String>(:final failure) => Result.err(failure),
+    };
+  }
 }

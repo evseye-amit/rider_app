@@ -229,16 +229,18 @@ class _ReferenceFieldState extends State<_ReferenceField> {
 
   List<_ReferenceEntry> _decode() {
     final Object? raw = widget.scope.form.valueOf(widget.node.fieldKey);
+    Object? parsed = raw;
     if (raw is String && raw.isNotEmpty) {
       try {
-        final Object? parsed = jsonDecode(raw);
-        if (parsed is List && parsed.isNotEmpty) {
-          return [
-            for (final e in parsed)
-              if (e is Map) _ReferenceEntry.fromJson(Map<String, dynamic>.from(e)),
-          ];
-        }
+        parsed = jsonDecode(raw);
       } catch (_) {}
+    }
+    if (parsed is List && parsed.isNotEmpty) {
+      final List<_ReferenceEntry> entries = [
+        for (final e in parsed)
+          if (e is Map) _ReferenceEntry.fromJson(Map<String, dynamic>.from(e)),
+      ];
+      if (entries.isNotEmpty) return entries;
     }
     return [_ReferenceEntry()];
   }

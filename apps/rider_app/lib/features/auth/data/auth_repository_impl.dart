@@ -12,7 +12,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Result<RiderEnrollment>> enroll(String mobile) => _riderApp.enroll(mobile);
 
   @override
-  Future<Result<OtpChallenge>> requestOtp(String mobile) => _auth.requestOtp(mobile);
+  Future<Result<OtpChallenge>> requestOtp(String mobile) => _auth.requestOtp(mobile, appCode: 'RIDER_APP');
 
   @override
   Future<Result<AuthUser>> verifyOtp({required String otpRequestId, required String code}) =>

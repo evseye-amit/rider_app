@@ -78,13 +78,65 @@ class SendExchangeOffer extends UseCase<void, String> {
   Future<Result<void>> call(String params) => _repository.sendOffer(params);
 }
 
-class SettleExchangeDeposits extends UseCase<num, String> {
+class SettleExchangeDeposits extends UseCase<DepositOutcome, String> {
   const SettleExchangeDeposits(this._repository);
 
   final ExchangeDeskRepository _repository;
 
   @override
-  Future<Result<num>> call(String params) => _repository.settleDeposits(params);
+  Future<Result<DepositOutcome>> call(String params) => _repository.settleDeposits(params);
+}
+
+class AssistedAcceptParams extends Equatable {
+  const AssistedAcceptParams({
+    required this.id,
+    required this.offer,
+    required this.consentReference,
+    required this.reason,
+  });
+
+  final String id;
+  final CaseOffer offer;
+  final String consentReference;
+  final String reason;
+
+  @override
+  List<Object?> get props => [id, offer, consentReference, reason];
+}
+
+class AssistedRejectParams extends Equatable {
+  const AssistedRejectParams({required this.id, required this.offer, required this.reason});
+
+  final String id;
+  final CaseOffer offer;
+  final String reason;
+
+  @override
+  List<Object?> get props => [id, offer, reason];
+}
+
+class AcceptOfferOnBehalf extends UseCase<void, AssistedAcceptParams> {
+  const AcceptOfferOnBehalf(this._repository);
+
+  final ExchangeDeskRepository _repository;
+
+  @override
+  Future<Result<void>> call(AssistedAcceptParams params) => _repository.acceptOnBehalf(
+    params.id,
+    params.offer,
+    consentReference: params.consentReference,
+    reason: params.reason,
+  );
+}
+
+class RejectOfferOnBehalf extends UseCase<void, AssistedRejectParams> {
+  const RejectOfferOnBehalf(this._repository);
+
+  final ExchangeDeskRepository _repository;
+
+  @override
+  Future<Result<void>> call(AssistedRejectParams params) =>
+      _repository.rejectOnBehalf(params.id, params.offer, reason: params.reason);
 }
 
 class StartExchangeHandover extends UseCase<void, String> {

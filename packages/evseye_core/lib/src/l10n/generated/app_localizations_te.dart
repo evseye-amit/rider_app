@@ -584,6 +584,9 @@ class AppL10nTe extends AppL10n {
   String get commonConfirmAccountNumber => 'ఖాతా నంబర్ మళ్ళీ రాయండి';
 
   @override
+  String get commonContinue => 'కొనసాగించండి';
+
+  @override
   String get commonCouldNotOpenDocumentTry => 'పత్రం తెరవలేదు. మళ్ళీ ప్రయత్నించండి.';
 
   @override
@@ -659,6 +662,9 @@ class AppL10nTe extends AppL10n {
   String get commonLanguage => 'భాష';
 
   @override
+  String get commonLoadMore => 'మరిన్ని చూపించు';
+
+  @override
   String get commonLowPriority => 'తక్కువ ప్రాధాన్యత';
 
   @override
@@ -701,10 +707,19 @@ class AppL10nTe extends AppL10n {
   String get commonNotFound => 'దొరకలేదు.';
 
   @override
+  String get commonNow => 'ఇప్పుడు';
+
+  @override
   String get commonOdometer => 'ఓడోమీటర్';
 
   @override
+  String get commonOff => 'ఆఫ్';
+
+  @override
   String get commonOffline => 'ఆఫ్‌లైన్';
+
+  @override
+  String get commonOn => 'ఆన్';
 
   @override
   String get commonOpen => 'తెరవండి';
@@ -1340,6 +1355,9 @@ class AppL10nTe extends AppL10n {
   String get earningsWeeklyDistance => 'వారపు దూరం';
 
   @override
+  String get errorActiveScooterRequired => 'దీనికి మీకు స్కూటర్ కేటాయించి ఉండాలి.';
+
+  @override
   String get errorCouldNotReachServerCheck => 'సర్వర్‌ను చేరలేకపోయాం. మీ కనెక్షన్ చూసుకోండి.';
 
   @override
@@ -1350,6 +1368,9 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get errorPaymentPending => 'చెల్లింపు పెండింగ్';
+
+  @override
+  String get errorRiderProfileMissing => 'రైడర్ ప్రొఫైల్ దొరకలేదు.';
 
   @override
   String get errorServerTookTooLongAnswer => 'సర్వర్ సమాధానం ఇవ్వడానికి చాలా సమయం తీసుకుంది.';
@@ -1435,10 +1456,29 @@ class AppL10nTe extends AppL10n {
   String get exchangeDepositToPay => 'చెల్లించాల్సిన అదనపు డిపాజిట్';
 
   @override
+  String get exchangeDeskAcceptedForRider => 'రైడర్ తరఫున ఆఫర్ అంగీకరించారు';
+
+  @override
+  String get exchangeDeskAcceptForRider => 'రైడర్ తరఫున అంగీకరించండి';
+
+  @override
   String get exchangeDeskApprove => 'అభ్యర్థన ఆమోదించండి';
 
   @override
   String get exchangeDeskApproved => 'అభ్యర్థన ఆమోదించారు';
+
+  @override
+  String get exchangeDeskAssistedHint =>
+      'రైడర్ యాప్ వాడలేకపోతే, వారి సమాధానాన్ని మీరు నమోదు చేయవచ్చు. వారి స్పష్టమైన అంగీకారంతో మాత్రమే చేయండి.';
+
+  @override
+  String get exchangeDeskAssistedReason => 'కారణం';
+
+  @override
+  String get exchangeDeskAssistedReasonNeeded => 'వారి తరఫున అంగీకరించడానికి కారణం జోడించండి';
+
+  @override
+  String get exchangeDeskAssistedReasonSubtitle => 'రైడర్ స్వయంగా యాప్‌లో ఎందుకు అంగీకరించడం లేదు?';
 
   @override
   String get exchangeDeskChangeScooter => 'స్కూటర్ మార్చండి';
@@ -1451,6 +1491,30 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get exchangeDeskConfirmReturn => 'స్కూటర్ వాపసు నిర్ధారించండి';
+
+  @override
+  String get exchangeDeskConsentNeeded => 'రైడర్ ఎలా అంగీకారం ఇచ్చారో జోడించండి';
+
+  @override
+  String get exchangeDeskConsentReference => 'అంగీకార రిఫరెన్స్';
+
+  @override
+  String get exchangeDeskConsentSubtitle =>
+      'రైడర్ ఎలా అంగీకరించారు? ఉదాహరణకు సంతకం చేసిన ఫారం నంబర్ లేదా రికార్డ్ చేసిన కాల్.';
+
+  @override
+  String get exchangeDeskDeclinedForRider => 'రైడర్ తరఫున ఆఫర్ తిరస్కరించారు';
+
+  @override
+  String get exchangeDeskDeclineForRider => 'రైడర్ తిరస్కరించారు';
+
+  @override
+  String get exchangeDeskDeclineSubtitle => 'రైడర్ ఆఫర్‌ను ఎందుకు తిరస్కరించారో నమోదు చేయండి.';
+
+  @override
+  String exchangeDeskDepositBreakdown(String total, String newDeposit, String shortfall) {
+    return '$total ఇంకా బకాయి ఉంది: కొత్త స్కూటర్‌కు $newDeposit, రైడర్ సెక్యూరిటీ డిపాజిట్ నింపడానికి $shortfall.';
+  }
 
   @override
   String exchangeDeskDepositDue(String amount) {
@@ -1502,6 +1566,9 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get exchangeDeskOfferSent => 'రైడర్‌కు ఆఫర్ పంపారు';
+
+  @override
+  String get exchangeDeskOpenAllocation => 'కొత్త కేటాయింపును తెరవండి';
 
   @override
   String get exchangeDeskOpenReturn => 'వాపసు తెరవండి';
@@ -1579,6 +1646,9 @@ class AppL10nTe extends AppL10n {
   String get exchangeErrorAlreadyReturned => 'పాత స్కూటర్ ఇప్పటికే తిరిగి ఇచ్చారు.';
 
   @override
+  String get exchangeErrorBatteryPlan => 'ఈ స్కూటర్‌కు రైడర్ బ్యాటరీ ప్లాన్ అందుబాటులో లేదు.';
+
+  @override
   String get exchangeErrorBillingChanged => 'ఆఫర్ ఆమోదించిన తర్వాత బిల్లింగ్ మారింది. దయచేసి సపోర్ట్‌ను సంప్రదించండి.';
 
   @override
@@ -1611,7 +1681,7 @@ class AppL10nTe extends AppL10n {
   String get exchangeErrorNoRental => 'మీకు యాక్టివ్ అద్దె కనిపించలేదు.';
 
   @override
-  String get exchangeErrorNoScooter => 'మార్పు అభ్యర్థనకు మీకు స్కూటర్ కేటాయించి ఉండాలి.';
+  String get exchangeErrorNotEligible => 'రైడర్ ఈ స్కూటర్‌కు అర్హులు కాదు.';
 
   @override
   String get exchangeErrorNoTerms =>
@@ -1625,6 +1695,10 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get exchangeErrorOfferInvalid => 'ఈ ఆఫర్‌ను ధృవీకరించలేకపోయాం. మళ్లీ పంపమని మీ హబ్‌ను అడగండి.';
+
+  @override
+  String get exchangeErrorPricingSetup =>
+      'ఈ స్కూటర్‌కు ధర ఇంకా సెట్ చేయలేదు. రేట్ కార్డ్ తనిఖీ చేయమని ఆపరేటర్‌ను అడగండి.';
 
   @override
   String get exchangeErrorRecordsMissing =>
@@ -2098,6 +2172,12 @@ class AppL10nTe extends AppL10n {
   String get hubWorkingLate => 'ఆలస్యంగా పని';
 
   @override
+  String get inspectionErrorSafeForReuse => 'స్కూటర్‌ను మళ్లీ ఇవ్వడానికి సురక్షితమో కాదో చెప్పండి.';
+
+  @override
+  String get inspectionErrorUnsafeReason => 'స్కూటర్‌ను మళ్లీ ఇవ్వడానికి ఎందుకు సురక్షితం కాదో జోడించండి.';
+
+  @override
   String get introCouldNotLoad => 'పరిచయ స్లైడ్‌లు తెరవలేకపోయాం.';
 
   @override
@@ -2139,10 +2219,13 @@ class AppL10nTe extends AppL10n {
   String get introVehicleTitle => 'మీ స్కూటర్,\nపూర్తిగా అనుసంధానం';
 
   @override
-  String get legalTermsAgree => 'నేను నిబంధనలు మరియు షరతులను చదివాను మరియు అంగీకరిస్తున్నాను';
+  String get legalAppName => 'యాప్';
 
   @override
-  String get legalTermsCouldNotLoad => 'నిబంధనలు తెరవలేకపోయాం';
+  String get legalDocumentCouldNotLoad => 'ఈ పత్రాన్ని లోడ్ చేయలేకపోయాం';
+
+  @override
+  String get legalTermsAgree => 'నేను నిబంధనలు మరియు షరతులను చదివాను మరియు అంగీకరిస్తున్నాను';
 
   @override
   String get legalTermsSubtitle => 'కొనసాగించే ముందు దయచేసి ఈ నిబంధనలను చదవండి.';
@@ -2612,6 +2695,9 @@ class AppL10nTe extends AppL10n {
   String get onboardingReferralCodeApplied => 'రెఫరల్ కోడ్ వర్తించబడింది';
 
   @override
+  String get onboardingReferralNotFound => 'దీనికి రెఫరల్ ఏదీ దొరకలేదు. కోడ్ లేదా మొబైల్ నంబర్‌ను తనిఖీ చేయండి.';
+
+  @override
   String get onboardingReferralTapApply => 'ఈ కోడ్ ఉపయోగించడానికి వర్తించు నొక్కండి, లేదా దాన్ని తీసివేయండి';
 
   @override
@@ -2867,44 +2953,96 @@ class AppL10nTe extends AppL10n {
       'ఆటో-డెబిట్‌తో ప్రతిసారీ సమయానికి చెల్లింపు జరుగుతుంది, మీరే పంపనవసరం లేదు';
 
   @override
-  String get rentalsAutoDebitMandate => 'ఆటో-డెబిట్ అనుమతి';
-
-  @override
-  String get rentalsAutoDebitNotActiveSettle =>
-      'ఆటో-డెబిట్ అమలులో లేదు. అనుమతి తిరిగి వచ్చేవరకు రాబోయే బిల్లులు మీరే చెల్లించండి.';
-
-  @override
   String get rentalsBillingPeriod => 'బిల్లు కాలం';
+
+  @override
+  String get rentalsBills => 'బిల్లులు';
+
+  @override
+  String get rentalsCouldNotLoadBill => 'ఈ బిల్లును లోడ్ చేయలేకపోయాం';
+
+  @override
+  String get rentalsCouldNotLoadLedger => 'మీ లెడ్జర్‌ను లోడ్ చేయలేకపోయాం';
+
+  @override
+  String get rentalsCouldNotLoadPayments => 'మీ చెల్లింపులను లోడ్ చేయలేకపోయాం';
 
   @override
   String get rentalsCouldNotLoadRentPlan => 'మీ అద్దె ప్లాన్ తెరవలేకపోయాం';
 
   @override
+  String get rentalsCredit => 'అందుబాటులో ఉన్న క్రెడిట్';
+
+  @override
+  String get rentalsCreditsApplied => 'వర్తించిన క్రెడిట్';
+
+  @override
   String get rentalsCurrentPlan => 'ప్రస్తుత ప్లాన్';
 
   @override
-  String get rentalsDebits => 'కోత దీనిలో';
-
-  @override
-  String get rentalsDownloadPdf => 'పీడీఎఫ్ డౌన్‌లోడ్ చేయండి';
+  String get rentalsDepositHeld => 'ఉంచిన డిపాజిట్';
 
   @override
   String get rentalsDue => 'చెల్లింపు తేదీ';
 
   @override
-  String get rentalsFailed => 'విఫలమైంది';
+  String get rentalsDueLater => 'తర్వాత చెల్లించాలి';
+
+  @override
+  String get rentalsFromWallet => 'మీ వాలెట్ నుండి';
 
   @override
   String get rentalsInvoiceHistory => 'బిల్లు చరిత్ర';
 
   @override
-  String get rentalsMaintenanceCover => 'నిర్వహణ కవర్';
+  String get rentalsLedger => 'లెడ్జర్';
 
   @override
-  String get rentalsNextDebit => 'తదుపరి కోత';
+  String get rentalsLedgerAdjustment => 'సర్దుబాటు';
+
+  @override
+  String get rentalsLedgerCharge => 'ఛార్జీ';
+
+  @override
+  String get rentalsLedgerCredit => 'క్రెడిట్';
+
+  @override
+  String get rentalsLedgerDeposit => 'డిపాజిట్';
+
+  @override
+  String get rentalsLedgerHint => 'మీ ఖాతాలోని ప్రతి ఛార్జీ, చెల్లింపు, క్రెడిట్, కొత్తవి ముందు.';
+
+  @override
+  String get rentalsLedgerPayment => 'చెల్లింపు';
+
+  @override
+  String get rentalsLedgerRefund => 'రీఫండ్';
+
+  @override
+  String get rentalsLedgerReversal => 'రివర్సల్';
 
   @override
   String get rentalsNoInvoicesYet => 'ఇంకా బిల్లులు లేవు';
+
+  @override
+  String get rentalsNoLedger => 'మీ లెడ్జర్‌లో ఇంకా ఏమీ లేదు';
+
+  @override
+  String get rentalsNoLedgerBody => 'ఛార్జీలు, చెల్లింపులు జరిగినప్పుడు ఇక్కడ కనిపిస్తాయి.';
+
+  @override
+  String get rentalsNoPayments => 'ఇంకా చెల్లింపులు లేవు';
+
+  @override
+  String get rentalsNoPaymentsBody => 'మీ బిల్లుల కోసం చేసే చెల్లింపులు ఇక్కడ కనిపిస్తాయి.';
+
+  @override
+  String get rentalsOutstanding => 'బకాయి';
+
+  @override
+  String rentalsOverdueNotice(String amount) {
+    return '$amount గడువు దాటింది. అంతరాయం లేకుండా నడపడానికి త్వరగా చెల్లించండి.';
+  }
 
   @override
   String get rentalsPaid => 'చెల్లించారు';
@@ -2913,14 +3051,23 @@ class AppL10nTe extends AppL10n {
   String get rentalsPaid2 => 'చెల్లింపు తేదీ';
 
   @override
-  String get rentalsPlanAutoDebitRentReceipts => 'మీ ప్లాన్, ఆటో-డెబిట్ మరియు అద్దె రసీదులు';
+  String get rentalsPaidSoFar => 'ఇప్పటి వరకు చెల్లించింది';
+
+  @override
+  String get rentalsPayments => 'చెల్లింపులు';
+
+  @override
+  String rentalsReceiptInvoices(int count) {
+    return '$count బిల్లు(లు) చెల్లించారు';
+  }
+
+  @override
+  String rentalsRefunded(String amount) {
+    return '$amount రీఫండ్ చేశారు';
+  }
 
   @override
   String get rentalsRentals => 'అద్దె';
-
-  @override
-  String get rentalsRentCollectedAutomaticallyFromLinked =>
-      'అద్దె పైన ఉన్న తేదీన మీ అనుసంధాన బ్యాంక్ ఖాతా నుంచి దానంతట అదే కోత అవుతుంది.';
 
   @override
   String get rentalsRentHandledAutomatically => 'అద్దె, దానంతట అదే కోత అవుతుంది';
@@ -2932,10 +3079,687 @@ class AppL10nTe extends AppL10n {
   String get rentalsRentReceiptsWillAppearHere => 'మీ అద్దె రసీదులు ఇక్కడ కనిపిస్తాయి.';
 
   @override
+  String get rentalsStatusDraft => 'డ్రాఫ్ట్';
+
+  @override
+  String get rentalsStatusDue => 'చెల్లించాలి';
+
+  @override
+  String get rentalsStatusOverdue => 'గడువు దాటింది';
+
+  @override
+  String get rentalsStatusPartlyPaid => 'పాక్షికంగా చెల్లించారు';
+
+  @override
+  String get rentalsStatusVoid => 'రద్దు';
+
+  @override
+  String get rentalsStillDue => 'ఇంకా బకాయి';
+
+  @override
+  String get rentalsSubtitle => 'మీ ప్లాన్, బిల్లులు, ఖాతా చరిత్ర';
+
+  @override
+  String get rentalsSubtotal => 'ఉపమొత్తం';
+
+  @override
   String get rentalsTapReceiptSeeFullBreakdown => 'పూర్తి వివరం చూడటానికి రసీదును నొక్కండి';
 
   @override
-  String get rentalsVehicleRent => 'వాహన అద్దె';
+  String get rentalsTax => 'పన్ను';
+
+  @override
+  String get rentalsUnallocated => 'ఇంకా వర్తించని చెల్లింపులు';
+
+  @override
+  String get rentalsYourAccount => 'మీ ఖాతా';
+
+  @override
+  String get returnDeskAddCharge => 'ఛార్జీ జోడించండి';
+
+  @override
+  String get returnDeskAdminApproved => 'రైడర్ తరఫున ఒక అడ్మిన్ ఈ ఛార్జీలను ఆమోదించారు.';
+
+  @override
+  String get returnDeskApprove => 'ఆమోదించండి';
+
+  @override
+  String get returnDeskApproveAndPost => 'ఆమోదించి ఛార్జీలు చేర్చండి';
+
+  @override
+  String get returnDeskApproveAsManager => 'మేనేజర్‌గా ఆమోదించండి';
+
+  @override
+  String returnDeskApproveBodyPost(String amount) {
+    return '$amount రైడర్ బిల్లులో చేర్చబడుతుంది.';
+  }
+
+  @override
+  String get returnDeskApproveBodyWait => 'మీ ఆమోదం నమోదవుతుంది. రైడర్ కూడా ఆమోదించిన తర్వాత ఛార్జీలు చేరతాయి.';
+
+  @override
+  String get returnDeskApproved => 'ఆమోదం నమోదైంది';
+
+  @override
+  String get returnDeskApproveForRider => 'రైడర్ తరఫున ఆమోదించండి';
+
+  @override
+  String get returnDeskApproveTitle => 'ఈ ఛార్జీలను ఆమోదించాలా?';
+
+  @override
+  String get returnDeskBackdateReason => 'దీన్ని ఎందుకు ఆలస్యంగా నమోదు చేస్తున్నారు?';
+
+  @override
+  String get returnDeskBackdateReasonNeeded => 'ముందు సమయానికి కారణం జోడించండి';
+
+  @override
+  String get returnDeskCaseTitle => 'రిటర్న్';
+
+  @override
+  String get returnDeskChargeDetails => 'వివరాలు';
+
+  @override
+  String get returnDeskChargeDetailsHint => 'ఖచ్చితంగా ఏమి పాడైంది లేదా తప్పిపోయింది?';
+
+  @override
+  String get returnDeskChargesHint =>
+      'ధరల జాబితా నుండి ఎంచుకోండి. ప్రతి ఛార్జీకి వివరాలు, కనీసం ఒక తనిఖీ ఫోటో ఆధారంగా అవసరం.';
+
+  @override
+  String get returnDeskChecklistHint =>
+      'నింపిన రిటర్న్ చెక్‌లిస్ట్ ఫోటో. తప్పిపోయిన వస్తువుల ఛార్జీలకు ఇది ఆధారంగా అవసరం.';
+
+  @override
+  String get returnDeskChecklistNeeded => 'తప్పిపోయిన వస్తువుల ఛార్జీలకు రిటర్న్ చెక్‌లిస్ట్ ఫోటో ఆధారంగా అవసరం.';
+
+  @override
+  String get returnDeskChecklistPhoto => 'రిటర్న్ చెక్‌లిస్ట్';
+
+  @override
+  String get returnDeskClosedNoCharges => 'ఛార్జీలు లేకుండా రిటర్న్ ముగిసింది';
+
+  @override
+  String get returnDeskCloseNoCharges => 'ఛార్జీలు లేకుండా ముగించండి';
+
+  @override
+  String get returnDeskCloseNoChargesBody => 'రిటర్న్ ముగుస్తుంది, ఈ స్కూటర్‌కు రైడర్‌కు ఛార్జీ వేయరు.';
+
+  @override
+  String get returnDeskCouldNotLoad => 'రిటర్న్‌లను లోడ్ చేయలేకపోయాం';
+
+  @override
+  String get returnDeskCouldNotLoadInspection => 'తనిఖీని లోడ్ చేయలేకపోయాం';
+
+  @override
+  String get returnDeskDamageHint =>
+      'ఏవైనా సొట్టలు, గీతలు లేదా విరిగిన భాగాల దగ్గరి ఫోటోలు. ఛార్జీలకు ఆధారంగా వాడవచ్చు.';
+
+  @override
+  String get returnDeskDamagePhoto => 'నష్టం ఫోటో';
+
+  @override
+  String get returnDeskDamagePhotos => 'నష్టం ఫోటోలు';
+
+  @override
+  String get returnDeskDetailsNeeded => 'వివరాలు జోడించండి';
+
+  @override
+  String get returnDeskDraftSaved => 'డ్రాఫ్ట్ సేవ్ అయింది';
+
+  @override
+  String get returnDeskEditCharge => 'ఛార్జీని సవరించండి';
+
+  @override
+  String get returnDeskEmpty => 'ఇక్కడ రిటర్న్‌లు లేవు';
+
+  @override
+  String get returnDeskEmptyBody => 'మీ హబ్‌లలో రైడర్లు బుక్ చేసే రిటర్న్‌లు ఇక్కడ కనిపిస్తాయి.';
+
+  @override
+  String get returnDeskEvidence => 'ఆధార ఫోటోలు';
+
+  @override
+  String get returnDeskEvidenceNeeded => 'ఆధారంగా కనీసం ఒక ఫోటోను ఎంచుకోండి';
+
+  @override
+  String get returnDeskFilterReturned => 'తిరిగి ఇచ్చినవి';
+
+  @override
+  String get returnDeskFilterToReceive => 'స్వీకరించాల్సినవి';
+
+  @override
+  String get returnDeskFinishInspection => 'తనిఖీ ముగించండి';
+
+  @override
+  String get returnDeskGuideApprove =>
+      'రైడర్ వైపు పని పూర్తయింది. తర్వాత ఫ్లీట్ లేదా ఆపరేషన్స్ మేనేజర్ ఆమోదిస్తారు, ఛార్జీలు రైడర్ బిల్లులో చేరతాయి.';
+
+  @override
+  String get returnDeskGuideCancelled => 'రైడర్ ఈ రిటర్న్‌ను రద్దు చేశారు. చేయాల్సింది ఏమీ లేదు.';
+
+  @override
+  String get returnDeskGuideCharges =>
+      'పాడైన లేదా తప్పిపోయిన వాటికి ఛార్జీ జోడించి, రైడర్‌కు పంపండి. అంతా బాగుంటే ఛార్జీలు లేకుండా రిటర్న్‌ను ముగించండి.';
+
+  @override
+  String get returnDeskGuideClosed => 'ఈ రిటర్న్ ముగిసింది.';
+
+  @override
+  String get returnDeskGuideDisputed => 'రైడర్ ఛార్జీలపై అభ్యంతరం చెప్పారు. వాటిని సవరించి మళ్లీ పంపండి.';
+
+  @override
+  String get returnDeskGuideInspect =>
+      'స్కూటర్ హబ్‌లో ఉంది. దాన్ని తనిఖీ చేసి, ఫోటోలు తీసి, మళ్లీ అద్దెకు ఇవ్వవచ్చో నిర్ణయించండి.';
+
+  @override
+  String returnDeskGuideReceive(String date) {
+    return 'రైడర్ $date న స్కూటర్ తీసుకురావాలని అనుకుంటున్నారు. హబ్‌కు చేరినప్పుడు స్వీకరించినట్లు గుర్తించండి.';
+  }
+
+  @override
+  String get returnDeskGuideWithRider => 'ఛార్జీలు రైడర్ వద్ద ఉన్నాయి, వారి ఫోన్‌కు వచ్చిన కోడ్‌తో ఆమోదిస్తారు.';
+
+  @override
+  String get returnDeskInspectHint => 'ఫోటోలు తీసి, చెక్‌లిస్ట్ చూసి, స్కూటర్‌ను మళ్లీ ఇవ్వవచ్చో నిర్ణయించండి.';
+
+  @override
+  String get returnDeskInspectionDone => 'తనిఖీ సేవ్ అయింది';
+
+  @override
+  String get returnDeskInspectionResult => 'తనిఖీ';
+
+  @override
+  String get returnDeskInspectTitle => 'స్కూటర్ తనిఖీ';
+
+  @override
+  String get returnDeskLoadingPhotos => 'తనిఖీ ఫోటోలు లోడ్ అవుతున్నాయి. కొద్దిసేపట్లో మళ్లీ ప్రయత్నించండి.';
+
+  @override
+  String get returnDeskManagerApproved => 'మేనేజర్ ఆమోదించారు';
+
+  @override
+  String get returnDeskMarkReceived => 'స్వీకరించినట్లు గుర్తించు';
+
+  @override
+  String get returnDeskNoInspection => 'తనిఖీ ఇంకా సిద్ధం కాలేదు. రిఫ్రెష్ చేయడానికి కిందికి లాగండి.';
+
+  @override
+  String get returnDeskNoPhotoRules =>
+      'ఇక్కడ ఫోటోలు తప్పనిసరి కాదు. సహాయపడితే చెక్‌లిస్ట్ లేదా నష్టం ఫోటోలు జోడించండి.';
+
+  @override
+  String get returnDeskNoPhotosYet => 'ఇంకా తనిఖీ ఫోటోలు లేవు. వాటిని తనిఖీ స్క్రీన్‌లో జోడించండి.';
+
+  @override
+  String get returnDeskNoPrices => 'ఇంకా జరిమానా ధరలు సెట్ చేయలేదు. జోడించమని అడ్మిన్‌ను అడగండి.';
+
+  @override
+  String get returnDeskOverridden => 'రైడర్ తరఫున ఆమోదించారు';
+
+  @override
+  String get returnDeskOverrideReason => 'కారణం';
+
+  @override
+  String get returnDeskOverrideReasonNeeded => 'రైడర్ తరఫున ఆమోదించడానికి కారణం జోడించండి.';
+
+  @override
+  String get returnDeskOverrideSubtitle => 'రైడర్ ఆమోదించలేనప్పుడు మాత్రమే దీన్ని వాడండి. కారణం రికార్డులో ఉంటుంది.';
+
+  @override
+  String get returnDeskPhotos => 'ఫోటోలు';
+
+  @override
+  String get returnDeskPhotosHint => 'ఆ ఫోటో తీయడానికి టైల్‌ను నొక్కండి. ఎరుపు చుక్క ఉన్నవి తప్పనిసరి.';
+
+  @override
+  String returnDeskPhotosMissing(String names) {
+    return 'ఇంకా కావాలి: $names';
+  }
+
+  @override
+  String get returnDeskPickCharge => 'ధరల జాబితా నుండి ఛార్జీని ఎంచుకోండి';
+
+  @override
+  String returnDeskPosted(String date) {
+    return '$date న ఛార్జీలు రైడర్ బిల్లులో చేర్చబడ్డాయి.';
+  }
+
+  @override
+  String get returnDeskReceived => 'స్కూటర్ స్వీకరించబడింది';
+
+  @override
+  String get returnDeskReceivedAt => 'స్వీకరించిన సమయం';
+
+  @override
+  String get returnDeskReceivedEarlier => 'ఇది ముందే వచ్చింది';
+
+  @override
+  String get returnDeskReceivedEarlierHint => 'ఆలస్యంగా నమోదు చేస్తుంటే అసలు సమయం నమోదు చేయండి';
+
+  @override
+  String returnDeskReceivedOn(String date) {
+    return '$date న స్వీకరించారు';
+  }
+
+  @override
+  String get returnDeskReceiveHint =>
+      'స్కూటర్ హబ్‌కు వచ్చిన తర్వాతే ఇది చేయండి. మీరు నమోదు చేసిన సమయం నుండి అద్దె ముగుస్తుంది.';
+
+  @override
+  String get returnDeskReceiveTitle => 'స్కూటర్‌ను స్వీకరించండి';
+
+  @override
+  String get returnDeskReceivingHub => 'స్వీకరించే హబ్';
+
+  @override
+  String get returnDeskReviseHint => 'వివాదంలోని ఛార్జీలను మార్చండి లేదా తొలగించండి, తర్వాత రైడర్‌కు మళ్లీ పంపండి.';
+
+  @override
+  String get returnDeskRiderApproved => 'రైడర్ ఈ ఛార్జీలను ఆమోదించారు.';
+
+  @override
+  String get returnDeskRiderDispute => 'రైడర్ అభ్యంతరం';
+
+  @override
+  String get returnDeskRiderNote => 'రైడర్ గమనిక';
+
+  @override
+  String get returnDeskSafeNo => 'ముందు మరమ్మతు అవసరం';
+
+  @override
+  String get returnDeskSafeNoHint => 'ఇది మెయింటెనెన్స్‌కు వెళ్తుంది, కేటాయించలేరు';
+
+  @override
+  String get returnDeskSafety => 'దీన్ని మళ్లీ అద్దెకు ఇవ్వవచ్చా?';
+
+  @override
+  String get returnDeskSafetyNeeded => 'స్కూటర్‌ను మళ్లీ అద్దెకు ఇవ్వవచ్చో ఎంచుకోండి';
+
+  @override
+  String get returnDeskSafeYes => 'మళ్లీ అద్దెకు సురక్షితం';
+
+  @override
+  String get returnDeskSafeYesHint => 'ఇది అందుబాటులో ఉన్న స్కూటర్లలోకి తిరిగి వెళ్తుంది';
+
+  @override
+  String get returnDeskSaveCharge => 'ఛార్జీ సేవ్ చేయండి';
+
+  @override
+  String get returnDeskSaveDraft => 'డ్రాఫ్ట్ సేవ్ చేయండి';
+
+  @override
+  String get returnDeskSendToRider => 'రైడర్‌కు పంపండి';
+
+  @override
+  String get returnDeskSendToRiderBody =>
+      'రైడర్ ఈ ఛార్జీలను తమ యాప్‌లో చూసి కోడ్‌తో ఆమోదిస్తారు. రైడర్ వద్ద ఉన్నప్పుడు మీరు వాటిని సవరించలేరు.';
+
+  @override
+  String get returnDeskSentToRider => 'ఛార్జీలు రైడర్‌కు పంపబడ్డాయి';
+
+  @override
+  String get returnDeskStageApproval => 'ఆమోదం అవసరం';
+
+  @override
+  String get returnDeskStageAwaiting => 'స్కూటర్ కోసం వేచి ఉంది';
+
+  @override
+  String get returnDeskStageCharges => 'ఛార్జీలు జోడించండి';
+
+  @override
+  String get returnDeskStageInspect => 'స్కూటర్‌ను తనిఖీ చేయండి';
+
+  @override
+  String get returnDeskStageWithRider => 'రైడర్ వద్ద';
+
+  @override
+  String get returnDeskStartInspection => 'తనిఖీ ప్రారంభించండి';
+
+  @override
+  String get returnDeskSubtitle => 'రైడర్లు తిరిగి ఇస్తున్న స్కూటర్లు';
+
+  @override
+  String get returnDeskTitle => 'రిటర్న్ డెస్క్';
+
+  @override
+  String get returnDeskUnsafeReason => 'ఏమి సరిచేయాలి?';
+
+  @override
+  String get returnDeskUnsafeReasonNeeded => 'ఏమి సరిచేయాలో చెప్పండి';
+
+  @override
+  String get returnDeskWaitingManager => 'తర్వాత ఫ్లీట్ లేదా ఆపరేషన్స్ మేనేజర్ ఆమోదిస్తారు.';
+
+  @override
+  String returnDeskWaitingRider(String name) {
+    return '$name ఫోన్‌కు పంపిన కోడ్‌తో ఆమోదం కోసం వేచి ఉంది.';
+  }
+
+  @override
+  String get returnsAgreement => 'ఒప్పందం';
+
+  @override
+  String get returnsApproveCharges => 'ఛార్జీలను ఆమోదించండి';
+
+  @override
+  String returnsApproveSubtitle(String amount) {
+    return 'మీ ఫోన్‌కు 6 అంకెల కోడ్ పంపాం. దాన్ని నమోదు చేస్తే $amount ఛార్జీలు ఆమోదించబడతాయి.';
+  }
+
+  @override
+  String get returnsApproveTitle => 'కోడ్ నమోదు చేయండి';
+
+  @override
+  String get returnsCancel => 'రిటర్న్ రద్దు చేయండి';
+
+  @override
+  String get returnsCancelBody => 'స్కూటర్ మీ దగ్గరే ఉంటుంది, అద్దె ఎప్పటిలాగే కొనసాగుతుంది.';
+
+  @override
+  String get returnsCancelled => 'రిటర్న్ రద్దయింది';
+
+  @override
+  String get returnsCancelTitle => 'ఈ రిటర్న్‌ను రద్దు చేయాలా?';
+
+  @override
+  String get returnsCharges => 'ఛార్జీలు';
+
+  @override
+  String get returnsChargesApproved => 'ఛార్జీలు ఆమోదించబడ్డాయి';
+
+  @override
+  String get returnsChargesPending => 'హబ్ ఇంకా స్కూటర్‌ను తనిఖీ చేస్తోంది. ఛార్జీలు ఉంటే ఇక్కడ కనిపిస్తాయి.';
+
+  @override
+  String get returnsCodeExpired => 'ఆ కోడ్ గడువు ముగిసింది. కొత్తది అడగండి.';
+
+  @override
+  String get returnsCodeInvalid => 'ఆ కోడ్ పనిచేయలేదు. తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.';
+
+  @override
+  String get returnsCouldNotLoad => 'మీ రిటర్న్‌లను లోడ్ చేయలేకపోయాం';
+
+  @override
+  String get returnsCouldNotLoadHubs => 'హబ్‌లను లోడ్ చేయలేకపోయాం';
+
+  @override
+  String get returnsDate => 'తిరిగి ఇచ్చే తేదీ';
+
+  @override
+  String get returnsDetails => 'వివరాలు';
+
+  @override
+  String get returnsDetailTitle => 'రిటర్న్';
+
+  @override
+  String get returnsDisputeCharges => 'ఛార్జీలపై అభ్యంతరం';
+
+  @override
+  String get returnsDisputeReason => 'ఏమి తప్పు?';
+
+  @override
+  String get returnsDisputeReasonRequired => 'హబ్ బృందం సమీక్షించడానికి కారణం జోడించండి.';
+
+  @override
+  String get returnsDisputeSent => 'అభ్యంతరం హబ్ బృందానికి పంపబడింది';
+
+  @override
+  String get returnsDisputeSubtitle => 'ఈ ఛార్జీలలో ఏమి తప్పు ఉందో హబ్ బృందానికి చెప్పండి.';
+
+  @override
+  String get returnsEndRentalBody =>
+      'దాన్ని ఎప్పుడు, ఎక్కడ తిరిగి ఇస్తారో చెప్పండి. హబ్ బృందం దాన్ని తనిఖీ చేస్తుంది, ఏవైనా ఛార్జీలు ముందుగా మీ ఆమోదానికి వస్తాయి.';
+
+  @override
+  String get returnsEndRentalTitle => 'స్కూటర్ ఇక అవసరం లేదా?';
+
+  @override
+  String get returnsErrorAlreadyReceived => 'ఈ స్కూటర్‌ను ఇప్పటికే స్వీకరించారు.';
+
+  @override
+  String get returnsErrorAlreadyRequested => 'ఈ అద్దెకు ఇప్పటికే తిరిగి ఇచ్చే అభ్యర్థన ఉంది.';
+
+  @override
+  String get returnsErrorApprovalNotPending => 'ఈ జరిమానాలు మీ ఆమోదం కోసం వేచి లేవు.';
+
+  @override
+  String get returnsErrorBeforeAgreement => 'రిటర్న్ సమయం అద్దె మొదలవడానికి ముందుది.';
+
+  @override
+  String get returnsErrorInspectFirst => 'జరిమానాలు జోడించే ముందు రిటర్న్ తనిఖీ పూర్తి చేయండి.';
+
+  @override
+  String get returnsErrorNotCancellable => 'ఈ రిటర్న్‌ను ఇక రద్దు చేయలేరు.';
+
+  @override
+  String get returnsErrorNotDisputable => 'ఈ జరిమానాలపై ఇప్పుడు అభ్యంతరం చెప్పలేరు.';
+
+  @override
+  String get returnsErrorNotReceivable => 'ఈ రిటర్న్ రద్దయింది, కాబట్టి దీనిపై స్కూటర్‌ను స్వీకరించలేరు.';
+
+  @override
+  String get returnsErrorNotSubmittable => 'ఈ జరిమానాలను ఇప్పుడు సమర్పించలేరు.';
+
+  @override
+  String get returnsErrorNotTerminable => 'ఈ అద్దెను ఇప్పుడు తిరిగి ఇవ్వలేరు.';
+
+  @override
+  String get returnsErrorOverrideNotAllowed => 'ఈ దశలో రైడర్ ఆమోదాన్ని ఓవర్‌రైడ్ చేయలేరు.';
+
+  @override
+  String get returnsErrorPenaltiesLocked => 'రైడర్ వద్ద ఉన్నప్పుడు లేదా ఛార్జ్ చేసిన తర్వాత జరిమానాలను మార్చలేరు.';
+
+  @override
+  String get returnsErrorReceiveFirst => 'జరిమానాలు జోడించే ముందు స్కూటర్‌ను స్వీకరించండి.';
+
+  @override
+  String get returnsErrorRevisePenalties => 'రైడర్ ఈ జరిమానాలపై అభ్యంతరం చెప్పారు. జాబితాను సవరించి మళ్లీ సమర్పించండి.';
+
+  @override
+  String get returnsErrorStateChanged => 'ఈ జరిమానాలు ఇప్పుడే మారాయి. రిఫ్రెష్ చేసి మళ్లీ ప్రయత్నించండి.';
+
+  @override
+  String get returnsErrorSubmitFirst => 'ఆమోదించే ముందు జరిమానాలను సమర్పించండి.';
+
+  @override
+  String returnsEtaMinutes(int minutes) {
+    return '$minutes నిమిషాల దూరం';
+  }
+
+  @override
+  String returnsEvidenceCount(int count) {
+    return 'ఆధారంగా $count ఫోటో(లు)';
+  }
+
+  @override
+  String get returnsHandedOver => 'అప్పగించారు';
+
+  @override
+  String get returnsHub => 'రిటర్న్ హబ్';
+
+  @override
+  String get returnsKindDamage => 'నష్టం';
+
+  @override
+  String get returnsKindMissing => 'తప్పిపోయిన వస్తువు';
+
+  @override
+  String get returnsLocationForHubs => 'మీకు దగ్గరలోని హబ్‌లను చూపించడానికి మీ లొకేషన్‌ను ఉపయోగిస్తాం.';
+
+  @override
+  String get returnsNextCharges =>
+      'ఏదైనా పాడైనా లేదా తప్పిపోయినా, ఛార్జీలు ఇక్కడ కనిపిస్తాయి, బిల్లు వేయడానికి ముందు కోడ్‌తో మీరు ఆమోదిస్తారు.';
+
+  @override
+  String get returnsNextHandOver => 'ఎంచుకున్న తేదీన స్కూటర్, దాని బ్యాటరీ, ఛార్జర్‌ను హబ్‌కు తీసుకురండి.';
+
+  @override
+  String get returnsNextInspection => 'హబ్ బృందం స్కూటర్‌ను స్వీకరించి తనిఖీ చేస్తుంది.';
+
+  @override
+  String get returnsNoCharges => 'ఈ రిటర్న్‌కు ఛార్జీలు లేవు.';
+
+  @override
+  String get returnsNoHubsNearby => 'మీ దగ్గర హబ్‌లు కనిపించలేదు';
+
+  @override
+  String get returnsNone => 'ఇంకా రిటర్న్‌లు లేవు';
+
+  @override
+  String get returnsNoneBody => 'మీరు స్కూటర్‌ను తిరిగి ఇచ్చినప్పుడు, దాని స్థితిని ఇక్కడ చూడవచ్చు.';
+
+  @override
+  String get returnsNoteAdminApproved =>
+      'మీ తరఫున ఒక అడ్మిన్ ఈ ఛార్జీలను ఆమోదించారు. తర్వాత హబ్ మేనేజర్ నిర్ధారిస్తారు. మీరు ఇంకా అభ్యంతరం చెప్పవచ్చు.';
+
+  @override
+  String get returnsNoteCancelled => 'మీరు ఈ రిటర్న్‌ను రద్దు చేశారు. మీ అద్దె ఎప్పటిలాగే కొనసాగుతుంది.';
+
+  @override
+  String get returnsNoteDisputed => 'మీరు ఈ ఛార్జీలపై అభ్యంతరం చెప్పారు. హబ్ బృందం వాటిని సమీక్షించి సవరించవచ్చు.';
+
+  @override
+  String get returnsNoteInspecting =>
+      'మీ స్కూటర్ హబ్‌లో ఉంది, తనిఖీ జరుగుతోంది. ఏవైనా ఛార్జీలు మీ ఆమోదం కోసం ఇక్కడ కనిపిస్తాయి.';
+
+  @override
+  String get returnsNoteNeedsYou =>
+      'హబ్ కింది ఛార్జీలను గుర్తించింది. మీ ఫోన్‌కు పంపే కోడ్‌తో వాటిని ఆమోదించండి, లేదా అభ్యంతరం చెప్పండి.';
+
+  @override
+  String get returnsNoteNoCharges => 'రిటర్న్ పూర్తయింది. స్కూటర్ బాగానే తిరిగి వచ్చింది, కాబట్టి ఛార్జీలు లేవు.';
+
+  @override
+  String returnsNoteRequested(String date) {
+    return '$date న స్కూటర్‌ను ఎంచుకున్న హబ్‌కు తీసుకెళ్లండి. హబ్ బృందం దాన్ని స్వీకరిస్తుంది.';
+  }
+
+  @override
+  String get returnsNotes => 'ఇంకేమైనా?';
+
+  @override
+  String returnsNoteSettled(String amount) {
+    return 'రిటర్న్ పూర్తయింది. $amount ఛార్జీలు మీ బిల్లులో చేర్చబడ్డాయి.';
+  }
+
+  @override
+  String get returnsNotesHint => 'హబ్ బృందం కోసం ఐచ్ఛిక గమనిక';
+
+  @override
+  String get returnsNoteYouApproved => 'మీరు ఛార్జీలను ఆమోదించారు. తర్వాత హబ్ మేనేజర్ వాటిని నిర్ధారిస్తారు.';
+
+  @override
+  String get returnsNothingToReturn => 'ప్రస్తుతం తిరిగి ఇవ్వాల్సింది ఏమీ లేదు';
+
+  @override
+  String get returnsNothingToReturnBody => 'మీకు యాక్టివ్ అద్దె లేదు, లేదా దాని రిటర్న్ ఇప్పటికే జరుగుతోంది.';
+
+  @override
+  String get returnsPickDate => 'తిరిగి ఇచ్చే తేదీని ఎంచుకోండి';
+
+  @override
+  String get returnsPickHub => 'హబ్‌ను ఎంచుకోండి';
+
+  @override
+  String get returnsPickHubSubtitle => 'మీకు దగ్గరలోని హబ్‌లు పైన ఉన్నాయి';
+
+  @override
+  String get returnsPickReason => 'ఒక కారణాన్ని ఎంచుకోండి';
+
+  @override
+  String get returnsPickRental => 'ముగించాల్సిన అద్దెను ఎంచుకోండి';
+
+  @override
+  String returnsPlannedFor(String date) {
+    return '$date కి ప్లాన్ చేశారు';
+  }
+
+  @override
+  String get returnsProgress => 'పురోగతి';
+
+  @override
+  String get returnsReason => 'కారణం';
+
+  @override
+  String get returnsReasonChangingJob => 'ఉద్యోగం మారుతున్నాను';
+
+  @override
+  String get returnsReasonNoLongerNeeded => 'ఇక ఇది అవసరం లేదు';
+
+  @override
+  String get returnsReasonRelocating => 'వేరే నగరానికి వెళ్తున్నాను';
+
+  @override
+  String get returnsReasonTooExpensive => 'అద్దె చాలా ఎక్కువ';
+
+  @override
+  String get returnsReasonVehicleIssues => 'స్కూటర్‌తో సమస్యలు';
+
+  @override
+  String get returnsRental => 'అద్దె';
+
+  @override
+  String get returnsRequested => 'రిటర్న్ అభ్యర్థన నమోదైంది. హబ్‌లో కలుద్దాం.';
+
+  @override
+  String get returnsRequestReturn => 'రిటర్న్ కోసం అభ్యర్థించండి';
+
+  @override
+  String get returnsRequestSubtitle => 'తేదీని, మీరు తీసుకువచ్చే హబ్‌ను ఎంచుకోండి';
+
+  @override
+  String get returnsSendDispute => 'అభ్యంతరం పంపండి';
+
+  @override
+  String get returnsStatusAwaitingManager => 'హబ్ మేనేజర్ వద్ద';
+
+  @override
+  String get returnsStatusCancelled => 'రద్దు చేశారు';
+
+  @override
+  String get returnsStatusClosed => 'ముగిసింది';
+
+  @override
+  String get returnsStatusDisputed => 'వివాదంలో ఉంది';
+
+  @override
+  String get returnsStatusInspecting => 'తనిఖీ జరుగుతోంది';
+
+  @override
+  String get returnsStatusNeedsYou => 'మీ ఆమోదం అవసరం';
+
+  @override
+  String get returnsStatusRequested => 'రిటర్న్ అభ్యర్థించారు';
+
+  @override
+  String get returnsStepClosed => 'రిటర్న్ పూర్తి';
+
+  @override
+  String get returnsStepHandedOver => 'స్కూటర్ అప్పగింత';
+
+  @override
+  String get returnsStepInspection => 'తనిఖీ, ఛార్జీలు';
+
+  @override
+  String get returnsStepRequested => 'రిటర్న్ అభ్యర్థన';
+
+  @override
+  String get returnsSubtitle => 'మీ అద్దె ముగించి స్కూటర్‌ను తిరిగి ఇవ్వండి';
+
+  @override
+  String get returnsTitle => 'స్కూటర్ తిరిగి ఇవ్వండి';
+
+  @override
+  String get returnsWhenWhere => 'ఎప్పుడు, ఎక్కడ';
+
+  @override
+  String get returnsWhy => 'మీరు దీన్ని ఎందుకు తిరిగి ఇస్తున్నారు?';
+
+  @override
+  String get returnsYourDispute => 'మీ అభ్యంతరం';
+
+  @override
+  String get returnsYourReturns => 'మీ రిటర్న్‌లు';
 
   @override
   String get rideParkedLocked => 'నిలిపి తాళం వేయబడింది.';
@@ -3129,52 +3953,46 @@ class AppL10nTe extends AppL10n {
   String get supportAddFewMoreDetails10 => 'మరిన్ని వివరాలు రాయండి (10+ అక్షరాలు)';
 
   @override
-  String get supportAnySettledBalanceCanWithdrawn => 'పరిష్కరించిన నిల్వను రోజుకు ఒకసారి తీసుకోవచ్చు. చెల్లింపులు ';
+  String get supportAll => 'అన్నీ';
 
   @override
   String get supportBatteryCharging => 'బ్యాటరీ లేదా చార్జింగ్';
 
   @override
-  String get supportBatteryDrops20Within40 => '40 కిమీలోపు బ్యాటరీ 20%కి పడిపోతుంది';
-
-  @override
-  String get supportBorneBy => 'మీరు భరించాలి';
-
-  @override
   String get supportBreakdownRoad => 'దారిలో మరమ్మతు';
-
-  @override
-  String get supportCallBackWithin15Min => '15 నిమిషాల్లో తిరిగి కాల్';
-
-  @override
-  String get supportCanIKeepScooterOvernight => 'స్కూటర్‌ను రాత్రంతా ఉంచుకోవచ్చా?';
-
-  @override
-  String get supportChooseCategory => 'విభాగాన్ని ఎంచుకోండి';
 
   @override
   String get supportCouldNotLoadSupport => 'సహాయం తెరవలేకపోయాం';
 
   @override
-  String get supportDecidesWhoPicksUpTicket => 'మీ ఫిర్యాదును ఎవరు, ఎంత వేగంగా చేపడతారో ఇది నిర్ణయిస్తుంది';
+  String get supportCouldNotLoadTicket => 'ఈ టికెట్‌ను లోడ్ చేయలేకపోయాం';
 
   @override
   String get supportDescription => 'వివరణ';
 
   @override
+  String get supportDeskEmpty => 'ఇక్కడ టికెట్లు లేవు';
+
+  @override
+  String get supportDeskEmptyBody => 'మీ హబ్‌లలో రైడర్లు నమోదు చేసే టికెట్లు ఇక్కడ కనిపిస్తాయి.';
+
+  @override
+  String get supportDeskSubtitle => 'మీ హబ్‌ల రైడర్ టికెట్లు';
+
+  @override
+  String get supportDeskTitle => 'సపోర్ట్ డెస్క్';
+
+  @override
   String get supportDocumentsKyc => 'పత్రాలు మరియు కేవైసీ';
 
   @override
-  String get supportEveryMondayMorningAgainstNach => 'ప్రతి సోమవారం ఉదయం మీ నాచ్ అనుమతితో. వాలెట్ ';
+  String get supportHub => 'హబ్';
 
   @override
-  String get supportGeneral => 'సాధారణం';
+  String get supportInProgress => 'పురోగతిలో ఉంది';
 
   @override
-  String get supportHowSoonCanIWithdraw => 'నా సంపాదనను ఎంత త్వరగా తీసుకోవచ్చు?';
-
-  @override
-  String get supportLicenceReUploadAfterRenewal => 'పునరుద్ధరణ తర్వాత లైసెన్స్ మళ్ళీ అప్‌లోడ్ చేయండి';
+  String get supportMarkResolved => 'పరిష్కరించినట్లు గుర్తించు';
 
   @override
   String get supportMoreDetailGiveFasterCan => 'మీరు ఎంత ఎక్కువ వివరం ఇస్తే అంత వేగంగా సాయం చేయగలం';
@@ -3192,17 +4010,39 @@ class AppL10nTe extends AppL10n {
   String get supportOneLineSumsUpIssue => 'సమస్యను ఒక్క వాక్యంలో రాయండి';
 
   @override
+  String supportOpenCount(int count) {
+    return '$count తెరిచి ఉన్నాయి';
+  }
+
+  @override
   String get supportOpenTickets => 'తెరిచిన ఫిర్యాదులు';
 
   @override
   String get supportPaymentWallet => 'చెల్లింపు లేదా వాలెట్';
 
   @override
+  String get supportPdfAttachment => 'PDF పత్రం';
+
+  @override
+  String supportPhotosHint(int count) {
+    return 'సమస్యను వివరించడానికి సహాయపడితే $count ఫోటోల వరకు జోడించండి.';
+  }
+
+  @override
+  String supportPhotosNotAttached(int count) {
+    return 'టికెట్ నమోదైంది, కానీ $count ఫోటో(లు) జత చేయలేకపోయాం. టికెట్ నుండి వాటిని జోడించవచ్చు.';
+  }
+
+  @override
   String get supportPhotosOptional => 'ఫోటోలు (ఐచ్ఛికం)';
 
   @override
-  String get supportRaiseBatteryChargingTicketSwap =>
-      'బ్యాటరీ లేదా చార్జింగ్ ఫిర్యాదు నమోదు చేసి దగ్గరి హబ్‌లో మార్చుకోండి. ';
+  String get supportPickTopic => 'ఒక అంశాన్ని ఎంచుకోండి, లేదా కింద మీ సొంత విషయం రాయండి.';
+
+  @override
+  String supportRaisedOn(String date) {
+    return '$date న నమోదు చేశారు';
+  }
 
   @override
   String get supportRaiseOneAboveIfSomething => 'ఏదైనా సరిచేయాలంటే పైన నమోదు చేయండి.';
@@ -3211,40 +4051,38 @@ class AppL10nTe extends AppL10n {
   String get supportRaiseTicket => 'ఫిర్యాదు నమోదు చేయండి';
 
   @override
-  String get supportRearTyrePunctureNearAshram => 'ఆశ్రమ్ దగ్గర వెనుక టైరు పంక్చర్';
+  String get supportReopen => 'మళ్లీ తెరువు';
 
   @override
-  String get supportReferralBonusSunilNotCredited => 'సునీల్ రెఫరల్ బోనస్ జమ కాలేదు';
-
-  @override
-  String get supportRepairsAcrossTickets => 'మీ ఫిర్యాదుల మరమ్మతులు';
+  String get supportResolveBody => 'రైడర్ ఇంకా సమాధానం ఇవ్వవచ్చు. వారి సమాధానం టికెట్‌ను మళ్లీ తెరుస్తుంది.';
 
   @override
   String get supportResolved => 'పరిష్కరించబడింది';
 
   @override
-  String get supportResponseWithin1Day => '1 రోజులో స్పందన';
+  String get supportResolvedReplyToReopen =>
+      'ఈ టికెట్ పరిష్కరించబడింది. ఇంకా సహాయం కావాలంటే సందేశం పంపండి, అది మళ్లీ తెరవబడుతుంది.';
 
   @override
-  String get supportResponseWithin30Min => '30 నిమిషాల్లో స్పందన';
-
-  @override
-  String get supportResponseWithin4Hours => '4 గంటల్లో స్పందన';
-
-  @override
-  String get supportRoadsideWithin45Min => '45 నిమిషాల్లో రోడ్డుపై సహాయం';
-
-  @override
-  String get supportSelectCategory => 'విభాగాన్ని ఎంచుకోండి';
+  String get supportResolveTitle => 'ఈ టికెట్‌ను పరిష్కరించినట్లు గుర్తించాలా?';
 
   @override
   String get supportSomethingElse => 'మరేదైనా';
+
+  @override
+  String get supportStartWorking => 'పని ప్రారంభించు';
+
+  @override
+  String get supportStatusUpdated => 'టికెట్ స్థితి అప్‌డేట్ అయింది';
 
   @override
   String get supportSubject => 'విషయం';
 
   @override
   String get supportSubmitTicket => 'ఫిర్యాదు సమర్పించండి';
+
+  @override
+  String get supportTeam => 'సపోర్ట్ బృందం';
 
   @override
   String get supportTeamLeadSeesStraightAway => 'మీ టీమ్ లీడ్ దీన్ని వెంటనే చూస్తారు.';
@@ -3259,36 +4097,33 @@ class AppL10nTe extends AppL10n {
   String get supportTellUsWhatHappenedAttach => 'ఏమి జరిగిందో చెప్పండి, ఉపయోగపడితే ఫోటో జతచేయండి. ';
 
   @override
+  String get supportTicket => 'టికెట్';
+
+  @override
+  String get supportTicketRaised => 'టికెట్ నమోదైంది. మా బృందం దీనిపై పనిచేస్తోంది.';
+
+  @override
+  String get supportTicketReopened => 'టికెట్ మళ్లీ తెరవబడింది. మా బృందం మిమ్మల్ని సంప్రదిస్తుంది.';
+
+  @override
   String get supportTickets => 'మీ ఫిర్యాదులు';
 
   @override
-  String get supportTripsLostSwapDoNot =>
-      'బ్యాటరీ మార్పు వల్ల తప్పిన ట్రిప్‌లు మీ ప్రోత్సాహక లక్ష్యానికి లెక్కించబడవు.';
-
-  @override
-  String get supportTurnIfCannotRideSafely => 'దీన్ని సరిచేయకుండా సురక్షితంగా నడపలేకపోతే దీన్ని ఆన్ చేయండి';
-
-  @override
-  String get supportVehicleAffected => 'వాహనంపై ప్రభావం పడింది';
-
-  @override
-  String get supportVehicleImpact => 'వాహనంపై ప్రభావం';
+  String supportUpdated(String time) {
+    return '$time అప్‌డేట్ అయింది';
+  }
 
   @override
   String get supportWhatHappenedSinceWhen => 'ఏమి జరిగింది, ఎప్పటి నుంచి?';
 
   @override
-  String get supportWhatHappensIfBatteryDies => 'షిఫ్ట్ మధ్యలో బ్యాటరీ అయిపోతే ఏమవుతుంది?';
-
-  @override
   String get supportWhatsTheIssue => 'ఏమి సమస్య';
 
   @override
-  String get supportWhenDoesMyRentGet => 'నా అద్దె ఎప్పుడు కోత అవుతుంది?';
+  String get supportWriteMessage => 'సందేశం రాయండి';
 
   @override
-  String get supportYesWeeklyMonthlyPlansDaily =>
-      'అవును, వారపు మరియు నెలవారీ ప్లాన్లలో. రోజువారీ ప్లాన్లలో హబ్‌కు తిరిగి ఇవ్వాలి ';
+  String get supportYou => 'మీరు';
 
   @override
   String get swapCouldNotLoad => 'స్వాప్ స్టేషన్‌లు తెరవలేకపోయాం';
@@ -3341,6 +4176,23 @@ class AppL10nTe extends AppL10n {
   String get walletCash => 'నగదు';
 
   @override
+  String get walletClosingBalance => 'ముగింపు బ్యాలెన్స్';
+
+  @override
+  String walletCompletedOn(String date) {
+    return '$date న పూర్తయింది';
+  }
+
+  @override
+  String get walletCouldNotLoadDeposit => 'డిపాజిట్ వివరాలను రిఫ్రెష్ చేయలేకపోయాం';
+
+  @override
+  String get walletCouldNotLoadReceipt => 'రసీదును లోడ్ చేయలేకపోయాం';
+
+  @override
+  String get walletCouldNotLoadStatement => 'మీ స్టేట్‌మెంట్‌ను లోడ్ చేయలేకపోయాం';
+
+  @override
   String get walletCouldNotLoadWallet => 'మీ వాలెట్ తెరవలేకపోయాం';
 
   @override
@@ -3365,13 +4217,101 @@ class AppL10nTe extends AppL10n {
   String get walletDeposit => 'డిపాజిట్';
 
   @override
+  String get walletDepositDeducted => 'తగ్గించింది';
+
+  @override
+  String get walletDepositHeld => 'ఉంచింది';
+
+  @override
+  String get walletDepositLocked => 'మీ అద్దె కోసం లాక్';
+
+  @override
+  String walletDepositMoved(String amount) {
+    return 'డిపాజిట్ $amount';
+  }
+
+  @override
+  String get walletDepositPaidIn => 'చెల్లించింది';
+
+  @override
+  String get walletDepositRequired => 'అవసరమైన మొత్తం';
+
+  @override
+  String get walletDepositReturnedAmount => 'తిరిగి ఇచ్చింది';
+
+  @override
   String get walletDepositReturnedSeparately => 'మీరు వెళ్ళిపోయేటప్పుడు మీ డిపాజిట్ విడిగా తిరిగి వస్తుంది.';
+
+  @override
+  String get walletDepositReturns => 'తిరిగి చెల్లింపులు';
+
+  @override
+  String get walletDepositStatusCancelled => 'రద్దు';
+
+  @override
+  String get walletDepositStatusForfeited => 'జప్తు చేశారు';
+
+  @override
+  String get walletDepositStatusLocked => 'మీ అద్దె కోసం ఉంచారు';
+
+  @override
+  String get walletDepositStatusPaid => 'చెల్లించారు';
+
+  @override
+  String get walletDepositStatusPartlyDeducted => 'పాక్షికంగా తగ్గించారు';
+
+  @override
+  String get walletDepositStatusPartlyPaid => 'పాక్షికంగా చెల్లించారు';
+
+  @override
+  String get walletDepositStatusPending => 'చెల్లింపు కోసం వేచి ఉంది';
+
+  @override
+  String get walletDepositStatusReturnable => 'తిరిగి ఇవ్వడానికి సిద్ధం';
+
+  @override
+  String get walletDepositStatusReturned => 'తిరిగి ఇచ్చారు';
+
+  @override
+  String get walletDepositStatusReturnRequested => 'తిరిగి ఇవ్వమని అభ్యర్థించారు';
+
+  @override
+  String get walletDepositToPay => 'ఇంకా చెల్లించాలి';
+
+  @override
+  String get walletDestination => 'ఎవరికి చెల్లించారు';
 
   @override
   String get walletDueNow => 'ఇప్పుడు చెల్లించాలి';
 
   @override
+  String get walletErrorDepositNotFound => 'ఈ డిపాజిట్ అందుబాటులో లేదు.';
+
+  @override
+  String get walletErrorNotFound => 'మీ వాలెట్ ఇంకా సెటప్ కాలేదు.';
+
+  @override
+  String get walletErrorReceiptNotFound => 'ఈ రసీదు అందుబాటులో లేదు.';
+
+  @override
+  String get walletErrorStatementPeriod => 'ఆ వ్యవధికి స్టేట్‌మెంట్ అందుబాటులో లేదు.';
+
+  @override
+  String get walletErrorTransactionNotFound => 'ఈ లావాదేవీ అందుబాటులో లేదు.';
+
+  @override
   String get walletExpiringSoon => '7 రోజుల్లో ముగుస్తుంది';
+
+  @override
+  String walletFundedOf(String funded, String required) {
+    return '$required లో $funded';
+  }
+
+  @override
+  String get walletInvoicesSettled => 'చెల్లించిన బిల్లులు';
+
+  @override
+  String get walletIssued => 'జారీ చేశారు';
 
   @override
   String get walletKindAdjustment => 'సర్దుబాటు';
@@ -3404,7 +4344,16 @@ class AppL10nTe extends AppL10n {
   String get walletLedgerWillFillUpAs => 'మీరు నడిపి సంపాదించే కొద్దీ మీ లెక్క నిండుతుంది.';
 
   @override
+  String get walletMethod => 'పద్ధతి';
+
+  @override
   String get walletMoney => 'మీ డబ్బు';
+
+  @override
+  String get walletMoneyIn => 'వచ్చిన డబ్బు';
+
+  @override
+  String get walletMoneyOut => 'వెళ్లిన డబ్బు';
 
   @override
   String get walletNothingMatchesFilterYet => 'ఈ వడపోతకు ఇంకా ఏమీ సరిపోలేదు.';
@@ -3416,13 +4365,57 @@ class AppL10nTe extends AppL10n {
   String get walletOnHold => 'నిలిపి ఉంచారు';
 
   @override
+  String get walletOpeningBalance => 'ప్రారంభ బ్యాలెన్స్';
+
+  @override
   String get walletPayments => 'చెల్లింపులు';
+
+  @override
+  String get walletReceipt => 'రసీదు';
+
+  @override
+  String get walletReceiptNumber => 'రసీదు సంఖ్య';
 
   @override
   String get walletReferenceId => 'రిఫరెన్స్ ఐడీ';
 
   @override
   String get walletRefundable => 'తిరిగి ఇచ్చేది';
+
+  @override
+  String walletRequestedOn(String date) {
+    return '$date న అభ్యర్థన';
+  }
+
+  @override
+  String get walletReturnApproved => 'ఆమోదించారు';
+
+  @override
+  String get walletReturnCancelled => 'రద్దు';
+
+  @override
+  String get walletReturnDone => 'తిరిగి ఇచ్చారు';
+
+  @override
+  String get walletReturnFailed => 'విఫలమైంది';
+
+  @override
+  String get walletReturnProcessing => 'ప్రాసెస్ అవుతోంది';
+
+  @override
+  String get walletReturnRejected => 'తిరస్కరించారు';
+
+  @override
+  String get walletReturnRequested => 'అభ్యర్థించారు';
+
+  @override
+  String get walletReturnReview => 'సమీక్షలో ఉంది';
+
+  @override
+  String get walletRewardExpired => 'రివార్డ్ గడువు ముగిసింది';
+
+  @override
+  String get walletRewardReversed => 'రివార్డ్ వెనక్కి తీసుకున్నారు';
 
   @override
   String get walletRewardsEarned => 'ఇప్పటివరకు సంపాదించింది';
@@ -3437,6 +4430,26 @@ class AppL10nTe extends AppL10n {
   String get walletStateFailed => 'విఫలమైంది';
 
   @override
+  String get walletStatement => 'స్టేట్‌మెంట్';
+
+  @override
+  String get walletStatementEmpty => 'ఈ నెల ఏమీ లేదు';
+
+  @override
+  String get walletStatementEmptyBody => 'ఈ నెల మీ వాలెట్‌లోకి వచ్చే లేదా వెళ్లే డబ్బు ఇక్కడ కనిపిస్తుంది.';
+
+  @override
+  String walletStatementReference(String reference) {
+    return 'స్టేట్‌మెంట్ రిఫరెన్స్ $reference';
+  }
+
+  @override
+  String get walletStatementSubtitle => 'నెలవారీగా, ఖచ్చితమైన వచ్చిన, వెళ్లిన డబ్బు';
+
+  @override
+  String get walletStatementSummary => 'ఈ నెల';
+
+  @override
   String get walletStatePending => 'పెండింగ్';
 
   @override
@@ -3446,5 +4459,14 @@ class AppL10nTe extends AppL10n {
   String get walletStateSettled => 'పూర్తయింది';
 
   @override
+  String get walletToBank => 'మీ బ్యాంక్ ఖాతాకు';
+
+  @override
+  String get walletToWallet => 'మీ వాలెట్‌కు';
+
+  @override
   String get walletTransactions => 'లావాదేవీలు';
+
+  @override
+  String get walletViewReceipt => 'రసీదు';
 }

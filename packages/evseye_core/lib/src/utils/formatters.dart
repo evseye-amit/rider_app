@@ -26,6 +26,8 @@ abstract final class Fmt {
 
   static String date(DateTime d) => DateFormat('dd MMM yyyy', _locale).format(d);
 
+  static String month(DateTime d) => DateFormat('MMMM yyyy', _locale).format(d);
+
   static String dateTime(DateTime d) => DateFormat('dd MMM, h:mm a', _locale).format(d);
 
   static String time(DateTime d) => DateFormat('h:mm a', _locale).format(d);
