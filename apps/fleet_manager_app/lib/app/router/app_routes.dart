@@ -1,6 +1,5 @@
 abstract final class Routes {
   static const String splash = '/';
-  static const String terms = '/terms';
   static const String language = '/language';
   static const String login = '/login';
   static const String otp = '/otp';

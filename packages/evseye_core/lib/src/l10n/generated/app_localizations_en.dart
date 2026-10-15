@@ -3681,13 +3681,31 @@ class AppL10nEn extends AppL10n {
   String get returnsReason => 'Reason';
 
   @override
+  String get returnsReasonBatteryIssues => 'Battery or charging problems';
+
+  @override
   String get returnsReasonChangingJob => 'Changing jobs';
+
+  @override
+  String get returnsReasonHealthOrFamily => 'Health or family reasons';
+
+  @override
+  String get returnsReasonLowEarnings => 'Not earning enough';
 
   @override
   String get returnsReasonNoLongerNeeded => 'I don\'t need it anymore';
 
   @override
+  String get returnsReasonOwnVehicle => 'Bought my own vehicle';
+
+  @override
   String get returnsReasonRelocating => 'Moving to another city';
+
+  @override
+  String get returnsReasonServiceIssues => 'Unhappy with the service';
+
+  @override
+  String get returnsReasonTakingBreak => 'Taking a break from work';
 
   @override
   String get returnsReasonTooExpensive => 'Rent is too high';

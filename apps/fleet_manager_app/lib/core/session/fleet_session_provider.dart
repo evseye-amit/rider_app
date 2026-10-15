@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,7 +37,6 @@ class FleetSessionNotifier extends Notifier<FleetSession> {
     );
     if (result case Ok<AuthUser>(:final value)) {
       await _openSession(value);
-      unawaited(ref.read(termsConsentProvider.notifier).recordAcceptance(value.id));
     }
     return result;
   }

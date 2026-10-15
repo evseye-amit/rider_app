@@ -32,7 +32,7 @@ import 'app_routes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
-const Set<String> _publicPaths = {Routes.splash, Routes.terms, Routes.language, Routes.login, Routes.otp};
+const Set<String> _publicPaths = {Routes.splash, Routes.language, Routes.login, Routes.otp};
 
 final routerProvider = Provider<GoRouter>((ref) {
   final ValueNotifier<bool> signedIn = ValueNotifier<bool>(ref.read(fleetSessionProvider).isSignedIn);
@@ -43,15 +43,9 @@ final routerProvider = Provider<GoRouter>((ref) {
     navigatorKey: _rootNavigatorKey,
     initialLocation: Routes.splash,
     refreshListenable: signedIn,
-    redirect: (context, state) => _redirect(signedIn.value, ref.read(pendingFirstRunStepProvider), state.uri.path),
+    redirect: (context, state) => _redirect(signedIn.value, ref.read(localeProvider).hasBeenPrompted, state.uri.path),
     routes: [
       GoRoute(path: Routes.splash, name: 'splash', builder: (context, state) => const SplashPage()),
-      GoRoute(
-        path: Routes.terms,
-        name: 'terms',
-        builder: (context, state) =>
-            TermsAcceptancePage(audience: LegalAudience.fleetManager, onAccepted: () => context.go(Routes.login)),
-      ),
       GoRoute(
         path: Routes.language,
         name: 'language',
@@ -180,17 +174,11 @@ final routerProvider = Provider<GoRouter>((ref) {
   );
 });
 
-String? _redirect(bool signedIn, FirstRunStep? firstRun, String path) {
-  if (path == Routes.login) return _firstRunRoute(firstRun);
+String? _redirect(bool signedIn, bool languagePrompted, String path) {
+  if (path == Routes.login) return languagePrompted ? null : Routes.language;
   if (_publicPaths.contains(path)) return null;
   return signedIn ? null : Routes.login;
 }
-
-String? _firstRunRoute(FirstRunStep? step) => switch (step) {
-  FirstRunStep.terms => Routes.terms,
-  FirstRunStep.language => Routes.language,
-  null => null,
-};
 
 class _RouteErrorPage extends StatelessWidget {
   const _RouteErrorPage({required this.location});

@@ -4893,17 +4893,41 @@
   "@returnsReason": {
     "description": "Reason"
   },
+  "returnsReasonBatteryIssues": "Battery or charging problems",
+  "@returnsReasonBatteryIssues": {
+    "description": "Battery or charging problems"
+  },
   "returnsReasonChangingJob": "Changing jobs",
   "@returnsReasonChangingJob": {
     "description": "Changing jobs"
+  },
+  "returnsReasonHealthOrFamily": "Health or family reasons",
+  "@returnsReasonHealthOrFamily": {
+    "description": "Health or family reasons"
+  },
+  "returnsReasonLowEarnings": "Not earning enough",
+  "@returnsReasonLowEarnings": {
+    "description": "Not earning enough"
   },
   "returnsReasonNoLongerNeeded": "I don't need it anymore",
   "@returnsReasonNoLongerNeeded": {
     "description": "I don't need it anymore"
   },
+  "returnsReasonOwnVehicle": "Bought my own vehicle",
+  "@returnsReasonOwnVehicle": {
+    "description": "Bought my own vehicle"
+  },
   "returnsReasonRelocating": "Moving to another city",
   "@returnsReasonRelocating": {
     "description": "Moving to another city"
+  },
+  "returnsReasonServiceIssues": "Unhappy with the service",
+  "@returnsReasonServiceIssues": {
+    "description": "Unhappy with the service"
+  },
+  "returnsReasonTakingBreak": "Taking a break from work",
+  "@returnsReasonTakingBreak": {
+    "description": "Taking a break from work"
   },
   "returnsReasonTooExpensive": "Rent is too high",
   "@returnsReasonTooExpensive": {

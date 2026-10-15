@@ -3681,13 +3681,31 @@ class AppL10nTe extends AppL10n {
   String get returnsReason => 'కారణం';
 
   @override
+  String get returnsReasonBatteryIssues => 'బ్యాటరీ లేదా ఛార్జింగ్ సమస్యలు';
+
+  @override
   String get returnsReasonChangingJob => 'ఉద్యోగం మారుతున్నాను';
+
+  @override
+  String get returnsReasonHealthOrFamily => 'ఆరోగ్య లేదా కుటుంబ కారణాలు';
+
+  @override
+  String get returnsReasonLowEarnings => 'తగినంత సంపాదన రావడం లేదు';
 
   @override
   String get returnsReasonNoLongerNeeded => 'ఇక ఇది అవసరం లేదు';
 
   @override
+  String get returnsReasonOwnVehicle => 'నా సొంత వాహనం కొన్నాను';
+
+  @override
   String get returnsReasonRelocating => 'వేరే నగరానికి వెళ్తున్నాను';
+
+  @override
+  String get returnsReasonServiceIssues => 'సేవతో సంతృప్తిగా లేను';
+
+  @override
+  String get returnsReasonTakingBreak => 'పని నుండి కొంత విరామం తీసుకుంటున్నాను';
 
   @override
   String get returnsReasonTooExpensive => 'అద్దె చాలా ఎక్కువ';

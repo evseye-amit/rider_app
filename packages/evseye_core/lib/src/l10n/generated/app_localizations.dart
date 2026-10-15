@@ -7192,11 +7192,29 @@ abstract class AppL10n {
   /// **'Reason'**
   String get returnsReason;
 
+  /// Battery or charging problems
+  ///
+  /// In en, this message translates to:
+  /// **'Battery or charging problems'**
+  String get returnsReasonBatteryIssues;
+
   /// Changing jobs
   ///
   /// In en, this message translates to:
   /// **'Changing jobs'**
   String get returnsReasonChangingJob;
+
+  /// Health or family reasons
+  ///
+  /// In en, this message translates to:
+  /// **'Health or family reasons'**
+  String get returnsReasonHealthOrFamily;
+
+  /// Not earning enough
+  ///
+  /// In en, this message translates to:
+  /// **'Not earning enough'**
+  String get returnsReasonLowEarnings;
 
   /// I don't need it anymore
   ///
@@ -7204,11 +7222,29 @@ abstract class AppL10n {
   /// **'I don\'t need it anymore'**
   String get returnsReasonNoLongerNeeded;
 
+  /// Bought my own vehicle
+  ///
+  /// In en, this message translates to:
+  /// **'Bought my own vehicle'**
+  String get returnsReasonOwnVehicle;
+
   /// Moving to another city
   ///
   /// In en, this message translates to:
   /// **'Moving to another city'**
   String get returnsReasonRelocating;
+
+  /// Unhappy with the service
+  ///
+  /// In en, this message translates to:
+  /// **'Unhappy with the service'**
+  String get returnsReasonServiceIssues;
+
+  /// Taking a break from work
+  ///
+  /// In en, this message translates to:
+  /// **'Taking a break from work'**
+  String get returnsReasonTakingBreak;
 
   /// Rent is too high
   ///

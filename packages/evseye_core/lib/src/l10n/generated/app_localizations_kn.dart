@@ -3683,13 +3683,31 @@ class AppL10nKn extends AppL10n {
   String get returnsReason => 'ಕಾರಣ';
 
   @override
+  String get returnsReasonBatteryIssues => 'ಬ್ಯಾಟರಿ ಅಥವಾ ಚಾರ್ಜಿಂಗ್ ಸಮಸ್ಯೆ';
+
+  @override
   String get returnsReasonChangingJob => 'ಕೆಲಸ ಬದಲಾಯಿಸುತ್ತಿದ್ದೇನೆ';
+
+  @override
+  String get returnsReasonHealthOrFamily => 'ಆರೋಗ್ಯ ಅಥವಾ ಕುಟುಂಬದ ಕಾರಣಗಳು';
+
+  @override
+  String get returnsReasonLowEarnings => 'ಸಾಕಷ್ಟು ಸಂಪಾದನೆ ಆಗುತ್ತಿಲ್ಲ';
 
   @override
   String get returnsReasonNoLongerNeeded => 'ಇನ್ನು ಇದು ಬೇಕಾಗಿಲ್ಲ';
 
   @override
+  String get returnsReasonOwnVehicle => 'ನನ್ನದೇ ವಾಹನ ಖರೀದಿಸಿದ್ದೇನೆ';
+
+  @override
   String get returnsReasonRelocating => 'ಬೇರೆ ನಗರಕ್ಕೆ ಹೋಗುತ್ತಿದ್ದೇನೆ';
+
+  @override
+  String get returnsReasonServiceIssues => 'ಸೇವೆಯಿಂದ ತೃಪ್ತಿ ಇಲ್ಲ';
+
+  @override
+  String get returnsReasonTakingBreak => 'ಕೆಲಸದಿಂದ ಸ್ವಲ್ಪ ವಿರಾಮ ತೆಗೆದುಕೊಳ್ಳುತ್ತಿದ್ದೇನೆ';
 
   @override
   String get returnsReasonTooExpensive => 'ಬಾಡಿಗೆ ತುಂಬಾ ಹೆಚ್ಚು';

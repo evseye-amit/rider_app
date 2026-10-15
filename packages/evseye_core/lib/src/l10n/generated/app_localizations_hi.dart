@@ -3672,13 +3672,31 @@ class AppL10nHi extends AppL10n {
   String get returnsReason => 'कारण';
 
   @override
+  String get returnsReasonBatteryIssues => 'बैटरी या चार्जिंग में दिक्कत';
+
+  @override
   String get returnsReasonChangingJob => 'नौकरी बदल रहे हैं';
+
+  @override
+  String get returnsReasonHealthOrFamily => 'स्वास्थ्य या पारिवारिक कारण';
+
+  @override
+  String get returnsReasonLowEarnings => 'पर्याप्त कमाई नहीं हो रही';
 
   @override
   String get returnsReasonNoLongerNeeded => 'अब इसकी ज़रूरत नहीं है';
 
   @override
+  String get returnsReasonOwnVehicle => 'अपना वाहन खरीद लिया';
+
+  @override
   String get returnsReasonRelocating => 'दूसरे शहर जा रहे हैं';
+
+  @override
+  String get returnsReasonServiceIssues => 'सेवा से संतुष्ट नहीं';
+
+  @override
+  String get returnsReasonTakingBreak => 'काम से कुछ समय की छुट्टी ले रहे हैं';
 
   @override
   String get returnsReasonTooExpensive => 'किराया बहुत ज़्यादा है';

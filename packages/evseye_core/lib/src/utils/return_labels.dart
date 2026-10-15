@@ -4,8 +4,14 @@ enum ReturnReason {
   noLongerNeeded('NO_LONGER_NEEDED'),
   relocating('RELOCATING'),
   changingJob('CHANGING_JOB'),
-  vehicleIssues('VEHICLE_ISSUES'),
+  takingBreak('TAKING_A_BREAK'),
+  lowEarnings('LOW_EARNINGS'),
   tooExpensive('TOO_EXPENSIVE'),
+  vehicleIssues('VEHICLE_ISSUES'),
+  batteryIssues('BATTERY_ISSUES'),
+  serviceIssues('SERVICE_ISSUES'),
+  ownVehicle('OWN_VEHICLE'),
+  healthOrFamily('HEALTH_OR_FAMILY'),
   other('OTHER');
 
   const ReturnReason(this.wire);
@@ -19,8 +25,14 @@ String returnReasonLabel(AppL10n l10n, String code) => switch (ReturnReason.pars
   ReturnReason.noLongerNeeded => l10n.returnsReasonNoLongerNeeded,
   ReturnReason.relocating => l10n.returnsReasonRelocating,
   ReturnReason.changingJob => l10n.returnsReasonChangingJob,
-  ReturnReason.vehicleIssues => l10n.returnsReasonVehicleIssues,
+  ReturnReason.takingBreak => l10n.returnsReasonTakingBreak,
+  ReturnReason.lowEarnings => l10n.returnsReasonLowEarnings,
   ReturnReason.tooExpensive => l10n.returnsReasonTooExpensive,
+  ReturnReason.vehicleIssues => l10n.returnsReasonVehicleIssues,
+  ReturnReason.batteryIssues => l10n.returnsReasonBatteryIssues,
+  ReturnReason.serviceIssues => l10n.returnsReasonServiceIssues,
+  ReturnReason.ownVehicle => l10n.returnsReasonOwnVehicle,
+  ReturnReason.healthOrFamily => l10n.returnsReasonHealthOrFamily,
   ReturnReason.other => l10n.commonOther,
   null => _humanize(code),
 };
