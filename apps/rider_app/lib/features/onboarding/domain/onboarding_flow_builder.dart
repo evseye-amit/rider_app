@@ -5,6 +5,7 @@ abstract final class OnboardingFlowBuilder {
 
   static const String referralCodeKey = 'REFERRAL_CODE';
   static const String referralAppliedKey = 'REFERRAL_CODE_APPLIED';
+  static const String referralLockedKey = 'REFERRAL_CODE_LOCKED';
 
   static UiFlowConfig build(RiderOnboardingConfig config, AppL10n l10n) {
     final List<OnboardingStepConfig> steps = config.steps;
@@ -121,6 +122,8 @@ abstract final class OnboardingFlowBuilder {
           'caps': true,
           'maxLength': _referralCodeLength,
           'appliedKey': referralAppliedKey,
+          'lockedKey': referralLockedKey,
+          'scan': true,
         },
         action: const UiAction(type: 'applyReferral'),
         enabledWhen: f.isEnabled ? null : const UiCondition(flag: '__NEVER__'),

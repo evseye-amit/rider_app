@@ -1,5 +1,6 @@
 import '../utils/result.dart';
 import 'api_client.dart';
+import 'vehicle_submission_api.dart';
 
 DateTime? _date(Object? value) => value == null ? null : DateTime.tryParse(value.toString());
 
@@ -219,6 +220,10 @@ class VehicleExchange {
     this.acceptedAt,
     this.completedAt,
     this.offers = const [],
+    this.plannedReturnDate,
+    this.plannedHubId,
+    this.submissionRequired = true,
+    this.submission,
   });
 
   factory VehicleExchange.fromJson(Map<String, dynamic> json) {
@@ -252,6 +257,10 @@ class VehicleExchange {
           .whereType<Map>()
           .map((e) => VehicleExchangeOffer.fromJson(Map<String, dynamic>.from(e)))
           .toList(growable: false),
+      plannedReturnDate: _date(json['plannedReturnDate'])?.toLocal(),
+      plannedHubId: _textOrNull(json['plannedHubId']),
+      submissionRequired: json['submissionRequired'] != false,
+      submission: SubmissionSummaryDto.maybe(json['vehicleSubmission']),
     );
   }
 
@@ -278,8 +287,14 @@ class VehicleExchange {
   final DateTime? acceptedAt;
   final DateTime? completedAt;
   final List<VehicleExchangeOffer> offers;
+  final DateTime? plannedReturnDate;
+  final String? plannedHubId;
+  final bool submissionRequired;
+  final SubmissionSummaryDto? submission;
 
-  bool get oldVehicleReturned => returnInspectionId != null && status != VehicleExchangeStatus.returnPending;
+  bool get oldVehicleReturned => submissionRequired
+      ? submission?.isConfirmed ?? false
+      : returnInspectionId != null && status != VehicleExchangeStatus.returnPending;
 
   bool get canCancel => status.canCancel && returnInspectionId == null;
 
@@ -352,16 +367,26 @@ class VehicleExchangeApi {
 
   Future<Result<VehicleExchange>> details(String id) => _client.get<VehicleExchange>('$_base/$id', parse: _one);
 
-  Future<Result<VehicleExchange>> request({required String agreementId, required String reasonCode, String? reason}) =>
-      _client.post<VehicleExchange>(
-        _base,
-        body: {
-          'agreementId': agreementId,
-          'reasonCode': reasonCode,
-          if (reason != null && reason.isNotEmpty) 'reason': reason,
-        },
-        parse: _one,
-      );
+  Future<Result<VehicleExchange>> request({
+    required String agreementId,
+    required String reasonCode,
+    required DateTime plannedReturnDate,
+    String? reason,
+    String? plannedHubId,
+    double? latitude,
+    double? longitude,
+  }) => _client.post<VehicleExchange>(
+    _base,
+    body: {
+      'agreementId': agreementId,
+      'reasonCode': reasonCode,
+      'plannedReturnDate': plannedDateWire(plannedReturnDate),
+      if (reason != null && reason.isNotEmpty) 'reason': reason,
+      'plannedHubId': ?plannedHubId,
+      if (latitude != null && longitude != null) ...{'latitude': latitude, 'longitude': longitude},
+    },
+    parse: _one,
+  );
 
   Future<Result<void>> accept({required String id, required String offerId, required String offerHash}) =>
       _client.post<void>('$_base/$id/accept', body: {'offerId': offerId, 'offerHash': offerHash, 'consent': true});

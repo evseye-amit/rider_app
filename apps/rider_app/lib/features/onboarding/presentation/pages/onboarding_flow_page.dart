@@ -7,8 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
+import '../../../../core/referral/pending_referral.dart';
+import '../../../../core/referral/referral_link.dart';
 import '../../../../core/session/rider_session_provider.dart';
 import '../../domain/onboarding_flow_builder.dart';
+import '../../domain/usecases/apply_referral_code.dart';
 import '../../domain/usecases/save_onboarding_step.dart';
 import '../../domain/usecases/upload_onboarding_document.dart';
 import '../../onboarding_dependencies.dart';
@@ -30,6 +33,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
 
   final Set<String> _busy = {};
 
+  ReferralLink? _scanned;
   RiderOnboardingConfig? _config;
   int _stepIndex = 0;
   bool _saving = false;
@@ -85,6 +89,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
     if (savedReferral != null && _form.valueOf(OnboardingFlowBuilder.referralAppliedKey) == null) {
       _form.setValue(OnboardingFlowBuilder.referralAppliedKey, savedReferral, markTouched: false);
     }
+    _prefillReferral(config, ref.read(pendingReferralProvider));
 
     final int resume = jumpTo ?? config.resumeIndex;
     setState(() {
@@ -244,6 +249,27 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
     }
   }
 
+  bool get _referralLocked => _form.valueOf(OnboardingFlowBuilder.referralLockedKey) == true;
+
+  void _prefillReferral(RiderOnboardingConfig config, PendingReferral? pending) {
+    if (pending == null || !config.fieldCodes.contains(OnboardingFlowBuilder.referralCodeKey)) return;
+    if (_form.valueOf(OnboardingFlowBuilder.referralAppliedKey) != null) return;
+    _form.setValue(OnboardingFlowBuilder.referralCodeKey, pending.link.code, markTouched: false);
+    _form.setValue(OnboardingFlowBuilder.referralLockedKey, true, markTouched: false);
+    _form.setError(OnboardingFlowBuilder.referralCodeKey, null);
+  }
+
+  Future<void> _scanReferral(UiNode node) async {
+    if (_referralLocked || _busy.contains(node.fieldKey)) return;
+    FocusManager.instance.primaryFocus?.unfocus();
+    final ReferralLink? link = await context.push<ReferralLink>(Routes.onboardingReferralScan);
+    if (link == null || !mounted) return;
+    _scanned = link;
+    _form.setValue(node.fieldKey, link.code);
+    _form.setError(node.fieldKey, null);
+    AppSnack.success(context, context.l10n.referScanFound(link.code));
+  }
+
   Future<void> _applyReferral(UiNode node) async {
     final String key = node.fieldKey;
     final String code = _form.stringOf(key).trim();
@@ -257,9 +283,26 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
       return;
     }
 
+    final bool locked = _referralLocked;
+    final PendingReferral? pending = locked ? ref.read(pendingReferralProvider) : null;
+    final ReferralLink? scanned = _scanned?.code == code.toUpperCase() ? _scanned : null;
+    final ReferralLink? link = pending?.link.code == code.toUpperCase() ? pending?.link : scanned;
+    final ReferralSource source = switch ((pending, scanned)) {
+      (final PendingReferral from, _) => from.source,
+      (null, final ReferralLink _) => ReferralSource.qrCode,
+      (null, null) => ReferralSource.referralCode,
+    };
+
     FocusManager.instance.primaryFocus?.unfocus();
     setState(() => _busy.add(key));
-    final Result<void> result = await ref.read(applyReferralCodeProvider)(code);
+    final Result<void> result = await ref.read(applyReferralCodeProvider)(
+      ReferralApplication(
+        input: code,
+        source: source,
+        inviteToken: link?.inviteToken,
+        campaignCode: link?.campaignCode,
+      ),
+    );
     if (!mounted) return;
     setState(() => _busy.remove(key));
 
@@ -267,9 +310,19 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
       case Ok<void>():
         _form.setValue(OnboardingFlowBuilder.referralAppliedKey, code);
         _form.setError(key, null);
+        if (locked) ref.read(pendingReferralProvider.notifier).clear();
         _persist();
         AppSnack.success(context, context.l10n.onboardingReferralCodeApplied);
       case Err<void>(:final failure):
+        final bool transient =
+            failure is NetworkFailure ||
+            failure is RateLimitFailure ||
+            (failure is ServerFailure && (failure.status ?? 500) >= 500);
+        if (locked && !transient) {
+          _form.setValue(OnboardingFlowBuilder.referralLockedKey, null);
+          ref.read(pendingReferralProvider.notifier).clear();
+          _persist();
+        }
         _form.setError(key, failure.message);
     }
   }
@@ -284,6 +337,8 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
         _capture(node);
       case 'applyReferral':
         _applyReferral(node);
+      case 'scanReferral':
+        _scanReferral(node);
       case 'navigate':
         if (action.target != null) context.push(action.target!);
     }
@@ -291,6 +346,12 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(pendingReferralProvider, (_, next) {
+      final RiderOnboardingConfig? loaded = _config;
+      if (loaded != null && next != null && !_busy.contains(OnboardingFlowBuilder.referralCodeKey)) {
+        _prefillReferral(loaded, next);
+      }
+    });
     final RiderOnboardingConfig? config = _config;
     if (config == null) {
       return Scaffold(

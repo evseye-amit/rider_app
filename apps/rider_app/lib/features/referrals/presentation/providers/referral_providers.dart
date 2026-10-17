@@ -12,3 +12,11 @@ final referralOverviewProvider = FutureProvider.autoDispose<ReferralOverview>(
 final referralsProvider = FutureProvider.autoDispose<List<Referral>>(
   (ref) async => (await ref.watch(getReferralsProvider)(const NoParams())).getOrThrow(),
 );
+
+final referralDetailProvider = FutureProvider.autoDispose.family<ReferralDetail, String>(
+  (ref, id) async => (await ref.watch(getReferralDetailProvider)(id)).getOrThrow(),
+);
+
+final referralActivityProvider = FutureProvider.autoDispose<List<ReferralActivity>>(
+  (ref) async => (await ref.watch(getReferralActivityProvider)(const NoParams())).getOrThrow(),
+);

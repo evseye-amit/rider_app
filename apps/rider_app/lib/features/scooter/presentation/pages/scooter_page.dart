@@ -36,16 +36,7 @@ class ScooterPage extends ConsumerWidget {
       bottomPadding: 120,
       onRefresh: () => ref.refreshQuietly(vehicleProvider),
       band: VehicleBand(vehicle: data),
-      children: data == null
-          ? const [_ScooterSkeleton()]
-          : [
-              _VehicleCard(vehicle: data),
-              const Gap.lg(),
-              ModuleCard(
-                title: context.l10n.commonIotUnit,
-                child: IotPanel(vehicle: data),
-              ),
-            ],
+      children: data == null ? const [_ScooterSkeleton()] : [_VehicleCard(vehicle: data)],
     );
   }
 }
@@ -57,11 +48,7 @@ class _ScooterSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        ShimmerBox(height: 116, borderRadius: Corners.brXl),
-        Gap.xxl(),
-        ShimmerBox(height: 200, borderRadius: Corners.brXl),
-      ],
+      children: [ShimmerBox(height: 116, borderRadius: Corners.brXl)],
     );
   }
 }

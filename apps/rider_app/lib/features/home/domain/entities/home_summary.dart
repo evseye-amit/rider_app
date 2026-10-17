@@ -12,13 +12,13 @@ class HomeSummary extends Equatable {
     required this.rentDueDate,
     required this.rentPlan,
     required this.walletBalance,
-    required this.tripsToday,
-    required this.distanceTodayKm,
-    required this.onlineMinutes,
     required this.weeklyEarnings,
     required this.weeklyLabels,
     required this.announcements,
     required this.quickActions,
+    this.category,
+    this.dailyRent,
+    this.workingDays,
   });
 
   final num todayEarnings;
@@ -31,13 +31,13 @@ class HomeSummary extends Equatable {
   final DateTime? rentDueDate;
   final String rentPlan;
   final num walletBalance;
-  final int tripsToday;
-  final double distanceTodayKm;
-  final int onlineMinutes;
   final List<num> weeklyEarnings;
   final List<String> weeklyLabels;
   final List<Announcement> announcements;
   final List<QuickAction> quickActions;
+  final String? category;
+  final num? dailyRent;
+  final int? workingDays;
 
   double get incentiveProgress =>
       incentiveTripsTarget == 0 ? 0 : (incentiveTrips / incentiveTripsTarget).clamp(0.0, 1.0);
@@ -50,9 +50,11 @@ class HomeSummary extends Equatable {
     incentiveEarned,
     rentDue,
     walletBalance,
-    tripsToday,
     announcements,
     quickActions,
+    category,
+    dailyRent,
+    workingDays,
   ];
 }
 

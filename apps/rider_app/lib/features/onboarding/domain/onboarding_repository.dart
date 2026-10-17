@@ -9,5 +9,10 @@ abstract interface class OnboardingRepository {
 
   Future<Result<RemotePhoto>> uploadDocument({required String fieldCode, required File file});
 
-  Future<Result<void>> applyReferralCode(String code);
+  Future<Result<void>> applyReferralCode(
+    String input, {
+    ReferralSource source = ReferralSource.referralCode,
+    String? inviteToken,
+    String? campaignCode,
+  });
 }

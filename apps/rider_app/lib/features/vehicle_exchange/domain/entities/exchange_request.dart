@@ -141,6 +141,9 @@ class ExchangeRequest extends Equatable {
     this.completedAt,
     this.canCancel = false,
     this.offers = const [],
+    this.plannedDate,
+    this.usesCheckIn = true,
+    this.checkInId,
   });
 
   final String id;
@@ -153,6 +156,18 @@ class ExchangeRequest extends Equatable {
   final DateTime? completedAt;
   final bool canCancel;
   final List<ExchangeOffer> offers;
+  final DateTime? plannedDate;
+  final bool usesCheckIn;
+  final String? checkInId;
+
+  List<ExchangeStep> get steps => usesCheckIn
+      ? [
+          for (final ExchangeStep step in ExchangeStep.values)
+            if (step != ExchangeStep.approval) step,
+        ]
+      : ExchangeStep.values;
+
+  bool get isCheckingIn => usesCheckIn && checkInId != null && !oldScooterReturned;
 
   ExchangeOffer? get pendingOffer => offers.where((offer) => offer.isActionable).firstOrNull;
 
@@ -184,7 +199,7 @@ class ExchangeRequest extends Equatable {
     };
   }
 
-  ExchangeStep? get currentStep => ExchangeStep.values.where((step) => !isStepDone(step)).firstOrNull;
+  ExchangeStep? get currentStep => steps.where((step) => !isStepDone(step)).firstOrNull;
 
   @override
   List<Object?> get props => [
@@ -198,5 +213,8 @@ class ExchangeRequest extends Equatable {
     completedAt,
     canCancel,
     offers,
+    plannedDate,
+    usesCheckIn,
+    checkInId,
   ];
 }

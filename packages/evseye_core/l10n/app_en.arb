@@ -1,17 +1,5 @@
 {
   "@@locale": "en",
-  "allocationAbandon": "Abandon",
-  "@allocationAbandon": {
-    "description": "Abandon"
-  },
-  "allocationAbandonDeAllocation": "Abandon this de-allocation?",
-  "@allocationAbandonDeAllocation": {
-    "description": "Abandon this de-allocation?"
-  },
-  "allocationActiveAllocation": "Active allocation",
-  "@allocationActiveAllocation": {
-    "description": "Active allocation"
-  },
   "allocationAddItem": "Add an item",
   "@allocationAddItem": {
     "description": "Add an item"
@@ -80,37 +68,17 @@
   "@allocationChecklistTapToggleMandatory": {
     "description": "Checklist · tap to toggle mandatory"
   },
-  "allocationClientRequiresNoInspectionPhotos": "This client requires no inspection photos. You can write up the checklist now.",
-  "@allocationClientRequiresNoInspectionPhotos": {
-    "description": "This client requires no inspection photos. You can write up the checklist now."
-  },
-  "allocationCodesSentWhenStepOpens": "Codes are sent when this step opens.",
-  "@allocationCodesSentWhenStepOpens": {
-    "description": "Codes are sent when this step opens."
-  },
-  "allocationCompareReturnedVehicleAgainstReference": "Compare the returned vehicle against this reference set",
-  "@allocationCompareReturnedVehicleAgainstReference": {
-    "description": "Compare the returned vehicle against this reference set"
-  },
-  "allocationComplete": "Complete",
-  "@allocationComplete": {
-    "description": "Complete"
-  },
   "allocationComplete2": "Complete.",
   "@allocationComplete2": {
     "description": "Complete."
-  },
-  "allocationCompleteDeAllocation": "Complete this de-allocation?",
-  "@allocationCompleteDeAllocation": {
-    "description": "Complete this de-allocation?"
   },
   "allocationConfirmHaveReceivedAmountRider": "Confirm you have received the amount the rider submitted a reference for. This cannot be undone.",
   "@allocationConfirmHaveReceivedAmountRider": {
     "description": "Confirm you have received the amount the rider submitted a reference for. This cannot be undone."
   },
-  "allocationConfirmsPhotosAndIot": "Confirms the vehicle's photos are on file and its IoT unit is online.",
-  "@allocationConfirmsPhotosAndIot": {
-    "description": "Confirms the vehicle's photos are on file and its IoT unit is online."
+  "allocationConfirmsPhotos": "Confirms the vehicle's photos are on file.",
+  "@allocationConfirmsPhotos": {
+    "description": "Confirms the vehicle's photos are on file."
   },
   "allocationContinueHandover": "Continue the handover",
   "@allocationContinueHandover": {
@@ -128,25 +96,9 @@
   "@allocationCouldNotLoadAvailableVehicles": {
     "description": "Could not load available vehicles"
   },
-  "allocationCouldNotLoadDeAllocation": "Could not load the de-allocation flow",
-  "@allocationCouldNotLoadDeAllocation": {
-    "description": "Could not load the de-allocation flow"
-  },
-  "allocationCouldNotLoadDeAllocation2": "Could not load the de-allocation flow.",
-  "@allocationCouldNotLoadDeAllocation2": {
-    "description": "Could not load the de-allocation flow."
-  },
   "allocationCouldNotLoadHandover": "Could not load this handover",
   "@allocationCouldNotLoadHandover": {
     "description": "Could not load this handover"
-  },
-  "allocationCouldNotLoadReturn": "Could not load this return",
-  "@allocationCouldNotLoadReturn": {
-    "description": "Could not load this return"
-  },
-  "allocationCouldNotLoadReturns": "Could not load returns",
-  "@allocationCouldNotLoadReturns": {
-    "description": "Could not load returns"
   },
   "allocationDeAllocateVehicle": "De-allocate vehicle",
   "@allocationDeAllocateVehicle": {
@@ -155,10 +107,6 @@
   "allocationDeployed": "Deployed",
   "@allocationDeployed": {
     "description": "Deployed"
-  },
-  "allocationEveryDeAllocationRequestHas": "Every de-allocation request has been processed.",
-  "@allocationEveryDeAllocationRequestHas": {
-    "description": "Every de-allocation request has been processed."
   },
   "allocationEveryLineNeedsLabelAmount": "Every line needs a label and an amount above zero",
   "@allocationEveryLineNeedsLabelAmount": {
@@ -188,10 +136,6 @@
   "@allocationHandoverCompleteMessage": {
     "description": "Training is done and the scooter is with the rider. This handover is complete."
   },
-  "allocationHeartbeatStale": "Heartbeat stale",
-  "@allocationHeartbeatStale": {
-    "description": "Heartbeat stale"
-  },
   "allocationHelmetHandedOver": "Helmet handed over",
   "@allocationHelmetHandedOver": {
     "description": "Helmet handed over"
@@ -212,10 +156,6 @@
   "@allocationInspectionAcceptedTraining": {
     "description": "Inspection accepted · training"
   },
-  "allocationInspectionEvidence": "Inspection evidence",
-  "@allocationInspectionEvidence": {
-    "description": "Inspection evidence"
-  },
   "allocationInspectionSentRider": "Inspection sent to rider",
   "@allocationInspectionSentRider": {
     "description": "Inspection sent to rider"
@@ -228,17 +168,9 @@
   "@allocationInspectionTraining": {
     "description": "Inspection and training"
   },
-  "allocationIotDevice": "IoT device",
-  "@allocationIotDevice": {
-    "description": "IoT device"
-  },
   "allocationItem": "Item",
   "@allocationItem": {
     "description": "Item"
-  },
-  "allocationKeepGoing": "Keep going",
-  "@allocationKeepGoing": {
-    "description": "Keep going"
   },
   "allocationLeftSide": "Left side",
   "@allocationLeftSide": {
@@ -247,10 +179,6 @@
   "allocationLightsIndicators": "Lights and indicators",
   "@allocationLightsIndicators": {
     "description": "Lights and indicators"
-  },
-  "allocationMapDeviceFirst": "Map a device first",
-  "@allocationMapDeviceFirst": {
-    "description": "Map a device first"
   },
   "allocationMarkAsPaid": "Mark as paid",
   "@allocationMarkAsPaid": {
@@ -276,17 +204,9 @@
   "@allocationNoHandoversProgress": {
     "description": "No handovers in progress"
   },
-  "allocationNoIotDevice": "No IoT device",
-  "@allocationNoIotDevice": {
-    "description": "No IoT device"
-  },
   "allocationNothingCurrentlyAllocatedRider": "Nothing is currently allocated to a rider.",
   "@allocationNothingCurrentlyAllocatedRider": {
     "description": "Nothing is currently allocated to a rider."
-  },
-  "allocationNothingTakeBack": "Nothing to take back",
-  "@allocationNothingTakeBack": {
-    "description": "Nothing to take back"
   },
   "allocationNoVehiclesOut": "No vehicles out",
   "@allocationNoVehiclesOut": {
@@ -304,14 +224,6 @@
   "@allocationOnboardingFee": {
     "description": "Onboarding fee"
   },
-  "allocationOriginalHandoverPhotos": "Original handover photos",
-  "@allocationOriginalHandoverPhotos": {
-    "description": "Original handover photos"
-  },
-  "allocationOutRoad": "Out on road",
-  "@allocationOutRoad": {
-    "description": "Out on road"
-  },
   "allocationPaymentReceived": "Payment received?",
   "@allocationPaymentReceived": {
     "description": "Payment received?"
@@ -328,21 +240,29 @@
   "@allocationPaymentVerified": {
     "description": "Payment verified"
   },
-  "allocationPhotoAttached": "Photo attached",
-  "@allocationPhotoAttached": {
-    "description": "Photo attached"
+  "allocationPhotoBack": "Back",
+  "@allocationPhotoBack": {
+    "description": "Back"
   },
-  "allocationProcessReturn": "Process return",
-  "@allocationProcessReturn": {
-    "description": "Process return"
+  "allocationPhotoCannotOpen": "This photo can't be opened right now.",
+  "@allocationPhotoCannotOpen": {
+    "description": "This photo can't be opened right now."
   },
-  "allocationQueue": "In the queue",
-  "@allocationQueue": {
-    "description": "In the queue"
+  "allocationPhotoFront": "Front",
+  "@allocationPhotoFront": {
+    "description": "Front"
   },
-  "allocationRaised": "Raised on",
-  "@allocationRaised": {
-    "description": "Raised on"
+  "allocationPhotoLeft": "Left",
+  "@allocationPhotoLeft": {
+    "description": "Left"
+  },
+  "allocationPhotoRight": "Right",
+  "@allocationPhotoRight": {
+    "description": "Right"
+  },
+  "allocationPhotoUploaded": "Uploaded",
+  "@allocationPhotoUploaded": {
+    "description": "Uploaded"
   },
   "allocationRaiseDepositFeesRiderPays": "You raise the deposit and fees; the rider pays and submits the reference; you verify it.",
   "@allocationRaiseDepositFeesRiderPays": {
@@ -367,26 +287,6 @@
   "allocationReserved2": "Reserved on",
   "@allocationReserved2": {
     "description": "Reserved on"
-  },
-  "allocationReturnHasAlreadyBeenStarted": "The return has already been started on the server. You can finish it later from the Returns tab.",
-  "@allocationReturnHasAlreadyBeenStarted": {
-    "description": "The return has already been started on the server. You can finish it later from the Returns tab."
-  },
-  "allocationReturnInitiated": "Return initiated",
-  "@allocationReturnInitiated": {
-    "description": "Return initiated"
-  },
-  "allocationReturnReason": "Return reason",
-  "@allocationReturnReason": {
-    "description": "Return reason"
-  },
-  "allocationReturnRequest": "Return request",
-  "@allocationReturnRequest": {
-    "description": "Return request"
-  },
-  "allocationReturnStartedCodesSentRider": "Return started — codes sent to the rider and to you",
-  "@allocationReturnStartedCodesSentRider": {
-    "description": "Return started — codes sent to the rider and to you"
   },
   "allocationRider": "Rider",
   "@allocationRider": {
@@ -448,14 +348,6 @@
   "@allocationStartReturn": {
     "description": "Start a return"
   },
-  "allocationTakeVehicleBackPutShelf": "Take a vehicle back and put it on the shelf",
-  "@allocationTakeVehicleBackPutShelf": {
-    "description": "Take a vehicle back and put it on the shelf"
-  },
-  "allocationTalkingServer": "Talking to the server…",
-  "@allocationTalkingServer": {
-    "description": "Talking to the server…"
-  },
   "allocationTyresPressure": "Tyres and pressure",
   "@allocationTyresPressure": {
     "description": "Tyres and pressure"
@@ -468,6 +360,14 @@
   "@allocationVehicleHasAvailableOnboardedAllocation": {
     "description": "A vehicle has to be available, onboarded and allocation-enabled in one of your hubs to appear here."
   },
+  "allocationVehiclePhotos": "Vehicle photos",
+  "@allocationVehiclePhotos": {
+    "description": "Vehicle photos"
+  },
+  "allocationVehiclePhotosHint": "Take a photo of each side of the vehicle. All four are needed before you submit the inspection.",
+  "@allocationVehiclePhotosHint": {
+    "description": "Take a photo of each side of the vehicle. All four are needed before you submit the inspection."
+  },
   "allocationVehicleReserved": "Vehicle reserved",
   "@allocationVehicleReserved": {
     "description": "Vehicle reserved"
@@ -475,10 +375,6 @@
   "allocationVerifyPayment": "Verify payment",
   "@allocationVerifyPayment": {
     "description": "Verify payment"
-  },
-  "allocationViewReturn": "View return",
-  "@allocationViewReturn": {
-    "description": "View return"
   },
   "allocationWaiting": "Waiting",
   "@allocationWaiting": {
@@ -547,6 +443,26 @@
   "authEditNumber": "Edit number",
   "@authEditNumber": {
     "description": "Edit number"
+  },
+  "authLegalAgreement": "By clicking continue you are accepting our {terms} and {privacy}",
+  "@authLegalAgreement": {
+    "description": "Shown above the Continue button on the login screen. {terms} and {privacy} are tappable links.",
+    "placeholders": {
+      "terms": {
+        "type": "String"
+      },
+      "privacy": {
+        "type": "String"
+      }
+    }
+  },
+  "authLegalPrivacy": "Privacy Policy",
+  "@authLegalPrivacy": {
+    "description": "Privacy Policy"
+  },
+  "authLegalTerms": "Terms of Service",
+  "@authLegalTerms": {
+    "description": "Terms of Service"
   },
   "authLiveFleetVisibility": "Live fleet\nvisibility",
   "@authLiveFleetVisibility": {
@@ -650,6 +566,100 @@
   "@authWrongNumber": {
     "description": "Wrong number?"
   },
+  "checkInBasicReport": "Mechanic report",
+  "@checkInBasicReport": {
+    "description": "Mechanic report"
+  },
+  "checkInConfirmedByManager": "Confirmed by the hub team without your code: {reason}",
+  "@checkInConfirmedByManager": {
+    "description": "Report confirmed with a recorded bypass reason",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "checkInConfirmedByOtp": "Confirmed with your code.",
+  "@checkInConfirmedByOtp": {
+    "description": "Confirmed with your code."
+  },
+  "checkInCouldNotLoad": "Couldn't load the check-in.",
+  "@checkInCouldNotLoad": {
+    "description": "Couldn't load the check-in."
+  },
+  "checkInDeepReport": "Final mechanic check",
+  "@checkInDeepReport": {
+    "description": "Final mechanic check"
+  },
+  "checkInHub": "Hub",
+  "@checkInHub": {
+    "description": "Hub"
+  },
+  "checkInNoCharges": "No charges",
+  "@checkInNoCharges": {
+    "description": "No charges"
+  },
+  "checkInOtpHint": "You'll get a code on your phone. Share it with the hub team to confirm this report and its charges.",
+  "@checkInOtpHint": {
+    "description": "You'll get a code on your phone. Share it with the hub team to confirm this report and its charges."
+  },
+  "checkInPhotos": "Photos",
+  "@checkInPhotos": {
+    "description": "Photos"
+  },
+  "checkInPhotosCount": "{taken} of {total} taken",
+  "@checkInPhotosCount": {
+    "description": "Required check-in photos taken so far",
+    "placeholders": {
+      "taken": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "checkInSafe": "Safe to use again",
+  "@checkInSafe": {
+    "description": "Safe to use again"
+  },
+  "checkInStatusDraft": "Under review",
+  "@checkInStatusDraft": {
+    "description": "Under review"
+  },
+  "checkInStatusPosted": "Confirmed",
+  "@checkInStatusPosted": {
+    "description": "Confirmed"
+  },
+  "checkInStatusSubmitted": "Awaiting confirmation",
+  "@checkInStatusSubmitted": {
+    "description": "Awaiting confirmation"
+  },
+  "checkInTitle": "Scooter check-in",
+  "@checkInTitle": {
+    "description": "Scooter check-in"
+  },
+  "checkInTotal": "Total charges",
+  "@checkInTotal": {
+    "description": "Total charges"
+  },
+  "checkInUnsafe": "Not safe to reuse: {reason}",
+  "@checkInUnsafe": {
+    "description": "Mechanic marked the vehicle unsafe",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "checkInViewPhotos": "View",
+  "@checkInViewPhotos": {
+    "description": "View"
+  },
+  "checkInWaitingReport": "The hub team is taking photos. The mechanic's report shows up here once it's ready.",
+  "@checkInWaitingReport": {
+    "description": "The hub team is taking photos. The mechanic's report shows up here once it's ready."
+  },
   "commonAboutApp": "About this app",
   "@commonAboutApp": {
     "description": "About this app"
@@ -689,10 +699,6 @@
   "commonAllocation": "Allocation",
   "@commonAllocation": {
     "description": "Allocation"
-  },
-  "commonAnd": " and ",
-  "@commonAnd": {
-    "description": "Connector between the two legal links"
   },
   "commonAppWillChangeRightAway": "The app will change right away.",
   "@commonAppWillChangeRightAway": {
@@ -754,10 +760,6 @@
   "@commonConfirmAccountNumber": {
     "description": "Confirm account number"
   },
-  "commonContinue": "Continue",
-  "@commonContinue": {
-    "description": "Continue"
-  },
   "commonCouldNotOpenDocumentTry": "Could not open the document. Try again.",
   "@commonCouldNotOpenDocumentTry": {
     "description": "Could not open the document. Try again."
@@ -769,10 +771,6 @@
   "commonDaughter": "Daughter",
   "@commonDaughter": {
     "description": "Daughter"
-  },
-  "commonDeAllocation": "De-allocation",
-  "@commonDeAllocation": {
-    "description": "De-allocation"
   },
   "commonEnterAccountNumber": "Enter your account number",
   "@commonEnterAccountNumber": {
@@ -1170,6 +1168,59 @@
   "@commonYesterdayGlance": {
     "description": "Yesterday at a glance"
   },
+  "companyCodeHint": "e.g. yogmaya",
+  "@companyCodeHint": {
+    "description": "e.g. yogmaya"
+  },
+  "companyCodeLabel": "Company code",
+  "@companyCodeLabel": {
+    "description": "Company code"
+  },
+  "companyCodeRequired": "Enter your company code",
+  "@companyCodeRequired": {
+    "description": "Enter your company code"
+  },
+  "companyHelp": "You'll find the code in your welcome message. If you don't have it, ask your hub team.",
+  "@companyHelp": {
+    "description": "You'll find the code in your welcome message. If you don't have it, ask your hub team."
+  },
+  "companyNotFound": "We couldn't find a company with that code. Check it and try again.",
+  "@companyNotFound": {
+    "description": "We couldn't find a company with that code. Check it and try again."
+  },
+  "companyNotReady": "This company isn't set up for the app yet. Please contact your fleet operator.",
+  "@companyNotReady": {
+    "description": "This company isn't set up for the app yet. Please contact your fleet operator."
+  },
+  "companySubtitle": "Enter the company code your fleet operator gave you. You only need to do this once.",
+  "@companySubtitle": {
+    "description": "Enter the company code your fleet operator gave you. You only need to do this once."
+  },
+  "companyTitle": "Find your company",
+  "@companyTitle": {
+    "description": "Find your company"
+  },
+  "companyWelcome": "Welcome to {name}",
+  "@companyWelcome": {
+    "description": "Shown after the company code is resolved",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "consentAgree": "I have read this notice and I give my consent",
+  "@consentAgree": {
+    "description": "I have read this notice and I give my consent"
+  },
+  "consentRiderTitle": "Rider Consent",
+  "@consentRiderTitle": {
+    "description": "Rider Consent"
+  },
+  "consentSubtitle": "Please read how we collect and use your information, then give your consent to continue.",
+  "@consentSubtitle": {
+    "description": "Please read how we collect and use your information, then give your consent to continue."
+  },
   "deallocAccessoriesReturned": "Accessories returned",
   "@deallocAccessoriesReturned": {
     "description": "Accessories returned"
@@ -1531,10 +1582,6 @@
       }
     }
   },
-  "deploymentMandatoryModule": "Mandatory module",
-  "@deploymentMandatoryModule": {
-    "description": "Mandatory module"
-  },
   "deploymentNoPaymentShow": "No payment to show",
   "@deploymentNoPaymentShow": {
     "description": "No payment to show"
@@ -1546,10 +1593,6 @@
   "deploymentOpenEachModuleReadThrough": "Open each module and read it through. Mandatory ones must be completed before you can finish.",
   "@deploymentOpenEachModuleReadThrough": {
     "description": "Open each module and read it through. Mandatory ones must be completed before you can finish."
-  },
-  "deploymentOptionalModule": "Optional module",
-  "@deploymentOptionalModule": {
-    "description": "Optional module"
   },
   "deploymentPaidVia": "Paid via",
   "@deploymentPaidVia": {
@@ -1574,10 +1617,6 @@
   "deploymentProgressSavedSignAgainAny": "Your progress is saved. Sign in again any time to pick up where you left off.",
   "@deploymentProgressSavedSignAgainAny": {
     "description": "Your progress is saved. Sign in again any time to pick up where you left off."
-  },
-  "deploymentReadThroughModuleWithTeam": "Read through this module with your team lead before you ride.",
-  "@deploymentReadThroughModuleWithTeam": {
-    "description": "Read through this module with your team lead before you ride."
   },
   "deploymentReference": "Reference",
   "@deploymentReference": {
@@ -1622,10 +1661,6 @@
   "deploymentTrainingComplete": "Training complete",
   "@deploymentTrainingComplete": {
     "description": "Training complete"
-  },
-  "deploymentTrainingUnavailable": "Training unavailable",
-  "@deploymentTrainingUnavailable": {
-    "description": "Training unavailable"
   },
   "deploymentTransactionReference": "Transaction reference",
   "@deploymentTransactionReference": {
@@ -1909,255 +1944,6 @@
   "@exchangeDepositToPay": {
     "description": "Extra deposit to pay"
   },
-  "exchangeDeskAcceptedForRider": "Offer accepted for the rider",
-  "@exchangeDeskAcceptedForRider": {
-    "description": "Offer accepted for the rider"
-  },
-  "exchangeDeskAcceptForRider": "Accept for the rider",
-  "@exchangeDeskAcceptForRider": {
-    "description": "Accept for the rider"
-  },
-  "exchangeDeskApprove": "Approve request",
-  "@exchangeDeskApprove": {
-    "description": "Approve request"
-  },
-  "exchangeDeskApproved": "Request approved",
-  "@exchangeDeskApproved": {
-    "description": "Request approved"
-  },
-  "exchangeDeskAssistedHint": "If the rider can't use the app, you can record their answer for them. Do this only with their clear consent.",
-  "@exchangeDeskAssistedHint": {
-    "description": "If the rider can't use the app, you can record their answer for them. Do this only with their clear consent."
-  },
-  "exchangeDeskAssistedReason": "Reason",
-  "@exchangeDeskAssistedReason": {
-    "description": "Reason"
-  },
-  "exchangeDeskAssistedReasonNeeded": "Add a reason for accepting on their behalf",
-  "@exchangeDeskAssistedReasonNeeded": {
-    "description": "Add a reason for accepting on their behalf"
-  },
-  "exchangeDeskAssistedReasonSubtitle": "Why is the rider not accepting in the app themselves?",
-  "@exchangeDeskAssistedReasonSubtitle": {
-    "description": "Why is the rider not accepting in the app themselves?"
-  },
-  "exchangeDeskChangeScooter": "Change scooter",
-  "@exchangeDeskChangeScooter": {
-    "description": "Change scooter"
-  },
-  "exchangeDeskChooseScooter": "Choose replacement scooter",
-  "@exchangeDeskChooseScooter": {
-    "description": "Choose replacement scooter"
-  },
-  "exchangeDeskComplete": "Complete exchange",
-  "@exchangeDeskComplete": {
-    "description": "Complete exchange"
-  },
-  "exchangeDeskConfirmReturn": "Confirm scooter returned",
-  "@exchangeDeskConfirmReturn": {
-    "description": "Confirm scooter returned"
-  },
-  "exchangeDeskConsentNeeded": "Add how the rider gave consent",
-  "@exchangeDeskConsentNeeded": {
-    "description": "Add how the rider gave consent"
-  },
-  "exchangeDeskConsentReference": "Consent reference",
-  "@exchangeDeskConsentReference": {
-    "description": "Consent reference"
-  },
-  "exchangeDeskConsentSubtitle": "How did the rider agree? For example a signed form number or a recorded call.",
-  "@exchangeDeskConsentSubtitle": {
-    "description": "How did the rider agree? For example a signed form number or a recorded call."
-  },
-  "exchangeDeskDeclinedForRider": "Offer declined for the rider",
-  "@exchangeDeskDeclinedForRider": {
-    "description": "Offer declined for the rider"
-  },
-  "exchangeDeskDeclineForRider": "Rider declined",
-  "@exchangeDeskDeclineForRider": {
-    "description": "Rider declined"
-  },
-  "exchangeDeskDeclineSubtitle": "Record why the rider turned the offer down.",
-  "@exchangeDeskDeclineSubtitle": {
-    "description": "Record why the rider turned the offer down."
-  },
-  "exchangeDeskDepositBreakdown": "{total} is still due: {newDeposit} for the new scooter and {shortfall} to top up the rider's security deposit.",
-  "@exchangeDeskDepositBreakdown": {
-    "description": "Breakdown of deposit still due during an exchange",
-    "placeholders": {
-      "total": {
-        "type": "String"
-      },
-      "newDeposit": {
-        "type": "String"
-      },
-      "shortfall": {
-        "type": "String"
-      }
-    }
-  },
-  "exchangeDeskDepositDue": "The rider still has to pay {amount} more deposit.",
-  "@exchangeDeskDepositDue": {
-    "description": "The rider still has to pay {amount} more deposit.",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "exchangeDeskDepositsSettled": "Deposits settled",
-  "@exchangeDeskDepositsSettled": {
-    "description": "Deposits settled"
-  },
-  "exchangeDeskEmptyBody": "When a rider asks for a different scooter, the request shows up here.",
-  "@exchangeDeskEmptyBody": {
-    "description": "When a rider asks for a different scooter, the request shows up here."
-  },
-  "exchangeDeskExchangeCompleted": "Exchange completed",
-  "@exchangeDeskExchangeCompleted": {
-    "description": "Exchange completed"
-  },
-  "exchangeDeskGuideChoose": "The old scooter is back. Choose a replacement scooter for the rider.",
-  "@exchangeDeskGuideChoose": {
-    "description": "The old scooter is back. Choose a replacement scooter for the rider."
-  },
-  "exchangeDeskGuideDeposits": "The rider accepted. Settle the deposits to move on to the handover.",
-  "@exchangeDeskGuideDeposits": {
-    "description": "The rider accepted. Settle the deposits to move on to the handover."
-  },
-  "exchangeDeskGuideReview": "Check the request, then approve or reject it.",
-  "@exchangeDeskGuideReview": {
-    "description": "Check the request, then approve or reject it."
-  },
-  "exchangeDeskGuideSendOffer": "Check the offer below and send it to the rider.",
-  "@exchangeDeskGuideSendOffer": {
-    "description": "Check the offer below and send it to the rider."
-  },
-  "exchangeDeskGuideStartHandover": "Deposits are settled. Start the handover of the new scooter.",
-  "@exchangeDeskGuideStartHandover": {
-    "description": "Deposits are settled. Start the handover of the new scooter."
-  },
-  "exchangeDeskGuideStartReturn": "Start the return of the rider's current scooter.",
-  "@exchangeDeskGuideStartReturn": {
-    "description": "Start the return of the rider's current scooter."
-  },
-  "exchangeDeskHandoverHint": "The hub's fleet manager hands over the new scooter through the normal allocation steps. Once the scooter is active with the rider, complete the exchange.",
-  "@exchangeDeskHandoverHint": {
-    "description": "The hub's fleet manager hands over the new scooter through the normal allocation steps. Once the scooter is active with the rider, complete the exchange."
-  },
-  "exchangeDeskHandoverStarted": "Handover started",
-  "@exchangeDeskHandoverStarted": {
-    "description": "Handover started"
-  },
-  "exchangeDeskNeedsAction": "Needs action",
-  "@exchangeDeskNeedsAction": {
-    "description": "Needs action"
-  },
-  "exchangeDeskNoScooters": "No scooters are available right now.",
-  "@exchangeDeskNoScooters": {
-    "description": "No scooters are available right now."
-  },
-  "exchangeDeskOfferPreview": "Offer preview",
-  "@exchangeDeskOfferPreview": {
-    "description": "Offer preview"
-  },
-  "exchangeDeskOfferSent": "Offer sent to rider",
-  "@exchangeDeskOfferSent": {
-    "description": "Offer sent to rider"
-  },
-  "exchangeDeskOpenAllocation": "Open the new allocation",
-  "@exchangeDeskOpenAllocation": {
-    "description": "Open the new allocation"
-  },
-  "exchangeDeskOpenReturn": "Open return",
-  "@exchangeDeskOpenReturn": {
-    "description": "Open return"
-  },
-  "exchangeDeskReject": "Reject request",
-  "@exchangeDeskReject": {
-    "description": "Reject request"
-  },
-  "exchangeDeskRejectedDone": "Request rejected",
-  "@exchangeDeskRejectedDone": {
-    "description": "Request rejected"
-  },
-  "exchangeDeskRejectSubtitle": "Tell the rider why this can't be approved.",
-  "@exchangeDeskRejectSubtitle": {
-    "description": "Tell the rider why this can't be approved."
-  },
-  "exchangeDeskReplacement": "Replacement scooter",
-  "@exchangeDeskReplacement": {
-    "description": "Replacement scooter"
-  },
-  "exchangeDeskReservedUntil": "Until {time}",
-  "@exchangeDeskReservedUntil": {
-    "description": "Until {time}",
-    "placeholders": {
-      "time": {
-        "type": "String"
-      }
-    }
-  },
-  "exchangeDeskReserveScooter": "Reserve this scooter",
-  "@exchangeDeskReserveScooter": {
-    "description": "Reserve this scooter"
-  },
-  "exchangeDeskReturnConfirmed": "Return confirmed",
-  "@exchangeDeskReturnConfirmed": {
-    "description": "Return confirmed"
-  },
-  "exchangeDeskReturnHint": "Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here.",
-  "@exchangeDeskReturnHint": {
-    "description": "Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here."
-  },
-  "exchangeDeskReturnStarted": "Return started",
-  "@exchangeDeskReturnStarted": {
-    "description": "Return started"
-  },
-  "exchangeDeskRiderNote": "Rider's note",
-  "@exchangeDeskRiderNote": {
-    "description": "Rider's note"
-  },
-  "exchangeDeskScooterReserved": "Scooter reserved",
-  "@exchangeDeskScooterReserved": {
-    "description": "Scooter reserved"
-  },
-  "exchangeDeskSendOffer": "Send offer to rider",
-  "@exchangeDeskSendOffer": {
-    "description": "Send offer to rider"
-  },
-  "exchangeDeskSettleDeposits": "Settle deposits",
-  "@exchangeDeskSettleDeposits": {
-    "description": "Settle deposits"
-  },
-  "exchangeDeskStartHandover": "Start handover",
-  "@exchangeDeskStartHandover": {
-    "description": "Start handover"
-  },
-  "exchangeDeskStartReturn": "Start scooter return",
-  "@exchangeDeskStartReturn": {
-    "description": "Start scooter return"
-  },
-  "exchangeDeskStatusOfferSent": "Offer sent",
-  "@exchangeDeskStatusOfferSent": {
-    "description": "Offer sent"
-  },
-  "exchangeDeskStatusReserved": "Scooter reserved",
-  "@exchangeDeskStatusReserved": {
-    "description": "Scooter reserved"
-  },
-  "exchangeDeskSubtitle": "Riders asking for a different scooter",
-  "@exchangeDeskSubtitle": {
-    "description": "Riders asking for a different scooter"
-  },
-  "exchangeDeskWaitingRider": "Offer sent. Waiting for the rider to accept it in their app.",
-  "@exchangeDeskWaitingRider": {
-    "description": "Offer sent. Waiting for the rider to accept it in their app."
-  },
-  "exchangeDeskWithRider": "Waiting for rider",
-  "@exchangeDeskWithRider": {
-    "description": "Waiting for rider"
-  },
   "exchangeDetails": "Request details",
   "@exchangeDetails": {
     "description": "Request details"
@@ -2318,9 +2104,22 @@
   "@exchangeNextApproved": {
     "description": "Approved. Your hub will ask you to bring your current scooter in for a check."
   },
+  "exchangeNextBringIn": "Bring your current scooter to the hub you picked on {date}. The hub team will check it in.",
+  "@exchangeNextBringIn": {
+    "description": "Exchange requested, waiting for drop-off",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "exchangeNextCancelled": "This request was cancelled.",
   "@exchangeNextCancelled": {
     "description": "This request was cancelled."
+  },
+  "exchangeNextCheckingIn": "The hub team is checking your current scooter. You'll get a code on your phone to confirm the mechanic's report.",
+  "@exchangeNextCheckingIn": {
+    "description": "The hub team is checking your current scooter. You'll get a code on your phone to confirm the mechanic's report."
   },
   "exchangeNextChoosing": "Your old scooter is returned. Your hub is picking a replacement for you.",
   "@exchangeNextChoosing": {
@@ -2526,6 +2325,10 @@
   "@exchangeRequestSubtitle": {
     "description": "Tell your hub why you need a different scooter."
   },
+  "exchangeReturnDate": "Drop-off date",
+  "@exchangeReturnDate": {
+    "description": "Drop-off date"
+  },
   "exchangeSendRequest": "Send request",
   "@exchangeSendRequest": {
     "description": "Send request"
@@ -2557,6 +2360,10 @@
   "exchangeStatusCancelled": "Cancelled",
   "@exchangeStatusCancelled": {
     "description": "Cancelled"
+  },
+  "exchangeStatusCheckingIn": "Checking in",
+  "@exchangeStatusCheckingIn": {
+    "description": "Checking in"
   },
   "exchangeStatusChoosing": "Choosing scooter",
   "@exchangeStatusChoosing": {
@@ -2632,6 +2439,14 @@
   "@exchangeVersionPrevious": {
     "description": "Previous"
   },
+  "exchangeWhenWhere": "When and where",
+  "@exchangeWhenWhere": {
+    "description": "When and where"
+  },
+  "exchangeWhenWhereHint": "Pick when and where you'll bring your current scooter in.",
+  "@exchangeWhenWhereHint": {
+    "description": "Pick when and where you'll bring your current scooter in."
+  },
   "homeBonusUnlocked": "Bonus unlocked",
   "@homeBonusUnlocked": {
     "description": "Bonus unlocked"
@@ -2640,17 +2455,21 @@
   "@homeBookSlotOkhlaHubBefore": {
     "description": "Book a slot at the Okhla hub before the odometer hits 8,000 km."
   },
+  "homeCategory": "Category",
+  "@homeCategory": {
+    "description": "Category"
+  },
   "homeCouldNotLoadDashboard": "Could not load your dashboard",
   "@homeCouldNotLoadDashboard": {
     "description": "Could not load your dashboard"
   },
+  "homeDailyRental": "Daily Rental",
+  "@homeDailyRental": {
+    "description": "Daily Rental"
+  },
   "homeDepositsHandoverFees": "Deposits and handover fees",
   "@homeDepositsHandoverFees": {
     "description": "Deposits and handover fees"
-  },
-  "homeDistance": "Distance",
-  "@homeDistance": {
-    "description": "Distance"
   },
   "homeExtra15TripOkhlaPhase": "Extra ₹15 a trip in Okhla Phase II and Jasola this evening.",
   "@homeExtra15TripOkhlaPhase": {
@@ -2740,10 +2559,6 @@
   "@homeTodaysEarnings": {
     "description": "Today's earnings"
   },
-  "homeTrips": "Trips",
-  "@homeTrips": {
-    "description": "Trips"
-  },
   "homeVehicle": "Vehicle on",
   "@homeVehicle": {
     "description": "Vehicle on"
@@ -2756,17 +2571,50 @@
   "@homeWithdraw": {
     "description": "Withdraw"
   },
+  "homeWorkingDays": "Working Days",
+  "@homeWorkingDays": {
+    "description": "Working Days"
+  },
+  "hubAllHubs": "All hubs",
+  "@hubAllHubs": {
+    "description": "All hubs"
+  },
   "hubAllocate": "Allocate",
   "@hubAllocate": {
     "description": "Allocate"
+  },
+  "hubAllotmentsInQueue": "Allotments in Queue",
+  "@hubAllotmentsInQueue": {
+    "description": "Allotments in Queue"
+  },
+  "hubAllotmentsInQueueInfo": "Active riders at this hub who are waiting for a vehicle.",
+  "@hubAllotmentsInQueueInfo": {
+    "description": "Active riders at this hub who are waiting for a vehicle."
   },
   "hubBaysFree": "Bays free",
   "@hubBaysFree": {
     "description": "Bays free"
   },
+  "hubChooseHub": "Choose a hub",
+  "@hubChooseHub": {
+    "description": "Choose a hub"
+  },
+  "hubChooseHubSubtitle": "See one hub, or all your hubs together.",
+  "@hubChooseHubSubtitle": {
+    "description": "See one hub, or all your hubs together."
+  },
   "hubCouldNotLoadHub": "Could not load your hub",
   "@hubCouldNotLoadHub": {
     "description": "Could not load your hub"
+  },
+  "hubCount": "{count} hubs",
+  "@hubCount": {
+    "description": "Number of hubs assigned to the manager",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "hubFleetManager": "Fleet Manager",
   "@hubFleetManager": {
@@ -2784,10 +2632,6 @@
   "@hubHubGlance": {
     "description": "Your hub at a glance"
   },
-  "hubHubs": "Your hubs",
-  "@hubHubs": {
-    "description": "Your hubs"
-  },
   "hubMaintenance": "Maintenance",
   "@hubMaintenance": {
     "description": "Maintenance"
@@ -2800,25 +2644,25 @@
   "@hubNoHubAssigned": {
     "description": "No hub is assigned to you."
   },
-  "hubOpenJobs": "Open jobs",
-  "@hubOpenJobs": {
-    "description": "Open jobs"
+  "hubQuickView": "Quick Hub View",
+  "@hubQuickView": {
+    "description": "Quick Hub View"
   },
-  "hubPickOneSeveralSeeTheir": "Pick one, or several to see their numbers combined",
-  "@hubPickOneSeveralSeeTheir": {
-    "description": "Pick one, or several to see their numbers combined"
+  "hubQuickViewInfo": "Live counts for your selected hub.",
+  "@hubQuickViewInfo": {
+    "description": "Live counts for your selected hub."
   },
   "hubReturn": "Return",
   "@hubReturn": {
     "description": "Return"
   },
-  "hubReturnsClear": "Returns to clear",
-  "@hubReturnsClear": {
-    "description": "Returns to clear"
+  "hubRfdsAvailable": "RFDs available",
+  "@hubRfdsAvailable": {
+    "description": "RFDs available"
   },
-  "hubRidersPresent": "Riders present",
-  "@hubRidersPresent": {
-    "description": "Riders present"
+  "hubRfdsAvailableInfo": "Ready for deployment: vehicles at this hub that are free to allot.",
+  "@hubRfdsAvailableInfo": {
+    "description": "Ready for deployment: vehicles at this hub that are free to allot."
   },
   "hubsCouldNotLoad": "Could not load nearby hubs",
   "@hubsCouldNotLoad": {
@@ -2832,9 +2676,9 @@
   "@hubShift": {
     "description": "On shift"
   },
-  "hubShowThisHub": "Show this hub",
-  "@hubShowThisHub": {
-    "description": "Show this hub"
+  "hubShowDataFor": "Show data for",
+  "@hubShowDataFor": {
+    "description": "Show data for"
   },
   "hubsNoneBody": "There are no active hubs within reach of your location.",
   "@hubsNoneBody": {
@@ -2852,13 +2696,25 @@
   "@hubsSubtitle": {
     "description": "Closest hubs to you"
   },
+  "hubSubmissionsInQueue": "Submissions in Queue",
+  "@hubSubmissionsInQueue": {
+    "description": "Submissions in Queue"
+  },
+  "hubSubmissionsInQueueInfo": "Returns and exchanges due at this hub whose vehicle check-in isn't complete yet.",
+  "@hubSubmissionsInQueueInfo": {
+    "description": "Returns and exchanges due at this hub whose vehicle check-in isn't complete yet."
+  },
+  "hubUnderMaintenanceFleet": "Under Maintenance Fleet",
+  "@hubUnderMaintenanceFleet": {
+    "description": "Under Maintenance Fleet"
+  },
+  "hubUnderMaintenanceFleetInfo": "Vehicles from this hub that are under maintenance right now.",
+  "@hubUnderMaintenanceFleetInfo": {
+    "description": "Vehicles from this hub that are under maintenance right now."
+  },
   "hubUptime": "Uptime",
   "@hubUptime": {
     "description": "Uptime"
-  },
-  "hubWaitingAllocate": "Waiting to allocate",
-  "@hubWaitingAllocate": {
-    "description": "Waiting to allocate"
   },
   "hubWorkingLate": "Working late",
   "@hubWorkingLate": {
@@ -2931,18 +2787,6 @@
   "legalDocumentCouldNotLoad": "Could not load this document",
   "@legalDocumentCouldNotLoad": {
     "description": "Could not load this document"
-  },
-  "legalTermsAgree": "I have read and agree to the Terms & Conditions",
-  "@legalTermsAgree": {
-    "description": "I have read and agree to the Terms & Conditions"
-  },
-  "legalTermsSubtitle": "Please read these terms before you continue.",
-  "@legalTermsSubtitle": {
-    "description": "Please read these terms before you continue."
-  },
-  "legalTermsTitle": "Terms & Conditions",
-  "@legalTermsTitle": {
-    "description": "Terms & Conditions"
   },
   "maintenanceAddNote": "Add a note",
   "@maintenanceAddNote": {
@@ -3366,6 +3210,10 @@
   "@navScooterDetails": {
     "description": "Scooter details"
   },
+  "notificationsAll": "All",
+  "@notificationsAll": {
+    "description": "All"
+  },
   "notificationsAllCaughtUp": "You are all caught up",
   "@notificationsAllCaughtUp": {
     "description": "You are all caught up"
@@ -3382,9 +3230,22 @@
   "@notificationsEarlier": {
     "description": "Earlier"
   },
-  "notificationsNewEarningsRemindersAlertsWill": "New earnings, reminders and alerts will show up here.",
-  "@notificationsNewEarningsRemindersAlertsWill": {
-    "description": "New earnings, reminders and alerts will show up here."
+  "notificationsEmptyMessage": "New updates and alerts will show up here.",
+  "@notificationsEmptyMessage": {
+    "description": "New updates and alerts will show up here."
+  },
+  "notificationsGotIt": "Got it",
+  "@notificationsGotIt": {
+    "description": "Got it"
+  },
+  "notificationsInboxCount": "{count} notifications in your inbox",
+  "@notificationsInboxCount": {
+    "description": "Total notifications loaded",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "notificationsNoMatchingNotifications": "No matching notifications",
   "@notificationsNoMatchingNotifications": {
@@ -3409,6 +3270,15 @@
   "notificationsUnread": "Unread",
   "@notificationsUnread": {
     "description": "Unread"
+  },
+  "notificationsUnreadCount": "{count} unread",
+  "@notificationsUnreadCount": {
+    "description": "Unread notifications headline",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "onboardingAcceptAgreementContinue": "Accept the agreement to continue",
   "@onboardingAcceptAgreementContinue": {
@@ -3560,9 +3430,17 @@
   "@onboardingReferralCodeApplied": {
     "description": "Referral code applied"
   },
+  "onboardingReferralFromInvite": "Added from your invite link",
+  "@onboardingReferralFromInvite": {
+    "description": "Added from your invite link"
+  },
   "onboardingReferralNotFound": "We couldn't find a referral for that. Check the code or mobile number.",
   "@onboardingReferralNotFound": {
     "description": "We couldn't find a referral for that. Check the code or mobile number."
+  },
+  "onboardingReferralScan": "Scan referral QR",
+  "@onboardingReferralScan": {
+    "description": "Scan referral QR"
   },
   "onboardingReferralTapApply": "Tap Apply to use this code, or clear it",
   "@onboardingReferralTapApply": {
@@ -3769,25 +3647,200 @@
   "@profilePersonalDetails": {
     "description": "Personal details"
   },
+  "referActivity": "Activity",
+  "@referActivity": {
+    "description": "Activity"
+  },
+  "referCardReward": "Join with my code and get {amount}",
+  "@referCardReward": {
+    "description": "Caption on the shared QR card",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "referCodeCopied": "Referral code copied",
   "@referCodeCopied": {
     "description": "Referral code copied"
+  },
+  "referCompleteBy": "Complete these by {date}",
+  "@referCompleteBy": {
+    "description": "Qualification deadline",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "referCopyCode": "Copy code",
   "@referCopyCode": {
     "description": "Copy code"
   },
+  "referCopyMessage": "Copy invite message",
+  "@referCopyMessage": {
+    "description": "Copy invite message"
+  },
   "referCouldNotLoad": "Could not load refer & earn",
   "@referCouldNotLoad": {
     "description": "Could not load refer & earn"
+  },
+  "referDetailTitle": "Referral details",
+  "@referDetailTitle": {
+    "description": "Referral details"
+  },
+  "referDrawerHint": "Let a friend scan this to join with your code. Tap to enlarge.",
+  "@referDrawerHint": {
+    "description": "Let a friend scan this to join with your code. Tap to enlarge."
+  },
+  "referDrawerTitle": "My referral QR",
+  "@referDrawerTitle": {
+    "description": "My referral QR"
+  },
+  "referErrorAlreadyLinked": "Your account is already linked to another referral code.",
+  "@referErrorAlreadyLinked": {
+    "description": "Your account is already linked to another referral code."
+  },
+  "referErrorCampaignInactive": "Refer & earn isn't running right now.",
+  "@referErrorCampaignInactive": {
+    "description": "Refer & earn isn't running right now."
+  },
+  "referErrorCodeExpired": "This invite has expired. Ask your friend to send a new one.",
+  "@referErrorCodeExpired": {
+    "description": "This invite has expired. Ask your friend to send a new one."
+  },
+  "referErrorLimit": "This rider has reached their referral limit.",
+  "@referErrorLimit": {
+    "description": "This rider has reached their referral limit."
+  },
+  "referErrorNotEligible": "Your rider profile isn't ready for referrals yet.",
+  "@referErrorNotEligible": {
+    "description": "Your rider profile isn't ready for referrals yet."
+  },
+  "referErrorNotEnabled": "Refer & earn isn't available for your company.",
+  "@referErrorNotEnabled": {
+    "description": "Refer & earn isn't available for your company."
+  },
+  "referErrorNotFound": "Referral not found.",
+  "@referErrorNotFound": {
+    "description": "Referral not found."
+  },
+  "referErrorSelf": "You can't use your own referral code.",
+  "@referErrorSelf": {
+    "description": "You can't use your own referral code."
+  },
+  "referEventExpired": "A referral expired",
+  "@referEventExpired": {
+    "description": "A referral expired"
+  },
+  "referEventOther": "Referral update",
+  "@referEventOther": {
+    "description": "Referral update"
+  },
+  "referEventProgress": "A referral made progress",
+  "@referEventProgress": {
+    "description": "A referral made progress"
+  },
+  "referEventQualified": "A referral qualified for its reward",
+  "@referEventQualified": {
+    "description": "A referral qualified for its reward"
+  },
+  "referEventRegistered": "A rider joined with a referral code",
+  "@referEventRegistered": {
+    "description": "A rider joined with a referral code"
+  },
+  "referEventRewardPaid": "A referral reward was paid",
+  "@referEventRewardPaid": {
+    "description": "A referral reward was paid"
   },
   "referFriendGets": "Your friend gets",
   "@referFriendGets": {
     "description": "Your friend gets"
   },
+  "referHowItWorks": "How it works",
+  "@referHowItWorks": {
+    "description": "How it works"
+  },
+  "referHowItWorksBody": "Share your code. When your friend joins and completes these steps, the referral reward unlocks.",
+  "@referHowItWorksBody": {
+    "description": "Share your code. When your friend joins and completes these steps, the referral reward unlocks."
+  },
   "referInvited": "Invited",
   "@referInvited": {
     "description": "Invited"
+  },
+  "referInviteValidTill": "This invite is valid till {date}",
+  "@referInviteValidTill": {
+    "description": "Invite expiry",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "referMessageCopied": "Invite message copied",
+  "@referMessageCopied": {
+    "description": "Invite message copied"
+  },
+  "referMilestoneActivated": "Get activated as a rider",
+  "@referMilestoneActivated": {
+    "description": "Get activated as a rider"
+  },
+  "referMilestoneActiveDays": "Stay active for {count} days",
+  "@referMilestoneActiveDays": {
+    "description": "Milestone: active days",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "referMilestoneAttendance": "Mark attendance on {count} days",
+  "@referMilestoneAttendance": {
+    "description": "Milestone: attendance days",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "referMilestoneDeliveries": "Complete {count} deliveries",
+  "@referMilestoneDeliveries": {
+    "description": "Milestone: deliveries",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "referMilestoneKyc": "Complete KYC",
+  "@referMilestoneKyc": {
+    "description": "Complete KYC"
+  },
+  "referMilestoneOther": "Complete the campaign step",
+  "@referMilestoneOther": {
+    "description": "Complete the campaign step"
+  },
+  "referMilestonePayment": "Make the first payment",
+  "@referMilestonePayment": {
+    "description": "Make the first payment"
+  },
+  "referMilestoneRides": "Complete {count} rides",
+  "@referMilestoneRides": {
+    "description": "Milestone: rides",
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "referMilestoneTraining": "Finish the training",
+  "@referMilestoneTraining": {
+    "description": "Finish the training"
+  },
+  "referMilestoneVehicle": "Get a scooter allotted",
+  "@referMilestoneVehicle": {
+    "description": "Get a scooter allotted"
   },
   "referNoCampaignBody": "Check back soon for new rewards.",
   "@referNoCampaignBody": {
@@ -3813,6 +3866,14 @@
   "@referPending": {
     "description": "Pending"
   },
+  "referProgress": "Progress",
+  "@referProgress": {
+    "description": "Progress"
+  },
+  "referQrSemantics": "Referral QR code",
+  "@referQrSemantics": {
+    "description": "Referral QR code"
+  },
   "referQualified": "Qualified",
   "@referQualified": {
     "description": "Qualified"
@@ -3821,9 +3882,135 @@
   "@referRegistered": {
     "description": "Registered"
   },
+  "referRewardEarned": "Earned",
+  "@referRewardEarned": {
+    "description": "Earned"
+  },
+  "referRewardPending": "Pending",
+  "@referRewardPending": {
+    "description": "Pending"
+  },
+  "referRewardProcessing": "Processing",
+  "@referRewardProcessing": {
+    "description": "Processing"
+  },
+  "referRewardReversed": "Reversed",
+  "@referRewardReversed": {
+    "description": "Reversed"
+  },
+  "referRewards": "Rewards",
+  "@referRewards": {
+    "description": "Rewards"
+  },
+  "referScanCameraFailed": "The camera couldn't start. Try again, or pick a photo of the QR code.",
+  "@referScanCameraFailed": {
+    "description": "The camera couldn't start. Try again, or pick a photo of the QR code."
+  },
+  "referScanFound": "Found code {code}",
+  "@referScanFound": {
+    "description": "Code read from a QR",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "referScanFromPhotos": "Pick from photos",
+  "@referScanFromPhotos": {
+    "description": "Pick from photos"
+  },
+  "referScanHint": "Point the camera at a referral QR code",
+  "@referScanHint": {
+    "description": "Point the camera at a referral QR code"
+  },
+  "referScanNoCamera": "There's no camera to scan with on this device. Pick a photo of the QR code instead.",
+  "@referScanNoCamera": {
+    "description": "There's no camera to scan with on this device. Pick a photo of the QR code instead."
+  },
+  "referScanNoQrInPhoto": "No QR code found in that photo.",
+  "@referScanNoQrInPhoto": {
+    "description": "No QR code found in that photo."
+  },
+  "referScanNotReferral": "That QR code isn't a referral code.",
+  "@referScanNotReferral": {
+    "description": "That QR code isn't a referral code."
+  },
+  "referScanPermissionDenied": "Camera access is off. Allow it in Settings to scan, or pick a photo of the QR code.",
+  "@referScanPermissionDenied": {
+    "description": "Camera access is off. Allow it in Settings to scan, or pick a photo of the QR code."
+  },
+  "referScanTitle": "Scan referral QR",
+  "@referScanTitle": {
+    "description": "Scan referral QR"
+  },
+  "referScanToJoin": "Scan to join with my referral code",
+  "@referScanToJoin": {
+    "description": "Scan to join with my referral code"
+  },
+  "referShareAndroid": "Get the app on Android: {link}",
+  "@referShareAndroid": {
+    "description": "Play Store link line in the invite message",
+    "placeholders": {
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "referShareCodeLine": "Use my referral code {code} when you sign up.",
+  "@referShareCodeLine": {
+    "description": "Referral code line in the invite message",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "referShareIntro": "Join me as a rider on {app}!",
+  "@referShareIntro": {
+    "description": "Invite message opening line",
+    "placeholders": {
+      "app": {
+        "type": "String"
+      }
+    }
+  },
   "referShareInvite": "Share invite",
   "@referShareInvite": {
     "description": "Share invite"
+  },
+  "referShareIphone": "Get the app on iPhone: {link}",
+  "@referShareIphone": {
+    "description": "App Store link line in the invite message",
+    "placeholders": {
+      "link": {
+        "type": "String"
+      }
+    }
+  },
+  "referShareNow": "Share",
+  "@referShareNow": {
+    "description": "Share"
+  },
+  "referShareReward": "You get {amount} when you complete the joining steps.",
+  "@referShareReward": {
+    "description": "Friend reward line in the invite message",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "referShareSubtitle": "Your friend can scan the QR or use the link to join.",
+  "@referShareSubtitle": {
+    "description": "Your friend can scan the QR or use the link to join."
+  },
+  "referShareTitle": "Share your invite",
+  "@referShareTitle": {
+    "description": "Share your invite"
+  },
+  "referShowQr": "Show QR",
+  "@referShowQr": {
+    "description": "Show QR"
   },
   "referStatusActivated": "Activated",
   "@referStatusActivated": {
@@ -3869,9 +4056,29 @@
   "@referStatusUnderReview": {
     "description": "Under review"
   },
+  "referStepsDone": "{done}/{total} steps",
+  "@referStepsDone": {
+    "description": "Milestones completed out of total",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "referSubtitle": "Invite riders and earn rewards",
   "@referSubtitle": {
     "description": "Invite riders and earn rewards"
+  },
+  "referTerms": "Terms & conditions",
+  "@referTerms": {
+    "description": "Terms & conditions"
+  },
+  "referTimeline": "Timeline",
+  "@referTimeline": {
+    "description": "Timeline"
   },
   "referTotalEarned": "Total earned",
   "@referTotalEarned": {
@@ -3893,6 +4100,14 @@
   "referYourCode": "Your referral code",
   "@referYourCode": {
     "description": "Your referral code"
+  },
+  "referYourQr": "Your referral QR",
+  "@referYourQr": {
+    "description": "Your referral QR"
+  },
+  "referYourQrSubtitle": "Ask your friend to scan it in the app's onboarding.",
+  "@referYourQrSubtitle": {
+    "description": "Ask your friend to scan it in the app's onboarding."
   },
   "referYourReferrals": "Your referrals",
   "@referYourReferrals": {
@@ -4129,440 +4344,6 @@
   "@rentalsYourAccount": {
     "description": "Your account"
   },
-  "returnDeskAddCharge": "Add a charge",
-  "@returnDeskAddCharge": {
-    "description": "Add a charge"
-  },
-  "returnDeskAdminApproved": "An admin approved these charges for the rider.",
-  "@returnDeskAdminApproved": {
-    "description": "An admin approved these charges for the rider."
-  },
-  "returnDeskApprove": "Approve",
-  "@returnDeskApprove": {
-    "description": "Approve"
-  },
-  "returnDeskApproveAndPost": "Approve and post charges",
-  "@returnDeskApproveAndPost": {
-    "description": "Approve and post charges"
-  },
-  "returnDeskApproveAsManager": "Approve as manager",
-  "@returnDeskApproveAsManager": {
-    "description": "Approve as manager"
-  },
-  "returnDeskApproveBodyPost": "{amount} will be added to the rider's bill.",
-  "@returnDeskApproveBodyPost": {
-    "description": "Confirmation when manager approval posts the charges",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "returnDeskApproveBodyWait": "Your approval is recorded. The charges post once the rider approves too.",
-  "@returnDeskApproveBodyWait": {
-    "description": "Your approval is recorded. The charges post once the rider approves too."
-  },
-  "returnDeskApproved": "Approval recorded",
-  "@returnDeskApproved": {
-    "description": "Approval recorded"
-  },
-  "returnDeskApproveForRider": "Approve for the rider",
-  "@returnDeskApproveForRider": {
-    "description": "Approve for the rider"
-  },
-  "returnDeskApproveTitle": "Approve these charges?",
-  "@returnDeskApproveTitle": {
-    "description": "Approve these charges?"
-  },
-  "returnDeskBackdateReason": "Why is it being entered late?",
-  "@returnDeskBackdateReason": {
-    "description": "Why is it being entered late?"
-  },
-  "returnDeskBackdateReasonNeeded": "Add a reason for the earlier time",
-  "@returnDeskBackdateReasonNeeded": {
-    "description": "Add a reason for the earlier time"
-  },
-  "returnDeskCaseTitle": "Return",
-  "@returnDeskCaseTitle": {
-    "description": "Return"
-  },
-  "returnDeskChargeDetails": "Details",
-  "@returnDeskChargeDetails": {
-    "description": "Details"
-  },
-  "returnDeskChargeDetailsHint": "What exactly is damaged or missing?",
-  "@returnDeskChargeDetailsHint": {
-    "description": "What exactly is damaged or missing?"
-  },
-  "returnDeskChargesHint": "Pick from the price list. Each charge needs details and at least one inspection photo as evidence.",
-  "@returnDeskChargesHint": {
-    "description": "Pick from the price list. Each charge needs details and at least one inspection photo as evidence."
-  },
-  "returnDeskChecklistHint": "A photo of the filled return checklist. Charges for missing items need it as evidence.",
-  "@returnDeskChecklistHint": {
-    "description": "A photo of the filled return checklist. Charges for missing items need it as evidence."
-  },
-  "returnDeskChecklistNeeded": "Missing-item charges need the return checklist photo as evidence.",
-  "@returnDeskChecklistNeeded": {
-    "description": "Missing-item charges need the return checklist photo as evidence."
-  },
-  "returnDeskChecklistPhoto": "Return checklist",
-  "@returnDeskChecklistPhoto": {
-    "description": "Return checklist"
-  },
-  "returnDeskClosedNoCharges": "Return closed with no charges",
-  "@returnDeskClosedNoCharges": {
-    "description": "Return closed with no charges"
-  },
-  "returnDeskCloseNoCharges": "Close with no charges",
-  "@returnDeskCloseNoCharges": {
-    "description": "Close with no charges"
-  },
-  "returnDeskCloseNoChargesBody": "The return closes and the rider isn't charged for this scooter.",
-  "@returnDeskCloseNoChargesBody": {
-    "description": "The return closes and the rider isn't charged for this scooter."
-  },
-  "returnDeskCouldNotLoad": "Could not load returns",
-  "@returnDeskCouldNotLoad": {
-    "description": "Could not load returns"
-  },
-  "returnDeskCouldNotLoadInspection": "Could not load the inspection",
-  "@returnDeskCouldNotLoadInspection": {
-    "description": "Could not load the inspection"
-  },
-  "returnDeskDamageHint": "Close-ups of any dents, scratches or broken parts. You can use them as evidence for charges.",
-  "@returnDeskDamageHint": {
-    "description": "Close-ups of any dents, scratches or broken parts. You can use them as evidence for charges."
-  },
-  "returnDeskDamagePhoto": "Damage photo",
-  "@returnDeskDamagePhoto": {
-    "description": "Damage photo"
-  },
-  "returnDeskDamagePhotos": "Damage photos",
-  "@returnDeskDamagePhotos": {
-    "description": "Damage photos"
-  },
-  "returnDeskDetailsNeeded": "Add the details",
-  "@returnDeskDetailsNeeded": {
-    "description": "Add the details"
-  },
-  "returnDeskDraftSaved": "Draft saved",
-  "@returnDeskDraftSaved": {
-    "description": "Draft saved"
-  },
-  "returnDeskEditCharge": "Edit charge",
-  "@returnDeskEditCharge": {
-    "description": "Edit charge"
-  },
-  "returnDeskEmpty": "No returns here",
-  "@returnDeskEmpty": {
-    "description": "No returns here"
-  },
-  "returnDeskEmptyBody": "Returns riders book at your hubs will show up here.",
-  "@returnDeskEmptyBody": {
-    "description": "Returns riders book at your hubs will show up here."
-  },
-  "returnDeskEvidence": "Evidence photos",
-  "@returnDeskEvidence": {
-    "description": "Evidence photos"
-  },
-  "returnDeskEvidenceNeeded": "Pick at least one photo as evidence",
-  "@returnDeskEvidenceNeeded": {
-    "description": "Pick at least one photo as evidence"
-  },
-  "returnDeskFilterReturned": "Returned",
-  "@returnDeskFilterReturned": {
-    "description": "Returned"
-  },
-  "returnDeskFilterToReceive": "To receive",
-  "@returnDeskFilterToReceive": {
-    "description": "To receive"
-  },
-  "returnDeskFinishInspection": "Finish inspection",
-  "@returnDeskFinishInspection": {
-    "description": "Finish inspection"
-  },
-  "returnDeskGuideApprove": "The rider's side is done. A fleet or operations manager approves next, and the charges post to the rider's bill.",
-  "@returnDeskGuideApprove": {
-    "description": "The rider's side is done. A fleet or operations manager approves next, and the charges post to the rider's bill."
-  },
-  "returnDeskGuideCancelled": "The rider cancelled this return. Nothing to do.",
-  "@returnDeskGuideCancelled": {
-    "description": "The rider cancelled this return. Nothing to do."
-  },
-  "returnDeskGuideCharges": "Add a charge for anything damaged or missing, then send them to the rider. If all is fine, close the return with no charges.",
-  "@returnDeskGuideCharges": {
-    "description": "Add a charge for anything damaged or missing, then send them to the rider. If all is fine, close the return with no charges."
-  },
-  "returnDeskGuideClosed": "This return is closed.",
-  "@returnDeskGuideClosed": {
-    "description": "This return is closed."
-  },
-  "returnDeskGuideDisputed": "The rider disputed the charges. Revise them and send them again.",
-  "@returnDeskGuideDisputed": {
-    "description": "The rider disputed the charges. Revise them and send them again."
-  },
-  "returnDeskGuideInspect": "The scooter is at the hub. Inspect it, take the photos and decide whether it can be rented again.",
-  "@returnDeskGuideInspect": {
-    "description": "The scooter is at the hub. Inspect it, take the photos and decide whether it can be rented again."
-  },
-  "returnDeskGuideReceive": "The rider plans to bring the scooter on {date}. Mark it received when it reaches the hub.",
-  "@returnDeskGuideReceive": {
-    "description": "Guide shown while a return is waiting to be received",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "returnDeskGuideWithRider": "The charges are with the rider to approve with a code sent to their phone.",
-  "@returnDeskGuideWithRider": {
-    "description": "The charges are with the rider to approve with a code sent to their phone."
-  },
-  "returnDeskInspectHint": "Take the photos, check the checklist and decide whether the scooter can go out again.",
-  "@returnDeskInspectHint": {
-    "description": "Take the photos, check the checklist and decide whether the scooter can go out again."
-  },
-  "returnDeskInspectionDone": "Inspection saved",
-  "@returnDeskInspectionDone": {
-    "description": "Inspection saved"
-  },
-  "returnDeskInspectionResult": "Inspection",
-  "@returnDeskInspectionResult": {
-    "description": "Inspection"
-  },
-  "returnDeskInspectTitle": "Inspect scooter",
-  "@returnDeskInspectTitle": {
-    "description": "Inspect scooter"
-  },
-  "returnDeskLoadingPhotos": "Loading the inspection photos. Try again in a moment.",
-  "@returnDeskLoadingPhotos": {
-    "description": "Loading the inspection photos. Try again in a moment."
-  },
-  "returnDeskManagerApproved": "Manager approved",
-  "@returnDeskManagerApproved": {
-    "description": "Manager approved"
-  },
-  "returnDeskMarkReceived": "Mark received",
-  "@returnDeskMarkReceived": {
-    "description": "Mark received"
-  },
-  "returnDeskNoInspection": "The inspection isn't ready yet. Pull down to refresh.",
-  "@returnDeskNoInspection": {
-    "description": "The inspection isn't ready yet. Pull down to refresh."
-  },
-  "returnDeskNoPhotoRules": "No photos are required here. Add a checklist or damage photos if they help.",
-  "@returnDeskNoPhotoRules": {
-    "description": "No photos are required here. Add a checklist or damage photos if they help."
-  },
-  "returnDeskNoPhotosYet": "No inspection photos yet. Add them on the inspection screen.",
-  "@returnDeskNoPhotosYet": {
-    "description": "No inspection photos yet. Add them on the inspection screen."
-  },
-  "returnDeskNoPrices": "No penalty prices are set up yet. Ask an admin to add them.",
-  "@returnDeskNoPrices": {
-    "description": "No penalty prices are set up yet. Ask an admin to add them."
-  },
-  "returnDeskOverridden": "Approved on the rider's behalf",
-  "@returnDeskOverridden": {
-    "description": "Approved on the rider's behalf"
-  },
-  "returnDeskOverrideReason": "Reason",
-  "@returnDeskOverrideReason": {
-    "description": "Reason"
-  },
-  "returnDeskOverrideReasonNeeded": "Add a reason for approving on the rider's behalf.",
-  "@returnDeskOverrideReasonNeeded": {
-    "description": "Add a reason for approving on the rider's behalf."
-  },
-  "returnDeskOverrideSubtitle": "Use this only when the rider can't approve. The reason is kept on record.",
-  "@returnDeskOverrideSubtitle": {
-    "description": "Use this only when the rider can't approve. The reason is kept on record."
-  },
-  "returnDeskPhotos": "Photos",
-  "@returnDeskPhotos": {
-    "description": "Photos"
-  },
-  "returnDeskPhotosHint": "Tap a tile to take that photo. Tiles with a red dot are required.",
-  "@returnDeskPhotosHint": {
-    "description": "Tap a tile to take that photo. Tiles with a red dot are required."
-  },
-  "returnDeskPhotosMissing": "Still needed: {names}",
-  "@returnDeskPhotosMissing": {
-    "description": "Required inspection photos not yet taken",
-    "placeholders": {
-      "names": {
-        "type": "String"
-      }
-    }
-  },
-  "returnDeskPickCharge": "Choose a charge from the price list",
-  "@returnDeskPickCharge": {
-    "description": "Choose a charge from the price list"
-  },
-  "returnDeskPosted": "Charges posted to the rider's bill on {date}.",
-  "@returnDeskPosted": {
-    "description": "When charges were posted",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "returnDeskReceived": "Scooter received",
-  "@returnDeskReceived": {
-    "description": "Scooter received"
-  },
-  "returnDeskReceivedAt": "Received at",
-  "@returnDeskReceivedAt": {
-    "description": "Received at"
-  },
-  "returnDeskReceivedEarlier": "It came in earlier",
-  "@returnDeskReceivedEarlier": {
-    "description": "It came in earlier"
-  },
-  "returnDeskReceivedEarlierHint": "Record the actual time if you are entering it late",
-  "@returnDeskReceivedEarlierHint": {
-    "description": "Record the actual time if you are entering it late"
-  },
-  "returnDeskReceivedOn": "Received {date}",
-  "@returnDeskReceivedOn": {
-    "description": "When the scooter was received at the hub",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "returnDeskReceiveHint": "Do this once the scooter is physically at the hub. The rental ends from the time you record.",
-  "@returnDeskReceiveHint": {
-    "description": "Do this once the scooter is physically at the hub. The rental ends from the time you record."
-  },
-  "returnDeskReceiveTitle": "Receive scooter",
-  "@returnDeskReceiveTitle": {
-    "description": "Receive scooter"
-  },
-  "returnDeskReceivingHub": "Receiving hub",
-  "@returnDeskReceivingHub": {
-    "description": "Receiving hub"
-  },
-  "returnDeskReviseHint": "Change or remove the disputed charges, then send them to the rider again.",
-  "@returnDeskReviseHint": {
-    "description": "Change or remove the disputed charges, then send them to the rider again."
-  },
-  "returnDeskRiderApproved": "The rider approved these charges.",
-  "@returnDeskRiderApproved": {
-    "description": "The rider approved these charges."
-  },
-  "returnDeskRiderDispute": "Rider's dispute",
-  "@returnDeskRiderDispute": {
-    "description": "Rider's dispute"
-  },
-  "returnDeskRiderNote": "Rider's note",
-  "@returnDeskRiderNote": {
-    "description": "Rider's note"
-  },
-  "returnDeskSafeNo": "Needs repair first",
-  "@returnDeskSafeNo": {
-    "description": "Needs repair first"
-  },
-  "returnDeskSafeNoHint": "It goes to maintenance and can't be allocated",
-  "@returnDeskSafeNoHint": {
-    "description": "It goes to maintenance and can't be allocated"
-  },
-  "returnDeskSafety": "Can it be rented again?",
-  "@returnDeskSafety": {
-    "description": "Can it be rented again?"
-  },
-  "returnDeskSafetyNeeded": "Choose whether the scooter can be rented again",
-  "@returnDeskSafetyNeeded": {
-    "description": "Choose whether the scooter can be rented again"
-  },
-  "returnDeskSafeYes": "Safe to rent again",
-  "@returnDeskSafeYes": {
-    "description": "Safe to rent again"
-  },
-  "returnDeskSafeYesHint": "It goes back to the available pool",
-  "@returnDeskSafeYesHint": {
-    "description": "It goes back to the available pool"
-  },
-  "returnDeskSaveCharge": "Save charge",
-  "@returnDeskSaveCharge": {
-    "description": "Save charge"
-  },
-  "returnDeskSaveDraft": "Save draft",
-  "@returnDeskSaveDraft": {
-    "description": "Save draft"
-  },
-  "returnDeskSendToRider": "Send to rider",
-  "@returnDeskSendToRider": {
-    "description": "Send to rider"
-  },
-  "returnDeskSendToRiderBody": "The rider sees these charges in their app and approves them with a code. You can't edit them while they're with the rider.",
-  "@returnDeskSendToRiderBody": {
-    "description": "The rider sees these charges in their app and approves them with a code. You can't edit them while they're with the rider."
-  },
-  "returnDeskSentToRider": "Charges sent to the rider",
-  "@returnDeskSentToRider": {
-    "description": "Charges sent to the rider"
-  },
-  "returnDeskStageApproval": "Needs approval",
-  "@returnDeskStageApproval": {
-    "description": "Needs approval"
-  },
-  "returnDeskStageAwaiting": "Awaiting scooter",
-  "@returnDeskStageAwaiting": {
-    "description": "Awaiting scooter"
-  },
-  "returnDeskStageCharges": "Add charges",
-  "@returnDeskStageCharges": {
-    "description": "Add charges"
-  },
-  "returnDeskStageInspect": "Inspect scooter",
-  "@returnDeskStageInspect": {
-    "description": "Inspect scooter"
-  },
-  "returnDeskStageWithRider": "With rider",
-  "@returnDeskStageWithRider": {
-    "description": "With rider"
-  },
-  "returnDeskStartInspection": "Start inspection",
-  "@returnDeskStartInspection": {
-    "description": "Start inspection"
-  },
-  "returnDeskSubtitle": "Scooters riders are handing back",
-  "@returnDeskSubtitle": {
-    "description": "Scooters riders are handing back"
-  },
-  "returnDeskTitle": "Return desk",
-  "@returnDeskTitle": {
-    "description": "Return desk"
-  },
-  "returnDeskUnsafeReason": "What needs fixing?",
-  "@returnDeskUnsafeReason": {
-    "description": "What needs fixing?"
-  },
-  "returnDeskUnsafeReasonNeeded": "Say what needs fixing",
-  "@returnDeskUnsafeReasonNeeded": {
-    "description": "Say what needs fixing"
-  },
-  "returnDeskWaitingManager": "A fleet or operations manager approves next.",
-  "@returnDeskWaitingManager": {
-    "description": "A fleet or operations manager approves next."
-  },
-  "returnDeskWaitingRider": "Waiting for {name} to approve with the code sent to their phone.",
-  "@returnDeskWaitingRider": {
-    "description": "Status while charges wait for the rider",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "returnsAgreement": "Agreement",
-  "@returnsAgreement": {
-    "description": "Agreement"
-  },
   "returnsApproveCharges": "Approve charges",
   "@returnsApproveCharges": {
     "description": "Approve charges"
@@ -4728,15 +4509,6 @@
   "@returnsErrorSubmitFirst": {
     "description": "Submit the penalties before approving them."
   },
-  "returnsEtaMinutes": "{minutes} min away",
-  "@returnsEtaMinutes": {
-    "description": "Travel time to a hub",
-    "placeholders": {
-      "minutes": {
-        "type": "int"
-      }
-    }
-  },
   "returnsEvidenceCount": "{count} photo(s) as evidence",
   "@returnsEvidenceCount": {
     "description": "Number of evidence photos for a charge",
@@ -4766,17 +4538,17 @@
   "@returnsLocationForHubs": {
     "description": "We use your location to list the hubs closest to you."
   },
-  "returnsNextCharges": "If anything is damaged or missing, you see the charges here and approve them with a code before they are billed.",
-  "@returnsNextCharges": {
-    "description": "If anything is damaged or missing, you see the charges here and approve them with a code before they are billed."
+  "returnsNextCheckIn": "The hub team photographs the scooter and a mechanic checks it.",
+  "@returnsNextCheckIn": {
+    "description": "The hub team photographs the scooter and a mechanic checks it."
+  },
+  "returnsNextConfirm": "You get a code on your phone to confirm the report and any charges. Your rental ends once it's confirmed.",
+  "@returnsNextConfirm": {
+    "description": "You get a code on your phone to confirm the report and any charges. Your rental ends once it's confirmed."
   },
   "returnsNextHandOver": "Bring the scooter, its battery and charger to the hub on the date you picked.",
   "@returnsNextHandOver": {
     "description": "Bring the scooter, its battery and charger to the hub on the date you picked."
-  },
-  "returnsNextInspection": "The hub team checks the scooter in and inspects it.",
-  "@returnsNextInspection": {
-    "description": "The hub team checks the scooter in and inspects it."
   },
   "returnsNoCharges": "No charges for this return.",
   "@returnsNoCharges": {
@@ -4802,9 +4574,21 @@
   "@returnsNoteCancelled": {
     "description": "You cancelled this return. Your rental carries on as before."
   },
+  "returnsNoteCheckInDone": "Return closed. The check-in report below shows any charges.",
+  "@returnsNoteCheckInDone": {
+    "description": "Return closed. The check-in report below shows any charges."
+  },
+  "returnsNoteCheckingIn": "The hub team is checking your scooter. When the mechanic's report is ready, you'll get a code on your phone to confirm it.",
+  "@returnsNoteCheckingIn": {
+    "description": "The hub team is checking your scooter. When the mechanic's report is ready, you'll get a code on your phone to confirm it."
+  },
   "returnsNoteDisputed": "You disputed these charges. The hub team will review them and may revise them.",
   "@returnsNoteDisputed": {
     "description": "You disputed these charges. The hub team will review them and may revise them."
+  },
+  "returnsNoteFinalChecks": "Your scooter is checked in and your rental has ended. A mechanic is doing a final check, and if it finds anything more you'll be asked to confirm it.",
+  "@returnsNoteFinalChecks": {
+    "description": "Your scooter is checked in and your rental has ended. A mechanic is doing a final check, and if it finds anything more you'll be asked to confirm it."
   },
   "returnsNoteInspecting": "The hub has your scooter and is inspecting it. Any charges will show up here for your approval.",
   "@returnsNoteInspecting": {
@@ -4872,10 +4656,6 @@
   "@returnsPickReason": {
     "description": "Choose a reason"
   },
-  "returnsPickRental": "Choose the rental to end",
-  "@returnsPickRental": {
-    "description": "Choose the rental to end"
-  },
   "returnsPlannedFor": "Planned for {date}",
   "@returnsPlannedFor": {
     "description": "Planned return date",
@@ -4937,10 +4717,6 @@
   "@returnsReasonVehicleIssues": {
     "description": "Problems with the scooter"
   },
-  "returnsRental": "Rental",
-  "@returnsRental": {
-    "description": "Rental"
-  },
   "returnsRequested": "Return requested. See you at the hub.",
   "@returnsRequested": {
     "description": "Return requested. See you at the hub."
@@ -4965,6 +4741,10 @@
   "@returnsStatusCancelled": {
     "description": "Cancelled"
   },
+  "returnsStatusCheckingIn": "Checking in",
+  "@returnsStatusCheckingIn": {
+    "description": "Checking in"
+  },
   "returnsStatusClosed": "Closed",
   "@returnsStatusClosed": {
     "description": "Closed"
@@ -4972,6 +4752,10 @@
   "returnsStatusDisputed": "Disputed",
   "@returnsStatusDisputed": {
     "description": "Disputed"
+  },
+  "returnsStatusFinalChecks": "Final checks",
+  "@returnsStatusFinalChecks": {
+    "description": "Final checks"
   },
   "returnsStatusInspecting": "Being inspected",
   "@returnsStatusInspecting": {
@@ -4985,9 +4769,17 @@
   "@returnsStatusRequested": {
     "description": "Return requested"
   },
+  "returnsStepCheckIn": "Scooter checked in",
+  "@returnsStepCheckIn": {
+    "description": "Scooter checked in"
+  },
   "returnsStepClosed": "Return closed",
   "@returnsStepClosed": {
     "description": "Return closed"
+  },
+  "returnsStepFinalChecks": "Final mechanic check",
+  "@returnsStepFinalChecks": {
+    "description": "Final mechanic check"
   },
   "returnsStepHandedOver": "Scooter handed over",
   "@returnsStepHandedOver": {
@@ -5170,18 +4962,6 @@
   "@scooterDeliveryBox": {
     "description": "Delivery box"
   },
-  "scooterDeviceId": "Device ID",
-  "@scooterDeviceId": {
-    "description": "Device ID"
-  },
-  "scooterDeviceNumber": "Device number",
-  "@scooterDeviceNumber": {
-    "description": "Device number"
-  },
-  "scooterFirmware": "Firmware",
-  "@scooterFirmware": {
-    "description": "Firmware"
-  },
   "scooterFitnessCertificate": "Fitness certificate",
   "@scooterFitnessCertificate": {
     "description": "Fitness certificate"
@@ -5205,10 +4985,6 @@
   "scooterIotOnline": "IoT online",
   "@scooterIotOnline": {
     "description": "IoT online"
-  },
-  "scooterLastPing": "Last ping",
-  "@scooterLastPing": {
-    "description": "Last ping"
   },
   "scooterMotorNumber": "Motor number",
   "@scooterMotorNumber": {
@@ -5246,10 +5022,6 @@
   "@scooterRegistrationCertificate": {
     "description": "Registration certificate"
   },
-  "scooterSignalStrength": "Signal strength",
-  "@scooterSignalStrength": {
-    "description": "Signal strength"
-  },
   "scooterToolkit": "Toolkit",
   "@scooterToolkit": {
     "description": "Toolkit"
@@ -5273,6 +5045,588 @@
   "scooterWhoLooksAfter": "Who looks after you",
   "@scooterWhoLooksAfter": {
     "description": "Who looks after you"
+  },
+  "submissionAddCharge": "Add charge",
+  "@submissionAddCharge": {
+    "description": "Add charge"
+  },
+  "submissionBypass": "Can't use a code?",
+  "@submissionBypass": {
+    "description": "Can't use a code?"
+  },
+  "submissionBypassing": "Skipping code",
+  "@submissionBypassing": {
+    "description": "Skipping code"
+  },
+  "submissionBypassReason": "Why can't they confirm with a code?",
+  "@submissionBypassReason": {
+    "description": "Why can't they confirm with a code?"
+  },
+  "submissionBypassRider": "Rider code skipped: {reason}",
+  "@submissionBypassRider": {
+    "description": "Recorded rider bypass reason",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "submissionBypassTeamLead": "Team lead code skipped: {reason}",
+  "@submissionBypassTeamLead": {
+    "description": "Recorded team lead bypass reason",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "submissionCancelledBecause": "Cancelled: {reason}",
+  "@submissionCancelledBecause": {
+    "description": "Why a report was cancelled",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "submissionCancelReason": "Reason",
+  "@submissionCancelReason": {
+    "description": "Reason"
+  },
+  "submissionCancelReasonNeeded": "Enter a reason to cancel the report.",
+  "@submissionCancelReasonNeeded": {
+    "description": "Enter a reason to cancel the report."
+  },
+  "submissionCancelReport": "Cancel report",
+  "@submissionCancelReport": {
+    "description": "Cancel report"
+  },
+  "submissionCancelReportHint": "Say why. You can record a fresh report afterwards.",
+  "@submissionCancelReportHint": {
+    "description": "Say why. You can record a fresh report afterwards."
+  },
+  "submissionCancelReportTitle": "Cancel this report?",
+  "@submissionCancelReportTitle": {
+    "description": "Cancel this report?"
+  },
+  "submissionChargeDetails": "Details",
+  "@submissionChargeDetails": {
+    "description": "Details"
+  },
+  "submissionChargeDetailsHint": "Where is the damage, or what is missing?",
+  "@submissionChargeDetailsHint": {
+    "description": "Where is the damage, or what is missing?"
+  },
+  "submissionChargeEvidenceNeeded": "Pick at least one photo as proof for this charge.",
+  "@submissionChargeEvidenceNeeded": {
+    "description": "Pick at least one photo as proof for this charge."
+  },
+  "submissionCharges": "Charges",
+  "@submissionCharges": {
+    "description": "Charges"
+  },
+  "submissionChargesHint": "Add a charge for each damaged or missing item. Leave it empty if there's nothing to charge.",
+  "@submissionChargesHint": {
+    "description": "Add a charge for each damaged or missing item. Leave it empty if there's nothing to charge."
+  },
+  "submissionChassis": "Chassis",
+  "@submissionChassis": {
+    "description": "Chassis"
+  },
+  "submissionChecklistNeeded": "Missing items need the return checklist photo as proof.",
+  "@submissionChecklistNeeded": {
+    "description": "Missing items need the return checklist photo as proof."
+  },
+  "submissionChecksComplete": "All mechanic checks are done",
+  "@submissionChecksComplete": {
+    "description": "All mechanic checks are done"
+  },
+  "submissionChecksCompleteConfirm": "This closes the mechanic checks for this scooter. You won't be able to add more reports.",
+  "@submissionChecksCompleteConfirm": {
+    "description": "This closes the mechanic checks for this scooter. You won't be able to add more reports."
+  },
+  "submissionChecksCompleteHint": "Turn on only when no more checks are needed. No more reports can be added after this.",
+  "@submissionChecksCompleteHint": {
+    "description": "Turn on only when no more checks are needed. No more reports can be added after this."
+  },
+  "submissionCodeNotSent": "The code couldn't be sent. Try again or record why it can't be used.",
+  "@submissionCodeNotSent": {
+    "description": "The code couldn't be sent. Try again or record why it can't be used."
+  },
+  "submissionCodePending": "No code yet",
+  "@submissionCodePending": {
+    "description": "No code yet"
+  },
+  "submissionCodeSent": "Code sent",
+  "@submissionCodeSent": {
+    "description": "Code sent"
+  },
+  "submissionCodeSentTo": "Code sent to {phone}",
+  "@submissionCodeSentTo": {
+    "description": "Masked phone number that received the code",
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "submissionCodesSent": "Codes sent",
+  "@submissionCodesSent": {
+    "description": "Codes sent"
+  },
+  "submissionCollect": "Collect confirmations",
+  "@submissionCollect": {
+    "description": "Collect confirmations"
+  },
+  "submissionConfirm": "Confirm report",
+  "@submissionConfirm": {
+    "description": "Confirm report"
+  },
+  "submissionConfirmed": "Report confirmed",
+  "@submissionConfirmed": {
+    "description": "Report confirmed"
+  },
+  "submissionConfirmHint": "The rider and the team lead each get a code by SMS. Enter both codes to confirm. If someone can't use a code, record why.",
+  "@submissionConfirmHint": {
+    "description": "The rider and the team lead each get a code by SMS. Enter both codes to confirm. If someone can't use a code, record why."
+  },
+  "submissionConfirmTitle": "Confirm report",
+  "@submissionConfirmTitle": {
+    "description": "Confirm report"
+  },
+  "submissionCouldNotLoad": "Couldn't load this check-in",
+  "@submissionCouldNotLoad": {
+    "description": "Couldn't load this check-in"
+  },
+  "submissionDetailsNeeded": "Add details for this charge.",
+  "@submissionDetailsNeeded": {
+    "description": "Add details for this charge."
+  },
+  "submissionEditCharge": "Edit charge",
+  "@submissionEditCharge": {
+    "description": "Edit charge"
+  },
+  "submissionEvidence": "Proof photos",
+  "@submissionEvidence": {
+    "description": "Proof photos"
+  },
+  "submissionEvidenceHint": "Pick the photos that back up this report.",
+  "@submissionEvidenceHint": {
+    "description": "Pick the photos that back up this report."
+  },
+  "submissionEvidenceLimit": "You can pick up to {count} photos.",
+  "@submissionEvidenceLimit": {
+    "description": "Maximum proof photos",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "submissionEvidenceNeeded": "Pick at least one proof photo.",
+  "@submissionEvidenceNeeded": {
+    "description": "Pick at least one proof photo."
+  },
+  "submissionExtraPhotos": "Damage & extra photos",
+  "@submissionExtraPhotos": {
+    "description": "Damage & extra photos"
+  },
+  "submissionExtraPhotosHint": "Add close-ups of any damage. You can attach them to charges in the report.",
+  "@submissionExtraPhotosHint": {
+    "description": "Add close-ups of any damage. You can attach them to charges in the report."
+  },
+  "submissionFindings": "Findings",
+  "@submissionFindings": {
+    "description": "Findings"
+  },
+  "submissionImpose": "Impose report",
+  "@submissionImpose": {
+    "description": "Impose report"
+  },
+  "submissionImposeBody": "Make sure the rider has seen the findings and charges. After this the report can't be changed, only cancelled.",
+  "@submissionImposeBody": {
+    "description": "Make sure the rider has seen the findings and charges. After this the report can't be changed, only cancelled."
+  },
+  "submissionImposed": "Report imposed",
+  "@submissionImposed": {
+    "description": "Report imposed"
+  },
+  "submissionImposeTitle": "Impose this report?",
+  "@submissionImposeTitle": {
+    "description": "Impose this report?"
+  },
+  "submissionMechanicName": "Mechanic name",
+  "@submissionMechanicName": {
+    "description": "Mechanic name"
+  },
+  "submissionNameNeeded": "Enter the mechanic's name",
+  "@submissionNameNeeded": {
+    "description": "Enter the mechanic's name"
+  },
+  "submissionNextComplete": "All checks are done. Nothing more to do here.",
+  "@submissionNextComplete": {
+    "description": "All checks are done. Nothing more to do here."
+  },
+  "submissionNextDeep": "The scooter is checked in. Record the final mechanic check when it's done.",
+  "@submissionNextDeep": {
+    "description": "The scooter is checked in. Record the final mechanic check when it's done."
+  },
+  "submissionNextLabel": "Next step",
+  "@submissionNextLabel": {
+    "description": "Next step"
+  },
+  "submissionNextOtps": "Collect the rider's and team lead's codes to confirm the report.",
+  "@submissionNextOtps": {
+    "description": "Collect the rider's and team lead's codes to confirm the report."
+  },
+  "submissionNextPhotos": "Photos still to take: {count}. Then record the mechanic's report.",
+  "@submissionNextPhotos": {
+    "description": "Required check-in photos still missing",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "submissionNextReport": "All photos are in. Record the mechanic's report next.",
+  "@submissionNextReport": {
+    "description": "All photos are in. Record the mechanic's report next."
+  },
+  "submissionNextReview": "Go through the report and any charges with the rider, then impose it.",
+  "@submissionNextReview": {
+    "description": "Go through the report and any charges with the rider, then impose it."
+  },
+  "submissionNoPhotosYet": "No photos yet. Take them on the check-in screen first.",
+  "@submissionNoPhotosYet": {
+    "description": "No photos yet. Take them on the check-in screen first."
+  },
+  "submissionNoPrices": "No penalty prices are set up yet. Ask an admin to add them on the dashboard.",
+  "@submissionNoPrices": {
+    "description": "No penalty prices are set up yet. Ask an admin to add them on the dashboard."
+  },
+  "submissionNothingToConfirm": "Nothing to confirm",
+  "@submissionNothingToConfirm": {
+    "description": "Nothing to confirm"
+  },
+  "submissionNothingToConfirmBody": "There's no imposed report waiting for codes on this check-in.",
+  "@submissionNothingToConfirmBody": {
+    "description": "There's no imposed report waiting for codes on this check-in."
+  },
+  "submissionPartyRider": "Rider",
+  "@submissionPartyRider": {
+    "description": "Rider"
+  },
+  "submissionPartyTeamLead": "Team lead",
+  "@submissionPartyTeamLead": {
+    "description": "Team lead"
+  },
+  "submissionPhotoBattery": "Battery {name}",
+  "@submissionPhotoBattery": {
+    "description": "Photo of a specific battery",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "submissionPhotoBatteryGeneric": "Battery",
+  "@submissionPhotoBatteryGeneric": {
+    "description": "Battery"
+  },
+  "submissionPhotoChecklist": "Return checklist",
+  "@submissionPhotoChecklist": {
+    "description": "Return checklist"
+  },
+  "submissionPhotoController": "Controller {number}",
+  "@submissionPhotoController": {
+    "description": "Photo of a specific controller",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "submissionPhotoControllerGeneric": "Controller",
+  "@submissionPhotoControllerGeneric": {
+    "description": "Controller"
+  },
+  "submissionPhotoDamage": "Damage photo",
+  "@submissionPhotoDamage": {
+    "description": "Damage photo"
+  },
+  "submissionPhotoIot": "IoT device",
+  "@submissionPhotoIot": {
+    "description": "IoT device"
+  },
+  "submissionPhotos": "Required photos",
+  "@submissionPhotos": {
+    "description": "Required photos"
+  },
+  "submissionPhotosHint": "Tap an empty slot to take the photo. Tap a taken photo to view it.",
+  "@submissionPhotosHint": {
+    "description": "Tap an empty slot to take the photo. Tap a taken photo to view it."
+  },
+  "submissionPickCharge": "Pick a charge",
+  "@submissionPickCharge": {
+    "description": "Pick a charge"
+  },
+  "submissionQuantity": "Quantity",
+  "@submissionQuantity": {
+    "description": "Quantity"
+  },
+  "submissionReceivingHub": "Receiving hub",
+  "@submissionReceivingHub": {
+    "description": "Receiving hub"
+  },
+  "submissionRecordFinal": "Record final check",
+  "@submissionRecordFinal": {
+    "description": "Record final check"
+  },
+  "submissionRecordReport": "Record mechanic report",
+  "@submissionRecordReport": {
+    "description": "Record mechanic report"
+  },
+  "submissionReportBy": "By {name}",
+  "@submissionReportBy": {
+    "description": "Mechanic who wrote the report",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "submissionReportCancelled": "Report cancelled",
+  "@submissionReportCancelled": {
+    "description": "Report cancelled"
+  },
+  "submissionReports": "Mechanic reports",
+  "@submissionReports": {
+    "description": "Mechanic reports"
+  },
+  "submissionReportSaved": "Report saved",
+  "@submissionReportSaved": {
+    "description": "Report saved"
+  },
+  "submissionResendAll": "Resend codes",
+  "@submissionResendAll": {
+    "description": "Resend codes"
+  },
+  "submissionRiderNote": "Rider's note",
+  "@submissionRiderNote": {
+    "description": "Rider's note"
+  },
+  "submissionSafeNo": "No, it needs work",
+  "@submissionSafeNo": {
+    "description": "No, it needs work"
+  },
+  "submissionSafeNoHint": "It stays in maintenance after the checks.",
+  "@submissionSafeNoHint": {
+    "description": "It stays in maintenance after the checks."
+  },
+  "submissionSafeQuestion": "Safe to use again?",
+  "@submissionSafeQuestion": {
+    "description": "Safe to use again?"
+  },
+  "submissionSafetyNeeded": "Choose whether it's safe to use again",
+  "@submissionSafetyNeeded": {
+    "description": "Choose whether it's safe to use again"
+  },
+  "submissionSafeYes": "Yes, it's safe",
+  "@submissionSafeYes": {
+    "description": "Yes, it's safe"
+  },
+  "submissionSafeYesHint": "It can go back into the fleet once the checks are done.",
+  "@submissionSafeYesHint": {
+    "description": "It can go back into the fleet once the checks are done."
+  },
+  "submissionsAll": "All",
+  "@submissionsAll": {
+    "description": "All"
+  },
+  "submissionSaveCharge": "Save charge",
+  "@submissionSaveCharge": {
+    "description": "Save charge"
+  },
+  "submissionSaveReport": "Save report",
+  "@submissionSaveReport": {
+    "description": "Save report"
+  },
+  "submissionsCouldNotLoad": "Couldn't load returns and exchanges",
+  "@submissionsCouldNotLoad": {
+    "description": "Couldn't load returns and exchanges"
+  },
+  "submissionsDrawerSubtitle": "Check in returned scooters",
+  "@submissionsDrawerSubtitle": {
+    "description": "Check in returned scooters"
+  },
+  "submissionsDropOff": "Drop-off {date}",
+  "@submissionsDropOff": {
+    "description": "Planned drop-off date on a queue row",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "submissionsDropOffDate": "Drop-off date",
+  "@submissionsDropOffDate": {
+    "description": "Drop-off date"
+  },
+  "submissionsEmptyAll": "Returns and exchanges for your hub show up here.",
+  "@submissionsEmptyAll": {
+    "description": "Returns and exchanges for your hub show up here."
+  },
+  "submissionsEmptyChecks": "No check-ins are in progress.",
+  "@submissionsEmptyChecks": {
+    "description": "No check-ins are in progress."
+  },
+  "submissionsEmptyScheduled": "No scooters are due at your hub right now.",
+  "@submissionsEmptyScheduled": {
+    "description": "No scooters are due at your hub right now."
+  },
+  "submissionsEmptyTitle": "Nothing here",
+  "@submissionsEmptyTitle": {
+    "description": "Nothing here"
+  },
+  "submissionSendCodes": "Send codes",
+  "@submissionSendCodes": {
+    "description": "Send codes"
+  },
+  "submissionsExchanges": "Exchanges",
+  "@submissionsExchanges": {
+    "description": "Exchanges"
+  },
+  "submissionsExchangesDue": "Exchanges due",
+  "@submissionsExchangesDue": {
+    "description": "Exchanges due"
+  },
+  "submissionsInChecks": "In checks",
+  "@submissionsInChecks": {
+    "description": "In checks"
+  },
+  "submissionSourceExchange": "Exchange",
+  "@submissionSourceExchange": {
+    "description": "Exchange"
+  },
+  "submissionSourceReturn": "Return",
+  "@submissionSourceReturn": {
+    "description": "Return"
+  },
+  "submissionsReturns": "Returns",
+  "@submissionsReturns": {
+    "description": "Returns"
+  },
+  "submissionsReturnsDue": "Returns due",
+  "@submissionsReturnsDue": {
+    "description": "Returns due"
+  },
+  "submissionsScheduled": "Scheduled",
+  "@submissionsScheduled": {
+    "description": "Scheduled"
+  },
+  "submissionsSubtitle": "Check in scooters that riders bring back to your hub.",
+  "@submissionsSubtitle": {
+    "description": "Check in scooters that riders bring back to your hub."
+  },
+  "submissionStaffReturnBody": "This starts the check-in for {vehicle} now. {rider}'s rental ends once the mechanic's report is confirmed.",
+  "@submissionStaffReturnBody": {
+    "description": "Confirm a staff-started return",
+    "placeholders": {
+      "rider": {
+        "type": "String"
+      },
+      "vehicle": {
+        "type": "String"
+      }
+    }
+  },
+  "submissionStaffReturnTitle": "Take this scooter back?",
+  "@submissionStaffReturnTitle": {
+    "description": "Take this scooter back?"
+  },
+  "submissionStageCheckingIn": "Checking in",
+  "@submissionStageCheckingIn": {
+    "description": "Checking in"
+  },
+  "submissionStageDone": "Done",
+  "@submissionStageDone": {
+    "description": "Done"
+  },
+  "submissionStageFinalChecks": "Final checks",
+  "@submissionStageFinalChecks": {
+    "description": "Final checks"
+  },
+  "submissionStageScheduled": "Scheduled",
+  "@submissionStageScheduled": {
+    "description": "Scheduled"
+  },
+  "submissionStart": "Start check-in",
+  "@submissionStart": {
+    "description": "Start check-in"
+  },
+  "submissionStartBody": "Start once the rider is at the hub with the scooter. The scooter can't be allocated again until the check-in is finished.",
+  "@submissionStartBody": {
+    "description": "Start once the rider is at the hub with the scooter. The scooter can't be allocated again until the check-in is finished."
+  },
+  "submissionStarted": "Check-in started",
+  "@submissionStarted": {
+    "description": "Check-in started"
+  },
+  "submissionStartedAt": "Started",
+  "@submissionStartedAt": {
+    "description": "Started"
+  },
+  "submissionStartTitle": "Start check-in",
+  "@submissionStartTitle": {
+    "description": "Start check-in"
+  },
+  "submissionStatusCancelled": "Cancelled",
+  "@submissionStatusCancelled": {
+    "description": "Cancelled"
+  },
+  "submissionsTitle": "Returns & exchanges",
+  "@submissionsTitle": {
+    "description": "Returns & exchanges"
+  },
+  "submissionSummary": "What the mechanic found",
+  "@submissionSummary": {
+    "description": "What the mechanic found"
+  },
+  "submissionSummaryHint": "Condition of the body, battery, controller and accessories",
+  "@submissionSummaryHint": {
+    "description": "Condition of the body, battery, controller and accessories"
+  },
+  "submissionSummaryNeeded": "Describe what the mechanic found",
+  "@submissionSummaryNeeded": {
+    "description": "Describe what the mechanic found"
+  },
+  "submissionUnsafeReason": "Why isn't it safe?",
+  "@submissionUnsafeReason": {
+    "description": "Why isn't it safe?"
+  },
+  "submissionUnsafeReasonNeeded": "Say why it isn't safe",
+  "@submissionUnsafeReasonNeeded": {
+    "description": "Say why it isn't safe"
+  },
+  "submissionUseCode": "Use a code instead",
+  "@submissionUseCode": {
+    "description": "Use a code instead"
+  },
+  "submissionVerifiedRider": "Rider confirmed with a code",
+  "@submissionVerifiedRider": {
+    "description": "Rider confirmed with a code"
+  },
+  "submissionVerifiedTeamLead": "Team lead confirmed with a code",
+  "@submissionVerifiedTeamLead": {
+    "description": "Team lead confirmed with a code"
+  },
+  "submissionVerify": "Verify code",
+  "@submissionVerify": {
+    "description": "Verify code"
+  },
+  "submissionViewPhoto": "View photo",
+  "@submissionViewPhoto": {
+    "description": "View photo"
   },
   "supportAccidentTheft": "Accident or theft",
   "@supportAccidentTheft": {
@@ -5422,10 +5776,6 @@
   "@supportRaiseTicket": {
     "description": "Raise a ticket"
   },
-  "supportReopen": "Reopen",
-  "@supportReopen": {
-    "description": "Reopen"
-  },
   "supportResolveBody": "The rider can still reply. A reply from them reopens the ticket.",
   "@supportResolveBody": {
     "description": "The rider can still reply. A reply from them reopens the ticket."
@@ -5552,6 +5902,162 @@
       }
     }
   },
+  "teamAdvisor": "Advisor",
+  "@teamAdvisor": {
+    "description": "Advisor"
+  },
+  "teamBatteryExpert": "Battery Expert",
+  "@teamBatteryExpert": {
+    "description": "Battery Expert"
+  },
+  "teamHubTeam": "Hub team",
+  "@teamHubTeam": {
+    "description": "Hub team"
+  },
+  "teamMotorControllerRepair": "Motor Controller Repair",
+  "@teamMotorControllerRepair": {
+    "description": "Motor Controller Repair"
+  },
+  "teamNotIncluded": "Feature not included",
+  "@teamNotIncluded": {
+    "description": "Feature not included"
+  },
+  "teamNotIncludedMessage": "This feature is not included in your current package.",
+  "@teamNotIncludedMessage": {
+    "description": "This feature is not included in your current package."
+  },
+  "teamTechnician": "Technician",
+  "@teamTechnician": {
+    "description": "Technician"
+  },
+  "trainingCareClean": "Keep it clean",
+  "@trainingCareClean": {
+    "description": "Keep it clean"
+  },
+  "trainingCareCleanBody": "Maintain the scooter in clean and good condition.",
+  "@trainingCareCleanBody": {
+    "description": "Maintain the scooter in clean and good condition."
+  },
+  "trainingCareReport": "Report issues",
+  "@trainingCareReport": {
+    "description": "Report issues"
+  },
+  "trainingCareReportBody": "Immediately report any accident, damage, unusual noise, warning light or vehicle fault to us.",
+  "@trainingCareReportBody": {
+    "description": "Immediately report any accident, damage, unusual noise, warning light or vehicle fault to us."
+  },
+  "trainingCareTamper": "No tampering",
+  "@trainingCareTamper": {
+    "description": "No tampering"
+  },
+  "trainingCareTamperBody": "Do not open, modify or tamper with the battery, motor, controller, wiring or GPS device.",
+  "@trainingCareTamperBody": {
+    "description": "Do not open, modify or tamper with the battery, motor, controller, wiring or GPS device."
+  },
+  "trainingCareWater": "No deep water",
+  "@trainingCareWater": {
+    "description": "No deep water"
+  },
+  "trainingCareWaterBody": "Do not take the scooter through flooded/deep-water areas or use high-pressure water on it.",
+  "@trainingCareWaterBody": {
+    "description": "Do not take the scooter through flooded/deep-water areas or use high-pressure water on it."
+  },
+  "trainingChargeEquipment": "Use approved equipment",
+  "@trainingChargeEquipment": {
+    "description": "Use approved equipment"
+  },
+  "trainingChargeEquipmentBody": "Use only the charger/battery/accessories provided or approved by us.",
+  "@trainingChargeEquipmentBody": {
+    "description": "Use only the charger/battery/accessories provided or approved by us."
+  },
+  "trainingChargePark": "Park responsibly",
+  "@trainingChargePark": {
+    "description": "Park responsibly"
+  },
+  "trainingChargeParkBody": "Park securely at permitted locations and avoid water, fire or theft risks.",
+  "@trainingChargeParkBody": {
+    "description": "Park securely at permitted locations and avoid water, fire or theft risks."
+  },
+  "trainingChargeRide": "Ride responsibly",
+  "@trainingChargeRide": {
+    "description": "Ride responsibly"
+  },
+  "trainingChargeRideBody": "No overloading, unsafe riding, jumping, racing or misuse of the scooter.",
+  "@trainingChargeRideBody": {
+    "description": "No overloading, unsafe riding, jumping, racing or misuse of the scooter."
+  },
+  "trainingChargeStations": "Charge/swap only at designated stations",
+  "@trainingChargeStations": {
+    "description": "Charge/swap only at designated stations"
+  },
+  "trainingChargeStationsBody": "Use only approved charging/swapping station locations.",
+  "@trainingChargeStationsBody": {
+    "description": "Use only approved charging/swapping station locations."
+  },
+  "trainingCharging": "Charging & usage",
+  "@trainingCharging": {
+    "description": "Charging & usage"
+  },
+  "trainingChargingSummary": "Follow these simple guidelines for a safe, smooth and hassle-free ride.",
+  "@trainingChargingSummary": {
+    "description": "Follow these simple guidelines for a safe, smooth and hassle-free ride."
+  },
+  "trainingKeyPoints": "Key points",
+  "@trainingKeyPoints": {
+    "description": "Key points"
+  },
+  "trainingPayApp": "Payments on app only",
+  "@trainingPayApp": {
+    "description": "Payments on app only"
+  },
+  "trainingPayAppBody": "All rental, deposit and other applicable payments must be made through the official app/payment process.",
+  "@trainingPayAppBody": {
+    "description": "All rental, deposit and other applicable payments must be made through the official app/payment process."
+  },
+  "trainingPayBribe": "No bribe / unofficial payment",
+  "@trainingPayBribe": {
+    "description": "No bribe / unofficial payment"
+  },
+  "trainingPayBribeBody": "Never pay or offer a bribe, commission or personal payment to a TL or company representative.",
+  "@trainingPayBribeBody": {
+    "description": "Never pay or offer a bribe, commission or personal payment to a TL or company representative."
+  },
+  "trainingPayCash": "No cash payments",
+  "@trainingPayCash": {
+    "description": "No cash payments"
+  },
+  "trainingPayCashBody": "Do not make cash payments to any TL, staff member or representative.",
+  "@trainingPayCashBody": {
+    "description": "Do not make cash payments to any TL, staff member or representative."
+  },
+  "trainingPayments": "Payments & conduct",
+  "@trainingPayments": {
+    "description": "Payments & conduct"
+  },
+  "trainingPaymentsSummary": "Follow these simple guidelines for safe, transparent and hassle-free transactions.",
+  "@trainingPaymentsSummary": {
+    "description": "Follow these simple guidelines for safe, transparent and hassle-free transactions."
+  },
+  "trainingPayReport": "Report concerns",
+  "@trainingPayReport": {
+    "description": "Report concerns"
+  },
+  "trainingPayReportBody": "Report any demand for cash, bribe, unauthorised charge, misconduct or other issue directly to us.",
+  "@trainingPayReportBody": {
+    "description": "Report any demand for cash, bribe, unauthorised charge, misconduct or other issue directly to us."
+  },
+  "trainingVehicleCare": "Vehicle care",
+  "@trainingVehicleCare": {
+    "description": "Vehicle care"
+  },
+  "trainingVehicleCareSummary": "Keep the scooter safe, clean and ready for every ride.",
+  "@trainingVehicleCareSummary": {
+    "description": "Keep the scooter safe, clean and ready for every ride."
+  },
+  "trainingViewed": "Viewed",
+  "@trainingViewed": {
+    "description": "Viewed"
+  },
   "validationEnterDateBeforeToday": "Enter a date on or before today",
   "@validationEnterDateBeforeToday": {
     "description": "Enter a date on or before today"
@@ -5583,6 +6089,150 @@
   "validationField": "This field",
   "@validationField": {
     "description": "This field"
+  },
+  "verifyApprove": "Approve",
+  "@verifyApprove": {
+    "description": "Approve"
+  },
+  "verifyApproveAllFirst": "Approve all documents to assign a vehicle.",
+  "@verifyApproveAllFirst": {
+    "description": "Approve all documents to assign a vehicle."
+  },
+  "verifyApproved": "Approved",
+  "@verifyApproved": {
+    "description": "Approved"
+  },
+  "verifyApproveDocument": "Approve this document?",
+  "@verifyApproveDocument": {
+    "description": "Approve this document?"
+  },
+  "verifyApproveMessage": "{name} will be marked as verified. This can't be changed later.",
+  "@verifyApproveMessage": {
+    "description": "Confirm message before approving a rider document or reference",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyApproveReference": "Approve this reference?",
+  "@verifyApproveReference": {
+    "description": "Approve this reference?"
+  },
+  "verifyContinue": "Continue to assign vehicle",
+  "@verifyContinue": {
+    "description": "Continue to assign vehicle"
+  },
+  "verifyCouldNotCall": "Couldn't start the call.",
+  "@verifyCouldNotCall": {
+    "description": "Couldn't start the call."
+  },
+  "verifyCouldNotLoad": "Couldn't load this list.",
+  "@verifyCouldNotLoad": {
+    "description": "Couldn't load this list."
+  },
+  "verifyDocumentApproved": "Document approved",
+  "@verifyDocumentApproved": {
+    "description": "Document approved"
+  },
+  "verifyDocumentRejected": "Document rejected",
+  "@verifyDocumentRejected": {
+    "description": "Document rejected"
+  },
+  "verifyDocuments": "Documents",
+  "@verifyDocuments": {
+    "description": "Documents"
+  },
+  "verifyDocumentsHint": "Open each document the rider uploaded, then approve or reject it.",
+  "@verifyDocumentsHint": {
+    "description": "Open each document the rider uploaded, then approve or reject it."
+  },
+  "verifyDocumentsLocked": "Fleet managers can't review documents yet. Your admin can review them on the dashboard.",
+  "@verifyDocumentsLocked": {
+    "description": "Fleet managers can't review documents yet. Your admin can review them on the dashboard."
+  },
+  "verifyNoDocuments": "The rider hasn't uploaded any documents yet.",
+  "@verifyNoDocuments": {
+    "description": "The rider hasn't uploaded any documents yet."
+  },
+  "verifyNoReferences": "The rider hasn't added any references.",
+  "@verifyNoReferences": {
+    "description": "The rider hasn't added any references."
+  },
+  "verifyReason": "Reason",
+  "@verifyReason": {
+    "description": "Reason"
+  },
+  "verifyReasonHint": "e.g. Photo is blurry",
+  "@verifyReasonHint": {
+    "description": "e.g. Photo is blurry"
+  },
+  "verifyReasonRequired": "Enter a reason",
+  "@verifyReasonRequired": {
+    "description": "Enter a reason"
+  },
+  "verifyReferenceApproved": "Reference approved",
+  "@verifyReferenceApproved": {
+    "description": "Reference approved"
+  },
+  "verifyReferenceRejected": "Reference rejected",
+  "@verifyReferenceRejected": {
+    "description": "Reference rejected"
+  },
+  "verifyReferences": "References",
+  "@verifyReferences": {
+    "description": "References"
+  },
+  "verifyReferencesHint": "Call each reference to confirm, then approve or reject.",
+  "@verifyReferencesHint": {
+    "description": "Call each reference to confirm, then approve or reject."
+  },
+  "verifyReject": "Reject",
+  "@verifyReject": {
+    "description": "Reject"
+  },
+  "verifyRejected": "Rejected",
+  "@verifyRejected": {
+    "description": "Rejected"
+  },
+  "verifyRejectSubtitle": "Add a short reason for rejecting it.",
+  "@verifyRejectSubtitle": {
+    "description": "Add a short reason for rejecting it."
+  },
+  "verifyRejectTitle": "Reject {name}",
+  "@verifyRejectTitle": {
+    "description": "Title of the reject reason sheet",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyReviewedBy": "Reviewed by {name}",
+  "@verifyReviewedBy": {
+    "description": "Who reviewed a rider reference",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyTitle": "Verify rider",
+  "@verifyTitle": {
+    "description": "Verify rider"
+  },
+  "verifyUploadedOn": "Uploaded {date}",
+  "@verifyUploadedOn": {
+    "description": "When a rider document was uploaded",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyView": "View",
+  "@verifyView": {
+    "description": "View"
   },
   "walletAvailable": "Available",
   "@walletAvailable": {

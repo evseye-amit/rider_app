@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/referral/referral_scanner_page.dart';
 import '../../core/session/rider_session_provider.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_page.dart';
@@ -15,7 +16,6 @@ import '../../features/earnings/presentation/pages/incentives_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/home/presentation/widgets/rider_shell.dart';
 import '../../features/nearby_hubs/presentation/pages/nearby_hubs_page.dart';
-import '../../features/notifications/presentation/pages/notifications_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_flow_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_preview_page.dart';
 import '../../features/onboarding_intro/presentation/pages/intro_page.dart';
@@ -40,7 +40,15 @@ import 'app_routes.dart';
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final GlobalKey<NavigatorState> _homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 
-const Set<String> _publicPaths = {Routes.splash, Routes.intro, Routes.terms, Routes.language, Routes.login, Routes.otp};
+const Set<String> _publicPaths = {
+  Routes.splash,
+  Routes.company,
+  Routes.language,
+  Routes.consent,
+  Routes.intro,
+  Routes.login,
+  Routes.otp,
+};
 
 final routerProvider = Provider<GoRouter>((ref) {
   final ValueNotifier<RiderStage> stage = ValueNotifier<RiderStage>(ref.read(riderSessionProvider).stage);
@@ -51,20 +59,29 @@ final routerProvider = Provider<GoRouter>((ref) {
     navigatorKey: _rootNavigatorKey,
     initialLocation: Routes.splash,
     refreshListenable: stage,
-    redirect: (context, state) => _redirect(stage.value, ref.read(pendingFirstRunStepProvider), state.uri.path),
+    redirect: (context, state) => _redirect(stage.value, ref.read(pendingFirstRunStepProvider(true)), state.uri.path),
     routes: [
       GoRoute(path: Routes.splash, name: 'splash', builder: (context, state) => const SplashPage()),
       GoRoute(path: Routes.intro, name: 'intro', builder: (context, state) => const IntroPage()),
       GoRoute(
-        path: Routes.terms,
-        name: 'terms',
+        path: Routes.company,
+        name: 'company',
         builder: (context, state) =>
-            TermsAcceptancePage(audience: LegalAudience.rider, onAccepted: () => context.go(Routes.login)),
+            CompanyResolvePage(audience: LegalAudience.rider, onResolved: () => context.go(Routes.intro)),
       ),
       GoRoute(
         path: Routes.language,
         name: 'language',
-        builder: (context, state) => LanguageSelectionPage(onSelected: () => context.go(Routes.login)),
+        builder: (context, state) => LanguageSelectionPage(onSelected: () => context.go(Routes.intro)),
+      ),
+      GoRoute(
+        path: Routes.consent,
+        name: 'consent',
+        builder: (context, state) => ConsentPage(
+          audience: LegalAudience.rider,
+          title: context.l10n.consentRiderTitle,
+          onAccepted: () => context.go(Routes.intro),
+        ),
       ),
       GoRoute(path: Routes.login, name: 'login', builder: (context, state) => const LoginPage()),
       GoRoute(
@@ -84,6 +101,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: 'preview',
             name: 'onboardingPreview',
             builder: (context, state) => const OnboardingPreviewPage(),
+          ),
+          GoRoute(
+            path: 'referral-scan',
+            name: 'onboardingReferralScan',
+            builder: (context, state) => const ReferralScannerPage(),
           ),
         ],
       ),
@@ -196,7 +218,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 });
 
 String? _redirect(RiderStage stage, FirstRunStep? firstRun, String path) {
-  if (path == Routes.login) return _firstRunRoute(firstRun);
+  if (path == Routes.intro || path == Routes.login) return _firstRunRoute(firstRun);
   if (_publicPaths.contains(path)) return null;
   return switch (stage) {
     RiderStage.signedOut => Routes.login,
@@ -210,8 +232,9 @@ String? _redirect(RiderStage stage, FirstRunStep? firstRun, String path) {
 }
 
 String? _firstRunRoute(FirstRunStep? step) => switch (step) {
-  FirstRunStep.terms => Routes.terms,
+  FirstRunStep.company => Routes.company,
   FirstRunStep.language => Routes.language,
+  FirstRunStep.consent => Routes.consent,
   null => null,
 };
 

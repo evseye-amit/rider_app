@@ -9,7 +9,7 @@ import '../providers/exchange_provider.dart';
 String exchangeStatusLabel(AppL10n l10n, ExchangeRequest request) => switch (request.status) {
   ExchangeStatus.requested => l10n.exchangeStageRequested,
   ExchangeStatus.approved => request.oldScooterReturned ? l10n.exchangeStatusChoosing : l10n.exchangeStatusApproved,
-  ExchangeStatus.returnPending => l10n.exchangeStatusReturn,
+  ExchangeStatus.returnPending => request.isCheckingIn ? l10n.exchangeStatusCheckingIn : l10n.exchangeStatusReturn,
   ExchangeStatus.replacementSelected => l10n.exchangeStatusChoosing,
   ExchangeStatus.offerPresented => l10n.exchangeStageOfferReady,
   ExchangeStatus.depositPending => l10n.exchangeStageAccepted,
@@ -29,9 +29,12 @@ StatusTone exchangeStatusTone(ExchangeStatus status) => switch (status) {
 };
 
 String exchangeNextNote(AppL10n l10n, ExchangeRequest request) => switch (request.status) {
-  ExchangeStatus.requested => l10n.exchangeNextRequested,
+  ExchangeStatus.requested => switch (request.plannedDate) {
+    final DateTime date when request.usesCheckIn => l10n.exchangeNextBringIn(Fmt.date(date)),
+    _ => l10n.exchangeNextRequested,
+  },
   ExchangeStatus.approved => request.oldScooterReturned ? l10n.exchangeNextChoosing : l10n.exchangeNextApproved,
-  ExchangeStatus.returnPending => l10n.exchangeNextReturn,
+  ExchangeStatus.returnPending => request.isCheckingIn ? l10n.exchangeNextCheckingIn : l10n.exchangeNextReturn,
   ExchangeStatus.replacementSelected => l10n.exchangeNextReserved,
   ExchangeStatus.offerPresented => l10n.exchangeNextOffer,
   ExchangeStatus.depositPending => l10n.exchangeNextDeposit,
@@ -205,7 +208,7 @@ class ExchangeTimeline extends StatelessWidget {
       leading: const IconTile(icon: Icons.timeline_rounded, solid: true, size: 28),
       child: Column(
         children: [
-          for (final ExchangeStep step in ExchangeStep.values)
+          for (final ExchangeStep step in request.steps)
             _TimelineRow(
               label: _stepLabel(context.l10n, step),
               state: request.isStepDone(step)
@@ -213,7 +216,7 @@ class ExchangeTimeline extends StatelessWidget {
                   : step == current
                   ? (request.status.isOpen ? _StepState.current : _StepState.stopped)
                   : _StepState.upcoming,
-              last: step == ExchangeStep.values.last,
+              last: step == request.steps.last,
             ),
         ],
       ),

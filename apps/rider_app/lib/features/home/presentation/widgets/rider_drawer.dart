@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/legal/legal_link.dart';
+import '../../../../core/referral/my_referral.dart';
+import '../../../../core/referral/referral_qr_card.dart';
 import '../../../../core/session/rider_session_provider.dart';
 
 class RiderDrawer extends ConsumerWidget {
@@ -78,6 +80,7 @@ class RiderDrawer extends ConsumerWidget {
                   padding: const EdgeInsets.fromLTRB(Insets.md, Insets.sm, Insets.md, Insets.xxl),
                   physics: const BouncingScrollPhysics(),
                   children: [
+                    const _ReferralQr(),
                     _DrawerItem(
                       icon: Icons.person_rounded,
                       label: context.l10n.commonProfile,
@@ -149,6 +152,73 @@ class RiderDrawer extends ConsumerWidget {
                 child: Text(
                   '${context.l10n.commonVersion} ${FlavorConfig.riderVersion}',
                   style: AppText.bodySmall.copyWith(fontSize: 11, color: AppColors.textMuted),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ReferralQr extends ConsumerWidget {
+  const _ReferralQr();
+
+  void _expand(BuildContext context, MyReferral referral) => AppSheet.show<void>(
+    context,
+    title: context.l10n.referYourQr,
+    subtitle: context.l10n.referYourQrSubtitle,
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: Insets.xl),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 320),
+          child: ReferralQrCard(code: referral.code, data: referral.qrData, title: referral.title),
+        ),
+      ),
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final MyReferral? referral = ref.watch(myReferralProvider).value;
+    if (referral == null) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Insets.md),
+      child: Pressable(
+        onTap: () => _expand(context, referral),
+        scale: 0.98,
+        child: Container(
+          padding: const EdgeInsets.all(Insets.md),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: Corners.brLg,
+            border: Border.all(color: AppColors.stroke),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(Insets.xs + 2),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: Corners.brSm),
+                child: ReferralQrCode(data: referral.qrData, size: 88),
+              ),
+              const SizedBox(width: Insets.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(context.l10n.referDrawerTitle, style: AppText.titleSmall),
+                    const SizedBox(height: 2),
+                    Text(referral.code, style: AppText.code.copyWith(fontSize: 12.5, letterSpacing: 1)),
+                    const SizedBox(height: Insets.xs),
+                    Text(
+                      context.l10n.referDrawerHint,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.bodySmall.copyWith(fontSize: 11.5, height: 1.35),
+                    ),
+                  ],
                 ),
               ),
             ],

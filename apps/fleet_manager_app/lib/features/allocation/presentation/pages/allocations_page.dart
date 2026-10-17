@@ -5,8 +5,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/session/fleet_session_provider.dart';
+import '../../allocation_dependencies.dart';
 import '../../domain/entities/active_allocation.dart';
 import '../../domain/entities/allocation_board.dart';
+import '../../domain/usecases/start_return.dart';
 import '../providers/allocation_board_provider.dart';
 import '../widgets/allocation_widgets.dart';
 
@@ -169,7 +171,7 @@ class _PendingList extends StatelessWidget {
     return Column(
       children: [
         for (final PendingRider rider in items) ...[
-          PendingRiderTile(rider: rider, onAssign: () => context.push('${Routes.assignVehicle}?rider=${rider.id}')),
+          PendingRiderTile(rider: rider, onAssign: () => context.push('${Routes.riderVerification}?rider=${rider.id}')),
           if (rider != items.last) const Gap.md(),
         ],
       ],
@@ -209,13 +211,13 @@ class _InProgressList extends StatelessWidget {
   }
 }
 
-class _ActiveList extends StatelessWidget {
+class _ActiveList extends ConsumerWidget {
   const _ActiveList({required this.items});
 
   final List<ActiveAllocation> items;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (items.isEmpty) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: Insets.lg),
@@ -230,14 +232,41 @@ class _ActiveList extends StatelessWidget {
     return Column(
       children: [
         for (final ActiveAllocation allocation in items) ...[
-          ActiveAllocationTile(allocation: allocation, onOpen: () => _quickView(context, allocation)),
+          ActiveAllocationTile(allocation: allocation, onOpen: () => _quickView(context, ref, allocation)),
           if (allocation != items.last) const Gap.md(),
         ],
       ],
     );
   }
 
-  void _quickView(BuildContext context, ActiveAllocation allocation) {
+  Future<void> _startReturn(BuildContext context, WidgetRef ref, ActiveAllocation allocation) async {
+    final bool confirmed = await AppDialog.confirm(
+      context,
+      title: context.l10n.submissionStaffReturnTitle,
+      message: context.l10n.submissionStaffReturnBody(allocation.riderName, allocation.vehicleNumber),
+      confirmLabel: context.l10n.submissionStart,
+      icon: Icons.assignment_return_rounded,
+    );
+    if (!confirmed || !context.mounted) return;
+    final Result<String> result = await ref.read(startReturnProvider)(
+      StartReturnParams(
+        riderId: allocation.riderId,
+        idempotencyKey: newIdempotencyKey(),
+        hubId: allocation.hubId ?? ref.read(fleetSessionProvider).hub?.id,
+      ),
+    );
+    if (!context.mounted) return;
+    switch (result) {
+      case Ok<String>(:final value):
+        AppSnack.success(context, context.l10n.submissionStarted);
+        ref.invalidate(allocationBoardProvider);
+        await context.push('${Routes.submission}?id=$value');
+      case Err<String>(:final failure):
+        AppSnack.error(context, failure.message);
+    }
+  }
+
+  void _quickView(BuildContext context, WidgetRef ref, ActiveAllocation allocation) {
     AppSheet.show<void>(
       context,
       title: allocation.riderName,
@@ -259,7 +288,7 @@ class _ActiveList extends StatelessWidget {
         icon: Icons.assignment_return_rounded,
         onPressed: () {
           Navigator.of(context).pop();
-          context.push('${Routes.deallocationFlow}?id=${allocation.id}');
+          _startReturn(context, ref, allocation);
         },
       ),
     );

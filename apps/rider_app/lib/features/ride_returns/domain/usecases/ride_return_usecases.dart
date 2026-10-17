@@ -1,29 +1,26 @@
 import 'package:equatable/equatable.dart';
 import 'package:evseye_core/evseye_core.dart';
 
-import '../../../../core/location/geo_point.dart';
 import '../entities/ride_return.dart';
 import '../ride_returns_repository.dart';
 
 class ReturnRequestParams extends Equatable {
   const ReturnRequestParams({
-    required this.agreementId,
-    required this.reasonCode,
-    required this.hubId,
     required this.date,
     required this.idempotencyKey,
+    this.reasonCode,
+    this.hubId,
     this.notes,
   });
 
-  final String agreementId;
-  final String reasonCode;
-  final String hubId;
   final DateTime date;
   final String idempotencyKey;
+  final String? reasonCode;
+  final String? hubId;
   final String? notes;
 
   @override
-  List<Object?> get props => [agreementId, reasonCode, hubId, date, idempotencyKey, notes];
+  List<Object?> get props => [date, idempotencyKey, reasonCode, hubId, notes];
 }
 
 class ApproveChargesParams extends Equatable {
@@ -65,24 +62,6 @@ class GetRideReturn extends UseCase<RideReturn, String> {
   Future<Result<RideReturn>> call(String params) => _repository.detail(params);
 }
 
-class GetReturnablePlans extends UseCase<List<ReturnablePlan>, NoParams> {
-  const GetReturnablePlans(this._repository);
-
-  final RideReturnsRepository _repository;
-
-  @override
-  Future<Result<List<ReturnablePlan>>> call(NoParams params) => _repository.returnablePlans();
-}
-
-class GetReturnHubs extends UseCase<List<ReturnHub>, GeoPoint> {
-  const GetReturnHubs(this._repository);
-
-  final RideReturnsRepository _repository;
-
-  @override
-  Future<Result<List<ReturnHub>>> call(GeoPoint params) => _repository.hubs(params);
-}
-
 class RequestRideReturn extends UseCase<RideReturn, ReturnRequestParams> {
   const RequestRideReturn(this._repository);
 
@@ -90,11 +69,10 @@ class RequestRideReturn extends UseCase<RideReturn, ReturnRequestParams> {
 
   @override
   Future<Result<RideReturn>> call(ReturnRequestParams params) => _repository.request(
-    agreementId: params.agreementId,
-    reasonCode: params.reasonCode,
-    hubId: params.hubId,
     date: params.date,
     idempotencyKey: params.idempotencyKey,
+    reasonCode: params.reasonCode,
+    hubId: params.hubId,
     notes: params.notes,
   );
 }

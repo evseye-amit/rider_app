@@ -124,30 +124,6 @@ class ScooterDetailsPage extends StatelessWidget {
           ),
           const Gap.lg(),
           ModuleCard(
-            title: context.l10n.commonIotUnit,
-            leading: const IconTile(icon: Icons.sensors_rounded, solid: true, size: 28),
-            child: Column(
-              children: [
-                KeyValueRow(
-                  label: context.l10n.scooterDeviceNumber,
-                  value: _or(vehicle.iot.deviceId),
-                  icon: Icons.developer_board_rounded,
-                ),
-                KeyValueRow(
-                  label: context.l10n.commonStatus,
-                  value: vehicle.iot.online ? context.l10n.homeOnline : context.l10n.commonOffline,
-                  icon: Icons.wifi_rounded,
-                ),
-                KeyValueRow(
-                  label: context.l10n.scooterLastPing,
-                  value: _or(vehicle.iot.lastPing),
-                  icon: Icons.schedule_rounded,
-                ),
-              ],
-            ),
-          ),
-          const Gap.lg(),
-          ModuleCard(
             title: context.l10n.scooterOdometerService,
             leading: const IconTile(icon: Icons.speed_rounded, solid: true, size: 28),
             child: Column(

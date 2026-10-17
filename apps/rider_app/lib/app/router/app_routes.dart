@@ -1,13 +1,15 @@
 abstract final class Routes {
   static const String splash = '/';
   static const String intro = '/intro';
-  static const String terms = '/terms';
+  static const String company = '/company';
+  static const String consent = '/consent';
   static const String language = '/language';
   static const String login = '/login';
   static const String otp = '/otp';
 
   static const String onboarding = '/onboarding';
   static const String onboardingPreview = '/onboarding/preview';
+  static const String onboardingReferralScan = '/onboarding/referral-scan';
 
   static const String deploymentWaiting = '/deployment/waiting';
   static const String deploymentPayment = '/deployment/payment';

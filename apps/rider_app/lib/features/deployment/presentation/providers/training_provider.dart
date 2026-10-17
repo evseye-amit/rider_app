@@ -12,18 +12,18 @@ class TrainingNotifier extends AsyncNotifier<List<TrainingItem>> {
   @override
   Future<List<TrainingItem>> build() => _fetch();
 
-  Future<Result<DeploymentWorkflow>> markViewed(String contentCode) async {
-    final Result<DeploymentWorkflow> result = await ref.read(markTrainingViewedProvider)(
-      TrainingViewedParams(allocationId: _allocationId, contentCode: contentCode),
-    );
-    if (result.isOk) {
-      final AsyncValue<List<TrainingItem>> refreshed = await AsyncValue.guard(_fetch);
-      if (ref.mounted) state = refreshed;
+  Future<Result<DeploymentWorkflow>> complete() async {
+    final Result<List<TrainingItem>> training = await ref.read(getTrainingProvider)(_allocationId);
+    if (training case Err<List<TrainingItem>>(:final failure)) return Result.err(failure);
+    for (final TrainingItem item in training.valueOrNull ?? const <TrainingItem>[]) {
+      if (item.viewed) continue;
+      final Result<DeploymentWorkflow> marked = await ref.read(markTrainingViewedProvider)(
+        TrainingViewedParams(allocationId: _allocationId, contentCode: item.code),
+      );
+      if (marked case Err<DeploymentWorkflow>(:final failure)) return Result.err(failure);
     }
-    return result;
+    return ref.read(completeTrainingProvider)(_allocationId);
   }
-
-  Future<Result<DeploymentWorkflow>> complete() => ref.read(completeTrainingProvider)(_allocationId);
 
   Future<List<TrainingItem>> _fetch() async {
     final List<TrainingItem> items = (await ref.read(getTrainingProvider)(_allocationId)).getOrThrow();

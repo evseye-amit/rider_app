@@ -4,12 +4,13 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:share_plus/share_plus.dart';
 
+import '../../../../core/referral/referral_qr_card.dart';
 import '../../domain/entities/referral_invite.dart';
 import '../../domain/entities/referral_overview.dart';
 import '../../referrals_dependencies.dart';
 import '../providers/referral_providers.dart';
+import '../widgets/referral_share_sheet.dart';
 import '../widgets/referral_widgets.dart';
 
 class ReferEarnPage extends ConsumerStatefulWidget {
@@ -24,6 +25,7 @@ class _ReferEarnPageState extends ConsumerState<ReferEarnPage> {
 
   Future<void> _refresh() async {
     ref.invalidate(referralsProvider);
+    ref.invalidate(referralActivityProvider);
     await ref.refreshQuietly(referralOverviewProvider);
   }
 
@@ -32,10 +34,26 @@ class _ReferEarnPageState extends ConsumerState<ReferEarnPage> {
     if (mounted) AppSnack.success(context, context.l10n.referCodeCopied);
   }
 
-  Future<void> _share(BuildContext anchor, ReferralOverview overview) async {
-    final RenderBox? box = anchor.findRenderObject() as RenderBox?;
-    final Rect? origin = box == null ? null : box.localToGlobal(Offset.zero) & box.size;
+  void _showQr(ReferralOverview overview, String code) => AppSheet.show<void>(
+    context,
+    title: context.l10n.referYourQr,
+    subtitle: context.l10n.referYourQrSubtitle,
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: Insets.xl),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 320),
+          child: ReferralQrCard(
+            code: code,
+            data: overview.qrPayload ?? overview.shareLink ?? code,
+            title: overview.campaign?.title,
+          ),
+        ),
+      ),
+    ),
+  );
 
+  Future<void> _share(ReferralOverview overview) async {
     setState(() => _sharing = true);
     final Result<ReferralInvite> result = await ref.read(createReferralInviteProvider)(const NoParams());
     if (!mounted) return;
@@ -43,13 +61,7 @@ class _ReferEarnPageState extends ConsumerState<ReferEarnPage> {
 
     switch (result) {
       case Ok<ReferralInvite>(:final value):
-        await SharePlus.instance.share(
-          ShareParams(
-            text: overview.inviteMessage(value.shareLink),
-            subject: overview.campaign?.title,
-            sharePositionOrigin: origin,
-          ),
-        );
+        await ReferralShareSheet.show(context, overview: overview, invite: value);
         if (mounted) unawaited(_refresh());
       case Err<ReferralInvite>(:final failure):
         AppSnack.error(context, failure.message);
@@ -97,8 +109,11 @@ class _ReferEarnPageState extends ConsumerState<ReferEarnPage> {
           code: code,
           sharing: _sharing,
           onCopy: () => _copy(code),
-          onShare: (anchor) => _share(anchor, overview),
+          onShare: (_) => _share(overview),
+          onShowQr: () => _showQr(overview, code),
         ),
+        const Gap.lg(),
+        HowItWorksCard(campaign: campaign),
       ] else
         ModuleCard(
           child: EmptyState(
@@ -112,6 +127,7 @@ class _ReferEarnPageState extends ConsumerState<ReferEarnPage> {
       ReferralSummaryCard(summary: overview.summary),
       const Gap.lg(),
       const ReferralsCard(),
+      const ReferralActivityCard(),
     ];
   }
 }

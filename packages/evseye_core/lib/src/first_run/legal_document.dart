@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -7,6 +8,7 @@ import '../api/legal_api.dart';
 import '../l10n/l10n.dart';
 import '../providers/core_providers.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_typography.dart';
 import '../widgets/app_scaffold.dart';
 import '../widgets/empty_state.dart';
 
@@ -118,6 +120,52 @@ class LegalDocumentPage extends ConsumerWidget {
     return AppScaffold(
       title: title ?? (kind == LegalKind.terms ? context.l10n.commonTermsService : context.l10n.commonPrivacyPolicy),
       body: LegalHtmlView(request: request),
+    );
+  }
+}
+
+class LegalAgreementText extends StatefulWidget {
+  const LegalAgreementText({required this.onOpen, super.key});
+
+  final ValueChanged<LegalKind> onOpen;
+
+  @override
+  State<LegalAgreementText> createState() => _LegalAgreementTextState();
+}
+
+class _LegalAgreementTextState extends State<LegalAgreementText> {
+  late final TapGestureRecognizer _terms = TapGestureRecognizer()..onTap = () => widget.onOpen(LegalKind.terms);
+  late final TapGestureRecognizer _privacy = TapGestureRecognizer()..onTap = () => widget.onOpen(LegalKind.privacy);
+
+  @override
+  void dispose() {
+    _terms.dispose();
+    _privacy.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle base = AppText.bodySmall.copyWith(fontSize: 12, height: 1.5);
+    final TextStyle link = base.copyWith(color: AppColors.primary, fontWeight: FontWeight.w700);
+    final String terms = context.l10n.authLegalTerms;
+    final String privacy = context.l10n.authLegalPrivacy;
+    final Map<String, TapGestureRecognizer> links = {terms: _terms, privacy: _privacy};
+    final String text = context.l10n.authLegalAgreement(terms, privacy);
+
+    final List<InlineSpan> spans = [];
+    int start = 0;
+    for (final RegExpMatch match in RegExp(links.keys.map(RegExp.escape).join('|')).allMatches(text)) {
+      spans
+        ..add(TextSpan(text: text.substring(start, match.start)))
+        ..add(TextSpan(text: match[0], style: link, recognizer: links[match[0]]));
+      start = match.end;
+    }
+    spans.add(TextSpan(text: text.substring(start)));
+
+    return Text.rich(
+      TextSpan(style: base, children: spans),
+      textAlign: TextAlign.center,
     );
   }
 }

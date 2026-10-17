@@ -30,6 +30,7 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     final Result<AuthUser> restored = await ref.read(restoreSessionProvider)(const NoParams());
     if (restored case Ok<AuthUser>(:final value)) {
       state = state.copyWith(user: value);
+      unawaited(_loadAttendance());
       await refreshState();
       await loadPackage();
     } else {
@@ -60,7 +61,8 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     );
     if (result case Ok<AuthUser>(:final value)) {
       state = state.copyWith(user: value);
-      unawaited(ref.read(termsConsentProvider.notifier).recordAcceptance(value.id));
+      unawaited(ref.read(consentProvider.notifier).recordAcceptance(value.id));
+      unawaited(_loadAttendance());
       await refreshState();
       await loadPackage();
     }
@@ -112,8 +114,20 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     if (config.isComplete) await refreshState();
   }
 
-  void setAttendance(bool present) {
+  Future<Result<bool>> setAttendance(bool present) async {
+    final bool previous = state.present;
     state = state.copyWith(present: present, vehicleOn: present && state.vehicleOn);
+    final Result<bool> result = await ref.read(attendanceApiProvider).mark(present);
+    final bool actual = result.valueOrNull ?? previous;
+    state = state.copyWith(present: actual, vehicleOn: actual && state.vehicleOn);
+    return result;
+  }
+
+  Future<void> _loadAttendance() async {
+    final Result<bool> present = await ref.read(attendanceApiProvider).isPresent();
+    if (present case Ok<bool>(:final value)) {
+      state = state.copyWith(present: value, vehicleOn: value && state.vehicleOn);
+    }
   }
 
   void setVehicleOn(bool on) {

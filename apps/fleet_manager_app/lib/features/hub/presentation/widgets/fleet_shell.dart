@@ -24,7 +24,7 @@ class FleetShell extends StatelessWidget {
 enum FleetTab {
   home(Icons.dashboard_rounded, Icons.dashboard_outlined),
   allocations(Icons.swap_horiz_rounded, Icons.swap_horiz_outlined),
-  deallocations(Icons.assignment_return_rounded, Icons.assignment_return_outlined),
+  returns(Icons.assignment_return_rounded, Icons.assignment_return_outlined),
   team(Icons.groups_rounded, Icons.groups_outlined),
   maintenance(Icons.build_rounded, Icons.build_outlined);
 
@@ -33,7 +33,7 @@ enum FleetTab {
   String label(AppL10n l10n) => switch (this) {
     FleetTab.home => l10n.profileHub,
     FleetTab.allocations => l10n.hubAllocate,
-    FleetTab.deallocations => l10n.hubReturn,
+    FleetTab.returns => l10n.hubReturn,
     FleetTab.team => l10n.ridersTeam,
     FleetTab.maintenance => l10n.hubService,
   };

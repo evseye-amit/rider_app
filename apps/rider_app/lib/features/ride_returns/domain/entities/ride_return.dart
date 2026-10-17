@@ -69,6 +69,8 @@ class ReturnCharges extends Equatable {
   ];
 }
 
+enum CheckInStage { none, inProgress, finalChecks, done }
+
 class RideReturn extends Equatable {
   const RideReturn({
     required this.id,
@@ -80,6 +82,10 @@ class RideReturn extends Equatable {
     this.receivedAt,
     this.cancelledAt,
     this.charges,
+    this.usesCheckIn = true,
+    this.checkInId,
+    this.checkInConfirmed = false,
+    this.checksComplete = false,
   });
 
   final String id;
@@ -91,16 +97,43 @@ class RideReturn extends Equatable {
   final DateTime? receivedAt;
   final DateTime? cancelledAt;
   final ReturnCharges? charges;
+  final bool usesCheckIn;
+  final String? checkInId;
+  final bool checkInConfirmed;
+  final bool checksComplete;
 
-  bool get canCancel => status == ReturnStatus.requested && receivedAt == null;
+  CheckInStage get checkIn => checkInId == null
+      ? CheckInStage.none
+      : !checkInConfirmed
+      ? CheckInStage.inProgress
+      : checksComplete
+      ? CheckInStage.done
+      : CheckInStage.finalChecks;
 
-  bool get isOpen =>
-      status == ReturnStatus.requested || (status == ReturnStatus.returned && charges?.stage != ChargesStage.settled);
+  bool get canCancel => status == ReturnStatus.requested && receivedAt == null && checkInId == null;
 
-  bool get needsYou => charges?.canRespond ?? false;
+  bool get isOpen => usesCheckIn
+      ? status == ReturnStatus.requested || checkIn == CheckInStage.inProgress || checkIn == CheckInStage.finalChecks
+      : status == ReturnStatus.requested || (status == ReturnStatus.returned && charges?.stage != ChargesStage.settled);
+
+  bool get needsYou => !usesCheckIn && (charges?.canRespond ?? false);
 
   @override
-  List<Object?> get props => [id, status, reasonCode, plannedDate, createdAt, notes, receivedAt, cancelledAt, charges];
+  List<Object?> get props => [
+    id,
+    status,
+    reasonCode,
+    plannedDate,
+    createdAt,
+    notes,
+    receivedAt,
+    cancelledAt,
+    charges,
+    usesCheckIn,
+    checkInId,
+    checkInConfirmed,
+    checksComplete,
+  ];
 }
 
 class ReturnPage extends Equatable {
@@ -113,36 +146,6 @@ class ReturnPage extends Equatable {
 
   @override
   List<Object?> get props => [returns, nextCursor];
-}
-
-class ReturnablePlan extends Equatable {
-  const ReturnablePlan({required this.agreementId, required this.number, this.scooterName});
-
-  final String agreementId;
-  final String number;
-  final String? scooterName;
-
-  @override
-  List<Object?> get props => [agreementId, number, scooterName];
-}
-
-class ReturnHub extends Equatable {
-  const ReturnHub({
-    required this.id,
-    required this.name,
-    required this.address,
-    required this.distanceMeters,
-    this.etaMinutes,
-  });
-
-  final String id;
-  final String name;
-  final String address;
-  final num distanceMeters;
-  final int? etaMinutes;
-
-  @override
-  List<Object?> get props => [id, name, address, distanceMeters, etaMinutes];
 }
 
 class ApprovalCode extends Equatable {

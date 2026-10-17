@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
+import '../../../../core/legal/legal_link.dart';
 import '../../../../core/session/fleet_session_provider.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -86,7 +87,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           onSubmitted: (_) => _continue(),
           suffix: _isValid ? const Icon(Icons.check_circle_rounded, size: 20, color: AppColors.success) : null,
         ),
-        const Gap.xl(),
+        const Gap.lg(),
+        LegalAgreementText(onOpen: (kind) => LegalLink.open(context, kind)),
+        const Gap.md(),
         PrimaryButton(
           label: context.l10n.authContinue,
           trailingIcon: Icons.arrow_forward_rounded,

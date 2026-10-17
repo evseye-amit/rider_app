@@ -14,20 +14,76 @@ DateTime? _date(Object? value) => value == null ? null : DateTime.tryParse(value
 
 Map<String, dynamic> _map(Object? value) => value is Map ? Map<String, dynamic>.from(value) : const <String, dynamic>{};
 
+List<Map<String, dynamic>> _maps(Object? value) => [
+  for (final Object? item in value is List ? value : const [])
+    if (item is Map) Map<String, dynamic>.from(item),
+];
+
+enum ReferralSource {
+  referralCode('REFERRAL_CODE'),
+  qrCode('QR_CODE'),
+  deepLink('DEEP_LINK'),
+  shareLink('SHARE_LINK');
+
+  const ReferralSource(this.wire);
+
+  final String wire;
+}
+
+class ReferralMilestoneDto {
+  const ReferralMilestoneDto({
+    required this.type,
+    required this.target,
+    this.operator,
+    this.current,
+    this.mandatory = true,
+    this.completedAt,
+  });
+
+  factory ReferralMilestoneDto.fromJson(Map<String, dynamic> json) => ReferralMilestoneDto(
+    type: _textOrNull(json['type']) ?? '',
+    target: _amount(json['target']),
+    operator: _textOrNull(json['operator']),
+    current: json['current'] == null ? null : _amount(json['current']),
+    mandatory: json['mandatory'] != false,
+    completedAt: _date(json['completedAt']),
+  );
+
+  final String type;
+  final num target;
+  final String? operator;
+  final num? current;
+  final bool mandatory;
+  final DateTime? completedAt;
+
+  bool get isDone => completedAt != null;
+}
+
 class ReferralCampaignDto {
-  const ReferralCampaignDto({required this.title, this.description, this.terms, this.endAt});
+  const ReferralCampaignDto({
+    required this.title,
+    this.code,
+    this.description,
+    this.terms,
+    this.endAt,
+    this.milestones = const [],
+  });
 
   factory ReferralCampaignDto.fromJson(Map<String, dynamic> json) => ReferralCampaignDto(
     title: _textOrNull(json['title']) ?? '',
+    code: _textOrNull(json['code']),
     description: _textOrNull(json['description']),
     terms: _textOrNull(json['terms']),
     endAt: _date(json['endAt']),
+    milestones: _maps(json['milestones']).map(ReferralMilestoneDto.fromJson).toList(growable: false),
   );
 
   final String title;
+  final String? code;
   final String? description;
   final String? terms;
   final DateTime? endAt;
+  final List<ReferralMilestoneDto> milestones;
 }
 
 class ReferralRewardRuleDto {
@@ -73,9 +129,11 @@ class ReferralHomeDto {
     this.campaign,
     this.code,
     this.shareLink,
+    this.qrPayload,
     this.shareMessage,
     this.referrerReward,
     this.refereeReward,
+    this.currency,
   });
 
   factory ReferralHomeDto.fromJson(Map<String, dynamic> json) {
@@ -86,6 +144,7 @@ class ReferralHomeDto {
       campaign: json['campaign'] is Map ? ReferralCampaignDto.fromJson(_map(json['campaign'])) : null,
       code: _textOrNull(referral['code']),
       shareLink: _textOrNull(referral['shareLink']),
+      qrPayload: _textOrNull(referral['qrPayload']),
       shareMessage: _textOrNull(referral['shareMessage']),
       referrerReward: rewards['referrerReward'] is Map
           ? ReferralRewardRuleDto.fromJson(_map(rewards['referrerReward']))
@@ -93,6 +152,7 @@ class ReferralHomeDto {
       refereeReward: rewards['refereeReward'] is Map
           ? ReferralRewardRuleDto.fromJson(_map(rewards['refereeReward']))
           : null,
+      currency: _textOrNull(rewards['currency']),
     );
   }
 
@@ -100,37 +160,65 @@ class ReferralHomeDto {
   final ReferralCampaignDto? campaign;
   final String? code;
   final String? shareLink;
+  final String? qrPayload;
   final String? shareMessage;
   final ReferralRewardRuleDto? referrerReward;
   final ReferralRewardRuleDto? refereeReward;
+  final String? currency;
 }
 
 class ReferralInviteDto {
-  const ReferralInviteDto({required this.referralCode, required this.shareLink, this.expiresAt});
+  const ReferralInviteDto({
+    required this.referralCode,
+    required this.shareLink,
+    this.inviteToken,
+    this.qrPayload,
+    this.expiresAt,
+  });
 
   factory ReferralInviteDto.fromJson(Map<String, dynamic> json) => ReferralInviteDto(
     referralCode: _textOrNull(json['referralCode']) ?? '',
     shareLink: _textOrNull(json['shareLink']) ?? '',
+    inviteToken: _textOrNull(json['inviteToken']),
+    qrPayload: _textOrNull(json['qrPayload']),
     expiresAt: _date(json['expiresAt']),
   );
 
   final String referralCode;
   final String shareLink;
+  final String? inviteToken;
+  final String? qrPayload;
   final DateTime? expiresAt;
 }
 
 class ReferralRewardDto {
-  const ReferralRewardDto({required this.beneficiary, required this.amount, required this.status});
+  const ReferralRewardDto({
+    required this.beneficiary,
+    required this.amount,
+    required this.status,
+    this.currency,
+    this.earnedAt,
+    this.approvedAt,
+    this.paidAt,
+  });
 
   factory ReferralRewardDto.fromJson(Map<String, dynamic> json) => ReferralRewardDto(
     beneficiary: _textOrNull(json['beneficiary']) ?? '',
     amount: _amount(json['amount']),
     status: _textOrNull(json['status']) ?? '',
+    currency: _textOrNull(json['currency']),
+    earnedAt: _date(json['earnedAt']),
+    approvedAt: _date(json['approvedAt']),
+    paidAt: _date(_map(json['payout'])['paidAt']),
   );
 
   final String beneficiary;
   final num amount;
   final String status;
+  final String? currency;
+  final DateTime? earnedAt;
+  final DateTime? approvedAt;
+  final DateTime? paidAt;
 }
 
 class ReferralDto {
@@ -143,6 +231,8 @@ class ReferralDto {
     this.invitedAt,
     this.registeredAt,
     this.qualifiedAt,
+    this.qualificationDeadlineAt,
+    this.milestones = const [],
   });
 
   factory ReferralDto.fromJson(Map<String, dynamic> json) {
@@ -155,10 +245,9 @@ class ReferralDto {
       invitedAt: _date(json['invitedAt']),
       registeredAt: _date(json['registeredAt']),
       qualifiedAt: _date(json['qualifiedAt']),
-      rewards: [
-        for (final Object? reward in json['rewards'] as List? ?? const [])
-          if (reward is Map) ReferralRewardDto.fromJson(Map<String, dynamic>.from(reward)),
-      ],
+      qualificationDeadlineAt: _date(json['qualificationDeadlineAt']),
+      milestones: _maps(json['milestones']).map(ReferralMilestoneDto.fromJson).toList(growable: false),
+      rewards: _maps(json['rewards']).map(ReferralRewardDto.fromJson).toList(growable: false),
     );
   }
 
@@ -169,7 +258,69 @@ class ReferralDto {
   final DateTime? invitedAt;
   final DateTime? registeredAt;
   final DateTime? qualifiedAt;
+  final DateTime? qualificationDeadlineAt;
+  final List<ReferralMilestoneDto> milestones;
   final List<ReferralRewardDto> rewards;
+}
+
+class ReferralDetailDto extends ReferralDto {
+  const ReferralDetailDto({
+    required super.id,
+    required super.status,
+    required super.rewards,
+    super.refereeName,
+    super.refereeMobile,
+    super.invitedAt,
+    super.registeredAt,
+    super.qualifiedAt,
+    super.qualificationDeadlineAt,
+    super.milestones,
+    this.campaignTitle,
+    this.kycVerifiedAt,
+    this.activatedAt,
+    this.expiresAt,
+  });
+
+  factory ReferralDetailDto.fromJson(Map<String, dynamic> json) {
+    final ReferralDto base = ReferralDto.fromJson(json);
+    return ReferralDetailDto(
+      id: base.id,
+      status: base.status,
+      rewards: base.rewards,
+      refereeName: base.refereeName,
+      refereeMobile: base.refereeMobile,
+      invitedAt: base.invitedAt,
+      registeredAt: base.registeredAt,
+      qualifiedAt: base.qualifiedAt,
+      qualificationDeadlineAt: base.qualificationDeadlineAt,
+      milestones: base.milestones,
+      campaignTitle: _textOrNull(_map(json['campaign'])['title']),
+      kycVerifiedAt: _date(json['kycVerifiedAt']),
+      activatedAt: _date(json['activatedAt']),
+      expiresAt: _date(json['expiresAt']),
+    );
+  }
+
+  final String? campaignTitle;
+  final DateTime? kycVerifiedAt;
+  final DateTime? activatedAt;
+  final DateTime? expiresAt;
+}
+
+class ReferralActivityDto {
+  const ReferralActivityDto({required this.id, required this.eventType, this.referralId, this.createdAt});
+
+  factory ReferralActivityDto.fromJson(Map<String, dynamic> json) => ReferralActivityDto(
+    id: json['id']?.toString() ?? '',
+    eventType: _textOrNull(json['eventType']) ?? '',
+    referralId: _textOrNull(json['referralId']),
+    createdAt: _date(json['createdAt']),
+  );
+
+  final String id;
+  final String eventType;
+  final String? referralId;
+  final DateTime? createdAt;
 }
 
 class ReferralApi {
@@ -185,8 +336,20 @@ class ReferralApi {
   Future<Result<ReferralInviteDto>> invite() =>
       _client.post<ReferralInviteDto>('$_base/invites', parse: (data) => ReferralInviteDto.fromJson(_map(data)));
 
-  Future<Result<void>> attribute(String referralCode) =>
-      _client.post<void>('$_base/attribute', body: {'referralCode': referralCode});
+  Future<Result<void>> attribute(
+    String referralCode, {
+    ReferralSource? source,
+    String? inviteToken,
+    String? campaignCode,
+  }) => _client.post<void>(
+    '$_base/attribute',
+    body: {
+      'referralCode': referralCode,
+      'source': ?source?.wire,
+      'inviteToken': ?inviteToken,
+      'campaignCode': ?campaignCode,
+    },
+  );
 
   Future<Result<String>> resolveInput(String input) => _client.get<String>(
     '$_base/resolve-input',
@@ -197,9 +360,16 @@ class ReferralApi {
   Future<Result<List<ReferralDto>>> mine({int page = 1, int pageSize = 50}) => _client.get<List<ReferralDto>>(
     _base,
     query: {'page': page, 'pageSize': pageSize},
-    parse: (data) => [
-      for (final Object? item in _map(data)['items'] as List? ?? const [])
-        if (item is Map) ReferralDto.fromJson(Map<String, dynamic>.from(item)),
-    ],
+    parse: (data) => _maps(_map(data)['items']).map(ReferralDto.fromJson).toList(growable: false),
   );
+
+  Future<Result<ReferralDetailDto>> detail(String id) =>
+      _client.get<ReferralDetailDto>('$_base/$id', parse: (data) => ReferralDetailDto.fromJson(_map(data)));
+
+  Future<Result<List<ReferralActivityDto>>> activity({int page = 1, int pageSize = 20}) =>
+      _client.get<List<ReferralActivityDto>>(
+        '$_base/notifications',
+        query: {'page': page, 'pageSize': pageSize},
+        parse: (data) => _maps(_map(data)['items']).map(ReferralActivityDto.fromJson).toList(growable: false),
+      );
 }

@@ -91,7 +91,7 @@ class _AllocationDonePageState extends State<AllocationDonePage> with SingleTick
                 _NextStep(
                   icon: Icons.electric_scooter_rounded,
                   title: context.l10n.allocationRequestVehicle,
-                  message: context.l10n.allocationConfirmsPhotosAndIot,
+                  message: context.l10n.allocationConfirmsPhotos,
                 ),
                 Gap.md(),
                 _NextStep(

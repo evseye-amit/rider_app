@@ -10,7 +10,13 @@ abstract interface class ExchangeRepository {
 
   Future<Result<RentalAgreement?>> activeAgreement();
 
-  Future<Result<ExchangeRequest>> request({required String agreementId, required String reasonCode, String? reason});
+  Future<Result<ExchangeRequest>> request({
+    required String agreementId,
+    required String reasonCode,
+    required DateTime plannedDate,
+    String? hubId,
+    String? reason,
+  });
 
   Future<Result<void>> acceptOffer({required String id, required String offerId, required String offerHash});
 

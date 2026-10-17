@@ -16,6 +16,7 @@ class StatCard extends StatelessWidget {
     this.deltaPositive = true,
     this.onTap,
     this.compact = false,
+    this.labelMaxLines = 1,
     super.key,
   });
 
@@ -28,6 +29,7 @@ class StatCard extends StatelessWidget {
   final bool deltaPositive;
   final VoidCallback? onTap;
   final bool compact;
+  final int labelMaxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +98,7 @@ class StatCard extends StatelessWidget {
             const SizedBox(height: Insets.xs),
             Text(
               label,
-              maxLines: 1,
+              maxLines: labelMaxLines,
               overflow: TextOverflow.ellipsis,
               style: AppText.bodySmall.copyWith(fontSize: 12, fontWeight: FontWeight.w600),
             ),

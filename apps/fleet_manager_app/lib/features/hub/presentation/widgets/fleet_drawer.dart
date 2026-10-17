@@ -74,7 +74,11 @@ class FleetDrawer extends ConsumerWidget {
         child: SafeArea(
           child: Column(
             children: [
-              _Header(managerName: session.managerName, hubName: session.hubName, hubCode: session.hubCode),
+              _Header(
+                managerName: session.managerName,
+                hubName: session.allHubs ? context.l10n.hubAllHubs : session.hubName,
+                hubCode: session.allHubs ? context.l10n.hubCount(session.hubs.length) : session.hubCode,
+              ),
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(Insets.md, Insets.sm, Insets.md, Insets.xxl),
@@ -93,26 +97,14 @@ class FleetDrawer extends ConsumerWidget {
                     ),
                     _Item(
                       icon: Icons.assignment_return_rounded,
-                      label: context.l10n.commonDeAllocation,
-                      onTap: () => _goTab(context, Routes.deallocations),
+                      label: context.l10n.submissionsTitle,
+                      subtitle: context.l10n.submissionsDrawerSubtitle,
+                      onTap: () => _goTab(context, Routes.submissions),
                     ),
                     _Item(
                       icon: Icons.build_rounded,
                       label: context.l10n.hubMaintenance,
                       onTap: () => _goTab(context, Routes.maintenance),
-                    ),
-                    if (session.canManageExchanges)
-                      _Item(
-                        icon: Icons.published_with_changes_rounded,
-                        label: context.l10n.exchangeTitle,
-                        subtitle: context.l10n.exchangeDeskSubtitle,
-                        onTap: () => _open(context, Routes.exchanges),
-                      ),
-                    _Item(
-                      icon: Icons.assignment_return_rounded,
-                      label: context.l10n.returnDeskTitle,
-                      subtitle: context.l10n.returnDeskSubtitle,
-                      onTap: () => _open(context, Routes.returns),
                     ),
                     _Item(
                       icon: Icons.support_agent_rounded,

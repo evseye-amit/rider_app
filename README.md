@@ -93,7 +93,8 @@ flavors/<client>/
 
 The illustrations are recoloured to the client's `primary` colour automatically.
 Each client has its own package ID and version, so clients install as separate
-apps. Bump `version` in `flavor.yaml` before each release.
+apps. Bump `version` in `flavor.yaml` before each release. Leave out
+`companyCode` and the apps ask for the company code on first launch instead.
 
 ### Add a client
 

@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 class ActiveAllocation extends Equatable {
   const ActiveAllocation({
     required this.id,
+    required this.riderId,
     required this.riderName,
     required this.riderCode,
     required this.mobile,
@@ -13,9 +14,11 @@ class ActiveAllocation extends Equatable {
     required this.plan,
     required this.batteryPercent,
     required this.status,
+    this.hubId,
   });
 
   final String id;
+  final String riderId;
   final String riderName;
   final String riderCode;
   final String mobile;
@@ -28,10 +31,12 @@ class ActiveAllocation extends Equatable {
   final int? batteryPercent;
 
   final String status;
+  final String? hubId;
 
   @override
   List<Object?> get props => [
     id,
+    riderId,
     riderName,
     riderCode,
     mobile,
@@ -42,5 +47,6 @@ class ActiveAllocation extends Equatable {
     plan,
     batteryPercent,
     status,
+    hubId,
   ];
 }

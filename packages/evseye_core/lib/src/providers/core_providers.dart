@@ -2,10 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_client.dart';
+import '../api/attendance_api.dart';
 import '../api/auth_api.dart';
+import '../api/company_api.dart';
 import '../api/deployment_api.dart';
 import '../api/legal_api.dart';
 import '../api/media_api.dart';
+import '../api/notifications_api.dart';
 import '../api/referral_api.dart';
 import '../api/rental_agreements_api.dart';
 import '../api/ride_returns_api.dart';
@@ -17,6 +20,7 @@ import '../api/support_api.dart';
 import '../api/swap_stations_api.dart';
 import '../api/token_store.dart';
 import '../api/vehicle_exchange_api.dart';
+import '../api/vehicle_submission_api.dart';
 import '../api/wallet_api.dart';
 import '../config/ui_config_service.dart';
 
@@ -67,6 +71,8 @@ final swapStationsApiProvider = Provider<SwapStationsApi>((_) => SwapStationsApi
 
 final legalApiProvider = Provider<LegalApi>((ref) => LegalApi(ref.watch(apiClientProvider)));
 
+final companyApiProvider = Provider<CompanyApi>((ref) => CompanyApi(ref.watch(apiClientProvider)));
+
 final riderSupportApiProvider = Provider<SupportApi>(
   (ref) => SupportApi.rider(ref.watch(apiClientProvider), ref.watch(mediaApiProvider)),
 );
@@ -80,5 +86,13 @@ final rideReturnsApiProvider = Provider<RideReturnsApi>((ref) => RideReturnsApi(
 final returnDeskApiProvider = Provider<ReturnDeskApi>((ref) => ReturnDeskApi(ref.watch(apiClientProvider)));
 
 final riderBillingApiProvider = Provider<RiderBillingApi>((ref) => RiderBillingApi(ref.watch(apiClientProvider)));
+
+final attendanceApiProvider = Provider<AttendanceApi>((ref) => AttendanceApi(ref.watch(apiClientProvider)));
+
+final notificationsApiProvider = Provider<NotificationsApi>((ref) => NotificationsApi(ref.watch(apiClientProvider)));
+
+final vehicleSubmissionApiProvider = Provider<VehicleSubmissionApi>(
+  (ref) => VehicleSubmissionApi(ref.watch(apiClientProvider)),
+);
 
 Duration? noProviderRetry(int retryCount, Object error) => null;

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
+import '../../allocation_dependencies.dart';
 import '../providers/deployment_detail_provider.dart';
 import '../widgets/allocation_widgets.dart';
 
@@ -130,8 +133,6 @@ class _Loaded extends ConsumerWidget {
                 value: fleet?.fleetCode ?? '—',
                 icon: Icons.qr_code_rounded,
               ),
-              if (fleet?.iotDeviceNumber case final String device)
-                KeyValueRow(label: context.l10n.allocationIotDevice, value: device, icon: Icons.sensors_rounded),
             ],
           ),
         ),
@@ -142,7 +143,7 @@ class _Loaded extends ConsumerWidget {
           child: DeploymentTimeline(status: status, workflow: request.workflow),
         ),
         const Gap.lg(),
-        if (status == DeploymentStatus.paymentPaid) _EvidenceCard(evidence: detail.evidence),
+        if (status.beforeInspection) _VehiclePhotosCard(allocationId: allocationId, evidence: detail.evidence),
         if (status == DeploymentStatus.pdiPendingRider || status == DeploymentStatus.trainingPending)
           _RiderTurnCard(status: status),
         if (status.isDeployed)
@@ -241,32 +242,276 @@ class _Band extends StatelessWidget {
   }
 }
 
-class _EvidenceCard extends StatelessWidget {
-  const _EvidenceCard({required this.evidence});
+const List<String> _vehicleSides = ['FRONT', 'REAR', 'LEFT', 'RIGHT'];
 
+List<String> _photoSlots(AllocationEvidence? evidence) => [
+  ..._vehicleSides,
+  for (final String type in evidence?.requiredPhotoTypes ?? const <String>[])
+    if (!_vehicleSides.contains(type)) type,
+];
+
+bool _photosReady(AllocationEvidence? evidence) =>
+    evidence == null || (evidence.isComplete && _vehicleSides.every(evidence.completedPhotoTypes.contains));
+
+String _photoLabel(AppL10n l10n, String type) => switch (type) {
+  'FRONT' => l10n.allocationPhotoFront,
+  'REAR' => l10n.allocationPhotoBack,
+  'LEFT' => l10n.allocationPhotoLeft,
+  'RIGHT' => l10n.allocationPhotoRight,
+  _ => PhotoRequirement(photoType: type, isRequired: true).title,
+};
+
+IconData _photoIcon(String type) => switch (type) {
+  'FRONT' => Icons.arrow_circle_up_rounded,
+  'REAR' => Icons.arrow_circle_down_rounded,
+  'LEFT' => Icons.arrow_circle_left_rounded,
+  'RIGHT' => Icons.arrow_circle_right_rounded,
+  _ => Icons.photo_camera_rounded,
+};
+
+class _VehiclePhotosCard extends ConsumerStatefulWidget {
+  const _VehiclePhotosCard({required this.allocationId, required this.evidence});
+
+  final String allocationId;
   final AllocationEvidence? evidence;
 
   @override
+  ConsumerState<_VehiclePhotosCard> createState() => _VehiclePhotosCardState();
+}
+
+class _VehiclePhotosCardState extends ConsumerState<_VehiclePhotosCard> {
+  final Map<String, File> _local = {};
+  final Set<String> _uploading = {};
+
+  Future<void> _take(String photoType) async {
+    final File? file = await PhotoSourceSheet.pick(context);
+    if (file == null || !mounted) return;
+    setState(() => _uploading.add(photoType));
+    final Result<void> result = await ref
+        .read(deploymentDetailProvider(widget.allocationId).notifier)
+        .uploadEvidencePhoto(photoType, file);
+    if (!mounted) return;
+    setState(() {
+      _uploading.remove(photoType);
+      if (result.isOk) _local[photoType] = file;
+    });
+    if (result case Err<void>(:final failure)) AppSnack.error(context, failure.message);
+  }
+
+  Future<void> _view(String photoType) async {
+    final File? local = _local[photoType];
+    if (local != null) return PhotoViewer.showImage(context, FileImage(local));
+    final RemotePhoto? photo = widget.evidence?.photoFor(photoType);
+    if (photo == null) return;
+    final Result<String> url = await ref.read(getPhotoUrlProvider)(photo.id);
+    if (!mounted) return;
+    switch (url) {
+      case Ok<String>(:final value) when value.isNotEmpty:
+        await PhotoViewer.show(context, value);
+      case _:
+        AppSnack.error(context, context.l10n.allocationPhotoCannotOpen);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final AllocationEvidence? current = evidence;
+    final AllocationEvidence? evidence = widget.evidence;
+    final Set<String> uploaded = {...?evidence?.completedPhotoTypes, ..._local.keys};
+    final List<String> slots = _photoSlots(evidence);
+    final bool done = slots.every(uploaded.contains);
+
     return ModuleCard(
-      title: context.l10n.allocationInspectionEvidence,
+      title: context.l10n.allocationVehiclePhotos,
       leading: IconTile(
-        icon: Icons.photo_library_rounded,
-        tone: current == null ? AppColors.textMuted : (current.isComplete ? AppColors.success : AppColors.warning),
+        icon: Icons.photo_camera_rounded,
+        tone: done ? AppColors.success : AppColors.warning,
         solid: true,
         size: 28,
       ),
-      child: current == null
-          ? const ShimmerBox(height: 40)
-          : Text(
-              current.requiredPhotoTypes.isEmpty
-                  ? context.l10n.allocationClientRequiresNoInspectionPhotos
-                  : current.isComplete
-                  ? 'All ${current.requiredPhotoTypes.length} required photos are on file.'
-                  : 'Missing: ${current.missingPhotoTypes.join(', ')}. Upload them against the inspection before submitting.',
-              style: AppText.bodySmall.copyWith(height: 1.5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            context.l10n.allocationVehiclePhotosHint,
+            style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
+          ),
+          const Gap.md(),
+          if (evidence == null)
+            const ShimmerBox(height: 220, borderRadius: Corners.brLg)
+          else
+            GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              mainAxisSpacing: Insets.md,
+              crossAxisSpacing: Insets.md,
+              childAspectRatio: 1.2,
+              children: [
+                for (final String type in slots)
+                  _SidePhotoTile(
+                    label: _photoLabel(context.l10n, type),
+                    icon: _photoIcon(type),
+                    file: _local[type],
+                    uploaded: uploaded.contains(type),
+                    uploading: _uploading.contains(type),
+                    onTake: () => _take(type),
+                    onView: () => _view(type),
+                  ),
+              ],
             ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SidePhotoTile extends StatelessWidget {
+  const _SidePhotoTile({
+    required this.label,
+    required this.icon,
+    required this.file,
+    required this.uploaded,
+    required this.uploading,
+    required this.onTake,
+    required this.onView,
+  });
+
+  final String label;
+  final IconData icon;
+  final File? file;
+  final bool uploaded;
+  final bool uploading;
+  final VoidCallback onTake;
+  final VoidCallback onView;
+
+  @override
+  Widget build(BuildContext context) {
+    final File? local = file;
+    final bool captured = local != null || uploaded;
+    final Widget face = local != null
+        ? _PreviewFace(file: local, label: label)
+        : uploaded
+        ? _UploadedFace(label: label)
+        : PhotoSlot(label: label, icon: icon, onTap: uploading ? null : onTake);
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        if (captured)
+          Pressable(
+            onTap: uploading ? null : onView,
+            scale: 0.97,
+            child: ClipRRect(borderRadius: Corners.brMd, child: face),
+          )
+        else
+          face,
+        if (captured && !uploading)
+          Positioned(
+            top: 6,
+            right: 6,
+            child: Pressable(
+              onTap: onTake,
+              child: StatusChip(
+                label: context.l10n.commonRetake,
+                tone: StatusTone.neutral,
+                dense: true,
+                showDot: false,
+              ),
+            ),
+          ),
+        if (uploading)
+          DecoratedBox(
+            decoration: BoxDecoration(color: Colors.black38, borderRadius: Corners.brMd),
+            child: const Center(
+              child: SizedBox.square(
+                dimension: 22,
+                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _PreviewFace extends StatelessWidget {
+  const _PreviewFace({required this.file, required this.label});
+
+  final File file;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Image.file(file, fit: BoxFit.cover, cacheWidth: 600),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: Container(
+            color: Colors.black54,
+            padding: const EdgeInsets.symmetric(horizontal: Insets.sm, vertical: Insets.xs),
+            child: Row(
+              children: [
+                const Icon(Icons.check_circle_rounded, size: 14, color: AppColors.success),
+                const SizedBox(width: Insets.xs),
+                Expanded(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.bodySmall.copyWith(fontSize: 11.5, color: Colors.white, fontWeight: FontWeight.w700),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _UploadedFace extends StatelessWidget {
+  const _UploadedFace({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: AppColors.successWash,
+        borderRadius: Corners.brMd,
+        border: Border.all(color: AppColors.success.withValues(alpha: 0.35), width: 1.3),
+      ),
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.check_circle_rounded, size: 26, color: AppColors.success),
+            const SizedBox(height: Insets.sm),
+            Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.bodySmall.copyWith(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              context.l10n.allocationPhotoUploaded,
+              style: AppText.bodySmall.copyWith(fontSize: 11, color: AppColors.textMuted),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -360,7 +605,7 @@ class _Footer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final DeploymentStatus status = detail.status;
-    final bool evidenceReady = detail.evidence == null || detail.evidence!.isComplete;
+    final bool evidenceReady = _photosReady(detail.evidence);
 
     final (String label, IconData icon, VoidCallback? onPressed) = switch (status) {
       DeploymentStatus.riderWaiting || DeploymentStatus.fleetRequested => (

@@ -12,6 +12,7 @@ class ModuleCard extends StatelessWidget {
     this.title,
     this.actionLabel,
     this.onAction,
+    this.onInfo,
     this.padding = const EdgeInsets.all(Insets.lg),
     this.leading,
     super.key,
@@ -21,6 +22,7 @@ class ModuleCard extends StatelessWidget {
   final String? title;
   final String? actionLabel;
   final VoidCallback? onAction;
+  final VoidCallback? onInfo;
   final EdgeInsetsGeometry padding;
   final Widget? leading;
 
@@ -43,11 +45,25 @@ class ModuleCard extends StatelessWidget {
               children: [
                 if (leading != null) ...[leading!, const SizedBox(width: Insets.sm + 2)],
                 Expanded(
-                  child: Text(
-                    title!,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.titleMedium.copyWith(fontSize: 15.5),
+                  child: Row(
+                    children: [
+                      Flexible(
+                        child: Text(
+                          title!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.titleMedium.copyWith(fontSize: 15.5),
+                        ),
+                      ),
+                      if (onInfo != null)
+                        Pressable(
+                          onTap: onInfo,
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: Insets.xs + 2, vertical: Insets.xxs),
+                            child: Icon(Icons.info_outline_rounded, size: 18, color: AppColors.textMuted),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
                 if (actionLabel != null)

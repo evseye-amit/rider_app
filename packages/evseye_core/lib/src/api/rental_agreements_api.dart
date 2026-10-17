@@ -11,10 +11,12 @@ class RentalAgreementDto {
     this.currentVehicleId,
     this.vehicleModel,
     this.vehicleVariant,
+    this.startDate,
   });
 
   factory RentalAgreementDto.fromJson(Map<String, dynamic> json) {
     final Object? vehicle = json['vehicle'];
+    final String start = json['startDate']?.toString() ?? '';
     return RentalAgreementDto(
       id: json['id']?.toString() ?? '',
       agreementNumber: json['agreementNumber']?.toString() ?? '',
@@ -24,6 +26,7 @@ class RentalAgreementDto {
       currentVehicleId: json['currentVehicleId']?.toString(),
       vehicleModel: vehicle is Map ? vehicle['modelName']?.toString() : null,
       vehicleVariant: vehicle is Map ? vehicle['variantName']?.toString() : null,
+      startDate: start.length < 10 ? null : DateTime.tryParse(start.substring(0, 10)),
     );
   }
 
@@ -35,6 +38,7 @@ class RentalAgreementDto {
   final String? currentVehicleId;
   final String? vehicleModel;
   final String? vehicleVariant;
+  final DateTime? startDate;
 
   bool get isActive => status == 'ACTIVE';
 }

@@ -39,7 +39,10 @@ class HomePage extends ConsumerWidget {
     return HeroScaffold(
       drawer: const FleetDrawer(),
       bottomPadding: 120,
-      onRefresh: () => ref.refreshQuietly(hubOverviewProvider),
+      onRefresh: () {
+        ref.invalidate(unreadNotificationsProvider);
+        return ref.refreshQuietly(hubOverviewProvider);
+      },
       band: _Band(summary: overview?.summary),
       children: overview == null ? const [_HomeSkeleton()] : _content(context, ref, overview),
     );
@@ -48,18 +51,25 @@ class HomePage extends ConsumerWidget {
   List<Widget> _content(BuildContext context, WidgetRef ref, HubOverview overview) {
     final FleetSession session = ref.watch(fleetSessionProvider);
     final HubSummary summary = overview.summary;
+    final HubQueue? queue = summary.queue;
 
     return [
       HubCard(
         profile: overview.profile,
         summary: summary,
         hubs: session.hubs,
-        selectedIndexes: session.activeHubIndexes,
-        onSelectionChanged: ref.read(fleetSessionProvider.notifier).setHubSelection,
+        selectedIndex: session.selectedHubIndex,
+        onSelected: ref.read(fleetSessionProvider.notifier).selectHub,
       ),
       const Gap.lg(),
       ModuleCard(
-        title: context.l10n.commonYesterdayGlance,
+        title: context.l10n.hubQuickView,
+        onInfo: () => AppSheet.show<void>(
+          context,
+          title: context.l10n.hubQuickView,
+          subtitle: context.l10n.hubQuickViewInfo,
+          child: const _QueueInfo(),
+        ),
         padding: const EdgeInsets.all(Insets.md),
         child: GridView(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -72,42 +82,94 @@ class HomePage extends ConsumerWidget {
           padding: EdgeInsets.zero,
           physics: const NeverScrollableScrollPhysics(),
           children: [
-            StatCard(
-              label: context.l10n.hubWaitingAllocate,
-              value: '${summary.pendingAllocations}',
-              caption: '${summary.todayAllocations} done today',
-              icon: Icons.swap_horiz_rounded,
-              compact: true,
-              onTap: () => context.go(Routes.allocations),
-            ),
-            StatCard(
-              label: context.l10n.hubReturnsClear,
-              value: '${summary.pendingDeallocations}',
-              caption: '${summary.todayDeallocations} done today',
-              icon: Icons.assignment_return_rounded,
-              compact: true,
-              onTap: () => context.go(Routes.deallocations),
-            ),
-            StatCard(
-              label: context.l10n.hubRidersPresent,
-              value: '${summary.ridersPresent}',
-              caption: 'of ${summary.ridersActive} active',
-              icon: Icons.groups_rounded,
-              compact: true,
-              onTap: () => context.go(Routes.team),
-            ),
-            StatCard(
-              label: context.l10n.hubOpenJobs,
-              value: '${summary.openMaintenance}',
-              caption: summary.overdueMaintenance > 0 ? '${summary.overdueMaintenance} overdue' : 'all on schedule',
-              icon: Icons.build_rounded,
-              compact: true,
-              onTap: () => context.go(Routes.maintenance),
-            ),
+            for (final _QueueCard card in _QueueCard.values)
+              StatCard(
+                label: card.label(context.l10n),
+                value: queue == null ? '—' : '${card.count(queue)}',
+                icon: card.icon,
+                compact: true,
+                labelMaxLines: 2,
+                onTap: () => card.open(context),
+              ),
           ],
         ),
       ),
     ];
+  }
+}
+
+enum _QueueCard {
+  allotments(Icons.swap_horiz_rounded),
+  submissions(Icons.assignment_return_rounded),
+  readyForDeployment(Icons.electric_scooter_rounded),
+  underMaintenance(Icons.build_rounded);
+
+  const _QueueCard(this.icon);
+
+  final IconData icon;
+
+  String label(AppL10n l10n) => switch (this) {
+    _QueueCard.allotments => l10n.hubAllotmentsInQueue,
+    _QueueCard.submissions => l10n.hubSubmissionsInQueue,
+    _QueueCard.readyForDeployment => l10n.hubRfdsAvailable,
+    _QueueCard.underMaintenance => l10n.hubUnderMaintenanceFleet,
+  };
+
+  String info(AppL10n l10n) => switch (this) {
+    _QueueCard.allotments => l10n.hubAllotmentsInQueueInfo,
+    _QueueCard.submissions => l10n.hubSubmissionsInQueueInfo,
+    _QueueCard.readyForDeployment => l10n.hubRfdsAvailableInfo,
+    _QueueCard.underMaintenance => l10n.hubUnderMaintenanceFleetInfo,
+  };
+
+  int count(HubQueue queue) => switch (this) {
+    _QueueCard.allotments => queue.allotments,
+    _QueueCard.submissions => queue.submissions,
+    _QueueCard.readyForDeployment => queue.readyForDeployment,
+    _QueueCard.underMaintenance => queue.underMaintenance,
+  };
+
+  void open(BuildContext context) {
+    switch (this) {
+      case _QueueCard.allotments || _QueueCard.readyForDeployment:
+        context.go(Routes.allocations);
+      case _QueueCard.submissions:
+        context.go(Routes.submissions);
+      case _QueueCard.underMaintenance:
+        context.go(Routes.maintenance);
+    }
+  }
+}
+
+class _QueueInfo extends StatelessWidget {
+  const _QueueInfo();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        for (final _QueueCard card in _QueueCard.values) ...[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              IconTile(icon: card.icon, size: 38),
+              const SizedBox(width: Insets.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(card.label(context.l10n), style: AppText.titleSmall),
+                    const SizedBox(height: 2),
+                    Text(card.info(context.l10n), style: AppText.bodySmall.copyWith(height: 1.5)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          if (card != _QueueCard.values.last) const Gap.lg(),
+        ],
+      ],
+    );
   }
 }
 
@@ -124,21 +186,26 @@ class _Band extends ConsumerWidget {
     return l10n.hubWorkingLate;
   }
 
-  void _markAttendance(BuildContext context, WidgetRef ref, bool next) {
-    ref.read(fleetSessionProvider.notifier).setAttendance(next);
-    next
-        ? AppSnack.success(context, context.l10n.commonMarkedPresentShiftHasStarted)
-        : AppSnack.info(context, context.l10n.hubMarkedAbsentShiftClosed);
+  Future<void> _markAttendance(BuildContext context, WidgetRef ref, bool next) async {
+    final Result<bool> result = await ref.read(fleetSessionProvider.notifier).setAttendance(next);
+    if (!context.mounted) return;
+    switch (result) {
+      case Ok<bool>(:final value):
+        value
+            ? AppSnack.success(context, context.l10n.commonMarkedPresentShiftHasStarted)
+            : AppSnack.info(context, context.l10n.hubMarkedAbsentShiftClosed);
+      case Err<bool>(:final failure):
+        AppSnack.error(context, failure.message);
+    }
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final FleetSession session = ref.watch(fleetSessionProvider);
+    final int unread = ref.watch(unreadNotificationsProvider).value ?? 0;
     final HubSummary? current = summary;
+    final double? utilisation = current?.utilisation;
     final String firstName = session.managerName.split(' ').first;
-    final int baysFree = current == null
-        ? 0
-        : (current.chargingBaysTotal - current.chargingBaysBusy).clamp(0, current.chargingBaysTotal);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +229,7 @@ class _Band extends ConsumerWidget {
                   ),
                   const SizedBox(height: 1),
                   Text(
-                    current?.hubName ?? session.hubName,
+                    session.allHubs ? context.l10n.hubAllHubs : current?.hubName ?? session.hubName,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.titleLarge.copyWith(fontSize: 20, color: AppColors.onInk),
@@ -172,13 +239,19 @@ class _Band extends ConsumerWidget {
             ),
             const SizedBox(width: Insets.sm),
             AttendanceToggle(present: session.present, onChanged: (next) => _markAttendance(context, ref, next)),
+            const SizedBox(width: Insets.sm),
+            InkCircleButton(
+              icon: Icons.notifications_none_rounded,
+              badgeCount: unread,
+              onTap: () => context.push(Routes.notifications),
+            ),
           ],
         ),
         const Gap.xxl(),
         Text(context.l10n.hubFleetUtilisation, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
         const Gap.sm(),
         Text(
-          current == null ? '—' : Fmt.percent(current.utilisation),
+          utilisation == null ? '—' : Fmt.percent(utilisation),
           style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
         ),
         const Gap.xl(),
@@ -192,11 +265,7 @@ class _Band extends ConsumerWidget {
           child: Row(
             children: [
               Expanded(
-                child: InkStat(
-                  label: context.l10n.hubUptime,
-                  value: current == null ? '—' : Fmt.percent(current.uptime),
-                  icon: Icons.bolt_rounded,
-                ),
+                child: InkStat(label: context.l10n.hubUptime, value: '—', icon: Icons.bolt_rounded),
               ),
               const InkDivider(),
               const SizedBox(width: Insets.md),
@@ -210,11 +279,7 @@ class _Band extends ConsumerWidget {
               const InkDivider(),
               const SizedBox(width: Insets.md),
               Expanded(
-                child: InkStat(
-                  label: context.l10n.hubBaysFree,
-                  value: current == null ? '—' : '$baysFree',
-                  icon: Icons.ev_station_rounded,
-                ),
+                child: InkStat(label: context.l10n.hubBaysFree, value: '—', icon: Icons.ev_station_rounded),
               ),
             ],
           ),

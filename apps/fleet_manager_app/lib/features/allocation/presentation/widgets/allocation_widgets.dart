@@ -2,19 +2,6 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/active_allocation.dart';
-import '../../domain/entities/deallocation_request.dart';
-
-StatusTone priorityTone(String priority) => switch (priority.toLowerCase()) {
-  'high' => StatusTone.danger,
-  'low' => StatusTone.neutral,
-  _ => StatusTone.warning,
-};
-
-String priorityLabel(String priority) => switch (priority.toLowerCase()) {
-  'high' => ActiveLocale.strings.commonHighPriority,
-  'low' => ActiveLocale.strings.commonLowPriority,
-  _ => ActiveLocale.strings.commonNormalPriority,
-};
 
 class OverlapModuleCard extends StatelessWidget {
   const OverlapModuleCard({
@@ -318,114 +305,6 @@ class ActiveAllocationTile extends StatelessWidget {
                 ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ReturnRequestTile extends StatelessWidget {
-  const ReturnRequestTile({required this.request, required this.onOpen, required this.onProcess, super.key});
-
-  final DeallocationRequest request;
-  final VoidCallback onOpen;
-  final VoidCallback onProcess;
-
-  @override
-  Widget build(BuildContext context) {
-    return GlassCard(
-      padding: const EdgeInsets.all(Insets.md),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Pressable(
-            onTap: onOpen,
-            scale: 0.99,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppAvatar(name: request.riderName, size: 42),
-                const SizedBox(width: Insets.sm),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Wrap(
-                        alignment: WrapAlignment.spaceBetween,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        runSpacing: Insets.xs,
-                        children: [
-                          Text(
-                            request.riderName,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppText.titleMedium.copyWith(fontSize: 15),
-                          ),
-                          StatusChip(
-                            label: priorityLabel(request.priority),
-                            tone: priorityTone(request.priority),
-                            dense: true,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        '${request.vehicleNumber} · ${request.model}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.bodySmall.copyWith(fontSize: 12),
-                      ),
-                      const SizedBox(height: Insets.sm),
-                      Text(
-                        request.reason,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.bodyMedium.copyWith(fontSize: 12.5),
-                      ),
-                      const SizedBox(height: Insets.sm),
-                      Row(
-                        children: [
-                          const Icon(Icons.schedule_rounded, size: 13, color: AppColors.textMuted),
-                          const SizedBox(width: 5),
-                          Expanded(
-                            child: Text(
-                              'Raised ${Fmt.relative(request.raisedOn)}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppText.bodySmall.copyWith(fontSize: 11.5),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: Insets.lg),
-          Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-          const SizedBox(height: Insets.md),
-          Wrap(
-            alignment: WrapAlignment.spaceBetween,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            runSpacing: Insets.sm,
-            children: [
-              GhostButton(
-                label: context.l10n.allocationViewReturn,
-                icon: Icons.chevron_right_rounded,
-                onPressed: onOpen,
-                dense: true,
-              ),
-              SecondaryButton(
-                label: context.l10n.allocationProcessReturn,
-                icon: Icons.assignment_return_rounded,
-                expand: false,
-                size: AppButtonSize.small,
-                onPressed: onProcess,
-              ),
-            ],
           ),
         ],
       ),

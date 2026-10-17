@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:evseye_core/evseye_core.dart';
 
 import 'entities/allocation_board.dart';
-import 'entities/deallocation_request.dart';
 
 abstract interface class AllocationRepository {
   Future<Result<AllocationBoard>> getBoard();
@@ -22,30 +23,15 @@ abstract interface class AllocationRepository {
 
   Future<Result<AllocationEvidence>> getEvidence(String allocationId);
 
+  Future<Result<RemotePhoto>> uploadEvidencePhoto(String inspectionId, {required String photoType, required File file});
+
+  Future<Result<String>> photoUrl(String photoId);
+
   Future<Result<DeploymentWorkflow>> submitPdi(
     String allocationId, {
     required String workPartnerName,
     required List<PdiChecklistItem> checklist,
   });
 
-  Future<Result<DeallocationRequest>> getDeallocationRequest(String allocationId);
-
-  Future<Result<DeallocationStart>> initiateDeallocation(String allocationId);
-
-  Future<Result<OtpChallenge>> requestDeallocationOtp(
-    String allocationId, {
-    required String phone,
-    required String party,
-  });
-
-  Future<Result<void>> verifyDeallocationOtp(String allocationId, {required String otpRequestId, required String code});
-
-  Future<Result<void>> completeDeallocation(String allocationId);
-}
-
-class DeallocationStart {
-  const DeallocationStart({required this.allocationId, required this.inspectionId});
-
-  final String allocationId;
-  final String inspectionId;
+  Future<Result<String>> startReturn({required String riderId, required String idempotencyKey, String? hubId});
 }

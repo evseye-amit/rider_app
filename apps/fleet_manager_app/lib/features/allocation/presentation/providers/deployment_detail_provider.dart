@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:evseye_core/evseye_core.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../allocation_dependencies.dart';
 import '../../domain/usecases/ask_payment.dart';
+import '../../domain/usecases/evidence_photo_usecases.dart';
 import '../../domain/usecases/submit_pdi.dart';
 
 class DeploymentDetail extends Equatable {
@@ -76,13 +78,23 @@ class DeploymentDetailNotifier extends AsyncNotifier<DeploymentDetail> {
         ),
       );
 
+  Future<Result<void>> uploadEvidencePhoto(String photoType, File file) async {
+    final String inspectionId = state.value?.evidence?.inspectionId ?? '';
+    if (inspectionId.isEmpty) return const Result.err(NotFoundFailure());
+    final Result<RemotePhoto> result = await ref.read(uploadEvidencePhotoProvider)(
+      EvidencePhotoParams(inspectionId: inspectionId, photoType: photoType, file: file),
+    );
+    if (!ref.mounted) return const Result.err(ServerFailure());
+    if (result case Err<RemotePhoto>(:final failure)) return Result.err(failure);
+    final DeploymentDetail? current = state.value;
+    if (current != null) await _loadSideData(current);
+    return const Result.ok(null);
+  }
+
   Future<void> _loadSideData(DeploymentDetail detail) async {
-    final DeploymentDetail enriched = switch (detail.status) {
-      DeploymentStatus.paymentPaid => detail.copyWith(
-        evidence: (await ref.read(getAllocationEvidenceProvider)(_allocationId)).valueOrNull,
-      ),
-      _ => detail,
-    };
+    final DeploymentDetail enriched = detail.status.beforeInspection
+        ? detail.copyWith(evidence: (await ref.read(getAllocationEvidenceProvider)(_allocationId)).valueOrNull)
+        : detail;
     if (!ref.mounted || enriched == detail) return;
     final DeploymentDetail? current = state.value;
     if (current != null) {

@@ -6,7 +6,7 @@ abstract final class ApiEnv {
     defaultValue: 'http://localhost:3000/api/v1',
   );
 
-  static const String companyCode = FlavorConfig.companyCode;
+  static String companyCode = FlavorConfig.companyCode;
 
   static String get healthUrl {
     final Uri base = Uri.parse(baseUrl);

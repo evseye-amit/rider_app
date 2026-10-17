@@ -20,6 +20,9 @@ String flavorConfigSource(Flavor flavor) {
     ..writeln()
     ..writeln('  static const String riderAppName = ${_dartString(rider.appName)};')
     ..writeln('  static const String riderVersion = ${_dartString(rider.versionName)};')
+    ..writeln('  static const String riderAndroidApplicationId = ${_dartString(rider.androidApplicationId)};')
+    ..writeln('  static const String riderIosBundleId = ${_dartString(rider.iosBundleId)};')
+    ..writeln('  static const String riderAppStoreId = ${_dartString(rider.appStoreId)};')
     ..writeln('  static const String fleetAppName = ${_dartString(fleet.appName)};')
     ..writeln('  static const String fleetVersion = ${_dartString(fleet.versionName)};')
     ..writeln();

@@ -8,31 +8,27 @@ import '../../features/allocation/presentation/pages/allocation_detail_page.dart
 import '../../features/allocation/presentation/pages/allocation_done_page.dart';
 import '../../features/allocation/presentation/pages/allocations_page.dart';
 import '../../features/allocation/presentation/pages/assign_vehicle_page.dart';
-import '../../features/allocation/presentation/pages/deallocation_detail_page.dart';
-import '../../features/allocation/presentation/pages/deallocation_flow_page.dart';
-import '../../features/allocation/presentation/pages/deallocations_page.dart';
+import '../../features/allocation/presentation/pages/rider_verification_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_page.dart';
-import '../../features/exchanges/presentation/pages/choose_scooter_page.dart';
-import '../../features/exchanges/presentation/pages/exchange_case_page.dart';
-import '../../features/exchanges/presentation/pages/exchange_cases_page.dart';
 import '../../features/hub/presentation/pages/home_page.dart';
 import '../../features/hub/presentation/widgets/fleet_shell.dart';
 import '../../features/maintenance/presentation/pages/maintenance_detail_page.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
 import '../../features/maintenance/presentation/pages/raise_maintenance_page.dart';
-import '../../features/returns/presentation/pages/return_case_page.dart';
-import '../../features/returns/presentation/pages/return_desk_page.dart';
-import '../../features/returns/presentation/pages/return_inspection_page.dart';
 import '../../features/riders/presentation/pages/team_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
+import '../../features/submissions/presentation/pages/submission_confirm_page.dart';
+import '../../features/submissions/presentation/pages/submission_page.dart';
+import '../../features/submissions/presentation/pages/submission_report_page.dart';
+import '../../features/submissions/presentation/pages/submissions_page.dart';
 import '../../features/support/presentation/pages/desk_ticket_page.dart';
 import '../../features/support/presentation/pages/support_desk_page.dart';
 import 'app_routes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
-const Set<String> _publicPaths = {Routes.splash, Routes.language, Routes.login, Routes.otp};
+const Set<String> _publicPaths = {Routes.splash, Routes.company, Routes.language, Routes.login, Routes.otp};
 
 final routerProvider = Provider<GoRouter>((ref) {
   final ValueNotifier<bool> signedIn = ValueNotifier<bool>(ref.read(fleetSessionProvider).isSignedIn);
@@ -43,9 +39,16 @@ final routerProvider = Provider<GoRouter>((ref) {
     navigatorKey: _rootNavigatorKey,
     initialLocation: Routes.splash,
     refreshListenable: signedIn,
-    redirect: (context, state) => _redirect(signedIn.value, ref.read(localeProvider).hasBeenPrompted, state.uri.path),
+    redirect: (context, state) =>
+        _redirect(signedIn.value, ref.read(pendingFirstRunStepProvider(false)), state.uri.path),
     routes: [
       GoRoute(path: Routes.splash, name: 'splash', builder: (context, state) => const SplashPage()),
+      GoRoute(
+        path: Routes.company,
+        name: 'company',
+        builder: (context, state) =>
+            CompanyResolvePage(audience: LegalAudience.fleetManager, onResolved: () => context.go(Routes.login)),
+      ),
       GoRoute(
         path: Routes.language,
         name: 'language',
@@ -79,9 +82,9 @@ final routerProvider = Provider<GoRouter>((ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: Routes.deallocations,
-                name: 'deallocations',
-                builder: (context, state) => const DeallocationsPage(),
+                path: Routes.submissions,
+                name: 'submissions',
+                builder: (context, state) => const SubmissionsPage(),
               ),
             ],
           ),
@@ -105,6 +108,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => AllocationDetailPage(requestId: state.uri.queryParameters['id'] ?? ''),
       ),
       GoRoute(
+        path: Routes.riderVerification,
+        name: 'riderVerification',
+        builder: (context, state) => RiderVerificationPage(riderId: state.uri.queryParameters['rider'] ?? ''),
+      ),
+      GoRoute(
         path: Routes.assignVehicle,
         name: 'assignVehicle',
         builder: (context, state) => AssignVehiclePage(riderId: state.uri.queryParameters['rider'] ?? ''),
@@ -119,14 +127,19 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(
-        path: Routes.deallocationDetail,
-        name: 'deallocationDetail',
-        builder: (context, state) => DeallocationDetailPage(requestId: state.uri.queryParameters['id'] ?? ''),
+        path: Routes.submission,
+        name: 'submission',
+        builder: (context, state) => SubmissionPage(submissionId: state.uri.queryParameters['id'] ?? ''),
       ),
       GoRoute(
-        path: Routes.deallocationFlow,
-        name: 'deallocationFlow',
-        builder: (context, state) => DeallocationFlowPage(requestId: state.uri.queryParameters['id'] ?? ''),
+        path: Routes.submissionReport,
+        name: 'submissionReport',
+        builder: (context, state) => SubmissionReportPage(submissionId: state.uri.queryParameters['id'] ?? ''),
+      ),
+      GoRoute(
+        path: Routes.submissionConfirm,
+        name: 'submissionConfirm',
+        builder: (context, state) => SubmissionConfirmPage(submissionId: state.uri.queryParameters['id'] ?? ''),
       ),
       GoRoute(
         path: Routes.maintenanceDetail,
@@ -138,44 +151,30 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'raiseMaintenance',
         builder: (context, state) => RaiseMaintenancePage(vehicleNumber: state.uri.queryParameters['vehicle']),
       ),
-      GoRoute(path: Routes.exchanges, name: 'exchanges', builder: (context, state) => const ExchangeCasesPage()),
-      GoRoute(
-        path: Routes.exchangeDetail,
-        name: 'exchangeDetail',
-        builder: (context, state) => ExchangeCasePage(exchangeId: state.uri.queryParameters['id'] ?? ''),
-      ),
-      GoRoute(
-        path: Routes.exchangeReplacement,
-        name: 'exchangeReplacement',
-        builder: (context, state) => ChooseScooterPage(exchangeId: state.uri.queryParameters['id'] ?? ''),
-      ),
       GoRoute(path: Routes.support, name: 'support', builder: (context, state) => const SupportDeskPage()),
+      GoRoute(
+        path: Routes.notifications,
+        name: 'notifications',
+        builder: (context, state) => const NotificationsPage(),
+      ),
       GoRoute(
         path: Routes.supportTicket,
         name: 'supportTicket',
         builder: (context, state) => DeskTicketPage(ticketId: state.uri.queryParameters['id'] ?? ''),
-      ),
-      GoRoute(path: Routes.returns, name: 'returns', builder: (context, state) => const ReturnDeskPage()),
-      GoRoute(
-        path: Routes.returnCase,
-        name: 'returnCase',
-        builder: (context, state) => ReturnCasePage(returnId: state.uri.queryParameters['id'] ?? ''),
-      ),
-      GoRoute(
-        path: Routes.returnInspection,
-        name: 'returnInspection',
-        builder: (context, state) => ReturnInspectionPage(
-          inspectionId: state.uri.queryParameters['id'] ?? '',
-          vehicleLabel: state.uri.queryParameters['vehicle'],
-        ),
       ),
     ],
     errorBuilder: (context, state) => _RouteErrorPage(location: state.uri.toString()),
   );
 });
 
-String? _redirect(bool signedIn, bool languagePrompted, String path) {
-  if (path == Routes.login) return languagePrompted ? null : Routes.language;
+String? _redirect(bool signedIn, FirstRunStep? firstRun, String path) {
+  if (path == Routes.login) {
+    return switch (firstRun) {
+      FirstRunStep.company => Routes.company,
+      FirstRunStep.language => Routes.language,
+      FirstRunStep.consent || null => null,
+    };
+  }
   if (_publicPaths.contains(path)) return null;
   return signedIn ? null : Routes.login;
 }

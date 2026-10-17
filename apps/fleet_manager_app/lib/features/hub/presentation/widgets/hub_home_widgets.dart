@@ -9,8 +9,8 @@ class HubCard extends StatelessWidget {
     required this.profile,
     required this.summary,
     required this.hubs,
-    required this.selectedIndexes,
-    required this.onSelectionChanged,
+    required this.selectedIndex,
+    required this.onSelected,
     super.key,
   });
 
@@ -19,12 +19,17 @@ class HubCard extends StatelessWidget {
 
   final List<HubProfile> hubs;
 
-  final List<int> selectedIndexes;
-  final ValueChanged<List<int>> onSelectionChanged;
+  final int? selectedIndex;
+  final ValueChanged<int?> onSelected;
 
   @override
   Widget build(BuildContext context) {
-    final int allocated = summary.fleet.allocated;
+    final bool all = selectedIndex == null && hubs.length > 1;
+    final List<TeamLead> leads = all
+        ? {for (final HubProfile hub in hubs) ...hub.teamLeads}.toList()
+        : profile.teamLeads;
+    final int chargingBays = all ? hubs.fold(0, (sum, hub) => sum + hub.chargingBays) : profile.chargingBays;
+    final int serviceBays = all ? hubs.fold(0, (sum, hub) => sum + hub.serviceBays) : profile.serviceBays;
 
     return Container(
       padding: const EdgeInsets.all(Insets.lg),
@@ -41,13 +46,18 @@ class HubCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      profile.name,
+                      all ? context.l10n.hubAllHubs : profile.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppText.titleMedium.copyWith(fontSize: 16),
                     ),
                     const SizedBox(height: 2),
-                    Text(profile.code, style: AppText.code.copyWith(fontSize: 11.5, letterSpacing: 1)),
+                    Text(
+                      all ? hubs.map((hub) => hub.code).join(' · ') : profile.code,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.code.copyWith(fontSize: 11.5, letterSpacing: 1),
+                    ),
                   ],
                 ),
               ),
@@ -56,26 +66,32 @@ class HubCard extends StatelessWidget {
 
           if (hubs.length > 1) ...[
             const Gap.lg(),
-            _HubPicker(hubs: hubs, selectedIndexes: selectedIndexes, onChanged: onSelectionChanged),
+            _HubDropdown(hubs: hubs, selectedIndex: all ? null : selectedIndex, onSelected: onSelected),
           ],
 
           const Gap.lg(),
           Divider(color: AppColors.stroke.withValues(alpha: 0.7), height: 1),
           const Gap.lg(),
 
-          _Line(icon: Icons.location_on_rounded, text: profile.address),
+          if (all)
+            _Line(icon: Icons.hub_rounded, text: hubs.map((hub) => hub.name).join(', '))
+          else
+            _Line(icon: Icons.location_on_rounded, text: profile.address),
           const Gap.md(),
-          _Line(icon: Icons.electric_scooter_rounded, text: '$allocated of ${profile.capacity} slots in use'),
+          _Line(
+            icon: Icons.electric_scooter_rounded,
+            text: '${summary.parkingOccupied} of ${summary.parkingCapacity} slots in use',
+          ),
           const Gap.md(),
           _Line(
             icon: Icons.ev_station_rounded,
             text:
-                '${profile.chargingBays} charging bays · '
-                '${profile.serviceBays} service bays',
+                '$chargingBays charging bays · '
+                '$serviceBays service bays',
           ),
-          if (profile.hasTeamLeads) ...[
+          if (leads.isNotEmpty) ...[
             const Gap.md(),
-            _Line(icon: Icons.groups_rounded, text: profile.teamLeads.map((l) => l.name.split(' ').first).join(', ')),
+            _Line(icon: Icons.groups_rounded, text: leads.map((l) => l.name.split(' ').first).join(', ')),
           ],
         ],
       ),
@@ -83,90 +99,65 @@ class HubCard extends StatelessWidget {
   }
 }
 
-class _HubPicker extends StatelessWidget {
-  const _HubPicker({required this.hubs, required this.selectedIndexes, required this.onChanged});
+class _HubChoice {
+  const _HubChoice(this.index);
+
+  final int? index;
+}
+
+class _HubDropdown extends StatelessWidget {
+  const _HubDropdown({required this.hubs, required this.selectedIndex, required this.onSelected});
 
   final List<HubProfile> hubs;
-  final List<int> selectedIndexes;
-  final ValueChanged<List<int>> onChanged;
+  final int? selectedIndex;
+  final ValueChanged<int?> onSelected;
+
+  Future<void> _open(BuildContext context) async {
+    final int? current = selectedIndex;
+    final _HubChoice? picked = await AppSheet.show<_HubChoice>(
+      context,
+      title: context.l10n.hubChooseHub,
+      subtitle: context.l10n.hubChooseHubSubtitle,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: Insets.sm),
+            child: _HubOption(
+              name: context.l10n.hubAllHubs,
+              code: context.l10n.hubCount(hubs.length),
+              city: '',
+              selected: current == null,
+              onTap: () => Navigator.of(context).pop(const _HubChoice(null)),
+            ),
+          ),
+          for (int i = 0; i < hubs.length; i++)
+            Padding(
+              padding: const EdgeInsets.only(bottom: Insets.sm),
+              child: _HubOption(
+                name: hubs[i].name,
+                code: hubs[i].code,
+                city: hubs[i].city,
+                selected: current == i,
+                onTap: () => Navigator.of(context).pop(_HubChoice(i)),
+              ),
+            ),
+          const Gap.sm(),
+        ],
+      ),
+    );
+    if (picked != null && picked.index != current) onSelected(picked.index);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Pressable(
+    final int? index = selectedIndex;
+    return AppPickerField(
+      label: context.l10n.hubShowDataFor,
+      value: index == null ? context.l10n.hubAllHubs : hubs[index].name,
+      prefixIcon: Icons.hub_rounded,
       onTap: () => _open(context),
-      scale: 0.99,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: Insets.md, vertical: Insets.sm + 2),
-        decoration: BoxDecoration(
-          color: AppColors.primaryWash,
-          borderRadius: Corners.brMd,
-          border: Border.all(color: AppColors.primary.withValues(alpha: 0.22)),
-        ),
-        child: Row(
-          children: [
-            const Icon(Icons.swap_horiz_rounded, size: 17, color: AppColors.primary),
-            const SizedBox(width: Insets.sm),
-            Expanded(
-              child: Text(
-                selectedIndexes.length > 1
-                    ? '${selectedIndexes.length} hubs combined · tap to change'
-                    : 'Switch hub · ${hubs.length} assigned',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.bodySmall.copyWith(
-                  fontSize: 12.5,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primary,
-                ),
-              ),
-            ),
-            const Icon(Icons.keyboard_arrow_down_rounded, size: 20, color: AppColors.primary),
-          ],
-        ),
-      ),
     );
-  }
-
-  Future<void> _open(BuildContext context) async {
-    final Set<int> picked = {...selectedIndexes};
-
-    final List<int>? result = await AppSheet.show<List<int>>(
-      context,
-      title: context.l10n.hubHubs,
-      subtitle: context.l10n.hubPickOneSeveralSeeTheir,
-      child: StatefulBuilder(
-        builder: (context, setSheetState) => Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (int i = 0; i < hubs.length; i++)
-              Padding(
-                padding: const EdgeInsets.only(bottom: Insets.sm),
-                child: _HubOption(
-                  name: hubs[i].name,
-                  code: hubs[i].code,
-                  city: hubs[i].city,
-                  selected: picked.contains(i),
-                  onTap: () => setSheetState(() {
-                    if (picked.contains(i)) {
-                      if (picked.length > 1) picked.remove(i);
-                    } else {
-                      picked.add(i);
-                    }
-                  }),
-                ),
-              ),
-            const Gap.sm(),
-            PrimaryButton(
-              label: picked.length > 1 ? 'Show ${picked.length} hubs combined' : context.l10n.hubShowThisHub,
-              icon: Icons.check_rounded,
-              onPressed: () => Navigator.of(context).pop(picked.toList()..sort()),
-            ),
-            const Gap.sm(),
-          ],
-        ),
-      ),
-    );
-    if (result != null && result.isNotEmpty) onChanged(result);
   }
 }
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -41,31 +43,43 @@ class FleetSessionNotifier extends Notifier<FleetSession> {
     return result;
   }
 
-  void setHubSelection(Iterable<int> indexes) {
-    final Set<int> next = indexes.where((i) => i >= 0 && i < state.hubs.length).toSet();
+  void selectHub(int? index) {
+    final int count = state.hubs.length;
+    final Set<int> next = index == null
+        ? {for (int i = 0; i < count; i++) i}
+        : {if (index >= 0 && index < count) index};
     if (next.isEmpty) return;
     if (next.length == state.selectedHubIndexes.length && next.every(state.selectedHubIndexes.contains)) return;
     state = state.copyWith(selectedHubIndexes: next);
   }
 
-  void setAttendance(bool present) {
+  Future<Result<bool>> setAttendance(bool present) async {
+    final bool previous = state.present;
     state = state.copyWith(present: present);
+    final Result<bool> result = await ref.read(attendanceApiProvider).mark(present);
+    state = state.copyWith(present: result.valueOrNull ?? previous);
+    return result;
   }
 
   Future<void> signOut() async {
     await ref.read(signOutProvider)();
-    state = FleetSession(flags: state.flags, present: state.present);
+    state = FleetSession(flags: state.flags);
+  }
+
+  Future<void> _loadAttendance() async {
+    final Result<bool> present = await ref.read(attendanceApiProvider).isPresent();
+    if (present case Ok<bool>(:final value)) state = state.copyWith(present: value);
   }
 
   Future<void> _openSession(AuthUser user) async {
+    unawaited(_loadAttendance());
     final FeatureFlags flags = await _config.loadFeatureFlags();
     final List<HubProfile> hubs = (await ref.read(listHubsProvider)(const NoParams())).valueOrNull ?? state.hubs;
-    final Set<int> selection = state.selectedHubIndexes.where((i) => i < hubs.length).toSet();
     state = state.copyWith(
       user: user,
       flags: flags,
       hubs: hubs,
-      selectedHubIndexes: selection.isEmpty ? const {0} : selection,
+      selectedHubIndexes: {for (int i = 0; i < hubs.length; i++) i},
     );
   }
 }

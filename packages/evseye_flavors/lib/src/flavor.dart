@@ -26,6 +26,8 @@ final RegExp _iosId = RegExp(r'^[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+$');
 
 final RegExp _version = RegExp(r'^\d+\.\d+\.\d+\+\d+$');
 
+final RegExp _appStoreId = RegExp(r'^\d{6,12}$');
+
 class FlavorException implements Exception {
   const FlavorException(this.problems);
 
@@ -38,12 +40,14 @@ class AppFlavor {
     required this.androidApplicationId,
     required this.iosBundleId,
     required this.version,
+    this.appStoreId = '',
   });
 
   final String appName;
   final String androidApplicationId;
   final String iosBundleId;
   final String version;
+  final String appStoreId;
 
   String get versionName => version.split('+').first;
 
@@ -104,7 +108,13 @@ class Flavor {
       return value;
     }
 
-    final String companyCode = text(yaml, 'companyCode');
+    final String companyCode = text(
+      yaml,
+      'companyCode',
+      required: false,
+      format: RegExp(r'^[a-z0-9-]+$'),
+      hint: 'a lowercase code such as yogmaya',
+    );
     final String supportEmail = text(yaml, 'supportEmail', required: false);
 
     final Map<String, AppFlavor> apps = {};
@@ -126,6 +136,14 @@ class Flavor {
         ),
         iosBundleId: text(section, 'iosBundleId', prefix: prefix, format: _iosId, hint: 'com.company.app'),
         version: text(section, 'version', prefix: prefix, format: _version, hint: '"1.0.0+1"'),
+        appStoreId: text(
+          section,
+          'appStoreId',
+          prefix: prefix,
+          required: false,
+          format: _appStoreId,
+          hint: 'the numeric Apple ID from App Store Connect, such as "6450000000"',
+        ),
       );
     }
 

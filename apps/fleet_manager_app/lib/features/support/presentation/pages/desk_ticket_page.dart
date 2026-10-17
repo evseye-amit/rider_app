@@ -279,8 +279,10 @@ class _TicketHeader extends StatelessWidget {
               icon: Icons.check_circle_outline_rounded,
               dense: true,
             ),
-          const Gap.md(),
-          _StatusActions(status: ticket.status, updating: updating, onStatus: onStatus),
+          if (ticket.status != TicketStatus.resolved) ...[
+            const Gap.md(),
+            _StatusActions(status: ticket.status, updating: updating, onStatus: onStatus),
+          ],
         ],
       ),
     );
@@ -321,12 +323,7 @@ class _StatusActions extends StatelessWidget {
         ],
       ),
       TicketStatus.inProgress => resolve,
-      TicketStatus.resolved => SecondaryButton(
-        label: context.l10n.supportReopen,
-        icon: Icons.replay_rounded,
-        size: AppButtonSize.medium,
-        onPressed: busy ? null : () => onStatus(TicketStatus.open),
-      ),
+      TicketStatus.resolved => const SizedBox.shrink(),
     };
   }
 }

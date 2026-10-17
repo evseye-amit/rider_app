@@ -1,3 +1,5 @@
+import 'dart:ui' show ImageFilter;
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -64,55 +66,59 @@ class _TeamPageState extends ConsumerState<TeamPage> {
       bottomPadding: 120,
       onRefresh: () => ref.refreshQuietly(ridersProvider),
       band: _RidersBand(riders: all ?? const []),
-      children: all == null
-          ? const [_RidersSkeleton()]
-          : [
-              ModuleCard(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    AppSearchField(
-                      hint: context.l10n.ridersSearchNameCodeVehicle,
-                      controller: _search,
-                      onChanged: (_) => setState(() {}),
-                    ),
-                    const Gap.md(),
-                    SegmentedTabs(
-                      items: [context.l10n.ridersActive, context.l10n.ridersOnboarding, context.l10n.ridersExited],
-                      selectedIndex: _tab,
-                      onChanged: (i) => setState(() => _tab = i),
-                      counts: {0: active.length, 1: onboarding.length, 2: exited.length},
-                    ),
-                  ],
+      children: [
+        const _HubTeamPreview(),
+        const Gap.lg(),
+        if (all == null)
+          const _RidersSkeleton()
+        else ...[
+          ModuleCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AppSearchField(
+                  hint: context.l10n.ridersSearchNameCodeVehicle,
+                  controller: _search,
+                  onChanged: (_) => setState(() {}),
                 ),
+                const Gap.md(),
+                SegmentedTabs(
+                  items: [context.l10n.ridersActive, context.l10n.ridersOnboarding, context.l10n.ridersExited],
+                  selectedIndex: _tab,
+                  onChanged: (i) => setState(() => _tab = i),
+                  counts: {0: active.length, 1: onboarding.length, 2: exited.length},
+                ),
+              ],
+            ),
+          ),
+          const Gap.lg(),
+          if (shown.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: Insets.lg),
+              child: ArtBlock(
+                art: BrandArt.empty,
+                artSize: 130,
+                title: context.l10n.ridersNoRidersHere,
+                message: context.l10n.ridersNobodyMatchesSearchList,
               ),
-              const Gap.lg(),
-              if (shown.isEmpty)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: Insets.lg),
-                  child: ArtBlock(
-                    art: BrandArt.empty,
-                    artSize: 130,
-                    title: context.l10n.ridersNoRidersHere,
-                    message: context.l10n.ridersNobodyMatchesSearchList,
-                  ),
-                )
-              else
-                ModuleCard(
-                  child: Column(
-                    children: [
-                      for (final Rider rider in shown) ...[
-                        _RiderRow(rider: rider, onTap: () => _openRiderSheet(rider)),
-                        if (rider != shown.last) ...[
-                          const Gap.md(),
-                          Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-                          const Gap.md(),
-                        ],
-                      ],
+            )
+          else
+            ModuleCard(
+              child: Column(
+                children: [
+                  for (final Rider rider in shown) ...[
+                    _RiderRow(rider: rider, onTap: () => _openRiderSheet(rider)),
+                    if (rider != shown.last) ...[
+                      const Gap.md(),
+                      Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
+                      const Gap.md(),
                     ],
-                  ),
-                ),
-            ],
+                  ],
+                ],
+              ),
+            ),
+        ],
+      ],
     );
   }
 
@@ -362,6 +368,122 @@ class _RiderRow extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _HubTeamPreview extends StatelessWidget {
+  const _HubTeamPreview();
+
+  @override
+  Widget build(BuildContext context) {
+    final List<(String, String, IconData)> members = [
+      ('Ravi Kumar', context.l10n.teamTechnician, Icons.engineering_rounded),
+      ('Sandeep Naik', context.l10n.teamBatteryExpert, Icons.battery_charging_full_rounded),
+      ('Faisal Shaikh', context.l10n.teamMotorControllerRepair, Icons.electrical_services_rounded),
+      ('Priya Menon', context.l10n.teamAdvisor, Icons.support_agent_rounded),
+    ];
+
+    return ModuleCard(
+      title: context.l10n.teamHubTeam,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(Insets.md),
+            decoration: BoxDecoration(
+              color: AppColors.primaryWash,
+              borderRadius: Corners.brLg,
+              border: Border.all(color: AppColors.primary.withValues(alpha: 0.18)),
+            ),
+            child: Row(
+              children: [
+                const IconTile(icon: Icons.lock_rounded, solid: true, size: 40),
+                const SizedBox(width: Insets.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(context.l10n.teamNotIncluded, style: AppText.titleSmall),
+                      const SizedBox(height: 2),
+                      Text(
+                        context.l10n.teamNotIncludedMessage,
+                        style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Gap.lg(),
+          ExcludeSemantics(
+            child: ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 2.4, sigmaY: 2.4, tileMode: TileMode.decal),
+              child: Column(
+                children: [
+                  for (final (String name, String role, IconData icon) in members) ...[
+                    _TeamMemberRow(name: name, role: role, icon: icon),
+                    if (name != members.last.$1) ...[
+                      const Gap.md(),
+                      Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
+                      const Gap.md(),
+                    ],
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TeamMemberRow extends StatelessWidget {
+  const _TeamMemberRow({required this.name, required this.role, required this.icon});
+
+  final String name;
+  final String role;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        AppAvatar(name: name, size: 46),
+        const SizedBox(width: Insets.md),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.titleSmall.copyWith(fontSize: 14.5),
+              ),
+              const SizedBox(height: 3),
+              Row(
+                children: [
+                  Icon(icon, size: 14, color: AppColors.primary),
+                  const SizedBox(width: 5),
+                  Expanded(
+                    child: Text(
+                      role,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.bodySmall.copyWith(fontSize: 12, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: Insets.sm),
+        const IconTile(icon: Icons.call_rounded, size: 36),
+      ],
     );
   }
 }

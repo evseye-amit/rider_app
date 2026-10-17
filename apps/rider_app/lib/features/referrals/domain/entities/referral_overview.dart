@@ -1,14 +1,26 @@
 import 'package:equatable/equatable.dart';
 
+import 'referral.dart';
+
 class ReferralCampaign extends Equatable {
-  const ReferralCampaign({required this.title, this.description, this.endsAt});
+  const ReferralCampaign({
+    required this.title,
+    this.code,
+    this.description,
+    this.terms,
+    this.endsAt,
+    this.milestones = const [],
+  });
 
   final String title;
+  final String? code;
   final String? description;
+  final String? terms;
   final DateTime? endsAt;
+  final List<ReferralMilestone> milestones;
 
   @override
-  List<Object?> get props => [title, description, endsAt];
+  List<Object?> get props => [title, code, description, terms, endsAt, milestones];
 }
 
 class ReferralSummary extends Equatable {
@@ -38,6 +50,7 @@ class ReferralOverview extends Equatable {
     this.campaign,
     this.code,
     this.shareLink,
+    this.qrPayload,
     this.shareMessage,
     this.referrerReward,
     this.refereeReward,
@@ -47,18 +60,28 @@ class ReferralOverview extends Equatable {
   final ReferralCampaign? campaign;
   final String? code;
   final String? shareLink;
+  final String? qrPayload;
   final String? shareMessage;
   final num? referrerReward;
   final num? refereeReward;
 
-  String inviteMessage(String inviteLink) {
+  String? inviteMessage(String inviteLink) {
     final String? message = shareMessage;
     final String? link = shareLink;
-    if (message == null) return [?code, inviteLink].join(' ');
+    if (message == null) return null;
     if (link != null && message.contains(link)) return message.replaceAll(link, inviteLink);
     return '$message\n$inviteLink';
   }
 
   @override
-  List<Object?> get props => [summary, campaign, code, shareLink, shareMessage, referrerReward, refereeReward];
+  List<Object?> get props => [
+    summary,
+    campaign,
+    code,
+    shareLink,
+    qrPayload,
+    shareMessage,
+    referrerReward,
+    refereeReward,
+  ];
 }

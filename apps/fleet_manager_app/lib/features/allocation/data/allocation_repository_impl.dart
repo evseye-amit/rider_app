@@ -1,15 +1,18 @@
+import 'dart:io';
+
 import 'package:evseye_core/evseye_core.dart';
 
 import '../domain/allocation_repository.dart';
 import '../domain/entities/active_allocation.dart';
 import '../domain/entities/allocation_board.dart';
-import '../domain/entities/deallocation_request.dart';
 
 class AllocationRepositoryImpl implements AllocationRepository {
-  const AllocationRepositoryImpl(this._api, this._deployments);
+  const AllocationRepositoryImpl(this._api, this._deployments, this._media, this._submissions);
 
   final ApiClient _api;
   final DeploymentApi _deployments;
+  final MediaApi _media;
+  final VehicleSubmissionApi _submissions;
 
   static const int _maxPageSize = 100;
 
@@ -30,10 +33,6 @@ class AllocationRepositoryImpl implements AllocationRepository {
         inProgress: (results[1] as Ok<List<DeploymentAllocation>>).value
           ..sort((a, b) => (b.updatedAt ?? DateTime(0)).compareTo(a.updatedAt ?? DateTime(0))),
         active: allocations.where((r) => r['status'] == 'ACTIVE').map(_activeFrom).toList(growable: false),
-        returns: allocations
-            .where((r) => r['status'] == 'DEALLOCATION_INITIATED')
-            .map(_returnFrom)
-            .toList(growable: false),
       ),
     );
   }
@@ -84,6 +83,22 @@ class AllocationRepositoryImpl implements AllocationRepository {
   Future<Result<AllocationEvidence>> getEvidence(String allocationId) => _deployments.evidence(allocationId);
 
   @override
+  Future<Result<RemotePhoto>> uploadEvidencePhoto(
+    String inspectionId, {
+    required String photoType,
+    required File file,
+  }) => _media.upload(
+    entity: PhotoEntity.inspection,
+    entityId: inspectionId,
+    photoType: photoType,
+    file: file,
+    mimeType: _mimeOf(file),
+  );
+
+  @override
+  Future<Result<String>> photoUrl(String photoId) => _media.downloadUrl(photoId);
+
+  @override
   Future<Result<DeploymentWorkflow>> submitPdi(
     String allocationId, {
     required String workPartnerName,
@@ -91,48 +106,18 @@ class AllocationRepositoryImpl implements AllocationRepository {
   }) => _deployments.submitPdi(allocationId, workPartnerName: workPartnerName, checklist: checklist);
 
   @override
-  Future<Result<DeallocationRequest>> getDeallocationRequest(String allocationId) => _api.get<DeallocationRequest>(
-    '/allocations/$allocationId',
-    parse: (data) => _returnFrom(Map<String, dynamic>.from(data as Map)),
-  );
-
-  @override
-  Future<Result<DeallocationStart>> initiateDeallocation(String allocationId) => _api.post<DeallocationStart>(
-    '/allocations/$allocationId/deallocation/initiate',
-    parse: (data) {
-      final Map<String, dynamic> m = Map<String, dynamic>.from(data as Map);
-      return DeallocationStart(
-        allocationId: m['allocationId']?.toString() ?? allocationId,
-        inspectionId: m['inspectionId']?.toString() ?? '',
-      );
-    },
-  );
-
-  @override
-  Future<Result<OtpChallenge>> requestDeallocationOtp(
-    String allocationId, {
-    required String phone,
-    required String party,
-  }) => _api.post<OtpChallenge>(
-    '/allocations/$allocationId/deallocation/otp/request',
-    body: {'phone': _e164(phone), 'party': party},
-    parse: (data) => OtpChallenge.fromJson(Map<String, dynamic>.from(data as Map)),
-  );
-
-  @override
-  Future<Result<void>> verifyDeallocationOtp(
-    String allocationId, {
-    required String otpRequestId,
-    required String code,
-  }) => _api.post<void>(
-    '/allocations/$allocationId/deallocation/otp/verify',
-    body: {'otpRequestId': otpRequestId, 'code': code},
-    parse: (_) {},
-  );
-
-  @override
-  Future<Result<void>> completeDeallocation(String allocationId) =>
-      _api.post<void>('/allocations/$allocationId/deallocation/complete', parse: (_) {});
+  Future<Result<String>> startReturn({required String riderId, required String idempotencyKey, String? hubId}) async {
+    final Result<String> created = await _submissions.createStaffReturn(
+      riderId: riderId,
+      plannedDate: DateTime.now(),
+      idempotencyKey: idempotencyKey,
+      hubId: hubId,
+    );
+    return switch (created) {
+      Ok<String>(:final value) => _submissions.start(source: SubmissionSource.returns, requestId: value, hubId: hubId),
+      Err<String>(:final failure) => Result.err(failure),
+    };
+  }
 
   static List<Map<String, dynamic>> _rows(dynamic data) {
     final List<dynamic> raw = data is Map ? (data['items'] as List<dynamic>? ?? const []) : data as List<dynamic>;
@@ -147,6 +132,8 @@ class AllocationRepositoryImpl implements AllocationRepository {
     final Map<String, dynamic> fleet = _sub(row, 'fleet');
     return ActiveAllocation(
       id: row['id']?.toString() ?? '',
+      riderId: row['riderId']?.toString() ?? rider['id']?.toString() ?? '',
+      hubId: fleet['currentHubId']?.toString(),
       riderName: rider['name']?.toString() ?? '—',
       riderCode: rider['riderCode']?.toString() ?? '',
       mobile: rider['mobile']?.toString() ?? '',
@@ -164,39 +151,10 @@ class AllocationRepositoryImpl implements AllocationRepository {
     );
   }
 
-  static DeallocationRequest _returnFrom(Map<String, dynamic> row) {
-    final Map<String, dynamic> rider = _sub(row, 'rider');
-    final Map<String, dynamic> fleet = _sub(row, 'fleet');
-    return DeallocationRequest(
-      id: row['id']?.toString() ?? '',
-      riderName: rider['name']?.toString() ?? '—',
-      riderCode: rider['riderCode']?.toString() ?? '',
-      mobile: rider['mobile']?.toString() ?? '',
-      vehicleNumber: fleet['vehicleNumber']?.toString() ?? '—',
-      model: fleet['modelName']?.toString() ?? '',
-      reason: row['status'] == 'ACTIVE'
-          ? ActiveLocale.strings.allocationActiveAllocation
-          : ActiveLocale.strings.allocationReturnInitiated,
-      raisedOn: DateTime.tryParse(row['updatedAt']?.toString() ?? '') ?? DateTime.now(),
-      teamLead: '',
-      priority: 'normal',
-      allocationStatus: row['status']?.toString() ?? 'DEALLOCATION_INITIATED',
-
-      postReturnInspectionId: (row['inspections'] as List<dynamic>? ?? const [])
-          .whereType<Map>()
-          .where((i) => i['type'] == 'POST_DEALLOCATION')
-          .map((i) => i['id']?.toString())
-          .firstOrNull,
-      postReturnInspectionDone: (row['inspections'] as List<dynamic>? ?? const []).whereType<Map>().any(
-        (i) => i['type'] == 'POST_DEALLOCATION' && i['status'] == 'COMPLETED',
-      ),
-    );
-  }
-
-  static String _e164(String raw) {
-    final String digits = raw.replaceAll(RegExp(r'\D'), '');
-    if (digits.length == 10) return '+91$digits';
-    if (digits.length == 12 && digits.startsWith('91')) return '+$digits';
-    return raw.startsWith('+') ? raw : '+$digits';
+  static String _mimeOf(File file) {
+    final String name = file.path.toLowerCase();
+    if (name.endsWith('.png')) return 'image/png';
+    if (name.endsWith('.webp')) return 'image/webp';
+    return 'image/jpeg';
   }
 }

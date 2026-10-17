@@ -9,5 +9,9 @@ abstract interface class ReferralRepository {
 
   Future<Result<List<Referral>>> referrals();
 
+  Future<Result<ReferralDetail>> detail(String id);
+
+  Future<Result<List<ReferralActivity>>> activity();
+
   Future<Result<ReferralInvite>> invite();
 }

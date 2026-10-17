@@ -1,6 +1,7 @@
 import '../l10n/l10n.dart';
 import '../utils/result.dart';
 import 'api_client.dart';
+import 'media_api.dart';
 enum RiderScreen {
   onboarding,
   waiting,
@@ -43,6 +44,11 @@ enum DeploymentStatus {
 
   bool get waitsOnRider => switch (this) {
         paymentPending || pdiPendingRider || trainingPending => true,
+        _ => false,
+      };
+
+  bool get beforeInspection => switch (this) {
+        riderWaiting || fleetRequested || paymentPending || paymentPaid => true,
         _ => false,
       };
 
@@ -541,6 +547,7 @@ class AllocationEvidence {
     required this.requiredPhotoTypes,
     required this.completedPhotoTypes,
     required this.missingPhotoTypes,
+    this.photos = const [],
   });
 
   factory AllocationEvidence.fromJson(Map<String, dynamic> json) {
@@ -568,6 +575,10 @@ class AllocationEvidence {
       missingPhotoTypes: (json['missingPhotoTypes'] as List<dynamic>? ?? const [])
           .map((e) => e.toString())
           .toList(growable: false),
+      photos: photos
+          .where((p) => p['status'] == 'COMPLETE' && p['id'] is String)
+          .map(RemotePhoto.fromJson)
+          .toList(growable: false),
     );
   }
 
@@ -576,8 +587,11 @@ class AllocationEvidence {
   final List<String> requiredPhotoTypes;
   final List<String> completedPhotoTypes;
   final List<String> missingPhotoTypes;
+  final List<RemotePhoto> photos;
 
   bool get isComplete => missingPhotoTypes.isEmpty;
+
+  RemotePhoto? photoFor(String photoType) => photos.where((photo) => photo.photoType == photoType).lastOrNull;
 }
 
 class DeploymentApi {

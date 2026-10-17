@@ -10,6 +10,35 @@ class ReturnStatusStyle {
 
   factory ReturnStatusStyle.of(AppL10n l10n, RideReturn item) {
     final ReturnCharges? charges = item.charges;
+    if (item.usesCheckIn && item.status != ReturnStatus.cancelled) {
+      return switch (item.checkIn) {
+        CheckInStage.none when item.status == ReturnStatus.returned => ReturnStatusStyle._(
+          l10n.returnsStatusClosed,
+          StatusTone.success,
+          Icons.check_circle_rounded,
+        ),
+        CheckInStage.none => ReturnStatusStyle._(
+          l10n.returnsStatusRequested,
+          StatusTone.info,
+          Icons.event_available_rounded,
+        ),
+        CheckInStage.inProgress => ReturnStatusStyle._(
+          l10n.returnsStatusCheckingIn,
+          StatusTone.warning,
+          Icons.fact_check_rounded,
+        ),
+        CheckInStage.finalChecks => ReturnStatusStyle._(
+          l10n.returnsStatusFinalChecks,
+          StatusTone.info,
+          Icons.build_circle_rounded,
+        ),
+        CheckInStage.done => ReturnStatusStyle._(
+          l10n.returnsStatusClosed,
+          StatusTone.success,
+          Icons.check_circle_rounded,
+        ),
+      };
+    }
     return switch (item.status) {
       ReturnStatus.cancelled => ReturnStatusStyle._(
         l10n.returnsStatusCancelled,
@@ -55,6 +84,15 @@ class ReturnStatusStyle {
 
 String returnNote(AppL10n l10n, RideReturn item) {
   final ReturnCharges? charges = item.charges;
+  if (item.usesCheckIn && item.status != ReturnStatus.cancelled) {
+    return switch (item.checkIn) {
+      CheckInStage.none when item.status == ReturnStatus.returned => l10n.returnsNoteCheckInDone,
+      CheckInStage.none => l10n.returnsNoteRequested(Fmt.date(item.plannedDate)),
+      CheckInStage.inProgress => l10n.returnsNoteCheckingIn,
+      CheckInStage.finalChecks => l10n.returnsNoteFinalChecks,
+      CheckInStage.done => l10n.returnsNoteCheckInDone,
+    };
+  }
   return switch (item.status) {
     ReturnStatus.cancelled => l10n.returnsNoteCancelled,
     ReturnStatus.requested => l10n.returnsNoteRequested(Fmt.date(item.plannedDate)),
@@ -147,18 +185,33 @@ class ReturnTimeline extends StatelessWidget {
 
   final RideReturn item;
 
+  List<(String, bool, bool, String?)> _checkInSteps(AppL10n l10n) {
+    final DateTime? receivedAt = item.receivedAt;
+    final CheckInStage stage = item.checkIn;
+    final bool confirmed = stage == CheckInStage.finalChecks || stage == CheckInStage.done;
+    final bool closed = stage == CheckInStage.done;
+    return [
+      (l10n.returnsStepRequested, true, false, Fmt.date(item.createdAt)),
+      (l10n.returnsStepCheckIn, confirmed, !confirmed, receivedAt == null ? null : Fmt.date(receivedAt)),
+      (l10n.returnsStepFinalChecks, closed, confirmed && !closed, null),
+      (l10n.returnsStepClosed, closed, false, null),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final DateTime? receivedAt = item.receivedAt;
     final bool received = receivedAt != null || item.status == ReturnStatus.returned;
     final bool settled = item.charges?.stage == ChargesStage.settled;
     final DateTime? settledAt = item.charges?.postedAt;
-    final List<(String, bool, bool, String?)> steps = [
-      (context.l10n.returnsStepRequested, true, false, Fmt.date(item.createdAt)),
-      (context.l10n.returnsStepHandedOver, received, !received, receivedAt == null ? null : Fmt.date(receivedAt)),
-      (context.l10n.returnsStepInspection, settled, received && !settled, null),
-      (context.l10n.returnsStepClosed, settled, false, settledAt == null ? null : Fmt.date(settledAt)),
-    ];
+    final List<(String, bool, bool, String?)> steps = item.usesCheckIn
+        ? _checkInSteps(context.l10n)
+        : [
+            (context.l10n.returnsStepRequested, true, false, Fmt.date(item.createdAt)),
+            (context.l10n.returnsStepHandedOver, received, !received, receivedAt == null ? null : Fmt.date(receivedAt)),
+            (context.l10n.returnsStepInspection, settled, received && !settled, null),
+            (context.l10n.returnsStepClosed, settled, false, settledAt == null ? null : Fmt.date(settledAt)),
+          ];
     return ModuleCard(
       title: context.l10n.returnsProgress,
       leading: const IconTile(icon: Icons.timeline_rounded, solid: true, size: 28),
@@ -436,34 +489,6 @@ class _ApprovalCodeSheetState extends State<ApprovalCodeSheet> {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ReturnHubTile extends StatelessWidget {
-  const ReturnHubTile({required this.hub, required this.selected, required this.onTap, super.key});
-
-  final ReturnHub hub;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final int? eta = hub.etaMinutes;
-    return AppRadioTile(
-      selected: selected,
-      onTap: onTap,
-      title: hub.name,
-      subtitle: [
-        Fmt.distanceKm(hub.distanceMeters / 1000),
-        if (eta != null) context.l10n.returnsEtaMinutes(eta),
-        if (hub.address.isNotEmpty) hub.address,
-      ].join(' · '),
-      leading: IconTile(
-        icon: Icons.store_rounded,
-        tone: selected ? AppColors.primary : AppColors.textSecondary,
-        size: 36,
       ),
     );
   }

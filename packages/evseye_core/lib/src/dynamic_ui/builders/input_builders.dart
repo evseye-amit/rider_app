@@ -43,52 +43,7 @@ Map<String, NodeBuilder> inputBuilders(WidgetRegistry r) => {
               onChanged: (v) => scope.form.setValue(key, v),
             ),
           ),
-      'referralCode': (context, node, scope) => _Field(
-            node: node,
-            scope: scope,
-            builder: (key, value, error, enabled) {
-              final String code = value?.trim() ?? '';
-              final bool busy = scope.isBusy(key);
-              final bool applied =
-                  code.isNotEmpty && scope.form.stringOf(node.props['appliedKey']?.toString() ?? '') == code;
-              return AppTextField(
-                label: node.text(scope, 'label'),
-                hint: node.props['hint'] == null ? null : node.text(scope, 'hint'),
-                errorText: error,
-                enabled: enabled,
-                readOnly: applied || busy,
-                initialValue: value,
-                required: _isRequired(node),
-                maxLength: (node.props['maxLength'] as num?)?.toInt(),
-                prefixIcon: node.props['icon'] == null
-                    ? null
-                    : NodeTokens.icon(node.props['icon'] as String?),
-                textCapitalization: TextCapitalization.characters,
-                inputFormatters: _formatters(node),
-                onChanged: (v) => scope.form.setValue(key, v),
-                suffix: applied
-                    ? StatusChip(
-                        label: context.l10n.onboardingReferralApplied,
-                        tone: StatusTone.success,
-                        icon: Icons.check_rounded,
-                        dense: true,
-                      )
-                    : PrimaryButton(
-                        label: context.l10n.onboardingReferralApply,
-                        size: AppButtonSize.small,
-                        expand: false,
-                        loading: busy,
-                        onPressed: enabled && code.isNotEmpty
-                            ? () => scope.onAction(
-                                  context,
-                                  node.action ?? const UiAction(type: 'applyReferral'),
-                                  node,
-                                )
-                            : null,
-                      ),
-              );
-            },
-          ),
+      'referralCode': (context, node, scope) => _ReferralCodeField(node: node, scope: scope),
       'pickerField': (context, node, scope) => _Field(
             node: node,
             scope: scope,
@@ -353,6 +308,152 @@ class _Field extends StatelessWidget {
           scope.isEnabled(node),
         );
       },
+    );
+  }
+}
+
+class _ReferralCodeField extends StatefulWidget {
+  const _ReferralCodeField({required this.node, required this.scope});
+
+  final UiNode node;
+  final DynamicUiScope scope;
+
+  @override
+  State<_ReferralCodeField> createState() => _ReferralCodeFieldState();
+}
+
+class _ReferralCodeFieldState extends State<_ReferralCodeField> {
+  late final TextEditingController _controller = TextEditingController(text: _value);
+
+  String get _value => widget.scope.form.valueOf(widget.node.fieldKey)?.toString() ?? '';
+
+  @override
+  void initState() {
+    super.initState();
+    widget.scope.form.addListener(_sync);
+  }
+
+  @override
+  void didUpdateWidget(covariant _ReferralCodeField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!identical(oldWidget.scope.form, widget.scope.form)) {
+      oldWidget.scope.form.removeListener(_sync);
+      widget.scope.form.addListener(_sync);
+      _sync();
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.scope.form.removeListener(_sync);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _sync() {
+    final String value = _value;
+    if (_controller.text == value) return;
+    _controller.value = TextEditingValue(
+      text: value,
+      selection: TextSelection.collapsed(offset: value.length),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final UiNode node = widget.node;
+    final DynamicUiScope scope = widget.scope;
+    final String key = node.fieldKey;
+    return ListenableBuilder(
+      listenable: scope.form,
+      builder: (context, _) {
+        final String code = _value.trim();
+        final bool enabled = scope.isEnabled(node);
+        final bool busy = scope.isBusy(key);
+        final bool applied = code.isNotEmpty && scope.form.stringOf(node.props['appliedKey']?.toString() ?? '') == code;
+        final bool locked = scope.form.valueOf(node.props['lockedKey']?.toString() ?? '') == true;
+        return AppTextField(
+          controller: _controller,
+          label: node.text(scope, 'label'),
+          hint: node.props['hint'] == null ? null : node.text(scope, 'hint'),
+          helper: locked && !applied ? context.l10n.onboardingReferralFromInvite : null,
+          errorText: scope.form.errorOf(key),
+          enabled: enabled,
+          readOnly: applied || busy || locked,
+          required: _isRequired(node),
+          maxLength: (node.props['maxLength'] as num?)?.toInt(),
+          prefixIcon: node.props['icon'] == null ? null : NodeTokens.icon(node.props['icon'] as String?),
+          textCapitalization: TextCapitalization.characters,
+          inputFormatters: _formatters(node),
+          onChanged: (v) => scope.form.setValue(key, v),
+          suffix: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (node.props['scan'] == true && !applied) ...[
+                _ScanButton(
+                  enabled: enabled && !busy && !locked,
+                  onTap: () => scope.onAction(context, const UiAction(type: 'scanReferral'), node),
+                ),
+                const SizedBox(width: Insets.sm),
+              ],
+              if (applied)
+                StatusChip(
+                  label: context.l10n.onboardingReferralApplied,
+                  tone: StatusTone.success,
+                  icon: Icons.check_rounded,
+                  dense: true,
+                )
+              else
+                PrimaryButton(
+                  label: context.l10n.onboardingReferralApply,
+                  size: AppButtonSize.small,
+                  expand: false,
+                  loading: busy,
+                  onPressed: enabled && code.isNotEmpty
+                      ? () => scope.onAction(context, node.action ?? const UiAction(type: 'applyReferral'), node)
+                      : null,
+                ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _ScanButton extends StatelessWidget {
+  const _ScanButton({required this.enabled, required this.onTap});
+
+  final bool enabled;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      enabled: enabled,
+      label: context.l10n.onboardingReferralScan,
+      child: Tooltip(
+        message: context.l10n.onboardingReferralScan,
+        child: InkWell(
+          onTap: enabled ? onTap : null,
+          borderRadius: Corners.brSm,
+          child: Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: enabled ? AppColors.primaryWash : AppColors.surfaceMuted,
+              borderRadius: Corners.brSm,
+              border: Border.all(color: enabled ? AppColors.primary.withValues(alpha: 0.3) : AppColors.stroke),
+            ),
+            child: Icon(
+              Icons.qr_code_scanner_rounded,
+              size: 19,
+              color: enabled ? AppColors.primary : AppColors.textMuted,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

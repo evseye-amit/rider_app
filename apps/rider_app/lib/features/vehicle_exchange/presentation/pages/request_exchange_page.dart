@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
+import '../../../../core/check_in/submission_hubs.dart';
 import '../../domain/entities/exchange_request.dart';
 import '../../domain/entities/rental_agreement.dart';
 import '../../domain/usecases/request_exchange.dart';
@@ -19,8 +20,12 @@ class RequestExchangePage extends ConsumerStatefulWidget {
 }
 
 class _RequestExchangePageState extends ConsumerState<RequestExchangePage> {
+  static const int _maxDaysAhead = 60;
+
   final TextEditingController _note = TextEditingController();
   ExchangeReason? _reason;
+  DateTime? _date;
+  SubmissionHub? _hub;
   bool _sending = false;
 
   @override
@@ -29,13 +34,41 @@ class _RequestExchangePageState extends ConsumerState<RequestExchangePage> {
     super.dispose();
   }
 
-  Future<void> _send(RentalAgreement agreement) async {
+  DateTime get _today {
+    final DateTime now = DateTime.now();
+    return DateTime(now.year, now.month, now.day);
+  }
+
+  Future<void> _pickDate() async {
+    final DateTime? picked = await AppDateWheel.show(
+      context,
+      first: _today,
+      last: _today.add(const Duration(days: _maxDaysAhead)),
+      initial: _date ?? _today,
+      title: context.l10n.returnsPickDate,
+    );
+    if (picked != null) setState(() => _date = picked);
+  }
+
+  Future<void> _pickHub(SubmissionHub? current) async {
+    final SubmissionHub? picked = await SubmissionHubPicker.show(context, selectedId: current?.id);
+    if (picked != null) setState(() => _hub = picked);
+  }
+
+  Future<void> _send(RentalAgreement agreement, SubmissionHub? hub) async {
     final ExchangeReason? reason = _reason;
-    if (reason == null || _sending) return;
+    final DateTime? date = _date;
+    if (reason == null || date == null || _sending) return;
     FocusManager.instance.primaryFocus?.unfocus();
     setState(() => _sending = true);
     final Result<ExchangeRequest> result = await ref.read(requestExchangeProvider)(
-      RequestExchangeParams(agreementId: agreement.id, reasonCode: reason.code, reason: _note.text.trim()),
+      RequestExchangeParams(
+        agreementId: agreement.id,
+        reasonCode: reason.code,
+        plannedDate: date,
+        hubId: hub?.id,
+        reason: _note.text.trim(),
+      ),
     );
     if (!mounted) return;
     setState(() => _sending = false);
@@ -54,6 +87,8 @@ class _RequestExchangePageState extends ConsumerState<RequestExchangePage> {
   Widget build(BuildContext context) {
     final AsyncValue<RentalAgreement?> agreement = ref.watch(activeAgreementProvider);
     final RentalAgreement? active = agreement.value;
+    final SubmissionHub? hub = _hub ?? ref.watch(submissionChoicesProvider(null)).value?.defaultHub;
+    final DateTime? date = _date;
 
     return AppScaffold(
       title: context.l10n.exchangeRequestAction,
@@ -64,7 +99,7 @@ class _RequestExchangePageState extends ConsumerState<RequestExchangePage> {
               label: context.l10n.exchangeSendRequest,
               icon: Icons.send_rounded,
               loading: _sending,
-              onPressed: _reason == null || _sending ? null : () => _send(active),
+              onPressed: _reason == null || date == null || _sending ? null : () => _send(active, hub),
             ),
       body: switch (agreement) {
         AsyncValue(hasValue: false, hasError: true) => EmptyState(
@@ -103,7 +138,27 @@ class _RequestExchangePageState extends ConsumerState<RequestExchangePage> {
               ),
               const Gap.sm(),
             ],
+            const Gap.xl(),
+            SectionHeader(title: context.l10n.exchangeWhenWhere, subtitle: context.l10n.exchangeWhenWhereHint),
             const Gap.lg(),
+            AppPickerField(
+              label: context.l10n.exchangeReturnDate,
+              required: true,
+              value: date == null ? null : Fmt.date(date),
+              hint: context.l10n.returnsPickDate,
+              prefixIcon: Icons.calendar_today_rounded,
+              onTap: _pickDate,
+            ),
+            const Gap.lg(),
+            AppPickerField(
+              label: context.l10n.returnsHub,
+              value: hub?.name,
+              hint: context.l10n.returnsPickHub,
+              prefixIcon: Icons.store_rounded,
+              helper: hub == null || hub.address.isEmpty ? null : hub.address,
+              onTap: () => _pickHub(hub),
+            ),
+            const Gap.xl(),
             AppTextField(
               controller: _note,
               label: context.l10n.exchangeNoteLabel,

@@ -193,7 +193,6 @@ class _VehicleOptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool deviceOk = vehicle.hasDevice && vehicle.heartbeatFresh;
     return Pressable(
       onTap: onTap,
       scale: 0.99,
@@ -239,28 +238,6 @@ class _VehicleOptionCard extends StatelessWidget {
                     border: Border.all(color: selected ? AppColors.primary : AppColors.stroke, width: 1.6),
                   ),
                   child: selected ? const Icon(Icons.check_rounded, size: 15, color: Colors.white) : null,
-                ),
-              ],
-            ),
-            const SizedBox(height: Insets.md),
-            Wrap(
-              spacing: Insets.sm,
-              runSpacing: Insets.sm,
-              children: [
-                StatusChip(
-                  label: vehicle.hasDevice ? 'IoT ${vehicle.iotDeviceNumber}' : context.l10n.allocationNoIotDevice,
-                  tone: vehicle.hasDevice ? StatusTone.brand : StatusTone.warning,
-                  icon: Icons.sensors_rounded,
-                  dense: true,
-                ),
-                StatusChip(
-                  label: deviceOk
-                      ? 'Online ${Fmt.relative(vehicle.iotLastHeartbeatAt!)}'
-                      : vehicle.hasDevice
-                      ? context.l10n.allocationHeartbeatStale
-                      : context.l10n.allocationMapDeviceFirst,
-                  tone: deviceOk ? StatusTone.success : StatusTone.warning,
-                  dense: true,
                 ),
               ],
             ),

@@ -306,7 +306,9 @@ class _RoundAction extends StatelessWidget {
 }
 
 abstract final class PhotoViewer {
-  static Future<void> show(BuildContext context, String url) => showDialog<void>(
+  static Future<void> show(BuildContext context, String url) => showImage(context, NetworkImage(url));
+
+  static Future<void> showImage(BuildContext context, ImageProvider image) => showDialog<void>(
     context: context,
     barrierColor: Colors.black87,
     builder: (context) => Dialog.fullscreen(
@@ -317,8 +319,8 @@ abstract final class PhotoViewer {
             child: InteractiveViewer(
               maxScale: 5,
               child: Center(
-                child: Image.network(
-                  url,
+                child: Image(
+                  image: image,
                   fit: BoxFit.contain,
                   errorBuilder: (_, _, _) => const Icon(Icons.image_not_supported_rounded, color: Colors.white54),
                 ),

@@ -9,8 +9,6 @@ class HubRepositoryImpl implements HubRepository {
 
   final ApiClient _api;
 
-  static const int _maxPageSize = 100;
-
   @override
   Future<Result<List<HubProfile>>> listHubs() async {
     final Result<List<HubProfile>> result = await _api.get<List<HubProfile>>(
@@ -46,49 +44,38 @@ class HubRepositoryImpl implements HubRepository {
   @override
   Future<Result<HubSummary>> getSummary(String hubCode) async {
     final Map<String, dynamic> hub = await _hub(hubCode);
-
-    final Map<String, int> queues = await _queueCounts();
+    final String? hubId = hub['id']?.toString();
 
     return _api.get<HubSummary>(
-      '/dashboard',
+      '/fleet-manager/home',
+      query: {if (hubId != null && hubId.isNotEmpty) 'hubId': hubId},
       parse: (data) {
-        final Map<String, dynamic> d = Map<String, dynamic>.from(data as Map);
-        final Map<String, dynamic> fleet = Map<String, dynamic>.from(d['fleet'] as Map? ?? const {});
-        final Map<String, dynamic> riders = Map<String, dynamic>.from(d['riders'] as Map? ?? const {});
-        final Map<String, dynamic> ops = Map<String, dynamic>.from(d['operations'] as Map? ?? const {});
+        final Map<String, dynamic> home = _map(data);
+        final Map<String, dynamic> selected = _map(home['hub']);
+        final Map<String, dynamic> summary = _map(home['summary']);
+        final Map<String, dynamic> fleet = _map(summary['fleetUtilisation']);
+        final Map<String, dynamic> riders = _map(summary['riders']);
+        final Map<String, dynamic> parking = _map(selected['parking']);
 
         int count(Map<String, dynamic> m, String key) => (m[key] as num?)?.toInt() ?? 0;
-        final int total = fleet.values.fold(0, (sum, v) => sum + ((v as num?)?.toInt() ?? 0));
-        final int allocated = count(fleet, 'ALLOCATED') + count(fleet, 'IN_USE');
 
         return HubSummary(
-          hubName: hub['name'] as String? ?? '—',
-          hubCode: hub['code'] as String? ?? '—',
-          fleet: FleetStatusBreakdown(
-            total: total,
-            allocated: allocated,
-            available: count(fleet, 'AVAILABLE'),
-            inService: count(fleet, 'MAINTENANCE') + count(fleet, 'INSPECTION_PENDING'),
-            offRoad: count(fleet, 'OUT_OF_SERVICE'),
-          ),
-          ridersActive: count(riders, 'ACTIVE'),
-
-          ridersPresent: 0,
-          ridersOnboarding: count(riders, 'ONBOARDING'),
-          utilisation: total == 0 ? 0 : allocated / total,
-          uptime: 0,
-          pendingAllocations: queues['waiting'] ?? 0,
-          pendingDeallocations: queues['returns'] ?? 0,
-          openMaintenance: 0,
-          overdueMaintenance: 0,
-          batteryHealthAverage: 0,
-          chargingBaysBusy: 0,
-          chargingBaysTotal: (hub['chargingPoints'] as num?)?.toInt() ?? 0,
-          todayAllocations: count(ops, 'allocationsToday'),
-          todayDeallocations: count(ops, 'deallocationsToday'),
-          weeklyAllocations: const [],
-          weeklyLabels: const [],
-          alerts: const [],
+          hubName: selected['name']?.toString() ?? hub['name']?.toString() ?? '—',
+          hubCode: selected['code']?.toString() ?? hub['code']?.toString() ?? '—',
+          fleetAllocated: count(fleet, 'allocated'),
+          fleetTotal: count(fleet, 'total'),
+          ridersPresent: count(riders, 'present'),
+          ridersActive: count(riders, 'active'),
+          parkingOccupied: count(parking, 'occupiedSlots'),
+          parkingCapacity: count(parking, 'capacity'),
+          queue: summary.isEmpty
+              ? null
+              : HubQueue(
+                  allotments: count(summary, 'pendingAllocation'),
+                  submissions: count(summary, 'pendingSubmission'),
+                  readyForDeployment: count(summary, 'readyForDeployment'),
+                  underMaintenance: count(summary, 'underMaintenance'),
+                ),
         );
       },
     );
@@ -105,27 +92,7 @@ class HubRepositoryImpl implements HubRepository {
     });
   }
 
-  Future<Map<String, int>> _queueCounts() async {
-    final Result<Map<String, int>> result = await _api.get<Map<String, int>>(
-      '/allocations',
-      query: {'pageSize': _maxPageSize},
-      parse: (data) {
-        final List<dynamic> rows = data is Map ? (data['items'] as List<dynamic>? ?? const []) : data as List<dynamic>;
-        int waiting = 0;
-        int returns = 0;
-        for (final row in rows) {
-          switch ((row as Map)['status']?.toString()) {
-            case 'INITIATED' || 'INSPECTION_PENDING' || 'OTP_PENDING':
-              waiting++;
-            case 'DEALLOCATION_INITIATED':
-              returns++;
-          }
-        }
-        return {'waiting': waiting, 'returns': returns};
-      },
-    );
-    return result.valueOrNull ?? const {'waiting': 0, 'returns': 0};
-  }
+  static Map<String, dynamic> _map(Object? value) => value is Map ? Map<String, dynamic>.from(value) : const {};
 
   Future<Map<String, dynamic>> _hub(String hubCode) async {
     final Result<List<Map<String, dynamic>>> rows = await _api.get<List<Map<String, dynamic>>>(

@@ -94,24 +94,6 @@ abstract class AppL10n {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('hi'), Locale('kn'), Locale('te')];
 
-  /// Abandon
-  ///
-  /// In en, this message translates to:
-  /// **'Abandon'**
-  String get allocationAbandon;
-
-  /// Abandon this de-allocation?
-  ///
-  /// In en, this message translates to:
-  /// **'Abandon this de-allocation?'**
-  String get allocationAbandonDeAllocation;
-
-  /// Active allocation
-  ///
-  /// In en, this message translates to:
-  /// **'Active allocation'**
-  String get allocationActiveAllocation;
-
   /// Add an item
   ///
   /// In en, this message translates to:
@@ -214,41 +196,11 @@ abstract class AppL10n {
   /// **'Checklist · tap to toggle mandatory'**
   String get allocationChecklistTapToggleMandatory;
 
-  /// This client requires no inspection photos. You can write up the checklist now.
-  ///
-  /// In en, this message translates to:
-  /// **'This client requires no inspection photos. You can write up the checklist now.'**
-  String get allocationClientRequiresNoInspectionPhotos;
-
-  /// Codes are sent when this step opens.
-  ///
-  /// In en, this message translates to:
-  /// **'Codes are sent when this step opens.'**
-  String get allocationCodesSentWhenStepOpens;
-
-  /// Compare the returned vehicle against this reference set
-  ///
-  /// In en, this message translates to:
-  /// **'Compare the returned vehicle against this reference set'**
-  String get allocationCompareReturnedVehicleAgainstReference;
-
-  /// Complete
-  ///
-  /// In en, this message translates to:
-  /// **'Complete'**
-  String get allocationComplete;
-
   /// Complete.
   ///
   /// In en, this message translates to:
   /// **'Complete.'**
   String get allocationComplete2;
-
-  /// Complete this de-allocation?
-  ///
-  /// In en, this message translates to:
-  /// **'Complete this de-allocation?'**
-  String get allocationCompleteDeAllocation;
 
   /// Confirm you have received the amount the rider submitted a reference for. This cannot be undone.
   ///
@@ -256,11 +208,11 @@ abstract class AppL10n {
   /// **'Confirm you have received the amount the rider submitted a reference for. This cannot be undone.'**
   String get allocationConfirmHaveReceivedAmountRider;
 
-  /// Confirms the vehicle's photos are on file and its IoT unit is online.
+  /// Confirms the vehicle's photos are on file.
   ///
   /// In en, this message translates to:
-  /// **'Confirms the vehicle\'s photos are on file and its IoT unit is online.'**
-  String get allocationConfirmsPhotosAndIot;
+  /// **'Confirms the vehicle\'s photos are on file.'**
+  String get allocationConfirmsPhotos;
 
   /// Continue the handover
   ///
@@ -286,35 +238,11 @@ abstract class AppL10n {
   /// **'Could not load available vehicles'**
   String get allocationCouldNotLoadAvailableVehicles;
 
-  /// Could not load the de-allocation flow
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load the de-allocation flow'**
-  String get allocationCouldNotLoadDeAllocation;
-
-  /// Could not load the de-allocation flow.
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load the de-allocation flow.'**
-  String get allocationCouldNotLoadDeAllocation2;
-
   /// Could not load this handover
   ///
   /// In en, this message translates to:
   /// **'Could not load this handover'**
   String get allocationCouldNotLoadHandover;
-
-  /// Could not load this return
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load this return'**
-  String get allocationCouldNotLoadReturn;
-
-  /// Could not load returns
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load returns'**
-  String get allocationCouldNotLoadReturns;
 
   /// De-allocate vehicle
   ///
@@ -327,12 +255,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Deployed'**
   String get allocationDeployed;
-
-  /// Every de-allocation request has been processed.
-  ///
-  /// In en, this message translates to:
-  /// **'Every de-allocation request has been processed.'**
-  String get allocationEveryDeAllocationRequestHas;
 
   /// Every line needs a label and an amount above zero
   ///
@@ -376,12 +298,6 @@ abstract class AppL10n {
   /// **'Training is done and the scooter is with the rider. This handover is complete.'**
   String get allocationHandoverCompleteMessage;
 
-  /// Heartbeat stale
-  ///
-  /// In en, this message translates to:
-  /// **'Heartbeat stale'**
-  String get allocationHeartbeatStale;
-
   /// Helmet handed over
   ///
   /// In en, this message translates to:
@@ -412,12 +328,6 @@ abstract class AppL10n {
   /// **'Inspection accepted · training'**
   String get allocationInspectionAcceptedTraining;
 
-  /// Inspection evidence
-  ///
-  /// In en, this message translates to:
-  /// **'Inspection evidence'**
-  String get allocationInspectionEvidence;
-
   /// Inspection sent to rider
   ///
   /// In en, this message translates to:
@@ -436,23 +346,11 @@ abstract class AppL10n {
   /// **'Inspection and training'**
   String get allocationInspectionTraining;
 
-  /// IoT device
-  ///
-  /// In en, this message translates to:
-  /// **'IoT device'**
-  String get allocationIotDevice;
-
   /// Item
   ///
   /// In en, this message translates to:
   /// **'Item'**
   String get allocationItem;
-
-  /// Keep going
-  ///
-  /// In en, this message translates to:
-  /// **'Keep going'**
-  String get allocationKeepGoing;
 
   /// Left side
   ///
@@ -465,12 +363,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Lights and indicators'**
   String get allocationLightsIndicators;
-
-  /// Map a device first
-  ///
-  /// In en, this message translates to:
-  /// **'Map a device first'**
-  String get allocationMapDeviceFirst;
 
   /// Mark as paid
   ///
@@ -508,23 +400,11 @@ abstract class AppL10n {
   /// **'No handovers in progress'**
   String get allocationNoHandoversProgress;
 
-  /// No IoT device
-  ///
-  /// In en, this message translates to:
-  /// **'No IoT device'**
-  String get allocationNoIotDevice;
-
   /// Nothing is currently allocated to a rider.
   ///
   /// In en, this message translates to:
   /// **'Nothing is currently allocated to a rider.'**
   String get allocationNothingCurrentlyAllocatedRider;
-
-  /// Nothing to take back
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing to take back'**
-  String get allocationNothingTakeBack;
 
   /// No vehicles out
   ///
@@ -550,18 +430,6 @@ abstract class AppL10n {
   /// **'Onboarding fee'**
   String get allocationOnboardingFee;
 
-  /// Original handover photos
-  ///
-  /// In en, this message translates to:
-  /// **'Original handover photos'**
-  String get allocationOriginalHandoverPhotos;
-
-  /// Out on road
-  ///
-  /// In en, this message translates to:
-  /// **'Out on road'**
-  String get allocationOutRoad;
-
   /// Payment received?
   ///
   /// In en, this message translates to:
@@ -586,29 +454,41 @@ abstract class AppL10n {
   /// **'Payment verified'**
   String get allocationPaymentVerified;
 
-  /// Photo attached
+  /// Back
   ///
   /// In en, this message translates to:
-  /// **'Photo attached'**
-  String get allocationPhotoAttached;
+  /// **'Back'**
+  String get allocationPhotoBack;
 
-  /// Process return
+  /// This photo can't be opened right now.
   ///
   /// In en, this message translates to:
-  /// **'Process return'**
-  String get allocationProcessReturn;
+  /// **'This photo can\'t be opened right now.'**
+  String get allocationPhotoCannotOpen;
 
-  /// In the queue
+  /// Front
   ///
   /// In en, this message translates to:
-  /// **'In the queue'**
-  String get allocationQueue;
+  /// **'Front'**
+  String get allocationPhotoFront;
 
-  /// Raised on
+  /// Left
   ///
   /// In en, this message translates to:
-  /// **'Raised on'**
-  String get allocationRaised;
+  /// **'Left'**
+  String get allocationPhotoLeft;
+
+  /// Right
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get allocationPhotoRight;
+
+  /// Uploaded
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded'**
+  String get allocationPhotoUploaded;
 
   /// You raise the deposit and fees; the rider pays and submits the reference; you verify it.
   ///
@@ -645,36 +525,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Reserved on'**
   String get allocationReserved2;
-
-  /// The return has already been started on the server. You can finish it later from the Returns tab.
-  ///
-  /// In en, this message translates to:
-  /// **'The return has already been started on the server. You can finish it later from the Returns tab.'**
-  String get allocationReturnHasAlreadyBeenStarted;
-
-  /// Return initiated
-  ///
-  /// In en, this message translates to:
-  /// **'Return initiated'**
-  String get allocationReturnInitiated;
-
-  /// Return reason
-  ///
-  /// In en, this message translates to:
-  /// **'Return reason'**
-  String get allocationReturnReason;
-
-  /// Return request
-  ///
-  /// In en, this message translates to:
-  /// **'Return request'**
-  String get allocationReturnRequest;
-
-  /// Return started — codes sent to the rider and to you
-  ///
-  /// In en, this message translates to:
-  /// **'Return started — codes sent to the rider and to you'**
-  String get allocationReturnStartedCodesSentRider;
 
   /// Rider
   ///
@@ -766,18 +616,6 @@ abstract class AppL10n {
   /// **'Start a return'**
   String get allocationStartReturn;
 
-  /// Take a vehicle back and put it on the shelf
-  ///
-  /// In en, this message translates to:
-  /// **'Take a vehicle back and put it on the shelf'**
-  String get allocationTakeVehicleBackPutShelf;
-
-  /// Talking to the server…
-  ///
-  /// In en, this message translates to:
-  /// **'Talking to the server…'**
-  String get allocationTalkingServer;
-
   /// Tyres and pressure
   ///
   /// In en, this message translates to:
@@ -796,6 +634,18 @@ abstract class AppL10n {
   /// **'A vehicle has to be available, onboarded and allocation-enabled in one of your hubs to appear here.'**
   String get allocationVehicleHasAvailableOnboardedAllocation;
 
+  /// Vehicle photos
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle photos'**
+  String get allocationVehiclePhotos;
+
+  /// Take a photo of each side of the vehicle. All four are needed before you submit the inspection.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo of each side of the vehicle. All four are needed before you submit the inspection.'**
+  String get allocationVehiclePhotosHint;
+
   /// Vehicle reserved
   ///
   /// In en, this message translates to:
@@ -807,12 +657,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Verify payment'**
   String get allocationVerifyPayment;
-
-  /// View return
-  ///
-  /// In en, this message translates to:
-  /// **'View return'**
-  String get allocationViewReturn;
 
   /// Waiting
   ///
@@ -915,6 +759,24 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Edit number'**
   String get authEditNumber;
+
+  /// Shown above the Continue button on the login screen. {terms} and {privacy} are tappable links.
+  ///
+  /// In en, this message translates to:
+  /// **'By clicking continue you are accepting our {terms} and {privacy}'**
+  String authLegalAgreement(String terms, String privacy);
+
+  /// Privacy Policy
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get authLegalPrivacy;
+
+  /// Terms of Service
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get authLegalTerms;
 
   /// Live fleet visibility
   ///
@@ -1054,6 +916,120 @@ abstract class AppL10n {
   /// **'Wrong number?'**
   String get authWrongNumber;
 
+  /// Mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Mechanic report'**
+  String get checkInBasicReport;
+
+  /// Report confirmed with a recorded bypass reason
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed by the hub team without your code: {reason}'**
+  String checkInConfirmedByManager(String reason);
+
+  /// Confirmed with your code.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed with your code.'**
+  String get checkInConfirmedByOtp;
+
+  /// Couldn't load the check-in.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the check-in.'**
+  String get checkInCouldNotLoad;
+
+  /// Final mechanic check
+  ///
+  /// In en, this message translates to:
+  /// **'Final mechanic check'**
+  String get checkInDeepReport;
+
+  /// Hub
+  ///
+  /// In en, this message translates to:
+  /// **'Hub'**
+  String get checkInHub;
+
+  /// No charges
+  ///
+  /// In en, this message translates to:
+  /// **'No charges'**
+  String get checkInNoCharges;
+
+  /// You'll get a code on your phone. Share it with the hub team to confirm this report and its charges.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll get a code on your phone. Share it with the hub team to confirm this report and its charges.'**
+  String get checkInOtpHint;
+
+  /// Photos
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get checkInPhotos;
+
+  /// Required check-in photos taken so far
+  ///
+  /// In en, this message translates to:
+  /// **'{taken} of {total} taken'**
+  String checkInPhotosCount(int taken, int total);
+
+  /// Safe to use again
+  ///
+  /// In en, this message translates to:
+  /// **'Safe to use again'**
+  String get checkInSafe;
+
+  /// Under review
+  ///
+  /// In en, this message translates to:
+  /// **'Under review'**
+  String get checkInStatusDraft;
+
+  /// Confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get checkInStatusPosted;
+
+  /// Awaiting confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting confirmation'**
+  String get checkInStatusSubmitted;
+
+  /// Scooter check-in
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter check-in'**
+  String get checkInTitle;
+
+  /// Total charges
+  ///
+  /// In en, this message translates to:
+  /// **'Total charges'**
+  String get checkInTotal;
+
+  /// Mechanic marked the vehicle unsafe
+  ///
+  /// In en, this message translates to:
+  /// **'Not safe to reuse: {reason}'**
+  String checkInUnsafe(String reason);
+
+  /// View
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get checkInViewPhotos;
+
+  /// The hub team is taking photos. The mechanic's report shows up here once it's ready.
+  ///
+  /// In en, this message translates to:
+  /// **'The hub team is taking photos. The mechanic\'s report shows up here once it\'s ready.'**
+  String get checkInWaitingReport;
+
   /// About this app
   ///
   /// In en, this message translates to:
@@ -1113,12 +1089,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Allocation'**
   String get commonAllocation;
-
-  /// Connector between the two legal links
-  ///
-  /// In en, this message translates to:
-  /// **' and '**
-  String get commonAnd;
 
   /// The app will change right away.
   ///
@@ -1210,12 +1180,6 @@ abstract class AppL10n {
   /// **'Confirm account number'**
   String get commonConfirmAccountNumber;
 
-  /// Continue
-  ///
-  /// In en, this message translates to:
-  /// **'Continue'**
-  String get commonContinue;
-
   /// Could not open the document. Try again.
   ///
   /// In en, this message translates to:
@@ -1233,12 +1197,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Daughter'**
   String get commonDaughter;
-
-  /// De-allocation
-  ///
-  /// In en, this message translates to:
-  /// **'De-allocation'**
-  String get commonDeAllocation;
 
   /// Enter your account number
   ///
@@ -1834,6 +1792,78 @@ abstract class AppL10n {
   /// **'Yesterday at a glance'**
   String get commonYesterdayGlance;
 
+  /// e.g. yogmaya
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. yogmaya'**
+  String get companyCodeHint;
+
+  /// Company code
+  ///
+  /// In en, this message translates to:
+  /// **'Company code'**
+  String get companyCodeLabel;
+
+  /// Enter your company code
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your company code'**
+  String get companyCodeRequired;
+
+  /// You'll find the code in your welcome message. If you don't have it, ask your hub team.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll find the code in your welcome message. If you don\'t have it, ask your hub team.'**
+  String get companyHelp;
+
+  /// We couldn't find a company with that code. Check it and try again.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t find a company with that code. Check it and try again.'**
+  String get companyNotFound;
+
+  /// This company isn't set up for the app yet. Please contact your fleet operator.
+  ///
+  /// In en, this message translates to:
+  /// **'This company isn\'t set up for the app yet. Please contact your fleet operator.'**
+  String get companyNotReady;
+
+  /// Enter the company code your fleet operator gave you. You only need to do this once.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the company code your fleet operator gave you. You only need to do this once.'**
+  String get companySubtitle;
+
+  /// Find your company
+  ///
+  /// In en, this message translates to:
+  /// **'Find your company'**
+  String get companyTitle;
+
+  /// Shown after the company code is resolved
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to {name}'**
+  String companyWelcome(String name);
+
+  /// I have read this notice and I give my consent
+  ///
+  /// In en, this message translates to:
+  /// **'I have read this notice and I give my consent'**
+  String get consentAgree;
+
+  /// Rider Consent
+  ///
+  /// In en, this message translates to:
+  /// **'Rider Consent'**
+  String get consentRiderTitle;
+
+  /// Please read how we collect and use your information, then give your consent to continue.
+  ///
+  /// In en, this message translates to:
+  /// **'Please read how we collect and use your information, then give your consent to continue.'**
+  String get consentSubtitle;
+
   /// Accessories returned
   ///
   /// In en, this message translates to:
@@ -2368,12 +2398,6 @@ abstract class AppL10n {
   /// **'Your fleet manager is on the next step for {vehicle}.'**
   String deploymentManagerNextStep(String vehicle);
 
-  /// Mandatory module
-  ///
-  /// In en, this message translates to:
-  /// **'Mandatory module'**
-  String get deploymentMandatoryModule;
-
   /// No payment to show
   ///
   /// In en, this message translates to:
@@ -2391,12 +2415,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Open each module and read it through. Mandatory ones must be completed before you can finish.'**
   String get deploymentOpenEachModuleReadThrough;
-
-  /// Optional module
-  ///
-  /// In en, this message translates to:
-  /// **'Optional module'**
-  String get deploymentOptionalModule;
 
   /// Paid via
   ///
@@ -2433,12 +2451,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Your progress is saved. Sign in again any time to pick up where you left off.'**
   String get deploymentProgressSavedSignAgainAny;
-
-  /// Read through this module with your team lead before you ride.
-  ///
-  /// In en, this message translates to:
-  /// **'Read through this module with your team lead before you ride.'**
-  String get deploymentReadThroughModuleWithTeam;
 
   /// Reference
   ///
@@ -2505,12 +2517,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Training complete'**
   String get deploymentTrainingComplete;
-
-  /// Training unavailable
-  ///
-  /// In en, this message translates to:
-  /// **'Training unavailable'**
-  String get deploymentTrainingUnavailable;
 
   /// Transaction reference
   ///
@@ -2920,348 +2926,6 @@ abstract class AppL10n {
   /// **'Extra deposit to pay'**
   String get exchangeDepositToPay;
 
-  /// Offer accepted for the rider
-  ///
-  /// In en, this message translates to:
-  /// **'Offer accepted for the rider'**
-  String get exchangeDeskAcceptedForRider;
-
-  /// Accept for the rider
-  ///
-  /// In en, this message translates to:
-  /// **'Accept for the rider'**
-  String get exchangeDeskAcceptForRider;
-
-  /// Approve request
-  ///
-  /// In en, this message translates to:
-  /// **'Approve request'**
-  String get exchangeDeskApprove;
-
-  /// Request approved
-  ///
-  /// In en, this message translates to:
-  /// **'Request approved'**
-  String get exchangeDeskApproved;
-
-  /// If the rider can't use the app, you can record their answer for them. Do this only with their clear consent.
-  ///
-  /// In en, this message translates to:
-  /// **'If the rider can\'t use the app, you can record their answer for them. Do this only with their clear consent.'**
-  String get exchangeDeskAssistedHint;
-
-  /// Reason
-  ///
-  /// In en, this message translates to:
-  /// **'Reason'**
-  String get exchangeDeskAssistedReason;
-
-  /// Add a reason for accepting on their behalf
-  ///
-  /// In en, this message translates to:
-  /// **'Add a reason for accepting on their behalf'**
-  String get exchangeDeskAssistedReasonNeeded;
-
-  /// Why is the rider not accepting in the app themselves?
-  ///
-  /// In en, this message translates to:
-  /// **'Why is the rider not accepting in the app themselves?'**
-  String get exchangeDeskAssistedReasonSubtitle;
-
-  /// Change scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Change scooter'**
-  String get exchangeDeskChangeScooter;
-
-  /// Choose replacement scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Choose replacement scooter'**
-  String get exchangeDeskChooseScooter;
-
-  /// Complete exchange
-  ///
-  /// In en, this message translates to:
-  /// **'Complete exchange'**
-  String get exchangeDeskComplete;
-
-  /// Confirm scooter returned
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm scooter returned'**
-  String get exchangeDeskConfirmReturn;
-
-  /// Add how the rider gave consent
-  ///
-  /// In en, this message translates to:
-  /// **'Add how the rider gave consent'**
-  String get exchangeDeskConsentNeeded;
-
-  /// Consent reference
-  ///
-  /// In en, this message translates to:
-  /// **'Consent reference'**
-  String get exchangeDeskConsentReference;
-
-  /// How did the rider agree? For example a signed form number or a recorded call.
-  ///
-  /// In en, this message translates to:
-  /// **'How did the rider agree? For example a signed form number or a recorded call.'**
-  String get exchangeDeskConsentSubtitle;
-
-  /// Offer declined for the rider
-  ///
-  /// In en, this message translates to:
-  /// **'Offer declined for the rider'**
-  String get exchangeDeskDeclinedForRider;
-
-  /// Rider declined
-  ///
-  /// In en, this message translates to:
-  /// **'Rider declined'**
-  String get exchangeDeskDeclineForRider;
-
-  /// Record why the rider turned the offer down.
-  ///
-  /// In en, this message translates to:
-  /// **'Record why the rider turned the offer down.'**
-  String get exchangeDeskDeclineSubtitle;
-
-  /// Breakdown of deposit still due during an exchange
-  ///
-  /// In en, this message translates to:
-  /// **'{total} is still due: {newDeposit} for the new scooter and {shortfall} to top up the rider\'s security deposit.'**
-  String exchangeDeskDepositBreakdown(String total, String newDeposit, String shortfall);
-
-  /// The rider still has to pay {amount} more deposit.
-  ///
-  /// In en, this message translates to:
-  /// **'The rider still has to pay {amount} more deposit.'**
-  String exchangeDeskDepositDue(String amount);
-
-  /// Deposits settled
-  ///
-  /// In en, this message translates to:
-  /// **'Deposits settled'**
-  String get exchangeDeskDepositsSettled;
-
-  /// When a rider asks for a different scooter, the request shows up here.
-  ///
-  /// In en, this message translates to:
-  /// **'When a rider asks for a different scooter, the request shows up here.'**
-  String get exchangeDeskEmptyBody;
-
-  /// Exchange completed
-  ///
-  /// In en, this message translates to:
-  /// **'Exchange completed'**
-  String get exchangeDeskExchangeCompleted;
-
-  /// The old scooter is back. Choose a replacement scooter for the rider.
-  ///
-  /// In en, this message translates to:
-  /// **'The old scooter is back. Choose a replacement scooter for the rider.'**
-  String get exchangeDeskGuideChoose;
-
-  /// The rider accepted. Settle the deposits to move on to the handover.
-  ///
-  /// In en, this message translates to:
-  /// **'The rider accepted. Settle the deposits to move on to the handover.'**
-  String get exchangeDeskGuideDeposits;
-
-  /// Check the request, then approve or reject it.
-  ///
-  /// In en, this message translates to:
-  /// **'Check the request, then approve or reject it.'**
-  String get exchangeDeskGuideReview;
-
-  /// Check the offer below and send it to the rider.
-  ///
-  /// In en, this message translates to:
-  /// **'Check the offer below and send it to the rider.'**
-  String get exchangeDeskGuideSendOffer;
-
-  /// Deposits are settled. Start the handover of the new scooter.
-  ///
-  /// In en, this message translates to:
-  /// **'Deposits are settled. Start the handover of the new scooter.'**
-  String get exchangeDeskGuideStartHandover;
-
-  /// Start the return of the rider's current scooter.
-  ///
-  /// In en, this message translates to:
-  /// **'Start the return of the rider\'s current scooter.'**
-  String get exchangeDeskGuideStartReturn;
-
-  /// The hub's fleet manager hands over the new scooter through the normal allocation steps. Once the scooter is active with the rider, complete the exchange.
-  ///
-  /// In en, this message translates to:
-  /// **'The hub\'s fleet manager hands over the new scooter through the normal allocation steps. Once the scooter is active with the rider, complete the exchange.'**
-  String get exchangeDeskHandoverHint;
-
-  /// Handover started
-  ///
-  /// In en, this message translates to:
-  /// **'Handover started'**
-  String get exchangeDeskHandoverStarted;
-
-  /// Needs action
-  ///
-  /// In en, this message translates to:
-  /// **'Needs action'**
-  String get exchangeDeskNeedsAction;
-
-  /// No scooters are available right now.
-  ///
-  /// In en, this message translates to:
-  /// **'No scooters are available right now.'**
-  String get exchangeDeskNoScooters;
-
-  /// Offer preview
-  ///
-  /// In en, this message translates to:
-  /// **'Offer preview'**
-  String get exchangeDeskOfferPreview;
-
-  /// Offer sent to rider
-  ///
-  /// In en, this message translates to:
-  /// **'Offer sent to rider'**
-  String get exchangeDeskOfferSent;
-
-  /// Open the new allocation
-  ///
-  /// In en, this message translates to:
-  /// **'Open the new allocation'**
-  String get exchangeDeskOpenAllocation;
-
-  /// Open return
-  ///
-  /// In en, this message translates to:
-  /// **'Open return'**
-  String get exchangeDeskOpenReturn;
-
-  /// Reject request
-  ///
-  /// In en, this message translates to:
-  /// **'Reject request'**
-  String get exchangeDeskReject;
-
-  /// Request rejected
-  ///
-  /// In en, this message translates to:
-  /// **'Request rejected'**
-  String get exchangeDeskRejectedDone;
-
-  /// Tell the rider why this can't be approved.
-  ///
-  /// In en, this message translates to:
-  /// **'Tell the rider why this can\'t be approved.'**
-  String get exchangeDeskRejectSubtitle;
-
-  /// Replacement scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Replacement scooter'**
-  String get exchangeDeskReplacement;
-
-  /// Until {time}
-  ///
-  /// In en, this message translates to:
-  /// **'Until {time}'**
-  String exchangeDeskReservedUntil(String time);
-
-  /// Reserve this scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Reserve this scooter'**
-  String get exchangeDeskReserveScooter;
-
-  /// Return confirmed
-  ///
-  /// In en, this message translates to:
-  /// **'Return confirmed'**
-  String get exchangeDeskReturnConfirmed;
-
-  /// Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here.
-  ///
-  /// In en, this message translates to:
-  /// **'Finish the return in Returns: verify the rider\'s OTP and complete the inspection. Then confirm it here.'**
-  String get exchangeDeskReturnHint;
-
-  /// Return started
-  ///
-  /// In en, this message translates to:
-  /// **'Return started'**
-  String get exchangeDeskReturnStarted;
-
-  /// Rider's note
-  ///
-  /// In en, this message translates to:
-  /// **'Rider\'s note'**
-  String get exchangeDeskRiderNote;
-
-  /// Scooter reserved
-  ///
-  /// In en, this message translates to:
-  /// **'Scooter reserved'**
-  String get exchangeDeskScooterReserved;
-
-  /// Send offer to rider
-  ///
-  /// In en, this message translates to:
-  /// **'Send offer to rider'**
-  String get exchangeDeskSendOffer;
-
-  /// Settle deposits
-  ///
-  /// In en, this message translates to:
-  /// **'Settle deposits'**
-  String get exchangeDeskSettleDeposits;
-
-  /// Start handover
-  ///
-  /// In en, this message translates to:
-  /// **'Start handover'**
-  String get exchangeDeskStartHandover;
-
-  /// Start scooter return
-  ///
-  /// In en, this message translates to:
-  /// **'Start scooter return'**
-  String get exchangeDeskStartReturn;
-
-  /// Offer sent
-  ///
-  /// In en, this message translates to:
-  /// **'Offer sent'**
-  String get exchangeDeskStatusOfferSent;
-
-  /// Scooter reserved
-  ///
-  /// In en, this message translates to:
-  /// **'Scooter reserved'**
-  String get exchangeDeskStatusReserved;
-
-  /// Riders asking for a different scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Riders asking for a different scooter'**
-  String get exchangeDeskSubtitle;
-
-  /// Offer sent. Waiting for the rider to accept it in their app.
-  ///
-  /// In en, this message translates to:
-  /// **'Offer sent. Waiting for the rider to accept it in their app.'**
-  String get exchangeDeskWaitingRider;
-
-  /// Waiting for rider
-  ///
-  /// In en, this message translates to:
-  /// **'Waiting for rider'**
-  String get exchangeDeskWithRider;
-
   /// Request details
   ///
   /// In en, this message translates to:
@@ -3502,11 +3166,23 @@ abstract class AppL10n {
   /// **'Approved. Your hub will ask you to bring your current scooter in for a check.'**
   String get exchangeNextApproved;
 
+  /// Exchange requested, waiting for drop-off
+  ///
+  /// In en, this message translates to:
+  /// **'Bring your current scooter to the hub you picked on {date}. The hub team will check it in.'**
+  String exchangeNextBringIn(String date);
+
   /// This request was cancelled.
   ///
   /// In en, this message translates to:
   /// **'This request was cancelled.'**
   String get exchangeNextCancelled;
+
+  /// The hub team is checking your current scooter. You'll get a code on your phone to confirm the mechanic's report.
+  ///
+  /// In en, this message translates to:
+  /// **'The hub team is checking your current scooter. You\'ll get a code on your phone to confirm the mechanic\'s report.'**
+  String get exchangeNextCheckingIn;
 
   /// Your old scooter is returned. Your hub is picking a replacement for you.
   ///
@@ -3814,6 +3490,12 @@ abstract class AppL10n {
   /// **'Tell your hub why you need a different scooter.'**
   String get exchangeRequestSubtitle;
 
+  /// Drop-off date
+  ///
+  /// In en, this message translates to:
+  /// **'Drop-off date'**
+  String get exchangeReturnDate;
+
   /// Send request
   ///
   /// In en, this message translates to:
@@ -3861,6 +3543,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Cancelled'**
   String get exchangeStatusCancelled;
+
+  /// Checking in
+  ///
+  /// In en, this message translates to:
+  /// **'Checking in'**
+  String get exchangeStatusCheckingIn;
 
   /// Choosing scooter
   ///
@@ -3958,6 +3646,18 @@ abstract class AppL10n {
   /// **'Previous'**
   String get exchangeVersionPrevious;
 
+  /// When and where
+  ///
+  /// In en, this message translates to:
+  /// **'When and where'**
+  String get exchangeWhenWhere;
+
+  /// Pick when and where you'll bring your current scooter in.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick when and where you\'ll bring your current scooter in.'**
+  String get exchangeWhenWhereHint;
+
   /// Bonus unlocked
   ///
   /// In en, this message translates to:
@@ -3970,23 +3670,29 @@ abstract class AppL10n {
   /// **'Book a slot at the Okhla hub before the odometer hits 8,000 km.'**
   String get homeBookSlotOkhlaHubBefore;
 
+  /// Category
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get homeCategory;
+
   /// Could not load your dashboard
   ///
   /// In en, this message translates to:
   /// **'Could not load your dashboard'**
   String get homeCouldNotLoadDashboard;
 
+  /// Daily Rental
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Rental'**
+  String get homeDailyRental;
+
   /// Deposits and handover fees
   ///
   /// In en, this message translates to:
   /// **'Deposits and handover fees'**
   String get homeDepositsHandoverFees;
-
-  /// Distance
-  ///
-  /// In en, this message translates to:
-  /// **'Distance'**
-  String get homeDistance;
 
   /// Extra ₹15 a trip in Okhla Phase II and Jasola this evening.
   ///
@@ -4120,12 +3826,6 @@ abstract class AppL10n {
   /// **'Today\'s earnings'**
   String get homeTodaysEarnings;
 
-  /// Trips
-  ///
-  /// In en, this message translates to:
-  /// **'Trips'**
-  String get homeTrips;
-
   /// Vehicle on
   ///
   /// In en, this message translates to:
@@ -4144,11 +3844,35 @@ abstract class AppL10n {
   /// **'Withdraw'**
   String get homeWithdraw;
 
+  /// Working Days
+  ///
+  /// In en, this message translates to:
+  /// **'Working Days'**
+  String get homeWorkingDays;
+
+  /// All hubs
+  ///
+  /// In en, this message translates to:
+  /// **'All hubs'**
+  String get hubAllHubs;
+
   /// Allocate
   ///
   /// In en, this message translates to:
   /// **'Allocate'**
   String get hubAllocate;
+
+  /// Allotments in Queue
+  ///
+  /// In en, this message translates to:
+  /// **'Allotments in Queue'**
+  String get hubAllotmentsInQueue;
+
+  /// Active riders at this hub who are waiting for a vehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Active riders at this hub who are waiting for a vehicle.'**
+  String get hubAllotmentsInQueueInfo;
 
   /// Bays free
   ///
@@ -4156,11 +3880,29 @@ abstract class AppL10n {
   /// **'Bays free'**
   String get hubBaysFree;
 
+  /// Choose a hub
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a hub'**
+  String get hubChooseHub;
+
+  /// See one hub, or all your hubs together.
+  ///
+  /// In en, this message translates to:
+  /// **'See one hub, or all your hubs together.'**
+  String get hubChooseHubSubtitle;
+
   /// Could not load your hub
   ///
   /// In en, this message translates to:
   /// **'Could not load your hub'**
   String get hubCouldNotLoadHub;
+
+  /// Number of hubs assigned to the manager
+  ///
+  /// In en, this message translates to:
+  /// **'{count} hubs'**
+  String hubCount(int count);
 
   /// Fleet Manager
   ///
@@ -4186,12 +3928,6 @@ abstract class AppL10n {
   /// **'Your hub at a glance'**
   String get hubHubGlance;
 
-  /// Your hubs
-  ///
-  /// In en, this message translates to:
-  /// **'Your hubs'**
-  String get hubHubs;
-
   /// Maintenance
   ///
   /// In en, this message translates to:
@@ -4210,17 +3946,17 @@ abstract class AppL10n {
   /// **'No hub is assigned to you.'**
   String get hubNoHubAssigned;
 
-  /// Open jobs
+  /// Quick Hub View
   ///
   /// In en, this message translates to:
-  /// **'Open jobs'**
-  String get hubOpenJobs;
+  /// **'Quick Hub View'**
+  String get hubQuickView;
 
-  /// Pick one, or several to see their numbers combined
+  /// Live counts for your selected hub.
   ///
   /// In en, this message translates to:
-  /// **'Pick one, or several to see their numbers combined'**
-  String get hubPickOneSeveralSeeTheir;
+  /// **'Live counts for your selected hub.'**
+  String get hubQuickViewInfo;
 
   /// Return
   ///
@@ -4228,17 +3964,17 @@ abstract class AppL10n {
   /// **'Return'**
   String get hubReturn;
 
-  /// Returns to clear
+  /// RFDs available
   ///
   /// In en, this message translates to:
-  /// **'Returns to clear'**
-  String get hubReturnsClear;
+  /// **'RFDs available'**
+  String get hubRfdsAvailable;
 
-  /// Riders present
+  /// Ready for deployment: vehicles at this hub that are free to allot.
   ///
   /// In en, this message translates to:
-  /// **'Riders present'**
-  String get hubRidersPresent;
+  /// **'Ready for deployment: vehicles at this hub that are free to allot.'**
+  String get hubRfdsAvailableInfo;
 
   /// Could not load nearby hubs
   ///
@@ -4258,11 +3994,11 @@ abstract class AppL10n {
   /// **'On shift'**
   String get hubShift;
 
-  /// Show this hub
+  /// Show data for
   ///
   /// In en, this message translates to:
-  /// **'Show this hub'**
-  String get hubShowThisHub;
+  /// **'Show data for'**
+  String get hubShowDataFor;
 
   /// There are no active hubs within reach of your location.
   ///
@@ -4288,17 +4024,35 @@ abstract class AppL10n {
   /// **'Closest hubs to you'**
   String get hubsSubtitle;
 
+  /// Submissions in Queue
+  ///
+  /// In en, this message translates to:
+  /// **'Submissions in Queue'**
+  String get hubSubmissionsInQueue;
+
+  /// Returns and exchanges due at this hub whose vehicle check-in isn't complete yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Returns and exchanges due at this hub whose vehicle check-in isn\'t complete yet.'**
+  String get hubSubmissionsInQueueInfo;
+
+  /// Under Maintenance Fleet
+  ///
+  /// In en, this message translates to:
+  /// **'Under Maintenance Fleet'**
+  String get hubUnderMaintenanceFleet;
+
+  /// Vehicles from this hub that are under maintenance right now.
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicles from this hub that are under maintenance right now.'**
+  String get hubUnderMaintenanceFleetInfo;
+
   /// Uptime
   ///
   /// In en, this message translates to:
   /// **'Uptime'**
   String get hubUptime;
-
-  /// Waiting to allocate
-  ///
-  /// In en, this message translates to:
-  /// **'Waiting to allocate'**
-  String get hubWaitingAllocate;
 
   /// Working late
   ///
@@ -4407,24 +4161,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Could not load this document'**
   String get legalDocumentCouldNotLoad;
-
-  /// I have read and agree to the Terms & Conditions
-  ///
-  /// In en, this message translates to:
-  /// **'I have read and agree to the Terms & Conditions'**
-  String get legalTermsAgree;
-
-  /// Please read these terms before you continue.
-  ///
-  /// In en, this message translates to:
-  /// **'Please read these terms before you continue.'**
-  String get legalTermsSubtitle;
-
-  /// Terms & Conditions
-  ///
-  /// In en, this message translates to:
-  /// **'Terms & Conditions'**
-  String get legalTermsTitle;
 
   /// Add a note
   ///
@@ -5044,6 +4780,12 @@ abstract class AppL10n {
   /// **'Scooter details'**
   String get navScooterDetails;
 
+  /// All
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get notificationsAll;
+
   /// You are all caught up
   ///
   /// In en, this message translates to:
@@ -5068,11 +4810,23 @@ abstract class AppL10n {
   /// **'Earlier'**
   String get notificationsEarlier;
 
-  /// New earnings, reminders and alerts will show up here.
+  /// New updates and alerts will show up here.
   ///
   /// In en, this message translates to:
-  /// **'New earnings, reminders and alerts will show up here.'**
-  String get notificationsNewEarningsRemindersAlertsWill;
+  /// **'New updates and alerts will show up here.'**
+  String get notificationsEmptyMessage;
+
+  /// Got it
+  ///
+  /// In en, this message translates to:
+  /// **'Got it'**
+  String get notificationsGotIt;
+
+  /// Total notifications loaded
+  ///
+  /// In en, this message translates to:
+  /// **'{count} notifications in your inbox'**
+  String notificationsInboxCount(int count);
 
   /// No matching notifications
   ///
@@ -5109,6 +4863,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Unread'**
   String get notificationsUnread;
+
+  /// Unread notifications headline
+  ///
+  /// In en, this message translates to:
+  /// **'{count} unread'**
+  String notificationsUnreadCount(int count);
 
   /// Accept the agreement to continue
   ///
@@ -5320,11 +5080,23 @@ abstract class AppL10n {
   /// **'Referral code applied'**
   String get onboardingReferralCodeApplied;
 
+  /// Added from your invite link
+  ///
+  /// In en, this message translates to:
+  /// **'Added from your invite link'**
+  String get onboardingReferralFromInvite;
+
   /// We couldn't find a referral for that. Check the code or mobile number.
   ///
   /// In en, this message translates to:
   /// **'We couldn\'t find a referral for that. Check the code or mobile number.'**
   String get onboardingReferralNotFound;
+
+  /// Scan referral QR
+  ///
+  /// In en, this message translates to:
+  /// **'Scan referral QR'**
+  String get onboardingReferralScan;
 
   /// Tap Apply to use this code, or clear it
   ///
@@ -5626,11 +5398,29 @@ abstract class AppL10n {
   /// **'Personal details'**
   String get profilePersonalDetails;
 
+  /// Activity
+  ///
+  /// In en, this message translates to:
+  /// **'Activity'**
+  String get referActivity;
+
+  /// Caption on the shared QR card
+  ///
+  /// In en, this message translates to:
+  /// **'Join with my code and get {amount}'**
+  String referCardReward(String amount);
+
   /// Referral code copied
   ///
   /// In en, this message translates to:
   /// **'Referral code copied'**
   String get referCodeCopied;
+
+  /// Qualification deadline
+  ///
+  /// In en, this message translates to:
+  /// **'Complete these by {date}'**
+  String referCompleteBy(String date);
 
   /// Copy code
   ///
@@ -5638,11 +5428,119 @@ abstract class AppL10n {
   /// **'Copy code'**
   String get referCopyCode;
 
+  /// Copy invite message
+  ///
+  /// In en, this message translates to:
+  /// **'Copy invite message'**
+  String get referCopyMessage;
+
   /// Could not load refer & earn
   ///
   /// In en, this message translates to:
   /// **'Could not load refer & earn'**
   String get referCouldNotLoad;
+
+  /// Referral details
+  ///
+  /// In en, this message translates to:
+  /// **'Referral details'**
+  String get referDetailTitle;
+
+  /// Let a friend scan this to join with your code. Tap to enlarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Let a friend scan this to join with your code. Tap to enlarge.'**
+  String get referDrawerHint;
+
+  /// My referral QR
+  ///
+  /// In en, this message translates to:
+  /// **'My referral QR'**
+  String get referDrawerTitle;
+
+  /// Your account is already linked to another referral code.
+  ///
+  /// In en, this message translates to:
+  /// **'Your account is already linked to another referral code.'**
+  String get referErrorAlreadyLinked;
+
+  /// Refer & earn isn't running right now.
+  ///
+  /// In en, this message translates to:
+  /// **'Refer & earn isn\'t running right now.'**
+  String get referErrorCampaignInactive;
+
+  /// This invite has expired. Ask your friend to send a new one.
+  ///
+  /// In en, this message translates to:
+  /// **'This invite has expired. Ask your friend to send a new one.'**
+  String get referErrorCodeExpired;
+
+  /// This rider has reached their referral limit.
+  ///
+  /// In en, this message translates to:
+  /// **'This rider has reached their referral limit.'**
+  String get referErrorLimit;
+
+  /// Your rider profile isn't ready for referrals yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rider profile isn\'t ready for referrals yet.'**
+  String get referErrorNotEligible;
+
+  /// Refer & earn isn't available for your company.
+  ///
+  /// In en, this message translates to:
+  /// **'Refer & earn isn\'t available for your company.'**
+  String get referErrorNotEnabled;
+
+  /// Referral not found.
+  ///
+  /// In en, this message translates to:
+  /// **'Referral not found.'**
+  String get referErrorNotFound;
+
+  /// You can't use your own referral code.
+  ///
+  /// In en, this message translates to:
+  /// **'You can\'t use your own referral code.'**
+  String get referErrorSelf;
+
+  /// A referral expired
+  ///
+  /// In en, this message translates to:
+  /// **'A referral expired'**
+  String get referEventExpired;
+
+  /// Referral update
+  ///
+  /// In en, this message translates to:
+  /// **'Referral update'**
+  String get referEventOther;
+
+  /// A referral made progress
+  ///
+  /// In en, this message translates to:
+  /// **'A referral made progress'**
+  String get referEventProgress;
+
+  /// A referral qualified for its reward
+  ///
+  /// In en, this message translates to:
+  /// **'A referral qualified for its reward'**
+  String get referEventQualified;
+
+  /// A rider joined with a referral code
+  ///
+  /// In en, this message translates to:
+  /// **'A rider joined with a referral code'**
+  String get referEventRegistered;
+
+  /// A referral reward was paid
+  ///
+  /// In en, this message translates to:
+  /// **'A referral reward was paid'**
+  String get referEventRewardPaid;
 
   /// Your friend gets
   ///
@@ -5650,11 +5548,95 @@ abstract class AppL10n {
   /// **'Your friend gets'**
   String get referFriendGets;
 
+  /// How it works
+  ///
+  /// In en, this message translates to:
+  /// **'How it works'**
+  String get referHowItWorks;
+
+  /// Share your code. When your friend joins and completes these steps, the referral reward unlocks.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your code. When your friend joins and completes these steps, the referral reward unlocks.'**
+  String get referHowItWorksBody;
+
   /// Invited
   ///
   /// In en, this message translates to:
   /// **'Invited'**
   String get referInvited;
+
+  /// Invite expiry
+  ///
+  /// In en, this message translates to:
+  /// **'This invite is valid till {date}'**
+  String referInviteValidTill(String date);
+
+  /// Invite message copied
+  ///
+  /// In en, this message translates to:
+  /// **'Invite message copied'**
+  String get referMessageCopied;
+
+  /// Get activated as a rider
+  ///
+  /// In en, this message translates to:
+  /// **'Get activated as a rider'**
+  String get referMilestoneActivated;
+
+  /// Milestone: active days
+  ///
+  /// In en, this message translates to:
+  /// **'Stay active for {count} days'**
+  String referMilestoneActiveDays(String count);
+
+  /// Milestone: attendance days
+  ///
+  /// In en, this message translates to:
+  /// **'Mark attendance on {count} days'**
+  String referMilestoneAttendance(String count);
+
+  /// Milestone: deliveries
+  ///
+  /// In en, this message translates to:
+  /// **'Complete {count} deliveries'**
+  String referMilestoneDeliveries(String count);
+
+  /// Complete KYC
+  ///
+  /// In en, this message translates to:
+  /// **'Complete KYC'**
+  String get referMilestoneKyc;
+
+  /// Complete the campaign step
+  ///
+  /// In en, this message translates to:
+  /// **'Complete the campaign step'**
+  String get referMilestoneOther;
+
+  /// Make the first payment
+  ///
+  /// In en, this message translates to:
+  /// **'Make the first payment'**
+  String get referMilestonePayment;
+
+  /// Milestone: rides
+  ///
+  /// In en, this message translates to:
+  /// **'Complete {count} rides'**
+  String referMilestoneRides(String count);
+
+  /// Finish the training
+  ///
+  /// In en, this message translates to:
+  /// **'Finish the training'**
+  String get referMilestoneTraining;
+
+  /// Get a scooter allotted
+  ///
+  /// In en, this message translates to:
+  /// **'Get a scooter allotted'**
+  String get referMilestoneVehicle;
 
   /// Check back soon for new rewards.
   ///
@@ -5692,6 +5674,18 @@ abstract class AppL10n {
   /// **'Pending'**
   String get referPending;
 
+  /// Progress
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get referProgress;
+
+  /// Referral QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Referral QR code'**
+  String get referQrSemantics;
+
   /// Qualified
   ///
   /// In en, this message translates to:
@@ -5704,11 +5698,155 @@ abstract class AppL10n {
   /// **'Registered'**
   String get referRegistered;
 
+  /// Earned
+  ///
+  /// In en, this message translates to:
+  /// **'Earned'**
+  String get referRewardEarned;
+
+  /// Pending
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get referRewardPending;
+
+  /// Processing
+  ///
+  /// In en, this message translates to:
+  /// **'Processing'**
+  String get referRewardProcessing;
+
+  /// Reversed
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed'**
+  String get referRewardReversed;
+
+  /// Rewards
+  ///
+  /// In en, this message translates to:
+  /// **'Rewards'**
+  String get referRewards;
+
+  /// The camera couldn't start. Try again, or pick a photo of the QR code.
+  ///
+  /// In en, this message translates to:
+  /// **'The camera couldn\'t start. Try again, or pick a photo of the QR code.'**
+  String get referScanCameraFailed;
+
+  /// Code read from a QR
+  ///
+  /// In en, this message translates to:
+  /// **'Found code {code}'**
+  String referScanFound(String code);
+
+  /// Pick from photos
+  ///
+  /// In en, this message translates to:
+  /// **'Pick from photos'**
+  String get referScanFromPhotos;
+
+  /// Point the camera at a referral QR code
+  ///
+  /// In en, this message translates to:
+  /// **'Point the camera at a referral QR code'**
+  String get referScanHint;
+
+  /// There's no camera to scan with on this device. Pick a photo of the QR code instead.
+  ///
+  /// In en, this message translates to:
+  /// **'There\'s no camera to scan with on this device. Pick a photo of the QR code instead.'**
+  String get referScanNoCamera;
+
+  /// No QR code found in that photo.
+  ///
+  /// In en, this message translates to:
+  /// **'No QR code found in that photo.'**
+  String get referScanNoQrInPhoto;
+
+  /// That QR code isn't a referral code.
+  ///
+  /// In en, this message translates to:
+  /// **'That QR code isn\'t a referral code.'**
+  String get referScanNotReferral;
+
+  /// Camera access is off. Allow it in Settings to scan, or pick a photo of the QR code.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera access is off. Allow it in Settings to scan, or pick a photo of the QR code.'**
+  String get referScanPermissionDenied;
+
+  /// Scan referral QR
+  ///
+  /// In en, this message translates to:
+  /// **'Scan referral QR'**
+  String get referScanTitle;
+
+  /// Scan to join with my referral code
+  ///
+  /// In en, this message translates to:
+  /// **'Scan to join with my referral code'**
+  String get referScanToJoin;
+
+  /// Play Store link line in the invite message
+  ///
+  /// In en, this message translates to:
+  /// **'Get the app on Android: {link}'**
+  String referShareAndroid(String link);
+
+  /// Referral code line in the invite message
+  ///
+  /// In en, this message translates to:
+  /// **'Use my referral code {code} when you sign up.'**
+  String referShareCodeLine(String code);
+
+  /// Invite message opening line
+  ///
+  /// In en, this message translates to:
+  /// **'Join me as a rider on {app}!'**
+  String referShareIntro(String app);
+
   /// Share invite
   ///
   /// In en, this message translates to:
   /// **'Share invite'**
   String get referShareInvite;
+
+  /// App Store link line in the invite message
+  ///
+  /// In en, this message translates to:
+  /// **'Get the app on iPhone: {link}'**
+  String referShareIphone(String link);
+
+  /// Share
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get referShareNow;
+
+  /// Friend reward line in the invite message
+  ///
+  /// In en, this message translates to:
+  /// **'You get {amount} when you complete the joining steps.'**
+  String referShareReward(String amount);
+
+  /// Your friend can scan the QR or use the link to join.
+  ///
+  /// In en, this message translates to:
+  /// **'Your friend can scan the QR or use the link to join.'**
+  String get referShareSubtitle;
+
+  /// Share your invite
+  ///
+  /// In en, this message translates to:
+  /// **'Share your invite'**
+  String get referShareTitle;
+
+  /// Show QR
+  ///
+  /// In en, this message translates to:
+  /// **'Show QR'**
+  String get referShowQr;
 
   /// Activated
   ///
@@ -5776,11 +5914,29 @@ abstract class AppL10n {
   /// **'Under review'**
   String get referStatusUnderReview;
 
+  /// Milestones completed out of total
+  ///
+  /// In en, this message translates to:
+  /// **'{done}/{total} steps'**
+  String referStepsDone(int done, int total);
+
   /// Invite riders and earn rewards
   ///
   /// In en, this message translates to:
   /// **'Invite riders and earn rewards'**
   String get referSubtitle;
+
+  /// Terms & conditions
+  ///
+  /// In en, this message translates to:
+  /// **'Terms & conditions'**
+  String get referTerms;
+
+  /// Timeline
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get referTimeline;
 
   /// Total earned
   ///
@@ -5805,6 +5961,18 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Your referral code'**
   String get referYourCode;
+
+  /// Your referral QR
+  ///
+  /// In en, this message translates to:
+  /// **'Your referral QR'**
+  String get referYourQr;
+
+  /// Ask your friend to scan it in the app's onboarding.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask your friend to scan it in the app\'s onboarding.'**
+  String get referYourQrSubtitle;
 
   /// Your referrals
   ///
@@ -6136,612 +6304,6 @@ abstract class AppL10n {
   /// **'Your account'**
   String get rentalsYourAccount;
 
-  /// Add a charge
-  ///
-  /// In en, this message translates to:
-  /// **'Add a charge'**
-  String get returnDeskAddCharge;
-
-  /// An admin approved these charges for the rider.
-  ///
-  /// In en, this message translates to:
-  /// **'An admin approved these charges for the rider.'**
-  String get returnDeskAdminApproved;
-
-  /// Approve
-  ///
-  /// In en, this message translates to:
-  /// **'Approve'**
-  String get returnDeskApprove;
-
-  /// Approve and post charges
-  ///
-  /// In en, this message translates to:
-  /// **'Approve and post charges'**
-  String get returnDeskApproveAndPost;
-
-  /// Approve as manager
-  ///
-  /// In en, this message translates to:
-  /// **'Approve as manager'**
-  String get returnDeskApproveAsManager;
-
-  /// Confirmation when manager approval posts the charges
-  ///
-  /// In en, this message translates to:
-  /// **'{amount} will be added to the rider\'s bill.'**
-  String returnDeskApproveBodyPost(String amount);
-
-  /// Your approval is recorded. The charges post once the rider approves too.
-  ///
-  /// In en, this message translates to:
-  /// **'Your approval is recorded. The charges post once the rider approves too.'**
-  String get returnDeskApproveBodyWait;
-
-  /// Approval recorded
-  ///
-  /// In en, this message translates to:
-  /// **'Approval recorded'**
-  String get returnDeskApproved;
-
-  /// Approve for the rider
-  ///
-  /// In en, this message translates to:
-  /// **'Approve for the rider'**
-  String get returnDeskApproveForRider;
-
-  /// Approve these charges?
-  ///
-  /// In en, this message translates to:
-  /// **'Approve these charges?'**
-  String get returnDeskApproveTitle;
-
-  /// Why is it being entered late?
-  ///
-  /// In en, this message translates to:
-  /// **'Why is it being entered late?'**
-  String get returnDeskBackdateReason;
-
-  /// Add a reason for the earlier time
-  ///
-  /// In en, this message translates to:
-  /// **'Add a reason for the earlier time'**
-  String get returnDeskBackdateReasonNeeded;
-
-  /// Return
-  ///
-  /// In en, this message translates to:
-  /// **'Return'**
-  String get returnDeskCaseTitle;
-
-  /// Details
-  ///
-  /// In en, this message translates to:
-  /// **'Details'**
-  String get returnDeskChargeDetails;
-
-  /// What exactly is damaged or missing?
-  ///
-  /// In en, this message translates to:
-  /// **'What exactly is damaged or missing?'**
-  String get returnDeskChargeDetailsHint;
-
-  /// Pick from the price list. Each charge needs details and at least one inspection photo as evidence.
-  ///
-  /// In en, this message translates to:
-  /// **'Pick from the price list. Each charge needs details and at least one inspection photo as evidence.'**
-  String get returnDeskChargesHint;
-
-  /// A photo of the filled return checklist. Charges for missing items need it as evidence.
-  ///
-  /// In en, this message translates to:
-  /// **'A photo of the filled return checklist. Charges for missing items need it as evidence.'**
-  String get returnDeskChecklistHint;
-
-  /// Missing-item charges need the return checklist photo as evidence.
-  ///
-  /// In en, this message translates to:
-  /// **'Missing-item charges need the return checklist photo as evidence.'**
-  String get returnDeskChecklistNeeded;
-
-  /// Return checklist
-  ///
-  /// In en, this message translates to:
-  /// **'Return checklist'**
-  String get returnDeskChecklistPhoto;
-
-  /// Return closed with no charges
-  ///
-  /// In en, this message translates to:
-  /// **'Return closed with no charges'**
-  String get returnDeskClosedNoCharges;
-
-  /// Close with no charges
-  ///
-  /// In en, this message translates to:
-  /// **'Close with no charges'**
-  String get returnDeskCloseNoCharges;
-
-  /// The return closes and the rider isn't charged for this scooter.
-  ///
-  /// In en, this message translates to:
-  /// **'The return closes and the rider isn\'t charged for this scooter.'**
-  String get returnDeskCloseNoChargesBody;
-
-  /// Could not load returns
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load returns'**
-  String get returnDeskCouldNotLoad;
-
-  /// Could not load the inspection
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load the inspection'**
-  String get returnDeskCouldNotLoadInspection;
-
-  /// Close-ups of any dents, scratches or broken parts. You can use them as evidence for charges.
-  ///
-  /// In en, this message translates to:
-  /// **'Close-ups of any dents, scratches or broken parts. You can use them as evidence for charges.'**
-  String get returnDeskDamageHint;
-
-  /// Damage photo
-  ///
-  /// In en, this message translates to:
-  /// **'Damage photo'**
-  String get returnDeskDamagePhoto;
-
-  /// Damage photos
-  ///
-  /// In en, this message translates to:
-  /// **'Damage photos'**
-  String get returnDeskDamagePhotos;
-
-  /// Add the details
-  ///
-  /// In en, this message translates to:
-  /// **'Add the details'**
-  String get returnDeskDetailsNeeded;
-
-  /// Draft saved
-  ///
-  /// In en, this message translates to:
-  /// **'Draft saved'**
-  String get returnDeskDraftSaved;
-
-  /// Edit charge
-  ///
-  /// In en, this message translates to:
-  /// **'Edit charge'**
-  String get returnDeskEditCharge;
-
-  /// No returns here
-  ///
-  /// In en, this message translates to:
-  /// **'No returns here'**
-  String get returnDeskEmpty;
-
-  /// Returns riders book at your hubs will show up here.
-  ///
-  /// In en, this message translates to:
-  /// **'Returns riders book at your hubs will show up here.'**
-  String get returnDeskEmptyBody;
-
-  /// Evidence photos
-  ///
-  /// In en, this message translates to:
-  /// **'Evidence photos'**
-  String get returnDeskEvidence;
-
-  /// Pick at least one photo as evidence
-  ///
-  /// In en, this message translates to:
-  /// **'Pick at least one photo as evidence'**
-  String get returnDeskEvidenceNeeded;
-
-  /// Returned
-  ///
-  /// In en, this message translates to:
-  /// **'Returned'**
-  String get returnDeskFilterReturned;
-
-  /// To receive
-  ///
-  /// In en, this message translates to:
-  /// **'To receive'**
-  String get returnDeskFilterToReceive;
-
-  /// Finish inspection
-  ///
-  /// In en, this message translates to:
-  /// **'Finish inspection'**
-  String get returnDeskFinishInspection;
-
-  /// The rider's side is done. A fleet or operations manager approves next, and the charges post to the rider's bill.
-  ///
-  /// In en, this message translates to:
-  /// **'The rider\'s side is done. A fleet or operations manager approves next, and the charges post to the rider\'s bill.'**
-  String get returnDeskGuideApprove;
-
-  /// The rider cancelled this return. Nothing to do.
-  ///
-  /// In en, this message translates to:
-  /// **'The rider cancelled this return. Nothing to do.'**
-  String get returnDeskGuideCancelled;
-
-  /// Add a charge for anything damaged or missing, then send them to the rider. If all is fine, close the return with no charges.
-  ///
-  /// In en, this message translates to:
-  /// **'Add a charge for anything damaged or missing, then send them to the rider. If all is fine, close the return with no charges.'**
-  String get returnDeskGuideCharges;
-
-  /// This return is closed.
-  ///
-  /// In en, this message translates to:
-  /// **'This return is closed.'**
-  String get returnDeskGuideClosed;
-
-  /// The rider disputed the charges. Revise them and send them again.
-  ///
-  /// In en, this message translates to:
-  /// **'The rider disputed the charges. Revise them and send them again.'**
-  String get returnDeskGuideDisputed;
-
-  /// The scooter is at the hub. Inspect it, take the photos and decide whether it can be rented again.
-  ///
-  /// In en, this message translates to:
-  /// **'The scooter is at the hub. Inspect it, take the photos and decide whether it can be rented again.'**
-  String get returnDeskGuideInspect;
-
-  /// Guide shown while a return is waiting to be received
-  ///
-  /// In en, this message translates to:
-  /// **'The rider plans to bring the scooter on {date}. Mark it received when it reaches the hub.'**
-  String returnDeskGuideReceive(String date);
-
-  /// The charges are with the rider to approve with a code sent to their phone.
-  ///
-  /// In en, this message translates to:
-  /// **'The charges are with the rider to approve with a code sent to their phone.'**
-  String get returnDeskGuideWithRider;
-
-  /// Take the photos, check the checklist and decide whether the scooter can go out again.
-  ///
-  /// In en, this message translates to:
-  /// **'Take the photos, check the checklist and decide whether the scooter can go out again.'**
-  String get returnDeskInspectHint;
-
-  /// Inspection saved
-  ///
-  /// In en, this message translates to:
-  /// **'Inspection saved'**
-  String get returnDeskInspectionDone;
-
-  /// Inspection
-  ///
-  /// In en, this message translates to:
-  /// **'Inspection'**
-  String get returnDeskInspectionResult;
-
-  /// Inspect scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Inspect scooter'**
-  String get returnDeskInspectTitle;
-
-  /// Loading the inspection photos. Try again in a moment.
-  ///
-  /// In en, this message translates to:
-  /// **'Loading the inspection photos. Try again in a moment.'**
-  String get returnDeskLoadingPhotos;
-
-  /// Manager approved
-  ///
-  /// In en, this message translates to:
-  /// **'Manager approved'**
-  String get returnDeskManagerApproved;
-
-  /// Mark received
-  ///
-  /// In en, this message translates to:
-  /// **'Mark received'**
-  String get returnDeskMarkReceived;
-
-  /// The inspection isn't ready yet. Pull down to refresh.
-  ///
-  /// In en, this message translates to:
-  /// **'The inspection isn\'t ready yet. Pull down to refresh.'**
-  String get returnDeskNoInspection;
-
-  /// No photos are required here. Add a checklist or damage photos if they help.
-  ///
-  /// In en, this message translates to:
-  /// **'No photos are required here. Add a checklist or damage photos if they help.'**
-  String get returnDeskNoPhotoRules;
-
-  /// No inspection photos yet. Add them on the inspection screen.
-  ///
-  /// In en, this message translates to:
-  /// **'No inspection photos yet. Add them on the inspection screen.'**
-  String get returnDeskNoPhotosYet;
-
-  /// No penalty prices are set up yet. Ask an admin to add them.
-  ///
-  /// In en, this message translates to:
-  /// **'No penalty prices are set up yet. Ask an admin to add them.'**
-  String get returnDeskNoPrices;
-
-  /// Approved on the rider's behalf
-  ///
-  /// In en, this message translates to:
-  /// **'Approved on the rider\'s behalf'**
-  String get returnDeskOverridden;
-
-  /// Reason
-  ///
-  /// In en, this message translates to:
-  /// **'Reason'**
-  String get returnDeskOverrideReason;
-
-  /// Add a reason for approving on the rider's behalf.
-  ///
-  /// In en, this message translates to:
-  /// **'Add a reason for approving on the rider\'s behalf.'**
-  String get returnDeskOverrideReasonNeeded;
-
-  /// Use this only when the rider can't approve. The reason is kept on record.
-  ///
-  /// In en, this message translates to:
-  /// **'Use this only when the rider can\'t approve. The reason is kept on record.'**
-  String get returnDeskOverrideSubtitle;
-
-  /// Photos
-  ///
-  /// In en, this message translates to:
-  /// **'Photos'**
-  String get returnDeskPhotos;
-
-  /// Tap a tile to take that photo. Tiles with a red dot are required.
-  ///
-  /// In en, this message translates to:
-  /// **'Tap a tile to take that photo. Tiles with a red dot are required.'**
-  String get returnDeskPhotosHint;
-
-  /// Required inspection photos not yet taken
-  ///
-  /// In en, this message translates to:
-  /// **'Still needed: {names}'**
-  String returnDeskPhotosMissing(String names);
-
-  /// Choose a charge from the price list
-  ///
-  /// In en, this message translates to:
-  /// **'Choose a charge from the price list'**
-  String get returnDeskPickCharge;
-
-  /// When charges were posted
-  ///
-  /// In en, this message translates to:
-  /// **'Charges posted to the rider\'s bill on {date}.'**
-  String returnDeskPosted(String date);
-
-  /// Scooter received
-  ///
-  /// In en, this message translates to:
-  /// **'Scooter received'**
-  String get returnDeskReceived;
-
-  /// Received at
-  ///
-  /// In en, this message translates to:
-  /// **'Received at'**
-  String get returnDeskReceivedAt;
-
-  /// It came in earlier
-  ///
-  /// In en, this message translates to:
-  /// **'It came in earlier'**
-  String get returnDeskReceivedEarlier;
-
-  /// Record the actual time if you are entering it late
-  ///
-  /// In en, this message translates to:
-  /// **'Record the actual time if you are entering it late'**
-  String get returnDeskReceivedEarlierHint;
-
-  /// When the scooter was received at the hub
-  ///
-  /// In en, this message translates to:
-  /// **'Received {date}'**
-  String returnDeskReceivedOn(String date);
-
-  /// Do this once the scooter is physically at the hub. The rental ends from the time you record.
-  ///
-  /// In en, this message translates to:
-  /// **'Do this once the scooter is physically at the hub. The rental ends from the time you record.'**
-  String get returnDeskReceiveHint;
-
-  /// Receive scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Receive scooter'**
-  String get returnDeskReceiveTitle;
-
-  /// Receiving hub
-  ///
-  /// In en, this message translates to:
-  /// **'Receiving hub'**
-  String get returnDeskReceivingHub;
-
-  /// Change or remove the disputed charges, then send them to the rider again.
-  ///
-  /// In en, this message translates to:
-  /// **'Change or remove the disputed charges, then send them to the rider again.'**
-  String get returnDeskReviseHint;
-
-  /// The rider approved these charges.
-  ///
-  /// In en, this message translates to:
-  /// **'The rider approved these charges.'**
-  String get returnDeskRiderApproved;
-
-  /// Rider's dispute
-  ///
-  /// In en, this message translates to:
-  /// **'Rider\'s dispute'**
-  String get returnDeskRiderDispute;
-
-  /// Rider's note
-  ///
-  /// In en, this message translates to:
-  /// **'Rider\'s note'**
-  String get returnDeskRiderNote;
-
-  /// Needs repair first
-  ///
-  /// In en, this message translates to:
-  /// **'Needs repair first'**
-  String get returnDeskSafeNo;
-
-  /// It goes to maintenance and can't be allocated
-  ///
-  /// In en, this message translates to:
-  /// **'It goes to maintenance and can\'t be allocated'**
-  String get returnDeskSafeNoHint;
-
-  /// Can it be rented again?
-  ///
-  /// In en, this message translates to:
-  /// **'Can it be rented again?'**
-  String get returnDeskSafety;
-
-  /// Choose whether the scooter can be rented again
-  ///
-  /// In en, this message translates to:
-  /// **'Choose whether the scooter can be rented again'**
-  String get returnDeskSafetyNeeded;
-
-  /// Safe to rent again
-  ///
-  /// In en, this message translates to:
-  /// **'Safe to rent again'**
-  String get returnDeskSafeYes;
-
-  /// It goes back to the available pool
-  ///
-  /// In en, this message translates to:
-  /// **'It goes back to the available pool'**
-  String get returnDeskSafeYesHint;
-
-  /// Save charge
-  ///
-  /// In en, this message translates to:
-  /// **'Save charge'**
-  String get returnDeskSaveCharge;
-
-  /// Save draft
-  ///
-  /// In en, this message translates to:
-  /// **'Save draft'**
-  String get returnDeskSaveDraft;
-
-  /// Send to rider
-  ///
-  /// In en, this message translates to:
-  /// **'Send to rider'**
-  String get returnDeskSendToRider;
-
-  /// The rider sees these charges in their app and approves them with a code. You can't edit them while they're with the rider.
-  ///
-  /// In en, this message translates to:
-  /// **'The rider sees these charges in their app and approves them with a code. You can\'t edit them while they\'re with the rider.'**
-  String get returnDeskSendToRiderBody;
-
-  /// Charges sent to the rider
-  ///
-  /// In en, this message translates to:
-  /// **'Charges sent to the rider'**
-  String get returnDeskSentToRider;
-
-  /// Needs approval
-  ///
-  /// In en, this message translates to:
-  /// **'Needs approval'**
-  String get returnDeskStageApproval;
-
-  /// Awaiting scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Awaiting scooter'**
-  String get returnDeskStageAwaiting;
-
-  /// Add charges
-  ///
-  /// In en, this message translates to:
-  /// **'Add charges'**
-  String get returnDeskStageCharges;
-
-  /// Inspect scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Inspect scooter'**
-  String get returnDeskStageInspect;
-
-  /// With rider
-  ///
-  /// In en, this message translates to:
-  /// **'With rider'**
-  String get returnDeskStageWithRider;
-
-  /// Start inspection
-  ///
-  /// In en, this message translates to:
-  /// **'Start inspection'**
-  String get returnDeskStartInspection;
-
-  /// Scooters riders are handing back
-  ///
-  /// In en, this message translates to:
-  /// **'Scooters riders are handing back'**
-  String get returnDeskSubtitle;
-
-  /// Return desk
-  ///
-  /// In en, this message translates to:
-  /// **'Return desk'**
-  String get returnDeskTitle;
-
-  /// What needs fixing?
-  ///
-  /// In en, this message translates to:
-  /// **'What needs fixing?'**
-  String get returnDeskUnsafeReason;
-
-  /// Say what needs fixing
-  ///
-  /// In en, this message translates to:
-  /// **'Say what needs fixing'**
-  String get returnDeskUnsafeReasonNeeded;
-
-  /// A fleet or operations manager approves next.
-  ///
-  /// In en, this message translates to:
-  /// **'A fleet or operations manager approves next.'**
-  String get returnDeskWaitingManager;
-
-  /// Status while charges wait for the rider
-  ///
-  /// In en, this message translates to:
-  /// **'Waiting for {name} to approve with the code sent to their phone.'**
-  String returnDeskWaitingRider(String name);
-
-  /// Agreement
-  ///
-  /// In en, this message translates to:
-  /// **'Agreement'**
-  String get returnsAgreement;
-
   /// Approve charges
   ///
   /// In en, this message translates to:
@@ -6982,12 +6544,6 @@ abstract class AppL10n {
   /// **'Submit the penalties before approving them.'**
   String get returnsErrorSubmitFirst;
 
-  /// Travel time to a hub
-  ///
-  /// In en, this message translates to:
-  /// **'{minutes} min away'**
-  String returnsEtaMinutes(int minutes);
-
   /// Number of evidence photos for a charge
   ///
   /// In en, this message translates to:
@@ -7024,23 +6580,23 @@ abstract class AppL10n {
   /// **'We use your location to list the hubs closest to you.'**
   String get returnsLocationForHubs;
 
-  /// If anything is damaged or missing, you see the charges here and approve them with a code before they are billed.
+  /// The hub team photographs the scooter and a mechanic checks it.
   ///
   /// In en, this message translates to:
-  /// **'If anything is damaged or missing, you see the charges here and approve them with a code before they are billed.'**
-  String get returnsNextCharges;
+  /// **'The hub team photographs the scooter and a mechanic checks it.'**
+  String get returnsNextCheckIn;
+
+  /// You get a code on your phone to confirm the report and any charges. Your rental ends once it's confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'You get a code on your phone to confirm the report and any charges. Your rental ends once it\'s confirmed.'**
+  String get returnsNextConfirm;
 
   /// Bring the scooter, its battery and charger to the hub on the date you picked.
   ///
   /// In en, this message translates to:
   /// **'Bring the scooter, its battery and charger to the hub on the date you picked.'**
   String get returnsNextHandOver;
-
-  /// The hub team checks the scooter in and inspects it.
-  ///
-  /// In en, this message translates to:
-  /// **'The hub team checks the scooter in and inspects it.'**
-  String get returnsNextInspection;
 
   /// No charges for this return.
   ///
@@ -7078,11 +6634,29 @@ abstract class AppL10n {
   /// **'You cancelled this return. Your rental carries on as before.'**
   String get returnsNoteCancelled;
 
+  /// Return closed. The check-in report below shows any charges.
+  ///
+  /// In en, this message translates to:
+  /// **'Return closed. The check-in report below shows any charges.'**
+  String get returnsNoteCheckInDone;
+
+  /// The hub team is checking your scooter. When the mechanic's report is ready, you'll get a code on your phone to confirm it.
+  ///
+  /// In en, this message translates to:
+  /// **'The hub team is checking your scooter. When the mechanic\'s report is ready, you\'ll get a code on your phone to confirm it.'**
+  String get returnsNoteCheckingIn;
+
   /// You disputed these charges. The hub team will review them and may revise them.
   ///
   /// In en, this message translates to:
   /// **'You disputed these charges. The hub team will review them and may revise them.'**
   String get returnsNoteDisputed;
+
+  /// Your scooter is checked in and your rental has ended. A mechanic is doing a final check, and if it finds anything more you'll be asked to confirm it.
+  ///
+  /// In en, this message translates to:
+  /// **'Your scooter is checked in and your rental has ended. A mechanic is doing a final check, and if it finds anything more you\'ll be asked to confirm it.'**
+  String get returnsNoteFinalChecks;
 
   /// The hub has your scooter and is inspecting it. Any charges will show up here for your approval.
   ///
@@ -7168,12 +6742,6 @@ abstract class AppL10n {
   /// **'Choose a reason'**
   String get returnsPickReason;
 
-  /// Choose the rental to end
-  ///
-  /// In en, this message translates to:
-  /// **'Choose the rental to end'**
-  String get returnsPickRental;
-
   /// Planned return date
   ///
   /// In en, this message translates to:
@@ -7258,12 +6826,6 @@ abstract class AppL10n {
   /// **'Problems with the scooter'**
   String get returnsReasonVehicleIssues;
 
-  /// Rental
-  ///
-  /// In en, this message translates to:
-  /// **'Rental'**
-  String get returnsRental;
-
   /// Return requested. See you at the hub.
   ///
   /// In en, this message translates to:
@@ -7300,6 +6862,12 @@ abstract class AppL10n {
   /// **'Cancelled'**
   String get returnsStatusCancelled;
 
+  /// Checking in
+  ///
+  /// In en, this message translates to:
+  /// **'Checking in'**
+  String get returnsStatusCheckingIn;
+
   /// Closed
   ///
   /// In en, this message translates to:
@@ -7311,6 +6879,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Disputed'**
   String get returnsStatusDisputed;
+
+  /// Final checks
+  ///
+  /// In en, this message translates to:
+  /// **'Final checks'**
+  String get returnsStatusFinalChecks;
 
   /// Being inspected
   ///
@@ -7330,11 +6904,23 @@ abstract class AppL10n {
   /// **'Return requested'**
   String get returnsStatusRequested;
 
+  /// Scooter checked in
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter checked in'**
+  String get returnsStepCheckIn;
+
   /// Return closed
   ///
   /// In en, this message translates to:
   /// **'Return closed'**
   String get returnsStepClosed;
+
+  /// Final mechanic check
+  ///
+  /// In en, this message translates to:
+  /// **'Final mechanic check'**
+  String get returnsStepFinalChecks;
 
   /// Scooter handed over
   ///
@@ -7600,24 +7186,6 @@ abstract class AppL10n {
   /// **'Delivery box'**
   String get scooterDeliveryBox;
 
-  /// Device ID
-  ///
-  /// In en, this message translates to:
-  /// **'Device ID'**
-  String get scooterDeviceId;
-
-  /// Device number
-  ///
-  /// In en, this message translates to:
-  /// **'Device number'**
-  String get scooterDeviceNumber;
-
-  /// Firmware
-  ///
-  /// In en, this message translates to:
-  /// **'Firmware'**
-  String get scooterFirmware;
-
   /// Fitness certificate
   ///
   /// In en, this message translates to:
@@ -7653,12 +7221,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'IoT online'**
   String get scooterIotOnline;
-
-  /// Last ping
-  ///
-  /// In en, this message translates to:
-  /// **'Last ping'**
-  String get scooterLastPing;
 
   /// Motor number
   ///
@@ -7714,12 +7276,6 @@ abstract class AppL10n {
   /// **'Registration certificate'**
   String get scooterRegistrationCertificate;
 
-  /// Signal strength
-  ///
-  /// In en, this message translates to:
-  /// **'Signal strength'**
-  String get scooterSignalStrength;
-
   /// Toolkit
   ///
   /// In en, this message translates to:
@@ -7755,6 +7311,792 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Who looks after you'**
   String get scooterWhoLooksAfter;
+
+  /// Add charge
+  ///
+  /// In en, this message translates to:
+  /// **'Add charge'**
+  String get submissionAddCharge;
+
+  /// Can't use a code?
+  ///
+  /// In en, this message translates to:
+  /// **'Can\'t use a code?'**
+  String get submissionBypass;
+
+  /// Skipping code
+  ///
+  /// In en, this message translates to:
+  /// **'Skipping code'**
+  String get submissionBypassing;
+
+  /// Why can't they confirm with a code?
+  ///
+  /// In en, this message translates to:
+  /// **'Why can\'t they confirm with a code?'**
+  String get submissionBypassReason;
+
+  /// Recorded rider bypass reason
+  ///
+  /// In en, this message translates to:
+  /// **'Rider code skipped: {reason}'**
+  String submissionBypassRider(String reason);
+
+  /// Recorded team lead bypass reason
+  ///
+  /// In en, this message translates to:
+  /// **'Team lead code skipped: {reason}'**
+  String submissionBypassTeamLead(String reason);
+
+  /// Why a report was cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled: {reason}'**
+  String submissionCancelledBecause(String reason);
+
+  /// Reason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get submissionCancelReason;
+
+  /// Enter a reason to cancel the report.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a reason to cancel the report.'**
+  String get submissionCancelReasonNeeded;
+
+  /// Cancel report
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel report'**
+  String get submissionCancelReport;
+
+  /// Say why. You can record a fresh report afterwards.
+  ///
+  /// In en, this message translates to:
+  /// **'Say why. You can record a fresh report afterwards.'**
+  String get submissionCancelReportHint;
+
+  /// Cancel this report?
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel this report?'**
+  String get submissionCancelReportTitle;
+
+  /// Details
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get submissionChargeDetails;
+
+  /// Where is the damage, or what is missing?
+  ///
+  /// In en, this message translates to:
+  /// **'Where is the damage, or what is missing?'**
+  String get submissionChargeDetailsHint;
+
+  /// Pick at least one photo as proof for this charge.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick at least one photo as proof for this charge.'**
+  String get submissionChargeEvidenceNeeded;
+
+  /// Charges
+  ///
+  /// In en, this message translates to:
+  /// **'Charges'**
+  String get submissionCharges;
+
+  /// Add a charge for each damaged or missing item. Leave it empty if there's nothing to charge.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a charge for each damaged or missing item. Leave it empty if there\'s nothing to charge.'**
+  String get submissionChargesHint;
+
+  /// Chassis
+  ///
+  /// In en, this message translates to:
+  /// **'Chassis'**
+  String get submissionChassis;
+
+  /// Missing items need the return checklist photo as proof.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing items need the return checklist photo as proof.'**
+  String get submissionChecklistNeeded;
+
+  /// All mechanic checks are done
+  ///
+  /// In en, this message translates to:
+  /// **'All mechanic checks are done'**
+  String get submissionChecksComplete;
+
+  /// This closes the mechanic checks for this scooter. You won't be able to add more reports.
+  ///
+  /// In en, this message translates to:
+  /// **'This closes the mechanic checks for this scooter. You won\'t be able to add more reports.'**
+  String get submissionChecksCompleteConfirm;
+
+  /// Turn on only when no more checks are needed. No more reports can be added after this.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on only when no more checks are needed. No more reports can be added after this.'**
+  String get submissionChecksCompleteHint;
+
+  /// The code couldn't be sent. Try again or record why it can't be used.
+  ///
+  /// In en, this message translates to:
+  /// **'The code couldn\'t be sent. Try again or record why it can\'t be used.'**
+  String get submissionCodeNotSent;
+
+  /// No code yet
+  ///
+  /// In en, this message translates to:
+  /// **'No code yet'**
+  String get submissionCodePending;
+
+  /// Code sent
+  ///
+  /// In en, this message translates to:
+  /// **'Code sent'**
+  String get submissionCodeSent;
+
+  /// Masked phone number that received the code
+  ///
+  /// In en, this message translates to:
+  /// **'Code sent to {phone}'**
+  String submissionCodeSentTo(String phone);
+
+  /// Codes sent
+  ///
+  /// In en, this message translates to:
+  /// **'Codes sent'**
+  String get submissionCodesSent;
+
+  /// Collect confirmations
+  ///
+  /// In en, this message translates to:
+  /// **'Collect confirmations'**
+  String get submissionCollect;
+
+  /// Confirm report
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm report'**
+  String get submissionConfirm;
+
+  /// Report confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Report confirmed'**
+  String get submissionConfirmed;
+
+  /// The rider and the team lead each get a code by SMS. Enter both codes to confirm. If someone can't use a code, record why.
+  ///
+  /// In en, this message translates to:
+  /// **'The rider and the team lead each get a code by SMS. Enter both codes to confirm. If someone can\'t use a code, record why.'**
+  String get submissionConfirmHint;
+
+  /// Confirm report
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm report'**
+  String get submissionConfirmTitle;
+
+  /// Couldn't load this check-in
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load this check-in'**
+  String get submissionCouldNotLoad;
+
+  /// Add details for this charge.
+  ///
+  /// In en, this message translates to:
+  /// **'Add details for this charge.'**
+  String get submissionDetailsNeeded;
+
+  /// Edit charge
+  ///
+  /// In en, this message translates to:
+  /// **'Edit charge'**
+  String get submissionEditCharge;
+
+  /// Proof photos
+  ///
+  /// In en, this message translates to:
+  /// **'Proof photos'**
+  String get submissionEvidence;
+
+  /// Pick the photos that back up this report.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the photos that back up this report.'**
+  String get submissionEvidenceHint;
+
+  /// Maximum proof photos
+  ///
+  /// In en, this message translates to:
+  /// **'You can pick up to {count} photos.'**
+  String submissionEvidenceLimit(int count);
+
+  /// Pick at least one proof photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick at least one proof photo.'**
+  String get submissionEvidenceNeeded;
+
+  /// Damage & extra photos
+  ///
+  /// In en, this message translates to:
+  /// **'Damage & extra photos'**
+  String get submissionExtraPhotos;
+
+  /// Add close-ups of any damage. You can attach them to charges in the report.
+  ///
+  /// In en, this message translates to:
+  /// **'Add close-ups of any damage. You can attach them to charges in the report.'**
+  String get submissionExtraPhotosHint;
+
+  /// Findings
+  ///
+  /// In en, this message translates to:
+  /// **'Findings'**
+  String get submissionFindings;
+
+  /// Impose report
+  ///
+  /// In en, this message translates to:
+  /// **'Impose report'**
+  String get submissionImpose;
+
+  /// Make sure the rider has seen the findings and charges. After this the report can't be changed, only cancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Make sure the rider has seen the findings and charges. After this the report can\'t be changed, only cancelled.'**
+  String get submissionImposeBody;
+
+  /// Report imposed
+  ///
+  /// In en, this message translates to:
+  /// **'Report imposed'**
+  String get submissionImposed;
+
+  /// Impose this report?
+  ///
+  /// In en, this message translates to:
+  /// **'Impose this report?'**
+  String get submissionImposeTitle;
+
+  /// Mechanic name
+  ///
+  /// In en, this message translates to:
+  /// **'Mechanic name'**
+  String get submissionMechanicName;
+
+  /// Enter the mechanic's name
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the mechanic\'s name'**
+  String get submissionNameNeeded;
+
+  /// All checks are done. Nothing more to do here.
+  ///
+  /// In en, this message translates to:
+  /// **'All checks are done. Nothing more to do here.'**
+  String get submissionNextComplete;
+
+  /// The scooter is checked in. Record the final mechanic check when it's done.
+  ///
+  /// In en, this message translates to:
+  /// **'The scooter is checked in. Record the final mechanic check when it\'s done.'**
+  String get submissionNextDeep;
+
+  /// Next step
+  ///
+  /// In en, this message translates to:
+  /// **'Next step'**
+  String get submissionNextLabel;
+
+  /// Collect the rider's and team lead's codes to confirm the report.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect the rider\'s and team lead\'s codes to confirm the report.'**
+  String get submissionNextOtps;
+
+  /// Required check-in photos still missing
+  ///
+  /// In en, this message translates to:
+  /// **'Photos still to take: {count}. Then record the mechanic\'s report.'**
+  String submissionNextPhotos(int count);
+
+  /// All photos are in. Record the mechanic's report next.
+  ///
+  /// In en, this message translates to:
+  /// **'All photos are in. Record the mechanic\'s report next.'**
+  String get submissionNextReport;
+
+  /// Go through the report and any charges with the rider, then impose it.
+  ///
+  /// In en, this message translates to:
+  /// **'Go through the report and any charges with the rider, then impose it.'**
+  String get submissionNextReview;
+
+  /// No photos yet. Take them on the check-in screen first.
+  ///
+  /// In en, this message translates to:
+  /// **'No photos yet. Take them on the check-in screen first.'**
+  String get submissionNoPhotosYet;
+
+  /// No penalty prices are set up yet. Ask an admin to add them on the dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'No penalty prices are set up yet. Ask an admin to add them on the dashboard.'**
+  String get submissionNoPrices;
+
+  /// Nothing to confirm
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to confirm'**
+  String get submissionNothingToConfirm;
+
+  /// There's no imposed report waiting for codes on this check-in.
+  ///
+  /// In en, this message translates to:
+  /// **'There\'s no imposed report waiting for codes on this check-in.'**
+  String get submissionNothingToConfirmBody;
+
+  /// Rider
+  ///
+  /// In en, this message translates to:
+  /// **'Rider'**
+  String get submissionPartyRider;
+
+  /// Team lead
+  ///
+  /// In en, this message translates to:
+  /// **'Team lead'**
+  String get submissionPartyTeamLead;
+
+  /// Photo of a specific battery
+  ///
+  /// In en, this message translates to:
+  /// **'Battery {name}'**
+  String submissionPhotoBattery(String name);
+
+  /// Battery
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get submissionPhotoBatteryGeneric;
+
+  /// Return checklist
+  ///
+  /// In en, this message translates to:
+  /// **'Return checklist'**
+  String get submissionPhotoChecklist;
+
+  /// Photo of a specific controller
+  ///
+  /// In en, this message translates to:
+  /// **'Controller {number}'**
+  String submissionPhotoController(String number);
+
+  /// Controller
+  ///
+  /// In en, this message translates to:
+  /// **'Controller'**
+  String get submissionPhotoControllerGeneric;
+
+  /// Damage photo
+  ///
+  /// In en, this message translates to:
+  /// **'Damage photo'**
+  String get submissionPhotoDamage;
+
+  /// IoT device
+  ///
+  /// In en, this message translates to:
+  /// **'IoT device'**
+  String get submissionPhotoIot;
+
+  /// Required photos
+  ///
+  /// In en, this message translates to:
+  /// **'Required photos'**
+  String get submissionPhotos;
+
+  /// Tap an empty slot to take the photo. Tap a taken photo to view it.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap an empty slot to take the photo. Tap a taken photo to view it.'**
+  String get submissionPhotosHint;
+
+  /// Pick a charge
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a charge'**
+  String get submissionPickCharge;
+
+  /// Quantity
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get submissionQuantity;
+
+  /// Receiving hub
+  ///
+  /// In en, this message translates to:
+  /// **'Receiving hub'**
+  String get submissionReceivingHub;
+
+  /// Record final check
+  ///
+  /// In en, this message translates to:
+  /// **'Record final check'**
+  String get submissionRecordFinal;
+
+  /// Record mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Record mechanic report'**
+  String get submissionRecordReport;
+
+  /// Mechanic who wrote the report
+  ///
+  /// In en, this message translates to:
+  /// **'By {name}'**
+  String submissionReportBy(String name);
+
+  /// Report cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Report cancelled'**
+  String get submissionReportCancelled;
+
+  /// Mechanic reports
+  ///
+  /// In en, this message translates to:
+  /// **'Mechanic reports'**
+  String get submissionReports;
+
+  /// Report saved
+  ///
+  /// In en, this message translates to:
+  /// **'Report saved'**
+  String get submissionReportSaved;
+
+  /// Resend codes
+  ///
+  /// In en, this message translates to:
+  /// **'Resend codes'**
+  String get submissionResendAll;
+
+  /// Rider's note
+  ///
+  /// In en, this message translates to:
+  /// **'Rider\'s note'**
+  String get submissionRiderNote;
+
+  /// No, it needs work
+  ///
+  /// In en, this message translates to:
+  /// **'No, it needs work'**
+  String get submissionSafeNo;
+
+  /// It stays in maintenance after the checks.
+  ///
+  /// In en, this message translates to:
+  /// **'It stays in maintenance after the checks.'**
+  String get submissionSafeNoHint;
+
+  /// Safe to use again?
+  ///
+  /// In en, this message translates to:
+  /// **'Safe to use again?'**
+  String get submissionSafeQuestion;
+
+  /// Choose whether it's safe to use again
+  ///
+  /// In en, this message translates to:
+  /// **'Choose whether it\'s safe to use again'**
+  String get submissionSafetyNeeded;
+
+  /// Yes, it's safe
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, it\'s safe'**
+  String get submissionSafeYes;
+
+  /// It can go back into the fleet once the checks are done.
+  ///
+  /// In en, this message translates to:
+  /// **'It can go back into the fleet once the checks are done.'**
+  String get submissionSafeYesHint;
+
+  /// All
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get submissionsAll;
+
+  /// Save charge
+  ///
+  /// In en, this message translates to:
+  /// **'Save charge'**
+  String get submissionSaveCharge;
+
+  /// Save report
+  ///
+  /// In en, this message translates to:
+  /// **'Save report'**
+  String get submissionSaveReport;
+
+  /// Couldn't load returns and exchanges
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load returns and exchanges'**
+  String get submissionsCouldNotLoad;
+
+  /// Check in returned scooters
+  ///
+  /// In en, this message translates to:
+  /// **'Check in returned scooters'**
+  String get submissionsDrawerSubtitle;
+
+  /// Planned drop-off date on a queue row
+  ///
+  /// In en, this message translates to:
+  /// **'Drop-off {date}'**
+  String submissionsDropOff(String date);
+
+  /// Drop-off date
+  ///
+  /// In en, this message translates to:
+  /// **'Drop-off date'**
+  String get submissionsDropOffDate;
+
+  /// Returns and exchanges for your hub show up here.
+  ///
+  /// In en, this message translates to:
+  /// **'Returns and exchanges for your hub show up here.'**
+  String get submissionsEmptyAll;
+
+  /// No check-ins are in progress.
+  ///
+  /// In en, this message translates to:
+  /// **'No check-ins are in progress.'**
+  String get submissionsEmptyChecks;
+
+  /// No scooters are due at your hub right now.
+  ///
+  /// In en, this message translates to:
+  /// **'No scooters are due at your hub right now.'**
+  String get submissionsEmptyScheduled;
+
+  /// Nothing here
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here'**
+  String get submissionsEmptyTitle;
+
+  /// Send codes
+  ///
+  /// In en, this message translates to:
+  /// **'Send codes'**
+  String get submissionSendCodes;
+
+  /// Exchanges
+  ///
+  /// In en, this message translates to:
+  /// **'Exchanges'**
+  String get submissionsExchanges;
+
+  /// Exchanges due
+  ///
+  /// In en, this message translates to:
+  /// **'Exchanges due'**
+  String get submissionsExchangesDue;
+
+  /// In checks
+  ///
+  /// In en, this message translates to:
+  /// **'In checks'**
+  String get submissionsInChecks;
+
+  /// Exchange
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange'**
+  String get submissionSourceExchange;
+
+  /// Return
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get submissionSourceReturn;
+
+  /// Returns
+  ///
+  /// In en, this message translates to:
+  /// **'Returns'**
+  String get submissionsReturns;
+
+  /// Returns due
+  ///
+  /// In en, this message translates to:
+  /// **'Returns due'**
+  String get submissionsReturnsDue;
+
+  /// Scheduled
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get submissionsScheduled;
+
+  /// Check in scooters that riders bring back to your hub.
+  ///
+  /// In en, this message translates to:
+  /// **'Check in scooters that riders bring back to your hub.'**
+  String get submissionsSubtitle;
+
+  /// Confirm a staff-started return
+  ///
+  /// In en, this message translates to:
+  /// **'This starts the check-in for {vehicle} now. {rider}\'s rental ends once the mechanic\'s report is confirmed.'**
+  String submissionStaffReturnBody(String rider, String vehicle);
+
+  /// Take this scooter back?
+  ///
+  /// In en, this message translates to:
+  /// **'Take this scooter back?'**
+  String get submissionStaffReturnTitle;
+
+  /// Checking in
+  ///
+  /// In en, this message translates to:
+  /// **'Checking in'**
+  String get submissionStageCheckingIn;
+
+  /// Done
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get submissionStageDone;
+
+  /// Final checks
+  ///
+  /// In en, this message translates to:
+  /// **'Final checks'**
+  String get submissionStageFinalChecks;
+
+  /// Scheduled
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get submissionStageScheduled;
+
+  /// Start check-in
+  ///
+  /// In en, this message translates to:
+  /// **'Start check-in'**
+  String get submissionStart;
+
+  /// Start once the rider is at the hub with the scooter. The scooter can't be allocated again until the check-in is finished.
+  ///
+  /// In en, this message translates to:
+  /// **'Start once the rider is at the hub with the scooter. The scooter can\'t be allocated again until the check-in is finished.'**
+  String get submissionStartBody;
+
+  /// Check-in started
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in started'**
+  String get submissionStarted;
+
+  /// Started
+  ///
+  /// In en, this message translates to:
+  /// **'Started'**
+  String get submissionStartedAt;
+
+  /// Start check-in
+  ///
+  /// In en, this message translates to:
+  /// **'Start check-in'**
+  String get submissionStartTitle;
+
+  /// Cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get submissionStatusCancelled;
+
+  /// Returns & exchanges
+  ///
+  /// In en, this message translates to:
+  /// **'Returns & exchanges'**
+  String get submissionsTitle;
+
+  /// What the mechanic found
+  ///
+  /// In en, this message translates to:
+  /// **'What the mechanic found'**
+  String get submissionSummary;
+
+  /// Condition of the body, battery, controller and accessories
+  ///
+  /// In en, this message translates to:
+  /// **'Condition of the body, battery, controller and accessories'**
+  String get submissionSummaryHint;
+
+  /// Describe what the mechanic found
+  ///
+  /// In en, this message translates to:
+  /// **'Describe what the mechanic found'**
+  String get submissionSummaryNeeded;
+
+  /// Why isn't it safe?
+  ///
+  /// In en, this message translates to:
+  /// **'Why isn\'t it safe?'**
+  String get submissionUnsafeReason;
+
+  /// Say why it isn't safe
+  ///
+  /// In en, this message translates to:
+  /// **'Say why it isn\'t safe'**
+  String get submissionUnsafeReasonNeeded;
+
+  /// Use a code instead
+  ///
+  /// In en, this message translates to:
+  /// **'Use a code instead'**
+  String get submissionUseCode;
+
+  /// Rider confirmed with a code
+  ///
+  /// In en, this message translates to:
+  /// **'Rider confirmed with a code'**
+  String get submissionVerifiedRider;
+
+  /// Team lead confirmed with a code
+  ///
+  /// In en, this message translates to:
+  /// **'Team lead confirmed with a code'**
+  String get submissionVerifiedTeamLead;
+
+  /// Verify code
+  ///
+  /// In en, this message translates to:
+  /// **'Verify code'**
+  String get submissionVerify;
+
+  /// View photo
+  ///
+  /// In en, this message translates to:
+  /// **'View photo'**
+  String get submissionViewPhoto;
 
   /// Accident or theft
   ///
@@ -7948,12 +8290,6 @@ abstract class AppL10n {
   /// **'Raise a ticket'**
   String get supportRaiseTicket;
 
-  /// Reopen
-  ///
-  /// In en, this message translates to:
-  /// **'Reopen'**
-  String get supportReopen;
-
   /// The rider can still reply. A reply from them reopens the ticket.
   ///
   /// In en, this message translates to:
@@ -8128,6 +8464,240 @@ abstract class AppL10n {
   /// **'Units: {count}'**
   String swapUnits(String count);
 
+  /// Advisor
+  ///
+  /// In en, this message translates to:
+  /// **'Advisor'**
+  String get teamAdvisor;
+
+  /// Battery Expert
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Expert'**
+  String get teamBatteryExpert;
+
+  /// Hub team
+  ///
+  /// In en, this message translates to:
+  /// **'Hub team'**
+  String get teamHubTeam;
+
+  /// Motor Controller Repair
+  ///
+  /// In en, this message translates to:
+  /// **'Motor Controller Repair'**
+  String get teamMotorControllerRepair;
+
+  /// Feature not included
+  ///
+  /// In en, this message translates to:
+  /// **'Feature not included'**
+  String get teamNotIncluded;
+
+  /// This feature is not included in your current package.
+  ///
+  /// In en, this message translates to:
+  /// **'This feature is not included in your current package.'**
+  String get teamNotIncludedMessage;
+
+  /// Technician
+  ///
+  /// In en, this message translates to:
+  /// **'Technician'**
+  String get teamTechnician;
+
+  /// Keep it clean
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it clean'**
+  String get trainingCareClean;
+
+  /// Maintain the scooter in clean and good condition.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintain the scooter in clean and good condition.'**
+  String get trainingCareCleanBody;
+
+  /// Report issues
+  ///
+  /// In en, this message translates to:
+  /// **'Report issues'**
+  String get trainingCareReport;
+
+  /// Immediately report any accident, damage, unusual noise, warning light or vehicle fault to us.
+  ///
+  /// In en, this message translates to:
+  /// **'Immediately report any accident, damage, unusual noise, warning light or vehicle fault to us.'**
+  String get trainingCareReportBody;
+
+  /// No tampering
+  ///
+  /// In en, this message translates to:
+  /// **'No tampering'**
+  String get trainingCareTamper;
+
+  /// Do not open, modify or tamper with the battery, motor, controller, wiring or GPS device.
+  ///
+  /// In en, this message translates to:
+  /// **'Do not open, modify or tamper with the battery, motor, controller, wiring or GPS device.'**
+  String get trainingCareTamperBody;
+
+  /// No deep water
+  ///
+  /// In en, this message translates to:
+  /// **'No deep water'**
+  String get trainingCareWater;
+
+  /// Do not take the scooter through flooded/deep-water areas or use high-pressure water on it.
+  ///
+  /// In en, this message translates to:
+  /// **'Do not take the scooter through flooded/deep-water areas or use high-pressure water on it.'**
+  String get trainingCareWaterBody;
+
+  /// Use approved equipment
+  ///
+  /// In en, this message translates to:
+  /// **'Use approved equipment'**
+  String get trainingChargeEquipment;
+
+  /// Use only the charger/battery/accessories provided or approved by us.
+  ///
+  /// In en, this message translates to:
+  /// **'Use only the charger/battery/accessories provided or approved by us.'**
+  String get trainingChargeEquipmentBody;
+
+  /// Park responsibly
+  ///
+  /// In en, this message translates to:
+  /// **'Park responsibly'**
+  String get trainingChargePark;
+
+  /// Park securely at permitted locations and avoid water, fire or theft risks.
+  ///
+  /// In en, this message translates to:
+  /// **'Park securely at permitted locations and avoid water, fire or theft risks.'**
+  String get trainingChargeParkBody;
+
+  /// Ride responsibly
+  ///
+  /// In en, this message translates to:
+  /// **'Ride responsibly'**
+  String get trainingChargeRide;
+
+  /// No overloading, unsafe riding, jumping, racing or misuse of the scooter.
+  ///
+  /// In en, this message translates to:
+  /// **'No overloading, unsafe riding, jumping, racing or misuse of the scooter.'**
+  String get trainingChargeRideBody;
+
+  /// Charge/swap only at designated stations
+  ///
+  /// In en, this message translates to:
+  /// **'Charge/swap only at designated stations'**
+  String get trainingChargeStations;
+
+  /// Use only approved charging/swapping station locations.
+  ///
+  /// In en, this message translates to:
+  /// **'Use only approved charging/swapping station locations.'**
+  String get trainingChargeStationsBody;
+
+  /// Charging & usage
+  ///
+  /// In en, this message translates to:
+  /// **'Charging & usage'**
+  String get trainingCharging;
+
+  /// Follow these simple guidelines for a safe, smooth and hassle-free ride.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow these simple guidelines for a safe, smooth and hassle-free ride.'**
+  String get trainingChargingSummary;
+
+  /// Key points
+  ///
+  /// In en, this message translates to:
+  /// **'Key points'**
+  String get trainingKeyPoints;
+
+  /// Payments on app only
+  ///
+  /// In en, this message translates to:
+  /// **'Payments on app only'**
+  String get trainingPayApp;
+
+  /// All rental, deposit and other applicable payments must be made through the official app/payment process.
+  ///
+  /// In en, this message translates to:
+  /// **'All rental, deposit and other applicable payments must be made through the official app/payment process.'**
+  String get trainingPayAppBody;
+
+  /// No bribe / unofficial payment
+  ///
+  /// In en, this message translates to:
+  /// **'No bribe / unofficial payment'**
+  String get trainingPayBribe;
+
+  /// Never pay or offer a bribe, commission or personal payment to a TL or company representative.
+  ///
+  /// In en, this message translates to:
+  /// **'Never pay or offer a bribe, commission or personal payment to a TL or company representative.'**
+  String get trainingPayBribeBody;
+
+  /// No cash payments
+  ///
+  /// In en, this message translates to:
+  /// **'No cash payments'**
+  String get trainingPayCash;
+
+  /// Do not make cash payments to any TL, staff member or representative.
+  ///
+  /// In en, this message translates to:
+  /// **'Do not make cash payments to any TL, staff member or representative.'**
+  String get trainingPayCashBody;
+
+  /// Payments & conduct
+  ///
+  /// In en, this message translates to:
+  /// **'Payments & conduct'**
+  String get trainingPayments;
+
+  /// Follow these simple guidelines for safe, transparent and hassle-free transactions.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow these simple guidelines for safe, transparent and hassle-free transactions.'**
+  String get trainingPaymentsSummary;
+
+  /// Report concerns
+  ///
+  /// In en, this message translates to:
+  /// **'Report concerns'**
+  String get trainingPayReport;
+
+  /// Report any demand for cash, bribe, unauthorised charge, misconduct or other issue directly to us.
+  ///
+  /// In en, this message translates to:
+  /// **'Report any demand for cash, bribe, unauthorised charge, misconduct or other issue directly to us.'**
+  String get trainingPayReportBody;
+
+  /// Vehicle care
+  ///
+  /// In en, this message translates to:
+  /// **'Vehicle care'**
+  String get trainingVehicleCare;
+
+  /// Keep the scooter safe, clean and ready for every ride.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep the scooter safe, clean and ready for every ride.'**
+  String get trainingVehicleCareSummary;
+
+  /// Viewed
+  ///
+  /// In en, this message translates to:
+  /// **'Viewed'**
+  String get trainingViewed;
+
   /// Enter a date on or before today
   ///
   /// In en, this message translates to:
@@ -8175,6 +8745,192 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'This field'**
   String get validationField;
+
+  /// Approve
+  ///
+  /// In en, this message translates to:
+  /// **'Approve'**
+  String get verifyApprove;
+
+  /// Approve all documents to assign a vehicle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approve all documents to assign a vehicle.'**
+  String get verifyApproveAllFirst;
+
+  /// Approved
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get verifyApproved;
+
+  /// Approve this document?
+  ///
+  /// In en, this message translates to:
+  /// **'Approve this document?'**
+  String get verifyApproveDocument;
+
+  /// Confirm message before approving a rider document or reference
+  ///
+  /// In en, this message translates to:
+  /// **'{name} will be marked as verified. This can\'t be changed later.'**
+  String verifyApproveMessage(String name);
+
+  /// Approve this reference?
+  ///
+  /// In en, this message translates to:
+  /// **'Approve this reference?'**
+  String get verifyApproveReference;
+
+  /// Continue to assign vehicle
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to assign vehicle'**
+  String get verifyContinue;
+
+  /// Couldn't start the call.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t start the call.'**
+  String get verifyCouldNotCall;
+
+  /// Couldn't load this list.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load this list.'**
+  String get verifyCouldNotLoad;
+
+  /// Document approved
+  ///
+  /// In en, this message translates to:
+  /// **'Document approved'**
+  String get verifyDocumentApproved;
+
+  /// Document rejected
+  ///
+  /// In en, this message translates to:
+  /// **'Document rejected'**
+  String get verifyDocumentRejected;
+
+  /// Documents
+  ///
+  /// In en, this message translates to:
+  /// **'Documents'**
+  String get verifyDocuments;
+
+  /// Open each document the rider uploaded, then approve or reject it.
+  ///
+  /// In en, this message translates to:
+  /// **'Open each document the rider uploaded, then approve or reject it.'**
+  String get verifyDocumentsHint;
+
+  /// Fleet managers can't review documents yet. Your admin can review them on the dashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Fleet managers can\'t review documents yet. Your admin can review them on the dashboard.'**
+  String get verifyDocumentsLocked;
+
+  /// The rider hasn't uploaded any documents yet.
+  ///
+  /// In en, this message translates to:
+  /// **'The rider hasn\'t uploaded any documents yet.'**
+  String get verifyNoDocuments;
+
+  /// The rider hasn't added any references.
+  ///
+  /// In en, this message translates to:
+  /// **'The rider hasn\'t added any references.'**
+  String get verifyNoReferences;
+
+  /// Reason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get verifyReason;
+
+  /// e.g. Photo is blurry
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Photo is blurry'**
+  String get verifyReasonHint;
+
+  /// Enter a reason
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a reason'**
+  String get verifyReasonRequired;
+
+  /// Reference approved
+  ///
+  /// In en, this message translates to:
+  /// **'Reference approved'**
+  String get verifyReferenceApproved;
+
+  /// Reference rejected
+  ///
+  /// In en, this message translates to:
+  /// **'Reference rejected'**
+  String get verifyReferenceRejected;
+
+  /// References
+  ///
+  /// In en, this message translates to:
+  /// **'References'**
+  String get verifyReferences;
+
+  /// Call each reference to confirm, then approve or reject.
+  ///
+  /// In en, this message translates to:
+  /// **'Call each reference to confirm, then approve or reject.'**
+  String get verifyReferencesHint;
+
+  /// Reject
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get verifyReject;
+
+  /// Rejected
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get verifyRejected;
+
+  /// Add a short reason for rejecting it.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a short reason for rejecting it.'**
+  String get verifyRejectSubtitle;
+
+  /// Title of the reject reason sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Reject {name}'**
+  String verifyRejectTitle(String name);
+
+  /// Who reviewed a rider reference
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed by {name}'**
+  String verifyReviewedBy(String name);
+
+  /// Verify rider
+  ///
+  /// In en, this message translates to:
+  /// **'Verify rider'**
+  String get verifyTitle;
+
+  /// When a rider document was uploaded
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded {date}'**
+  String verifyUploadedOn(String date);
+
+  /// View
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get verifyView;
 
   /// Available
   ///

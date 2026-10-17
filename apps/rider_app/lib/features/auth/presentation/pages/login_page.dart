@@ -1,5 +1,4 @@
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -86,7 +85,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           onSubmitted: (_) => _continue(),
           suffix: _valid ? const Icon(Icons.check_circle_rounded, size: 20, color: AppColors.success) : null,
         ),
-        const Gap.xl(),
+        const Gap.lg(),
+        LegalAgreementText(onOpen: (kind) => LegalLink.open(context, kind)),
+        const Gap.md(),
         PrimaryButton(
           label: context.l10n.authContinue,
           trailingIcon: Icons.arrow_forward_rounded,
@@ -113,8 +114,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         AuthDivider(label: context.l10n.authWhyRideWithUs),
         const Gap.xl(),
         const _TrustStrip(),
-        const Gap.xxl(),
-        const _LegalLine(),
       ],
     );
   }
@@ -158,37 +157,6 @@ class _TrustStrip extends StatelessWidget {
           if (label != items.last.$2) const SizedBox(width: Insets.sm),
         ],
       ],
-    );
-  }
-}
-
-class _LegalLine extends StatelessWidget {
-  const _LegalLine();
-
-  @override
-  Widget build(BuildContext context) {
-    final TextStyle base = AppText.bodySmall.copyWith(fontSize: 12, height: 1.5);
-    final TextStyle link = base.copyWith(color: AppColors.primary, fontWeight: FontWeight.w700);
-
-    return Text.rich(
-      TextSpan(
-        style: base,
-        children: [
-          TextSpan(
-            text: context.l10n.commonTermsService,
-            style: link,
-            recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context, LegalKind.terms),
-          ),
-          TextSpan(text: context.l10n.commonAnd),
-          TextSpan(
-            text: context.l10n.commonPrivacyPolicy,
-            style: link,
-            recognizer: TapGestureRecognizer()..onTap = () => LegalLink.open(context, LegalKind.privacy),
-          ),
-          const TextSpan(text: '.'),
-        ],
-      ),
-      textAlign: TextAlign.center,
     );
   }
 }

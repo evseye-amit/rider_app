@@ -2,6 +2,7 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/referral/pending_referral.dart';
 import 'router/app_router.dart';
 
 class RiderApp extends ConsumerWidget {
@@ -9,6 +10,7 @@ class RiderApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(pendingReferralProvider, (_, _) {});
     final AppLocale locale = ref.watch(localeProvider.select((p) => p.locale));
 
     return MaterialApp.router(

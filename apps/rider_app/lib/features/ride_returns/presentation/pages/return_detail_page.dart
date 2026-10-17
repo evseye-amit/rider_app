@@ -2,6 +2,7 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/check_in/check_in_card.dart';
 import '../../domain/entities/ride_return.dart';
 import '../../domain/usecases/ride_return_usecases.dart';
 import '../../ride_returns_dependencies.dart';
@@ -20,8 +21,10 @@ class ReturnDetailPage extends ConsumerStatefulWidget {
 class _ReturnDetailPageState extends ConsumerState<ReturnDetailPage> {
   bool _busy = false;
 
-  Future<void> _refresh() =>
-      ref.refresh(rideReturnProvider(widget.returnId).future).then<void>((_) {}, onError: (_) {});
+  Future<void> _refresh() {
+    ref.invalidate(riderCheckInProvider);
+    return ref.refresh(rideReturnProvider(widget.returnId).future).then<void>((_) {}, onError: (_) {});
+  }
 
   Future<void> _cancel() async {
     final bool confirmed = await AppDialog.confirm(
@@ -154,6 +157,7 @@ class _ReturnDetailPageState extends ConsumerState<ReturnDetailPage> {
     final String? notes = item.notes;
     final DateTime? receivedAt = item.receivedAt;
     final DateTime? cancelledAt = item.cancelledAt;
+    final String? checkInId = item.checkInId;
 
     return AppScaffold(
       title: context.l10n.returnsDetailTitle,
@@ -166,7 +170,8 @@ class _ReturnDetailPageState extends ConsumerState<ReturnDetailPage> {
           children: [
             ReturnStatusCard(item: item),
             const Gap.lg(),
-            if (item.status == ReturnStatus.returned) ...[
+            if (checkInId != null) ...[CheckInCard(submissionId: checkInId), const Gap.lg()],
+            if (!item.usesCheckIn && item.status == ReturnStatus.returned) ...[
               ChargesCard(
                 charges:
                     charges ??

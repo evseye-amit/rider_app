@@ -37,7 +37,10 @@ class HomePage extends ConsumerWidget {
     return HeroScaffold(
       drawer: const RiderDrawer(),
       bottomPadding: 190,
-      onRefresh: () => ref.refreshQuietly(homeSummaryProvider),
+      onRefresh: () {
+        ref.invalidate(unreadNotificationsProvider);
+        return ref.refreshQuietly(homeSummaryProvider);
+      },
       floatingAction: Padding(
         padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
         child: FloatingActionButton(
@@ -139,10 +142,16 @@ class _Band extends ConsumerWidget {
       if (!confirmed || !context.mounted) return;
     }
 
-    ref.read(riderSessionProvider.notifier).setAttendance(next);
-    next
-        ? AppSnack.success(context, context.l10n.commonMarkedPresentShiftHasStarted)
-        : AppSnack.warning(context, context.l10n.homeMarkedAbsentScooterNowDisabled);
+    final Result<bool> result = await ref.read(riderSessionProvider.notifier).setAttendance(next);
+    if (!context.mounted) return;
+    switch (result) {
+      case Ok<bool>(:final value):
+        value
+            ? AppSnack.success(context, context.l10n.commonMarkedPresentShiftHasStarted)
+            : AppSnack.warning(context, context.l10n.homeMarkedAbsentScooterNowDisabled);
+      case Err<bool>(:final failure):
+        AppSnack.error(context, failure.message);
+    }
   }
 
   @override
@@ -151,6 +160,7 @@ class _Band extends ConsumerWidget {
         ref.watch(riderSessionProvider.select((s) => s.profile['shortName']?.toString())) ??
         context.l10n.allocationRider;
     final bool present = ref.watch(riderSessionProvider.select((s) => s.present));
+    final int unread = ref.watch(unreadNotificationsProvider).value ?? 0;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,7 +195,7 @@ class _Band extends ConsumerWidget {
             const SizedBox(width: Insets.sm),
             InkCircleButton(
               icon: Icons.notifications_none_rounded,
-              badgeCount: 2,
+              badgeCount: unread,
               onTap: () => context.push(Routes.notifications),
             ),
           ],
@@ -259,27 +269,33 @@ class _Band extends ConsumerWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: context.l10n.homeTrips,
-                  value: '${summary?.tripsToday ?? 0}',
-                  icon: Icons.route_rounded,
+                  label: context.l10n.homeCategory,
+                  value: summary?.category ?? '—',
+                  icon: Icons.category_rounded,
                 ),
               ),
               const InkDivider(),
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: context.l10n.homeDistance,
-                  value: Fmt.distanceKm(summary?.distanceTodayKm ?? 0),
-                  icon: Icons.near_me_rounded,
+                  label: context.l10n.homeDailyRental,
+                  value: switch (summary?.dailyRent) {
+                    final num rent => Fmt.money(rent),
+                    null => '—',
+                  },
+                  icon: Icons.currency_rupee_rounded,
                 ),
               ),
               const InkDivider(),
               const SizedBox(width: Insets.md),
               Expanded(
                 child: InkStat(
-                  label: context.l10n.homeOnline,
-                  value: Fmt.duration(Duration(minutes: present ? (summary?.onlineMinutes ?? 0) : 0)),
-                  icon: Icons.schedule_rounded,
+                  label: context.l10n.homeWorkingDays,
+                  value: switch (summary?.workingDays) {
+                    final int days => '$days',
+                    null => '—',
+                  },
+                  icon: Icons.calendar_month_rounded,
                 ),
               ),
             ],

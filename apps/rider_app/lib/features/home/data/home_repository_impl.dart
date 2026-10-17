@@ -4,16 +4,21 @@ import '../domain/entities/home_summary.dart';
 import '../domain/home_repository.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
-  HomeRepositoryImpl(this._deployments);
+  HomeRepositoryImpl(this._deployments, this._agreements);
 
   final DeploymentApi _deployments;
+  final RentalAgreementsApi _agreements;
 
   @override
   Future<Result<HomeSummary>> getSummary() async {
     final DateTime now = DateTime.now();
 
-    final Result<RiderWallet> wallet = await _deployments.riderWallet();
+    final (Result<RiderWallet> wallet, Result<List<RentalAgreementDto>> agreements) = await (
+      _deployments.riderWallet(),
+      _agreements.list(),
+    ).wait;
     final num walletBalance = wallet.fold((_) => 0, (w) => w.totalPaid);
+    final RentalAgreementDto? rental = agreements.valueOrNull?.where((agreement) => agreement.isActive).firstOrNull;
 
     return Result.ok(
       HomeSummary(
@@ -30,9 +35,8 @@ class HomeRepositoryImpl implements HomeRepository {
 
         walletBalance: walletBalance,
 
-        tripsToday: 14,
-        distanceTodayKm: 62.4,
-        onlineMinutes: 318,
+        dailyRent: rental == null ? null : _dailyRent(rental),
+        workingDays: _workingDays(rental?.startDate, now),
 
         weeklyEarnings: [980, 1120, 860, 1340, 1210, 1490, 1240],
         weeklyLabels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -86,6 +90,26 @@ class HomeRepositoryImpl implements HomeRepository {
         ],
       ),
     );
+  }
+
+  static num? _dailyRent(RentalAgreementDto rental) {
+    final int? days = switch (rental.rentalPeriodType) {
+      'DAILY' => 1,
+      'WEEKLY' => 7,
+      'FORTNIGHTLY' => 14,
+      'MONTHLY' => 30,
+      'QUARTERLY' => 90,
+      _ => null,
+    };
+    return days == null ? null : rental.recurringAmount / days;
+  }
+
+  static int? _workingDays(DateTime? start, DateTime now) {
+    if (start == null) return null;
+    final int days =
+        DateTime.utc(now.year, now.month, now.day).difference(DateTime.utc(start.year, start.month, start.day)).inDays +
+        1;
+    return days < 0 ? 0 : days;
   }
 
   static DateTime _nextWeekday(DateTime from, int weekday) {

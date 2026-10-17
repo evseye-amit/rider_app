@@ -5,7 +5,8 @@ import 'json_fields.dart';
 
 enum LegalKind {
   terms('TERMS_AND_CONDITIONS'),
-  privacy('PRIVACY_POLICY');
+  privacy('PRIVACY_POLICY'),
+  consent('PRIVACY_CONSENT');
 
   const LegalKind(this.wire);
 

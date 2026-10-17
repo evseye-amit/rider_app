@@ -22,14 +22,29 @@
 		<string>$(FLUTTER_BUILD_NAME)</string>
 		<key>CFBundleSignature</key>
 		<string>????</string>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Viewer</string>
+				<key>CFBundleURLName</key>
+				<string>referral</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>evseye-rider</string>
+				</array>
+			</dict>
+		</array>
 		<key>CFBundleVersion</key>
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
+		<key>FlutterDeepLinkingEnabled</key>
+		<false/>
 		<key>GMSApiKey</key>
 		<string>$(GOOGLE_MAPS_API_KEY)</string>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
 		<key>NSCameraUsageDescription</key>
-		<string>EVSEYE needs the camera so you can photograph your documents for onboarding.</string>
+		<string>EVSEYE needs the camera so you can photograph your documents for onboarding and scan referral QR codes.</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>Your location is used to show nearby hubs and battery swap stations.</string>
 		<key>NSPhotoLibraryUsageDescription</key>

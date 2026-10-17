@@ -32,14 +32,35 @@ class OnboardingRepositoryImpl implements OnboardingRepository {
   }
 
   @override
-  Future<Result<void>> applyReferralCode(String input) async {
+  Future<Result<void>> applyReferralCode(
+    String input, {
+    ReferralSource source = ReferralSource.referralCode,
+    String? inviteToken,
+    String? campaignCode,
+  }) async {
     final String trimmed = input.trim();
-    if (RegExp(r'^EVS-', caseSensitive: false).hasMatch(trimmed)) return _referrals.attribute(trimmed.toUpperCase());
-    final Result<String> resolved = await _referrals.resolveInput(trimmed);
-    return switch (resolved) {
-      Ok<String>(:final value) when value.isNotEmpty => _referrals.attribute(value),
-      Ok<String>() => Result.err(ValidationFailure(ActiveLocale.strings.onboardingReferralNotFound)),
-      Err<String>(:final failure) => Result.err(failure),
-    };
+    final String code;
+    if (RegExp(r'^EVS-', caseSensitive: false).hasMatch(trimmed)) {
+      code = trimmed.toUpperCase();
+    } else {
+      switch (await _referrals.resolveInput(trimmed)) {
+        case Ok<String>(:final value) when value.isNotEmpty:
+          code = value;
+        case Ok<String>():
+          return Result.err(ValidationFailure(ActiveLocale.strings.onboardingReferralNotFound));
+        case Err<String>(:final failure):
+          return Result.err(failure);
+      }
+    }
+    final Result<void> result = await _referrals.attribute(
+      code,
+      source: source,
+      inviteToken: inviteToken,
+      campaignCode: campaignCode,
+    );
+    if (result case Err<void>(failure: ValidationFailure()) when inviteToken != null || campaignCode != null) {
+      return _referrals.attribute(code, source: source);
+    }
+    return result;
   }
 }

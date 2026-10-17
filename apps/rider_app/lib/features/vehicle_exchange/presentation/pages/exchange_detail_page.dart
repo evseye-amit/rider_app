@@ -2,6 +2,7 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/check_in/check_in_card.dart';
 import '../../domain/entities/exchange_request.dart';
 import '../../domain/usecases/respond_to_offer.dart';
 import '../../exchange_dependencies.dart';
@@ -22,6 +23,7 @@ class _ExchangeDetailPageState extends ConsumerState<ExchangeDetailPage> {
 
   Future<void> _refresh() async {
     ref.invalidate(exchangesProvider);
+    ref.invalidate(riderCheckInProvider);
     await ref.refreshQuietly(exchangeProvider(widget.exchangeId));
   }
 
@@ -141,6 +143,8 @@ class _ExchangeDetailPageState extends ConsumerState<ExchangeDetailPage> {
     final ExchangeOffer? accepted = request.acceptedOffer;
     final String? note = request.status == ExchangeStatus.rejected ? null : request.reason;
     final DateTime? completedAt = request.completedAt;
+    final DateTime? plannedDate = request.plannedDate;
+    final String? checkInId = request.checkInId;
 
     return AppScaffold(
       title: context.l10n.exchangeDetailTitle,
@@ -165,6 +169,7 @@ class _ExchangeDetailPageState extends ConsumerState<ExchangeDetailPage> {
               AcceptedPlanCard(request: request, offer: accepted),
               const Gap.lg(),
             ],
+            if (checkInId != null) ...[CheckInCard(submissionId: checkInId), const Gap.lg()],
             ExchangeTimeline(request: request),
             const Gap.lg(),
             ModuleCard(
@@ -179,6 +184,12 @@ class _ExchangeDetailPageState extends ConsumerState<ExchangeDetailPage> {
                   ),
                   if (note != null && note.isNotEmpty)
                     KeyValueRow(label: context.l10n.exchangeNotes, value: note, icon: Icons.notes_rounded),
+                  if (plannedDate != null)
+                    KeyValueRow(
+                      label: context.l10n.exchangeReturnDate,
+                      value: Fmt.date(plannedDate),
+                      icon: Icons.event_rounded,
+                    ),
                   KeyValueRow(
                     label: context.l10n.exchangeRaised,
                     value: Fmt.dateTime(request.createdAt),

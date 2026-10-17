@@ -35,8 +35,16 @@ class ExchangeRepositoryImpl implements ExchangeRepository {
   Future<Result<ExchangeRequest>> request({
     required String agreementId,
     required String reasonCode,
+    required DateTime plannedDate,
+    String? hubId,
     String? reason,
-  }) async => (await _api.request(agreementId: agreementId, reasonCode: reasonCode, reason: reason)).map(_request);
+  }) async => (await _api.request(
+    agreementId: agreementId,
+    reasonCode: reasonCode,
+    plannedReturnDate: plannedDate,
+    plannedHubId: hubId,
+    reason: reason,
+  )).map(_request);
 
   @override
   Future<Result<void>> acceptOffer({required String id, required String offerId, required String offerHash}) =>
@@ -79,6 +87,9 @@ class ExchangeRepositoryImpl implements ExchangeRepository {
     completedAt: exchange.completedAt,
     canCancel: exchange.canCancel,
     offers: [for (final VehicleExchangeOffer offer in exchange.offers) _offer(offer)],
+    plannedDate: exchange.plannedReturnDate,
+    usesCheckIn: exchange.submissionRequired,
+    checkInId: exchange.submission?.id,
   );
 
   static ExchangeStatus _status(VehicleExchangeStatus status) => switch (status) {

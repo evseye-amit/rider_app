@@ -9,15 +9,6 @@ class AppL10nEn extends AppL10n {
   AppL10nEn([String locale = 'en']) : super(locale);
 
   @override
-  String get allocationAbandon => 'Abandon';
-
-  @override
-  String get allocationAbandonDeAllocation => 'Abandon this de-allocation?';
-
-  @override
-  String get allocationActiveAllocation => 'Active allocation';
-
-  @override
   String get allocationAddItem => 'Add an item';
 
   @override
@@ -69,31 +60,14 @@ class AppL10nEn extends AppL10n {
   String get allocationChecklistTapToggleMandatory => 'Checklist · tap to toggle mandatory';
 
   @override
-  String get allocationClientRequiresNoInspectionPhotos =>
-      'This client requires no inspection photos. You can write up the checklist now.';
-
-  @override
-  String get allocationCodesSentWhenStepOpens => 'Codes are sent when this step opens.';
-
-  @override
-  String get allocationCompareReturnedVehicleAgainstReference =>
-      'Compare the returned vehicle against this reference set';
-
-  @override
-  String get allocationComplete => 'Complete';
-
-  @override
   String get allocationComplete2 => 'Complete.';
-
-  @override
-  String get allocationCompleteDeAllocation => 'Complete this de-allocation?';
 
   @override
   String get allocationConfirmHaveReceivedAmountRider =>
       'Confirm you have received the amount the rider submitted a reference for. This cannot be undone.';
 
   @override
-  String get allocationConfirmsPhotosAndIot => 'Confirms the vehicle\'s photos are on file and its IoT unit is online.';
+  String get allocationConfirmsPhotos => 'Confirms the vehicle\'s photos are on file.';
 
   @override
   String get allocationContinueHandover => 'Continue the handover';
@@ -108,28 +82,13 @@ class AppL10nEn extends AppL10n {
   String get allocationCouldNotLoadAvailableVehicles => 'Could not load available vehicles';
 
   @override
-  String get allocationCouldNotLoadDeAllocation => 'Could not load the de-allocation flow';
-
-  @override
-  String get allocationCouldNotLoadDeAllocation2 => 'Could not load the de-allocation flow.';
-
-  @override
   String get allocationCouldNotLoadHandover => 'Could not load this handover';
-
-  @override
-  String get allocationCouldNotLoadReturn => 'Could not load this return';
-
-  @override
-  String get allocationCouldNotLoadReturns => 'Could not load returns';
 
   @override
   String get allocationDeAllocateVehicle => 'De-allocate vehicle';
 
   @override
   String get allocationDeployed => 'Deployed';
-
-  @override
-  String get allocationEveryDeAllocationRequestHas => 'Every de-allocation request has been processed.';
 
   @override
   String get allocationEveryLineNeedsLabelAmount => 'Every line needs a label and an amount above zero';
@@ -155,9 +114,6 @@ class AppL10nEn extends AppL10n {
       'Training is done and the scooter is with the rider. This handover is complete.';
 
   @override
-  String get allocationHeartbeatStale => 'Heartbeat stale';
-
-  @override
   String get allocationHelmetHandedOver => 'Helmet handed over';
 
   @override
@@ -173,9 +129,6 @@ class AppL10nEn extends AppL10n {
   String get allocationInspectionAcceptedTraining => 'Inspection accepted · training';
 
   @override
-  String get allocationInspectionEvidence => 'Inspection evidence';
-
-  @override
   String get allocationInspectionSentRider => 'Inspection sent to rider';
 
   @override
@@ -185,22 +138,13 @@ class AppL10nEn extends AppL10n {
   String get allocationInspectionTraining => 'Inspection and training';
 
   @override
-  String get allocationIotDevice => 'IoT device';
-
-  @override
   String get allocationItem => 'Item';
-
-  @override
-  String get allocationKeepGoing => 'Keep going';
 
   @override
   String get allocationLeftSide => 'Left side';
 
   @override
   String get allocationLightsIndicators => 'Lights and indicators';
-
-  @override
-  String get allocationMapDeviceFirst => 'Map a device first';
 
   @override
   String get allocationMarkAsPaid => 'Mark as paid';
@@ -223,13 +167,7 @@ class AppL10nEn extends AppL10n {
   String get allocationNoHandoversProgress => 'No handovers in progress';
 
   @override
-  String get allocationNoIotDevice => 'No IoT device';
-
-  @override
   String get allocationNothingCurrentlyAllocatedRider => 'Nothing is currently allocated to a rider.';
-
-  @override
-  String get allocationNothingTakeBack => 'Nothing to take back';
 
   @override
   String get allocationNoVehiclesOut => 'No vehicles out';
@@ -244,12 +182,6 @@ class AppL10nEn extends AppL10n {
   String get allocationOnboardingFee => 'Onboarding fee';
 
   @override
-  String get allocationOriginalHandoverPhotos => 'Original handover photos';
-
-  @override
-  String get allocationOutRoad => 'Out on road';
-
-  @override
   String get allocationPaymentReceived => 'Payment received?';
 
   @override
@@ -262,16 +194,22 @@ class AppL10nEn extends AppL10n {
   String get allocationPaymentVerified => 'Payment verified';
 
   @override
-  String get allocationPhotoAttached => 'Photo attached';
+  String get allocationPhotoBack => 'Back';
 
   @override
-  String get allocationProcessReturn => 'Process return';
+  String get allocationPhotoCannotOpen => 'This photo can\'t be opened right now.';
 
   @override
-  String get allocationQueue => 'In the queue';
+  String get allocationPhotoFront => 'Front';
 
   @override
-  String get allocationRaised => 'Raised on';
+  String get allocationPhotoLeft => 'Left';
+
+  @override
+  String get allocationPhotoRight => 'Right';
+
+  @override
+  String get allocationPhotoUploaded => 'Uploaded';
 
   @override
   String get allocationRaiseDepositFeesRiderPays =>
@@ -291,22 +229,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationReserved2 => 'Reserved on';
-
-  @override
-  String get allocationReturnHasAlreadyBeenStarted =>
-      'The return has already been started on the server. You can finish it later from the Returns tab.';
-
-  @override
-  String get allocationReturnInitiated => 'Return initiated';
-
-  @override
-  String get allocationReturnReason => 'Return reason';
-
-  @override
-  String get allocationReturnRequest => 'Return request';
-
-  @override
-  String get allocationReturnStartedCodesSentRider => 'Return started — codes sent to the rider and to you';
 
   @override
   String get allocationRider => 'Rider';
@@ -356,12 +278,6 @@ class AppL10nEn extends AppL10n {
   String get allocationStartReturn => 'Start a return';
 
   @override
-  String get allocationTakeVehicleBackPutShelf => 'Take a vehicle back and put it on the shelf';
-
-  @override
-  String get allocationTalkingServer => 'Talking to the server…';
-
-  @override
   String get allocationTyresPressure => 'Tyres and pressure';
 
   @override
@@ -372,13 +288,17 @@ class AppL10nEn extends AppL10n {
       'A vehicle has to be available, onboarded and allocation-enabled in one of your hubs to appear here.';
 
   @override
+  String get allocationVehiclePhotos => 'Vehicle photos';
+
+  @override
+  String get allocationVehiclePhotosHint =>
+      'Take a photo of each side of the vehicle. All four are needed before you submit the inspection.';
+
+  @override
   String get allocationVehicleReserved => 'Vehicle reserved';
 
   @override
   String get allocationVerifyPayment => 'Verify payment';
-
-  @override
-  String get allocationViewReturn => 'View return';
 
   @override
   String get allocationWaiting => 'Waiting';
@@ -431,6 +351,17 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get authEditNumber => 'Edit number';
+
+  @override
+  String authLegalAgreement(String terms, String privacy) {
+    return 'By clicking continue you are accepting our $terms and $privacy';
+  }
+
+  @override
+  String get authLegalPrivacy => 'Privacy Policy';
+
+  @override
+  String get authLegalTerms => 'Terms of Service';
 
   @override
   String get authLiveFleetVisibility => 'Live fleet\nvisibility';
@@ -508,6 +439,71 @@ class AppL10nEn extends AppL10n {
   String get authWrongNumber => 'Wrong number?';
 
   @override
+  String get checkInBasicReport => 'Mechanic report';
+
+  @override
+  String checkInConfirmedByManager(String reason) {
+    return 'Confirmed by the hub team without your code: $reason';
+  }
+
+  @override
+  String get checkInConfirmedByOtp => 'Confirmed with your code.';
+
+  @override
+  String get checkInCouldNotLoad => 'Couldn\'t load the check-in.';
+
+  @override
+  String get checkInDeepReport => 'Final mechanic check';
+
+  @override
+  String get checkInHub => 'Hub';
+
+  @override
+  String get checkInNoCharges => 'No charges';
+
+  @override
+  String get checkInOtpHint =>
+      'You\'ll get a code on your phone. Share it with the hub team to confirm this report and its charges.';
+
+  @override
+  String get checkInPhotos => 'Photos';
+
+  @override
+  String checkInPhotosCount(int taken, int total) {
+    return '$taken of $total taken';
+  }
+
+  @override
+  String get checkInSafe => 'Safe to use again';
+
+  @override
+  String get checkInStatusDraft => 'Under review';
+
+  @override
+  String get checkInStatusPosted => 'Confirmed';
+
+  @override
+  String get checkInStatusSubmitted => 'Awaiting confirmation';
+
+  @override
+  String get checkInTitle => 'Scooter check-in';
+
+  @override
+  String get checkInTotal => 'Total charges';
+
+  @override
+  String checkInUnsafe(String reason) {
+    return 'Not safe to reuse: $reason';
+  }
+
+  @override
+  String get checkInViewPhotos => 'View';
+
+  @override
+  String get checkInWaitingReport =>
+      'The hub team is taking photos. The mechanic\'s report shows up here once it\'s ready.';
+
+  @override
   String get commonAboutApp => 'About this app';
 
   @override
@@ -536,9 +532,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get commonAllocation => 'Allocation';
-
-  @override
-  String get commonAnd => ' and ';
 
   @override
   String get commonAppWillChangeRightAway => 'The app will change right away.';
@@ -586,9 +579,6 @@ class AppL10nEn extends AppL10n {
   String get commonConfirmAccountNumber => 'Confirm account number';
 
   @override
-  String get commonContinue => 'Continue';
-
-  @override
   String get commonCouldNotOpenDocumentTry => 'Could not open the document. Try again.';
 
   @override
@@ -596,9 +586,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get commonDaughter => 'Daughter';
-
-  @override
-  String get commonDeAllocation => 'De-allocation';
 
   @override
   String get commonEnterAccountNumber => 'Enter your account number';
@@ -898,6 +885,45 @@ class AppL10nEn extends AppL10n {
   String get commonYesterdayGlance => 'Yesterday at a glance';
 
   @override
+  String get companyCodeHint => 'e.g. yogmaya';
+
+  @override
+  String get companyCodeLabel => 'Company code';
+
+  @override
+  String get companyCodeRequired => 'Enter your company code';
+
+  @override
+  String get companyHelp => 'You\'ll find the code in your welcome message. If you don\'t have it, ask your hub team.';
+
+  @override
+  String get companyNotFound => 'We couldn\'t find a company with that code. Check it and try again.';
+
+  @override
+  String get companyNotReady => 'This company isn\'t set up for the app yet. Please contact your fleet operator.';
+
+  @override
+  String get companySubtitle => 'Enter the company code your fleet operator gave you. You only need to do this once.';
+
+  @override
+  String get companyTitle => 'Find your company';
+
+  @override
+  String companyWelcome(String name) {
+    return 'Welcome to $name';
+  }
+
+  @override
+  String get consentAgree => 'I have read this notice and I give my consent';
+
+  @override
+  String get consentRiderTitle => 'Rider Consent';
+
+  @override
+  String get consentSubtitle =>
+      'Please read how we collect and use your information, then give your consent to continue.';
+
+  @override
   String get deallocAccessoriesReturned => 'Accessories returned';
 
   @override
@@ -1175,9 +1201,6 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get deploymentMandatoryModule => 'Mandatory module';
-
-  @override
   String get deploymentNoPaymentShow => 'No payment to show';
 
   @override
@@ -1186,9 +1209,6 @@ class AppL10nEn extends AppL10n {
   @override
   String get deploymentOpenEachModuleReadThrough =>
       'Open each module and read it through. Mandatory ones must be completed before you can finish.';
-
-  @override
-  String get deploymentOptionalModule => 'Optional module';
 
   @override
   String get deploymentPaidVia => 'Paid via';
@@ -1208,9 +1228,6 @@ class AppL10nEn extends AppL10n {
   @override
   String get deploymentProgressSavedSignAgainAny =>
       'Your progress is saved. Sign in again any time to pick up where you left off.';
-
-  @override
-  String get deploymentReadThroughModuleWithTeam => 'Read through this module with your team lead before you ride.';
 
   @override
   String get deploymentReference => 'Reference';
@@ -1244,9 +1261,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentTrainingComplete => 'Training complete';
-
-  @override
-  String get deploymentTrainingUnavailable => 'Training unavailable';
 
   @override
   String get deploymentTransactionReference => 'Transaction reference';
@@ -1457,187 +1471,6 @@ class AppL10nEn extends AppL10n {
   String get exchangeDepositToPay => 'Extra deposit to pay';
 
   @override
-  String get exchangeDeskAcceptedForRider => 'Offer accepted for the rider';
-
-  @override
-  String get exchangeDeskAcceptForRider => 'Accept for the rider';
-
-  @override
-  String get exchangeDeskApprove => 'Approve request';
-
-  @override
-  String get exchangeDeskApproved => 'Request approved';
-
-  @override
-  String get exchangeDeskAssistedHint =>
-      'If the rider can\'t use the app, you can record their answer for them. Do this only with their clear consent.';
-
-  @override
-  String get exchangeDeskAssistedReason => 'Reason';
-
-  @override
-  String get exchangeDeskAssistedReasonNeeded => 'Add a reason for accepting on their behalf';
-
-  @override
-  String get exchangeDeskAssistedReasonSubtitle => 'Why is the rider not accepting in the app themselves?';
-
-  @override
-  String get exchangeDeskChangeScooter => 'Change scooter';
-
-  @override
-  String get exchangeDeskChooseScooter => 'Choose replacement scooter';
-
-  @override
-  String get exchangeDeskComplete => 'Complete exchange';
-
-  @override
-  String get exchangeDeskConfirmReturn => 'Confirm scooter returned';
-
-  @override
-  String get exchangeDeskConsentNeeded => 'Add how the rider gave consent';
-
-  @override
-  String get exchangeDeskConsentReference => 'Consent reference';
-
-  @override
-  String get exchangeDeskConsentSubtitle =>
-      'How did the rider agree? For example a signed form number or a recorded call.';
-
-  @override
-  String get exchangeDeskDeclinedForRider => 'Offer declined for the rider';
-
-  @override
-  String get exchangeDeskDeclineForRider => 'Rider declined';
-
-  @override
-  String get exchangeDeskDeclineSubtitle => 'Record why the rider turned the offer down.';
-
-  @override
-  String exchangeDeskDepositBreakdown(String total, String newDeposit, String shortfall) {
-    return '$total is still due: $newDeposit for the new scooter and $shortfall to top up the rider\'s security deposit.';
-  }
-
-  @override
-  String exchangeDeskDepositDue(String amount) {
-    return 'The rider still has to pay $amount more deposit.';
-  }
-
-  @override
-  String get exchangeDeskDepositsSettled => 'Deposits settled';
-
-  @override
-  String get exchangeDeskEmptyBody => 'When a rider asks for a different scooter, the request shows up here.';
-
-  @override
-  String get exchangeDeskExchangeCompleted => 'Exchange completed';
-
-  @override
-  String get exchangeDeskGuideChoose => 'The old scooter is back. Choose a replacement scooter for the rider.';
-
-  @override
-  String get exchangeDeskGuideDeposits => 'The rider accepted. Settle the deposits to move on to the handover.';
-
-  @override
-  String get exchangeDeskGuideReview => 'Check the request, then approve or reject it.';
-
-  @override
-  String get exchangeDeskGuideSendOffer => 'Check the offer below and send it to the rider.';
-
-  @override
-  String get exchangeDeskGuideStartHandover => 'Deposits are settled. Start the handover of the new scooter.';
-
-  @override
-  String get exchangeDeskGuideStartReturn => 'Start the return of the rider\'s current scooter.';
-
-  @override
-  String get exchangeDeskHandoverHint =>
-      'The hub\'s fleet manager hands over the new scooter through the normal allocation steps. Once the scooter is active with the rider, complete the exchange.';
-
-  @override
-  String get exchangeDeskHandoverStarted => 'Handover started';
-
-  @override
-  String get exchangeDeskNeedsAction => 'Needs action';
-
-  @override
-  String get exchangeDeskNoScooters => 'No scooters are available right now.';
-
-  @override
-  String get exchangeDeskOfferPreview => 'Offer preview';
-
-  @override
-  String get exchangeDeskOfferSent => 'Offer sent to rider';
-
-  @override
-  String get exchangeDeskOpenAllocation => 'Open the new allocation';
-
-  @override
-  String get exchangeDeskOpenReturn => 'Open return';
-
-  @override
-  String get exchangeDeskReject => 'Reject request';
-
-  @override
-  String get exchangeDeskRejectedDone => 'Request rejected';
-
-  @override
-  String get exchangeDeskRejectSubtitle => 'Tell the rider why this can\'t be approved.';
-
-  @override
-  String get exchangeDeskReplacement => 'Replacement scooter';
-
-  @override
-  String exchangeDeskReservedUntil(String time) {
-    return 'Until $time';
-  }
-
-  @override
-  String get exchangeDeskReserveScooter => 'Reserve this scooter';
-
-  @override
-  String get exchangeDeskReturnConfirmed => 'Return confirmed';
-
-  @override
-  String get exchangeDeskReturnHint =>
-      'Finish the return in Returns: verify the rider\'s OTP and complete the inspection. Then confirm it here.';
-
-  @override
-  String get exchangeDeskReturnStarted => 'Return started';
-
-  @override
-  String get exchangeDeskRiderNote => 'Rider\'s note';
-
-  @override
-  String get exchangeDeskScooterReserved => 'Scooter reserved';
-
-  @override
-  String get exchangeDeskSendOffer => 'Send offer to rider';
-
-  @override
-  String get exchangeDeskSettleDeposits => 'Settle deposits';
-
-  @override
-  String get exchangeDeskStartHandover => 'Start handover';
-
-  @override
-  String get exchangeDeskStartReturn => 'Start scooter return';
-
-  @override
-  String get exchangeDeskStatusOfferSent => 'Offer sent';
-
-  @override
-  String get exchangeDeskStatusReserved => 'Scooter reserved';
-
-  @override
-  String get exchangeDeskSubtitle => 'Riders asking for a different scooter';
-
-  @override
-  String get exchangeDeskWaitingRider => 'Offer sent. Waiting for the rider to accept it in their app.';
-
-  @override
-  String get exchangeDeskWithRider => 'Waiting for rider';
-
-  @override
   String get exchangeDetails => 'Request details';
 
   @override
@@ -1764,7 +1597,16 @@ class AppL10nEn extends AppL10n {
   String get exchangeNextApproved => 'Approved. Your hub will ask you to bring your current scooter in for a check.';
 
   @override
+  String exchangeNextBringIn(String date) {
+    return 'Bring your current scooter to the hub you picked on $date. The hub team will check it in.';
+  }
+
+  @override
   String get exchangeNextCancelled => 'This request was cancelled.';
+
+  @override
+  String get exchangeNextCheckingIn =>
+      'The hub team is checking your current scooter. You\'ll get a code on your phone to confirm the mechanic\'s report.';
 
   @override
   String get exchangeNextChoosing => 'Your old scooter is returned. Your hub is picking a replacement for you.';
@@ -1920,6 +1762,9 @@ class AppL10nEn extends AppL10n {
   String get exchangeRequestSubtitle => 'Tell your hub why you need a different scooter.';
 
   @override
+  String get exchangeReturnDate => 'Drop-off date';
+
+  @override
   String get exchangeSendRequest => 'Send request';
 
   @override
@@ -1942,6 +1787,9 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get exchangeStatusCancelled => 'Cancelled';
+
+  @override
+  String get exchangeStatusCheckingIn => 'Checking in';
 
   @override
   String get exchangeStatusChoosing => 'Choosing scooter';
@@ -1996,19 +1844,28 @@ class AppL10nEn extends AppL10n {
   String get exchangeVersionPrevious => 'Previous';
 
   @override
+  String get exchangeWhenWhere => 'When and where';
+
+  @override
+  String get exchangeWhenWhereHint => 'Pick when and where you\'ll bring your current scooter in.';
+
+  @override
   String get homeBonusUnlocked => 'Bonus unlocked';
 
   @override
   String get homeBookSlotOkhlaHubBefore => 'Book a slot at the Okhla hub before the odometer hits 8,000 km.';
 
   @override
+  String get homeCategory => 'Category';
+
+  @override
   String get homeCouldNotLoadDashboard => 'Could not load your dashboard';
 
   @override
-  String get homeDepositsHandoverFees => 'Deposits and handover fees';
+  String get homeDailyRental => 'Daily Rental';
 
   @override
-  String get homeDistance => 'Distance';
+  String get homeDepositsHandoverFees => 'Deposits and handover fees';
 
   @override
   String get homeExtra15TripOkhlaPhase => 'Extra ₹15 a trip in Okhla Phase II and Jasola this evening.';
@@ -2078,9 +1935,6 @@ class AppL10nEn extends AppL10n {
   String get homeTodaysEarnings => 'Today\'s earnings';
 
   @override
-  String get homeTrips => 'Trips';
-
-  @override
   String get homeVehicle => 'Vehicle on';
 
   @override
@@ -2090,13 +1944,36 @@ class AppL10nEn extends AppL10n {
   String get homeWithdraw => 'Withdraw';
 
   @override
+  String get homeWorkingDays => 'Working Days';
+
+  @override
+  String get hubAllHubs => 'All hubs';
+
+  @override
   String get hubAllocate => 'Allocate';
+
+  @override
+  String get hubAllotmentsInQueue => 'Allotments in Queue';
+
+  @override
+  String get hubAllotmentsInQueueInfo => 'Active riders at this hub who are waiting for a vehicle.';
 
   @override
   String get hubBaysFree => 'Bays free';
 
   @override
+  String get hubChooseHub => 'Choose a hub';
+
+  @override
+  String get hubChooseHubSubtitle => 'See one hub, or all your hubs together.';
+
+  @override
   String get hubCouldNotLoadHub => 'Could not load your hub';
+
+  @override
+  String hubCount(int count) {
+    return '$count hubs';
+  }
 
   @override
   String get hubFleetManager => 'Fleet Manager';
@@ -2111,9 +1988,6 @@ class AppL10nEn extends AppL10n {
   String get hubHubGlance => 'Your hub at a glance';
 
   @override
-  String get hubHubs => 'Your hubs';
-
-  @override
   String get hubMaintenance => 'Maintenance';
 
   @override
@@ -2123,19 +1997,19 @@ class AppL10nEn extends AppL10n {
   String get hubNoHubAssigned => 'No hub is assigned to you.';
 
   @override
-  String get hubOpenJobs => 'Open jobs';
+  String get hubQuickView => 'Quick Hub View';
 
   @override
-  String get hubPickOneSeveralSeeTheir => 'Pick one, or several to see their numbers combined';
+  String get hubQuickViewInfo => 'Live counts for your selected hub.';
 
   @override
   String get hubReturn => 'Return';
 
   @override
-  String get hubReturnsClear => 'Returns to clear';
+  String get hubRfdsAvailable => 'RFDs available';
 
   @override
-  String get hubRidersPresent => 'Riders present';
+  String get hubRfdsAvailableInfo => 'Ready for deployment: vehicles at this hub that are free to allot.';
 
   @override
   String get hubsCouldNotLoad => 'Could not load nearby hubs';
@@ -2147,7 +2021,7 @@ class AppL10nEn extends AppL10n {
   String get hubShift => 'On shift';
 
   @override
-  String get hubShowThisHub => 'Show this hub';
+  String get hubShowDataFor => 'Show data for';
 
   @override
   String get hubsNoneBody => 'There are no active hubs within reach of your location.';
@@ -2162,10 +2036,20 @@ class AppL10nEn extends AppL10n {
   String get hubsSubtitle => 'Closest hubs to you';
 
   @override
-  String get hubUptime => 'Uptime';
+  String get hubSubmissionsInQueue => 'Submissions in Queue';
 
   @override
-  String get hubWaitingAllocate => 'Waiting to allocate';
+  String get hubSubmissionsInQueueInfo =>
+      'Returns and exchanges due at this hub whose vehicle check-in isn\'t complete yet.';
+
+  @override
+  String get hubUnderMaintenanceFleet => 'Under Maintenance Fleet';
+
+  @override
+  String get hubUnderMaintenanceFleetInfo => 'Vehicles from this hub that are under maintenance right now.';
+
+  @override
+  String get hubUptime => 'Uptime';
 
   @override
   String get hubWorkingLate => 'Working late';
@@ -2223,15 +2107,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get legalDocumentCouldNotLoad => 'Could not load this document';
-
-  @override
-  String get legalTermsAgree => 'I have read and agree to the Terms & Conditions';
-
-  @override
-  String get legalTermsSubtitle => 'Please read these terms before you continue.';
-
-  @override
-  String get legalTermsTitle => 'Terms & Conditions';
 
   @override
   String get maintenanceAddNote => 'Add a note';
@@ -2548,6 +2423,9 @@ class AppL10nEn extends AppL10n {
   String get navScooterDetails => 'Scooter details';
 
   @override
+  String get notificationsAll => 'All';
+
+  @override
   String get notificationsAllCaughtUp => 'You are all caught up';
 
   @override
@@ -2560,7 +2438,15 @@ class AppL10nEn extends AppL10n {
   String get notificationsEarlier => 'Earlier';
 
   @override
-  String get notificationsNewEarningsRemindersAlertsWill => 'New earnings, reminders and alerts will show up here.';
+  String get notificationsEmptyMessage => 'New updates and alerts will show up here.';
+
+  @override
+  String get notificationsGotIt => 'Got it';
+
+  @override
+  String notificationsInboxCount(int count) {
+    return '$count notifications in your inbox';
+  }
 
   @override
   String get notificationsNoMatchingNotifications => 'No matching notifications';
@@ -2579,6 +2465,11 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get notificationsUnread => 'Unread';
+
+  @override
+  String notificationsUnreadCount(int count) {
+    return '$count unread';
+  }
 
   @override
   String get onboardingAcceptAgreementContinue => 'Accept the agreement to continue';
@@ -2694,7 +2585,13 @@ class AppL10nEn extends AppL10n {
   String get onboardingReferralCodeApplied => 'Referral code applied';
 
   @override
+  String get onboardingReferralFromInvite => 'Added from your invite link';
+
+  @override
   String get onboardingReferralNotFound => 'We couldn\'t find a referral for that. Check the code or mobile number.';
+
+  @override
+  String get onboardingReferralScan => 'Scan referral QR';
 
   @override
   String get onboardingReferralTapApply => 'Tap Apply to use this code, or clear it';
@@ -2850,19 +2747,139 @@ class AppL10nEn extends AppL10n {
   String get profilePersonalDetails => 'Personal details';
 
   @override
+  String get referActivity => 'Activity';
+
+  @override
+  String referCardReward(String amount) {
+    return 'Join with my code and get $amount';
+  }
+
+  @override
   String get referCodeCopied => 'Referral code copied';
+
+  @override
+  String referCompleteBy(String date) {
+    return 'Complete these by $date';
+  }
 
   @override
   String get referCopyCode => 'Copy code';
 
   @override
+  String get referCopyMessage => 'Copy invite message';
+
+  @override
   String get referCouldNotLoad => 'Could not load refer & earn';
+
+  @override
+  String get referDetailTitle => 'Referral details';
+
+  @override
+  String get referDrawerHint => 'Let a friend scan this to join with your code. Tap to enlarge.';
+
+  @override
+  String get referDrawerTitle => 'My referral QR';
+
+  @override
+  String get referErrorAlreadyLinked => 'Your account is already linked to another referral code.';
+
+  @override
+  String get referErrorCampaignInactive => 'Refer & earn isn\'t running right now.';
+
+  @override
+  String get referErrorCodeExpired => 'This invite has expired. Ask your friend to send a new one.';
+
+  @override
+  String get referErrorLimit => 'This rider has reached their referral limit.';
+
+  @override
+  String get referErrorNotEligible => 'Your rider profile isn\'t ready for referrals yet.';
+
+  @override
+  String get referErrorNotEnabled => 'Refer & earn isn\'t available for your company.';
+
+  @override
+  String get referErrorNotFound => 'Referral not found.';
+
+  @override
+  String get referErrorSelf => 'You can\'t use your own referral code.';
+
+  @override
+  String get referEventExpired => 'A referral expired';
+
+  @override
+  String get referEventOther => 'Referral update';
+
+  @override
+  String get referEventProgress => 'A referral made progress';
+
+  @override
+  String get referEventQualified => 'A referral qualified for its reward';
+
+  @override
+  String get referEventRegistered => 'A rider joined with a referral code';
+
+  @override
+  String get referEventRewardPaid => 'A referral reward was paid';
 
   @override
   String get referFriendGets => 'Your friend gets';
 
   @override
+  String get referHowItWorks => 'How it works';
+
+  @override
+  String get referHowItWorksBody =>
+      'Share your code. When your friend joins and completes these steps, the referral reward unlocks.';
+
+  @override
   String get referInvited => 'Invited';
+
+  @override
+  String referInviteValidTill(String date) {
+    return 'This invite is valid till $date';
+  }
+
+  @override
+  String get referMessageCopied => 'Invite message copied';
+
+  @override
+  String get referMilestoneActivated => 'Get activated as a rider';
+
+  @override
+  String referMilestoneActiveDays(String count) {
+    return 'Stay active for $count days';
+  }
+
+  @override
+  String referMilestoneAttendance(String count) {
+    return 'Mark attendance on $count days';
+  }
+
+  @override
+  String referMilestoneDeliveries(String count) {
+    return 'Complete $count deliveries';
+  }
+
+  @override
+  String get referMilestoneKyc => 'Complete KYC';
+
+  @override
+  String get referMilestoneOther => 'Complete the campaign step';
+
+  @override
+  String get referMilestonePayment => 'Make the first payment';
+
+  @override
+  String referMilestoneRides(String count) {
+    return 'Complete $count rides';
+  }
+
+  @override
+  String get referMilestoneTraining => 'Finish the training';
+
+  @override
+  String get referMilestoneVehicle => 'Get a scooter allotted';
 
   @override
   String get referNoCampaignBody => 'Check back soon for new rewards.';
@@ -2883,13 +2900,105 @@ class AppL10nEn extends AppL10n {
   String get referPending => 'Pending';
 
   @override
+  String get referProgress => 'Progress';
+
+  @override
+  String get referQrSemantics => 'Referral QR code';
+
+  @override
   String get referQualified => 'Qualified';
 
   @override
   String get referRegistered => 'Registered';
 
   @override
+  String get referRewardEarned => 'Earned';
+
+  @override
+  String get referRewardPending => 'Pending';
+
+  @override
+  String get referRewardProcessing => 'Processing';
+
+  @override
+  String get referRewardReversed => 'Reversed';
+
+  @override
+  String get referRewards => 'Rewards';
+
+  @override
+  String get referScanCameraFailed => 'The camera couldn\'t start. Try again, or pick a photo of the QR code.';
+
+  @override
+  String referScanFound(String code) {
+    return 'Found code $code';
+  }
+
+  @override
+  String get referScanFromPhotos => 'Pick from photos';
+
+  @override
+  String get referScanHint => 'Point the camera at a referral QR code';
+
+  @override
+  String get referScanNoCamera =>
+      'There\'s no camera to scan with on this device. Pick a photo of the QR code instead.';
+
+  @override
+  String get referScanNoQrInPhoto => 'No QR code found in that photo.';
+
+  @override
+  String get referScanNotReferral => 'That QR code isn\'t a referral code.';
+
+  @override
+  String get referScanPermissionDenied =>
+      'Camera access is off. Allow it in Settings to scan, or pick a photo of the QR code.';
+
+  @override
+  String get referScanTitle => 'Scan referral QR';
+
+  @override
+  String get referScanToJoin => 'Scan to join with my referral code';
+
+  @override
+  String referShareAndroid(String link) {
+    return 'Get the app on Android: $link';
+  }
+
+  @override
+  String referShareCodeLine(String code) {
+    return 'Use my referral code $code when you sign up.';
+  }
+
+  @override
+  String referShareIntro(String app) {
+    return 'Join me as a rider on $app!';
+  }
+
+  @override
   String get referShareInvite => 'Share invite';
+
+  @override
+  String referShareIphone(String link) {
+    return 'Get the app on iPhone: $link';
+  }
+
+  @override
+  String get referShareNow => 'Share';
+
+  @override
+  String referShareReward(String amount) {
+    return 'You get $amount when you complete the joining steps.';
+  }
+
+  @override
+  String get referShareSubtitle => 'Your friend can scan the QR or use the link to join.';
+
+  @override
+  String get referShareTitle => 'Share your invite';
+
+  @override
+  String get referShowQr => 'Show QR';
 
   @override
   String get referStatusActivated => 'Activated';
@@ -2925,7 +3034,18 @@ class AppL10nEn extends AppL10n {
   String get referStatusUnderReview => 'Under review';
 
   @override
+  String referStepsDone(int done, int total) {
+    return '$done/$total steps';
+  }
+
+  @override
   String get referSubtitle => 'Invite riders and earn rewards';
+
+  @override
+  String get referTerms => 'Terms & conditions';
+
+  @override
+  String get referTimeline => 'Timeline';
 
   @override
   String get referTotalEarned => 'Total earned';
@@ -2940,6 +3060,12 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get referYourCode => 'Your referral code';
+
+  @override
+  String get referYourQr => 'Your referral QR';
+
+  @override
+  String get referYourQrSubtitle => 'Ask your friend to scan it in the app\'s onboarding.';
 
   @override
   String get referYourReferrals => 'Your referrals';
@@ -3113,330 +3239,6 @@ class AppL10nEn extends AppL10n {
   String get rentalsYourAccount => 'Your account';
 
   @override
-  String get returnDeskAddCharge => 'Add a charge';
-
-  @override
-  String get returnDeskAdminApproved => 'An admin approved these charges for the rider.';
-
-  @override
-  String get returnDeskApprove => 'Approve';
-
-  @override
-  String get returnDeskApproveAndPost => 'Approve and post charges';
-
-  @override
-  String get returnDeskApproveAsManager => 'Approve as manager';
-
-  @override
-  String returnDeskApproveBodyPost(String amount) {
-    return '$amount will be added to the rider\'s bill.';
-  }
-
-  @override
-  String get returnDeskApproveBodyWait => 'Your approval is recorded. The charges post once the rider approves too.';
-
-  @override
-  String get returnDeskApproved => 'Approval recorded';
-
-  @override
-  String get returnDeskApproveForRider => 'Approve for the rider';
-
-  @override
-  String get returnDeskApproveTitle => 'Approve these charges?';
-
-  @override
-  String get returnDeskBackdateReason => 'Why is it being entered late?';
-
-  @override
-  String get returnDeskBackdateReasonNeeded => 'Add a reason for the earlier time';
-
-  @override
-  String get returnDeskCaseTitle => 'Return';
-
-  @override
-  String get returnDeskChargeDetails => 'Details';
-
-  @override
-  String get returnDeskChargeDetailsHint => 'What exactly is damaged or missing?';
-
-  @override
-  String get returnDeskChargesHint =>
-      'Pick from the price list. Each charge needs details and at least one inspection photo as evidence.';
-
-  @override
-  String get returnDeskChecklistHint =>
-      'A photo of the filled return checklist. Charges for missing items need it as evidence.';
-
-  @override
-  String get returnDeskChecklistNeeded => 'Missing-item charges need the return checklist photo as evidence.';
-
-  @override
-  String get returnDeskChecklistPhoto => 'Return checklist';
-
-  @override
-  String get returnDeskClosedNoCharges => 'Return closed with no charges';
-
-  @override
-  String get returnDeskCloseNoCharges => 'Close with no charges';
-
-  @override
-  String get returnDeskCloseNoChargesBody => 'The return closes and the rider isn\'t charged for this scooter.';
-
-  @override
-  String get returnDeskCouldNotLoad => 'Could not load returns';
-
-  @override
-  String get returnDeskCouldNotLoadInspection => 'Could not load the inspection';
-
-  @override
-  String get returnDeskDamageHint =>
-      'Close-ups of any dents, scratches or broken parts. You can use them as evidence for charges.';
-
-  @override
-  String get returnDeskDamagePhoto => 'Damage photo';
-
-  @override
-  String get returnDeskDamagePhotos => 'Damage photos';
-
-  @override
-  String get returnDeskDetailsNeeded => 'Add the details';
-
-  @override
-  String get returnDeskDraftSaved => 'Draft saved';
-
-  @override
-  String get returnDeskEditCharge => 'Edit charge';
-
-  @override
-  String get returnDeskEmpty => 'No returns here';
-
-  @override
-  String get returnDeskEmptyBody => 'Returns riders book at your hubs will show up here.';
-
-  @override
-  String get returnDeskEvidence => 'Evidence photos';
-
-  @override
-  String get returnDeskEvidenceNeeded => 'Pick at least one photo as evidence';
-
-  @override
-  String get returnDeskFilterReturned => 'Returned';
-
-  @override
-  String get returnDeskFilterToReceive => 'To receive';
-
-  @override
-  String get returnDeskFinishInspection => 'Finish inspection';
-
-  @override
-  String get returnDeskGuideApprove =>
-      'The rider\'s side is done. A fleet or operations manager approves next, and the charges post to the rider\'s bill.';
-
-  @override
-  String get returnDeskGuideCancelled => 'The rider cancelled this return. Nothing to do.';
-
-  @override
-  String get returnDeskGuideCharges =>
-      'Add a charge for anything damaged or missing, then send them to the rider. If all is fine, close the return with no charges.';
-
-  @override
-  String get returnDeskGuideClosed => 'This return is closed.';
-
-  @override
-  String get returnDeskGuideDisputed => 'The rider disputed the charges. Revise them and send them again.';
-
-  @override
-  String get returnDeskGuideInspect =>
-      'The scooter is at the hub. Inspect it, take the photos and decide whether it can be rented again.';
-
-  @override
-  String returnDeskGuideReceive(String date) {
-    return 'The rider plans to bring the scooter on $date. Mark it received when it reaches the hub.';
-  }
-
-  @override
-  String get returnDeskGuideWithRider => 'The charges are with the rider to approve with a code sent to their phone.';
-
-  @override
-  String get returnDeskInspectHint =>
-      'Take the photos, check the checklist and decide whether the scooter can go out again.';
-
-  @override
-  String get returnDeskInspectionDone => 'Inspection saved';
-
-  @override
-  String get returnDeskInspectionResult => 'Inspection';
-
-  @override
-  String get returnDeskInspectTitle => 'Inspect scooter';
-
-  @override
-  String get returnDeskLoadingPhotos => 'Loading the inspection photos. Try again in a moment.';
-
-  @override
-  String get returnDeskManagerApproved => 'Manager approved';
-
-  @override
-  String get returnDeskMarkReceived => 'Mark received';
-
-  @override
-  String get returnDeskNoInspection => 'The inspection isn\'t ready yet. Pull down to refresh.';
-
-  @override
-  String get returnDeskNoPhotoRules => 'No photos are required here. Add a checklist or damage photos if they help.';
-
-  @override
-  String get returnDeskNoPhotosYet => 'No inspection photos yet. Add them on the inspection screen.';
-
-  @override
-  String get returnDeskNoPrices => 'No penalty prices are set up yet. Ask an admin to add them.';
-
-  @override
-  String get returnDeskOverridden => 'Approved on the rider\'s behalf';
-
-  @override
-  String get returnDeskOverrideReason => 'Reason';
-
-  @override
-  String get returnDeskOverrideReasonNeeded => 'Add a reason for approving on the rider\'s behalf.';
-
-  @override
-  String get returnDeskOverrideSubtitle => 'Use this only when the rider can\'t approve. The reason is kept on record.';
-
-  @override
-  String get returnDeskPhotos => 'Photos';
-
-  @override
-  String get returnDeskPhotosHint => 'Tap a tile to take that photo. Tiles with a red dot are required.';
-
-  @override
-  String returnDeskPhotosMissing(String names) {
-    return 'Still needed: $names';
-  }
-
-  @override
-  String get returnDeskPickCharge => 'Choose a charge from the price list';
-
-  @override
-  String returnDeskPosted(String date) {
-    return 'Charges posted to the rider\'s bill on $date.';
-  }
-
-  @override
-  String get returnDeskReceived => 'Scooter received';
-
-  @override
-  String get returnDeskReceivedAt => 'Received at';
-
-  @override
-  String get returnDeskReceivedEarlier => 'It came in earlier';
-
-  @override
-  String get returnDeskReceivedEarlierHint => 'Record the actual time if you are entering it late';
-
-  @override
-  String returnDeskReceivedOn(String date) {
-    return 'Received $date';
-  }
-
-  @override
-  String get returnDeskReceiveHint =>
-      'Do this once the scooter is physically at the hub. The rental ends from the time you record.';
-
-  @override
-  String get returnDeskReceiveTitle => 'Receive scooter';
-
-  @override
-  String get returnDeskReceivingHub => 'Receiving hub';
-
-  @override
-  String get returnDeskReviseHint => 'Change or remove the disputed charges, then send them to the rider again.';
-
-  @override
-  String get returnDeskRiderApproved => 'The rider approved these charges.';
-
-  @override
-  String get returnDeskRiderDispute => 'Rider\'s dispute';
-
-  @override
-  String get returnDeskRiderNote => 'Rider\'s note';
-
-  @override
-  String get returnDeskSafeNo => 'Needs repair first';
-
-  @override
-  String get returnDeskSafeNoHint => 'It goes to maintenance and can\'t be allocated';
-
-  @override
-  String get returnDeskSafety => 'Can it be rented again?';
-
-  @override
-  String get returnDeskSafetyNeeded => 'Choose whether the scooter can be rented again';
-
-  @override
-  String get returnDeskSafeYes => 'Safe to rent again';
-
-  @override
-  String get returnDeskSafeYesHint => 'It goes back to the available pool';
-
-  @override
-  String get returnDeskSaveCharge => 'Save charge';
-
-  @override
-  String get returnDeskSaveDraft => 'Save draft';
-
-  @override
-  String get returnDeskSendToRider => 'Send to rider';
-
-  @override
-  String get returnDeskSendToRiderBody =>
-      'The rider sees these charges in their app and approves them with a code. You can\'t edit them while they\'re with the rider.';
-
-  @override
-  String get returnDeskSentToRider => 'Charges sent to the rider';
-
-  @override
-  String get returnDeskStageApproval => 'Needs approval';
-
-  @override
-  String get returnDeskStageAwaiting => 'Awaiting scooter';
-
-  @override
-  String get returnDeskStageCharges => 'Add charges';
-
-  @override
-  String get returnDeskStageInspect => 'Inspect scooter';
-
-  @override
-  String get returnDeskStageWithRider => 'With rider';
-
-  @override
-  String get returnDeskStartInspection => 'Start inspection';
-
-  @override
-  String get returnDeskSubtitle => 'Scooters riders are handing back';
-
-  @override
-  String get returnDeskTitle => 'Return desk';
-
-  @override
-  String get returnDeskUnsafeReason => 'What needs fixing?';
-
-  @override
-  String get returnDeskUnsafeReasonNeeded => 'Say what needs fixing';
-
-  @override
-  String get returnDeskWaitingManager => 'A fleet or operations manager approves next.';
-
-  @override
-  String returnDeskWaitingRider(String name) {
-    return 'Waiting for $name to approve with the code sent to their phone.';
-  }
-
-  @override
-  String get returnsAgreement => 'Agreement';
-
-  @override
   String get returnsApproveCharges => 'Approve charges';
 
   @override
@@ -3561,11 +3363,6 @@ class AppL10nEn extends AppL10n {
   String get returnsErrorSubmitFirst => 'Submit the penalties before approving them.';
 
   @override
-  String returnsEtaMinutes(int minutes) {
-    return '$minutes min away';
-  }
-
-  @override
   String returnsEvidenceCount(int count) {
     return '$count photo(s) as evidence';
   }
@@ -3586,14 +3383,14 @@ class AppL10nEn extends AppL10n {
   String get returnsLocationForHubs => 'We use your location to list the hubs closest to you.';
 
   @override
-  String get returnsNextCharges =>
-      'If anything is damaged or missing, you see the charges here and approve them with a code before they are billed.';
+  String get returnsNextCheckIn => 'The hub team photographs the scooter and a mechanic checks it.';
+
+  @override
+  String get returnsNextConfirm =>
+      'You get a code on your phone to confirm the report and any charges. Your rental ends once it\'s confirmed.';
 
   @override
   String get returnsNextHandOver => 'Bring the scooter, its battery and charger to the hub on the date you picked.';
-
-  @override
-  String get returnsNextInspection => 'The hub team checks the scooter in and inspects it.';
 
   @override
   String get returnsNoCharges => 'No charges for this return.';
@@ -3615,7 +3412,18 @@ class AppL10nEn extends AppL10n {
   String get returnsNoteCancelled => 'You cancelled this return. Your rental carries on as before.';
 
   @override
+  String get returnsNoteCheckInDone => 'Return closed. The check-in report below shows any charges.';
+
+  @override
+  String get returnsNoteCheckingIn =>
+      'The hub team is checking your scooter. When the mechanic\'s report is ready, you\'ll get a code on your phone to confirm it.';
+
+  @override
   String get returnsNoteDisputed => 'You disputed these charges. The hub team will review them and may revise them.';
+
+  @override
+  String get returnsNoteFinalChecks =>
+      'Your scooter is checked in and your rental has ended. A mechanic is doing a final check, and if it finds anything more you\'ll be asked to confirm it.';
 
   @override
   String get returnsNoteInspecting =>
@@ -3667,9 +3475,6 @@ class AppL10nEn extends AppL10n {
   String get returnsPickReason => 'Choose a reason';
 
   @override
-  String get returnsPickRental => 'Choose the rental to end';
-
-  @override
   String returnsPlannedFor(String date) {
     return 'Planned for $date';
   }
@@ -3714,9 +3519,6 @@ class AppL10nEn extends AppL10n {
   String get returnsReasonVehicleIssues => 'Problems with the scooter';
 
   @override
-  String get returnsRental => 'Rental';
-
-  @override
   String get returnsRequested => 'Return requested. See you at the hub.';
 
   @override
@@ -3735,10 +3537,16 @@ class AppL10nEn extends AppL10n {
   String get returnsStatusCancelled => 'Cancelled';
 
   @override
+  String get returnsStatusCheckingIn => 'Checking in';
+
+  @override
   String get returnsStatusClosed => 'Closed';
 
   @override
   String get returnsStatusDisputed => 'Disputed';
+
+  @override
+  String get returnsStatusFinalChecks => 'Final checks';
 
   @override
   String get returnsStatusInspecting => 'Being inspected';
@@ -3750,7 +3558,13 @@ class AppL10nEn extends AppL10n {
   String get returnsStatusRequested => 'Return requested';
 
   @override
+  String get returnsStepCheckIn => 'Scooter checked in';
+
+  @override
   String get returnsStepClosed => 'Return closed';
+
+  @override
+  String get returnsStepFinalChecks => 'Final mechanic check';
 
   @override
   String get returnsStepHandedOver => 'Scooter handed over';
@@ -3887,15 +3701,6 @@ class AppL10nEn extends AppL10n {
   String get scooterDeliveryBox => 'Delivery box';
 
   @override
-  String get scooterDeviceId => 'Device ID';
-
-  @override
-  String get scooterDeviceNumber => 'Device number';
-
-  @override
-  String get scooterFirmware => 'Firmware';
-
-  @override
   String get scooterFitnessCertificate => 'Fitness certificate';
 
   @override
@@ -3912,9 +3717,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get scooterIotOnline => 'IoT online';
-
-  @override
-  String get scooterLastPing => 'Last ping';
 
   @override
   String get scooterMotorNumber => 'Motor number';
@@ -3944,9 +3746,6 @@ class AppL10nEn extends AppL10n {
   String get scooterRegistrationCertificate => 'Registration certificate';
 
   @override
-  String get scooterSignalStrength => 'Signal strength';
-
-  @override
   String get scooterToolkit => 'Toolkit';
 
   @override
@@ -3963,6 +3762,427 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get scooterWhoLooksAfter => 'Who looks after you';
+
+  @override
+  String get submissionAddCharge => 'Add charge';
+
+  @override
+  String get submissionBypass => 'Can\'t use a code?';
+
+  @override
+  String get submissionBypassing => 'Skipping code';
+
+  @override
+  String get submissionBypassReason => 'Why can\'t they confirm with a code?';
+
+  @override
+  String submissionBypassRider(String reason) {
+    return 'Rider code skipped: $reason';
+  }
+
+  @override
+  String submissionBypassTeamLead(String reason) {
+    return 'Team lead code skipped: $reason';
+  }
+
+  @override
+  String submissionCancelledBecause(String reason) {
+    return 'Cancelled: $reason';
+  }
+
+  @override
+  String get submissionCancelReason => 'Reason';
+
+  @override
+  String get submissionCancelReasonNeeded => 'Enter a reason to cancel the report.';
+
+  @override
+  String get submissionCancelReport => 'Cancel report';
+
+  @override
+  String get submissionCancelReportHint => 'Say why. You can record a fresh report afterwards.';
+
+  @override
+  String get submissionCancelReportTitle => 'Cancel this report?';
+
+  @override
+  String get submissionChargeDetails => 'Details';
+
+  @override
+  String get submissionChargeDetailsHint => 'Where is the damage, or what is missing?';
+
+  @override
+  String get submissionChargeEvidenceNeeded => 'Pick at least one photo as proof for this charge.';
+
+  @override
+  String get submissionCharges => 'Charges';
+
+  @override
+  String get submissionChargesHint =>
+      'Add a charge for each damaged or missing item. Leave it empty if there\'s nothing to charge.';
+
+  @override
+  String get submissionChassis => 'Chassis';
+
+  @override
+  String get submissionChecklistNeeded => 'Missing items need the return checklist photo as proof.';
+
+  @override
+  String get submissionChecksComplete => 'All mechanic checks are done';
+
+  @override
+  String get submissionChecksCompleteConfirm =>
+      'This closes the mechanic checks for this scooter. You won\'t be able to add more reports.';
+
+  @override
+  String get submissionChecksCompleteHint =>
+      'Turn on only when no more checks are needed. No more reports can be added after this.';
+
+  @override
+  String get submissionCodeNotSent => 'The code couldn\'t be sent. Try again or record why it can\'t be used.';
+
+  @override
+  String get submissionCodePending => 'No code yet';
+
+  @override
+  String get submissionCodeSent => 'Code sent';
+
+  @override
+  String submissionCodeSentTo(String phone) {
+    return 'Code sent to $phone';
+  }
+
+  @override
+  String get submissionCodesSent => 'Codes sent';
+
+  @override
+  String get submissionCollect => 'Collect confirmations';
+
+  @override
+  String get submissionConfirm => 'Confirm report';
+
+  @override
+  String get submissionConfirmed => 'Report confirmed';
+
+  @override
+  String get submissionConfirmHint =>
+      'The rider and the team lead each get a code by SMS. Enter both codes to confirm. If someone can\'t use a code, record why.';
+
+  @override
+  String get submissionConfirmTitle => 'Confirm report';
+
+  @override
+  String get submissionCouldNotLoad => 'Couldn\'t load this check-in';
+
+  @override
+  String get submissionDetailsNeeded => 'Add details for this charge.';
+
+  @override
+  String get submissionEditCharge => 'Edit charge';
+
+  @override
+  String get submissionEvidence => 'Proof photos';
+
+  @override
+  String get submissionEvidenceHint => 'Pick the photos that back up this report.';
+
+  @override
+  String submissionEvidenceLimit(int count) {
+    return 'You can pick up to $count photos.';
+  }
+
+  @override
+  String get submissionEvidenceNeeded => 'Pick at least one proof photo.';
+
+  @override
+  String get submissionExtraPhotos => 'Damage & extra photos';
+
+  @override
+  String get submissionExtraPhotosHint => 'Add close-ups of any damage. You can attach them to charges in the report.';
+
+  @override
+  String get submissionFindings => 'Findings';
+
+  @override
+  String get submissionImpose => 'Impose report';
+
+  @override
+  String get submissionImposeBody =>
+      'Make sure the rider has seen the findings and charges. After this the report can\'t be changed, only cancelled.';
+
+  @override
+  String get submissionImposed => 'Report imposed';
+
+  @override
+  String get submissionImposeTitle => 'Impose this report?';
+
+  @override
+  String get submissionMechanicName => 'Mechanic name';
+
+  @override
+  String get submissionNameNeeded => 'Enter the mechanic\'s name';
+
+  @override
+  String get submissionNextComplete => 'All checks are done. Nothing more to do here.';
+
+  @override
+  String get submissionNextDeep => 'The scooter is checked in. Record the final mechanic check when it\'s done.';
+
+  @override
+  String get submissionNextLabel => 'Next step';
+
+  @override
+  String get submissionNextOtps => 'Collect the rider\'s and team lead\'s codes to confirm the report.';
+
+  @override
+  String submissionNextPhotos(int count) {
+    return 'Photos still to take: $count. Then record the mechanic\'s report.';
+  }
+
+  @override
+  String get submissionNextReport => 'All photos are in. Record the mechanic\'s report next.';
+
+  @override
+  String get submissionNextReview => 'Go through the report and any charges with the rider, then impose it.';
+
+  @override
+  String get submissionNoPhotosYet => 'No photos yet. Take them on the check-in screen first.';
+
+  @override
+  String get submissionNoPrices => 'No penalty prices are set up yet. Ask an admin to add them on the dashboard.';
+
+  @override
+  String get submissionNothingToConfirm => 'Nothing to confirm';
+
+  @override
+  String get submissionNothingToConfirmBody => 'There\'s no imposed report waiting for codes on this check-in.';
+
+  @override
+  String get submissionPartyRider => 'Rider';
+
+  @override
+  String get submissionPartyTeamLead => 'Team lead';
+
+  @override
+  String submissionPhotoBattery(String name) {
+    return 'Battery $name';
+  }
+
+  @override
+  String get submissionPhotoBatteryGeneric => 'Battery';
+
+  @override
+  String get submissionPhotoChecklist => 'Return checklist';
+
+  @override
+  String submissionPhotoController(String number) {
+    return 'Controller $number';
+  }
+
+  @override
+  String get submissionPhotoControllerGeneric => 'Controller';
+
+  @override
+  String get submissionPhotoDamage => 'Damage photo';
+
+  @override
+  String get submissionPhotoIot => 'IoT device';
+
+  @override
+  String get submissionPhotos => 'Required photos';
+
+  @override
+  String get submissionPhotosHint => 'Tap an empty slot to take the photo. Tap a taken photo to view it.';
+
+  @override
+  String get submissionPickCharge => 'Pick a charge';
+
+  @override
+  String get submissionQuantity => 'Quantity';
+
+  @override
+  String get submissionReceivingHub => 'Receiving hub';
+
+  @override
+  String get submissionRecordFinal => 'Record final check';
+
+  @override
+  String get submissionRecordReport => 'Record mechanic report';
+
+  @override
+  String submissionReportBy(String name) {
+    return 'By $name';
+  }
+
+  @override
+  String get submissionReportCancelled => 'Report cancelled';
+
+  @override
+  String get submissionReports => 'Mechanic reports';
+
+  @override
+  String get submissionReportSaved => 'Report saved';
+
+  @override
+  String get submissionResendAll => 'Resend codes';
+
+  @override
+  String get submissionRiderNote => 'Rider\'s note';
+
+  @override
+  String get submissionSafeNo => 'No, it needs work';
+
+  @override
+  String get submissionSafeNoHint => 'It stays in maintenance after the checks.';
+
+  @override
+  String get submissionSafeQuestion => 'Safe to use again?';
+
+  @override
+  String get submissionSafetyNeeded => 'Choose whether it\'s safe to use again';
+
+  @override
+  String get submissionSafeYes => 'Yes, it\'s safe';
+
+  @override
+  String get submissionSafeYesHint => 'It can go back into the fleet once the checks are done.';
+
+  @override
+  String get submissionsAll => 'All';
+
+  @override
+  String get submissionSaveCharge => 'Save charge';
+
+  @override
+  String get submissionSaveReport => 'Save report';
+
+  @override
+  String get submissionsCouldNotLoad => 'Couldn\'t load returns and exchanges';
+
+  @override
+  String get submissionsDrawerSubtitle => 'Check in returned scooters';
+
+  @override
+  String submissionsDropOff(String date) {
+    return 'Drop-off $date';
+  }
+
+  @override
+  String get submissionsDropOffDate => 'Drop-off date';
+
+  @override
+  String get submissionsEmptyAll => 'Returns and exchanges for your hub show up here.';
+
+  @override
+  String get submissionsEmptyChecks => 'No check-ins are in progress.';
+
+  @override
+  String get submissionsEmptyScheduled => 'No scooters are due at your hub right now.';
+
+  @override
+  String get submissionsEmptyTitle => 'Nothing here';
+
+  @override
+  String get submissionSendCodes => 'Send codes';
+
+  @override
+  String get submissionsExchanges => 'Exchanges';
+
+  @override
+  String get submissionsExchangesDue => 'Exchanges due';
+
+  @override
+  String get submissionsInChecks => 'In checks';
+
+  @override
+  String get submissionSourceExchange => 'Exchange';
+
+  @override
+  String get submissionSourceReturn => 'Return';
+
+  @override
+  String get submissionsReturns => 'Returns';
+
+  @override
+  String get submissionsReturnsDue => 'Returns due';
+
+  @override
+  String get submissionsScheduled => 'Scheduled';
+
+  @override
+  String get submissionsSubtitle => 'Check in scooters that riders bring back to your hub.';
+
+  @override
+  String submissionStaffReturnBody(String rider, String vehicle) {
+    return 'This starts the check-in for $vehicle now. $rider\'s rental ends once the mechanic\'s report is confirmed.';
+  }
+
+  @override
+  String get submissionStaffReturnTitle => 'Take this scooter back?';
+
+  @override
+  String get submissionStageCheckingIn => 'Checking in';
+
+  @override
+  String get submissionStageDone => 'Done';
+
+  @override
+  String get submissionStageFinalChecks => 'Final checks';
+
+  @override
+  String get submissionStageScheduled => 'Scheduled';
+
+  @override
+  String get submissionStart => 'Start check-in';
+
+  @override
+  String get submissionStartBody =>
+      'Start once the rider is at the hub with the scooter. The scooter can\'t be allocated again until the check-in is finished.';
+
+  @override
+  String get submissionStarted => 'Check-in started';
+
+  @override
+  String get submissionStartedAt => 'Started';
+
+  @override
+  String get submissionStartTitle => 'Start check-in';
+
+  @override
+  String get submissionStatusCancelled => 'Cancelled';
+
+  @override
+  String get submissionsTitle => 'Returns & exchanges';
+
+  @override
+  String get submissionSummary => 'What the mechanic found';
+
+  @override
+  String get submissionSummaryHint => 'Condition of the body, battery, controller and accessories';
+
+  @override
+  String get submissionSummaryNeeded => 'Describe what the mechanic found';
+
+  @override
+  String get submissionUnsafeReason => 'Why isn\'t it safe?';
+
+  @override
+  String get submissionUnsafeReasonNeeded => 'Say why it isn\'t safe';
+
+  @override
+  String get submissionUseCode => 'Use a code instead';
+
+  @override
+  String get submissionVerifiedRider => 'Rider confirmed with a code';
+
+  @override
+  String get submissionVerifiedTeamLead => 'Team lead confirmed with a code';
+
+  @override
+  String get submissionVerify => 'Verify code';
+
+  @override
+  String get submissionViewPhoto => 'View photo';
 
   @override
   String get supportAccidentTheft => 'Accident or theft';
@@ -4069,9 +4289,6 @@ class AppL10nEn extends AppL10n {
   String get supportRaiseTicket => 'Raise a ticket';
 
   @override
-  String get supportReopen => 'Reopen';
-
-  @override
   String get supportResolveBody => 'The rider can still reply. A reply from them reopens the ticket.';
 
   @override
@@ -4164,6 +4381,130 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
+  String get teamAdvisor => 'Advisor';
+
+  @override
+  String get teamBatteryExpert => 'Battery Expert';
+
+  @override
+  String get teamHubTeam => 'Hub team';
+
+  @override
+  String get teamMotorControllerRepair => 'Motor Controller Repair';
+
+  @override
+  String get teamNotIncluded => 'Feature not included';
+
+  @override
+  String get teamNotIncludedMessage => 'This feature is not included in your current package.';
+
+  @override
+  String get teamTechnician => 'Technician';
+
+  @override
+  String get trainingCareClean => 'Keep it clean';
+
+  @override
+  String get trainingCareCleanBody => 'Maintain the scooter in clean and good condition.';
+
+  @override
+  String get trainingCareReport => 'Report issues';
+
+  @override
+  String get trainingCareReportBody =>
+      'Immediately report any accident, damage, unusual noise, warning light or vehicle fault to us.';
+
+  @override
+  String get trainingCareTamper => 'No tampering';
+
+  @override
+  String get trainingCareTamperBody =>
+      'Do not open, modify or tamper with the battery, motor, controller, wiring or GPS device.';
+
+  @override
+  String get trainingCareWater => 'No deep water';
+
+  @override
+  String get trainingCareWaterBody =>
+      'Do not take the scooter through flooded/deep-water areas or use high-pressure water on it.';
+
+  @override
+  String get trainingChargeEquipment => 'Use approved equipment';
+
+  @override
+  String get trainingChargeEquipmentBody => 'Use only the charger/battery/accessories provided or approved by us.';
+
+  @override
+  String get trainingChargePark => 'Park responsibly';
+
+  @override
+  String get trainingChargeParkBody => 'Park securely at permitted locations and avoid water, fire or theft risks.';
+
+  @override
+  String get trainingChargeRide => 'Ride responsibly';
+
+  @override
+  String get trainingChargeRideBody => 'No overloading, unsafe riding, jumping, racing or misuse of the scooter.';
+
+  @override
+  String get trainingChargeStations => 'Charge/swap only at designated stations';
+
+  @override
+  String get trainingChargeStationsBody => 'Use only approved charging/swapping station locations.';
+
+  @override
+  String get trainingCharging => 'Charging & usage';
+
+  @override
+  String get trainingChargingSummary => 'Follow these simple guidelines for a safe, smooth and hassle-free ride.';
+
+  @override
+  String get trainingKeyPoints => 'Key points';
+
+  @override
+  String get trainingPayApp => 'Payments on app only';
+
+  @override
+  String get trainingPayAppBody =>
+      'All rental, deposit and other applicable payments must be made through the official app/payment process.';
+
+  @override
+  String get trainingPayBribe => 'No bribe / unofficial payment';
+
+  @override
+  String get trainingPayBribeBody =>
+      'Never pay or offer a bribe, commission or personal payment to a TL or company representative.';
+
+  @override
+  String get trainingPayCash => 'No cash payments';
+
+  @override
+  String get trainingPayCashBody => 'Do not make cash payments to any TL, staff member or representative.';
+
+  @override
+  String get trainingPayments => 'Payments & conduct';
+
+  @override
+  String get trainingPaymentsSummary =>
+      'Follow these simple guidelines for safe, transparent and hassle-free transactions.';
+
+  @override
+  String get trainingPayReport => 'Report concerns';
+
+  @override
+  String get trainingPayReportBody =>
+      'Report any demand for cash, bribe, unauthorised charge, misconduct or other issue directly to us.';
+
+  @override
+  String get trainingVehicleCare => 'Vehicle care';
+
+  @override
+  String get trainingVehicleCareSummary => 'Keep the scooter safe, clean and ready for every ride.';
+
+  @override
+  String get trainingViewed => 'Viewed';
+
+  @override
   String get validationEnterDateBeforeToday => 'Enter a date on or before today';
 
   @override
@@ -4186,6 +4527,108 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get validationField => 'This field';
+
+  @override
+  String get verifyApprove => 'Approve';
+
+  @override
+  String get verifyApproveAllFirst => 'Approve all documents to assign a vehicle.';
+
+  @override
+  String get verifyApproved => 'Approved';
+
+  @override
+  String get verifyApproveDocument => 'Approve this document?';
+
+  @override
+  String verifyApproveMessage(String name) {
+    return '$name will be marked as verified. This can\'t be changed later.';
+  }
+
+  @override
+  String get verifyApproveReference => 'Approve this reference?';
+
+  @override
+  String get verifyContinue => 'Continue to assign vehicle';
+
+  @override
+  String get verifyCouldNotCall => 'Couldn\'t start the call.';
+
+  @override
+  String get verifyCouldNotLoad => 'Couldn\'t load this list.';
+
+  @override
+  String get verifyDocumentApproved => 'Document approved';
+
+  @override
+  String get verifyDocumentRejected => 'Document rejected';
+
+  @override
+  String get verifyDocuments => 'Documents';
+
+  @override
+  String get verifyDocumentsHint => 'Open each document the rider uploaded, then approve or reject it.';
+
+  @override
+  String get verifyDocumentsLocked =>
+      'Fleet managers can\'t review documents yet. Your admin can review them on the dashboard.';
+
+  @override
+  String get verifyNoDocuments => 'The rider hasn\'t uploaded any documents yet.';
+
+  @override
+  String get verifyNoReferences => 'The rider hasn\'t added any references.';
+
+  @override
+  String get verifyReason => 'Reason';
+
+  @override
+  String get verifyReasonHint => 'e.g. Photo is blurry';
+
+  @override
+  String get verifyReasonRequired => 'Enter a reason';
+
+  @override
+  String get verifyReferenceApproved => 'Reference approved';
+
+  @override
+  String get verifyReferenceRejected => 'Reference rejected';
+
+  @override
+  String get verifyReferences => 'References';
+
+  @override
+  String get verifyReferencesHint => 'Call each reference to confirm, then approve or reject.';
+
+  @override
+  String get verifyReject => 'Reject';
+
+  @override
+  String get verifyRejected => 'Rejected';
+
+  @override
+  String get verifyRejectSubtitle => 'Add a short reason for rejecting it.';
+
+  @override
+  String verifyRejectTitle(String name) {
+    return 'Reject $name';
+  }
+
+  @override
+  String verifyReviewedBy(String name) {
+    return 'Reviewed by $name';
+  }
+
+  @override
+  String get verifyTitle => 'Verify rider';
+
+  @override
+  String verifyUploadedOn(String date) {
+    return 'Uploaded $date';
+  }
+
+  @override
+  String get verifyView => 'View';
 
   @override
   String get walletAvailable => 'Available';

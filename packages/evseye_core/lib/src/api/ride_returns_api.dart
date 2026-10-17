@@ -3,6 +3,7 @@ import 'dart:math';
 import '../utils/result.dart';
 import 'api_client.dart';
 import 'json_fields.dart';
+import 'vehicle_submission_api.dart';
 
 enum RideReturnStatus {
   requested('REQUESTED'),
@@ -182,6 +183,8 @@ class RideReturnDto {
     this.reasonText,
     this.cancelledAt,
     this.penaltyCase,
+    this.submissionRequired = true,
+    this.submission,
   });
 
   factory RideReturnDto.fromJson(Map<String, dynamic> json) {
@@ -204,6 +207,8 @@ class RideReturnDto {
       reasonText: jsonTextOrNull(json['reasonText']),
       cancelledAt: jsonDate(json['cancelledAt']),
       penaltyCase: penalty.isEmpty ? null : PenaltyCaseDto.fromJson(penalty),
+      submissionRequired: json['submissionRequired'] != false,
+      submission: SubmissionSummaryDto.maybe(json['vehicleSubmission']),
     );
   }
 
@@ -223,10 +228,13 @@ class RideReturnDto {
   final String? reasonText;
   final DateTime? cancelledAt;
   final PenaltyCaseDto? penaltyCase;
+  final bool submissionRequired;
+  final SubmissionSummaryDto? submission;
 
-  bool get isOpen =>
-      status == RideReturnStatus.requested ||
-      (status == RideReturnStatus.returned && penaltyCase?.status != PenaltyCaseStatus.posted);
+  bool get isOpen => submissionRequired
+      ? status == RideReturnStatus.requested || (submission != null && !submission!.isFinished)
+      : status == RideReturnStatus.requested ||
+            (status == RideReturnStatus.returned && penaltyCase?.status != PenaltyCaseStatus.posted);
 }
 
 class RideReturnPage {
@@ -372,21 +380,22 @@ class RideReturnsApi {
       _client.get<RideReturnDto>('$_base/$id', parse: (data) => RideReturnDto.fromJson(jsonMap(data)));
 
   Future<Result<RideReturnDto>> request({
-    required String agreementId,
-    required String reasonCode,
-    required String plannedHubId,
     required DateTime plannedReturnDate,
     required String idempotencyKey,
+    String? reasonCode,
+    String? plannedHubId,
     String? notes,
+    double? latitude,
+    double? longitude,
   }) => _client.post<RideReturnDto>(
     _base,
     headers: {'Idempotency-Key': idempotencyKey},
     body: {
-      'agreementId': agreementId,
-      'reasonCode': reasonCode,
-      'plannedHubId': plannedHubId,
-      'plannedReturnDate': plannedReturnDate.toUtc().toIso8601String(),
+      'plannedReturnDate': plannedDateWire(plannedReturnDate),
+      'reasonCode': ?reasonCode,
+      'plannedHubId': ?plannedHubId,
       if (notes != null && notes.trim().isNotEmpty) 'notes': notes.trim(),
+      if (latitude != null && longitude != null) ...{'latitude': latitude, 'longitude': longitude},
     },
     parse: (data) => RideReturnDto.fromJson(jsonMap(data)),
   );

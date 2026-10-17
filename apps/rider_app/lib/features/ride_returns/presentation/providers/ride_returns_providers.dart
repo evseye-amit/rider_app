@@ -1,7 +1,6 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/location/geo_point.dart';
 import '../../domain/entities/ride_return.dart';
 import '../../ride_returns_dependencies.dart';
 
@@ -46,12 +45,4 @@ final rideReturnsProvider = AsyncNotifierProvider.autoDispose<RideReturnsNotifie
 
 final rideReturnProvider = FutureProvider.autoDispose.family<RideReturn, String>(
   (ref, id) async => (await ref.watch(getRideReturnProvider)(id)).getOrThrow(),
-);
-
-final returnablePlansProvider = FutureProvider.autoDispose<List<ReturnablePlan>>(
-  (ref) async => (await ref.watch(getReturnablePlansProvider)(const NoParams())).getOrThrow(),
-);
-
-final returnHubsProvider = FutureProvider.autoDispose.family<List<ReturnHub>, GeoPoint>(
-  (ref, origin) async => (await ref.watch(getReturnHubsProvider)(origin)).getOrThrow(),
 );

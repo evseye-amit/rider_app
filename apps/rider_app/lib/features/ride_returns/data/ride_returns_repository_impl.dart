@@ -1,17 +1,12 @@
 import 'package:evseye_core/evseye_core.dart';
 
-import '../../../core/location/geo_point.dart';
 import '../domain/entities/ride_return.dart';
 import '../domain/ride_returns_repository.dart';
 
 class RideReturnsRepositoryImpl implements RideReturnsRepository {
-  const RideReturnsRepositoryImpl(this._returns, this._agreements, this._hubs);
+  const RideReturnsRepositoryImpl(this._returns);
 
   final RideReturnsApi _returns;
-  final RentalAgreementsApi _agreements;
-  final RiderHubsApi _hubs;
-
-  static const Set<String> _returnable = {'ACTIVE', 'SUSPENDED', 'TERMINATION_PENDING'};
 
   @override
   Future<Result<ReturnPage>> returns({String? cursor}) async => (await _returns.list(cursor: cursor)).map(
@@ -23,53 +18,17 @@ class RideReturnsRepositoryImpl implements RideReturnsRepository {
   Future<Result<RideReturn>> detail(String id) async => (await _returns.detail(id)).map(_return);
 
   @override
-  Future<Result<List<ReturnablePlan>>> returnablePlans() async {
-    final (agreements, returns) = await (_agreements.list(), _returns.list()).wait;
-    if (agreements case Err<List<RentalAgreementDto>>(:final failure)) return Result.err(failure);
-    final Set<String> taken = {
-      for (final RideReturnDto dto in returns.valueOrNull?.items ?? const <RideReturnDto>[])
-        if (dto.status == RideReturnStatus.requested) dto.agreementId,
-    };
-    return Result.ok([
-      for (final RentalAgreementDto agreement in (agreements as Ok<List<RentalAgreementDto>>).value)
-        if (_returnable.contains(agreement.status) && !taken.contains(agreement.id))
-          ReturnablePlan(
-            agreementId: agreement.id,
-            number: agreement.agreementNumber,
-            scooterName: _scooterName(agreement),
-          ),
-    ]);
-  }
-
-  @override
-  Future<Result<List<ReturnHub>>> hubs(GeoPoint origin) async =>
-      (await _hubs.nearby(latitude: origin.latitude, longitude: origin.longitude)).map(
-        (hubs) => [
-          for (final NearbyHubDto hub in hubs)
-            ReturnHub(
-              id: hub.id,
-              name: hub.name,
-              address: hub.address,
-              distanceMeters: hub.roadMeters ?? hub.straightLineMeters,
-              etaMinutes: hub.etaMinutes,
-            ),
-        ],
-      );
-
-  @override
   Future<Result<RideReturn>> request({
-    required String agreementId,
-    required String reasonCode,
-    required String hubId,
     required DateTime date,
     required String idempotencyKey,
+    String? reasonCode,
+    String? hubId,
     String? notes,
   }) async => (await _returns.request(
-    agreementId: agreementId,
-    reasonCode: reasonCode,
-    plannedHubId: hubId,
     plannedReturnDate: date,
     idempotencyKey: idempotencyKey,
+    reasonCode: reasonCode,
+    plannedHubId: hubId,
     notes: notes,
   )).map(_return);
 
@@ -99,13 +58,9 @@ class RideReturnsRepositoryImpl implements RideReturnsRepository {
   @override
   Future<Result<void>> disputeCharges(String id, String reason) => _returns.dispute(id, reason);
 
-  static String? _scooterName(RentalAgreementDto agreement) {
-    final String name = [?agreement.vehicleModel, ?agreement.vehicleVariant].join(' ').trim();
-    return name.isEmpty ? null : name;
-  }
-
   static RideReturn _return(RideReturnDto dto) {
     final PenaltyCaseDto? penalty = dto.penaltyCase;
+    final SubmissionSummaryDto? submission = dto.submission;
     return RideReturn(
       id: dto.id,
       status: switch (dto.status) {
@@ -120,6 +75,10 @@ class RideReturnsRepositoryImpl implements RideReturnsRepository {
       receivedAt: dto.receivedAt,
       cancelledAt: dto.cancelledAt,
       charges: penalty == null ? null : _charges(penalty),
+      usesCheckIn: dto.submissionRequired,
+      checkInId: submission?.id,
+      checkInConfirmed: submission?.isConfirmed ?? false,
+      checksComplete: submission?.mechanicChecksComplete ?? false,
     );
   }
 
