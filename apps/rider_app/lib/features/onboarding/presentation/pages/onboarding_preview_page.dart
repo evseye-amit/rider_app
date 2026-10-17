@@ -42,7 +42,10 @@ class _OnboardingPreviewPageState extends ConsumerState<OnboardingPreviewPage> {
         await ref.read(riderSessionProvider.notifier).applyOnboarding(value);
         if (!mounted) return;
         setState(() => _submitting = false);
-        if (value.isComplete) {
+        if (value.needsResubmission) {
+          AppSnack.error(context, context.l10n.onboardingUploadRejectedAgain);
+          context.pop(value.resumeIndex);
+        } else if (value.isComplete) {
           ref.read(onboardingDraftProvider.notifier).clear();
           AppSnack.success(context, context.l10n.onboardingApplicationSubmitted);
           context.go(ref.read(riderSessionProvider).homeRoute);
@@ -109,7 +112,12 @@ class _OnboardingPreviewPageState extends ConsumerState<OnboardingPreviewPage> {
       ),
       children: [
         for (int i = 0; i < config.steps.length; i++) ...[
-          _StepCard(step: config.steps[i], valueOf: valueOf, onEdit: () => _edit(i)),
+          _StepCard(
+            step: config.steps[i],
+            valueOf: valueOf,
+            isRejected: (field) => config.document(field)?.isRejected ?? false,
+            onEdit: () => _edit(i),
+          ),
           if (i != config.steps.length - 1) const Gap.lg(),
         ],
       ],
@@ -170,10 +178,11 @@ class _Band extends StatelessWidget {
 }
 
 class _StepCard extends StatelessWidget {
-  const _StepCard({required this.step, required this.valueOf, required this.onEdit});
+  const _StepCard({required this.step, required this.valueOf, required this.isRejected, required this.onEdit});
 
   final OnboardingStepConfig step;
   final Object? Function(String key) valueOf;
+  final bool Function(OnboardingFieldConfig field) isRejected;
   final VoidCallback onEdit;
 
   @override
@@ -194,12 +203,20 @@ class _StepCard extends StatelessWidget {
           : Column(
               children: [
                 for (final OnboardingFieldConfig field in shown)
-                  KeyValueRow(
-                    label: field.label,
-                    value: _display(context.l10n, field, valueOf(field.formKey)),
-                    icon: field.isUpload ? Icons.attach_file_rounded : null,
-                    valueColor: valueOf(field.formKey) == null ? AppColors.textMuted : null,
-                  ),
+                  if (field.isUpload && valueOf(field.formKey) == null && isRejected(field))
+                    KeyValueRow(
+                      label: field.label,
+                      value: context.l10n.commonRejectedUploadAgain,
+                      icon: Icons.error_outline_rounded,
+                      valueColor: AppColors.danger,
+                    )
+                  else
+                    KeyValueRow(
+                      label: field.label,
+                      value: _display(context.l10n, field, valueOf(field.formKey)),
+                      icon: field.isUpload ? Icons.attach_file_rounded : null,
+                      valueColor: valueOf(field.formKey) == null ? AppColors.textMuted : null,
+                    ),
               ],
             ),
     );

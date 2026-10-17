@@ -996,6 +996,15 @@
   "@commonRejectedUploadAgain": {
     "description": "Rejected — upload again"
   },
+  "commonRejectionReason": "Reason: {reason}",
+  "@commonRejectionReason": {
+    "description": "Why a document was rejected, shown under a rejected upload",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "commonRelationship": "Relationship",
   "@commonRelationship": {
     "description": "Relationship"
@@ -3333,9 +3342,17 @@
   "@onboardingDateBirthNotValid": {
     "description": "That date of birth is not valid"
   },
+  "onboardingDocumentApproved": "Approved",
+  "@onboardingDocumentApproved": {
+    "description": "Upload tile text for a document the reviewer approved"
+  },
   "onboardingDocumentHasExpiredEnterDate": "This document has expired. Enter a date later than today.",
   "@onboardingDocumentHasExpiredEnterDate": {
     "description": "This document has expired. Enter a date later than today."
+  },
+  "onboardingDocumentInReview": "Uploaded · under review",
+  "@onboardingDocumentInReview": {
+    "description": "Upload tile text for a document waiting for review"
   },
   "onboardingDocuments": "Documents",
   "@onboardingDocuments": {
@@ -3446,6 +3463,19 @@
   "@onboardingReferralTapApply": {
     "description": "Tap Apply to use this code, or clear it"
   },
+  "onboardingRejectedMessage": "Upload again to continue: {documents}",
+  "@onboardingRejectedMessage": {
+    "description": "Red banner message listing the rejected documents",
+    "placeholders": {
+      "documents": {
+        "type": "String"
+      }
+    }
+  },
+  "onboardingRejectedTitle": "Rejected in review",
+  "@onboardingRejectedTitle": {
+    "description": "Red banner title on an onboarding step with rejected documents"
+  },
   "onboardingReview": "Review",
   "@onboardingReview": {
     "description": "Review"
@@ -3497,6 +3527,10 @@
   "onboardingTakePhotoDocumentChooseOne": "Take a photo of the document, or choose one you already have",
   "@onboardingTakePhotoDocumentChooseOne": {
     "description": "Take a photo of the document, or choose one you already have"
+  },
+  "onboardingUploadRejectedAgain": "Upload the rejected documents again before you submit.",
+  "@onboardingUploadRejectedAgain": {
+    "description": "Snack when the rider submits while a rejected document is still not re-uploaded"
   },
   "paymentsAllClear": "You are all paid up",
   "@paymentsAllClear": {

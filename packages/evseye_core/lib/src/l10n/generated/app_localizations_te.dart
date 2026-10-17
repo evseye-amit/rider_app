@@ -753,6 +753,11 @@ class AppL10nTe extends AppL10n {
   String get commonRejectedUploadAgain => 'తిరస్కరించారు, మళ్ళీ అప్‌లోడ్ చేయండి';
 
   @override
+  String commonRejectionReason(String reason) {
+    return 'కారణం: $reason';
+  }
+
+  @override
   String get commonRelationship => 'సంబంధం';
 
   @override
@@ -2511,7 +2516,13 @@ class AppL10nTe extends AppL10n {
   String get onboardingDateBirthNotValid => 'ఈ పుట్టిన తేదీ సరైనది కాదు';
 
   @override
+  String get onboardingDocumentApproved => 'ఆమోదించబడింది';
+
+  @override
   String get onboardingDocumentHasExpiredEnterDate => 'ఈ పత్రం గడువు ముగిసింది. ఈరోజు తర్వాతి తేదీ రాయండి.';
+
+  @override
+  String get onboardingDocumentInReview => 'అప్‌లోడ్ అయింది · పరిశీలనలో ఉంది';
 
   @override
   String get onboardingDocuments => 'పత్రాలు';
@@ -2596,6 +2607,14 @@ class AppL10nTe extends AppL10n {
   String get onboardingReferralTapApply => 'ఈ కోడ్ ఉపయోగించడానికి వర్తించు నొక్కండి, లేదా దాన్ని తీసివేయండి';
 
   @override
+  String onboardingRejectedMessage(String documents) {
+    return 'కొనసాగడానికి మళ్లీ అప్‌లోడ్ చేయండి: $documents';
+  }
+
+  @override
+  String get onboardingRejectedTitle => 'పరిశీలనలో తిరస్కరించబడింది';
+
+  @override
   String get onboardingReview => 'సమీక్షించండి';
 
   @override
@@ -2634,6 +2653,9 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get onboardingTakePhotoDocumentChooseOne => 'పత్రం ఫోటో తీయండి, లేదా ఇప్పటికే ఉన్న ఫోటో ఎంచుకోండి';
+
+  @override
+  String get onboardingUploadRejectedAgain => 'సమర్పించే ముందు తిరస్కరించిన పత్రాలను మళ్లీ అప్‌లోడ్ చేయండి.';
 
   @override
   String get paymentsAllClear => 'మీ చెల్లింపులన్నీ అయ్యాయి';

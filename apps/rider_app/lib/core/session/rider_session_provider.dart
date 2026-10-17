@@ -14,6 +14,10 @@ export 'rider_session.dart';
 export 'rider_stage.dart';
 
 class RiderSessionNotifier extends Notifier<RiderSession> {
+  static const Duration _documentCheckInterval = Duration(seconds: 30);
+
+  DateTime? _documentsCheckedAt;
+
   UiConfigService get _config => ref.read(uiConfigServiceProvider);
 
   TokenStore get _tokens => ref.read(tokenStoreProvider);
@@ -74,7 +78,7 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     switch (result) {
       case Ok<RiderDeployment>(:final value):
         RiderOnboardingConfig? onboarding = state.onboarding;
-        if (value.screen == RiderScreen.onboarding || onboarding == null) {
+        if (value.screen == RiderScreen.onboarding || onboarding == null || _documentsDue(value)) {
           onboarding = await _fetchOnboarding() ?? onboarding;
         }
         state = state.copyWith(
@@ -141,13 +145,22 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
 
   void handleSessionExpired() => _clearSession();
 
-  Future<RiderOnboardingConfig?> _fetchOnboarding() async =>
-      (await ref.read(getOnboardingProvider)(const NoParams())).valueOrNull;
+  Future<RiderOnboardingConfig?> _fetchOnboarding() async {
+    _documentsCheckedAt = DateTime.now();
+    return (await ref.read(getOnboardingProvider)(const NoParams())).valueOrNull;
+  }
+
+  bool _documentsDue(RiderDeployment deployment) {
+    if (deployment.screen != RiderScreen.waiting || deployment.allocation != null) return false;
+    final DateTime? checked = _documentsCheckedAt;
+    return checked == null || DateTime.now().difference(checked) >= _documentCheckInterval;
+  }
 
   RiderStage _resolveStage(RiderDeployment deployment, RiderOnboardingConfig? onboarding) {
     if (onboarding == null) return RiderStage.fromScreen(deployment.screen);
     if (!onboarding.isComplete) return RiderStage.onboarding;
     if (deployment.allocation != null) return RiderStage.fromScreen(deployment.screen);
+    if (onboarding.needsResubmission) return RiderStage.onboarding;
     return RiderStage.fromScreen(RiderScreen.parse(onboarding.screen));
   }
 

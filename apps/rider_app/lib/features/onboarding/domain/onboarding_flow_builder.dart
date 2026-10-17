@@ -17,19 +17,32 @@ abstract final class OnboardingFlowBuilder {
         'packageName': config.packageName,
         'submitLabel': l10n.onboardingSubmitApplication,
       },
-      steps: [for (int i = 0; i < steps.length; i++) _step(steps[i], isLast: i == steps.length - 1, l10n: l10n)],
+      steps: [
+        for (int i = 0; i < steps.length; i++) _step(config, steps[i], isLast: i == steps.length - 1, l10n: l10n),
+      ],
     );
   }
 
-  static UiFlowStep _step(OnboardingStepConfig step, {required bool isLast, required AppL10n l10n}) {
+  static UiFlowStep _step(
+    RiderOnboardingConfig config,
+    OnboardingStepConfig step, {
+    required bool isLast,
+    required AppL10n l10n,
+  }) {
     final List<UiNode> body = [];
+
+    final List<OnboardingFieldConfig> rejected = [
+      for (final f in step.uploads)
+        if (config.document(f)?.isRejected ?? false) f,
+    ];
+    if (rejected.isNotEmpty) body.add(_rejectedBanner(rejected, l10n));
 
     final List<UiNode> inputs = [for (final f in step.inputs) _input(f, l10n)];
     if (inputs.isNotEmpty) {
       body.add(UiNode(type: 'group', props: {'gap': 18}, children: inputs));
     }
 
-    final List<UiNode> uploads = [for (final f in step.uploads) _upload(f, l10n)];
+    final List<UiNode> uploads = [for (final f in step.uploads) _upload(f, config.document(f), l10n)];
     if (uploads.isNotEmpty) {
       body.add(
         UiNode(
@@ -230,7 +243,18 @@ abstract final class OnboardingFlowBuilder {
       ValidationRule(type: 'pattern', value: f.pattern, message: l10n.onboardingEnterValidField(f.label)),
   ];
 
-  static UiNode _upload(OnboardingFieldConfig f, AppL10n l10n) {
+  static UiNode _rejectedBanner(List<OnboardingFieldConfig> fields, AppL10n l10n) => UiNode(
+    type: 'banner',
+    props: {
+      'title': l10n.onboardingRejectedTitle,
+      'message': l10n.onboardingRejectedMessage(fields.map((f) => f.label).join(', ')),
+      'tone': 'danger',
+      'icon': 'warning',
+    },
+    visibleWhen: UiCondition(anyOf: [for (final f in fields) UiCondition(field: f.formKey, isNotEmpty: false)]),
+  );
+
+  static UiNode _upload(OnboardingFieldConfig f, OnboardingDocument? document, AppL10n l10n) {
     final List<String> types = f.allowedFileTypes;
     final int? maxMb = f.maxFileSizeMb;
     final String hint = [
@@ -238,6 +262,7 @@ abstract final class OnboardingFlowBuilder {
       if (maxMb != null) 'up to $maxMb MB',
       if (f.minFiles > 1) '${f.minFiles} files',
     ].join(' · ');
+    final bool rejected = document?.isRejected ?? false;
     return UiNode(
       type: 'upload',
       id: f.formKey,
@@ -246,12 +271,14 @@ abstract final class OnboardingFlowBuilder {
         'label': f.label,
         if (hint.isNotEmpty) 'hint': hint,
         'featureCode': f.featureCode,
-        'fieldCode': f.fieldCode.isEmpty ? f.featureCode : f.fieldCode,
+        'fieldCode': f.uploadCode,
         'required': f.required,
+        if (rejected) 'rejected': document?.rejectionReason ?? '',
       },
       action: const UiAction(type: 'pickFile'),
       validations: [
-        if (f.required) ValidationRule(type: 'required', message: l10n.onboardingAddYourField(f.label.toLowerCase())),
+        if (f.required || rejected)
+          ValidationRule(type: 'required', message: l10n.onboardingAddYourField(f.label.toLowerCase())),
       ],
     );
   }

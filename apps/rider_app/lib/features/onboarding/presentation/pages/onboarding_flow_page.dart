@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -90,6 +91,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
       _form.setValue(OnboardingFlowBuilder.referralAppliedKey, savedReferral, markTouched: false);
     }
     _prefillReferral(config, ref.read(pendingReferralProvider));
+    _syncDocuments(config);
 
     final int resume = jumpTo ?? config.resumeIndex;
     setState(() {
@@ -97,6 +99,31 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
       _stepIndex = config.steps.isEmpty ? 0 : resume.clamp(0, config.steps.length - 1);
       _loadError = null;
     });
+  }
+
+  void _syncDocuments(RiderOnboardingConfig config) {
+    for (final OnboardingStepConfig step in config.steps) {
+      for (final OnboardingFieldConfig field in step.uploads) {
+        final OnboardingDocument? document = config.document(field);
+        if (document == null) continue;
+        final Object? current = _form.valueOf(field.formKey);
+        if (document.isRejected) {
+          if (current != null) _form.setValue(field.formKey, null, markTouched: false);
+        } else if (current == null) {
+          _form.setValue(field.formKey, _documentLabel(document), markTouched: false);
+        }
+      }
+    }
+  }
+
+  static String _documentLabel(OnboardingDocument document) => document.status == OnboardingDocumentStatus.approved
+      ? ActiveLocale.strings.onboardingDocumentApproved
+      : ActiveLocale.strings.onboardingDocumentInReview;
+
+  Future<void> _refreshDocuments() async {
+    final Result<RiderOnboardingConfig> result = await _session.loadOnboarding();
+    if (!mounted) return;
+    if (result case Ok<RiderOnboardingConfig>(:final value)) setState(() => _config = value);
   }
 
   void _persist() => ref.read(onboardingDraftProvider.notifier).save(_form.values);
@@ -216,7 +243,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
       case Ok<RiderOnboardingConfig>(:final value):
         await _session.applyOnboarding(value);
         if (!mounted) return;
-        _apply(value, jumpTo: _stepIndex + 1);
+        _apply(value, jumpTo: value.needsResubmission ? null : _stepIndex + 1);
       case Err<RiderOnboardingConfig>(:final failure):
         AppSnack.error(context, failure.message);
     }
@@ -244,6 +271,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
       case Ok<RemotePhoto>():
         _form.setValue(key, file.uri.pathSegments.last);
         AppSnack.success(context, context.l10n.commonUploaded);
+        if (node.props['rejected'] != null) unawaited(_refreshDocuments());
       case Err<RemotePhoto>(:final failure):
         AppSnack.error(context, failure.message);
     }

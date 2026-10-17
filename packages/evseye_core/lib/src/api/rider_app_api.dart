@@ -85,6 +85,8 @@ class OnboardingFieldConfig {
 
   String get formKey => isInput ? fieldCode : (isUpload ? 'upload:$featureCode' : 'feature:$featureCode');
 
+  String get uploadCode => fieldCode.isEmpty ? featureCode : fieldCode;
+
   int? get minLength => (validation['minLength'] as num?)?.toInt();
   int? get maxLength => (validation['maxLength'] as num?)?.toInt();
   String? get pattern => validation['pattern']?.toString();
@@ -178,6 +180,38 @@ class OnboardingProgress {
       raw is List ? raw.map((e) => e.toString()).toList(growable: false) : const [];
 }
 
+enum OnboardingDocumentStatus {
+  pending('PENDING'),
+  approved('APPROVED'),
+  rejected('REJECTED');
+
+  const OnboardingDocumentStatus(this.wire);
+
+  final String wire;
+
+  static OnboardingDocumentStatus parse(String? wire) =>
+      values.firstWhere((s) => s.wire == wire?.toUpperCase(), orElse: () => pending);
+}
+
+class OnboardingDocument {
+  const OnboardingDocument({required this.fieldCode, required this.status, this.rejectionReason});
+
+  factory OnboardingDocument.fromJson(Map<String, dynamic> json) {
+    final String reason = json['rejectionReason']?.toString().trim() ?? '';
+    return OnboardingDocument(
+      fieldCode: json['fieldCode']?.toString() ?? '',
+      status: OnboardingDocumentStatus.parse(json['status']?.toString()),
+      rejectionReason: reason.isEmpty ? null : reason,
+    );
+  }
+
+  final String fieldCode;
+  final OnboardingDocumentStatus status;
+  final String? rejectionReason;
+
+  bool get isRejected => status == OnboardingDocumentStatus.rejected;
+}
+
 class RiderOnboardingConfig {
   const RiderOnboardingConfig({
     required this.packageId,
@@ -186,11 +220,13 @@ class RiderOnboardingConfig {
     required this.steps,
     required this.progress,
     this.screen,
+    this.documents = const [],
   });
 
   factory RiderOnboardingConfig.fromJson(Map<String, dynamic> json) {
     final Map<String, dynamic> pkg = Map<String, dynamic>.from(json['package'] as Map? ?? const {});
     final Map<String, dynamic> onboarding = Map<String, dynamic>.from(json['onboarding'] as Map? ?? const {});
+    final Map<String, dynamic> review = Map<String, dynamic>.from(json['documentReview'] as Map? ?? const {});
     final List<OnboardingStepConfig> steps =
         (onboarding['steps'] as List<dynamic>? ?? const [])
             .map((e) => OnboardingStepConfig.fromJson(Map<String, dynamic>.from(e as Map)))
@@ -206,6 +242,10 @@ class RiderOnboardingConfig {
           ? OnboardingProgress.empty
           : OnboardingProgress.fromJson(Map<String, dynamic>.from(json['progress'] as Map)),
       screen: json['screen']?.toString(),
+      documents: (review['documents'] as List<dynamic>? ?? const [])
+          .map((e) => OnboardingDocument.fromJson(Map<String, dynamic>.from(e as Map)))
+          .where((d) => d.fieldCode.isNotEmpty)
+          .toList(growable: false),
     );
   }
 
@@ -216,8 +256,14 @@ class RiderOnboardingConfig {
   final OnboardingProgress progress;
 
   final String? screen;
+  final List<OnboardingDocument> documents;
 
   bool get isComplete => progress.completed;
+
+  OnboardingDocument? document(OnboardingFieldConfig field) =>
+      documents.where((d) => d.fieldCode == field.uploadCode).firstOrNull;
+
+  bool get needsResubmission => steps.any((s) => s.uploads.any((f) => document(f)?.isRejected ?? false));
 
   int get resumeIndex {
     final String? id = progress.currentStepId;

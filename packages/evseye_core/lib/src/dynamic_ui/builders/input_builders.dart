@@ -226,26 +226,29 @@ Map<String, NodeBuilder> inputBuilders(WidgetRegistry r) => {
       'upload': (context, node, scope) => _Field(
             node: node,
             scope: scope,
-            builder: (key, value, error, enabled) => UploadTile(
-              label: node.text(scope, 'label'),
-              hint: node.props['hint'] == null ? null : node.text(scope, 'hint'),
-              required: _isRequired(node),
+            builder: (key, value, error, enabled) {
+              final String? rejected = node.props['rejected']?.toString();
+              return UploadTile(
+                label: node.text(scope, 'label'),
+                hint: node.props['hint'] == null ? null : node.text(scope, 'hint'),
+                required: _isRequired(node),
 
-              state: scope.isBusy(key)
-                  ? UploadState.uploading
-                  : (value == null || value.isEmpty
-                      ? UploadState.empty
-                      : UploadState.uploaded),
-              fileName: value,
-              rejectReason: error,
-              onRemove: () => scope.form.setValue(key, null),
+                state: scope.isBusy(key)
+                    ? UploadState.uploading
+                    : (value == null || value.isEmpty
+                        ? (rejected == null ? UploadState.empty : UploadState.rejected)
+                        : UploadState.uploaded),
+                fileName: value,
+                rejectReason: rejected ?? error,
+                onRemove: () => scope.form.setValue(key, null),
 
-              onTap: () => scope.onAction(
-                context,
-                node.action ?? const UiAction(type: 'pickFile'),
-                node,
-              ),
-            ),
+                onTap: () => scope.onAction(
+                  context,
+                  node.action ?? const UiAction(type: 'pickFile'),
+                  node,
+                ),
+              );
+            },
           ),
       'photoGrid': (context, node, scope) {
         final List<_Option> slots = _options(node, scope, key: 'slots');

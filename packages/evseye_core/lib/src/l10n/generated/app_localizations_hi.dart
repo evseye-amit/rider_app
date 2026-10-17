@@ -751,6 +751,11 @@ class AppL10nHi extends AppL10n {
   String get commonRejectedUploadAgain => 'अस्वीकार, दोबारा अपलोड करें';
 
   @override
+  String commonRejectionReason(String reason) {
+    return 'कारण: $reason';
+  }
+
+  @override
   String get commonRelationship => 'रिश्ता';
 
   @override
@@ -2501,7 +2506,13 @@ class AppL10nHi extends AppL10n {
   String get onboardingDateBirthNotValid => 'यह जन्म तिथि सही नहीं है';
 
   @override
+  String get onboardingDocumentApproved => 'स्वीकृत';
+
+  @override
   String get onboardingDocumentHasExpiredEnterDate => 'यह दस्तावेज़ ख़त्म हो चुका है। आज के बाद की तारीख डालें।';
+
+  @override
+  String get onboardingDocumentInReview => 'अपलोड हो गया · जाँच जारी';
 
   @override
   String get onboardingDocuments => 'दस्तावेज़';
@@ -2586,6 +2597,14 @@ class AppL10nHi extends AppL10n {
   String get onboardingReferralTapApply => 'यह कोड इस्तेमाल करने के लिए लागू करें दबाएँ, या इसे हटा दें';
 
   @override
+  String onboardingRejectedMessage(String documents) {
+    return 'आगे बढ़ने के लिए दोबारा अपलोड करें: $documents';
+  }
+
+  @override
+  String get onboardingRejectedTitle => 'जाँच में अस्वीकार';
+
+  @override
   String get onboardingReview => 'जांचें';
 
   @override
@@ -2623,6 +2642,9 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get onboardingTakePhotoDocumentChooseOne => 'दस्तावेज़ की फ़ोटो लें, या पहले से मौजूद फ़ोटो चुनें';
+
+  @override
+  String get onboardingUploadRejectedAgain => 'जमा करने से पहले अस्वीकार हुए दस्तावेज़ दोबारा अपलोड करें।';
 
   @override
   String get paymentsAllClear => 'आपका सारा भुगतान हो गया';

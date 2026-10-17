@@ -41,6 +41,7 @@ class UploadTile extends StatelessWidget {
       UploadState.uploaded => (AppColors.success, Icons.task_alt_rounded),
       UploadState.rejected => (AppColors.danger, Icons.error_outline_rounded),
     };
+    final String reason = state == UploadState.rejected ? rejectReason?.trim() ?? '' : '';
 
     return Pressable(
       onTap: onTap,
@@ -91,7 +92,7 @@ class UploadTile extends StatelessWidget {
                         switch (state) {
                           UploadState.uploaded => fileName ?? context.l10n.commonUploaded,
                           UploadState.uploading => 'Uploading… ${(progress * 100).round()}%',
-                          UploadState.rejected => rejectReason ?? context.l10n.commonRejectedUploadAgain,
+                          UploadState.rejected => context.l10n.commonRejectedUploadAgain,
                           UploadState.empty => hint ?? context.l10n.commonJpgPngPdfUp5,
                         },
                         maxLines: 1,
@@ -99,6 +100,7 @@ class UploadTile extends StatelessWidget {
                         style: AppText.bodySmall.copyWith(
                           fontSize: 11.5,
                           color: state == UploadState.rejected ? AppColors.danger : null,
+                          fontWeight: state == UploadState.rejected ? FontWeight.w700 : null,
                         ),
                       ),
                     ],
@@ -125,6 +127,21 @@ class UploadTile extends StatelessWidget {
                   ),
               ],
             ),
+            if (reason.isNotEmpty) ...[
+              const SizedBox(height: Insets.sm),
+              Padding(
+                padding: const EdgeInsets.only(left: 42 + Insets.md),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    context.l10n.commonRejectionReason(reason),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.4, color: AppColors.danger),
+                  ),
+                ),
+              ),
+            ],
             if (state == UploadState.uploading) ...[
               const SizedBox(height: Insets.md),
               ClipRRect(

@@ -756,6 +756,11 @@ class AppL10nEn extends AppL10n {
   String get commonRejectedUploadAgain => 'Rejected — upload again';
 
   @override
+  String commonRejectionReason(String reason) {
+    return 'Reason: $reason';
+  }
+
+  @override
   String get commonRelationship => 'Relationship';
 
   @override
@@ -2512,7 +2517,13 @@ class AppL10nEn extends AppL10n {
   String get onboardingDateBirthNotValid => 'That date of birth is not valid';
 
   @override
+  String get onboardingDocumentApproved => 'Approved';
+
+  @override
   String get onboardingDocumentHasExpiredEnterDate => 'This document has expired. Enter a date later than today.';
+
+  @override
+  String get onboardingDocumentInReview => 'Uploaded · under review';
 
   @override
   String get onboardingDocuments => 'Documents';
@@ -2597,6 +2608,14 @@ class AppL10nEn extends AppL10n {
   String get onboardingReferralTapApply => 'Tap Apply to use this code, or clear it';
 
   @override
+  String onboardingRejectedMessage(String documents) {
+    return 'Upload again to continue: $documents';
+  }
+
+  @override
+  String get onboardingRejectedTitle => 'Rejected in review';
+
+  @override
   String get onboardingReview => 'Review';
 
   @override
@@ -2635,6 +2654,9 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get onboardingTakePhotoDocumentChooseOne => 'Take a photo of the document, or choose one you already have';
+
+  @override
+  String get onboardingUploadRejectedAgain => 'Upload the rejected documents again before you submit.';
 
   @override
   String get paymentsAllClear => 'You are all paid up';

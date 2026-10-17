@@ -1534,6 +1534,12 @@ abstract class AppL10n {
   /// **'Rejected — upload again'**
   String get commonRejectedUploadAgain;
 
+  /// Why a document was rejected, shown under a rejected upload
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {reason}'**
+  String commonRejectionReason(String reason);
+
   /// Relationship
   ///
   /// In en, this message translates to:
@@ -4942,11 +4948,23 @@ abstract class AppL10n {
   /// **'That date of birth is not valid'**
   String get onboardingDateBirthNotValid;
 
+  /// Upload tile text for a document the reviewer approved
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get onboardingDocumentApproved;
+
   /// This document has expired. Enter a date later than today.
   ///
   /// In en, this message translates to:
   /// **'This document has expired. Enter a date later than today.'**
   String get onboardingDocumentHasExpiredEnterDate;
+
+  /// Upload tile text for a document waiting for review
+  ///
+  /// In en, this message translates to:
+  /// **'Uploaded · under review'**
+  String get onboardingDocumentInReview;
 
   /// Documents
   ///
@@ -5104,6 +5122,18 @@ abstract class AppL10n {
   /// **'Tap Apply to use this code, or clear it'**
   String get onboardingReferralTapApply;
 
+  /// Red banner message listing the rejected documents
+  ///
+  /// In en, this message translates to:
+  /// **'Upload again to continue: {documents}'**
+  String onboardingRejectedMessage(String documents);
+
+  /// Red banner title on an onboarding step with rejected documents
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected in review'**
+  String get onboardingRejectedTitle;
+
   /// Review
   ///
   /// In en, this message translates to:
@@ -5181,6 +5211,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Take a photo of the document, or choose one you already have'**
   String get onboardingTakePhotoDocumentChooseOne;
+
+  /// Snack when the rider submits while a rejected document is still not re-uploaded
+  ///
+  /// In en, this message translates to:
+  /// **'Upload the rejected documents again before you submit.'**
+  String get onboardingUploadRejectedAgain;
 
   /// You are all paid up
   ///
