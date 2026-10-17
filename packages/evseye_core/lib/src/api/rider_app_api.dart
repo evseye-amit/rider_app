@@ -301,10 +301,36 @@ class RiderEnrollment {
   final String phone;
 }
 
+class RiderHomeDto {
+  const RiderHomeDto({this.partnerName, this.businessCategory, this.dailyRentalAmount, this.rentalDays = 0});
+
+  factory RiderHomeDto.fromJson(Map<String, dynamic> json) => RiderHomeDto(
+    partnerName: _text(json['partnerName']),
+    businessCategory: _text(json['businessCategory']),
+    dailyRentalAmount: num.tryParse(json['dailyRentalAmount']?.toString() ?? ''),
+    rentalDays: (json['rentalDays'] as num?)?.toInt() ?? 0,
+  );
+
+  final String? partnerName;
+  final String? businessCategory;
+  final num? dailyRentalAmount;
+  final int rentalDays;
+
+  static String? _text(Object? raw) {
+    final String text = raw?.toString().trim() ?? '';
+    return text.isEmpty ? null : text;
+  }
+}
+
 class RiderAppApi {
   const RiderAppApi(this._client);
 
   final ApiClient _client;
+
+  Future<Result<RiderHomeDto>> home() => _client.get<RiderHomeDto>(
+    '/rider-app/home',
+    parse: (data) => RiderHomeDto.fromJson(Map<String, dynamic>.from(data as Map)),
+  );
 
   Future<Result<RiderEnrollment>> enroll(String mobile, {String? companyCode}) {
     return _client.post<RiderEnrollment>(
