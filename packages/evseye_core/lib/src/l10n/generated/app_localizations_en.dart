@@ -612,15 +612,6 @@ class AppL10nEn extends AppL10n {
   String get commonGallery => 'Gallery';
 
   @override
-  String get commonGoodAfternoon => 'Good afternoon';
-
-  @override
-  String get commonGoodEvening => 'Good evening';
-
-  @override
-  String get commonGoodMorning => 'Good morning';
-
-  @override
   String get commonHandover => 'Handover';
 
   @override
@@ -1928,9 +1919,6 @@ class AppL10nEn extends AppL10n {
   String get homeRentDue => 'Rent due';
 
   @override
-  String get homeRidingLate => 'Riding late';
-
-  @override
   String get homeScooter => 'Scooter';
 
   @override
@@ -2062,9 +2050,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get hubUptime => 'Uptime';
-
-  @override
-  String get hubWorkingLate => 'Working late';
 
   @override
   String get inspectionErrorSafeForReuse => 'Say whether the scooter is safe to give out again.';

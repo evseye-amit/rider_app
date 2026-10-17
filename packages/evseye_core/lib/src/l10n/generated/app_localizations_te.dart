@@ -610,15 +610,6 @@ class AppL10nTe extends AppL10n {
   String get commonGallery => 'గ్యాలరీ';
 
   @override
-  String get commonGoodAfternoon => 'నమస్కారం';
-
-  @override
-  String get commonGoodEvening => 'శుభ సాయంత్రం';
-
-  @override
-  String get commonGoodMorning => 'శుభోదయం';
-
-  @override
   String get commonHandover => 'అప్పగింత';
 
   @override
@@ -1929,9 +1920,6 @@ class AppL10nTe extends AppL10n {
   String get homeRentDue => 'బకాయి అద్దె';
 
   @override
-  String get homeRidingLate => 'రాత్రి ప్రయాణం';
-
-  @override
   String get homeScooter => 'స్కూటర్';
 
   @override
@@ -2063,9 +2051,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get hubUptime => 'నడిచిన సమయం';
-
-  @override
-  String get hubWorkingLate => 'ఆలస్యంగా పని';
 
   @override
   String get inspectionErrorSafeForReuse => 'స్కూటర్‌ను మళ్లీ ఇవ్వడానికి సురక్షితమో కాదో చెప్పండి.';

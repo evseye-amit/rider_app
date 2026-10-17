@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/session/rider_session_provider.dart';
 import '../providers/deployment_provider.dart';
-import '../providers/training_provider.dart';
 import '../widgets/training_modules.dart';
 
 class TrainingPage extends ConsumerStatefulWidget {
@@ -60,8 +59,6 @@ class _TrainingPageState extends ConsumerState<TrainingPage> {
         ),
       );
     }
-
-    if (allocationId != null) ref.watch(trainingProvider(allocationId));
 
     final int viewed = _viewed.length;
     final int total = TrainingModule.values.length;

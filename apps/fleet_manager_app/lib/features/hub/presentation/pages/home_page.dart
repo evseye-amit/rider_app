@@ -178,14 +178,6 @@ class _Band extends ConsumerWidget {
 
   final HubSummary? summary;
 
-  String _greeting(AppL10n l10n) {
-    final int hour = DateTime.now().hour;
-    if (hour < 12) return l10n.commonGoodMorning;
-    if (hour < 17) return l10n.commonGoodAfternoon;
-    if (hour < 21) return l10n.commonGoodEvening;
-    return l10n.hubWorkingLate;
-  }
-
   Future<void> _markAttendance(BuildContext context, WidgetRef ref, bool next) async {
     final Result<bool> result = await ref.read(fleetSessionProvider.notifier).setAttendance(next);
     if (!context.mounted) return;
@@ -205,7 +197,6 @@ class _Band extends ConsumerWidget {
     final int unread = ref.watch(unreadNotificationsProvider).value ?? 0;
     final HubSummary? current = summary;
     final double? utilisation = current?.utilisation;
-    final String firstName = session.managerName.split(' ').first;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,23 +209,11 @@ class _Band extends ConsumerWidget {
             ),
             const SizedBox(width: Insets.md),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${_greeting(context.l10n)}, $firstName',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.onInkSecondary),
-                  ),
-                  const SizedBox(height: 1),
-                  Text(
-                    session.allHubs ? context.l10n.hubAllHubs : current?.hubName ?? session.hubName,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.titleLarge.copyWith(fontSize: 20, color: AppColors.onInk),
-                  ),
-                ],
+              child: Text(
+                session.managerName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.titleLarge.copyWith(fontSize: 20, color: AppColors.onInk),
               ),
             ),
             const SizedBox(width: Insets.sm),

@@ -121,14 +121,6 @@ class _Band extends ConsumerWidget {
 
   final HomeSummary? summary;
 
-  String _greeting(AppL10n l10n) {
-    final int hour = DateTime.now().hour;
-    if (hour < 12) return l10n.commonGoodMorning;
-    if (hour < 17) return l10n.commonGoodAfternoon;
-    if (hour < 21) return l10n.commonGoodEvening;
-    return l10n.homeRidingLate;
-  }
-
   Future<void> _confirmAttendance(BuildContext context, WidgetRef ref, bool next) async {
     if (!next) {
       final bool confirmed = await AppDialog.confirm(
@@ -173,21 +165,11 @@ class _Band extends ConsumerWidget {
             ),
             const SizedBox(width: Insets.md),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    _greeting(context.l10n),
-                    style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.onInkSecondary),
-                  ),
-                  const SizedBox(height: 1),
-                  Text(
-                    name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.titleLarge.copyWith(fontSize: 20, color: AppColors.onInk),
-                  ),
-                ],
+              child: Text(
+                name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.titleLarge.copyWith(fontSize: 20, color: AppColors.onInk),
               ),
             ),
             const SizedBox(width: Insets.sm),

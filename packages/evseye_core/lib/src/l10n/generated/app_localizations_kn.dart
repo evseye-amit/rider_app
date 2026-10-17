@@ -610,15 +610,6 @@ class AppL10nKn extends AppL10n {
   String get commonGallery => 'ಗ್ಯಾಲರಿ';
 
   @override
-  String get commonGoodAfternoon => 'ಶುಭ ಮಧ್ಯಾಹ್ನ';
-
-  @override
-  String get commonGoodEvening => 'ಶುಭ ಸಂಜೆ';
-
-  @override
-  String get commonGoodMorning => 'ಶುಭೋದಯ';
-
-  @override
   String get commonHandover => 'ಹಸ್ತಾಂತರ';
 
   @override
@@ -1930,9 +1921,6 @@ class AppL10nKn extends AppL10n {
   String get homeRentDue => 'ಬಾಕಿ ಬಾಡಿಗೆ';
 
   @override
-  String get homeRidingLate => 'ತಡರಾತ್ರಿ ಸವಾರಿ';
-
-  @override
   String get homeScooter => 'ಸ್ಕೂಟರ್';
 
   @override
@@ -2064,9 +2052,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get hubUptime => 'ಚಾಲನೆಯ ಸಮಯ';
-
-  @override
-  String get hubWorkingLate => 'ತಡವಾಗಿ ಕೆಲಸ';
 
   @override
   String get inspectionErrorSafeForReuse => 'ಸ್ಕೂಟರ್ ಅನ್ನು ಮತ್ತೆ ನೀಡಲು ಸುರಕ್ಷಿತವೇ ಎಂದು ತಿಳಿಸಿ.';

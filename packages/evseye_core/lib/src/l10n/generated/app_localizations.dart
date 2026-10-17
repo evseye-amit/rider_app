@@ -1246,24 +1246,6 @@ abstract class AppL10n {
   /// **'Gallery'**
   String get commonGallery;
 
-  /// Good afternoon
-  ///
-  /// In en, this message translates to:
-  /// **'Good afternoon'**
-  String get commonGoodAfternoon;
-
-  /// Good evening
-  ///
-  /// In en, this message translates to:
-  /// **'Good evening'**
-  String get commonGoodEvening;
-
-  /// Good morning
-  ///
-  /// In en, this message translates to:
-  /// **'Good morning'**
-  String get commonGoodMorning;
-
   /// Handover
   ///
   /// In en, this message translates to:
@@ -3808,12 +3790,6 @@ abstract class AppL10n {
   /// **'Rent due'**
   String get homeRentDue;
 
-  /// Riding late
-  ///
-  /// In en, this message translates to:
-  /// **'Riding late'**
-  String get homeRidingLate;
-
   /// Scooter
   ///
   /// In en, this message translates to:
@@ -4071,12 +4047,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Uptime'**
   String get hubUptime;
-
-  /// Working late
-  ///
-  /// In en, this message translates to:
-  /// **'Working late'**
-  String get hubWorkingLate;
 
   /// Say whether the scooter is safe to give out again.
   ///

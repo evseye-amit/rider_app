@@ -177,9 +177,9 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
   RiderStage _deploymentStage(RiderDeployment deployment) {
     final RiderStage stage = RiderStage.fromScreen(deployment.screen);
     final String? allocationId = deployment.allocation?.id;
-    if (stage != RiderStage.training || allocationId == null) return stage;
+    if (allocationId == null || (stage != RiderStage.training && stage != RiderStage.active)) return stage;
     final List<String> done = ref.read(sharedPreferencesProvider).getStringList(_hygieneKey) ?? const [];
-    return done.contains(allocationId) ? RiderStage.active : stage;
+    return done.contains(allocationId) ? RiderStage.active : RiderStage.training;
   }
 
   String _resolveMobile({required RiderDeployment? deployment, required RiderOnboardingConfig? onboarding}) {

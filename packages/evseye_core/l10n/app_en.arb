@@ -804,18 +804,6 @@
   "@commonGallery": {
     "description": "Gallery"
   },
-  "commonGoodAfternoon": "Good afternoon",
-  "@commonGoodAfternoon": {
-    "description": "Good afternoon"
-  },
-  "commonGoodEvening": "Good evening",
-  "@commonGoodEvening": {
-    "description": "Good evening"
-  },
-  "commonGoodMorning": "Good morning",
-  "@commonGoodMorning": {
-    "description": "Good morning"
-  },
   "commonHandover": "Handover",
   "@commonHandover": {
     "description": "Handover"
@@ -2552,10 +2540,6 @@
   "@homeRentDue": {
     "description": "Rent due"
   },
-  "homeRidingLate": "Riding late",
-  "@homeRidingLate": {
-    "description": "Riding late"
-  },
   "homeScooter": "Scooter",
   "@homeScooter": {
     "description": "Scooter"
@@ -2732,10 +2716,6 @@
   "hubUptime": "Uptime",
   "@hubUptime": {
     "description": "Uptime"
-  },
-  "hubWorkingLate": "Working late",
-  "@hubWorkingLate": {
-    "description": "Working late"
   },
   "inspectionErrorSafeForReuse": "Say whether the scooter is safe to give out again.",
   "@inspectionErrorSafeForReuse": {
