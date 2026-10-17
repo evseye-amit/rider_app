@@ -198,10 +198,16 @@ class AppL10nKn extends AppL10n {
   String get allocationPhotoCannotOpen => 'ಈ ಫೋಟೋವನ್ನು ಈಗ ತೆರೆಯಲು ಆಗುವುದಿಲ್ಲ.';
 
   @override
+  String get allocationPhotoDeclaration => 'ಘೋಷಣಾ ಪತ್ರ';
+
+  @override
   String get allocationPhotoFront => 'ಮುಂಭಾಗ';
 
   @override
   String get allocationPhotoLeft => 'ಎಡಭಾಗ';
+
+  @override
+  String get allocationPhotoRider => 'ವಾಹನದೊಂದಿಗೆ ರೈಡರ್';
 
   @override
   String get allocationPhotoRight => 'ಬಲಭಾಗ';
@@ -290,7 +296,7 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationVehiclePhotosHint =>
-      'ವಾಹನದ ಪ್ರತಿ ಬದಿಯ ಫೋಟೋ ತೆಗೆಯಿರಿ. ತಪಾಸಣೆ ಸಲ್ಲಿಸುವ ಮೊದಲು ನಾಲ್ಕೂ ಫೋಟೋಗಳು ಬೇಕು.';
+      'ವಾಹನದ ಪ್ರತಿ ಬದಿಯ ಫೋಟೋ, ವಾಹನದೊಂದಿಗೆ ರೈಡರ್‌ನ ಒಂದು ಫೋಟೋ ಮತ್ತು ಸಹಿ ಮಾಡಿದ ಘೋಷಣಾ ಪತ್ರದ ಒಂದು ಫೋಟೋ ತೆಗೆಯಿರಿ. ತಪಾಸಣೆ ಸಲ್ಲಿಸುವ ಮೊದಲು ಎಲ್ಲಾ ಫೋಟೋಗಳು ಬೇಕು.';
 
   @override
   String get allocationVehicleReserved => 'ವಾಹನ ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ';
@@ -918,7 +924,8 @@ class AppL10nKn extends AppL10n {
   }
 
   @override
-  String get consentAgree => 'ನಾನು ಈ ಸೂಚನೆಯನ್ನು ಓದಿದ್ದೇನೆ ಮತ್ತು ನನ್ನ ಒಪ್ಪಿಗೆ ನೀಡುತ್ತೇನೆ';
+  String get consentAgree =>
+      'ಈ ಸಮ್ಮತಿ ಪತ್ರದಲ್ಲಿರುವ ಅಂಶಗಳನ್ನು ನಾನು ಅರ್ಥಮಾಡಿಕೊಂಡಿದ್ದೇನೆ ಮತ್ತು \'ದತ್ತಾಂಶದ ಮೂಲ ಮಾಲೀಕ\'ನ (data principal) ಸಾಮರ್ಥ್ಯದಲ್ಲಿ ಇದಕ್ಕೆ ಸಮ್ಮತಿಸುತ್ತೇನೆ ಎಂದು ಘೋಷಿಸುತ್ತೇನೆ.';
 
   @override
   String get consentRiderTitle => 'ರೈಡರ್ ಒಪ್ಪಿಗೆ';
@@ -1155,7 +1162,7 @@ class AppL10nKn extends AppL10n {
   String get deploymentEnterTransactionReferencePaidWith => 'ಪಾವತಿಸಿದ ವ್ಯವಹಾರ ಉಲ್ಲೇಖ ಬರೆಯಿರಿ';
 
   @override
-  String get deploymentFinishTraining => 'ತರಬೇತಿ ಮುಗಿಸಿ';
+  String get deploymentFinishHygieneCheck => 'ಸ್ವಚ್ಛತಾ ಪರಿಶೀಲನೆ ಮುಗಿಸಿ';
 
   @override
   String get deploymentFlagAsProblem => 'ಸಮಸ್ಯೆ ಎಂದು ಗುರುತಿಸಿ';
@@ -1191,6 +1198,9 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get deploymentHowDidPay => 'ನೀವು ಹೇಗೆ ಪಾವತಿಸಿದಿರಿ?';
+
+  @override
+  String get deploymentHygieneComplete => 'ಸ್ವಚ್ಛತಾ ಪರಿಶೀಲನೆ ಪೂರ್ಣಗೊಂಡಿದೆ';
 
   @override
   String get deploymentInspection => 'ಪರಿಶೀಲನೆ';
@@ -1255,7 +1265,7 @@ class AppL10nKn extends AppL10n {
   String get deploymentRide => 'ಸವಾರಿ';
 
   @override
-  String get deploymentSafetyTraining => 'ಸುರಕ್ಷತಾ ತರಬೇತಿ';
+  String get deploymentRiderHygiene => 'ರೈಡರ್ ಸ್ವಚ್ಛತೆ';
 
   @override
   String get deploymentScooterReserved => 'ಸ್ಕೂಟರ್ ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ';
@@ -1265,9 +1275,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get deploymentSubmitWithProblemsFlagged => 'ಸಮಸ್ಯೆಗಳನ್ನು ಗುರುತಿಸಿ ಸಲ್ಲಿಸಬೇಕೆ?';
-
-  @override
-  String get deploymentTrainingComplete => 'ತರಬೇತಿ ಪೂರ್ಣ';
 
   @override
   String get deploymentTransactionReference => 'ವ್ಯವಹಾರ ಉಲ್ಲೇಖ';

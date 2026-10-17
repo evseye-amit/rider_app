@@ -200,10 +200,16 @@ class AppL10nEn extends AppL10n {
   String get allocationPhotoCannotOpen => 'This photo can\'t be opened right now.';
 
   @override
+  String get allocationPhotoDeclaration => 'Declaration form';
+
+  @override
   String get allocationPhotoFront => 'Front';
 
   @override
   String get allocationPhotoLeft => 'Left';
+
+  @override
+  String get allocationPhotoRider => 'Rider with vehicle';
 
   @override
   String get allocationPhotoRight => 'Right';
@@ -292,7 +298,7 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationVehiclePhotosHint =>
-      'Take a photo of each side of the vehicle. All four are needed before you submit the inspection.';
+      'Take a photo of each side of the vehicle, one of the rider with the vehicle, and one of the signed declaration form. All are needed before you submit the inspection.';
 
   @override
   String get allocationVehicleReserved => 'Vehicle reserved';
@@ -919,7 +925,8 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get consentAgree => 'I have read this notice and I give my consent';
+  String get consentAgree =>
+      'I declare that I have understood the points of this consent form and agree in my capacity as the data principal.';
 
   @override
   String get consentRiderTitle => 'Rider Consent';
@@ -1154,7 +1161,7 @@ class AppL10nEn extends AppL10n {
   String get deploymentEnterTransactionReferencePaidWith => 'Enter the transaction reference you paid with';
 
   @override
-  String get deploymentFinishTraining => 'Finish training';
+  String get deploymentFinishHygieneCheck => 'Finish hygiene check';
 
   @override
   String get deploymentFlagAsProblem => 'Flag as a problem';
@@ -1189,6 +1196,9 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentHowDidPay => 'How did you pay?';
+
+  @override
+  String get deploymentHygieneComplete => 'Hygiene check complete';
 
   @override
   String get deploymentInspection => 'Inspection';
@@ -1253,7 +1263,7 @@ class AppL10nEn extends AppL10n {
   String get deploymentRide => 'Ride';
 
   @override
-  String get deploymentSafetyTraining => 'Safety training';
+  String get deploymentRiderHygiene => 'Rider Hygiene';
 
   @override
   String get deploymentScooterReserved => 'Scooter reserved';
@@ -1263,9 +1273,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentSubmitWithProblemsFlagged => 'Submit with problems flagged?';
-
-  @override
-  String get deploymentTrainingComplete => 'Training complete';
 
   @override
   String get deploymentTransactionReference => 'Transaction reference';

@@ -199,10 +199,16 @@ class AppL10nTe extends AppL10n {
   String get allocationPhotoCannotOpen => 'ఈ ఫోటోను ఇప్పుడు తెరవలేము.';
 
   @override
+  String get allocationPhotoDeclaration => 'ప్రకటన పత్రం';
+
+  @override
   String get allocationPhotoFront => 'ముందు';
 
   @override
   String get allocationPhotoLeft => 'ఎడమ వైపు';
+
+  @override
+  String get allocationPhotoRider => 'వాహనంతో రైడర్';
 
   @override
   String get allocationPhotoRight => 'కుడి వైపు';
@@ -290,7 +296,8 @@ class AppL10nTe extends AppL10n {
   String get allocationVehiclePhotos => 'వాహన ఫోటోలు';
 
   @override
-  String get allocationVehiclePhotosHint => 'వాహనం ప్రతి వైపు ఫోటో తీయండి. తనిఖీ సమర్పించే ముందు నాలుగు ఫోటోలు అవసరం.';
+  String get allocationVehiclePhotosHint =>
+      'వాహనం ప్రతి వైపు ఫోటో, వాహనంతో రైడర్ ఒక ఫోటో మరియు సంతకం చేసిన ప్రకటన పత్రం ఒక ఫోటో తీయండి. తనిఖీ సమర్పించే ముందు అన్ని ఫోటోలు అవసరం.';
 
   @override
   String get allocationVehicleReserved => 'వాహనం రిజర్వ్ చేయబడింది';
@@ -916,7 +923,8 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
-  String get consentAgree => 'నేను ఈ నోటీసును చదివాను, నా సమ్మతి ఇస్తున్నాను';
+  String get consentAgree =>
+      'ఈ సమ్మతి పత్రంలోని అంశాలను నేను అర్థం చేసుకున్నానని మరియు డేటా ప్రిన్సిపాల్ హోదాలో అంగీకరిస్తున్నానని ప్రకటిస్తున్నాను.';
 
   @override
   String get consentRiderTitle => 'రైడర్ సమ్మతి';
@@ -1152,7 +1160,7 @@ class AppL10nTe extends AppL10n {
   String get deploymentEnterTransactionReferencePaidWith => 'చెల్లించిన లావాదేవీ రిఫరెన్స్ రాయండి';
 
   @override
-  String get deploymentFinishTraining => 'శిక్షణ పూర్తి చేయండి';
+  String get deploymentFinishHygieneCheck => 'పరిశుభ్రత తనిఖీ పూర్తి చేయండి';
 
   @override
   String get deploymentFlagAsProblem => 'సమస్యగా గుర్తించండి';
@@ -1187,6 +1195,9 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get deploymentHowDidPay => 'మీరు ఎలా చెల్లించారు?';
+
+  @override
+  String get deploymentHygieneComplete => 'పరిశుభ్రత తనిఖీ పూర్తయింది';
 
   @override
   String get deploymentInspection => 'తనిఖీ';
@@ -1251,7 +1262,7 @@ class AppL10nTe extends AppL10n {
   String get deploymentRide => 'ప్రయాణం';
 
   @override
-  String get deploymentSafetyTraining => 'భద్రతా శిక్షణ';
+  String get deploymentRiderHygiene => 'రైడర్ పరిశుభ్రత';
 
   @override
   String get deploymentScooterReserved => 'స్కూటర్ రిజర్వ్ చేయబడింది';
@@ -1261,9 +1272,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get deploymentSubmitWithProblemsFlagged => 'సమస్యలు గుర్తించి సమర్పించాలా?';
-
-  @override
-  String get deploymentTrainingComplete => 'శిక్షణ పూర్తి';
 
   @override
   String get deploymentTransactionReference => 'లావాదేవీ రిఫరెన్స్';

@@ -466,6 +466,12 @@ abstract class AppL10n {
   /// **'This photo can\'t be opened right now.'**
   String get allocationPhotoCannotOpen;
 
+  /// Assign-flow photo slot: the signed declaration form
+  ///
+  /// In en, this message translates to:
+  /// **'Declaration form'**
+  String get allocationPhotoDeclaration;
+
   /// Front
   ///
   /// In en, this message translates to:
@@ -477,6 +483,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Left'**
   String get allocationPhotoLeft;
+
+  /// Assign-flow photo slot: the rider standing with the vehicle
+  ///
+  /// In en, this message translates to:
+  /// **'Rider with vehicle'**
+  String get allocationPhotoRider;
 
   /// Right
   ///
@@ -640,10 +652,10 @@ abstract class AppL10n {
   /// **'Vehicle photos'**
   String get allocationVehiclePhotos;
 
-  /// Take a photo of each side of the vehicle. All four are needed before you submit the inspection.
+  /// Hint above the assign-flow photo grid
   ///
   /// In en, this message translates to:
-  /// **'Take a photo of each side of the vehicle. All four are needed before you submit the inspection.'**
+  /// **'Take a photo of each side of the vehicle, one of the rider with the vehicle, and one of the signed declaration form. All are needed before you submit the inspection.'**
   String get allocationVehiclePhotosHint;
 
   /// Vehicle reserved
@@ -1852,10 +1864,10 @@ abstract class AppL10n {
   /// **'Welcome to {name}'**
   String companyWelcome(String name);
 
-  /// I have read this notice and I give my consent
+  /// Consent screen checkbox: the data principal declaration, matching the rider privacy notice
   ///
   /// In en, this message translates to:
-  /// **'I have read this notice and I give my consent'**
+  /// **'I declare that I have understood the points of this consent form and agree in my capacity as the data principal.'**
   String get consentAgree;
 
   /// Rider Consent
@@ -2314,11 +2326,11 @@ abstract class AppL10n {
   /// **'Enter the transaction reference you paid with'**
   String get deploymentEnterTransactionReferencePaidWith;
 
-  /// Finish training
+  /// Bottom button on the rider hygiene screen
   ///
   /// In en, this message translates to:
-  /// **'Finish training'**
-  String get deploymentFinishTraining;
+  /// **'Finish hygiene check'**
+  String get deploymentFinishHygieneCheck;
 
   /// Flag as a problem
   ///
@@ -2379,6 +2391,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'How did you pay?'**
   String get deploymentHowDidPay;
+
+  /// Snack after the rider finishes the hygiene check
+  ///
+  /// In en, this message translates to:
+  /// **'Hygiene check complete'**
+  String get deploymentHygieneComplete;
 
   /// Inspection
   ///
@@ -2494,11 +2512,11 @@ abstract class AppL10n {
   /// **'Ride'**
   String get deploymentRide;
 
-  /// Safety training
+  /// Title of the rider hygiene screen during deployment
   ///
   /// In en, this message translates to:
-  /// **'Safety training'**
-  String get deploymentSafetyTraining;
+  /// **'Rider Hygiene'**
+  String get deploymentRiderHygiene;
 
   /// Scooter reserved
   ///
@@ -2517,12 +2535,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Submit with problems flagged?'**
   String get deploymentSubmitWithProblemsFlagged;
-
-  /// Training complete
-  ///
-  /// In en, this message translates to:
-  /// **'Training complete'**
-  String get deploymentTrainingComplete;
 
   /// Transaction reference
   ///

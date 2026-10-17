@@ -242,22 +242,24 @@ class _Band extends StatelessWidget {
   }
 }
 
-const List<String> _vehicleSides = ['FRONT', 'REAR', 'LEFT', 'RIGHT'];
+const List<String> _assignPhotos = ['FRONT', 'REAR', 'LEFT', 'RIGHT', 'RIDER_WITH_VEHICLE', 'DECLARATION_FORM'];
 
 List<String> _photoSlots(AllocationEvidence? evidence) => [
-  ..._vehicleSides,
+  ..._assignPhotos,
   for (final String type in evidence?.requiredPhotoTypes ?? const <String>[])
-    if (!_vehicleSides.contains(type)) type,
+    if (!_assignPhotos.contains(type)) type,
 ];
 
 bool _photosReady(AllocationEvidence? evidence) =>
-    evidence == null || (evidence.isComplete && _vehicleSides.every(evidence.completedPhotoTypes.contains));
+    evidence == null || (evidence.isComplete && _assignPhotos.every(evidence.completedPhotoTypes.contains));
 
 String _photoLabel(AppL10n l10n, String type) => switch (type) {
   'FRONT' => l10n.allocationPhotoFront,
   'REAR' => l10n.allocationPhotoBack,
   'LEFT' => l10n.allocationPhotoLeft,
   'RIGHT' => l10n.allocationPhotoRight,
+  'RIDER_WITH_VEHICLE' => l10n.allocationPhotoRider,
+  'DECLARATION_FORM' => l10n.allocationPhotoDeclaration,
   _ => PhotoRequirement(photoType: type, isRequired: true).title,
 };
 
@@ -266,6 +268,8 @@ IconData _photoIcon(String type) => switch (type) {
   'REAR' => Icons.arrow_circle_down_rounded,
   'LEFT' => Icons.arrow_circle_left_rounded,
   'RIGHT' => Icons.arrow_circle_right_rounded,
+  'RIDER_WITH_VEHICLE' => Icons.account_circle_rounded,
+  'DECLARATION_FORM' => Icons.assignment_rounded,
   _ => Icons.photo_camera_rounded,
 };
 

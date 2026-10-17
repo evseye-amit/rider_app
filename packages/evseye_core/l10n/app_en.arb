@@ -248,6 +248,10 @@
   "@allocationPhotoCannotOpen": {
     "description": "This photo can't be opened right now."
   },
+  "allocationPhotoDeclaration": "Declaration form",
+  "@allocationPhotoDeclaration": {
+    "description": "Assign-flow photo slot: the signed declaration form"
+  },
   "allocationPhotoFront": "Front",
   "@allocationPhotoFront": {
     "description": "Front"
@@ -255,6 +259,10 @@
   "allocationPhotoLeft": "Left",
   "@allocationPhotoLeft": {
     "description": "Left"
+  },
+  "allocationPhotoRider": "Rider with vehicle",
+  "@allocationPhotoRider": {
+    "description": "Assign-flow photo slot: the rider standing with the vehicle"
   },
   "allocationPhotoRight": "Right",
   "@allocationPhotoRight": {
@@ -364,9 +372,9 @@
   "@allocationVehiclePhotos": {
     "description": "Vehicle photos"
   },
-  "allocationVehiclePhotosHint": "Take a photo of each side of the vehicle. All four are needed before you submit the inspection.",
+  "allocationVehiclePhotosHint": "Take a photo of each side of the vehicle, one of the rider with the vehicle, and one of the signed declaration form. All are needed before you submit the inspection.",
   "@allocationVehiclePhotosHint": {
-    "description": "Take a photo of each side of the vehicle. All four are needed before you submit the inspection."
+    "description": "Hint above the assign-flow photo grid"
   },
   "allocationVehicleReserved": "Vehicle reserved",
   "@allocationVehicleReserved": {
@@ -1218,9 +1226,9 @@
       }
     }
   },
-  "consentAgree": "I have read this notice and I give my consent",
+  "consentAgree": "I declare that I have understood the points of this consent form and agree in my capacity as the data principal.",
   "@consentAgree": {
-    "description": "I have read this notice and I give my consent"
+    "description": "Consent screen checkbox: the data principal declaration, matching the rider privacy notice"
   },
   "consentRiderTitle": "Rider Consent",
   "@consentRiderTitle": {
@@ -1526,9 +1534,9 @@
   "@deploymentEnterTransactionReferencePaidWith": {
     "description": "Enter the transaction reference you paid with"
   },
-  "deploymentFinishTraining": "Finish training",
-  "@deploymentFinishTraining": {
-    "description": "Finish training"
+  "deploymentFinishHygieneCheck": "Finish hygiene check",
+  "@deploymentFinishHygieneCheck": {
+    "description": "Bottom button on the rider hygiene screen"
   },
   "deploymentFlagAsProblem": "Flag as a problem",
   "@deploymentFlagAsProblem": {
@@ -1569,6 +1577,10 @@
   "deploymentHowDidPay": "How did you pay?",
   "@deploymentHowDidPay": {
     "description": "How did you pay?"
+  },
+  "deploymentHygieneComplete": "Hygiene check complete",
+  "@deploymentHygieneComplete": {
+    "description": "Snack after the rider finishes the hygiene check"
   },
   "deploymentInspection": "Inspection",
   "@deploymentInspection": {
@@ -1651,9 +1663,9 @@
   "@deploymentRide": {
     "description": "Ride"
   },
-  "deploymentSafetyTraining": "Safety training",
-  "@deploymentSafetyTraining": {
-    "description": "Safety training"
+  "deploymentRiderHygiene": "Rider Hygiene",
+  "@deploymentRiderHygiene": {
+    "description": "Title of the rider hygiene screen during deployment"
   },
   "deploymentScooterReserved": "Scooter reserved",
   "@deploymentScooterReserved": {
@@ -1666,10 +1678,6 @@
   "deploymentSubmitWithProblemsFlagged": "Submit with problems flagged?",
   "@deploymentSubmitWithProblemsFlagged": {
     "description": "Submit with problems flagged?"
-  },
-  "deploymentTrainingComplete": "Training complete",
-  "@deploymentTrainingComplete": {
-    "description": "Training complete"
   },
   "deploymentTransactionReference": "Transaction reference",
   "@deploymentTransactionReference": {

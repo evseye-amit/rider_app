@@ -2,6 +2,7 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/session/rider_session_provider.dart';
 import '../providers/deployment_provider.dart';
 import '../providers/training_provider.dart';
 import '../widgets/training_modules.dart';
@@ -35,17 +36,9 @@ class _TrainingPageState extends ConsumerState<TrainingPage> {
 
   Future<void> _finish(String allocationId) async {
     setState(() => _finishing = true);
-    final Result<DeploymentWorkflow> result = await ref.read(trainingProvider(allocationId).notifier).complete();
-    if (!mounted) return;
-    setState(() => _finishing = false);
-
-    switch (result) {
-      case Ok<DeploymentWorkflow>():
-        AppSnack.success(context, context.l10n.deploymentTrainingComplete);
-        await ref.read(deploymentProvider.notifier).refresh(silent: true);
-      case Err<DeploymentWorkflow>(:final failure):
-        AppSnack.error(context, failure.message);
-    }
+    AppSnack.success(context, context.l10n.deploymentHygieneComplete);
+    await ref.read(riderSessionProvider.notifier).finishHygiene(allocationId);
+    if (mounted) setState(() => _finishing = false);
   }
 
   @override
@@ -55,7 +48,7 @@ class _TrainingPageState extends ConsumerState<TrainingPage> {
 
     if (deployment.hasError || (allocationId == null && !deployment.isLoading)) {
       return AppScaffold(
-        title: context.l10n.deploymentSafetyTraining,
+        title: context.l10n.deploymentRiderHygiene,
         showBack: false,
         body: EmptyState(
           title: context.l10n.deploymentCouldNotLoadTraining,
@@ -74,11 +67,11 @@ class _TrainingPageState extends ConsumerState<TrainingPage> {
     final int total = TrainingModule.values.length;
 
     return AppScaffold(
-      title: context.l10n.deploymentSafetyTraining,
+      title: context.l10n.deploymentRiderHygiene,
       subtitle: '$viewed of $total completed',
       showBack: false,
       footer: PrimaryButton(
-        label: context.l10n.deploymentFinishTraining,
+        label: context.l10n.deploymentFinishHygieneCheck,
         icon: Icons.school_rounded,
         loading: _finishing,
         onPressed: viewed == total && !_finishing && allocationId != null ? () => _finish(allocationId) : null,

@@ -15,6 +15,7 @@ export 'rider_stage.dart';
 
 class RiderSessionNotifier extends Notifier<RiderSession> {
   static const Duration _documentCheckInterval = Duration(seconds: 30);
+  static const String _hygieneKey = 'deployment.hygiene_done';
 
   DateTime? _documentsCheckedAt;
 
@@ -113,6 +114,15 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     return result;
   }
 
+  Future<void> finishHygiene(String allocationId) async {
+    final List<String> done = ref.read(sharedPreferencesProvider).getStringList(_hygieneKey) ?? const [];
+    if (!done.contains(allocationId)) {
+      await ref.read(sharedPreferencesProvider).setStringList(_hygieneKey, [...done, allocationId]);
+    }
+    final RiderDeployment? deployment = state.deployment;
+    if (deployment != null) state = state.copyWith(stage: _resolveStage(deployment, state.onboarding));
+  }
+
   Future<void> applyOnboarding(RiderOnboardingConfig config) async {
     state = state.copyWith(onboarding: config);
     if (config.isComplete) await refreshState();
@@ -157,11 +167,19 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
   }
 
   RiderStage _resolveStage(RiderDeployment deployment, RiderOnboardingConfig? onboarding) {
-    if (onboarding == null) return RiderStage.fromScreen(deployment.screen);
+    if (onboarding == null) return _deploymentStage(deployment);
     if (!onboarding.isComplete) return RiderStage.onboarding;
-    if (deployment.allocation != null) return RiderStage.fromScreen(deployment.screen);
+    if (deployment.allocation != null) return _deploymentStage(deployment);
     if (onboarding.needsResubmission) return RiderStage.onboarding;
     return RiderStage.fromScreen(RiderScreen.parse(onboarding.screen));
+  }
+
+  RiderStage _deploymentStage(RiderDeployment deployment) {
+    final RiderStage stage = RiderStage.fromScreen(deployment.screen);
+    final String? allocationId = deployment.allocation?.id;
+    if (stage != RiderStage.training || allocationId == null) return stage;
+    final List<String> done = ref.read(sharedPreferencesProvider).getStringList(_hygieneKey) ?? const [];
+    return done.contains(allocationId) ? RiderStage.active : stage;
   }
 
   String _resolveMobile({required RiderDeployment? deployment, required RiderOnboardingConfig? onboarding}) {

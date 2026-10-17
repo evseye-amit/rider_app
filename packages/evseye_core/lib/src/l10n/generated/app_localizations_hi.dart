@@ -197,10 +197,16 @@ class AppL10nHi extends AppL10n {
   String get allocationPhotoCannotOpen => 'यह फ़ोटो अभी नहीं खुल सकती।';
 
   @override
+  String get allocationPhotoDeclaration => 'घोषणा पत्र';
+
+  @override
   String get allocationPhotoFront => 'आगे';
 
   @override
   String get allocationPhotoLeft => 'बाईं ओर';
+
+  @override
+  String get allocationPhotoRider => 'वाहन के साथ राइडर';
 
   @override
   String get allocationPhotoRight => 'दाईं ओर';
@@ -289,7 +295,7 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get allocationVehiclePhotosHint =>
-      'वाहन की हर तरफ़ की फ़ोटो लें। जाँच जमा करने से पहले चारों फ़ोटो ज़रूरी हैं।';
+      'वाहन की हर तरफ़ की फ़ोटो, वाहन के साथ राइडर की एक फ़ोटो और हस्ताक्षर किए गए घोषणा पत्र की एक फ़ोटो लें। जाँच जमा करने से पहले सभी फ़ोटो ज़रूरी हैं।';
 
   @override
   String get allocationVehicleReserved => 'गाड़ी रोक ली गई';
@@ -914,7 +920,8 @@ class AppL10nHi extends AppL10n {
   }
 
   @override
-  String get consentAgree => 'मैंने यह सूचना पढ़ ली है और मैं अपनी सहमति देता/देती हूँ';
+  String get consentAgree =>
+      'मैं घोषणा करता/करती हूँ कि मैंने इस सहमति फ़ॉर्म की सभी बातें समझ ली हैं और डेटा प्रिंसिपल के तौर पर अपनी सहमति देता/देती हूँ।';
 
   @override
   String get consentRiderTitle => 'राइडर सहमति';
@@ -1150,7 +1157,7 @@ class AppL10nHi extends AppL10n {
   String get deploymentEnterTransactionReferencePaidWith => 'जिस रेफ़रेंस से भुगतान किया वह डालें';
 
   @override
-  String get deploymentFinishTraining => 'ट्रेनिंग पूरी करें';
+  String get deploymentFinishHygieneCheck => 'स्वच्छता जाँच पूरी करें';
 
   @override
   String get deploymentFlagAsProblem => 'समस्या बताएं';
@@ -1185,6 +1192,9 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get deploymentHowDidPay => 'आपने कैसे भुगतान किया?';
+
+  @override
+  String get deploymentHygieneComplete => 'स्वच्छता जाँच पूरी हुई';
 
   @override
   String get deploymentInspection => 'जांच';
@@ -1248,7 +1258,7 @@ class AppL10nHi extends AppL10n {
   String get deploymentRide => 'चलाएं';
 
   @override
-  String get deploymentSafetyTraining => 'सुरक्षा ट्रेनिंग';
+  String get deploymentRiderHygiene => 'राइडर स्वच्छता';
 
   @override
   String get deploymentScooterReserved => 'स्कूटर रोक लिया गया';
@@ -1258,9 +1268,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get deploymentSubmitWithProblemsFlagged => 'समस्याएं बताकर जमा करें?';
-
-  @override
-  String get deploymentTrainingComplete => 'ट्रेनिंग पूरी';
 
   @override
   String get deploymentTransactionReference => 'लेनदेन रेफ़रेंस';
