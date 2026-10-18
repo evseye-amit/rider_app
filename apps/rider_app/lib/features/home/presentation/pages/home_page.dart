@@ -57,10 +57,14 @@ class HomePage extends ConsumerWidget {
   }
 
   List<Widget> _content(BuildContext context, HomeSummary summary) {
+    final AutoPayStatus? autoPay = summary.autoPay;
     return [
       BalanceStrip(
         label: context.l10n.commonPaidDate,
-        amount: Fmt.money(summary.walletBalance),
+        amount: switch (summary.paidToDate) {
+          final num paid => Fmt.money(paid),
+          null => '—',
+        },
         caption: context.l10n.homeDepositsHandoverFees,
         onTapBalance: () => context.push(Routes.wallet),
         actions: [
@@ -78,7 +82,7 @@ class HomePage extends ConsumerWidget {
       ),
       const Gap.lg(),
       ModuleCard(
-        title: context.l10n.commonYesterdayGlance,
+        title: context.l10n.paymentsTitle,
         padding: const EdgeInsets.all(Insets.md),
         child: GridView(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -92,36 +96,53 @@ class HomePage extends ConsumerWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: [
             StatCard(
-              label: context.l10n.homeIncentiveEarned,
-              value: Fmt.money(summary.incentiveEarned),
-              caption: 'of ${Fmt.money(summary.incentiveTarget)} target',
-              icon: Icons.emoji_events_rounded,
-              accent: AppColors.primary,
+              label: context.l10n.paymentsAutoPay,
+              value: autoPay == null ? '—' : _autoPayLabel(context.l10n, autoPay),
+              caption: switch (summary.nextDebitDate) {
+                final DateTime date => context.l10n.homeNextDebitOn(Fmt.date(date)),
+                null => null,
+              },
+              icon: Icons.autorenew_rounded,
+              accent: switch (autoPay) {
+                AutoPayStatus.active => AppColors.success,
+                final AutoPayStatus status when status.needsAttention => AppColors.warning,
+                _ => AppColors.primary,
+              },
               compact: true,
-              onTap: () => context.push(Routes.incentives),
+              onTap: () => context.push(Routes.payments),
             ),
             StatCard(
-              label: context.l10n.homeRentDue,
-              value: switch (summary.rentDue) {
-                final num due => Fmt.money(due),
+              label: context.l10n.homeLastPayment,
+              value: switch (summary.lastPaymentAmount) {
+                final num amount => Fmt.money(amount),
                 null => '—',
               },
               caption: switch (summary) {
-                HomeSummary(rentDue: null) => null,
-                HomeSummary(rentOverdue: > 0) => context.l10n.homeRentOverdue(Fmt.money(summary.rentOverdue)),
-                HomeSummary(:final DateTime rentDueDate) => context.l10n.homeRentDueOn(Fmt.date(rentDueDate)),
-                _ => context.l10n.paymentsNothingDue,
+                HomeSummary(:final DateTime lastPaymentAt) => Fmt.relative(lastPaymentAt),
+                HomeSummary(lastPaymentAmount: null, rentDue: != null) => context.l10n.paymentsNoPayments,
+                _ => null,
               },
               icon: Icons.receipt_long_rounded,
-              accent: summary.rentOverdue > 0 ? AppColors.danger : AppColors.primary,
+              accent: AppColors.primary,
               compact: true,
-              onTap: () => context.push(Routes.rentals),
+              onTap: () => context.push(Routes.payments),
             ),
           ],
         ),
       ),
     ];
   }
+
+  static String _autoPayLabel(AppL10n l10n, AutoPayStatus status) => switch (status) {
+    AutoPayStatus.active => l10n.paymentsAutoPayActive,
+    AutoPayStatus.paused => l10n.paymentsAutoPayPaused,
+    AutoPayStatus.setupRequired => l10n.paymentsAutoPaySetupRequired,
+    AutoPayStatus.authenticationPending => l10n.paymentsAutoPayAuthPending,
+    AutoPayStatus.failed => l10n.paymentsAutoPayFailed,
+    AutoPayStatus.revoked => l10n.paymentsAutoPayRevoked,
+    AutoPayStatus.expired => l10n.paymentsAutoPayExpired,
+    AutoPayStatus.notEnabled => l10n.paymentsAutoPayNotEnabled,
+  };
 }
 
 class _Band extends ConsumerWidget {
@@ -153,6 +174,25 @@ class _Band extends ConsumerWidget {
         AppSnack.error(context, failure.message);
     }
   }
+
+  static (String, IconData, Color)? _rentStatus(AppL10n l10n, HomeSummary? summary) => switch (summary) {
+    HomeSummary(rentDue: final num due) when due <= 0 => (
+      l10n.paymentsNothingDue,
+      Icons.check_circle_rounded,
+      AppColors.onInkMint,
+    ),
+    HomeSummary(isOverdue: true, :final num rentOverdue) => (
+      l10n.homeRentOverdue(Fmt.money(rentOverdue)),
+      Icons.warning_amber_rounded,
+      AppColors.onInkCoral,
+    ),
+    HomeSummary(rentDue: != null, :final DateTime rentDueDate) => (
+      l10n.homeRentDueOn(Fmt.date(rentDueDate)),
+      Icons.event_rounded,
+      AppColors.onInkAmber,
+    ),
+    _ => null,
+  };
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -192,51 +232,50 @@ class _Band extends ConsumerWidget {
         ),
         const Gap.xxl(),
         Pressable(
-          onTap: () => context.push(Routes.wallet),
+          onTap: () => context.push(Routes.payments),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  Text(context.l10n.homeTodaysEarnings, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
+                  Text(context.l10n.homeRentDue, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
                   const SizedBox(width: 2),
                   const Icon(Icons.chevron_right_rounded, size: 16, color: AppColors.onInkSecondary),
                 ],
               ),
               const Gap.sm(),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
+              Wrap(
+                spacing: Insets.md,
+                runSpacing: Insets.xs,
+                crossAxisAlignment: WrapCrossAlignment.end,
                 children: [
-                  Flexible(
-                    child: Text(
-                      summary == null ? '—' : Fmt.money(summary!.todayEarnings),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
-                    ),
+                  Text(
+                    switch (summary?.rentDue) {
+                      final num due => Fmt.money(due),
+                      null => '—',
+                    },
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
                   ),
-                  const SizedBox(width: Insets.md),
-                  if (summary != null && summary!.earningsDelta.isNotEmpty)
+                  if (_rentStatus(context.l10n, summary) case (
+                    final String label,
+                    final IconData icon,
+                    final Color tone,
+                  ))
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6),
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                        decoration: BoxDecoration(
-                          color: AppColors.onInkMint.withValues(alpha: 0.16),
-                          borderRadius: Corners.pill,
-                        ),
+                        decoration: BoxDecoration(color: tone.withValues(alpha: 0.16), borderRadius: Corners.pill),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(Icons.trending_up_rounded, size: 12, color: AppColors.onInkMint),
+                            Icon(icon, size: 12, color: tone),
                             const SizedBox(width: 3),
                             Text(
-                              summary!.earningsDelta,
-                              style: AppText.bodySmall.copyWith(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w800,
-                                color: AppColors.onInkMint,
-                              ),
+                              label,
+                              style: AppText.bodySmall.copyWith(fontSize: 11, fontWeight: FontWeight.w800, color: tone),
                             ),
                           ],
                         ),
@@ -320,8 +359,6 @@ class _HomeSkeleton extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           children: List.generate(2, (_) => const ShimmerBox(height: 114, borderRadius: Corners.brLg)),
         ),
-        const Gap.xxl(),
-        const ShimmerBox(height: 104, borderRadius: Corners.brLg),
       ],
     );
   }

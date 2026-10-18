@@ -690,9 +690,6 @@ class AppL10nHi extends AppL10n {
   String get commonJpgPngPdfUp5 => 'JPG, PNG या PDF · 5 MB तक';
 
   @override
-  String get commonKmLeft => 'किमी बाकी';
-
-  @override
   String get commonLanguage => 'भाषा';
 
   @override
@@ -739,9 +736,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get commonOff => 'बंद';
-
-  @override
-  String get commonOffline => 'ऑफ़लाइन';
 
   @override
   String get commonOn => 'चालू';
@@ -918,9 +912,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get commonWillNeedMobileNumberOtp => 'दोबारा साइन इन करने के लिए आपको मोबाइल नंबर और ओटीपी चाहिए होगा।';
-
-  @override
-  String get commonYesterdayGlance => 'कल का हाल';
 
   @override
   String get companyCodeHint => 'जैसे yogmaya';
@@ -1953,12 +1944,6 @@ class AppL10nHi extends AppL10n {
   String get fleetStatusReturning => 'वापसी हो रही है';
 
   @override
-  String get homeBonusUnlocked => 'बोनस खुल गया';
-
-  @override
-  String get homeBookSlotOkhlaHubBefore => 'ओडोमीटर 8,000 किमी छूने से पहले ओखला हब में स्लॉट बुक करें।';
-
-  @override
   String get homeCategory => 'श्रेणी';
 
   @override
@@ -1971,28 +1956,19 @@ class AppL10nHi extends AppL10n {
   String get homeDepositsHandoverFees => 'जमा राशि और हैंडओवर शुल्क';
 
   @override
-  String get homeExtra15TripOkhlaPhase => 'आज शाम ओखला फ़ेज़ II और जसोला में हर ट्रिप पर ₹15 ज़्यादा।';
-
-  @override
   String get homeHelpSupport => 'मदद और सहायता';
 
   @override
   String get homeHistory => 'इतिहास';
 
   @override
-  String get homeIncentiveEarned => 'मिला इनाम';
+  String get homeLastPayment => 'पिछला भुगतान';
 
   @override
   String get homeMarkAbsent => 'गैरहाज़िर लगाएं';
 
   @override
-  String get homeMarkAttendanceStartScooter => 'स्कूटर चालू करने के लिए हाज़िरी लगाएं';
-
-  @override
   String get homeMarkedAbsentScooterNowDisabled => 'गैरहाज़िरी लग गई। स्कूटर अब बंद है।';
-
-  @override
-  String get homeMarkedPresent => 'हाज़िर लगा दिया';
 
   @override
   String get homeMarkYourselfAbsent => 'खुद को गैरहाज़िर लगाएं?';
@@ -2001,13 +1977,9 @@ class AppL10nHi extends AppL10n {
   String get homeMarkYourselfPresentSwitchVehicle => 'गाड़ी चालू करने के लिए पहले हाज़िरी लगाएं।';
 
   @override
-  String get homeMonSun => 'सोम – रवि';
-
-  @override
-  String get homeNotMarkedPresent => 'हाज़िरी नहीं लगी';
-
-  @override
-  String get homeOnline => 'ऑनलाइन';
+  String homeNextDebitOn(String date) {
+    return 'अगली कटौती $date';
+  }
 
   @override
   String get homePersonalDetailsKyc => 'निजी जानकारी और केवाईसी';
@@ -2032,23 +2004,8 @@ class AppL10nHi extends AppL10n {
   String get homeScooter => 'स्कूटर';
 
   @override
-  String get homeServiceDue240Km => '240 किमी में सर्विस ज़रूरी';
-
-  @override
   String get homeShiftWillEndScooterWill =>
       'आपकी शिफ़्ट ख़त्म हो जाएगी और स्कूटर बंद हो जाएगा। हफ़्तावार और महीनेवार प्लान में किराया फिर भी लगेगा।';
-
-  @override
-  String get homeSurgeOkhlaTill9Pm => 'रात 9 बजे तक ओखला में बढ़ी दर';
-
-  @override
-  String get homeTodaysEarnings => 'आज की कमाई';
-
-  @override
-  String get homeVehicle => 'गाड़ी चालू';
-
-  @override
-  String get homeVehicleOff => 'गाड़ी बंद';
 
   @override
   String get homeWithdraw => 'निकालें';

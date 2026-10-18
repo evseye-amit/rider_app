@@ -1390,12 +1390,6 @@ abstract class AppL10n {
   /// **'JPG, PNG or PDF · up to 5 MB'**
   String get commonJpgPngPdfUp5;
 
-  /// km left
-  ///
-  /// In en, this message translates to:
-  /// **'km left'**
-  String get commonKmLeft;
-
   /// Language
   ///
   /// In en, this message translates to:
@@ -1491,12 +1485,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Off'**
   String get commonOff;
-
-  /// Offline
-  ///
-  /// In en, this message translates to:
-  /// **'Offline'**
-  String get commonOffline;
 
   /// On
   ///
@@ -1845,12 +1833,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'You will need your mobile number and an OTP to sign back in.'**
   String get commonWillNeedMobileNumberOtp;
-
-  /// Yesterday at a glance
-  ///
-  /// In en, this message translates to:
-  /// **'Yesterday at a glance'**
-  String get commonYesterdayGlance;
 
   /// e.g. yogmaya
   ///
@@ -3850,18 +3832,6 @@ abstract class AppL10n {
   /// **'Being returned'**
   String get fleetStatusReturning;
 
-  /// Bonus unlocked
-  ///
-  /// In en, this message translates to:
-  /// **'Bonus unlocked'**
-  String get homeBonusUnlocked;
-
-  /// Book a slot at the Okhla hub before the odometer hits 8,000 km.
-  ///
-  /// In en, this message translates to:
-  /// **'Book a slot at the Okhla hub before the odometer hits 8,000 km.'**
-  String get homeBookSlotOkhlaHubBefore;
-
   /// Category
   ///
   /// In en, this message translates to:
@@ -3886,12 +3856,6 @@ abstract class AppL10n {
   /// **'Deposits and handover fees'**
   String get homeDepositsHandoverFees;
 
-  /// Extra ₹15 a trip in Okhla Phase II and Jasola this evening.
-  ///
-  /// In en, this message translates to:
-  /// **'Extra ₹15 a trip in Okhla Phase II and Jasola this evening.'**
-  String get homeExtra15TripOkhlaPhase;
-
   /// Help & support
   ///
   /// In en, this message translates to:
@@ -3904,11 +3868,11 @@ abstract class AppL10n {
   /// **'History'**
   String get homeHistory;
 
-  /// Incentive earned
+  /// Home tile label for the rider's most recent payment
   ///
   /// In en, this message translates to:
-  /// **'Incentive earned'**
-  String get homeIncentiveEarned;
+  /// **'Last payment'**
+  String get homeLastPayment;
 
   /// Mark absent
   ///
@@ -3916,23 +3880,11 @@ abstract class AppL10n {
   /// **'Mark absent'**
   String get homeMarkAbsent;
 
-  /// Mark attendance to start the scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Mark attendance to start the scooter'**
-  String get homeMarkAttendanceStartScooter;
-
   /// Marked absent. The scooter is now disabled.
   ///
   /// In en, this message translates to:
   /// **'Marked absent. The scooter is now disabled.'**
   String get homeMarkedAbsentScooterNowDisabled;
-
-  /// Marked present
-  ///
-  /// In en, this message translates to:
-  /// **'Marked present'**
-  String get homeMarkedPresent;
 
   /// Mark yourself absent?
   ///
@@ -3946,23 +3898,11 @@ abstract class AppL10n {
   /// **'Mark yourself present to switch the vehicle on.'**
   String get homeMarkYourselfPresentSwitchVehicle;
 
-  /// Mon – Sun
+  /// Caption under the home auto-debit tile
   ///
   /// In en, this message translates to:
-  /// **'Mon – Sun'**
-  String get homeMonSun;
-
-  /// Not marked present
-  ///
-  /// In en, this message translates to:
-  /// **'Not marked present'**
-  String get homeNotMarkedPresent;
-
-  /// Online
-  ///
-  /// In en, this message translates to:
-  /// **'Online'**
-  String get homeOnline;
+  /// **'Next debit {date}'**
+  String homeNextDebitOn(String date);
 
   /// Personal details and KYC
   ///
@@ -4000,41 +3940,11 @@ abstract class AppL10n {
   /// **'Scooter'**
   String get homeScooter;
 
-  /// Service due in 240 km
-  ///
-  /// In en, this message translates to:
-  /// **'Service due in 240 km'**
-  String get homeServiceDue240Km;
-
   /// Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans.
   ///
   /// In en, this message translates to:
   /// **'Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans.'**
   String get homeShiftWillEndScooterWill;
-
-  /// Surge in Okhla till 9 pm
-  ///
-  /// In en, this message translates to:
-  /// **'Surge in Okhla till 9 pm'**
-  String get homeSurgeOkhlaTill9Pm;
-
-  /// Today's earnings
-  ///
-  /// In en, this message translates to:
-  /// **'Today\'s earnings'**
-  String get homeTodaysEarnings;
-
-  /// Vehicle on
-  ///
-  /// In en, this message translates to:
-  /// **'Vehicle on'**
-  String get homeVehicle;
-
-  /// Vehicle off
-  ///
-  /// In en, this message translates to:
-  /// **'Vehicle off'**
-  String get homeVehicleOff;
 
   /// Withdraw
   ///

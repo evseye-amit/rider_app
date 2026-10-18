@@ -695,9 +695,6 @@ class AppL10nEn extends AppL10n {
   String get commonJpgPngPdfUp5 => 'JPG, PNG or PDF · up to 5 MB';
 
   @override
-  String get commonKmLeft => 'km left';
-
-  @override
   String get commonLanguage => 'Language';
 
   @override
@@ -744,9 +741,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get commonOff => 'Off';
-
-  @override
-  String get commonOffline => 'Offline';
 
   @override
   String get commonOn => 'On';
@@ -923,9 +917,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get commonWillNeedMobileNumberOtp => 'You will need your mobile number and an OTP to sign back in.';
-
-  @override
-  String get commonYesterdayGlance => 'Yesterday at a glance';
 
   @override
   String get companyCodeHint => 'e.g. yogmaya';
@@ -1961,12 +1952,6 @@ class AppL10nEn extends AppL10n {
   String get fleetStatusReturning => 'Being returned';
 
   @override
-  String get homeBonusUnlocked => 'Bonus unlocked';
-
-  @override
-  String get homeBookSlotOkhlaHubBefore => 'Book a slot at the Okhla hub before the odometer hits 8,000 km.';
-
-  @override
   String get homeCategory => 'Category';
 
   @override
@@ -1979,28 +1964,19 @@ class AppL10nEn extends AppL10n {
   String get homeDepositsHandoverFees => 'Deposits and handover fees';
 
   @override
-  String get homeExtra15TripOkhlaPhase => 'Extra ₹15 a trip in Okhla Phase II and Jasola this evening.';
-
-  @override
   String get homeHelpSupport => 'Help & support';
 
   @override
   String get homeHistory => 'History';
 
   @override
-  String get homeIncentiveEarned => 'Incentive earned';
+  String get homeLastPayment => 'Last payment';
 
   @override
   String get homeMarkAbsent => 'Mark absent';
 
   @override
-  String get homeMarkAttendanceStartScooter => 'Mark attendance to start the scooter';
-
-  @override
   String get homeMarkedAbsentScooterNowDisabled => 'Marked absent. The scooter is now disabled.';
-
-  @override
-  String get homeMarkedPresent => 'Marked present';
 
   @override
   String get homeMarkYourselfAbsent => 'Mark yourself absent?';
@@ -2009,13 +1985,9 @@ class AppL10nEn extends AppL10n {
   String get homeMarkYourselfPresentSwitchVehicle => 'Mark yourself present to switch the vehicle on.';
 
   @override
-  String get homeMonSun => 'Mon – Sun';
-
-  @override
-  String get homeNotMarkedPresent => 'Not marked present';
-
-  @override
-  String get homeOnline => 'Online';
+  String homeNextDebitOn(String date) {
+    return 'Next debit $date';
+  }
 
   @override
   String get homePersonalDetailsKyc => 'Personal details and KYC';
@@ -2040,23 +2012,8 @@ class AppL10nEn extends AppL10n {
   String get homeScooter => 'Scooter';
 
   @override
-  String get homeServiceDue240Km => 'Service due in 240 km';
-
-  @override
   String get homeShiftWillEndScooterWill =>
       'Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans.';
-
-  @override
-  String get homeSurgeOkhlaTill9Pm => 'Surge in Okhla till 9 pm';
-
-  @override
-  String get homeTodaysEarnings => 'Today\'s earnings';
-
-  @override
-  String get homeVehicle => 'Vehicle on';
-
-  @override
-  String get homeVehicleOff => 'Vehicle off';
 
   @override
   String get homeWithdraw => 'Withdraw';

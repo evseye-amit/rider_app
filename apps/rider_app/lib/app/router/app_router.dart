@@ -20,6 +20,7 @@ import '../../features/nearby_hubs/presentation/pages/nearby_hubs_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_flow_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_preview_page.dart';
 import '../../features/onboarding_intro/presentation/pages/intro_page.dart';
+import '../../features/payments/presentation/pages/payments_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/referrals/presentation/pages/refer_earn_page.dart';
 import '../../features/rentals/presentation/pages/rentals_page.dart';
@@ -186,6 +187,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(path: Routes.incentives, name: 'incentives', builder: (context, state) => const IncentivesPage()),
       GoRoute(path: Routes.rentals, name: 'rentals', builder: (context, state) => const RentalsPage()),
+      GoRoute(path: Routes.payments, name: 'payments', builder: (context, state) => const PaymentsPage()),
       GoRoute(path: Routes.profile, name: 'profile', builder: (context, state) => const ProfilePage()),
       GoRoute(
         path: Routes.notifications,

@@ -910,10 +910,6 @@
   "@commonJpgPngPdfUp5": {
     "description": "JPG, PNG or PDF · up to 5 MB"
   },
-  "commonKmLeft": "km left",
-  "@commonKmLeft": {
-    "description": "km left"
-  },
   "commonLanguage": "Language",
   "@commonLanguage": {
     "description": "Language"
@@ -977,10 +973,6 @@
   "commonOff": "Off",
   "@commonOff": {
     "description": "Off"
-  },
-  "commonOffline": "Offline",
-  "@commonOffline": {
-    "description": "Offline"
   },
   "commonOn": "On",
   "@commonOn": {
@@ -1218,10 +1210,6 @@
   "commonWillNeedMobileNumberOtp": "You will need your mobile number and an OTP to sign back in.",
   "@commonWillNeedMobileNumberOtp": {
     "description": "You will need your mobile number and an OTP to sign back in."
-  },
-  "commonYesterdayGlance": "Yesterday at a glance",
-  "@commonYesterdayGlance": {
-    "description": "Yesterday at a glance"
   },
   "companyCodeHint": "e.g. yogmaya",
   "@companyCodeHint": {
@@ -2590,14 +2578,6 @@
   "@fleetStatusReturning": {
     "description": "Being returned"
   },
-  "homeBonusUnlocked": "Bonus unlocked",
-  "@homeBonusUnlocked": {
-    "description": "Bonus unlocked"
-  },
-  "homeBookSlotOkhlaHubBefore": "Book a slot at the Okhla hub before the odometer hits 8,000 km.",
-  "@homeBookSlotOkhlaHubBefore": {
-    "description": "Book a slot at the Okhla hub before the odometer hits 8,000 km."
-  },
   "homeCategory": "Category",
   "@homeCategory": {
     "description": "Category"
@@ -2614,10 +2594,6 @@
   "@homeDepositsHandoverFees": {
     "description": "Deposits and handover fees"
   },
-  "homeExtra15TripOkhlaPhase": "Extra ₹15 a trip in Okhla Phase II and Jasola this evening.",
-  "@homeExtra15TripOkhlaPhase": {
-    "description": "Extra ₹15 a trip in Okhla Phase II and Jasola this evening."
-  },
   "homeHelpSupport": "Help & support",
   "@homeHelpSupport": {
     "description": "Help & support"
@@ -2626,25 +2602,17 @@
   "@homeHistory": {
     "description": "History"
   },
-  "homeIncentiveEarned": "Incentive earned",
-  "@homeIncentiveEarned": {
-    "description": "Incentive earned"
+  "homeLastPayment": "Last payment",
+  "@homeLastPayment": {
+    "description": "Home tile label for the rider's most recent payment"
   },
   "homeMarkAbsent": "Mark absent",
   "@homeMarkAbsent": {
     "description": "Mark absent"
   },
-  "homeMarkAttendanceStartScooter": "Mark attendance to start the scooter",
-  "@homeMarkAttendanceStartScooter": {
-    "description": "Mark attendance to start the scooter"
-  },
   "homeMarkedAbsentScooterNowDisabled": "Marked absent. The scooter is now disabled.",
   "@homeMarkedAbsentScooterNowDisabled": {
     "description": "Marked absent. The scooter is now disabled."
-  },
-  "homeMarkedPresent": "Marked present",
-  "@homeMarkedPresent": {
-    "description": "Marked present"
   },
   "homeMarkYourselfAbsent": "Mark yourself absent?",
   "@homeMarkYourselfAbsent": {
@@ -2654,17 +2622,14 @@
   "@homeMarkYourselfPresentSwitchVehicle": {
     "description": "Mark yourself present to switch the vehicle on."
   },
-  "homeMonSun": "Mon – Sun",
-  "@homeMonSun": {
-    "description": "Mon – Sun"
-  },
-  "homeNotMarkedPresent": "Not marked present",
-  "@homeNotMarkedPresent": {
-    "description": "Not marked present"
-  },
-  "homeOnline": "Online",
-  "@homeOnline": {
-    "description": "Online"
+  "homeNextDebitOn": "Next debit {date}",
+  "@homeNextDebitOn": {
+    "description": "Caption under the home auto-debit tile",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "homePersonalDetailsKyc": "Personal details and KYC",
   "@homePersonalDetailsKyc": {
@@ -2700,29 +2665,9 @@
   "@homeScooter": {
     "description": "Scooter"
   },
-  "homeServiceDue240Km": "Service due in 240 km",
-  "@homeServiceDue240Km": {
-    "description": "Service due in 240 km"
-  },
   "homeShiftWillEndScooterWill": "Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans.",
   "@homeShiftWillEndScooterWill": {
     "description": "Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans."
-  },
-  "homeSurgeOkhlaTill9Pm": "Surge in Okhla till 9 pm",
-  "@homeSurgeOkhlaTill9Pm": {
-    "description": "Surge in Okhla till 9 pm"
-  },
-  "homeTodaysEarnings": "Today's earnings",
-  "@homeTodaysEarnings": {
-    "description": "Today's earnings"
-  },
-  "homeVehicle": "Vehicle on",
-  "@homeVehicle": {
-    "description": "Vehicle on"
-  },
-  "homeVehicleOff": "Vehicle off",
-  "@homeVehicleOff": {
-    "description": "Vehicle off"
   },
   "homeWithdraw": "Withdraw",
   "@homeWithdraw": {
