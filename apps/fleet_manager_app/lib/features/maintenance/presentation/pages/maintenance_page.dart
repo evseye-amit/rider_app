@@ -1,17 +1,16 @@
+import 'dart:async';
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
-import '../../domain/entities/maintenance_board.dart';
-import '../../domain/entities/maintenance_job.dart';
-import '../../domain/entities/maintenance_summary.dart';
-import '../providers/maintenance_board_provider.dart';
+import '../../../../core/session/fleet_session_provider.dart';
+import '../../../hub/domain/entities/hub_profile.dart';
+import '../../domain/entities/maintenance_vehicle.dart';
+import '../providers/maintenance_providers.dart';
 import '../widgets/maintenance_widgets.dart';
-
-const List<String> _statusTabs = ['open', 'inProgress', 'overdue', 'closed'];
-const List<String> _priorityValues = ['', 'high', 'normal', 'low'];
 
 class MaintenancePage extends ConsumerStatefulWidget {
   const MaintenancePage({super.key});
@@ -22,65 +21,82 @@ class MaintenancePage extends ConsumerStatefulWidget {
 
 class _MaintenancePageState extends ConsumerState<MaintenancePage> {
   final TextEditingController _searchController = TextEditingController();
-  int _tab = 0;
-  int _priorityFilter = 0;
-  String _query = '';
+  Timer? _debounce;
+  String? _hubId;
+  String _search = '';
+
+  MaintenanceFilter get _filter => (hubId: _hubId, search: _search);
+
+  @override
+  void initState() {
+    super.initState();
+    final FleetSession session = ref.read(fleetSessionProvider);
+    final int? index = session.selectedHubIndex;
+    if (index != null && index < session.hubs.length) _hubId = session.hubs[index].id;
+  }
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _searchController.dispose();
     super.dispose();
   }
 
+  void _onSearch(String value) {
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 400), () {
+      final String next = value.trim();
+      if (mounted && next != _search) setState(() => _search = next);
+    });
+  }
+
+  void _clearSearch() {
+    _debounce?.cancel();
+    _searchController.clear();
+    if (_search.isNotEmpty) setState(() => _search = '');
+  }
+
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<MaintenanceBoard> maintenance = ref.watch(maintenanceBoardProvider);
-
-    if (maintenance.hasError) {
-      return Scaffold(
-        backgroundColor: AppColors.canvas,
-        body: SafeArea(
-          child: EmptyState(
-            title: context.l10n.maintenanceCouldNotLoadMaintenanceBoard,
-            message: maintenance.failureMessage,
-            icon: Icons.cloud_off_rounded,
-            tone: AppColors.danger,
-            actionLabel: context.l10n.commonTryAgain,
-            onAction: () => ref.invalidate(maintenanceBoardProvider),
-          ),
-        ),
-      );
-    }
-
-    final MaintenanceBoard? board = maintenance.value;
+    final FleetSession session = ref.watch(fleetSessionProvider);
+    final List<HubProfile> hubs = session.hubs;
+    final int hubIndex = hubs.indexWhere((hub) => hub.id == _hubId);
+    final AsyncValue<MaintenanceVehicleList> vehicles = ref.watch(maintenanceListProvider(_filter));
+    final String scope = hubIndex >= 0
+        ? hubs[hubIndex].name
+        : (hubs.length > 1 ? context.l10n.hubAllHubs : session.hubName);
 
     return HeroScaffold(
       bottomPadding: 120,
-      onRefresh: () => ref.refreshQuietly(maintenanceBoardProvider),
-      floatingAction: _RaiseJobFab(onTap: () => context.push(Routes.raiseMaintenance)),
-      band: _Band(summary: board?.summary),
-      children: board == null
-          ? const [_MaintenanceSkeleton()]
-          : [
-              _Content(
-                board: board,
-                tab: _tab,
-                onTabChanged: (i) => setState(() => _tab = i),
-                query: _query,
-                onQueryChanged: (q) => setState(() => _query = q),
-                searchController: _searchController,
-                priorityFilter: _priorityFilter,
-                onPriorityChanged: (i) => setState(() => _priorityFilter = i),
-              ),
-            ],
+      onRefresh: () => ref.read(maintenanceListProvider(_filter).notifier).reload(),
+      band: _Band(count: vehicles.value?.underMaintenance, scope: scope),
+      children: [
+        _Filters(
+          controller: _searchController,
+          onSearch: _onSearch,
+          onClear: _clearSearch,
+          hubs: hubs,
+          selected: hubIndex + 1,
+          onHub: (index) => setState(() => _hubId = index == 0 ? null : hubs[index - 1].id),
+        ),
+        const Gap.lg(),
+        _Results(
+          vehicles: vehicles,
+          searching: _search.isNotEmpty,
+          onRetry: () => ref.invalidate(maintenanceListProvider(_filter)),
+          onLoadMore: () => ref.read(maintenanceListProvider(_filter).notifier).loadMore(),
+          onOpen: (vehicle) => context.push('${Routes.maintenanceDetail}?id=${vehicle.id}'),
+        ),
+      ],
     );
   }
 }
 
 class _Band extends StatelessWidget {
-  const _Band({required this.summary});
+  const _Band({required this.count, required this.scope});
 
-  final MaintenanceSummary? summary;
+  final int? count;
+  final String scope;
 
   @override
   Widget build(BuildContext context) {
@@ -92,23 +108,30 @@ class _Band extends StatelessWidget {
             const IconTile(icon: Icons.build_rounded, tone: AppColors.primaryBright, solid: true, size: 46),
             const SizedBox(width: Insets.md),
             Expanded(
-              child: Text(
-                context.l10n.maintenanceMaintenanceBoard,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.displaySmall.copyWith(fontSize: 24, color: AppColors.onInk),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.l10n.maintenanceTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.displaySmall.copyWith(fontSize: 24, color: AppColors.onInk),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    scope,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.bodySmall.copyWith(fontSize: 12.5, color: AppColors.onInkSecondary),
+                  ),
+                ],
               ),
             ),
           ],
         ),
-        const Gap.sm(),
-        Text(
-          context.l10n.maintenanceTrackEveryJobFromRaised,
-          style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary, height: 1.4),
-        ),
         const Gap.xl(),
         Container(
-          padding: const EdgeInsets.symmetric(vertical: Insets.md, horizontal: Insets.sm),
+          padding: const EdgeInsets.all(Insets.lg),
           decoration: BoxDecoration(
             color: Colors.white.withValues(alpha: 0.06),
             borderRadius: Corners.brMd,
@@ -116,30 +139,27 @@ class _Band extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Expanded(
-                child: InkStat(
-                  label: context.l10n.commonOpen,
-                  value: '${summary?.open ?? 0}',
-                  icon: Icons.build_circle_outlined,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.l10n.maintenanceUnderMaintenance,
+                    style: AppText.label.copyWith(color: AppColors.onInkSecondary),
+                  ),
+                  const Gap.xs(),
+                  Text(
+                    count == null ? '—' : '$count',
+                    style: AppText.numericLarge.copyWith(fontSize: 36, color: AppColors.onInk),
+                  ),
+                ],
               ),
+              const SizedBox(width: Insets.lg),
               const InkDivider(),
-              const SizedBox(width: Insets.md),
+              const SizedBox(width: Insets.lg),
               Expanded(
-                child: InkStat(
-                  label: context.l10n.maintenanceOverdue,
-                  value: '${summary?.overdue ?? 0}',
-                  icon: Icons.warning_amber_rounded,
-                  valueColor: (summary?.overdue ?? 0) > 0 ? AppColors.onInkCoral : null,
-                ),
-              ),
-              const InkDivider(),
-              const SizedBox(width: Insets.md),
-              Expanded(
-                child: InkStat(
-                  label: context.l10n.maintenanceProgress,
-                  value: '${summary?.inProgress ?? 0}',
-                  icon: Icons.sync_rounded,
+                child: Text(
+                  context.l10n.maintenanceBandHint,
+                  style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45, color: AppColors.onInkSecondary),
                 ),
               ),
             ],
@@ -150,158 +170,22 @@ class _Band extends StatelessWidget {
   }
 }
 
-class _Content extends StatelessWidget {
-  const _Content({
-    required this.board,
-    required this.tab,
-    required this.onTabChanged,
-    required this.query,
-    required this.onQueryChanged,
-    required this.searchController,
-    required this.priorityFilter,
-    required this.onPriorityChanged,
+class _Filters extends StatelessWidget {
+  const _Filters({
+    required this.controller,
+    required this.onSearch,
+    required this.onClear,
+    required this.hubs,
+    required this.selected,
+    required this.onHub,
   });
 
-  final MaintenanceBoard board;
-  final int tab;
-  final ValueChanged<int> onTabChanged;
-  final String query;
-  final ValueChanged<String> onQueryChanged;
-  final TextEditingController searchController;
-  final int priorityFilter;
-  final ValueChanged<int> onPriorityChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final String status = _statusTabs[tab];
-    final String priority = _priorityValues[priorityFilter];
-    final String needle = query.trim().toLowerCase();
-    final List<MaintenanceJob> jobs = board.jobs
-        .where((job) {
-          final bool matchesStatus = job.status == status;
-          final bool matchesQuery =
-              needle.isEmpty ||
-              job.vehicleNumber.toLowerCase().contains(needle) ||
-              job.id.toLowerCase().contains(needle) ||
-              job.issue.toLowerCase().contains(needle);
-          final bool matchesPriority = priority.isEmpty || job.priority.toLowerCase() == priority;
-          return matchesStatus && matchesQuery && matchesPriority;
-        })
-        .toList(growable: false);
-
-    final Map<int, int> counts = {
-      for (int i = 0; i < _statusTabs.length; i++) i: board.jobs.where((job) => job.status == _statusTabs[i]).length,
-    };
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(Insets.lg),
-          decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.floating),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              PhotoPanel(
-                photo: BrandPhoto.service,
-                height: 132,
-                title: context.l10n.maintenanceServiceBay,
-                subtitle: '${board.summary.closedThisWeek} closed this week · avg ${board.summary.averageCloseHours}h',
-              ),
-              const Gap.xl(),
-              SegmentedTabs(
-                items: [
-                  context.l10n.commonOpen,
-                  context.l10n.ridersActive,
-                  context.l10n.maintenanceOverdue,
-                  context.l10n.maintenanceClosed,
-                ],
-                selectedIndex: tab,
-                onChanged: onTabChanged,
-                counts: counts,
-              ),
-              const Gap.lg(),
-              AppSearchField(
-                hint: context.l10n.maintenanceSearchVehicleJobIdIssue,
-                controller: searchController,
-                onChanged: onQueryChanged,
-              ),
-              const Gap.md(),
-              FilterChipBar(
-                items: ['All', context.l10n.commonHigh, context.l10n.commonNormal, 'Low'],
-                selectedIndex: priorityFilter,
-                onChanged: onPriorityChanged,
-                padding: EdgeInsets.zero,
-              ),
-            ],
-          ),
-        ),
-        const Gap.xl(),
-        if (jobs.isEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: Insets.lg),
-            child: ArtBlock(
-              art: BrandArt.empty,
-              artSize: 130,
-              title: context.l10n.maintenanceNoJobsHere,
-              message: context.l10n.maintenanceNothingMatchesQueueFilterRight,
-            ),
-          )
-        else
-          Column(
-            children: [
-              for (final MaintenanceJob job in jobs) ...[
-                JobRowTile(job: job, onTap: () => context.push('${Routes.maintenanceDetail}?id=${job.id}')),
-                if (job != jobs.last) const Gap.md(),
-              ],
-            ],
-          ),
-      ],
-    );
-  }
-}
-
-class _RaiseJobFab extends StatelessWidget {
-  const _RaiseJobFab({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Pressable(
-      onTap: onTap,
-      scale: 0.94,
-      child: Container(
-        height: 52,
-        padding: const EdgeInsets.symmetric(horizontal: Insets.xl),
-        decoration: BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: Corners.pill,
-          boxShadow: Shadows.lift(AppColors.primary, opacity: 0.4, blur: 22),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.add_rounded, size: 20, color: Colors.white),
-            const SizedBox(width: Insets.sm),
-            Text(
-              context.l10n.maintenanceRaiseJob2,
-              style: const TextStyle(
-                fontFamily: AppFonts.body,
-                fontSize: 14.5,
-                fontWeight: FontWeight.w800,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _MaintenanceSkeleton extends StatelessWidget {
-  const _MaintenanceSkeleton();
+  final TextEditingController controller;
+  final ValueChanged<String> onSearch;
+  final VoidCallback onClear;
+  final List<HubProfile> hubs;
+  final int selected;
+  final ValueChanged<int> onHub;
 
   @override
   Widget build(BuildContext context) {
@@ -311,15 +195,118 @@ class _MaintenanceSkeleton extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const ShimmerBox(height: 132, borderRadius: Corners.brLg),
-          const Gap.xl(),
-          const ShimmerBox(height: 42, borderRadius: Corners.pill),
-          const Gap.lg(),
-          const ShimmerBox(height: 46, borderRadius: Corners.pill),
-          const Gap.xl(),
-          for (int i = 0; i < 3; i++) ...[const ShimmerBox(height: 170, borderRadius: Corners.brLg), const Gap.md()],
+          AppSearchField(
+            hint: context.l10n.maintenanceSearchHint,
+            controller: controller,
+            onChanged: onSearch,
+            trailing: ListenableBuilder(
+              listenable: controller,
+              builder: (context, _) => controller.text.isEmpty
+                  ? const SizedBox.shrink()
+                  : Pressable(
+                      onTap: onClear,
+                      child: const Icon(Icons.close_rounded, size: 18, color: AppColors.textMuted),
+                    ),
+            ),
+          ),
+          if (hubs.length > 1) ...[
+            const Gap.md(),
+            FilterChipBar(
+              items: [context.l10n.hubAllHubs, for (final HubProfile hub in hubs) hub.name],
+              selectedIndex: selected,
+              onChanged: onHub,
+              padding: EdgeInsets.zero,
+            ),
+          ],
         ],
       ),
+    );
+  }
+}
+
+class _Results extends StatelessWidget {
+  const _Results({
+    required this.vehicles,
+    required this.searching,
+    required this.onRetry,
+    required this.onLoadMore,
+    required this.onOpen,
+  });
+
+  final AsyncValue<MaintenanceVehicleList> vehicles;
+  final bool searching;
+  final VoidCallback onRetry;
+  final Future<bool> Function() onLoadMore;
+  final ValueChanged<MaintenanceVehicle> onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    final MaintenanceVehicleList? list = vehicles.value;
+    if (list == null) {
+      if (vehicles.hasError) {
+        return ModuleCard(
+          child: EmptyState(
+            title: context.l10n.maintenanceCouldNotLoad,
+            message: vehicles.failureMessage,
+            icon: Icons.cloud_off_rounded,
+            tone: AppColors.danger,
+            actionLabel: context.l10n.commonTryAgain,
+            onAction: onRetry,
+            compact: true,
+          ),
+        );
+      }
+      return const _ListSkeleton();
+    }
+
+    if (list.items.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: Insets.lg),
+        child: ArtBlock(
+          art: BrandArt.empty,
+          artSize: 130,
+          title: searching ? context.l10n.maintenanceNoMatchTitle : context.l10n.maintenanceEmptyTitle,
+          message: searching ? context.l10n.maintenanceNoMatchBody : context.l10n.maintenanceEmptyBody,
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: Insets.xs, bottom: Insets.md),
+          child: Text(
+            context.l10n.maintenanceShowing(list.items.length, list.total),
+            style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.textMuted),
+          ),
+        ),
+        for (final MaintenanceVehicle vehicle in list.items) ...[
+          MaintenanceVehicleCard(vehicle: vehicle, onTap: () => onOpen(vehicle)),
+          const Gap.md(),
+        ],
+        if (list.hasMore) LoadMoreTile(onLoad: onLoadMore),
+      ],
+    );
+  }
+}
+
+class _ListSkeleton extends StatelessWidget {
+  const _ListSkeleton();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ShimmerBox(height: 14, width: 120),
+        Gap.md(),
+        ShimmerBox(height: 168, borderRadius: Corners.brLg),
+        Gap.md(),
+        ShimmerBox(height: 168, borderRadius: Corners.brLg),
+        Gap.md(),
+        ShimmerBox(height: 168, borderRadius: Corners.brLg),
+      ],
     );
   }
 }

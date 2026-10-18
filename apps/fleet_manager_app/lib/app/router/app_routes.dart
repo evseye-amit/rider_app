@@ -20,8 +20,7 @@ abstract final class Routes {
   static const String submissionReport = '/submissions/report';
   static const String submissionConfirm = '/submissions/confirm';
 
-  static const String maintenanceDetail = '/maintenance/job';
-  static const String raiseMaintenance = '/maintenance/raise';
+  static const String maintenanceDetail = '/maintenance/vehicle';
 
   static const String support = '/support';
   static const String supportTicket = '/support/ticket';

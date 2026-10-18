@@ -3,32 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'data/maintenance_repository_impl.dart';
 import 'domain/maintenance_repository.dart';
-import 'domain/usecases/get_maintenance_board.dart';
-import 'domain/usecases/get_maintenance_job.dart';
-import 'domain/usecases/get_vehicle_options.dart';
-import 'domain/usecases/get_vendor_options.dart';
-import 'domain/usecases/raise_maintenance_job.dart';
+import 'domain/usecases/maintenance_usecases.dart';
 
 final maintenanceRepositoryProvider = Provider<MaintenanceRepository>(
-  (ref) => MaintenanceRepositoryImpl(ref.watch(apiClientProvider)),
+  (ref) => MaintenanceRepositoryImpl(ref.watch(apiClientProvider), ref.watch(mediaApiProvider)),
 );
 
-final getMaintenanceBoardProvider = Provider<GetMaintenanceBoard>(
-  (ref) => GetMaintenanceBoard(ref.watch(maintenanceRepositoryProvider)),
+final getMaintenanceVehiclesProvider = Provider<GetMaintenanceVehicles>(
+  (ref) => GetMaintenanceVehicles(ref.watch(maintenanceRepositoryProvider)),
 );
 
-final getMaintenanceJobProvider = Provider<GetMaintenanceJob>(
-  (ref) => GetMaintenanceJob(ref.watch(maintenanceRepositoryProvider)),
+final getMaintenanceVehicleProvider = Provider<GetMaintenanceVehicle>(
+  (ref) => GetMaintenanceVehicle(ref.watch(maintenanceRepositoryProvider)),
 );
 
-final getVehicleOptionsProvider = Provider<GetVehicleOptions>(
-  (ref) => GetVehicleOptions(ref.watch(maintenanceRepositoryProvider)),
-);
-
-final getVendorOptionsProvider = Provider<GetVendorOptions>(
-  (ref) => GetVendorOptions(ref.watch(maintenanceRepositoryProvider)),
-);
-
-final raiseMaintenanceJobProvider = Provider<RaiseMaintenanceJob>(
-  (ref) => RaiseMaintenanceJob(ref.watch(maintenanceRepositoryProvider)),
+final getEvidencePhotoUrlProvider = Provider<GetEvidencePhotoUrl>(
+  (ref) => GetEvidencePhotoUrl(ref.watch(maintenanceRepositoryProvider)),
 );

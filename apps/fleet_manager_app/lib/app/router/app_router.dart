@@ -13,9 +13,8 @@ import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_page.dart';
 import '../../features/hub/presentation/pages/home_page.dart';
 import '../../features/hub/presentation/widgets/fleet_shell.dart';
-import '../../features/maintenance/presentation/pages/maintenance_detail_page.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
-import '../../features/maintenance/presentation/pages/raise_maintenance_page.dart';
+import '../../features/maintenance/presentation/pages/maintenance_vehicle_page.dart';
 import '../../features/riders/presentation/pages/team_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/submissions/presentation/pages/submission_confirm_page.dart';
@@ -144,12 +143,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.maintenanceDetail,
         name: 'maintenanceDetail',
-        builder: (context, state) => MaintenanceDetailPage(jobId: state.uri.queryParameters['id'] ?? ''),
-      ),
-      GoRoute(
-        path: Routes.raiseMaintenance,
-        name: 'raiseMaintenance',
-        builder: (context, state) => RaiseMaintenancePage(vehicleNumber: state.uri.queryParameters['vehicle']),
+        builder: (context, state) => MaintenanceVehiclePage(fleetId: state.uri.queryParameters['id'] ?? ''),
       ),
       GoRoute(path: Routes.support, name: 'support', builder: (context, state) => const SupportDeskPage()),
       GoRoute(

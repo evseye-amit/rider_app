@@ -613,12 +613,6 @@ class AppL10nHi extends AppL10n {
   String get commonHaveAlreadyUsedNumberAnother => 'आप यह नंबर किसी और रेफ़रेंस के लिए पहले ही दे चुके हैं';
 
   @override
-  String get commonHigh => 'ज़्यादा';
-
-  @override
-  String get commonHighPriority => 'ज़्यादा प्राथमिकता';
-
-  @override
   String get commonHintGuardian => 'जैसे अभिभावक';
 
   @override
@@ -644,9 +638,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get commonLoadMore => 'और दिखाएँ';
-
-  @override
-  String get commonLowPriority => 'कम प्राथमिकता';
 
   @override
   String get commonMake100 => 'इसे 100% करें';
@@ -677,12 +668,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get commonNominationComplete => 'आपका नॉमिनेशन पूरा हो गया।';
-
-  @override
-  String get commonNormal => 'सामान्य';
-
-  @override
-  String get commonNormalPriority => 'सामान्य प्राथमिकता';
 
   @override
   String get commonNotFound => 'नहीं मिला।';
@@ -1845,6 +1830,54 @@ class AppL10nHi extends AppL10n {
   String get exchangeWhenWhereHint => 'चुनें कि आप अपना मौजूदा स्कूटर कब और कहाँ लाएँगे।';
 
   @override
+  String get fleetOnboardingActive => 'सक्रिय';
+
+  @override
+  String get fleetOnboardingArchived => 'संग्रहीत';
+
+  @override
+  String get fleetOnboardingDraft => 'ड्राफ़्ट';
+
+  @override
+  String get fleetOnboardingInProgress => 'जारी है';
+
+  @override
+  String get fleetOnboardingPendingReview => 'समीक्षा का इंतज़ार';
+
+  @override
+  String get fleetOnboardingRejected => 'अस्वीकृत';
+
+  @override
+  String get fleetStatusAllocated => 'आवंटित';
+
+  @override
+  String get fleetStatusAllocating => 'आवंटन हो रहा है';
+
+  @override
+  String get fleetStatusAvailable => 'उपलब्ध';
+
+  @override
+  String get fleetStatusInspectionPending => 'जाँच का इंतज़ार';
+
+  @override
+  String get fleetStatusInTransit => 'रास्ते में';
+
+  @override
+  String get fleetStatusInUse => 'इस्तेमाल में';
+
+  @override
+  String get fleetStatusMaintenance => 'मेंटेनेंस में';
+
+  @override
+  String get fleetStatusOutOfService => 'सेवा से बाहर';
+
+  @override
+  String get fleetStatusReserved => 'आरक्षित';
+
+  @override
+  String get fleetStatusReturning => 'वापसी हो रही है';
+
+  @override
   String get homeBonusUnlocked => 'बोनस खुल गया';
 
   @override
@@ -2095,266 +2128,154 @@ class AppL10nHi extends AppL10n {
   String get legalDocumentCouldNotLoad => 'यह दस्तावेज़ लोड नहीं हो सका';
 
   @override
-  String get maintenanceAddNote => 'नोट जोड़ें';
+  String get maintenanceAllocation => 'आवंटन';
 
   @override
-  String get maintenanceAddNote2 => 'नोट जोड़ें';
+  String get maintenanceAllocationOff => 'बंद है';
 
   @override
-  String get maintenanceAssign => 'किसे सौंपें';
+  String get maintenanceAllocationOn => 'अनुमति है';
 
   @override
-  String get maintenanceAssignedVendor => 'सौंपा गया वेंडर';
+  String get maintenanceAwaitingReport => 'अभी रिपोर्ट नहीं';
 
   @override
-  String get maintenanceAssignVendor => 'वेंडर सौंपें';
-
-  @override
-  String get maintenanceAssignVendorStartWork => 'काम शुरू करने के लिए वेंडर सौंपें';
-
-  @override
-  String get maintenanceAwaitingVendorAssignment => 'वेंडर सौंपे जाने का इंतज़ार';
+  String get maintenanceBandHint => 'आपके हब के वे स्कूटर जो सर्विस में हैं, उनकी नवीनतम मैकेनिक रिपोर्ट के साथ।';
 
   @override
   String get maintenanceBattery => 'बैटरी';
 
   @override
-  String get maintenanceBatterySpecialist => 'बैटरी विशेषज्ञ';
+  String get maintenanceCategory => 'श्रेणी';
 
   @override
-  String get maintenanceBay => 'बे';
+  String get maintenanceChassis => 'चेसिस नंबर';
 
   @override
-  String get maintenanceBody => 'बॉडी';
+  String get maintenanceChecksOpen => 'कुछ मैकेनिक जाँच अभी बाकी हैं';
 
   @override
-  String get maintenanceBodyPaint => 'बॉडी और पेंट';
+  String get maintenanceColour => 'रंग';
 
   @override
-  String get maintenanceCanAlsoAssignLater => 'आप इसे बाद में भी सौंप सकते हैं';
+  String maintenanceConfirmedOn(String date) {
+    return 'पुष्टि हुई $date';
+  }
 
   @override
-  String get maintenanceCellBalanceTestBookedAfternoon => 'सेल बैलेंस टेस्ट आज दोपहर के लिए बुक है';
+  String get maintenanceCouldNotLoad => 'सर्विस वाले वाहन लोड नहीं हो सके';
 
   @override
-  String get maintenanceChargeHolds62ThenDrops => 'चार्ज 62% तक टिकता है फिर एक किलोमीटर में 40% पर आ जाता है।';
+  String get maintenanceCurrentHub => 'मौजूदा हब';
 
   @override
-  String get maintenanceChooseLater => 'बाद में चुनें';
+  String get maintenanceEarlierReports => 'पिछली मैकेनिक रिपोर्ट';
 
   @override
-  String get maintenanceClosed => 'बंद';
+  String get maintenanceEmptyBody => 'जब आपके हब का कोई स्कूटर मेंटेनेंस में भेजा जाएगा, वह यहाँ दिखेगा।';
 
   @override
-  String get maintenanceCloseJob => 'काम बंद करें';
+  String get maintenanceEmptyTitle => 'सर्विस में कोई वाहन नहीं';
 
   @override
-  String get maintenanceCloseJob2 => 'यह काम बंद करें?';
+  String get maintenanceEvidence => 'सबूत की फ़ोटो';
 
   @override
-  String get maintenanceCompleted => 'पूरा हुआ';
+  String get maintenanceFleetCode => 'फ़्लीट कोड';
 
   @override
-  String get maintenanceCostBreakdown => 'खर्च का ब्यौरा';
+  String get maintenanceHistory => 'स्टेटस इतिहास';
 
   @override
-  String get maintenanceCouldNotLoadForm => 'फ़ॉर्म नहीं खुल पाया';
+  String maintenanceHistoryLimit(int limit) {
+    return 'नवीनतम $limit बदलाव दिखा रहे हैं।';
+  }
 
   @override
-  String get maintenanceCouldNotLoadJob => 'यह काम नहीं खुल पाया';
+  String get maintenanceHomeHub => 'होम हब';
 
   @override
-  String get maintenanceCouldNotLoadMaintenanceBoard => 'मरम्मत बोर्ड नहीं खुल पाया';
+  String get maintenanceLatestReport => 'नवीनतम मैकेनिक रिपोर्ट';
 
   @override
-  String get maintenanceDescribeIssue => 'समस्या बताएं';
+  String get maintenanceMaker => 'निर्माता';
 
   @override
-  String get maintenanceFrontTyreWornPastWear => 'अगला टायर तय सीमा से ज़्यादा घिस चुका है।';
+  String get maintenanceModel => 'मॉडल';
 
   @override
-  String get maintenanceHintOdometer => 'जैसे 9420';
+  String maintenanceMovedOn(String date) {
+    return 'मेंटेनेंस में भेजा गया $date';
+  }
 
   @override
-  String get maintenanceHintUnitNotPowering => 'जैसे यूनिट चालू नहीं हो रही, वर्कशॉप शिकायत दर्ज की';
+  String get maintenanceNoHistory => 'कोई स्टेटस बदलाव दर्ज नहीं है।';
 
   @override
-  String get maintenanceIssue => 'समस्या';
+  String get maintenanceNoMatchBody => 'कोई दूसरा वाहन नंबर, फ़्लीट कोड, चेसिस या मॉडल आज़माएँ।';
 
   @override
-  String get maintenanceIssueCloseUp => 'समस्या की नज़दीकी फ़ोटो';
+  String get maintenanceNoMatchTitle => 'कोई मिलता-जुलता वाहन नहीं';
 
   @override
-  String get maintenanceIssueDescription => 'समस्या का विवरण';
+  String get maintenanceNoReportYet => 'इस वाहन की अभी तक कोई मैकेनिक रिपोर्ट दर्ज नहीं हुई है।';
 
   @override
-  String get maintenanceJob => 'काम';
+  String get maintenanceNotSafe => 'सुरक्षित नहीं';
 
   @override
-  String get maintenanceJobDetails => 'काम का ब्यौरा';
+  String get maintenanceOdometer => 'ओडोमीटर';
 
   @override
-  String get maintenanceJobNoLongerBoard => 'वह काम अब बोर्ड पर नहीं है।';
+  String get maintenanceOnboarding => 'ऑनबोर्डिंग';
 
   @override
-  String get maintenanceJobTimeline => 'काम की प्रगति';
-
-  @override
-  String get maintenanceJobType => 'काम का प्रकार';
-
-  @override
-  String get maintenanceKilometresAsShownCluster => 'किलोमीटर में, जैसा मीटर पर दिख रहा है।';
-
-  @override
-  String get maintenanceLabour => 'मज़दूरी';
-
-  @override
-  String get maintenanceMaintenanceBoard => 'मरम्मत बोर्ड';
-
-  @override
-  String get maintenanceNoJobsHere => 'यहां कोई काम नहीं';
-
-  @override
-  String get maintenanceNoNotesYet => 'अभी कोई नोट नहीं';
-
-  @override
-  String get maintenanceNote => 'नोट';
-
-  @override
-  String get maintenanceNoteAdded => 'नोट जुड़ गया।';
-
-  @override
-  String get maintenanceNotes => 'नोट';
-
-  @override
-  String get maintenanceNothingMatchesQueueFilterRight => 'इस कतार और फ़िल्टर से अभी कुछ नहीं मिला।';
-
-  @override
-  String get maintenanceNoVendorsAvailableReassignRight => 'अभी दोबारा सौंपने के लिए कोई वेंडर उपलब्ध नहीं है।';
-
-  @override
-  String get maintenanceOdometerReading => 'ओडोमीटर रीडिंग';
-
-  @override
-  String get maintenanceOverdue => 'समय बीत चुका';
-
-  @override
-  String get maintenancePadsMeasured12Mm => 'पैड 1.2 मिमी मापे गए';
-
-  @override
-  String get maintenancePanelResprayedRefitted => 'पैनल दोबारा रंगा और लगाया गया';
-
-  @override
-  String get maintenanceParts => 'पुर्ज़े';
-
-  @override
-  String get maintenancePhotoEvidence => 'फ़ोटो सबूत';
-
-  @override
-  String get maintenancePreDelivery => 'डिलीवरी से पहले';
-
-  @override
-  String get maintenancePriority => 'प्राथमिकता';
+  String maintenancePhotoCount(int count) {
+    return 'संलग्न फ़ोटो: $count';
+  }
 
   @override
   String get maintenanceProgress => 'चल रहा है';
 
   @override
-  String get maintenanceRaiseJob => 'काम दर्ज करें';
+  String maintenanceReportsLimit(int limit) {
+    return 'नवीनतम $limit रिपोर्ट दिखा रहे हैं।';
+  }
 
   @override
-  String get maintenanceRaiseJob2 => 'काम दर्ज करें';
+  String get maintenanceSafeToReuse => 'इस्तेमाल के लिए सुरक्षित';
 
   @override
-  String get maintenanceRaisingMaintenanceJobNeedsApi =>
-      'मरम्मत का काम दर्ज करने के लिए जो एपीआई चाहिए वह अभी नहीं है।';
-
-  @override
-  String get maintenanceRearBrakeBitesLateSqueals => 'पिछला ब्रेक देर से पकड़ता है और भार पड़ने पर आवाज़ करता है।';
-
-  @override
-  String get maintenanceReassign => 'दोबारा सौंपें';
-
-  @override
-  String get maintenanceReassignVendor => 'वेंडर दोबारा सौंपें';
-
-  @override
-  String get maintenanceReplacementSetOrdered => 'बदलने वाला सेट मंगाया गया';
-
-  @override
-  String get maintenanceRiderFile => 'दर्ज राइडर';
-
-  @override
-  String get maintenanceSaveNote => 'नोट सेव करें';
-
-  @override
-  String get maintenanceScheduledService => 'तय सर्विस';
-
-  @override
-  String get maintenanceScuffedSidePanelAfterParking => 'पार्किंग में टक्कर के बाद साइड पैनल छिल गया।';
-
-  @override
-  String get maintenanceSearchVehicleJobIdIssue => 'गाड़ी, काम आईडी या समस्या खोजें';
-
-  @override
-  String get maintenanceSelectJobType => 'काम का प्रकार चुनें';
+  String get maintenanceSearchHint => 'वाहन नंबर, फ़्लीट कोड, चेसिस या मॉडल खोजें';
 
   @override
   String get maintenanceSelectVehicle => 'गाड़ी चुनें';
 
   @override
-  String get maintenanceSelectVehicleJob => 'यह काम जिस गाड़ी के लिए है वह चुनें';
+  String maintenanceShowing(int shown, int total) {
+    return '$total में से $shown दिखा रहे हैं';
+  }
 
   @override
-  String get maintenanceSendVehicleWorkshop => 'गाड़ी वर्कशॉप भेजें';
+  String get maintenanceTitle => 'सर्विस में वाहन';
 
   @override
-  String get maintenanceSendWorkshop => 'इसे वर्कशॉप भेजें';
+  String get maintenanceUnderMaintenance => 'मेंटेनेंस में';
 
   @override
-  String get maintenanceServiceBay => 'सर्विस बे';
+  String get maintenanceVariant => 'वेरिएंट';
 
   @override
-  String get maintenanceServicePartner => 'सर्विस साथी';
+  String get maintenanceVehicleCouldNotLoad => 'यह वाहन लोड नहीं हो सका';
 
   @override
-  String get maintenanceTechnicianPicksUpAsSoon => 'दर्ज होते ही एक तकनीशियन इसे उठा लेता है।';
+  String get maintenanceVehicleDetails => 'वाहन का विवरण';
 
   @override
-  String get maintenanceTrackerDropsOffBetweenOkhla => 'ओखला और जसोला के बीच ट्रैकर छूट जाता है।';
+  String get maintenanceVehicleTitle => 'सर्विस में वाहन';
 
   @override
-  String get maintenanceTrackEveryJobFromRaised => 'हर काम दर्ज होने से बंद होने तक देखें';
-
-  @override
-  String get maintenanceTwoWheelerWorkshop => 'दोपहिया वर्कशॉप';
-
-  @override
-  String get maintenanceTyres => 'टायर';
-
-  @override
-  String get maintenanceUnassigned => 'किसी को नहीं सौंपा';
-
-  @override
-  String get maintenanceUpdatesFromWorkshopWillShow => 'वर्कशॉप की जानकारी यहां दिखेगी।';
-
-  @override
-  String get maintenanceUpdateStatus => 'स्थिति बदलें';
-
-  @override
-  String get maintenanceVendor => 'वेंडर';
-
-  @override
-  String get maintenanceWhatHappenedWhatNeededNext => 'क्या हुआ, या आगे क्या चाहिए';
-
-  @override
-  String get maintenanceWhatKindJob => 'यह किस तरह का काम है';
-
-  @override
-  String get maintenanceWhatWrongWithVehicle => 'गाड़ी में क्या ख़राबी है';
-
-  @override
-  String get maintenanceWideShot => 'पूरी फ़ोटो';
+  String get maintenanceVehicleType => 'वाहन का प्रकार';
 
   @override
   String get mapsAllowLocation => 'अनुमति दें';

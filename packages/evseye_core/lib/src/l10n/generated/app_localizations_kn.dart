@@ -616,12 +616,6 @@ class AppL10nKn extends AppL10n {
   String get commonHaveAlreadyUsedNumberAnother => 'ಈ ಸಂಖ್ಯೆಯನ್ನು ಬೇರೊಂದು ಉಲ್ಲೇಖಕ್ಕೆ ಈಗಾಗಲೇ ಬಳಸಿದ್ದೀರಿ';
 
   @override
-  String get commonHigh => 'ಹೆಚ್ಚು';
-
-  @override
-  String get commonHighPriority => 'ಹೆಚ್ಚಿನ ಆದ್ಯತೆ';
-
-  @override
   String get commonHintGuardian => 'ಉದಾ. ಪೋಷಕ';
 
   @override
@@ -647,9 +641,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get commonLoadMore => 'ಇನ್ನಷ್ಟು ತೋರಿಸಿ';
-
-  @override
-  String get commonLowPriority => 'ಕಡಿಮೆ ಆದ್ಯತೆ';
 
   @override
   String get commonMake100 => 'ಇದನ್ನು 100% ಮಾಡಿ';
@@ -680,12 +671,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get commonNominationComplete => 'ನಿಮ್ಮ ನಾಮನಿರ್ದೇಶನ ಪೂರ್ಣಗೊಂಡಿದೆ.';
-
-  @override
-  String get commonNormal => 'ಸಾಮಾನ್ಯ';
-
-  @override
-  String get commonNormalPriority => 'ಸಾಮಾನ್ಯ ಆದ್ಯತೆ';
 
   @override
   String get commonNotFound => 'ಸಿಗಲಿಲ್ಲ.';
@@ -1855,6 +1840,54 @@ class AppL10nKn extends AppL10n {
   String get exchangeWhenWhereHint => 'ನಿಮ್ಮ ಈಗಿನ ಸ್ಕೂಟರ್ ಅನ್ನು ಯಾವಾಗ ಮತ್ತು ಎಲ್ಲಿಗೆ ತರುತ್ತೀರಿ ಎಂದು ಆಯ್ಕೆಮಾಡಿ.';
 
   @override
+  String get fleetOnboardingActive => 'ಸಕ್ರಿಯ';
+
+  @override
+  String get fleetOnboardingArchived => 'ಆರ್ಕೈವ್ ಮಾಡಲಾಗಿದೆ';
+
+  @override
+  String get fleetOnboardingDraft => 'ಕರಡು';
+
+  @override
+  String get fleetOnboardingInProgress => 'ಪ್ರಗತಿಯಲ್ಲಿದೆ';
+
+  @override
+  String get fleetOnboardingPendingReview => 'ಪರಿಶೀಲನೆಗಾಗಿ ಕಾಯುತ್ತಿದೆ';
+
+  @override
+  String get fleetOnboardingRejected => 'ತಿರಸ್ಕೃತ';
+
+  @override
+  String get fleetStatusAllocated => 'ಹಂಚಿಕೆಯಾಗಿದೆ';
+
+  @override
+  String get fleetStatusAllocating => 'ಹಂಚಿಕೆ ನಡೆಯುತ್ತಿದೆ';
+
+  @override
+  String get fleetStatusAvailable => 'ಲಭ್ಯವಿದೆ';
+
+  @override
+  String get fleetStatusInspectionPending => 'ತಪಾಸಣೆಗಾಗಿ ಕಾಯುತ್ತಿದೆ';
+
+  @override
+  String get fleetStatusInTransit => 'ಸಾಗಣೆಯಲ್ಲಿದೆ';
+
+  @override
+  String get fleetStatusInUse => 'ಬಳಕೆಯಲ್ಲಿದೆ';
+
+  @override
+  String get fleetStatusMaintenance => 'ನಿರ್ವಹಣೆಯಲ್ಲಿದೆ';
+
+  @override
+  String get fleetStatusOutOfService => 'ಸೇವೆಯಿಂದ ಹೊರಗಿದೆ';
+
+  @override
+  String get fleetStatusReserved => 'ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get fleetStatusReturning => 'ಹಿಂತಿರುಗಿಸಲಾಗುತ್ತಿದೆ';
+
+  @override
   String get homeBonusUnlocked => 'ಬೋನಸ್ ತೆರೆದಿದೆ';
 
   @override
@@ -2107,266 +2140,155 @@ class AppL10nKn extends AppL10n {
   String get legalDocumentCouldNotLoad => 'ಈ ದಾಖಲೆಯನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
 
   @override
-  String get maintenanceAddNote => 'ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ';
+  String get maintenanceAllocation => 'ಹಂಚಿಕೆ';
 
   @override
-  String get maintenanceAddNote2 => 'ಟಿಪ್ಪಣಿ ಸೇರಿಸಿ';
+  String get maintenanceAllocationOff => 'ಆಫ್ ಆಗಿದೆ';
 
   @override
-  String get maintenanceAssign => 'ಯಾರಿಗೆ ನಿಯೋಜಿಸಬೇಕು';
+  String get maintenanceAllocationOn => 'ಅನುಮತಿಸಲಾಗಿದೆ';
 
   @override
-  String get maintenanceAssignedVendor => 'ನಿಯೋಜಿತ ವ್ಯಾಪಾರಿ';
+  String get maintenanceAwaitingReport => 'ಇನ್ನೂ ವರದಿ ಇಲ್ಲ';
 
   @override
-  String get maintenanceAssignVendor => 'ವ್ಯಾಪಾರಿಯನ್ನು ನಿಯೋಜಿಸಿ';
-
-  @override
-  String get maintenanceAssignVendorStartWork => 'ಕೆಲಸ ಪ್ರಾರಂಭಿಸಲು ವ್ಯಾಪಾರಿಯನ್ನು ನಿಯೋಜಿಸಿ';
-
-  @override
-  String get maintenanceAwaitingVendorAssignment => 'ವ್ಯಾಪಾರಿ ನಿಯೋಜನೆಗೆ ಕಾಯುತ್ತಿದೆ';
+  String get maintenanceBandHint =>
+      'ನಿಮ್ಮ ಹಬ್‌ಗಳಲ್ಲಿ ಸರ್ವೀಸ್‌ನಲ್ಲಿರುವ ಸ್ಕೂಟರ್‌ಗಳು, ಅವುಗಳ ಇತ್ತೀಚಿನ ಮೆಕ್ಯಾನಿಕ್ ವರದಿಯೊಂದಿಗೆ.';
 
   @override
   String get maintenanceBattery => 'ಬ್ಯಾಟರಿ';
 
   @override
-  String get maintenanceBatterySpecialist => 'ಬ್ಯಾಟರಿ ತಜ್ಞ';
+  String get maintenanceCategory => 'ವರ್ಗ';
 
   @override
-  String get maintenanceBay => 'ಬೇ';
+  String get maintenanceChassis => 'ಚಾಸಿಸ್ ಸಂಖ್ಯೆ';
 
   @override
-  String get maintenanceBody => 'ಬಾಡಿ';
+  String get maintenanceChecksOpen => 'ಕೆಲವು ಮೆಕ್ಯಾನಿಕ್ ಪರಿಶೀಲನೆಗಳು ಇನ್ನೂ ಬಾಕಿ ಇವೆ';
 
   @override
-  String get maintenanceBodyPaint => 'ಬಾಡಿ ಮತ್ತು ಬಣ್ಣ';
+  String get maintenanceColour => 'ಬಣ್ಣ';
 
   @override
-  String get maintenanceCanAlsoAssignLater => 'ಇದನ್ನು ನಂತರವೂ ನಿಯೋಜಿಸಬಹುದು';
+  String maintenanceConfirmedOn(String date) {
+    return 'ದೃಢೀಕರಿಸಲಾಗಿದೆ $date';
+  }
 
   @override
-  String get maintenanceCellBalanceTestBookedAfternoon => 'ಸೆಲ್ ಬ್ಯಾಲೆನ್ಸ್ ಪರೀಕ್ಷೆ ಇಂದು ಮಧ್ಯಾಹ್ನಕ್ಕೆ ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ';
+  String get maintenanceCouldNotLoad => 'ಸರ್ವೀಸ್‌ನಲ್ಲಿರುವ ವಾಹನಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
 
   @override
-  String get maintenanceChargeHolds62ThenDrops =>
-      'ಚಾರ್ಜ್ 62% ವರೆಗೆ ಉಳಿಯುತ್ತದೆ, ನಂತರ ಒಂದು ಕಿಲೋಮೀಟರ್‌ನಲ್ಲಿ 40%ಕ್ಕೆ ಇಳಿಯುತ್ತದೆ.';
+  String get maintenanceCurrentHub => 'ಪ್ರಸ್ತುತ ಹಬ್';
 
   @override
-  String get maintenanceChooseLater => 'ನಂತರ ಆರಿಸಿ';
+  String get maintenanceEarlierReports => 'ಹಿಂದಿನ ಮೆಕ್ಯಾನಿಕ್ ವರದಿಗಳು';
 
   @override
-  String get maintenanceClosed => 'ಮುಚ್ಚಲಾಗಿದೆ';
+  String get maintenanceEmptyBody => 'ನಿಮ್ಮ ಹಬ್‌ನ ಸ್ಕೂಟರ್ ನಿರ್ವಹಣೆಗೆ ಹೋದಾಗ ಅದು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
 
   @override
-  String get maintenanceCloseJob => 'ಕೆಲಸ ಮುಚ್ಚಿ';
+  String get maintenanceEmptyTitle => 'ಸರ್ವೀಸ್‌ನಲ್ಲಿ ಯಾವುದೇ ವಾಹನವಿಲ್ಲ';
 
   @override
-  String get maintenanceCloseJob2 => 'ಈ ಕೆಲಸ ಮುಚ್ಚಬೇಕೆ?';
+  String get maintenanceEvidence => 'ಸಾಕ್ಷ್ಯ ಫೋಟೋಗಳು';
 
   @override
-  String get maintenanceCompleted => 'ಪೂರ್ಣಗೊಂಡಿದೆ';
+  String get maintenanceFleetCode => 'ಫ್ಲೀಟ್ ಕೋಡ್';
 
   @override
-  String get maintenanceCostBreakdown => 'ವೆಚ್ಚದ ವಿವರ';
+  String get maintenanceHistory => 'ಸ್ಥಿತಿ ಇತಿಹಾಸ';
 
   @override
-  String get maintenanceCouldNotLoadForm => 'ಫಾರ್ಮ್ ತೆರೆಯಲಿಲ್ಲ';
+  String maintenanceHistoryLimit(int limit) {
+    return 'ಇತ್ತೀಚಿನ $limit ಬದಲಾವಣೆಗಳನ್ನು ತೋರಿಸಲಾಗುತ್ತಿದೆ.';
+  }
 
   @override
-  String get maintenanceCouldNotLoadJob => 'ಈ ಕೆಲಸ ತೆರೆಯಲಿಲ್ಲ';
+  String get maintenanceHomeHub => 'ಹೋಮ್ ಹಬ್';
 
   @override
-  String get maintenanceCouldNotLoadMaintenanceBoard => 'ನಿರ್ವಹಣಾ ಫಲಕ ತೆರೆಯಲಿಲ್ಲ';
+  String get maintenanceLatestReport => 'ಇತ್ತೀಚಿನ ಮೆಕ್ಯಾನಿಕ್ ವರದಿ';
 
   @override
-  String get maintenanceDescribeIssue => 'ಸಮಸ್ಯೆ ವಿವರಿಸಿ';
+  String get maintenanceMaker => 'ತಯಾರಕರು';
 
   @override
-  String get maintenanceFrontTyreWornPastWear => 'ಮುಂದಿನ ಟೈರ್ ಮಿತಿಗಿಂತ ಹೆಚ್ಚು ಸವೆದಿದೆ.';
+  String get maintenanceModel => 'ಮಾದರಿ';
 
   @override
-  String get maintenanceHintOdometer => 'ಉದಾ. 9420';
+  String maintenanceMovedOn(String date) {
+    return 'ನಿರ್ವಹಣೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ $date';
+  }
 
   @override
-  String get maintenanceHintUnitNotPowering => 'ಉದಾ. ಯೂನಿಟ್ ಚಾಲೂ ಆಗುತ್ತಿಲ್ಲ, ವರ್ಕ್‌ಶಾಪ್ ದೂರು ದಾಖಲಿಸಲಾಗಿದೆ';
+  String get maintenanceNoHistory => 'ಯಾವುದೇ ಸ್ಥಿತಿ ಬದಲಾವಣೆ ದಾಖಲಾಗಿಲ್ಲ.';
 
   @override
-  String get maintenanceIssue => 'ಸಮಸ್ಯೆ';
+  String get maintenanceNoMatchBody => 'ಬೇರೆ ವಾಹನ ಸಂಖ್ಯೆ, ಫ್ಲೀಟ್ ಕೋಡ್, ಚಾಸಿಸ್ ಅಥವಾ ಮಾದರಿ ಪ್ರಯತ್ನಿಸಿ.';
 
   @override
-  String get maintenanceIssueCloseUp => 'ಸಮಸ್ಯೆಯ ಹತ್ತಿರದ ಫೋಟೋ';
+  String get maintenanceNoMatchTitle => 'ಹೊಂದುವ ವಾಹನಗಳಿಲ್ಲ';
 
   @override
-  String get maintenanceIssueDescription => 'ಸಮಸ್ಯೆಯ ವಿವರಣೆ';
+  String get maintenanceNoReportYet => 'ಈ ವಾಹನಕ್ಕೆ ಇನ್ನೂ ಯಾವುದೇ ಮೆಕ್ಯಾನಿಕ್ ವರದಿ ದಾಖಲಾಗಿಲ್ಲ.';
 
   @override
-  String get maintenanceJob => 'ಕೆಲಸ';
+  String get maintenanceNotSafe => 'ಸುರಕ್ಷಿತವಲ್ಲ';
 
   @override
-  String get maintenanceJobDetails => 'ಕೆಲಸದ ವಿವರ';
+  String get maintenanceOdometer => 'ಓಡೋಮೀಟರ್';
 
   @override
-  String get maintenanceJobNoLongerBoard => 'ಆ ಕೆಲಸ ಈಗ ಫಲಕದಲ್ಲಿ ಇಲ್ಲ.';
+  String get maintenanceOnboarding => 'ಆನ್‌ಬೋರ್ಡಿಂಗ್';
 
   @override
-  String get maintenanceJobTimeline => 'ಕೆಲಸದ ಪ್ರಗತಿ';
-
-  @override
-  String get maintenanceJobType => 'ಕೆಲಸದ ಬಗೆ';
-
-  @override
-  String get maintenanceKilometresAsShownCluster => 'ಮೀಟರ್‌ನಲ್ಲಿ ತೋರಿಸಿದಂತೆ, ಕಿಲೋಮೀಟರ್‌ನಲ್ಲಿ.';
-
-  @override
-  String get maintenanceLabour => 'ಕೂಲಿ';
-
-  @override
-  String get maintenanceMaintenanceBoard => 'ನಿರ್ವಹಣಾ ಫಲಕ';
-
-  @override
-  String get maintenanceNoJobsHere => 'ಇಲ್ಲಿ ಕೆಲಸಗಳಿಲ್ಲ';
-
-  @override
-  String get maintenanceNoNotesYet => 'ಇನ್ನೂ ಟಿಪ್ಪಣಿ ಇಲ್ಲ';
-
-  @override
-  String get maintenanceNote => 'ಟಿಪ್ಪಣಿ';
-
-  @override
-  String get maintenanceNoteAdded => 'ಟಿಪ್ಪಣಿ ಸೇರಿಸಲಾಗಿದೆ.';
-
-  @override
-  String get maintenanceNotes => 'ಟಿಪ್ಪಣಿಗಳು';
-
-  @override
-  String get maintenanceNothingMatchesQueueFilterRight => 'ಈ ಸರದಿ ಮತ್ತು ಶೋಧಕ್ಕೆ ಈಗ ಏನೂ ಹೊಂದಿಲ್ಲ.';
-
-  @override
-  String get maintenanceNoVendorsAvailableReassignRight => 'ಈಗ ಮತ್ತೆ ನಿಯೋಜಿಸಲು ಯಾವ ವ್ಯಾಪಾರಿಯೂ ಲಭ್ಯವಿಲ್ಲ.';
-
-  @override
-  String get maintenanceOdometerReading => 'ಓಡೋಮೀಟರ್ ಅಳತೆ';
-
-  @override
-  String get maintenanceOverdue => 'ಸಮಯ ಮೀರಿದೆ';
-
-  @override
-  String get maintenancePadsMeasured12Mm => 'ಪ್ಯಾಡ್‌ಗಳು 1.2 ಮಿಮೀ ಅಳತೆ';
-
-  @override
-  String get maintenancePanelResprayedRefitted => 'ಪ್ಯಾನಲ್ ಮತ್ತೆ ಬಣ್ಣ ಹಚ್ಚಿ ಜೋಡಿಸಲಾಗಿದೆ';
-
-  @override
-  String get maintenanceParts => 'ಬಿಡಿಭಾಗಗಳು';
-
-  @override
-  String get maintenancePhotoEvidence => 'ಫೋಟೋ ಸಾಕ್ಷ್ಯ';
-
-  @override
-  String get maintenancePreDelivery => 'ವಿತರಣೆಗೂ ಮೊದಲು';
-
-  @override
-  String get maintenancePriority => 'ಆದ್ಯತೆ';
+  String maintenancePhotoCount(int count) {
+    return 'ಲಗತ್ತಿಸಿದ ಫೋಟೋಗಳು: $count';
+  }
 
   @override
   String get maintenanceProgress => 'ನಡೆಯುತ್ತಿದೆ';
 
   @override
-  String get maintenanceRaiseJob => 'ಕೆಲಸ ದಾಖಲಿಸಿ';
+  String maintenanceReportsLimit(int limit) {
+    return 'ಇತ್ತೀಚಿನ $limit ವರದಿಗಳನ್ನು ತೋರಿಸಲಾಗುತ್ತಿದೆ.';
+  }
 
   @override
-  String get maintenanceRaiseJob2 => 'ಕೆಲಸ ದಾಖಲಿಸಿ';
+  String get maintenanceSafeToReuse => 'ಮರುಬಳಕೆಗೆ ಸುರಕ್ಷಿತ';
 
   @override
-  String get maintenanceRaisingMaintenanceJobNeedsApi => 'ನಿರ್ವಹಣಾ ಕೆಲಸ ದಾಖಲಿಸಲು ಬೇಕಾದ ಎಪಿಐ ಇನ್ನೂ ಇಲ್ಲ.';
-
-  @override
-  String get maintenanceRearBrakeBitesLateSqueals => 'ಹಿಂದಿನ ಬ್ರೇಕ್ ತಡವಾಗಿ ಹಿಡಿಯುತ್ತದೆ ಮತ್ತು ಭಾರದಲ್ಲಿ ಸದ್ದು ಮಾಡುತ್ತದೆ.';
-
-  @override
-  String get maintenanceReassign => 'ಮತ್ತೆ ನಿಯೋಜಿಸಿ';
-
-  @override
-  String get maintenanceReassignVendor => 'ವ್ಯಾಪಾರಿಯನ್ನು ಮತ್ತೆ ನಿಯೋಜಿಸಿ';
-
-  @override
-  String get maintenanceReplacementSetOrdered => 'ಬದಲಿ ಸೆಟ್ ಆರ್ಡರ್ ಮಾಡಲಾಗಿದೆ';
-
-  @override
-  String get maintenanceRiderFile => 'ದಾಖಲಾದ ರೈಡರ್';
-
-  @override
-  String get maintenanceSaveNote => 'ಟಿಪ್ಪಣಿ ಉಳಿಸಿ';
-
-  @override
-  String get maintenanceScheduledService => 'ನಿಗದಿತ ಸೇವೆ';
-
-  @override
-  String get maintenanceScuffedSidePanelAfterParking => 'ಪಾರ್ಕಿಂಗ್ ಘರ್ಷಣೆಯ ನಂತರ ಪಕ್ಕದ ಪ್ಯಾನಲ್ ಗೀರಿದೆ.';
-
-  @override
-  String get maintenanceSearchVehicleJobIdIssue => 'ವಾಹನ, ಕೆಲಸದ ಐಡಿ ಅಥವಾ ಸಮಸ್ಯೆ ಹುಡುಕಿ';
-
-  @override
-  String get maintenanceSelectJobType => 'ಕೆಲಸದ ಬಗೆ ಆರಿಸಿ';
+  String get maintenanceSearchHint => 'ವಾಹನ ಸಂಖ್ಯೆ, ಫ್ಲೀಟ್ ಕೋಡ್, ಚಾಸಿಸ್ ಅಥವಾ ಮಾದರಿ ಹುಡುಕಿ';
 
   @override
   String get maintenanceSelectVehicle => 'ವಾಹನ ಆರಿಸಿ';
 
   @override
-  String get maintenanceSelectVehicleJob => 'ಈ ಕೆಲಸ ಯಾವ ವಾಹನಕ್ಕೆ ಎಂದು ಆರಿಸಿ';
+  String maintenanceShowing(int shown, int total) {
+    return '$total ರಲ್ಲಿ $shown ತೋರಿಸಲಾಗುತ್ತಿದೆ';
+  }
 
   @override
-  String get maintenanceSendVehicleWorkshop => 'ವಾಹನವನ್ನು ವರ್ಕ್‌ಶಾಪ್‌ಗೆ ಕಳುಹಿಸಿ';
+  String get maintenanceTitle => 'ಸರ್ವೀಸ್‌ನಲ್ಲಿರುವ ವಾಹನಗಳು';
 
   @override
-  String get maintenanceSendWorkshop => 'ಇದನ್ನು ವರ್ಕ್‌ಶಾಪ್‌ಗೆ ಕಳುಹಿಸಿ';
+  String get maintenanceUnderMaintenance => 'ನಿರ್ವಹಣೆಯಲ್ಲಿ';
 
   @override
-  String get maintenanceServiceBay => 'ಸೇವಾ ಬೇ';
+  String get maintenanceVariant => 'ವೇರಿಯಂಟ್';
 
   @override
-  String get maintenanceServicePartner => 'ಸೇವಾ ಪಾಲುದಾರ';
+  String get maintenanceVehicleCouldNotLoad => 'ಈ ವಾಹನವನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
 
   @override
-  String get maintenanceTechnicianPicksUpAsSoon => 'ದಾಖಲಾದ ತಕ್ಷಣ ತಂತ್ರಜ್ಞರು ಇದನ್ನು ಕೈಗೆತ್ತಿಕೊಳ್ಳುತ್ತಾರೆ.';
+  String get maintenanceVehicleDetails => 'ವಾಹನದ ವಿವರಗಳು';
 
   @override
-  String get maintenanceTrackerDropsOffBetweenOkhla => 'ಓಖ್ಲಾ ಮತ್ತು ಜಸೋಲಾ ನಡುವೆ ಟ್ರ್ಯಾಕರ್ ಕಡಿತಗೊಳ್ಳುತ್ತದೆ.';
+  String get maintenanceVehicleTitle => 'ಸರ್ವೀಸ್‌ನಲ್ಲಿರುವ ವಾಹನ';
 
   @override
-  String get maintenanceTrackEveryJobFromRaised => 'ಪ್ರತಿ ಕೆಲಸವನ್ನು ದಾಖಲಾದಿಂದ ಮುಚ್ಚುವವರೆಗೆ ನೋಡಿ';
-
-  @override
-  String get maintenanceTwoWheelerWorkshop => 'ದ್ವಿಚಕ್ರ ವರ್ಕ್‌ಶಾಪ್';
-
-  @override
-  String get maintenanceTyres => 'ಟೈರ್‌ಗಳು';
-
-  @override
-  String get maintenanceUnassigned => 'ನಿಯೋಜಿಸಿಲ್ಲ';
-
-  @override
-  String get maintenanceUpdatesFromWorkshopWillShow => 'ವರ್ಕ್‌ಶಾಪ್‌ನಿಂದ ಮಾಹಿತಿ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
-
-  @override
-  String get maintenanceUpdateStatus => 'ಸ್ಥಿತಿ ಬದಲಾಯಿಸಿ';
-
-  @override
-  String get maintenanceVendor => 'ವ್ಯಾಪಾರಿ';
-
-  @override
-  String get maintenanceWhatHappenedWhatNeededNext => 'ಏನಾಯಿತು, ಅಥವಾ ಮುಂದೆ ಏನು ಬೇಕು';
-
-  @override
-  String get maintenanceWhatKindJob => 'ಇದು ಯಾವ ಬಗೆಯ ಕೆಲಸ';
-
-  @override
-  String get maintenanceWhatWrongWithVehicle => 'ವಾಹನದಲ್ಲಿ ಏನು ತೊಂದರೆ';
-
-  @override
-  String get maintenanceWideShot => 'ಪೂರ್ಣ ಫೋಟೋ';
+  String get maintenanceVehicleType => 'ವಾಹನದ ಪ್ರಕಾರ';
 
   @override
   String get mapsAllowLocation => 'ಅನುಮತಿ ನೀಡಿ';

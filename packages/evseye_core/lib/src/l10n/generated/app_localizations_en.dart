@@ -618,12 +618,6 @@ class AppL10nEn extends AppL10n {
   String get commonHaveAlreadyUsedNumberAnother => 'You have already used this number for another reference';
 
   @override
-  String get commonHigh => 'High';
-
-  @override
-  String get commonHighPriority => 'High priority';
-
-  @override
   String get commonHintGuardian => 'e.g. Guardian';
 
   @override
@@ -649,9 +643,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get commonLoadMore => 'Load more';
-
-  @override
-  String get commonLowPriority => 'Low priority';
 
   @override
   String get commonMake100 => 'Make it 100%';
@@ -682,12 +673,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get commonNominationComplete => 'Your nomination is complete.';
-
-  @override
-  String get commonNormal => 'Normal';
-
-  @override
-  String get commonNormalPriority => 'Normal priority';
 
   @override
   String get commonNotFound => 'Not found.';
@@ -1853,6 +1838,54 @@ class AppL10nEn extends AppL10n {
   String get exchangeWhenWhereHint => 'Pick when and where you\'ll bring your current scooter in.';
 
   @override
+  String get fleetOnboardingActive => 'Active';
+
+  @override
+  String get fleetOnboardingArchived => 'Archived';
+
+  @override
+  String get fleetOnboardingDraft => 'Draft';
+
+  @override
+  String get fleetOnboardingInProgress => 'In progress';
+
+  @override
+  String get fleetOnboardingPendingReview => 'Waiting for review';
+
+  @override
+  String get fleetOnboardingRejected => 'Rejected';
+
+  @override
+  String get fleetStatusAllocated => 'Allocated';
+
+  @override
+  String get fleetStatusAllocating => 'Being allocated';
+
+  @override
+  String get fleetStatusAvailable => 'Available';
+
+  @override
+  String get fleetStatusInspectionPending => 'Waiting for inspection';
+
+  @override
+  String get fleetStatusInTransit => 'In transit';
+
+  @override
+  String get fleetStatusInUse => 'In use';
+
+  @override
+  String get fleetStatusMaintenance => 'Under maintenance';
+
+  @override
+  String get fleetStatusOutOfService => 'Out of service';
+
+  @override
+  String get fleetStatusReserved => 'Reserved';
+
+  @override
+  String get fleetStatusReturning => 'Being returned';
+
+  @override
   String get homeBonusUnlocked => 'Bonus unlocked';
 
   @override
@@ -2106,266 +2139,154 @@ class AppL10nEn extends AppL10n {
   String get legalDocumentCouldNotLoad => 'Could not load this document';
 
   @override
-  String get maintenanceAddNote => 'Add a note';
+  String get maintenanceAllocation => 'Allocation';
 
   @override
-  String get maintenanceAddNote2 => 'Add note';
+  String get maintenanceAllocationOff => 'Turned off';
 
   @override
-  String get maintenanceAssign => 'Assign to';
+  String get maintenanceAllocationOn => 'Allowed';
 
   @override
-  String get maintenanceAssignedVendor => 'Assigned vendor';
+  String get maintenanceAwaitingReport => 'No report yet';
 
   @override
-  String get maintenanceAssignVendor => 'Assign a vendor';
-
-  @override
-  String get maintenanceAssignVendorStartWork => 'Assign a vendor to start work';
-
-  @override
-  String get maintenanceAwaitingVendorAssignment => 'Awaiting vendor assignment';
+  String get maintenanceBandHint => 'Scooters at your hubs that are in for service, with their latest mechanic report.';
 
   @override
   String get maintenanceBattery => 'Battery';
 
   @override
-  String get maintenanceBatterySpecialist => 'Battery specialist';
+  String get maintenanceCategory => 'Category';
 
   @override
-  String get maintenanceBay => 'Bay';
+  String get maintenanceChassis => 'Chassis number';
 
   @override
-  String get maintenanceBody => 'Body';
+  String get maintenanceChecksOpen => 'Some mechanic checks are still open';
 
   @override
-  String get maintenanceBodyPaint => 'Body and paint';
+  String get maintenanceColour => 'Colour';
 
   @override
-  String get maintenanceCanAlsoAssignLater => 'You can also assign this later';
+  String maintenanceConfirmedOn(String date) {
+    return 'Confirmed $date';
+  }
 
   @override
-  String get maintenanceCellBalanceTestBookedAfternoon => 'Cell balance test booked for this afternoon';
+  String get maintenanceCouldNotLoad => 'Couldn\'t load vehicles in service';
 
   @override
-  String get maintenanceChargeHolds62ThenDrops => 'Charge holds to 62% then drops to 40% within a kilometre.';
+  String get maintenanceCurrentHub => 'Current hub';
 
   @override
-  String get maintenanceChooseLater => 'Choose later';
+  String get maintenanceEarlierReports => 'Earlier mechanic reports';
 
   @override
-  String get maintenanceClosed => 'Closed';
+  String get maintenanceEmptyBody => 'When a scooter at your hubs is moved to maintenance, it shows up here.';
 
   @override
-  String get maintenanceCloseJob => 'Close job';
+  String get maintenanceEmptyTitle => 'No vehicles in service';
 
   @override
-  String get maintenanceCloseJob2 => 'Close this job?';
+  String get maintenanceEvidence => 'Evidence photos';
 
   @override
-  String get maintenanceCompleted => 'Completed';
+  String get maintenanceFleetCode => 'Fleet code';
 
   @override
-  String get maintenanceCostBreakdown => 'Cost breakdown';
+  String get maintenanceHistory => 'Status history';
 
   @override
-  String get maintenanceCouldNotLoadForm => 'Could not load the form';
+  String maintenanceHistoryLimit(int limit) {
+    return 'Showing the latest $limit changes.';
+  }
 
   @override
-  String get maintenanceCouldNotLoadJob => 'Could not load this job';
+  String get maintenanceHomeHub => 'Home hub';
 
   @override
-  String get maintenanceCouldNotLoadMaintenanceBoard => 'Could not load the maintenance board';
+  String get maintenanceLatestReport => 'Latest mechanic report';
 
   @override
-  String get maintenanceDescribeIssue => 'Describe the issue';
+  String get maintenanceMaker => 'Manufacturer';
 
   @override
-  String get maintenanceFrontTyreWornPastWear => 'Front tyre worn past the wear bar.';
+  String get maintenanceModel => 'Model';
 
   @override
-  String get maintenanceHintOdometer => 'e.g. 9420';
+  String maintenanceMovedOn(String date) {
+    return 'Moved to maintenance $date';
+  }
 
   @override
-  String get maintenanceHintUnitNotPowering => 'e.g. Unit not powering on; workshop ticket raised';
+  String get maintenanceNoHistory => 'No status changes have been recorded.';
 
   @override
-  String get maintenanceIssue => 'Issue';
+  String get maintenanceNoMatchBody => 'Try a different vehicle number, fleet code, chassis or model.';
 
   @override
-  String get maintenanceIssueCloseUp => 'Issue close-up';
+  String get maintenanceNoMatchTitle => 'No matching vehicles';
 
   @override
-  String get maintenanceIssueDescription => 'Issue description';
+  String get maintenanceNoReportYet => 'No mechanic report has been recorded for this vehicle yet.';
 
   @override
-  String get maintenanceJob => 'Job';
+  String get maintenanceNotSafe => 'Not safe';
 
   @override
-  String get maintenanceJobDetails => 'Job details';
+  String get maintenanceOdometer => 'Odometer';
 
   @override
-  String get maintenanceJobNoLongerBoard => 'That job is no longer on the board.';
+  String get maintenanceOnboarding => 'Onboarding';
 
   @override
-  String get maintenanceJobTimeline => 'Job timeline';
-
-  @override
-  String get maintenanceJobType => 'Job type';
-
-  @override
-  String get maintenanceKilometresAsShownCluster => 'In kilometres, as shown on the cluster.';
-
-  @override
-  String get maintenanceLabour => 'Labour';
-
-  @override
-  String get maintenanceMaintenanceBoard => 'Maintenance board';
-
-  @override
-  String get maintenanceNoJobsHere => 'No jobs here';
-
-  @override
-  String get maintenanceNoNotesYet => 'No notes yet';
-
-  @override
-  String get maintenanceNote => 'Note';
-
-  @override
-  String get maintenanceNoteAdded => 'Note added.';
-
-  @override
-  String get maintenanceNotes => 'Notes';
-
-  @override
-  String get maintenanceNothingMatchesQueueFilterRight => 'Nothing matches this queue and filter right now.';
-
-  @override
-  String get maintenanceNoVendorsAvailableReassignRight => 'No vendors available to reassign right now.';
-
-  @override
-  String get maintenanceOdometerReading => 'Odometer reading';
-
-  @override
-  String get maintenanceOverdue => 'Overdue';
-
-  @override
-  String get maintenancePadsMeasured12Mm => 'Pads measured at 1.2 mm';
-
-  @override
-  String get maintenancePanelResprayedRefitted => 'Panel resprayed and refitted';
-
-  @override
-  String get maintenanceParts => 'Parts';
-
-  @override
-  String get maintenancePhotoEvidence => 'Photo evidence';
-
-  @override
-  String get maintenancePreDelivery => 'Pre-delivery';
-
-  @override
-  String get maintenancePriority => 'Priority';
+  String maintenancePhotoCount(int count) {
+    return 'Photos attached: $count';
+  }
 
   @override
   String get maintenanceProgress => 'In progress';
 
   @override
-  String get maintenanceRaiseJob => 'Raise a job';
+  String maintenanceReportsLimit(int limit) {
+    return 'Showing the latest $limit reports.';
+  }
 
   @override
-  String get maintenanceRaiseJob2 => 'Raise job';
+  String get maintenanceSafeToReuse => 'Safe to reuse';
 
   @override
-  String get maintenanceRaisingMaintenanceJobNeedsApi =>
-      'Raising a maintenance job needs an API that does not exist yet.';
-
-  @override
-  String get maintenanceRearBrakeBitesLateSqueals => 'Rear brake bites late and squeals under load.';
-
-  @override
-  String get maintenanceReassign => 'Reassign';
-
-  @override
-  String get maintenanceReassignVendor => 'Reassign vendor';
-
-  @override
-  String get maintenanceReplacementSetOrdered => 'Replacement set ordered';
-
-  @override
-  String get maintenanceRiderFile => 'Rider on file';
-
-  @override
-  String get maintenanceSaveNote => 'Save note';
-
-  @override
-  String get maintenanceScheduledService => 'Scheduled service';
-
-  @override
-  String get maintenanceScuffedSidePanelAfterParking => 'Scuffed side panel after a parking knock.';
-
-  @override
-  String get maintenanceSearchVehicleJobIdIssue => 'Search vehicle, job ID or issue';
-
-  @override
-  String get maintenanceSelectJobType => 'Select a job type';
+  String get maintenanceSearchHint => 'Search vehicle number, fleet code, chassis or model';
 
   @override
   String get maintenanceSelectVehicle => 'Select a vehicle';
 
   @override
-  String get maintenanceSelectVehicleJob => 'Select the vehicle this job is for';
+  String maintenanceShowing(int shown, int total) {
+    return 'Showing $shown of $total';
+  }
 
   @override
-  String get maintenanceSendVehicleWorkshop => 'Send a vehicle to the workshop';
+  String get maintenanceTitle => 'Vehicles in service';
 
   @override
-  String get maintenanceSendWorkshop => 'Send it to the workshop';
+  String get maintenanceUnderMaintenance => 'Under maintenance';
 
   @override
-  String get maintenanceServiceBay => 'Service bay';
+  String get maintenanceVariant => 'Variant';
 
   @override
-  String get maintenanceServicePartner => 'Service partner';
+  String get maintenanceVehicleCouldNotLoad => 'Couldn\'t load this vehicle';
 
   @override
-  String get maintenanceTechnicianPicksUpAsSoon => 'A technician picks this up as soon as it is raised.';
+  String get maintenanceVehicleDetails => 'Vehicle details';
 
   @override
-  String get maintenanceTrackerDropsOffBetweenOkhla => 'Tracker drops off between Okhla and Jasola.';
+  String get maintenanceVehicleTitle => 'Vehicle in service';
 
   @override
-  String get maintenanceTrackEveryJobFromRaised => 'Track every job from raised to closed';
-
-  @override
-  String get maintenanceTwoWheelerWorkshop => 'Two-wheeler workshop';
-
-  @override
-  String get maintenanceTyres => 'Tyres';
-
-  @override
-  String get maintenanceUnassigned => 'Unassigned';
-
-  @override
-  String get maintenanceUpdatesFromWorkshopWillShow => 'Updates from the workshop will show up here.';
-
-  @override
-  String get maintenanceUpdateStatus => 'Update status';
-
-  @override
-  String get maintenanceVendor => 'Vendor';
-
-  @override
-  String get maintenanceWhatHappenedWhatNeededNext => 'What happened, or what is needed next';
-
-  @override
-  String get maintenanceWhatKindJob => 'What kind of job is this';
-
-  @override
-  String get maintenanceWhatWrongWithVehicle => 'What is wrong with the vehicle';
-
-  @override
-  String get maintenanceWideShot => 'Wide shot';
+  String get maintenanceVehicleType => 'Vehicle type';
 
   @override
   String get mapsAllowLocation => 'Allow location';

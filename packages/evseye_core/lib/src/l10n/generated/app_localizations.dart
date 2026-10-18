@@ -1258,18 +1258,6 @@ abstract class AppL10n {
   /// **'You have already used this number for another reference'**
   String get commonHaveAlreadyUsedNumberAnother;
 
-  /// High
-  ///
-  /// In en, this message translates to:
-  /// **'High'**
-  String get commonHigh;
-
-  /// High priority
-  ///
-  /// In en, this message translates to:
-  /// **'High priority'**
-  String get commonHighPriority;
-
   /// e.g. Guardian
   ///
   /// In en, this message translates to:
@@ -1323,12 +1311,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Load more'**
   String get commonLoadMore;
-
-  /// Low priority
-  ///
-  /// In en, this message translates to:
-  /// **'Low priority'**
-  String get commonLowPriority;
 
   /// Make it 100%
   ///
@@ -1389,18 +1371,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Your nomination is complete.'**
   String get commonNominationComplete;
-
-  /// Normal
-  ///
-  /// In en, this message translates to:
-  /// **'Normal'**
-  String get commonNormal;
-
-  /// Normal priority
-  ///
-  /// In en, this message translates to:
-  /// **'Normal priority'**
-  String get commonNormalPriority;
 
   /// Not found.
   ///
@@ -3658,6 +3628,102 @@ abstract class AppL10n {
   /// **'Pick when and where you\'ll bring your current scooter in.'**
   String get exchangeWhenWhereHint;
 
+  /// Active
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get fleetOnboardingActive;
+
+  /// Archived
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get fleetOnboardingArchived;
+
+  /// Draft
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get fleetOnboardingDraft;
+
+  /// In progress
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get fleetOnboardingInProgress;
+
+  /// Waiting for review
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for review'**
+  String get fleetOnboardingPendingReview;
+
+  /// Rejected
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get fleetOnboardingRejected;
+
+  /// Allocated
+  ///
+  /// In en, this message translates to:
+  /// **'Allocated'**
+  String get fleetStatusAllocated;
+
+  /// Being allocated
+  ///
+  /// In en, this message translates to:
+  /// **'Being allocated'**
+  String get fleetStatusAllocating;
+
+  /// Available
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get fleetStatusAvailable;
+
+  /// Waiting for inspection
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for inspection'**
+  String get fleetStatusInspectionPending;
+
+  /// In transit
+  ///
+  /// In en, this message translates to:
+  /// **'In transit'**
+  String get fleetStatusInTransit;
+
+  /// In use
+  ///
+  /// In en, this message translates to:
+  /// **'In use'**
+  String get fleetStatusInUse;
+
+  /// Under maintenance
+  ///
+  /// In en, this message translates to:
+  /// **'Under maintenance'**
+  String get fleetStatusMaintenance;
+
+  /// Out of service
+  ///
+  /// In en, this message translates to:
+  /// **'Out of service'**
+  String get fleetStatusOutOfService;
+
+  /// Reserved
+  ///
+  /// In en, this message translates to:
+  /// **'Reserved'**
+  String get fleetStatusReserved;
+
+  /// Being returned
+  ///
+  /// In en, this message translates to:
+  /// **'Being returned'**
+  String get fleetStatusReturning;
+
   /// Bonus unlocked
   ///
   /// In en, this message translates to:
@@ -4150,47 +4216,35 @@ abstract class AppL10n {
   /// **'Could not load this document'**
   String get legalDocumentCouldNotLoad;
 
-  /// Add a note
+  /// Allocation
   ///
   /// In en, this message translates to:
-  /// **'Add a note'**
-  String get maintenanceAddNote;
+  /// **'Allocation'**
+  String get maintenanceAllocation;
 
-  /// Add note
+  /// Turned off
   ///
   /// In en, this message translates to:
-  /// **'Add note'**
-  String get maintenanceAddNote2;
+  /// **'Turned off'**
+  String get maintenanceAllocationOff;
 
-  /// Assign to
+  /// Allowed
   ///
   /// In en, this message translates to:
-  /// **'Assign to'**
-  String get maintenanceAssign;
+  /// **'Allowed'**
+  String get maintenanceAllocationOn;
 
-  /// Assigned vendor
+  /// No report yet
   ///
   /// In en, this message translates to:
-  /// **'Assigned vendor'**
-  String get maintenanceAssignedVendor;
+  /// **'No report yet'**
+  String get maintenanceAwaitingReport;
 
-  /// Assign a vendor
+  /// Scooters at your hubs that are in for service, with their latest mechanic report.
   ///
   /// In en, this message translates to:
-  /// **'Assign a vendor'**
-  String get maintenanceAssignVendor;
-
-  /// Assign a vendor to start work
-  ///
-  /// In en, this message translates to:
-  /// **'Assign a vendor to start work'**
-  String get maintenanceAssignVendorStartWork;
-
-  /// Awaiting vendor assignment
-  ///
-  /// In en, this message translates to:
-  /// **'Awaiting vendor assignment'**
-  String get maintenanceAwaitingVendorAssignment;
+  /// **'Scooters at your hubs that are in for service, with their latest mechanic report.'**
+  String get maintenanceBandHint;
 
   /// Battery
   ///
@@ -4198,281 +4252,167 @@ abstract class AppL10n {
   /// **'Battery'**
   String get maintenanceBattery;
 
-  /// Battery specialist
+  /// Category
   ///
   /// In en, this message translates to:
-  /// **'Battery specialist'**
-  String get maintenanceBatterySpecialist;
+  /// **'Category'**
+  String get maintenanceCategory;
 
-  /// Bay
+  /// Chassis number
   ///
   /// In en, this message translates to:
-  /// **'Bay'**
-  String get maintenanceBay;
+  /// **'Chassis number'**
+  String get maintenanceChassis;
 
-  /// Body
+  /// Some mechanic checks are still open
   ///
   /// In en, this message translates to:
-  /// **'Body'**
-  String get maintenanceBody;
+  /// **'Some mechanic checks are still open'**
+  String get maintenanceChecksOpen;
 
-  /// Body and paint
+  /// Colour
   ///
   /// In en, this message translates to:
-  /// **'Body and paint'**
-  String get maintenanceBodyPaint;
+  /// **'Colour'**
+  String get maintenanceColour;
 
-  /// You can also assign this later
+  /// Confirmed {date}
   ///
   /// In en, this message translates to:
-  /// **'You can also assign this later'**
-  String get maintenanceCanAlsoAssignLater;
+  /// **'Confirmed {date}'**
+  String maintenanceConfirmedOn(String date);
 
-  /// Cell balance test booked for this afternoon
+  /// Couldn't load vehicles in service
   ///
   /// In en, this message translates to:
-  /// **'Cell balance test booked for this afternoon'**
-  String get maintenanceCellBalanceTestBookedAfternoon;
+  /// **'Couldn\'t load vehicles in service'**
+  String get maintenanceCouldNotLoad;
 
-  /// Charge holds to 62% then drops to 40% within a kilometre.
+  /// Current hub
   ///
   /// In en, this message translates to:
-  /// **'Charge holds to 62% then drops to 40% within a kilometre.'**
-  String get maintenanceChargeHolds62ThenDrops;
+  /// **'Current hub'**
+  String get maintenanceCurrentHub;
 
-  /// Choose later
+  /// Earlier mechanic reports
   ///
   /// In en, this message translates to:
-  /// **'Choose later'**
-  String get maintenanceChooseLater;
+  /// **'Earlier mechanic reports'**
+  String get maintenanceEarlierReports;
 
-  /// Closed
+  /// When a scooter at your hubs is moved to maintenance, it shows up here.
   ///
   /// In en, this message translates to:
-  /// **'Closed'**
-  String get maintenanceClosed;
+  /// **'When a scooter at your hubs is moved to maintenance, it shows up here.'**
+  String get maintenanceEmptyBody;
 
-  /// Close job
+  /// No vehicles in service
   ///
   /// In en, this message translates to:
-  /// **'Close job'**
-  String get maintenanceCloseJob;
+  /// **'No vehicles in service'**
+  String get maintenanceEmptyTitle;
 
-  /// Close this job?
+  /// Evidence photos
   ///
   /// In en, this message translates to:
-  /// **'Close this job?'**
-  String get maintenanceCloseJob2;
+  /// **'Evidence photos'**
+  String get maintenanceEvidence;
 
-  /// Completed
+  /// Fleet code
   ///
   /// In en, this message translates to:
-  /// **'Completed'**
-  String get maintenanceCompleted;
+  /// **'Fleet code'**
+  String get maintenanceFleetCode;
 
-  /// Cost breakdown
+  /// Status history
   ///
   /// In en, this message translates to:
-  /// **'Cost breakdown'**
-  String get maintenanceCostBreakdown;
+  /// **'Status history'**
+  String get maintenanceHistory;
 
-  /// Could not load the form
+  /// Showing the latest {limit} changes.
   ///
   /// In en, this message translates to:
-  /// **'Could not load the form'**
-  String get maintenanceCouldNotLoadForm;
+  /// **'Showing the latest {limit} changes.'**
+  String maintenanceHistoryLimit(int limit);
 
-  /// Could not load this job
+  /// Home hub
   ///
   /// In en, this message translates to:
-  /// **'Could not load this job'**
-  String get maintenanceCouldNotLoadJob;
+  /// **'Home hub'**
+  String get maintenanceHomeHub;
 
-  /// Could not load the maintenance board
+  /// Latest mechanic report
   ///
   /// In en, this message translates to:
-  /// **'Could not load the maintenance board'**
-  String get maintenanceCouldNotLoadMaintenanceBoard;
+  /// **'Latest mechanic report'**
+  String get maintenanceLatestReport;
 
-  /// Describe the issue
+  /// Manufacturer
   ///
   /// In en, this message translates to:
-  /// **'Describe the issue'**
-  String get maintenanceDescribeIssue;
+  /// **'Manufacturer'**
+  String get maintenanceMaker;
 
-  /// Front tyre worn past the wear bar.
+  /// Model
   ///
   /// In en, this message translates to:
-  /// **'Front tyre worn past the wear bar.'**
-  String get maintenanceFrontTyreWornPastWear;
+  /// **'Model'**
+  String get maintenanceModel;
 
-  /// e.g. 9420
+  /// Moved to maintenance {date}
   ///
   /// In en, this message translates to:
-  /// **'e.g. 9420'**
-  String get maintenanceHintOdometer;
+  /// **'Moved to maintenance {date}'**
+  String maintenanceMovedOn(String date);
 
-  /// e.g. Unit not powering on; workshop ticket raised
+  /// No status changes have been recorded.
   ///
   /// In en, this message translates to:
-  /// **'e.g. Unit not powering on; workshop ticket raised'**
-  String get maintenanceHintUnitNotPowering;
+  /// **'No status changes have been recorded.'**
+  String get maintenanceNoHistory;
 
-  /// Issue
+  /// Try a different vehicle number, fleet code, chassis or model.
   ///
   /// In en, this message translates to:
-  /// **'Issue'**
-  String get maintenanceIssue;
+  /// **'Try a different vehicle number, fleet code, chassis or model.'**
+  String get maintenanceNoMatchBody;
 
-  /// Issue close-up
+  /// No matching vehicles
   ///
   /// In en, this message translates to:
-  /// **'Issue close-up'**
-  String get maintenanceIssueCloseUp;
+  /// **'No matching vehicles'**
+  String get maintenanceNoMatchTitle;
 
-  /// Issue description
+  /// No mechanic report has been recorded for this vehicle yet.
   ///
   /// In en, this message translates to:
-  /// **'Issue description'**
-  String get maintenanceIssueDescription;
+  /// **'No mechanic report has been recorded for this vehicle yet.'**
+  String get maintenanceNoReportYet;
 
-  /// Job
+  /// Not safe
   ///
   /// In en, this message translates to:
-  /// **'Job'**
-  String get maintenanceJob;
+  /// **'Not safe'**
+  String get maintenanceNotSafe;
 
-  /// Job details
+  /// Odometer
   ///
   /// In en, this message translates to:
-  /// **'Job details'**
-  String get maintenanceJobDetails;
+  /// **'Odometer'**
+  String get maintenanceOdometer;
 
-  /// That job is no longer on the board.
+  /// Onboarding
   ///
   /// In en, this message translates to:
-  /// **'That job is no longer on the board.'**
-  String get maintenanceJobNoLongerBoard;
+  /// **'Onboarding'**
+  String get maintenanceOnboarding;
 
-  /// Job timeline
+  /// Photos attached: {count}
   ///
   /// In en, this message translates to:
-  /// **'Job timeline'**
-  String get maintenanceJobTimeline;
-
-  /// Job type
-  ///
-  /// In en, this message translates to:
-  /// **'Job type'**
-  String get maintenanceJobType;
-
-  /// In kilometres, as shown on the cluster.
-  ///
-  /// In en, this message translates to:
-  /// **'In kilometres, as shown on the cluster.'**
-  String get maintenanceKilometresAsShownCluster;
-
-  /// Labour
-  ///
-  /// In en, this message translates to:
-  /// **'Labour'**
-  String get maintenanceLabour;
-
-  /// Maintenance board
-  ///
-  /// In en, this message translates to:
-  /// **'Maintenance board'**
-  String get maintenanceMaintenanceBoard;
-
-  /// No jobs here
-  ///
-  /// In en, this message translates to:
-  /// **'No jobs here'**
-  String get maintenanceNoJobsHere;
-
-  /// No notes yet
-  ///
-  /// In en, this message translates to:
-  /// **'No notes yet'**
-  String get maintenanceNoNotesYet;
-
-  /// Note
-  ///
-  /// In en, this message translates to:
-  /// **'Note'**
-  String get maintenanceNote;
-
-  /// Note added.
-  ///
-  /// In en, this message translates to:
-  /// **'Note added.'**
-  String get maintenanceNoteAdded;
-
-  /// Notes
-  ///
-  /// In en, this message translates to:
-  /// **'Notes'**
-  String get maintenanceNotes;
-
-  /// Nothing matches this queue and filter right now.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing matches this queue and filter right now.'**
-  String get maintenanceNothingMatchesQueueFilterRight;
-
-  /// No vendors available to reassign right now.
-  ///
-  /// In en, this message translates to:
-  /// **'No vendors available to reassign right now.'**
-  String get maintenanceNoVendorsAvailableReassignRight;
-
-  /// Odometer reading
-  ///
-  /// In en, this message translates to:
-  /// **'Odometer reading'**
-  String get maintenanceOdometerReading;
-
-  /// Overdue
-  ///
-  /// In en, this message translates to:
-  /// **'Overdue'**
-  String get maintenanceOverdue;
-
-  /// Pads measured at 1.2 mm
-  ///
-  /// In en, this message translates to:
-  /// **'Pads measured at 1.2 mm'**
-  String get maintenancePadsMeasured12Mm;
-
-  /// Panel resprayed and refitted
-  ///
-  /// In en, this message translates to:
-  /// **'Panel resprayed and refitted'**
-  String get maintenancePanelResprayedRefitted;
-
-  /// Parts
-  ///
-  /// In en, this message translates to:
-  /// **'Parts'**
-  String get maintenanceParts;
-
-  /// Photo evidence
-  ///
-  /// In en, this message translates to:
-  /// **'Photo evidence'**
-  String get maintenancePhotoEvidence;
-
-  /// Pre-delivery
-  ///
-  /// In en, this message translates to:
-  /// **'Pre-delivery'**
-  String get maintenancePreDelivery;
-
-  /// Priority
-  ///
-  /// In en, this message translates to:
-  /// **'Priority'**
-  String get maintenancePriority;
+  /// **'Photos attached: {count}'**
+  String maintenancePhotoCount(int count);
 
   /// In progress
   ///
@@ -4480,83 +4420,23 @@ abstract class AppL10n {
   /// **'In progress'**
   String get maintenanceProgress;
 
-  /// Raise a job
+  /// Showing the latest {limit} reports.
   ///
   /// In en, this message translates to:
-  /// **'Raise a job'**
-  String get maintenanceRaiseJob;
+  /// **'Showing the latest {limit} reports.'**
+  String maintenanceReportsLimit(int limit);
 
-  /// Raise job
+  /// Safe to reuse
   ///
   /// In en, this message translates to:
-  /// **'Raise job'**
-  String get maintenanceRaiseJob2;
+  /// **'Safe to reuse'**
+  String get maintenanceSafeToReuse;
 
-  /// Raising a maintenance job needs an API that does not exist yet.
+  /// Search vehicle number, fleet code, chassis or model
   ///
   /// In en, this message translates to:
-  /// **'Raising a maintenance job needs an API that does not exist yet.'**
-  String get maintenanceRaisingMaintenanceJobNeedsApi;
-
-  /// Rear brake bites late and squeals under load.
-  ///
-  /// In en, this message translates to:
-  /// **'Rear brake bites late and squeals under load.'**
-  String get maintenanceRearBrakeBitesLateSqueals;
-
-  /// Reassign
-  ///
-  /// In en, this message translates to:
-  /// **'Reassign'**
-  String get maintenanceReassign;
-
-  /// Reassign vendor
-  ///
-  /// In en, this message translates to:
-  /// **'Reassign vendor'**
-  String get maintenanceReassignVendor;
-
-  /// Replacement set ordered
-  ///
-  /// In en, this message translates to:
-  /// **'Replacement set ordered'**
-  String get maintenanceReplacementSetOrdered;
-
-  /// Rider on file
-  ///
-  /// In en, this message translates to:
-  /// **'Rider on file'**
-  String get maintenanceRiderFile;
-
-  /// Save note
-  ///
-  /// In en, this message translates to:
-  /// **'Save note'**
-  String get maintenanceSaveNote;
-
-  /// Scheduled service
-  ///
-  /// In en, this message translates to:
-  /// **'Scheduled service'**
-  String get maintenanceScheduledService;
-
-  /// Scuffed side panel after a parking knock.
-  ///
-  /// In en, this message translates to:
-  /// **'Scuffed side panel after a parking knock.'**
-  String get maintenanceScuffedSidePanelAfterParking;
-
-  /// Search vehicle, job ID or issue
-  ///
-  /// In en, this message translates to:
-  /// **'Search vehicle, job ID or issue'**
-  String get maintenanceSearchVehicleJobIdIssue;
-
-  /// Select a job type
-  ///
-  /// In en, this message translates to:
-  /// **'Select a job type'**
-  String get maintenanceSelectJobType;
+  /// **'Search vehicle number, fleet code, chassis or model'**
+  String get maintenanceSearchHint;
 
   /// Select a vehicle
   ///
@@ -4564,113 +4444,53 @@ abstract class AppL10n {
   /// **'Select a vehicle'**
   String get maintenanceSelectVehicle;
 
-  /// Select the vehicle this job is for
+  /// Showing {shown} of {total}
   ///
   /// In en, this message translates to:
-  /// **'Select the vehicle this job is for'**
-  String get maintenanceSelectVehicleJob;
+  /// **'Showing {shown} of {total}'**
+  String maintenanceShowing(int shown, int total);
 
-  /// Send a vehicle to the workshop
+  /// Vehicles in service
   ///
   /// In en, this message translates to:
-  /// **'Send a vehicle to the workshop'**
-  String get maintenanceSendVehicleWorkshop;
+  /// **'Vehicles in service'**
+  String get maintenanceTitle;
 
-  /// Send it to the workshop
+  /// Under maintenance
   ///
   /// In en, this message translates to:
-  /// **'Send it to the workshop'**
-  String get maintenanceSendWorkshop;
+  /// **'Under maintenance'**
+  String get maintenanceUnderMaintenance;
 
-  /// Service bay
+  /// Variant
   ///
   /// In en, this message translates to:
-  /// **'Service bay'**
-  String get maintenanceServiceBay;
+  /// **'Variant'**
+  String get maintenanceVariant;
 
-  /// Service partner
+  /// Couldn't load this vehicle
   ///
   /// In en, this message translates to:
-  /// **'Service partner'**
-  String get maintenanceServicePartner;
+  /// **'Couldn\'t load this vehicle'**
+  String get maintenanceVehicleCouldNotLoad;
 
-  /// A technician picks this up as soon as it is raised.
+  /// Vehicle details
   ///
   /// In en, this message translates to:
-  /// **'A technician picks this up as soon as it is raised.'**
-  String get maintenanceTechnicianPicksUpAsSoon;
+  /// **'Vehicle details'**
+  String get maintenanceVehicleDetails;
 
-  /// Tracker drops off between Okhla and Jasola.
+  /// Vehicle in service
   ///
   /// In en, this message translates to:
-  /// **'Tracker drops off between Okhla and Jasola.'**
-  String get maintenanceTrackerDropsOffBetweenOkhla;
+  /// **'Vehicle in service'**
+  String get maintenanceVehicleTitle;
 
-  /// Track every job from raised to closed
+  /// Vehicle type
   ///
   /// In en, this message translates to:
-  /// **'Track every job from raised to closed'**
-  String get maintenanceTrackEveryJobFromRaised;
-
-  /// Two-wheeler workshop
-  ///
-  /// In en, this message translates to:
-  /// **'Two-wheeler workshop'**
-  String get maintenanceTwoWheelerWorkshop;
-
-  /// Tyres
-  ///
-  /// In en, this message translates to:
-  /// **'Tyres'**
-  String get maintenanceTyres;
-
-  /// Unassigned
-  ///
-  /// In en, this message translates to:
-  /// **'Unassigned'**
-  String get maintenanceUnassigned;
-
-  /// Updates from the workshop will show up here.
-  ///
-  /// In en, this message translates to:
-  /// **'Updates from the workshop will show up here.'**
-  String get maintenanceUpdatesFromWorkshopWillShow;
-
-  /// Update status
-  ///
-  /// In en, this message translates to:
-  /// **'Update status'**
-  String get maintenanceUpdateStatus;
-
-  /// Vendor
-  ///
-  /// In en, this message translates to:
-  /// **'Vendor'**
-  String get maintenanceVendor;
-
-  /// What happened, or what is needed next
-  ///
-  /// In en, this message translates to:
-  /// **'What happened, or what is needed next'**
-  String get maintenanceWhatHappenedWhatNeededNext;
-
-  /// What kind of job is this
-  ///
-  /// In en, this message translates to:
-  /// **'What kind of job is this'**
-  String get maintenanceWhatKindJob;
-
-  /// What is wrong with the vehicle
-  ///
-  /// In en, this message translates to:
-  /// **'What is wrong with the vehicle'**
-  String get maintenanceWhatWrongWithVehicle;
-
-  /// Wide shot
-  ///
-  /// In en, this message translates to:
-  /// **'Wide shot'**
-  String get maintenanceWideShot;
+  /// **'Vehicle type'**
+  String get maintenanceVehicleType;
 
   /// Allow location
   ///
