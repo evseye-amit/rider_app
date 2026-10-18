@@ -86,7 +86,9 @@ From the repo root, `melos run flavor whizz` does the same.
 ```
 flavors/<client>/
 ├── flavor.yaml     client code, app names, package IDs, versions, colours
-├── banner.png      first two intro slides, login and OTP
+├── banner.png      login and OTP
+├── intro_1.png     first intro slide (the client logo)
+├── intro_2.png     second intro slide
 ├── rider/          app_icon.png, app_icon_foreground.png (1024×1024)
 └── fleet/          the same two icons
 ```

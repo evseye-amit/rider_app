@@ -9,7 +9,11 @@ import '../../../../app/router/app_routes.dart';
 import '../../domain/entities/intro_slide.dart';
 import '../providers/intro_slides_provider.dart';
 
-const Map<String, BrandArt> _slideArt = {'vehicle': BrandArt.banner, 'support': BrandArt.introSupport};
+const Map<String, BrandArt> _slideArt = {
+  'earn': BrandArt.intro1,
+  'vehicle': BrandArt.intro2,
+  'support': BrandArt.introSupport,
+};
 
 const Color _slideTone = AppColors.primary;
 
@@ -80,7 +84,7 @@ class _IntroPageState extends ConsumerState<IntroPage> {
               controller: _controller,
               itemCount: slides.length,
               onPageChanged: (i) => setState(() => _page = i),
-              itemBuilder: (context, i) => _Slide(slide: slides[i], showLogo: i == 0),
+              itemBuilder: (context, i) => _Slide(slide: slides[i]),
             ),
           ),
           Padding(
@@ -104,10 +108,9 @@ class _IntroPageState extends ConsumerState<IntroPage> {
 }
 
 class _Slide extends StatelessWidget {
-  const _Slide({required this.slide, required this.showLogo});
+  const _Slide({required this.slide});
 
   final IntroSlide slide;
-  final bool showLogo;
 
   @override
   Widget build(BuildContext context) {
@@ -137,17 +140,7 @@ class _Slide extends StatelessWidget {
                         height: discSize,
                         decoration: BoxDecoration(color: AppColors.washFor(_slideTone), shape: BoxShape.circle),
                       ),
-                      if (showLogo)
-                        Image.asset(
-                          SplashArtwork.logo,
-                          width: artWidth,
-                          height: artWidth,
-                          fit: BoxFit.contain,
-                          filterQuality: FilterQuality.medium,
-                          errorBuilder: (_, _, _) => SizedBox.square(dimension: artWidth),
-                        )
-                      else
-                        BrandIllustration(art: art, size: artWidth),
+                      BrandIllustration(art: art, size: artWidth),
                     ],
                   ),
                 ),

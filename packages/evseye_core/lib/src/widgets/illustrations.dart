@@ -20,6 +20,8 @@ enum BrandArt {
   manager('manager'),
 
   banner('banner'),
+  intro1('intro_1'),
+  intro2('intro_2'),
   introSupport('intro_support');
 
   const BrandArt(this.file);

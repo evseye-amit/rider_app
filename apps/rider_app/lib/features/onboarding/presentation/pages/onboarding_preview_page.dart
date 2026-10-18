@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -200,26 +202,73 @@ class _StepCard extends StatelessWidget {
                   : step.capabilities.map((capability) => capability.label).join(' · '),
               style: AppText.bodySmall.copyWith(height: 1.5),
             )
-          : Column(
-              children: [
-                for (final OnboardingFieldConfig field in shown)
-                  if (field.isUpload && valueOf(field.formKey) == null && isRejected(field))
-                    KeyValueRow(
-                      label: field.label,
-                      value: context.l10n.commonRejectedUploadAgain,
-                      icon: Icons.error_outline_rounded,
-                      valueColor: AppColors.danger,
-                    )
-                  else
-                    KeyValueRow(
-                      label: field.label,
-                      value: _display(context.l10n, field, valueOf(field.formKey)),
-                      icon: field.isUpload ? Icons.attach_file_rounded : null,
-                      valueColor: valueOf(field.formKey) == null ? AppColors.textMuted : null,
-                    ),
-              ],
-            ),
+          : Column(children: [for (final OnboardingFieldConfig field in shown) ..._rows(context, field)]),
     );
+  }
+
+  List<Widget> _rows(BuildContext context, OnboardingFieldConfig field) {
+    final Object? value = _decoded(valueOf(field.formKey));
+    if (field.isUpload && value == null && isRejected(field)) {
+      return [
+        KeyValueRow(
+          label: field.label,
+          value: context.l10n.commonRejectedUploadAgain,
+          icon: Icons.error_outline_rounded,
+          valueColor: AppColors.danger,
+        ),
+      ];
+    }
+
+    final List<Map<String, dynamic>> entries = [
+      if (value is List)
+        for (final Object? item in value)
+          if (item is Map) Map<String, dynamic>.from(item),
+    ];
+    if (entries.isNotEmpty) {
+      return [
+        for (final (int i, Map<String, dynamic> entry) in entries.indexed)
+          KeyValueRow(
+            label: entries.length == 1 ? field.label : '${field.label} ${i + 1}',
+            value: _entry(context, entry),
+          ),
+      ];
+    }
+
+    final Object? answer = value is List ? (value.isEmpty ? null : value.join(', ')) : value;
+    return [
+      KeyValueRow(
+        label: field.label,
+        value: _display(context.l10n, field, answer),
+        icon: field.isUpload ? Icons.attach_file_rounded : null,
+        valueColor: answer == null ? AppColors.textMuted : null,
+      ),
+    ];
+  }
+
+  static Object? _decoded(Object? value) {
+    if (value is! String || !value.trimLeft().startsWith('[')) return value;
+    try {
+      return jsonDecode(value);
+    } on FormatException {
+      return value;
+    }
+  }
+
+  static String _entry(BuildContext context, Map<String, dynamic> entry) {
+    String? text(String key) {
+      final String value = entry[key]?.toString().trim() ?? '';
+      return value.isEmpty ? null : value;
+    }
+
+    final String? relation = text('relation');
+    final String? mobile = text('mobile');
+    final String? share = text('share');
+    final String details = [
+      if (relation != null) relationLabel(context, relation),
+      if (mobile != null) Fmt.phone(mobile),
+      if (share != null) '$share%',
+    ].join(' · ');
+    return [?text('name'), if (details.isNotEmpty) details].join('\n');
   }
 
   static String _display(AppL10n l10n, OnboardingFieldConfig field, Object? value) {
