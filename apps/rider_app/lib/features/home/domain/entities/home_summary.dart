@@ -9,8 +9,8 @@ class HomeSummary extends Equatable {
     required this.incentiveTrips,
     required this.incentiveTripsTarget,
     required this.rentDue,
+    required this.rentOverdue,
     required this.rentDueDate,
-    required this.rentPlan,
     required this.walletBalance,
     required this.weeklyEarnings,
     required this.weeklyLabels,
@@ -27,9 +27,9 @@ class HomeSummary extends Equatable {
   final num incentiveTarget;
   final int incentiveTrips;
   final int incentiveTripsTarget;
-  final num rentDue;
+  final num? rentDue;
+  final num rentOverdue;
   final DateTime? rentDueDate;
-  final String rentPlan;
   final num walletBalance;
   final List<num> weeklyEarnings;
   final List<String> weeklyLabels;
@@ -49,6 +49,8 @@ class HomeSummary extends Equatable {
     todayEarnings,
     incentiveEarned,
     rentDue,
+    rentOverdue,
+    rentDueDate,
     walletBalance,
     announcements,
     quickActions,

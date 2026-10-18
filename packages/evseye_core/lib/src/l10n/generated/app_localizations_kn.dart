@@ -917,9 +917,6 @@ class AppL10nKn extends AppL10n {
   String get commonWeek => 'ಈ ವಾರ';
 
   @override
-  String get commonWeeklyPlan => 'ವಾರದ ಯೋಜನೆ';
-
-  @override
   String get commonWhatHappensNext => 'ಮುಂದೆ ಏನಾಗುತ್ತದೆ';
 
   @override
@@ -2030,6 +2027,16 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get homeRentDue => 'ಬಾಕಿ ಬಾಡಿಗೆ';
+
+  @override
+  String homeRentDueOn(String date) {
+    return 'ಪಾವತಿ ದಿನಾಂಕ $date';
+  }
+
+  @override
+  String homeRentOverdue(String amount) {
+    return '$amount ಅವಧಿ ಮೀರಿದೆ';
+  }
 
   @override
   String get homeScooter => 'ಸ್ಕೂಟರ್';

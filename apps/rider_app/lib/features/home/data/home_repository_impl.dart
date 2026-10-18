@@ -4,21 +4,22 @@ import '../domain/entities/home_summary.dart';
 import '../domain/home_repository.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
-  HomeRepositoryImpl(this._deployments, this._riderApp);
+  HomeRepositoryImpl(this._deployments, this._riderApp, this._payments);
 
   final DeploymentApi _deployments;
   final RiderAppApi _riderApp;
+  final RiderPaymentsApi _payments;
 
   @override
   Future<Result<HomeSummary>> getSummary() async {
-    final DateTime now = DateTime.now();
-
-    final (Result<RiderWallet> wallet, Result<RiderHomeDto> home) = await (
+    final (Result<RiderWallet> wallet, Result<RiderHomeDto> home, Result<PaymentsHome> payments) = await (
       _deployments.riderWallet(),
       _riderApp.home(),
+      _payments.home(),
     ).wait;
     final num walletBalance = wallet.fold((_) => 0, (w) => w.totalPaid);
     final RiderHomeDto? stats = home.valueOrNull;
+    final PaymentsHome? dues = payments.valueOrNull;
 
     return Result.ok(
       HomeSummary(
@@ -29,9 +30,9 @@ class HomeRepositoryImpl implements HomeRepository {
         incentiveTarget: 500,
         incentiveTrips: 14,
         incentiveTripsTarget: 20,
-        rentDue: 1750,
-        rentDueDate: _nextWeekday(now, DateTime.monday),
-        rentPlan: ActiveLocale.strings.commonWeeklyPlan,
+        rentDue: dues?.amountDue,
+        rentOverdue: dues?.overdueAmount ?? 0,
+        rentDueDate: dues?.dueDate,
 
         walletBalance: walletBalance,
 
@@ -91,10 +92,5 @@ class HomeRepositoryImpl implements HomeRepository {
         ],
       ),
     );
-  }
-
-  static DateTime _nextWeekday(DateTime from, int weekday) {
-    final int delta = (weekday - from.weekday + 7) % 7;
-    return DateTime(from.year, from.month, from.day + (delta == 0 ? 7 : delta));
   }
 }

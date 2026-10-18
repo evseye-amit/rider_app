@@ -919,9 +919,6 @@ class AppL10nEn extends AppL10n {
   String get commonWeek => 'This week';
 
   @override
-  String get commonWeeklyPlan => 'Weekly plan';
-
-  @override
   String get commonWhatHappensNext => 'What happens next';
 
   @override
@@ -2028,6 +2025,16 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get homeRentDue => 'Rent due';
+
+  @override
+  String homeRentDueOn(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String homeRentOverdue(String amount) {
+    return '$amount overdue';
+  }
 
   @override
   String get homeScooter => 'Scooter';

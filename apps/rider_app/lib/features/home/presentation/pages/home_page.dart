@@ -102,10 +102,18 @@ class HomePage extends ConsumerWidget {
             ),
             StatCard(
               label: context.l10n.homeRentDue,
-              value: Fmt.money(summary.rentDue),
-              caption: summary.rentDueDate == null ? summary.rentPlan : 'due ${Fmt.date(summary.rentDueDate!)}',
+              value: switch (summary.rentDue) {
+                final num due => Fmt.money(due),
+                null => '—',
+              },
+              caption: switch (summary) {
+                HomeSummary(rentDue: null) => null,
+                HomeSummary(rentOverdue: > 0) => context.l10n.homeRentOverdue(Fmt.money(summary.rentOverdue)),
+                HomeSummary(:final DateTime rentDueDate) => context.l10n.homeRentDueOn(Fmt.date(rentDueDate)),
+                _ => context.l10n.paymentsNothingDue,
+              },
               icon: Icons.receipt_long_rounded,
-              accent: AppColors.primary,
+              accent: summary.rentOverdue > 0 ? AppColors.danger : AppColors.primary,
               compact: true,
               onTap: () => context.push(Routes.rentals),
             ),

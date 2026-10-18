@@ -1834,12 +1834,6 @@ abstract class AppL10n {
   /// **'This week'**
   String get commonWeek;
 
-  /// Weekly plan
-  ///
-  /// In en, this message translates to:
-  /// **'Weekly plan'**
-  String get commonWeeklyPlan;
-
   /// What happens next
   ///
   /// In en, this message translates to:
@@ -3987,6 +3981,18 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Rent due'**
   String get homeRentDue;
+
+  /// Caption under the home rent due amount
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String homeRentDueOn(String date);
+
+  /// Caption under the home rent due amount when part of it is overdue
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} overdue'**
+  String homeRentOverdue(String amount);
 
   /// Scooter
   ///

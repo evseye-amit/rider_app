@@ -1211,10 +1211,6 @@
   "@commonWeek": {
     "description": "This week"
   },
-  "commonWeeklyPlan": "Weekly plan",
-  "@commonWeeklyPlan": {
-    "description": "Weekly plan"
-  },
   "commonWhatHappensNext": "What happens next",
   "@commonWhatHappensNext": {
     "description": "What happens next"
@@ -2681,6 +2677,24 @@
   "homeRentDue": "Rent due",
   "@homeRentDue": {
     "description": "Rent due"
+  },
+  "homeRentDueOn": "Due {date}",
+  "@homeRentDueOn": {
+    "description": "Caption under the home rent due amount",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRentOverdue": "{amount} overdue",
+  "@homeRentOverdue": {
+    "description": "Caption under the home rent due amount when part of it is overdue",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "homeScooter": "Scooter",
   "@homeScooter": {
