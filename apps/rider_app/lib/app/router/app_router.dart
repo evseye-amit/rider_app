@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -56,12 +58,17 @@ final routerProvider = Provider<GoRouter>((ref) {
   final ValueNotifier<RiderStage> stage = ValueNotifier<RiderStage>(ref.read(riderSessionProvider).stage);
   ref.onDispose(stage.dispose);
   ref.listen(riderSessionProvider.select((s) => s.stage), (_, next) => stage.value = next);
+  final ValueNotifier<FirstRunStep?> firstRun = ValueNotifier<FirstRunStep?>(
+    ref.read(pendingFirstRunStepProvider(true)),
+  );
+  ref.onDispose(firstRun.dispose);
+  ref.listen(pendingFirstRunStepProvider(true), (_, next) => firstRun.value = next);
 
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: Routes.splash,
-    refreshListenable: stage,
-    redirect: (context, state) => _redirect(stage.value, ref.read(pendingFirstRunStepProvider(true)), state.uri.path),
+    refreshListenable: Listenable.merge([stage, firstRun]),
+    redirect: (context, state) => _redirect(stage.value, firstRun.value, state.uri.path),
     routes: [
       GoRoute(path: Routes.splash, name: 'splash', builder: (context, state) => const SplashPage()),
       GoRoute(path: Routes.intro, name: 'intro', builder: (context, state) => const IntroPage()),
@@ -82,7 +89,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => ConsentPage(
           audience: LegalAudience.rider,
           title: context.l10n.consentRiderTitle,
-          onAccepted: () => context.go(Routes.intro),
+          subtitle: ref.read(riderSessionProvider).isSignedIn ? context.l10n.consentReviewLatest : null,
+          onAccepted: () {
+            final RiderSession session = ref.read(riderSessionProvider);
+            if (!session.isSignedIn) {
+              context.go(Routes.intro);
+              return;
+            }
+            unawaited(ref.read(consentProvider.notifier).recordAcceptance(session.user?.id ?? ''));
+            context.go(session.homeRoute);
+          },
         ),
       ),
       GoRoute(path: Routes.login, name: 'login', builder: (context, state) => const LoginPage()),
@@ -228,6 +244,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 String? _redirect(RiderStage stage, FirstRunStep? firstRun, String path) {
   if (path == Routes.intro || path == Routes.login) return _firstRunRoute(firstRun);
   if (_publicPaths.contains(path)) return null;
+  if (firstRun == FirstRunStep.consent) return Routes.consent;
   return switch (stage) {
     RiderStage.signedOut => Routes.login,
     RiderStage.onboarding => path.startsWith(Routes.onboarding) ? null : Routes.onboarding,

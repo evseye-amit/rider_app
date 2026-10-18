@@ -950,6 +950,10 @@ class AppL10nTe extends AppL10n {
       'ఈ సమ్మతి పత్రంలోని అంశాలను నేను అర్థం చేసుకున్నానని మరియు డేటా ప్రిన్సిపాల్ హోదాలో అంగీకరిస్తున్నానని ప్రకటిస్తున్నాను.';
 
   @override
+  String get consentReviewLatest =>
+      'యాప్‌ను ఉపయోగించడం కొనసాగించడానికి దయచేసి ఈ సమ్మతి యొక్క తాజా వెర్షన్‌ను చదివి అంగీకరించండి.';
+
+  @override
   String get consentRiderTitle => 'రైడర్ సమ్మతి';
 
   @override
@@ -3715,55 +3719,16 @@ class AppL10nTe extends AppL10n {
   String get ridersActive => 'చురుకుగా';
 
   @override
-  String get ridersAllocations => 'కేటాయింపులు';
-
-  @override
-  String get ridersAwaitingAllocation => 'కేటాయింపు కోసం ఎదురుచూస్తోంది';
-
-  @override
   String get ridersCall => 'కాల్ చేయండి';
-
-  @override
-  String get ridersCouldNotLoadTeam => 'బృందం తెరవలేకపోయాం';
 
   @override
   String get ridersExited => 'వదిలేశారు';
 
   @override
-  String get ridersExitReason => 'వదిలేయడానికి కారణం';
-
-  @override
-  String get ridersJoined => 'చేరారు';
-
-  @override
-  String get ridersKycStatus => 'కేవైసీ స్థితి';
-
-  @override
-  String get ridersNobodyMatchesSearchList => 'ఈ జాబితాలో వెతికినదానికి ఎవరూ దొరకలేదు.';
-
-  @override
-  String get ridersNoRidersHere => 'ఇక్కడ రైడర్లు లేరు';
-
-  @override
   String get ridersOnboarding => 'నమోదు ప్రక్రియ';
 
   @override
-  String get ridersPlan => 'ప్లాన్';
-
-  @override
-  String get ridersRidersRoster => 'జాబితాలోని రైడర్లు';
-
-  @override
-  String get ridersSearchNameCodeVehicle => 'పేరు, కోడ్ లేదా వాహనం వెతకండి';
-
-  @override
   String get ridersTeam => 'బృందం';
-
-  @override
-  String get ridersVerified => 'ధృవీకరించబడింది';
-
-  @override
-  String get ridersWithHubSince => 'హబ్‌తో ఎప్పటినుంచి';
 
   @override
   String get rideScooterConnectedUsePowerButton => 'మీ స్కూటర్ జత అయింది. ఆన్ చేయడానికి పవర్ బటన్ నొక్కండి.';
@@ -3823,12 +3788,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get scooterIdentity => 'గుర్తింపు';
-
-  @override
-  String get scooterIotOffline => 'పరికరం ఆఫ్‌లైన్';
-
-  @override
-  String get scooterIotOnline => 'పరికరం ఆన్‌లైన్';
 
   @override
   String get scooterMotorNumber => 'మోటార్ నంబర్';
@@ -4499,9 +4458,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get teamBatteryExpert => 'బ్యాటరీ నిపుణుడు';
-
-  @override
-  String get teamHubTeam => 'హబ్ బృందం';
 
   @override
   String get teamMotorControllerRepair => 'మోటార్ కంట్రోలర్ రిపేర్';

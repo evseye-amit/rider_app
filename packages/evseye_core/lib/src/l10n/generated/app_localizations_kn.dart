@@ -951,6 +951,10 @@ class AppL10nKn extends AppL10n {
       'ಈ ಸಮ್ಮತಿ ಪತ್ರದಲ್ಲಿರುವ ಅಂಶಗಳನ್ನು ನಾನು ಅರ್ಥಮಾಡಿಕೊಂಡಿದ್ದೇನೆ ಮತ್ತು \'ದತ್ತಾಂಶದ ಮೂಲ ಮಾಲೀಕ\'ನ (data principal) ಸಾಮರ್ಥ್ಯದಲ್ಲಿ ಇದಕ್ಕೆ ಸಮ್ಮತಿಸುತ್ತೇನೆ ಎಂದು ಘೋಷಿಸುತ್ತೇನೆ.';
 
   @override
+  String get consentReviewLatest =>
+      'ಆ್ಯಪ್ ಬಳಸುವುದನ್ನು ಮುಂದುವರಿಸಲು ದಯವಿಟ್ಟು ಈ ಒಪ್ಪಿಗೆಯ ಹೊಸ ಆವೃತ್ತಿಯನ್ನು ಓದಿ ಮತ್ತು ಅದನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಿ.';
+
+  @override
   String get consentRiderTitle => 'ರೈಡರ್ ಒಪ್ಪಿಗೆ';
 
   @override
@@ -3718,55 +3722,16 @@ class AppL10nKn extends AppL10n {
   String get ridersActive => 'ಸಕ್ರಿಯ';
 
   @override
-  String get ridersAllocations => 'ಹಂಚಿಕೆಗಳು';
-
-  @override
-  String get ridersAwaitingAllocation => 'ಹಂಚಿಕೆಗೆ ಕಾಯುತ್ತಿದೆ';
-
-  @override
   String get ridersCall => 'ಕರೆ ಮಾಡಿ';
-
-  @override
-  String get ridersCouldNotLoadTeam => 'ತಂಡ ತೆರೆಯಲಿಲ್ಲ';
 
   @override
   String get ridersExited => 'ಬಿಟ್ಟಿದ್ದಾರೆ';
 
   @override
-  String get ridersExitReason => 'ಬಿಡಲು ಕಾರಣ';
-
-  @override
-  String get ridersJoined => 'ಸೇರಿದ್ದಾರೆ';
-
-  @override
-  String get ridersKycStatus => 'ಕೆವೈಸಿ ಸ್ಥಿತಿ';
-
-  @override
-  String get ridersNobodyMatchesSearchList => 'ಈ ಪಟ್ಟಿಯಲ್ಲಿ ಹುಡುಕಾಟಕ್ಕೆ ಯಾರೂ ಸಿಗಲಿಲ್ಲ.';
-
-  @override
-  String get ridersNoRidersHere => 'ಇಲ್ಲಿ ರೈಡರ್‌ಗಳಿಲ್ಲ';
-
-  @override
   String get ridersOnboarding => 'ನೋಂದಣಿ ಪ್ರಕ್ರಿಯೆ';
 
   @override
-  String get ridersPlan => 'ಯೋಜನೆ';
-
-  @override
-  String get ridersRidersRoster => 'ಪಟ್ಟಿಯಲ್ಲಿರುವ ರೈಡರ್‌ಗಳು';
-
-  @override
-  String get ridersSearchNameCodeVehicle => 'ಹೆಸರು, ಕೋಡ್ ಅಥವಾ ವಾಹನ ಹುಡುಕಿ';
-
-  @override
   String get ridersTeam => 'ತಂಡ';
-
-  @override
-  String get ridersVerified => 'ಪರಿಶೀಲಿಸಲಾಗಿದೆ';
-
-  @override
-  String get ridersWithHubSince => 'ಹಬ್ ಜೊತೆ ಯಾವಾಗಿನಿಂದ';
 
   @override
   String get rideScooterConnectedUsePowerButton => 'ನಿಮ್ಮ ಸ್ಕೂಟರ್ ಜೋಡಿಸಲಾಗಿದೆ. ಆನ್ ಮಾಡಲು ಪವರ್ ಬಟನ್ ಒತ್ತಿ.';
@@ -3826,12 +3791,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get scooterIdentity => 'ಗುರುತು';
-
-  @override
-  String get scooterIotOffline => 'ಸಾಧನ ಆಫ್‌ಲೈನ್';
-
-  @override
-  String get scooterIotOnline => 'ಸಾಧನ ಆನ್‌ಲೈನ್';
 
   @override
   String get scooterMotorNumber => 'ಮೋಟಾರ್ ಸಂಖ್ಯೆ';
@@ -4502,9 +4461,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get teamBatteryExpert => 'ಬ್ಯಾಟರಿ ತಜ್ಞ';
-
-  @override
-  String get teamHubTeam => 'ಹಬ್ ತಂಡ';
 
   @override
   String get teamMotorControllerRepair => 'ಮೋಟಾರ್ ಕಂಟ್ರೋಲರ್ ರಿಪೇರಿ';

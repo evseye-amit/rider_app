@@ -952,6 +952,10 @@ class AppL10nEn extends AppL10n {
       'I declare that I have understood the points of this consent form and agree in my capacity as the data principal.';
 
   @override
+  String get consentReviewLatest =>
+      'Please read the latest version of this consent and accept it to keep using the app.';
+
+  @override
   String get consentRiderTitle => 'Rider Consent';
 
   @override
@@ -3713,55 +3717,16 @@ class AppL10nEn extends AppL10n {
   String get ridersActive => 'Active';
 
   @override
-  String get ridersAllocations => 'Allocations';
-
-  @override
-  String get ridersAwaitingAllocation => 'Awaiting allocation';
-
-  @override
   String get ridersCall => 'Call';
-
-  @override
-  String get ridersCouldNotLoadTeam => 'Could not load the team';
 
   @override
   String get ridersExited => 'Exited';
 
   @override
-  String get ridersExitReason => 'Exit reason';
-
-  @override
-  String get ridersJoined => 'Joined';
-
-  @override
-  String get ridersKycStatus => 'KYC status';
-
-  @override
-  String get ridersNobodyMatchesSearchList => 'Nobody matches this search in this list.';
-
-  @override
-  String get ridersNoRidersHere => 'No riders here';
-
-  @override
   String get ridersOnboarding => 'Onboarding';
 
   @override
-  String get ridersPlan => 'Plan';
-
-  @override
-  String get ridersRidersRoster => 'Riders on the roster';
-
-  @override
-  String get ridersSearchNameCodeVehicle => 'Search name, code or vehicle';
-
-  @override
   String get ridersTeam => 'Team';
-
-  @override
-  String get ridersVerified => 'Verified';
-
-  @override
-  String get ridersWithHubSince => 'With the hub since';
 
   @override
   String get rideScooterConnectedUsePowerButton => 'Your scooter is connected. Use the power button to switch it on.';
@@ -3821,12 +3786,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get scooterIdentity => 'Identity';
-
-  @override
-  String get scooterIotOffline => 'IoT offline';
-
-  @override
-  String get scooterIotOnline => 'IoT online';
 
   @override
   String get scooterMotorNumber => 'Motor number';
@@ -4495,9 +4454,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get teamBatteryExpert => 'Battery Expert';
-
-  @override
-  String get teamHubTeam => 'Hub team';
 
   @override
   String get teamMotorControllerRepair => 'Motor Controller Repair';

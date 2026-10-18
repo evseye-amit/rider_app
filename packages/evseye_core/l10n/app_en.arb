@@ -1256,6 +1256,10 @@
   "@consentAgree": {
     "description": "Consent screen checkbox: the data principal declaration, matching the rider privacy notice"
   },
+  "consentReviewLatest": "Please read the latest version of this consent and accept it to keep using the app.",
+  "@consentReviewLatest": {
+    "description": "Consent screen subtitle when a signed-in rider must accept a new consent version"
+  },
   "consentRiderTitle": "Rider Consent",
   "@consentRiderTitle": {
     "description": "Rider Consent"
@@ -5008,73 +5012,21 @@
   "@ridersActive": {
     "description": "Active"
   },
-  "ridersAllocations": "Allocations",
-  "@ridersAllocations": {
-    "description": "Allocations"
-  },
-  "ridersAwaitingAllocation": "Awaiting allocation",
-  "@ridersAwaitingAllocation": {
-    "description": "Awaiting allocation"
-  },
   "ridersCall": "Call",
   "@ridersCall": {
     "description": "Call"
-  },
-  "ridersCouldNotLoadTeam": "Could not load the team",
-  "@ridersCouldNotLoadTeam": {
-    "description": "Could not load the team"
   },
   "ridersExited": "Exited",
   "@ridersExited": {
     "description": "Exited"
   },
-  "ridersExitReason": "Exit reason",
-  "@ridersExitReason": {
-    "description": "Exit reason"
-  },
-  "ridersJoined": "Joined",
-  "@ridersJoined": {
-    "description": "Joined"
-  },
-  "ridersKycStatus": "KYC status",
-  "@ridersKycStatus": {
-    "description": "KYC status"
-  },
-  "ridersNobodyMatchesSearchList": "Nobody matches this search in this list.",
-  "@ridersNobodyMatchesSearchList": {
-    "description": "Nobody matches this search in this list."
-  },
-  "ridersNoRidersHere": "No riders here",
-  "@ridersNoRidersHere": {
-    "description": "No riders here"
-  },
   "ridersOnboarding": "Onboarding",
   "@ridersOnboarding": {
     "description": "Onboarding"
   },
-  "ridersPlan": "Plan",
-  "@ridersPlan": {
-    "description": "Plan"
-  },
-  "ridersRidersRoster": "Riders on the roster",
-  "@ridersRidersRoster": {
-    "description": "Riders on the roster"
-  },
-  "ridersSearchNameCodeVehicle": "Search name, code or vehicle",
-  "@ridersSearchNameCodeVehicle": {
-    "description": "Search name, code or vehicle"
-  },
   "ridersTeam": "Team",
   "@ridersTeam": {
     "description": "Team"
-  },
-  "ridersVerified": "Verified",
-  "@ridersVerified": {
-    "description": "Verified"
-  },
-  "ridersWithHubSince": "With the hub since",
-  "@ridersWithHubSince": {
-    "description": "With the hub since"
   },
   "rideScooterConnectedUsePowerButton": "Your scooter is connected. Use the power button to switch it on.",
   "@rideScooterConnectedUsePowerButton": {
@@ -5156,14 +5108,6 @@
   "scooterIdentity": "Identity",
   "@scooterIdentity": {
     "description": "Identity"
-  },
-  "scooterIotOffline": "IoT offline",
-  "@scooterIotOffline": {
-    "description": "IoT offline"
-  },
-  "scooterIotOnline": "IoT online",
-  "@scooterIotOnline": {
-    "description": "IoT online"
   },
   "scooterMotorNumber": "Motor number",
   "@scooterMotorNumber": {
@@ -6088,10 +6032,6 @@
   "teamBatteryExpert": "Battery Expert",
   "@teamBatteryExpert": {
     "description": "Battery Expert"
-  },
-  "teamHubTeam": "Hub team",
-  "@teamHubTeam": {
-    "description": "Hub team"
   },
   "teamMotorControllerRepair": "Motor Controller Repair",
   "@teamMotorControllerRepair": {

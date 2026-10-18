@@ -12,11 +12,13 @@ import 'first_run_scaffold.dart';
 import 'legal_document.dart';
 
 class ConsentPage extends ConsumerStatefulWidget {
-  const ConsentPage({required this.audience, required this.title, required this.onAccepted, super.key});
+  const ConsentPage({required this.audience, required this.title, required this.onAccepted, this.subtitle, super.key});
 
   final LegalAudience audience;
 
   final String title;
+
+  final String? subtitle;
 
   final VoidCallback onAccepted;
 
@@ -33,7 +35,9 @@ class _ConsentPageState extends ConsumerState<ConsentPage> {
     final LegalDocumentDto? document = _document;
     if (document == null) return;
     setState(() => _accepting = true);
-    await ref.read(consentProvider.notifier).accept(documentId: document.id, contentHash: document.contentHash);
+    await ref
+        .read(consentProvider.notifier)
+        .accept(documentId: document.id, contentHash: document.contentHash, locale: document.locale);
     if (mounted) widget.onAccepted();
   }
 
@@ -45,7 +49,7 @@ class _ConsentPageState extends ConsumerState<ConsentPage> {
     return FirstRunScaffold(
       icon: Icons.verified_user_rounded,
       title: widget.title,
-      subtitle: context.l10n.consentSubtitle,
+      subtitle: widget.subtitle ?? context.l10n.consentSubtitle,
       body: DecoratedBox(
         decoration: BoxDecoration(
           color: AppColors.surface,

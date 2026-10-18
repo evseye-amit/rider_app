@@ -1894,6 +1894,12 @@ abstract class AppL10n {
   /// **'I declare that I have understood the points of this consent form and agree in my capacity as the data principal.'**
   String get consentAgree;
 
+  /// Consent screen subtitle when a signed-in rider must accept a new consent version
+  ///
+  /// In en, this message translates to:
+  /// **'Please read the latest version of this consent and accept it to keep using the app.'**
+  String get consentReviewLatest;
+
   /// Rider Consent
   ///
   /// In en, this message translates to:
@@ -7126,29 +7132,11 @@ abstract class AppL10n {
   /// **'Active'**
   String get ridersActive;
 
-  /// Allocations
-  ///
-  /// In en, this message translates to:
-  /// **'Allocations'**
-  String get ridersAllocations;
-
-  /// Awaiting allocation
-  ///
-  /// In en, this message translates to:
-  /// **'Awaiting allocation'**
-  String get ridersAwaitingAllocation;
-
   /// Call
   ///
   /// In en, this message translates to:
   /// **'Call'**
   String get ridersCall;
-
-  /// Could not load the team
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load the team'**
-  String get ridersCouldNotLoadTeam;
 
   /// Exited
   ///
@@ -7156,77 +7144,17 @@ abstract class AppL10n {
   /// **'Exited'**
   String get ridersExited;
 
-  /// Exit reason
-  ///
-  /// In en, this message translates to:
-  /// **'Exit reason'**
-  String get ridersExitReason;
-
-  /// Joined
-  ///
-  /// In en, this message translates to:
-  /// **'Joined'**
-  String get ridersJoined;
-
-  /// KYC status
-  ///
-  /// In en, this message translates to:
-  /// **'KYC status'**
-  String get ridersKycStatus;
-
-  /// Nobody matches this search in this list.
-  ///
-  /// In en, this message translates to:
-  /// **'Nobody matches this search in this list.'**
-  String get ridersNobodyMatchesSearchList;
-
-  /// No riders here
-  ///
-  /// In en, this message translates to:
-  /// **'No riders here'**
-  String get ridersNoRidersHere;
-
   /// Onboarding
   ///
   /// In en, this message translates to:
   /// **'Onboarding'**
   String get ridersOnboarding;
 
-  /// Plan
-  ///
-  /// In en, this message translates to:
-  /// **'Plan'**
-  String get ridersPlan;
-
-  /// Riders on the roster
-  ///
-  /// In en, this message translates to:
-  /// **'Riders on the roster'**
-  String get ridersRidersRoster;
-
-  /// Search name, code or vehicle
-  ///
-  /// In en, this message translates to:
-  /// **'Search name, code or vehicle'**
-  String get ridersSearchNameCodeVehicle;
-
   /// Team
   ///
   /// In en, this message translates to:
   /// **'Team'**
   String get ridersTeam;
-
-  /// Verified
-  ///
-  /// In en, this message translates to:
-  /// **'Verified'**
-  String get ridersVerified;
-
-  /// With the hub since
-  ///
-  /// In en, this message translates to:
-  /// **'With the hub since'**
-  String get ridersWithHubSince;
 
   /// Your scooter is connected. Use the power button to switch it on.
   ///
@@ -7341,18 +7269,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Identity'**
   String get scooterIdentity;
-
-  /// IoT offline
-  ///
-  /// In en, this message translates to:
-  /// **'IoT offline'**
-  String get scooterIotOffline;
-
-  /// IoT online
-  ///
-  /// In en, this message translates to:
-  /// **'IoT online'**
-  String get scooterIotOnline;
 
   /// Motor number
   ///
@@ -8607,12 +8523,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Battery Expert'**
   String get teamBatteryExpert;
-
-  /// Hub team
-  ///
-  /// In en, this message translates to:
-  /// **'Hub team'**
-  String get teamHubTeam;
 
   /// Motor Controller Repair
   ///

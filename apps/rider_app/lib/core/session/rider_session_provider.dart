@@ -15,9 +15,11 @@ export 'rider_stage.dart';
 
 class RiderSessionNotifier extends Notifier<RiderSession> {
   static const Duration _documentCheckInterval = Duration(seconds: 30);
+  static const Duration _consentCheckInterval = Duration(minutes: 5);
   static const String _hygieneKey = 'deployment.hygiene_done';
 
   DateTime? _documentsCheckedAt;
+  DateTime? _consentCheckedAt;
 
   UiConfigService get _config => ref.read(uiConfigServiceProvider);
 
@@ -31,6 +33,7 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
   }
 
   Future<void> bootstrap() async {
+    final Future<void> consent = verifyConsent();
     await loadPackage();
     final Result<AuthUser> restored = await ref.read(restoreSessionProvider)(const NoParams());
     if (restored case Ok<AuthUser>(:final value)) {
@@ -41,6 +44,15 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     } else {
       state = state.copyWith(stage: RiderStage.signedOut);
     }
+    await consent;
+    if (state.user case final AuthUser user) unawaited(ref.read(consentProvider.notifier).recordAcceptance(user.id));
+  }
+
+  Future<void> verifyConsent() async {
+    final DateTime now = DateTime.now();
+    if (_consentCheckedAt case final DateTime last when now.difference(last) < _consentCheckInterval) return;
+    _consentCheckedAt = now;
+    await ref.read(consentProvider.notifier).verify(LegalAudience.rider);
   }
 
   Future<void> loadPackage() async {

@@ -1,15 +1,39 @@
+import 'dart:async';
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/referral/pending_referral.dart';
+import '../core/session/rider_session_provider.dart';
 import 'router/app_router.dart';
 
-class RiderApp extends ConsumerWidget {
+class RiderApp extends ConsumerStatefulWidget {
   const RiderApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<RiderApp> createState() => _RiderAppState();
+}
+
+class _RiderAppState extends ConsumerState<RiderApp> {
+  late final AppLifecycleListener _lifecycle;
+
+  @override
+  void initState() {
+    super.initState();
+    _lifecycle = AppLifecycleListener(
+      onResume: () => unawaited(ref.read(riderSessionProvider.notifier).verifyConsent()),
+    );
+  }
+
+  @override
+  void dispose() {
+    _lifecycle.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     ref.listen(pendingReferralProvider, (_, _) {});
     final AppLocale locale = ref.watch(localeProvider.select((p) => p.locale));
 

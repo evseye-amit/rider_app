@@ -44,13 +44,6 @@ class VehicleBand extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: Insets.sm),
-            StatusChip(
-              label: v == null ? '—' : (v.iot.online ? context.l10n.scooterIotOnline : context.l10n.scooterIotOffline),
-              tone: v == null ? StatusTone.neutral : (v.iot.online ? StatusTone.success : StatusTone.danger),
-              solid: true,
-              dense: true,
-            ),
           ],
         ),
         const Gap.xxl(),
