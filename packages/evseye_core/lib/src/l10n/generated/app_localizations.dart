@@ -106,18 +106,6 @@ abstract class AppL10n {
   /// **'Add at least one item'**
   String get allocationAddLeastOneItem;
 
-  /// Add at least one line
-  ///
-  /// In en, this message translates to:
-  /// **'Add at least one line'**
-  String get allocationAddLeastOneLine;
-
-  /// Add a line
-  ///
-  /// In en, this message translates to:
-  /// **'Add a line'**
-  String get allocationAddLine;
-
   /// All hubs
   ///
   /// In en, this message translates to:
@@ -136,17 +124,23 @@ abstract class AppL10n {
   /// **'Allocate a vehicle to a waiting rider to start one.'**
   String get allocationAllocateVehicleWaitingRiderStart;
 
-  /// Amount
-  ///
-  /// In en, this message translates to:
-  /// **'Amount'**
-  String get allocationAmount;
-
   /// Ask for payment
   ///
   /// In en, this message translates to:
   /// **'Ask for payment'**
   String get allocationAskPayment;
+
+  /// The amount is worked out from the plan the rider accepted. Send the payment request to the rider?
+  ///
+  /// In en, this message translates to:
+  /// **'The amount is worked out from the plan the rider accepted. Send the payment request to the rider?'**
+  String get allocationAskPaymentConfirm;
+
+  /// This is an exchange scooter. Its plan is already agreed, so nothing is collected for this handover. Continue?
+  ///
+  /// In en, this message translates to:
+  /// **'This is an exchange scooter. Its plan is already agreed, so nothing is collected for this handover. Continue?'**
+  String get allocationAskPaymentExchange;
 
   /// Assign
   ///
@@ -184,6 +178,12 @@ abstract class AppL10n {
   /// **'Body and paintwork'**
   String get allocationBodyPaintwork;
 
+  /// Change plan
+  ///
+  /// In en, this message translates to:
+  /// **'Change plan'**
+  String get allocationChangePlan;
+
   /// The checklist the rider will accept item by item
   ///
   /// In en, this message translates to:
@@ -196,6 +196,12 @@ abstract class AppL10n {
   /// **'Checklist · tap to toggle mandatory'**
   String get allocationChecklistTapToggleMandatory;
 
+  /// Choose rental plan
+  ///
+  /// In en, this message translates to:
+  /// **'Choose rental plan'**
+  String get allocationChoosePlan;
+
   /// Complete.
   ///
   /// In en, this message translates to:
@@ -207,6 +213,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Confirm you have received the amount the rider submitted a reference for. This cannot be undone.'**
   String get allocationConfirmHaveReceivedAmountRider;
+
+  /// Confirm you have received {amount} from the rider.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm you have received {amount} from the rider.'**
+  String allocationConfirmReceivedAmount(String amount);
 
   /// Confirms the vehicle's photos are on file.
   ///
@@ -255,12 +267,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Deployed'**
   String get allocationDeployed;
-
-  /// Every line needs a label and an amount above zero
-  ///
-  /// In en, this message translates to:
-  /// **'Every line needs a label and an amount above zero'**
-  String get allocationEveryLineNeedsLabelAmount;
 
   /// Every onboarded rider in your hubs has a vehicle or a handover under way.
   ///
@@ -346,12 +352,6 @@ abstract class AppL10n {
   /// **'Inspection and training'**
   String get allocationInspectionTraining;
 
-  /// Item
-  ///
-  /// In en, this message translates to:
-  /// **'Item'**
-  String get allocationItem;
-
   /// Left side
   ///
   /// In en, this message translates to:
@@ -387,6 +387,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Name the work partner or workshop that inspected the vehicle'**
   String get allocationNameWorkPartnerWorkshopInspected;
+
+  /// No battery plan
+  ///
+  /// In en, this message translates to:
+  /// **'No battery plan'**
+  String get allocationNoBatteryPlan;
 
   /// Nobody waiting
   ///
@@ -424,12 +430,6 @@ abstract class AppL10n {
   /// **'Number'**
   String get allocationNumber;
 
-  /// Onboarding fee
-  ///
-  /// In en, this message translates to:
-  /// **'Onboarding fee'**
-  String get allocationOnboardingFee;
-
   /// Payment received?
   ///
   /// In en, this message translates to:
@@ -441,6 +441,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Payment requested'**
   String get allocationPaymentRequested;
+
+  /// Payment requested
+  ///
+  /// In en, this message translates to:
+  /// **'Payment requested'**
+  String get allocationPaymentRequestedAmount;
 
   /// Payment requested — the rider sees it now
   ///
@@ -502,10 +508,112 @@ abstract class AppL10n {
   /// **'Uploaded'**
   String get allocationPhotoUploaded;
 
-  /// You raise the deposit and fees; the rider pays and submits the reference; you verify it.
+  /// Accepted by rider
   ///
   /// In en, this message translates to:
-  /// **'You raise the deposit and fees; the rider pays and submits the reference; you verify it.'**
+  /// **'Accepted by rider'**
+  String get allocationPlanAcceptedChip;
+
+  /// Waiting for the rider to accept this plan in their app. You can still change it until they accept.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for the rider to accept this plan in their app. You can still change it until they accept.'**
+  String get allocationPlanAwaitingBody;
+
+  /// Waiting for rider
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for rider'**
+  String get allocationPlanAwaitingChip;
+
+  /// Couldn't load rental plans
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load rental plans'**
+  String get allocationPlanCouldNotLoad;
+
+  /// This scooter replaces one from an exchange. The rider's exchange plan carries over, so there's no new plan or deposit to collect.
+  ///
+  /// In en, this message translates to:
+  /// **'This scooter replaces one from an exchange. The rider\'s exchange plan carries over, so there\'s no new plan or deposit to collect.'**
+  String get allocationPlanExchangeBody;
+
+  /// Exchange plan
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange plan'**
+  String get allocationPlanExchangeChip;
+
+  /// The plan offer expired or was replaced. Choose a plan again and send it to the rider.
+  ///
+  /// In en, this message translates to:
+  /// **'The plan offer expired or was replaced. Choose a plan again and send it to the rider.'**
+  String get allocationPlanExpiredBody;
+
+  /// No published rental plan matches this scooter and hub. Ask your admin to publish a rate card.
+  ///
+  /// In en, this message translates to:
+  /// **'No published rental plan matches this scooter and hub. Ask your admin to publish a rate card.'**
+  String get allocationPlanNoneBody;
+
+  /// No plans available
+  ///
+  /// In en, this message translates to:
+  /// **'No plans available'**
+  String get allocationPlanNoneTitle;
+
+  /// Choose the rental plan for this rider. They review and accept it in their app, and the payment is worked out from it.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the rental plan for this rider. They review and accept it in their app, and the payment is worked out from it.'**
+  String get allocationPlanNotChosenBody;
+
+  /// Not chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Not chosen'**
+  String get allocationPlanNotChosenChip;
+
+  /// Prices are worked out for this rider, scooter and hub.
+  ///
+  /// In en, this message translates to:
+  /// **'Prices are worked out for this rider, scooter and hub.'**
+  String get allocationPlanPickSubtitle;
+
+  /// Choose a rental plan
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a rental plan'**
+  String get allocationPlanPickTitle;
+
+  /// Send to rider
+  ///
+  /// In en, this message translates to:
+  /// **'Send to rider'**
+  String get allocationPlanSend;
+
+  /// Plan sent. The rider can accept it in their app.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan sent. The rider can accept it in their app.'**
+  String get allocationPlanSentSnack;
+
+  /// Rental plan
+  ///
+  /// In en, this message translates to:
+  /// **'Rental plan'**
+  String get allocationPlanTitle;
+
+  /// Waiting for rider to accept
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for rider to accept'**
+  String get allocationPlanWaitingButton;
+
+  /// You choose the rental plan; the rider accepts it, pays and submits the reference; you verify it.
+  ///
+  /// In en, this message translates to:
+  /// **'You choose the rental plan; the rider accepts it, pays and submits the reference; you verify it.'**
   String get allocationRaiseDepositFeesRiderPays;
 
   /// Reason
@@ -513,12 +621,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Reason'**
   String get allocationReason;
-
-  /// Rental fee (week)
-  ///
-  /// In en, this message translates to:
-  /// **'Rental fee (week)'**
-  String get allocationRentalFeeWeek;
 
   /// Request the vehicle
   ///
@@ -586,6 +688,12 @@ abstract class AppL10n {
   /// **'On road'**
   String get allocationRoad;
 
+  /// Scooter age (months): {months}
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter age (months): {months}'**
+  String allocationScooterAge(int months);
+
   /// Search rider name, code or mobile
   ///
   /// In en, this message translates to:
@@ -603,12 +711,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Search rider or vehicle number'**
   String get allocationSearchRiderVehicleNumber;
-
-  /// Security deposit
-  ///
-  /// In en, this message translates to:
-  /// **'Security deposit'**
-  String get allocationSecurityDeposit;
 
   /// Send payment request
   ///
@@ -711,12 +813,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Waiting for rider: training'**
   String get allocationWaitingRiderTraining;
-
-  /// What the rider pays before the handover
-  ///
-  /// In en, this message translates to:
-  /// **'What the rider pays before the handover'**
-  String get allocationWhatRiderPaysBeforeHandover;
 
   /// What was allocated
   ///
@@ -2416,6 +2512,36 @@ abstract class AppL10n {
   /// **'Pay for your scooter'**
   String get deploymentPayScooter;
 
+  /// Plan accepted. Your fleet manager will ask for payment next.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan accepted. Your fleet manager will ask for payment next.'**
+  String get deploymentPlanAcceptedSnack;
+
+  /// Couldn't load your plan
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your plan'**
+  String get deploymentPlanCouldNotLoad;
+
+  /// Your fleet manager picked this plan for you. Check the rent and what you pay today, read the terms, then accept to continue.
+  ///
+  /// In en, this message translates to:
+  /// **'Your fleet manager picked this plan for you. Check the rent and what you pay today, read the terms, then accept to continue.'**
+  String get deploymentPlanIntro;
+
+  /// You've accepted this plan. Your fleet manager will ask for payment next.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve accepted this plan. Your fleet manager will ask for payment next.'**
+  String get deploymentPlanNextPayment;
+
+  /// Your rental plan
+  ///
+  /// In en, this message translates to:
+  /// **'Your rental plan'**
+  String get deploymentPlanTitle;
+
   /// Preparing your scooter
   ///
   /// In en, this message translates to:
@@ -2517,6 +2643,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Your fleet manager is writing up the pre-delivery inspection for {vehicle}. You will check it over next.'**
   String deploymentWritingPdi(String vehicle);
+
+  /// Your plan
+  ///
+  /// In en, this message translates to:
+  /// **'Your plan'**
+  String get deploymentYourPlan;
 
   /// Achieved
   ///
@@ -5020,6 +5152,18 @@ abstract class AppL10n {
   /// **'Upload the rejected documents again before you submit.'**
   String get onboardingUploadRejectedAgain;
 
+  /// Refundable deposit
+  ///
+  /// In en, this message translates to:
+  /// **'Refundable deposit'**
+  String get paymentRefundableDeposit;
+
+  /// Rent and fees
+  ///
+  /// In en, this message translates to:
+  /// **'Rent and fees'**
+  String get paymentRentAndFees;
+
   /// You are all paid up
   ///
   /// In en, this message translates to:
@@ -5199,6 +5343,240 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Inspected by {partner}'**
   String pdiInspectedBy(String partner);
+
+  /// Accept plan
+  ///
+  /// In en, this message translates to:
+  /// **'Accept plan'**
+  String get planAccept;
+
+  /// Battery security deposit
+  ///
+  /// In en, this message translates to:
+  /// **'Battery security deposit'**
+  String get planBatteryDeposit;
+
+  /// I have read this plan and its terms, and I agree to them
+  ///
+  /// In en, this message translates to:
+  /// **'I have read this plan and its terms, and I agree to them'**
+  String get planConsent;
+
+  /// Custom plan
+  ///
+  /// In en, this message translates to:
+  /// **'Custom plan'**
+  String get planCustom;
+
+  /// Daily plan
+  ///
+  /// In en, this message translates to:
+  /// **'Daily plan'**
+  String get planDaily;
+
+  /// {count}-day plan
+  ///
+  /// In en, this message translates to:
+  /// **'{count}-day plan'**
+  String planDays(int count);
+
+  /// Discount
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get planDiscount;
+
+  /// This rental doesn't match the scooter. Contact your fleet manager.
+  ///
+  /// In en, this message translates to:
+  /// **'This rental doesn\'t match the scooter. Contact your fleet manager.'**
+  String get planErrorAgreementMismatch;
+
+  /// Your rental isn't active yet, so this can't be done now.
+  ///
+  /// In en, this message translates to:
+  /// **'Your rental isn\'t active yet, so this can\'t be done now.'**
+  String get planErrorAgreementNotActive;
+
+  /// The accepted plan isn't ready for handover. Refresh and try again.
+  ///
+  /// In en, this message translates to:
+  /// **'The accepted plan isn\'t ready for handover. Refresh and try again.'**
+  String get planErrorAgreementNotReady;
+
+  /// No scooter security deposit is set up for this plan. Ask your admin to add one, even if it's zero.
+  ///
+  /// In en, this message translates to:
+  /// **'No scooter security deposit is set up for this plan. Ask your admin to add one, even if it\'s zero.'**
+  String get planErrorDepositNotConfigured;
+
+  /// This is an exchange scooter, so its plan is already agreed.
+  ///
+  /// In en, this message translates to:
+  /// **'This is an exchange scooter, so its plan is already agreed.'**
+  String get planErrorExchangePlan;
+
+  /// No onboarding fee is set up for this plan. Ask your admin to add one, even if it's zero.
+  ///
+  /// In en, this message translates to:
+  /// **'No onboarding fee is set up for this plan. Ask your admin to add one, even if it\'s zero.'**
+  String get planErrorFeeNotConfigured;
+
+  /// Request the scooter before asking for payment.
+  ///
+  /// In en, this message translates to:
+  /// **'Request the scooter before asking for payment.'**
+  String get planErrorFleetRequestRequired;
+
+  /// This plan offer is no longer valid. Ask for a new one.
+  ///
+  /// In en, this message translates to:
+  /// **'This plan offer is no longer valid. Ask for a new one.'**
+  String get planErrorOfferNotValid;
+
+  /// The rider hasn't sent a payment reference yet.
+  ///
+  /// In en, this message translates to:
+  /// **'The rider hasn\'t sent a payment reference yet.'**
+  String get planErrorPaymentReferenceRequired;
+
+  /// The amount has changed. Refresh and ask for payment again.
+  ///
+  /// In en, this message translates to:
+  /// **'The amount has changed. Refresh and ask for payment again.'**
+  String get planErrorPaymentStale;
+
+  /// Choose a rental plan and get the rider to accept it first.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a rental plan and get the rider to accept it first.'**
+  String get planErrorRequired;
+
+  /// Another plan was just chosen. Refresh and try again.
+  ///
+  /// In en, this message translates to:
+  /// **'Another plan was just chosen. Refresh and try again.'**
+  String get planErrorSelectionChanged;
+
+  /// The plan can't be changed any more.
+  ///
+  /// In en, this message translates to:
+  /// **'The plan can\'t be changed any more.'**
+  String get planErrorSelectionClosed;
+
+  /// The plan terms changed. Refresh and accept again.
+  ///
+  /// In en, this message translates to:
+  /// **'The plan terms changed. Refresh and accept again.'**
+  String get planErrorTermsChanged;
+
+  /// Fortnightly plan
+  ///
+  /// In en, this message translates to:
+  /// **'Fortnightly plan'**
+  String get planFortnightly;
+
+  /// Free
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get planFree;
+
+  /// Included
+  ///
+  /// In en, this message translates to:
+  /// **'Included'**
+  String get planIncluded;
+
+  /// Insurance
+  ///
+  /// In en, this message translates to:
+  /// **'Insurance'**
+  String get planInsurance;
+
+  /// Monthly plan
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly plan'**
+  String get planMonthly;
+
+  /// This offer is no longer open. Your fleet manager will send a new one.
+  ///
+  /// In en, this message translates to:
+  /// **'This offer is no longer open. Your fleet manager will send a new one.'**
+  String get planOfferNotLive;
+
+  /// Onboarding fee
+  ///
+  /// In en, this message translates to:
+  /// **'Onboarding fee'**
+  String get planOnboardingFee;
+
+  /// Pay today
+  ///
+  /// In en, this message translates to:
+  /// **'Pay today'**
+  String get planPayableToday;
+
+  /// Quarterly plan
+  ///
+  /// In en, this message translates to:
+  /// **'Quarterly plan'**
+  String get planQuarterly;
+
+  /// Includes {amount} refundable deposit
+  ///
+  /// In en, this message translates to:
+  /// **'Includes {amount} refundable deposit'**
+  String planRefundableNote(String amount);
+
+  /// Rent
+  ///
+  /// In en, this message translates to:
+  /// **'Rent'**
+  String get planRent;
+
+  /// Scooter age adjustment
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter age adjustment'**
+  String get planScooterAgeAdjustment;
+
+  /// Scooter security deposit
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter security deposit'**
+  String get planScooterDeposit;
+
+  /// Plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Plan terms'**
+  String get planTermsTitle;
+
+  /// {rate} per {unit}
+  ///
+  /// In en, this message translates to:
+  /// **'{rate} per {unit}'**
+  String planUsageRate(String rate, String unit);
+
+  /// Offer valid until
+  ///
+  /// In en, this message translates to:
+  /// **'Offer valid until'**
+  String get planValidUntil;
+
+  /// Weekly plan
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly plan'**
+  String get planWeekly;
+
+  /// {count}-week plan
+  ///
+  /// In en, this message translates to:
+  /// **'{count}-week plan'**
+  String planWeeks(int count);
 
   /// Address & hub
   ///

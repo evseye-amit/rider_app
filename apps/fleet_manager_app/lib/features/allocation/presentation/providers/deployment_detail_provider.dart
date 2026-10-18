@@ -6,24 +6,36 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../allocation_dependencies.dart';
-import '../../domain/usecases/ask_payment.dart';
 import '../../domain/usecases/evidence_photo_usecases.dart';
+import '../../domain/usecases/rental_plan_usecases.dart';
 import '../../domain/usecases/submit_pdi.dart';
 
 class DeploymentDetail extends Equatable {
-  const DeploymentDetail({required this.request, this.evidence, this.busy = false});
+  const DeploymentDetail({required this.request, this.evidence, this.commercial, this.busy = false});
 
   final DeploymentAllocation request;
   final AllocationEvidence? evidence;
+  final AllocationCommercial? commercial;
   final bool busy;
 
   DeploymentStatus get status => request.deploymentStatus;
 
-  DeploymentDetail copyWith({DeploymentAllocation? request, AllocationEvidence? evidence, bool? busy}) =>
-      DeploymentDetail(request: request ?? this.request, evidence: evidence ?? this.evidence, busy: busy ?? this.busy);
+  bool get waitsOnRider => status.waitsOnRider || (commercial?.awaitingRider ?? false);
+
+  DeploymentDetail copyWith({
+    DeploymentAllocation? request,
+    AllocationEvidence? evidence,
+    AllocationCommercial? commercial,
+    bool? busy,
+  }) => DeploymentDetail(
+    request: request ?? this.request,
+    evidence: evidence ?? this.evidence,
+    commercial: commercial ?? this.commercial,
+    busy: busy ?? this.busy,
+  );
 
   @override
-  List<Object?> get props => [request.id, status, request.updatedAt, evidence, busy];
+  List<Object?> get props => [request.id, status, request.updatedAt, evidence, commercial, busy];
 }
 
 class DeploymentDetailNotifier extends AsyncNotifier<DeploymentDetail> {
@@ -36,7 +48,7 @@ class DeploymentDetailNotifier extends AsyncNotifier<DeploymentDetail> {
   @override
   Future<DeploymentDetail> build() async {
     final Timer timer = Timer.periodic(_pollEvery, (_) {
-      if (state.value?.status.waitsOnRider ?? false) unawaited(refresh(silent: true));
+      if (state.value?.waitsOnRider ?? false) unawaited(refresh(silent: true));
     });
     ref.onDispose(timer.cancel);
 
@@ -66,8 +78,11 @@ class DeploymentDetailNotifier extends AsyncNotifier<DeploymentDetail> {
 
   Future<Result<void>> requestFleet() => _perform(() => ref.read(requestFleetProvider)(_allocationId));
 
-  Future<Result<void>> askPayment(List<PaymentLineItem> items) =>
-      _perform(() => ref.read(askPaymentProvider)(AskPaymentParams(allocationId: _allocationId, items: items)));
+  Future<Result<void>> askPayment() => _perform(() => ref.read(askPaymentProvider)(_allocationId));
+
+  Future<Result<void>> selectPlan(RentalPlanOption plan) => _perform(
+    () => ref.read(selectRentalPlanProvider)(SelectRentalPlanParams(allocationId: _allocationId, plan: plan)),
+  );
 
   Future<Result<void>> verifyPayment() => _perform(() => ref.read(verifyPaymentProvider)(_allocationId));
 
@@ -92,14 +107,15 @@ class DeploymentDetailNotifier extends AsyncNotifier<DeploymentDetail> {
   }
 
   Future<void> _loadSideData(DeploymentDetail detail) async {
-    final DeploymentDetail enriched = detail.status.beforeInspection
-        ? detail.copyWith(evidence: (await ref.read(getAllocationEvidenceProvider)(_allocationId)).valueOrNull)
-        : detail;
-    if (!ref.mounted || enriched == detail) return;
+    if (!detail.status.beforeInspection) return;
+    final (Result<AllocationEvidence> evidence, Result<AllocationCommercial> commercial) = await (
+      ref.read(getAllocationEvidenceProvider)(_allocationId),
+      ref.read(getAllocationCommercialProvider)(_allocationId),
+    ).wait;
+    if (!ref.mounted) return;
     final DeploymentDetail? current = state.value;
-    if (current != null) {
-      state = AsyncData(current.copyWith(evidence: enriched.evidence));
-    }
+    if (current == null) return;
+    state = AsyncData(current.copyWith(evidence: evidence.valueOrNull, commercial: commercial.valueOrNull));
   }
 
   Future<Result<void>> _perform(Future<Result<Object?>> Function() action) async {

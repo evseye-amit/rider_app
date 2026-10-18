@@ -7,12 +7,13 @@ import '../domain/entities/active_allocation.dart';
 import '../domain/entities/allocation_board.dart';
 
 class AllocationRepositoryImpl implements AllocationRepository {
-  const AllocationRepositoryImpl(this._api, this._deployments, this._media, this._submissions);
+  const AllocationRepositoryImpl(this._api, this._deployments, this._media, this._submissions, this._commercial);
 
   final ApiClient _api;
   final DeploymentApi _deployments;
   final MediaApi _media;
   final VehicleSubmissionApi _submissions;
+  final CommercialApi _commercial;
 
   static const int _maxPageSize = 100;
 
@@ -73,8 +74,19 @@ class AllocationRepositoryImpl implements AllocationRepository {
   Future<Result<DeploymentWorkflow>> requestFleet(String allocationId) => _deployments.requestFleet(allocationId);
 
   @override
-  Future<Result<DeploymentPayment>> askPayment(String allocationId, List<PaymentLineItem> items) =>
-      _deployments.askPayment(allocationId, items: items);
+  Future<Result<DeploymentPayment>> askPayment(String allocationId) => _deployments.askPayment(allocationId);
+
+  @override
+  Future<Result<RentalPlanList>> getPlans(String allocationId, {String? batteryPlanId}) =>
+      _commercial.plans(allocationId, batteryPlanId: batteryPlanId);
+
+  @override
+  Future<Result<AllocationCommercial>> selectPlan(String allocationId, RentalPlanOption plan) =>
+      _commercial.selectPlan(allocationId, plan, idempotencyKey: newIdempotencyKey());
+
+  @override
+  Future<Result<AllocationCommercial>> getCommercial(String allocationId) =>
+      _commercial.allocationCommercial(allocationId);
 
   @override
   Future<Result<DeploymentWorkflow>> verifyPayment(String allocationId) => _deployments.verifyPayment(allocationId);

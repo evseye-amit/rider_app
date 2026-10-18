@@ -10,6 +10,7 @@ import '../../features/auth/presentation/pages/otp_page.dart';
 import '../../features/battery_swap/presentation/pages/battery_swap_page.dart';
 import '../../features/deployment/presentation/pages/payment_page.dart';
 import '../../features/deployment/presentation/pages/pdi_page.dart';
+import '../../features/deployment/presentation/pages/plan_acceptance_page.dart';
 import '../../features/deployment/presentation/pages/training_page.dart';
 import '../../features/deployment/presentation/pages/waiting_page.dart';
 import '../../features/earnings/presentation/pages/incentives_page.dart';
@@ -113,6 +114,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.deploymentWaiting,
         name: 'deploymentWaiting',
         builder: (context, state) => const WaitingPage(),
+      ),
+      GoRoute(
+        path: Routes.deploymentPlan,
+        name: 'deploymentPlan',
+        builder: (context, state) => const PlanAcceptancePage(),
       ),
       GoRoute(
         path: Routes.deploymentPayment,
@@ -224,6 +230,7 @@ String? _redirect(RiderStage stage, FirstRunStep? firstRun, String path) {
     RiderStage.signedOut => Routes.login,
     RiderStage.onboarding => path.startsWith(Routes.onboarding) ? null : Routes.onboarding,
     RiderStage.waiting ||
+    RiderStage.planAcceptance ||
     RiderStage.payment ||
     RiderStage.pdi ||
     RiderStage.training => path == stage.route ? null : stage.route,

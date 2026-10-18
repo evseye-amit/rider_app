@@ -15,12 +15,6 @@ class AppL10nEn extends AppL10n {
   String get allocationAddLeastOneItem => 'Add at least one item';
 
   @override
-  String get allocationAddLeastOneLine => 'Add at least one line';
-
-  @override
-  String get allocationAddLine => 'Add a line';
-
-  @override
   String get allocationAllHubs => 'All hubs';
 
   @override
@@ -30,10 +24,15 @@ class AppL10nEn extends AppL10n {
   String get allocationAllocateVehicleWaitingRiderStart => 'Allocate a vehicle to a waiting rider to start one.';
 
   @override
-  String get allocationAmount => 'Amount';
+  String get allocationAskPayment => 'Ask for payment';
 
   @override
-  String get allocationAskPayment => 'Ask for payment';
+  String get allocationAskPaymentConfirm =>
+      'The amount is worked out from the plan the rider accepted. Send the payment request to the rider?';
+
+  @override
+  String get allocationAskPaymentExchange =>
+      'This is an exchange scooter. Its plan is already agreed, so nothing is collected for this handover. Continue?';
 
   @override
   String get allocationAssign => 'Assign';
@@ -54,10 +53,16 @@ class AppL10nEn extends AppL10n {
   String get allocationBodyPaintwork => 'Body and paintwork';
 
   @override
+  String get allocationChangePlan => 'Change plan';
+
+  @override
   String get allocationChecklistRiderWillAcceptItem => 'The checklist the rider will accept item by item';
 
   @override
   String get allocationChecklistTapToggleMandatory => 'Checklist · tap to toggle mandatory';
+
+  @override
+  String get allocationChoosePlan => 'Choose rental plan';
 
   @override
   String get allocationComplete2 => 'Complete.';
@@ -65,6 +70,11 @@ class AppL10nEn extends AppL10n {
   @override
   String get allocationConfirmHaveReceivedAmountRider =>
       'Confirm you have received the amount the rider submitted a reference for. This cannot be undone.';
+
+  @override
+  String allocationConfirmReceivedAmount(String amount) {
+    return 'Confirm you have received $amount from the rider.';
+  }
 
   @override
   String get allocationConfirmsPhotos => 'Confirms the vehicle\'s photos are on file.';
@@ -89,9 +99,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationDeployed => 'Deployed';
-
-  @override
-  String get allocationEveryLineNeedsLabelAmount => 'Every line needs a label and an amount above zero';
 
   @override
   String get allocationEveryOnboardedRiderHubsHas =>
@@ -138,9 +145,6 @@ class AppL10nEn extends AppL10n {
   String get allocationInspectionTraining => 'Inspection and training';
 
   @override
-  String get allocationItem => 'Item';
-
-  @override
   String get allocationLeftSide => 'Left side';
 
   @override
@@ -161,6 +165,9 @@ class AppL10nEn extends AppL10n {
       'Name the work partner or workshop that inspected the vehicle';
 
   @override
+  String get allocationNoBatteryPlan => 'No battery plan';
+
+  @override
   String get allocationNobodyWaiting => 'Nobody waiting';
 
   @override
@@ -179,13 +186,13 @@ class AppL10nEn extends AppL10n {
   String get allocationNumber => 'Number';
 
   @override
-  String get allocationOnboardingFee => 'Onboarding fee';
-
-  @override
   String get allocationPaymentReceived => 'Payment received?';
 
   @override
   String get allocationPaymentRequested => 'Payment requested';
+
+  @override
+  String get allocationPaymentRequestedAmount => 'Payment requested';
 
   @override
   String get allocationPaymentRequestedRiderSeesNow => 'Payment requested — the rider sees it now';
@@ -218,14 +225,67 @@ class AppL10nEn extends AppL10n {
   String get allocationPhotoUploaded => 'Uploaded';
 
   @override
+  String get allocationPlanAcceptedChip => 'Accepted by rider';
+
+  @override
+  String get allocationPlanAwaitingBody =>
+      'Waiting for the rider to accept this plan in their app. You can still change it until they accept.';
+
+  @override
+  String get allocationPlanAwaitingChip => 'Waiting for rider';
+
+  @override
+  String get allocationPlanCouldNotLoad => 'Couldn\'t load rental plans';
+
+  @override
+  String get allocationPlanExchangeBody =>
+      'This scooter replaces one from an exchange. The rider\'s exchange plan carries over, so there\'s no new plan or deposit to collect.';
+
+  @override
+  String get allocationPlanExchangeChip => 'Exchange plan';
+
+  @override
+  String get allocationPlanExpiredBody =>
+      'The plan offer expired or was replaced. Choose a plan again and send it to the rider.';
+
+  @override
+  String get allocationPlanNoneBody =>
+      'No published rental plan matches this scooter and hub. Ask your admin to publish a rate card.';
+
+  @override
+  String get allocationPlanNoneTitle => 'No plans available';
+
+  @override
+  String get allocationPlanNotChosenBody =>
+      'Choose the rental plan for this rider. They review and accept it in their app, and the payment is worked out from it.';
+
+  @override
+  String get allocationPlanNotChosenChip => 'Not chosen';
+
+  @override
+  String get allocationPlanPickSubtitle => 'Prices are worked out for this rider, scooter and hub.';
+
+  @override
+  String get allocationPlanPickTitle => 'Choose a rental plan';
+
+  @override
+  String get allocationPlanSend => 'Send to rider';
+
+  @override
+  String get allocationPlanSentSnack => 'Plan sent. The rider can accept it in their app.';
+
+  @override
+  String get allocationPlanTitle => 'Rental plan';
+
+  @override
+  String get allocationPlanWaitingButton => 'Waiting for rider to accept';
+
+  @override
   String get allocationRaiseDepositFeesRiderPays =>
-      'You raise the deposit and fees; the rider pays and submits the reference; you verify it.';
+      'You choose the rental plan; the rider accepts it, pays and submits the reference; you verify it.';
 
   @override
   String get allocationReason => 'Reason';
-
-  @override
-  String get allocationRentalFeeWeek => 'Rental fee (week)';
 
   @override
   String get allocationRequestVehicle => 'Request the vehicle';
@@ -263,6 +323,11 @@ class AppL10nEn extends AppL10n {
   String get allocationRoad => 'On road';
 
   @override
+  String allocationScooterAge(int months) {
+    return 'Scooter age (months): $months';
+  }
+
+  @override
   String get allocationSearchRiderNameCodeMobile => 'Search rider name, code or mobile';
 
   @override
@@ -270,9 +335,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationSearchRiderVehicleNumber => 'Search rider or vehicle number';
-
-  @override
-  String get allocationSecurityDeposit => 'Security deposit';
 
   @override
   String get allocationSendPaymentRequest => 'Send payment request';
@@ -326,9 +388,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationWaitingRiderTraining => 'Waiting for rider: training';
-
-  @override
-  String get allocationWhatRiderPaysBeforeHandover => 'What the rider pays before the handover';
 
   @override
   String get allocationWhatWasAllocated => 'What was allocated';
@@ -1214,6 +1273,22 @@ class AppL10nEn extends AppL10n {
   String get deploymentPayScooter => 'Pay for your scooter';
 
   @override
+  String get deploymentPlanAcceptedSnack => 'Plan accepted. Your fleet manager will ask for payment next.';
+
+  @override
+  String get deploymentPlanCouldNotLoad => 'Couldn\'t load your plan';
+
+  @override
+  String get deploymentPlanIntro =>
+      'Your fleet manager picked this plan for you. Check the rent and what you pay today, read the terms, then accept to continue.';
+
+  @override
+  String get deploymentPlanNextPayment => 'You\'ve accepted this plan. Your fleet manager will ask for payment next.';
+
+  @override
+  String get deploymentPlanTitle => 'Your rental plan';
+
+  @override
   String get deploymentPreparingScooter => 'Preparing your scooter';
 
   @override
@@ -1266,6 +1341,9 @@ class AppL10nEn extends AppL10n {
   String deploymentWritingPdi(String vehicle) {
     return 'Your fleet manager is writing up the pre-delivery inspection for $vehicle. You will check it over next.';
   }
+
+  @override
+  String get deploymentYourPlan => 'Your plan';
 
   @override
   String get earningsAchieved => 'Achieved';
@@ -2572,6 +2650,12 @@ class AppL10nEn extends AppL10n {
   String get onboardingUploadRejectedAgain => 'Upload the rejected documents again before you submit.';
 
   @override
+  String get paymentRefundableDeposit => 'Refundable deposit';
+
+  @override
+  String get paymentRentAndFees => 'Rent and fees';
+
+  @override
   String get paymentsAllClear => 'You are all paid up';
 
   @override
@@ -2661,6 +2745,133 @@ class AppL10nEn extends AppL10n {
   @override
   String pdiInspectedBy(String partner) {
     return 'Inspected by $partner';
+  }
+
+  @override
+  String get planAccept => 'Accept plan';
+
+  @override
+  String get planBatteryDeposit => 'Battery security deposit';
+
+  @override
+  String get planConsent => 'I have read this plan and its terms, and I agree to them';
+
+  @override
+  String get planCustom => 'Custom plan';
+
+  @override
+  String get planDaily => 'Daily plan';
+
+  @override
+  String planDays(int count) {
+    return '$count-day plan';
+  }
+
+  @override
+  String get planDiscount => 'Discount';
+
+  @override
+  String get planErrorAgreementMismatch => 'This rental doesn\'t match the scooter. Contact your fleet manager.';
+
+  @override
+  String get planErrorAgreementNotActive => 'Your rental isn\'t active yet, so this can\'t be done now.';
+
+  @override
+  String get planErrorAgreementNotReady => 'The accepted plan isn\'t ready for handover. Refresh and try again.';
+
+  @override
+  String get planErrorDepositNotConfigured =>
+      'No scooter security deposit is set up for this plan. Ask your admin to add one, even if it\'s zero.';
+
+  @override
+  String get planErrorExchangePlan => 'This is an exchange scooter, so its plan is already agreed.';
+
+  @override
+  String get planErrorFeeNotConfigured =>
+      'No onboarding fee is set up for this plan. Ask your admin to add one, even if it\'s zero.';
+
+  @override
+  String get planErrorFleetRequestRequired => 'Request the scooter before asking for payment.';
+
+  @override
+  String get planErrorOfferNotValid => 'This plan offer is no longer valid. Ask for a new one.';
+
+  @override
+  String get planErrorPaymentReferenceRequired => 'The rider hasn\'t sent a payment reference yet.';
+
+  @override
+  String get planErrorPaymentStale => 'The amount has changed. Refresh and ask for payment again.';
+
+  @override
+  String get planErrorRequired => 'Choose a rental plan and get the rider to accept it first.';
+
+  @override
+  String get planErrorSelectionChanged => 'Another plan was just chosen. Refresh and try again.';
+
+  @override
+  String get planErrorSelectionClosed => 'The plan can\'t be changed any more.';
+
+  @override
+  String get planErrorTermsChanged => 'The plan terms changed. Refresh and accept again.';
+
+  @override
+  String get planFortnightly => 'Fortnightly plan';
+
+  @override
+  String get planFree => 'Free';
+
+  @override
+  String get planIncluded => 'Included';
+
+  @override
+  String get planInsurance => 'Insurance';
+
+  @override
+  String get planMonthly => 'Monthly plan';
+
+  @override
+  String get planOfferNotLive => 'This offer is no longer open. Your fleet manager will send a new one.';
+
+  @override
+  String get planOnboardingFee => 'Onboarding fee';
+
+  @override
+  String get planPayableToday => 'Pay today';
+
+  @override
+  String get planQuarterly => 'Quarterly plan';
+
+  @override
+  String planRefundableNote(String amount) {
+    return 'Includes $amount refundable deposit';
+  }
+
+  @override
+  String get planRent => 'Rent';
+
+  @override
+  String get planScooterAgeAdjustment => 'Scooter age adjustment';
+
+  @override
+  String get planScooterDeposit => 'Scooter security deposit';
+
+  @override
+  String get planTermsTitle => 'Plan terms';
+
+  @override
+  String planUsageRate(String rate, String unit) {
+    return '$rate per $unit';
+  }
+
+  @override
+  String get planValidUntil => 'Offer valid until';
+
+  @override
+  String get planWeekly => 'Weekly plan';
+
+  @override
+  String planWeeks(int count) {
+    return '$count-week plan';
   }
 
   @override

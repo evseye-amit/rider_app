@@ -15,6 +15,8 @@ abstract interface class DeploymentRepository {
 
   Future<Result<DeploymentWorkflow>> acceptPdi(String allocationId, List<PdiItemResponse> items);
 
+  Future<Result<CommercialAgreement>> acceptPlan(String offerId, {required String termsVersion});
+
   Future<Result<List<TrainingItem>>> training(String allocationId);
 
   Future<Result<DeploymentWorkflow>> markTrainingViewed(String allocationId, String contentCode);

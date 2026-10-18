@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/session/rider_session_provider.dart';
 import '../providers/deployment_provider.dart';
+import '../widgets/plan_widgets.dart';
 
 class WaitingPage extends ConsumerStatefulWidget {
   const WaitingPage({super.key});
@@ -159,6 +160,41 @@ class _WaitingPageState extends ConsumerState<WaitingPage> with SingleTickerProv
                   ],
                 ),
               ),
+            if (current.commercial?.agreement case final CommercialAgreement agreement) ...[
+              const Gap.lg(),
+              ModuleCard(
+                title: context.l10n.deploymentYourPlan,
+                leading: const IconTile(
+                  icon: Icons.price_change_rounded,
+                  tone: AppColors.success,
+                  solid: true,
+                  size: 28,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    PlanSummary(breakdown: agreement.breakdown),
+                    if (current.status == DeploymentStatus.riderWaiting ||
+                        current.status == DeploymentStatus.fleetRequested) ...[
+                      const Gap.md(),
+                      Text(
+                        context.l10n.deploymentPlanNextPayment,
+                        style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5),
+                      ),
+                    ],
+                    if (!agreement.terms.isEmpty) ...[
+                      const Gap.sm(),
+                      GhostButton(
+                        label: context.l10n.exchangeReadTerms,
+                        icon: Icons.description_rounded,
+                        dense: true,
+                        onPressed: () => showPlanTerms(context, agreement.terms),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ],
             const Gap.lg(),
             _Steps(status: current.status),
             const Gap.xl(),

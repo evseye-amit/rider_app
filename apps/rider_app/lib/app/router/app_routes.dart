@@ -12,6 +12,7 @@ abstract final class Routes {
   static const String onboardingReferralScan = '/onboarding/referral-scan';
 
   static const String deploymentWaiting = '/deployment/waiting';
+  static const String deploymentPlan = '/deployment/plan';
   static const String deploymentPayment = '/deployment/payment';
   static const String deploymentPdi = '/deployment/pdi';
   static const String deploymentTraining = '/deployment/training';

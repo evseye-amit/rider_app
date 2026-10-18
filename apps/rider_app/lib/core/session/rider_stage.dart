@@ -6,6 +6,7 @@ enum RiderStage {
   signedOut,
   onboarding,
   waiting,
+  planAcceptance,
   payment,
   pdi,
   training,
@@ -15,6 +16,7 @@ enum RiderStage {
     signedOut => Routes.login,
     onboarding => Routes.onboarding,
     waiting => Routes.deploymentWaiting,
+    planAcceptance => Routes.deploymentPlan,
     payment => Routes.deploymentPayment,
     pdi => Routes.deploymentPdi,
     training => Routes.deploymentTraining,
@@ -24,6 +26,7 @@ enum RiderStage {
   static RiderStage fromScreen(RiderScreen screen) => switch (screen) {
     RiderScreen.onboarding => onboarding,
     RiderScreen.waiting => waiting,
+    RiderScreen.planAcceptance => planAcceptance,
     RiderScreen.payment => payment,
     RiderScreen.pdi => pdi,
     RiderScreen.training => training,

@@ -17,7 +17,13 @@ abstract interface class AllocationRepository {
 
   Future<Result<DeploymentWorkflow>> requestFleet(String allocationId);
 
-  Future<Result<DeploymentPayment>> askPayment(String allocationId, List<PaymentLineItem> items);
+  Future<Result<DeploymentPayment>> askPayment(String allocationId);
+
+  Future<Result<RentalPlanList>> getPlans(String allocationId, {String? batteryPlanId});
+
+  Future<Result<AllocationCommercial>> selectPlan(String allocationId, RentalPlanOption plan);
+
+  Future<Result<AllocationCommercial>> getCommercial(String allocationId);
 
   Future<Result<DeploymentWorkflow>> verifyPayment(String allocationId);
 

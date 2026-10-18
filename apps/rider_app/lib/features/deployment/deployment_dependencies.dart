@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'data/deployment_repository_impl.dart';
 import 'domain/deployment_repository.dart';
 import 'domain/usecases/accept_pdi.dart';
+import 'domain/usecases/accept_plan.dart';
 import 'domain/usecases/complete_training.dart';
 import 'domain/usecases/get_current_deployment.dart';
 import 'domain/usecases/get_deployment_payment.dart';
@@ -12,8 +13,10 @@ import 'domain/usecases/mark_training_viewed.dart';
 import 'domain/usecases/submit_deployment_payment.dart';
 
 final deploymentRepositoryProvider = Provider<DeploymentRepository>(
-  (ref) => DeploymentRepositoryImpl(ref.watch(deploymentApiProvider)),
+  (ref) => DeploymentRepositoryImpl(ref.watch(deploymentApiProvider), ref.watch(commercialApiProvider)),
 );
+
+final acceptPlanProvider = Provider<AcceptPlan>((ref) => AcceptPlan(ref.watch(deploymentRepositoryProvider)));
 
 final getCurrentDeploymentProvider = Provider<GetCurrentDeployment>(
   (ref) => GetCurrentDeployment(ref.watch(deploymentRepositoryProvider)),

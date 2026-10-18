@@ -15,12 +15,6 @@ class AppL10nKn extends AppL10n {
   String get allocationAddLeastOneItem => 'ಕನಿಷ್ಠ ಒಂದು ವಸ್ತು ಸೇರಿಸಿ';
 
   @override
-  String get allocationAddLeastOneLine => 'ಕನಿಷ್ಠ ಒಂದು ಸಾಲು ಸೇರಿಸಿ';
-
-  @override
-  String get allocationAddLine => 'ಒಂದು ಸಾಲು ಸೇರಿಸಿ';
-
-  @override
   String get allocationAllHubs => 'ಎಲ್ಲಾ ಹಬ್‌ಗಳು';
 
   @override
@@ -30,10 +24,15 @@ class AppL10nKn extends AppL10n {
   String get allocationAllocateVehicleWaitingRiderStart => 'ಪ್ರಾರಂಭಿಸಲು ಕಾಯುತ್ತಿರುವ ರೈಡರ್‌ಗೆ ವಾಹನ ನೀಡಿ.';
 
   @override
-  String get allocationAmount => 'ಮೊತ್ತ';
+  String get allocationAskPayment => 'ಪಾವತಿ ಕೇಳಿ';
 
   @override
-  String get allocationAskPayment => 'ಪಾವತಿ ಕೇಳಿ';
+  String get allocationAskPaymentConfirm =>
+      'ಮೊತ್ತವನ್ನು ರೈಡರ್ ಒಪ್ಪಿದ ಪ್ಲಾನ್‌ನಿಂದ ಲೆಕ್ಕ ಹಾಕಲಾಗುತ್ತದೆ. ರೈಡರ್‌ಗೆ ಪಾವತಿ ವಿನಂತಿ ಕಳುಹಿಸಬೇಕೆ?';
+
+  @override
+  String get allocationAskPaymentExchange =>
+      'ಇದು ಎಕ್ಸ್‌ಚೇಂಜ್ ಸ್ಕೂಟರ್. ಇದರ ಪ್ಲಾನ್ ಈಗಾಗಲೇ ಒಪ್ಪಿಗೆಯಾಗಿದೆ, ಆದ್ದರಿಂದ ಈ ಹಸ್ತಾಂತರಕ್ಕೆ ಏನನ್ನೂ ಸಂಗ್ರಹಿಸುವುದಿಲ್ಲ. ಮುಂದುವರಿಯಬೇಕೆ?';
 
   @override
   String get allocationAssign => 'ನಿಯೋಜಿಸಿ';
@@ -54,10 +53,16 @@ class AppL10nKn extends AppL10n {
   String get allocationBodyPaintwork => 'ಬಾಡಿ ಮತ್ತು ಬಣ್ಣದ ಕೆಲಸ';
 
   @override
+  String get allocationChangePlan => 'ಪ್ಲಾನ್ ಬದಲಿಸಿ';
+
+  @override
   String get allocationChecklistRiderWillAcceptItem => 'ರೈಡರ್ ಒಂದೊಂದಾಗಿ ಒಪ್ಪಿಕೊಳ್ಳುವ ಪಟ್ಟಿ';
 
   @override
   String get allocationChecklistTapToggleMandatory => 'ಪಟ್ಟಿ · ಕಡ್ಡಾಯ ಬದಲಾಯಿಸಲು ಒತ್ತಿ';
+
+  @override
+  String get allocationChoosePlan => 'ಬಾಡಿಗೆ ಪ್ಲಾನ್ ಆಯ್ಕೆಮಾಡಿ';
 
   @override
   String get allocationComplete2 => 'ಪೂರ್ಣಗೊಂಡಿದೆ.';
@@ -65,6 +70,11 @@ class AppL10nKn extends AppL10n {
   @override
   String get allocationConfirmHaveReceivedAmountRider =>
       'ರೈಡರ್ ಉಲ್ಲೇಖ ನೀಡಿದ ಮೊತ್ತ ನಿಮಗೆ ಸಿಕ್ಕಿದೆ ಎಂದು ಖಚಿತಪಡಿಸಿ. ಇದನ್ನು ಹಿಂದಕ್ಕೆ ಪಡೆಯಲಾಗದು.';
+
+  @override
+  String allocationConfirmReceivedAmount(String amount) {
+    return 'ರೈಡರ್‌ನಿಂದ $amount ಸ್ವೀಕರಿಸಿದ್ದೀರಿ ಎಂದು ದೃಢೀಕರಿಸಿ.';
+  }
 
   @override
   String get allocationConfirmsPhotos => 'ವಾಹನದ ಫೋಟೋಗಳು ದಾಖಲಾಗಿವೆ ಎಂದು ಖಚಿತಪಡಿಸುತ್ತದೆ.';
@@ -89,9 +99,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationDeployed => 'ನಿಯೋಜಿಸಲಾಗಿದೆ';
-
-  @override
-  String get allocationEveryLineNeedsLabelAmount => 'ಪ್ರತಿ ಸಾಲಿಗೂ ಹೆಸರು ಮತ್ತು ಶೂನ್ಯಕ್ಕಿಂತ ಹೆಚ್ಚಿನ ಮೊತ್ತ ಬೇಕು';
 
   @override
   String get allocationEveryOnboardedRiderHubsHas =>
@@ -138,9 +145,6 @@ class AppL10nKn extends AppL10n {
   String get allocationInspectionTraining => 'ಪರಿಶೀಲನೆ ಮತ್ತು ತರಬೇತಿ';
 
   @override
-  String get allocationItem => 'ವಸ್ತು';
-
-  @override
   String get allocationLeftSide => 'ಎಡಭಾಗ';
 
   @override
@@ -157,6 +161,9 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationNameWorkPartnerWorkshopInspected => 'ವಾಹನ ಪರಿಶೀಲಿಸಿದ ಕೆಲಸದ ಪಾಲುದಾರ ಅಥವಾ ವರ್ಕ್‌ಶಾಪ್ ಹೆಸರಿಸಿ';
+
+  @override
+  String get allocationNoBatteryPlan => 'ಬ್ಯಾಟರಿ ಪ್ಲಾನ್ ಇಲ್ಲ';
 
   @override
   String get allocationNobodyWaiting => 'ಯಾರೂ ಕಾಯುತ್ತಿಲ್ಲ';
@@ -177,13 +184,13 @@ class AppL10nKn extends AppL10n {
   String get allocationNumber => 'ಸಂಖ್ಯೆ';
 
   @override
-  String get allocationOnboardingFee => 'ನೋಂದಣಿ ಶುಲ್ಕ';
-
-  @override
   String get allocationPaymentReceived => 'ಪಾವತಿ ಬಂದಿದೆಯೆ?';
 
   @override
   String get allocationPaymentRequested => 'ಪಾವತಿ ಕೇಳಲಾಗಿದೆ';
+
+  @override
+  String get allocationPaymentRequestedAmount => 'ಕೇಳಲಾದ ಪಾವತಿ';
 
   @override
   String get allocationPaymentRequestedRiderSeesNow => 'ಪಾವತಿ ಕೇಳಲಾಗಿದೆ, ರೈಡರ್‌ಗೆ ಈಗ ಕಾಣಿಸುತ್ತಿದೆ';
@@ -216,14 +223,67 @@ class AppL10nKn extends AppL10n {
   String get allocationPhotoUploaded => 'ಅಪ್‌ಲೋಡ್ ಆಗಿದೆ';
 
   @override
+  String get allocationPlanAcceptedChip => 'ರೈಡರ್ ಒಪ್ಪಿದ್ದಾರೆ';
+
+  @override
+  String get allocationPlanAwaitingBody =>
+      'ರೈಡರ್ ತಮ್ಮ ಆ್ಯಪ್‌ನಲ್ಲಿ ಈ ಪ್ಲಾನ್ ಒಪ್ಪಲು ಕಾಯಲಾಗುತ್ತಿದೆ. ಅವರು ಒಪ್ಪುವವರೆಗೆ ನೀವು ಇದನ್ನು ಬದಲಿಸಬಹುದು.';
+
+  @override
+  String get allocationPlanAwaitingChip => 'ರೈಡರ್‌ಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ';
+
+  @override
+  String get allocationPlanCouldNotLoad => 'ಬಾಡಿಗೆ ಪ್ಲಾನ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
+  String get allocationPlanExchangeBody =>
+      'ಈ ಸ್ಕೂಟರ್ ಎಕ್ಸ್‌ಚೇಂಜ್‌ನ ಬದಲಿ ಸ್ಕೂಟರ್. ರೈಡರ್‌ನ ಎಕ್ಸ್‌ಚೇಂಜ್ ಪ್ಲಾನ್ ಮುಂದುವರಿಯುತ್ತದೆ, ಆದ್ದರಿಂದ ಹೊಸ ಪ್ಲಾನ್ ಅಥವಾ ಠೇವಣಿ ಸಂಗ್ರಹಿಸಬೇಕಿಲ್ಲ.';
+
+  @override
+  String get allocationPlanExchangeChip => 'ಎಕ್ಸ್‌ಚೇಂಜ್ ಪ್ಲಾನ್';
+
+  @override
+  String get allocationPlanExpiredBody =>
+      'ಪ್ಲಾನ್ ಆಫರ್ ಅವಧಿ ಮುಗಿದಿದೆ ಅಥವಾ ಬದಲಾಗಿದೆ. ಮತ್ತೆ ಪ್ಲಾನ್ ಆಯ್ಕೆಮಾಡಿ ರೈಡರ್‌ಗೆ ಕಳುಹಿಸಿ.';
+
+  @override
+  String get allocationPlanNoneBody =>
+      'ಈ ಸ್ಕೂಟರ್ ಮತ್ತು ಹಬ್‌ಗೆ ಹೊಂದುವ ಪ್ರಕಟಿತ ಬಾಡಿಗೆ ಪ್ಲಾನ್ ಇಲ್ಲ. ರೇಟ್ ಕಾರ್ಡ್ ಪ್ರಕಟಿಸಲು ನಿಮ್ಮ ಅಡ್ಮಿನ್‌ಗೆ ಹೇಳಿ.';
+
+  @override
+  String get allocationPlanNoneTitle => 'ಯಾವುದೇ ಪ್ಲಾನ್ ಲಭ್ಯವಿಲ್ಲ';
+
+  @override
+  String get allocationPlanNotChosenBody =>
+      'ಈ ರೈಡರ್‌ಗೆ ಬಾಡಿಗೆ ಪ್ಲಾನ್ ಆಯ್ಕೆಮಾಡಿ. ರೈಡರ್ ಅದನ್ನು ತಮ್ಮ ಆ್ಯಪ್‌ನಲ್ಲಿ ನೋಡಿ ಒಪ್ಪುತ್ತಾರೆ, ಮತ್ತು ಪಾವತಿಯನ್ನು ಅದರಿಂದಲೇ ಲೆಕ್ಕ ಹಾಕಲಾಗುತ್ತದೆ.';
+
+  @override
+  String get allocationPlanNotChosenChip => 'ಆಯ್ಕೆಮಾಡಿಲ್ಲ';
+
+  @override
+  String get allocationPlanPickSubtitle => 'ಬೆಲೆಗಳನ್ನು ಈ ರೈಡರ್, ಸ್ಕೂಟರ್ ಮತ್ತು ಹಬ್‌ಗೆ ಲೆಕ್ಕ ಹಾಕಲಾಗುತ್ತದೆ.';
+
+  @override
+  String get allocationPlanPickTitle => 'ಬಾಡಿಗೆ ಪ್ಲಾನ್ ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String get allocationPlanSend => 'ರೈಡರ್‌ಗೆ ಕಳುಹಿಸಿ';
+
+  @override
+  String get allocationPlanSentSnack => 'ಪ್ಲಾನ್ ಕಳುಹಿಸಲಾಗಿದೆ. ರೈಡರ್ ತಮ್ಮ ಆ್ಯಪ್‌ನಲ್ಲಿ ಒಪ್ಪಬಹುದು.';
+
+  @override
+  String get allocationPlanTitle => 'ಬಾಡಿಗೆ ಪ್ಲಾನ್';
+
+  @override
+  String get allocationPlanWaitingButton => 'ರೈಡರ್ ಒಪ್ಪಿಗೆಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ';
+
+  @override
   String get allocationRaiseDepositFeesRiderPays =>
-      'ನೀವು ಠೇವಣಿ ಮತ್ತು ಶುಲ್ಕ ಕೇಳುತ್ತೀರಿ, ರೈಡರ್ ಪಾವತಿಸಿ ಉಲ್ಲೇಖ ನೀಡುತ್ತಾರೆ, ನೀವು ಅದನ್ನು ಪರಿಶೀಲಿಸುತ್ತೀರಿ.';
+      'ನೀವು ಬಾಡಿಗೆ ಪ್ಲಾನ್ ಆಯ್ಕೆಮಾಡುತ್ತೀರಿ; ರೈಡರ್ ಅದನ್ನು ಒಪ್ಪಿ, ಪಾವತಿಸಿ ರೆಫರೆನ್ಸ್ ಕಳುಹಿಸುತ್ತಾರೆ; ನೀವು ಅದನ್ನು ಪರಿಶೀಲಿಸುತ್ತೀರಿ.';
 
   @override
   String get allocationReason => 'ಕಾರಣ';
-
-  @override
-  String get allocationRentalFeeWeek => 'ಬಾಡಿಗೆ (ವಾರ)';
 
   @override
   String get allocationRequestVehicle => 'ವಾಹನ ಕೇಳಿ';
@@ -261,6 +321,11 @@ class AppL10nKn extends AppL10n {
   String get allocationRoad => 'ರಸ್ತೆಯಲ್ಲಿ';
 
   @override
+  String allocationScooterAge(int months) {
+    return 'ಸ್ಕೂಟರ್ ವಯಸ್ಸು (ತಿಂಗಳು): $months';
+  }
+
+  @override
   String get allocationSearchRiderNameCodeMobile => 'ರೈಡರ್ ಹೆಸರು, ಕೋಡ್ ಅಥವಾ ಮೊಬೈಲ್ ಹುಡುಕಿ';
 
   @override
@@ -268,9 +333,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationSearchRiderVehicleNumber => 'ರೈಡರ್ ಅಥವಾ ವಾಹನ ಸಂಖ್ಯೆ ಹುಡುಕಿ';
-
-  @override
-  String get allocationSecurityDeposit => 'ಭದ್ರತಾ ಠೇವಣಿ';
 
   @override
   String get allocationSendPaymentRequest => 'ಪಾವತಿ ಮನವಿ ಕಳುಹಿಸಿ';
@@ -324,9 +386,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationWaitingRiderTraining => 'ರೈಡರ್‌ಗಾಗಿ ಕಾಯುತ್ತಿದೆ: ತರಬೇತಿ';
-
-  @override
-  String get allocationWhatRiderPaysBeforeHandover => 'ಹಸ್ತಾಂತರದ ಮೊದಲು ರೈಡರ್ ಏನು ಪಾವತಿಸುತ್ತಾರೆ';
 
   @override
   String get allocationWhatWasAllocated => 'ಏನು ನೀಡಲಾಗಿತ್ತು';
@@ -1216,6 +1275,22 @@ class AppL10nKn extends AppL10n {
   String get deploymentPayScooter => 'ನಿಮ್ಮ ಸ್ಕೂಟರ್‌ಗೆ ಪಾವತಿಸಿ';
 
   @override
+  String get deploymentPlanAcceptedSnack => 'ಪ್ಲಾನ್ ಒಪ್ಪಲಾಗಿದೆ. ಮುಂದೆ ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಪಾವತಿ ಕೇಳುತ್ತಾರೆ.';
+
+  @override
+  String get deploymentPlanCouldNotLoad => 'ನಿಮ್ಮ ಪ್ಲಾನ್ ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
+
+  @override
+  String get deploymentPlanIntro =>
+      'ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ನಿಮಗಾಗಿ ಈ ಪ್ಲಾನ್ ಆಯ್ಕೆಮಾಡಿದ್ದಾರೆ. ಬಾಡಿಗೆ ಮತ್ತು ಇಂದು ಪಾವತಿಸಬೇಕಾದ ಮೊತ್ತ ನೋಡಿ, ನಿಯಮಗಳನ್ನು ಓದಿ, ನಂತರ ಮುಂದುವರಿಯಲು ಒಪ್ಪಿ.';
+
+  @override
+  String get deploymentPlanNextPayment => 'ನೀವು ಈ ಪ್ಲಾನ್ ಒಪ್ಪಿದ್ದೀರಿ. ಮುಂದೆ ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಪಾವತಿ ಕೇಳುತ್ತಾರೆ.';
+
+  @override
+  String get deploymentPlanTitle => 'ನಿಮ್ಮ ಬಾಡಿಗೆ ಪ್ಲಾನ್';
+
+  @override
   String get deploymentPreparingScooter => 'ನಿಮ್ಮ ಸ್ಕೂಟರ್ ಸಿದ್ಧವಾಗುತ್ತಿದೆ';
 
   @override
@@ -1268,6 +1343,9 @@ class AppL10nKn extends AppL10n {
   String deploymentWritingPdi(String vehicle) {
     return 'ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ $vehicle ನ ವಿತರಣಾಪೂರ್ವ ಪರಿಶೀಲನೆ ಬರೆಯುತ್ತಿದ್ದಾರೆ. ಮುಂದೆ ನೀವು ಅದನ್ನು ನೋಡುತ್ತೀರಿ.';
   }
+
+  @override
+  String get deploymentYourPlan => 'ನಿಮ್ಮ ಪ್ಲಾನ್';
 
   @override
   String get earningsAchieved => 'ಸಾಧಿಸಲಾಗಿದೆ';
@@ -2574,6 +2652,12 @@ class AppL10nKn extends AppL10n {
   String get onboardingUploadRejectedAgain => 'ಸಲ್ಲಿಸುವ ಮೊದಲು ತಿರಸ್ಕೃತ ದಾಖಲೆಗಳನ್ನು ಮತ್ತೆ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ.';
 
   @override
+  String get paymentRefundableDeposit => 'ಮರುಪಾವತಿಸಬಹುದಾದ ಠೇವಣಿ';
+
+  @override
+  String get paymentRentAndFees => 'ಬಾಡಿಗೆ ಮತ್ತು ಶುಲ್ಕಗಳು';
+
+  @override
   String get paymentsAllClear => 'ನಿಮ್ಮ ಎಲ್ಲಾ ಪಾವತಿ ಆಗಿದೆ';
 
   @override
@@ -2663,6 +2747,133 @@ class AppL10nKn extends AppL10n {
   @override
   String pdiInspectedBy(String partner) {
     return '$partner ಪರಿಶೀಲಿಸಿದ್ದಾರೆ';
+  }
+
+  @override
+  String get planAccept => 'ಪ್ಲಾನ್ ಒಪ್ಪಿ';
+
+  @override
+  String get planBatteryDeposit => 'ಬ್ಯಾಟರಿ ಭದ್ರತಾ ಠೇವಣಿ';
+
+  @override
+  String get planConsent => 'ನಾನು ಈ ಪ್ಲಾನ್ ಮತ್ತು ಅದರ ನಿಯಮಗಳನ್ನು ಓದಿದ್ದೇನೆ ಮತ್ತು ಒಪ್ಪುತ್ತೇನೆ';
+
+  @override
+  String get planCustom => 'ಕಸ್ಟಮ್ ಪ್ಲಾನ್';
+
+  @override
+  String get planDaily => 'ದೈನಂದಿನ ಪ್ಲಾನ್';
+
+  @override
+  String planDays(int count) {
+    return '$count ದಿನಗಳ ಪ್ಲಾನ್';
+  }
+
+  @override
+  String get planDiscount => 'ರಿಯಾಯಿತಿ';
+
+  @override
+  String get planErrorAgreementMismatch => 'ಈ ಬಾಡಿಗೆ ಸ್ಕೂಟರ್‌ಗೆ ಹೊಂದುತ್ತಿಲ್ಲ. ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಅನ್ನು ಸಂಪರ್ಕಿಸಿ.';
+
+  @override
+  String get planErrorAgreementNotActive => 'ನಿಮ್ಮ ಬಾಡಿಗೆ ಇನ್ನೂ ಸಕ್ರಿಯವಾಗಿಲ್ಲ, ಆದ್ದರಿಂದ ಇದನ್ನು ಈಗ ಮಾಡಲಾಗುವುದಿಲ್ಲ.';
+
+  @override
+  String get planErrorAgreementNotReady => 'ಒಪ್ಪಿದ ಪ್ಲಾನ್ ಹಸ್ತಾಂತರಕ್ಕೆ ಸಿದ್ಧವಾಗಿಲ್ಲ. ರಿಫ್ರೆಶ್ ಮಾಡಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get planErrorDepositNotConfigured =>
+      'ಈ ಪ್ಲಾನ್‌ಗೆ ಸ್ಕೂಟರ್ ಭದ್ರತಾ ಠೇವಣಿ ಹೊಂದಿಸಿಲ್ಲ. ಶೂನ್ಯವಾದರೂ ಅದನ್ನು ಸೇರಿಸಲು ನಿಮ್ಮ ಅಡ್ಮಿನ್‌ಗೆ ಹೇಳಿ.';
+
+  @override
+  String get planErrorExchangePlan => 'ಇದು ಎಕ್ಸ್‌ಚೇಂಜ್ ಸ್ಕೂಟರ್, ಆದ್ದರಿಂದ ಇದರ ಪ್ಲಾನ್ ಈಗಾಗಲೇ ಒಪ್ಪಿಗೆಯಾಗಿದೆ.';
+
+  @override
+  String get planErrorFeeNotConfigured =>
+      'ಈ ಪ್ಲಾನ್‌ಗೆ ಆನ್‌ಬೋರ್ಡಿಂಗ್ ಶುಲ್ಕ ಹೊಂದಿಸಿಲ್ಲ. ಶೂನ್ಯವಾದರೂ ಅದನ್ನು ಸೇರಿಸಲು ನಿಮ್ಮ ಅಡ್ಮಿನ್‌ಗೆ ಹೇಳಿ.';
+
+  @override
+  String get planErrorFleetRequestRequired => 'ಪಾವತಿ ಕೇಳುವ ಮೊದಲು ಸ್ಕೂಟರ್‌ಗೆ ವಿನಂತಿಸಿ.';
+
+  @override
+  String get planErrorOfferNotValid => 'ಈ ಪ್ಲಾನ್ ಆಫರ್ ಈಗ ಮಾನ್ಯವಾಗಿಲ್ಲ. ಹೊಸದನ್ನು ಕೇಳಿ.';
+
+  @override
+  String get planErrorPaymentReferenceRequired => 'ರೈಡರ್ ಇನ್ನೂ ಪಾವತಿ ರೆಫರೆನ್ಸ್ ಕಳುಹಿಸಿಲ್ಲ.';
+
+  @override
+  String get planErrorPaymentStale => 'ಮೊತ್ತ ಬದಲಾಗಿದೆ. ರಿಫ್ರೆಶ್ ಮಾಡಿ ಮತ್ತೆ ಪಾವತಿ ಕೇಳಿ.';
+
+  @override
+  String get planErrorRequired => 'ಮೊದಲು ಬಾಡಿಗೆ ಪ್ಲಾನ್ ಆಯ್ಕೆಮಾಡಿ ಮತ್ತು ರೈಡರ್ ಅದನ್ನು ಒಪ್ಪುವಂತೆ ಮಾಡಿ.';
+
+  @override
+  String get planErrorSelectionChanged => 'ಈಗಷ್ಟೇ ಬೇರೊಂದು ಪ್ಲಾನ್ ಆಯ್ಕೆಯಾಗಿದೆ. ರಿಫ್ರೆಶ್ ಮಾಡಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get planErrorSelectionClosed => 'ಪ್ಲಾನ್ ಅನ್ನು ಇನ್ನು ಬದಲಿಸಲಾಗುವುದಿಲ್ಲ.';
+
+  @override
+  String get planErrorTermsChanged => 'ಪ್ಲಾನ್ ನಿಯಮಗಳು ಬದಲಾಗಿವೆ. ರಿಫ್ರೆಶ್ ಮಾಡಿ ಮತ್ತೆ ಒಪ್ಪಿ.';
+
+  @override
+  String get planFortnightly => 'ಹದಿನೈದು ದಿನಗಳ ಪ್ಲಾನ್';
+
+  @override
+  String get planFree => 'ಉಚಿತ';
+
+  @override
+  String get planIncluded => 'ಒಳಗೊಂಡಿದೆ';
+
+  @override
+  String get planInsurance => 'ವಿಮೆ';
+
+  @override
+  String get planMonthly => 'ಮಾಸಿಕ ಪ್ಲಾನ್';
+
+  @override
+  String get planOfferNotLive => 'ಈ ಆಫರ್ ಈಗ ತೆರೆದಿಲ್ಲ. ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಹೊಸದನ್ನು ಕಳುಹಿಸುತ್ತಾರೆ.';
+
+  @override
+  String get planOnboardingFee => 'ಆನ್‌ಬೋರ್ಡಿಂಗ್ ಶುಲ್ಕ';
+
+  @override
+  String get planPayableToday => 'ಇಂದು ಪಾವತಿಸಿ';
+
+  @override
+  String get planQuarterly => 'ತ್ರೈಮಾಸಿಕ ಪ್ಲಾನ್';
+
+  @override
+  String planRefundableNote(String amount) {
+    return 'ಇದರಲ್ಲಿ $amount ಮರುಪಾವತಿಸಬಹುದಾದ ಠೇವಣಿ ಸೇರಿದೆ';
+  }
+
+  @override
+  String get planRent => 'ಬಾಡಿಗೆ';
+
+  @override
+  String get planScooterAgeAdjustment => 'ಸ್ಕೂಟರ್ ವಯಸ್ಸಿನ ಹೊಂದಾಣಿಕೆ';
+
+  @override
+  String get planScooterDeposit => 'ಸ್ಕೂಟರ್ ಭದ್ರತಾ ಠೇವಣಿ';
+
+  @override
+  String get planTermsTitle => 'ಪ್ಲಾನ್ ನಿಯಮಗಳು';
+
+  @override
+  String planUsageRate(String rate, String unit) {
+    return 'ಪ್ರತಿ $unitಗೆ $rate';
+  }
+
+  @override
+  String get planValidUntil => 'ಆಫರ್ ಈ ಸಮಯದವರೆಗೆ ಮಾನ್ಯ';
+
+  @override
+  String get planWeekly => 'ಸಾಪ್ತಾಹಿಕ ಪ್ಲಾನ್';
+
+  @override
+  String planWeeks(int count) {
+    return '$count ವಾರಗಳ ಪ್ಲಾನ್';
   }
 
   @override

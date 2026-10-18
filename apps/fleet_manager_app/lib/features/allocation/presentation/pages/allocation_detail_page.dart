@@ -10,6 +10,7 @@ import '../../../../app/router/app_routes.dart';
 import '../../allocation_dependencies.dart';
 import '../providers/deployment_detail_provider.dart';
 import '../widgets/allocation_widgets.dart';
+import '../widgets/rental_plan_widgets.dart';
 
 class AllocationDetailPage extends ConsumerWidget {
   const AllocationDetailPage({required this.requestId, super.key});
@@ -71,7 +72,7 @@ class _Loaded extends ConsumerWidget {
       bandColor: AppColors.ink,
       bottomPadding: 120,
       onRefresh: () => ref.read(deploymentDetailProvider(allocationId).notifier).refresh(silent: true),
-      band: _Band(request: request),
+      band: _Band(detail: detail),
       bottomNavigationBar: _Footer(allocationId: allocationId, detail: detail),
       children: [
         OverlapModuleCard(
@@ -137,6 +138,15 @@ class _Loaded extends ConsumerWidget {
           ),
         ),
         const Gap.lg(),
+        if (status.beforeInspection) ...[
+          RentalPlanCard(
+            commercial: detail.commercial,
+            isExchange: request.isExchangeReplacement,
+            paymentTotal: _planOpen(status) ? null : request.workflow?.paymentTotal,
+            onChange: detail.busy ? null : () => _choosePlan(context, ref, allocationId),
+          ),
+          const Gap.lg(),
+        ],
         ModuleCard(
           title: context.l10n.commonHandover,
           leading: const IconTile(icon: Icons.timeline_rounded, solid: true, size: 28),
@@ -158,8 +168,40 @@ class _Loaded extends ConsumerWidget {
   }
 }
 
-String _nextActionLabel(AppL10n l10n, DeploymentStatus status) => switch (status) {
-  DeploymentStatus.riderWaiting || DeploymentStatus.fleetRequested => l10n.allocationAskPayment,
+enum _PlanStep { choose, awaitingRider, ready }
+
+bool _planOpen(DeploymentStatus status) =>
+    status == DeploymentStatus.riderWaiting || status == DeploymentStatus.fleetRequested;
+
+_PlanStep _planStep(DeploymentDetail detail) {
+  final DeploymentAllocation request = detail.request;
+  final AllocationCommercial? commercial = detail.commercial;
+  if (request.isExchangeReplacement || (commercial?.isAccepted ?? request.rentalAgreementId != null)) {
+    return _PlanStep.ready;
+  }
+  if (commercial?.awaitingRider ?? request.commercialOfferId != null) return _PlanStep.awaitingRider;
+  return _PlanStep.choose;
+}
+
+Future<void> _choosePlan(BuildContext context, WidgetRef ref, String allocationId) async {
+  final RentalPlanOption? plan = await RentalPlanPicker.show(context, allocationId: allocationId);
+  if (plan == null || !context.mounted) return;
+  final Result<void> result = await ref.read(deploymentDetailProvider(allocationId).notifier).selectPlan(plan);
+  if (!context.mounted) return;
+  switch (result) {
+    case Ok<void>():
+      AppSnack.success(context, context.l10n.allocationPlanSentSnack);
+    case Err<void>(:final failure):
+      AppSnack.error(context, failure.message);
+  }
+}
+
+String _nextActionLabel(AppL10n l10n, DeploymentDetail detail) => switch (detail.status) {
+  DeploymentStatus.riderWaiting || DeploymentStatus.fleetRequested => switch (_planStep(detail)) {
+    _PlanStep.choose => l10n.allocationChoosePlan,
+    _PlanStep.awaitingRider => l10n.allocationPlanWaitingButton,
+    _PlanStep.ready => l10n.allocationAskPayment,
+  },
   DeploymentStatus.paymentPending => l10n.allocationVerifyPayment,
   DeploymentStatus.paymentPaid => l10n.commonSubmitInspection,
   DeploymentStatus.pdiPendingRider => l10n.allocationWaitingRiderAcceptInspection,
@@ -169,12 +211,13 @@ String _nextActionLabel(AppL10n l10n, DeploymentStatus status) => switch (status
 };
 
 class _Band extends StatelessWidget {
-  const _Band({required this.request});
+  const _Band({required this.detail});
 
-  final DeploymentAllocation request;
+  final DeploymentDetail detail;
 
   @override
   Widget build(BuildContext context) {
+    final DeploymentAllocation request = detail.request;
     final DeploymentStatus status = request.deploymentStatus;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,11 +273,11 @@ class _Band extends StatelessWidget {
         ),
         const Gap.lg(),
         Text(
-          status.waitsOnRider
+          detail.waitsOnRider
               ? context.l10n.allocationWaitingRiderPageRefreshesIts
               : status.isDeployed
               ? context.l10n.allocationComplete2
-              : 'Your move: ${_nextActionLabel(context.l10n, status).toLowerCase()}.',
+              : 'Your move: ${_nextActionLabel(context.l10n, detail).toLowerCase()}.',
           style: AppText.bodySmall.copyWith(color: AppColors.onInkMuted),
         ),
       ],
@@ -568,8 +611,16 @@ class _Footer extends ConsumerWidget {
   }
 
   Future<void> _askPayment(BuildContext context, WidgetRef ref) async {
-    final List<PaymentLineItem>? items = await _PaymentSheet.show(context);
-    if (items == null || !context.mounted) return;
+    final bool confirmed = await AppDialog.confirm(
+      context,
+      title: context.l10n.allocationAskPayment,
+      message: detail.request.isExchangeReplacement
+          ? context.l10n.allocationAskPaymentExchange
+          : context.l10n.allocationAskPaymentConfirm,
+      confirmLabel: context.l10n.allocationSendPaymentRequest,
+      icon: Icons.receipt_long_rounded,
+    );
+    if (!confirmed || !context.mounted) return;
 
     final DeploymentDetailNotifier notifier = _notifier(ref);
     if (detail.status == DeploymentStatus.riderWaiting) {
@@ -580,15 +631,18 @@ class _Footer extends ConsumerWidget {
         return;
       }
     }
-    final Result<void> asked = await notifier.askPayment(items);
+    final Result<void> asked = await notifier.askPayment();
     if (context.mounted) _announce(context, asked, context.l10n.allocationPaymentRequestedRiderSeesNow);
   }
 
   Future<void> _verifyPayment(BuildContext context, WidgetRef ref) async {
+    final num? total = detail.request.workflow?.paymentTotal;
     final bool confirmed = await AppDialog.confirm(
       context,
       title: context.l10n.allocationPaymentReceived,
-      message: context.l10n.allocationConfirmHaveReceivedAmountRider,
+      message: total == null
+          ? context.l10n.allocationConfirmHaveReceivedAmountRider
+          : context.l10n.allocationConfirmReceivedAmount(Fmt.money(total)),
       confirmLabel: context.l10n.allocationMarkAsPaid,
       icon: Icons.payments_rounded,
       tone: AppColors.success,
@@ -611,11 +665,22 @@ class _Footer extends ConsumerWidget {
     final DeploymentStatus status = detail.status;
     final bool evidenceReady = _photosReady(detail.evidence);
 
+    final _PlanStep step = _planStep(detail);
     final (String label, IconData icon, VoidCallback? onPressed) = switch (status) {
-      DeploymentStatus.riderWaiting || DeploymentStatus.fleetRequested => (
+      DeploymentStatus.riderWaiting || DeploymentStatus.fleetRequested when step == _PlanStep.ready => (
         context.l10n.allocationAskPayment,
         Icons.receipt_long_rounded,
         () => _askPayment(context, ref),
+      ),
+      DeploymentStatus.riderWaiting || DeploymentStatus.fleetRequested when step == _PlanStep.awaitingRider => (
+        context.l10n.allocationPlanWaitingButton,
+        Icons.hourglass_top_rounded,
+        null,
+      ),
+      DeploymentStatus.riderWaiting || DeploymentStatus.fleetRequested => (
+        context.l10n.allocationChoosePlan,
+        Icons.price_change_rounded,
+        () => _choosePlan(context, ref, allocationId),
       ),
       DeploymentStatus.paymentPending => (
         context.l10n.allocationVerifyPayment,
@@ -653,118 +718,6 @@ class _Footer extends ConsumerWidget {
         border: Border(top: BorderSide(color: AppColors.stroke)),
       ),
       child: PrimaryButton(label: label, icon: icon, loading: detail.busy, onPressed: detail.busy ? null : onPressed),
-    );
-  }
-}
-
-class _PaymentSheet extends StatefulWidget {
-  const _PaymentSheet({required this.labels});
-
-  final List<String> labels;
-
-  static Future<List<PaymentLineItem>?> show(BuildContext context) => AppSheet.show<List<PaymentLineItem>>(
-    context,
-    title: context.l10n.allocationAskPayment,
-    subtitle: context.l10n.allocationWhatRiderPaysBeforeHandover,
-    child: _PaymentSheet(
-      labels: [
-        context.l10n.allocationRentalFeeWeek,
-        context.l10n.allocationSecurityDeposit,
-        context.l10n.allocationOnboardingFee,
-      ],
-    ),
-  );
-
-  @override
-  State<_PaymentSheet> createState() => _PaymentSheetState();
-}
-
-class _PaymentSheetState extends State<_PaymentSheet> {
-  static const List<String> _defaultAmounts = ['700', '3000', '500'];
-
-  late final List<(TextEditingController, TextEditingController)> _rows = [
-    for (final (int i, String label) in widget.labels.indexed)
-      (TextEditingController(text: label), TextEditingController(text: _defaultAmounts[i])),
-  ];
-  String? _error;
-
-  @override
-  void dispose() {
-    for (final (TextEditingController label, TextEditingController amount) in _rows) {
-      label.dispose();
-      amount.dispose();
-    }
-    super.dispose();
-  }
-
-  num get _total => _rows.fold<num>(0, (sum, row) => sum + (num.tryParse(row.$2.text.trim()) ?? 0));
-
-  void _submit() {
-    final List<PaymentLineItem> items = [];
-    for (final (TextEditingController label, TextEditingController amount) in _rows) {
-      final String text = label.text.trim();
-      final num? value = num.tryParse(amount.text.trim());
-      if (text.isEmpty && amount.text.trim().isEmpty) continue;
-      if (text.isEmpty || value == null || value <= 0) {
-        setState(() => _error = context.l10n.allocationEveryLineNeedsLabelAmount);
-        return;
-      }
-      items.add(PaymentLineItem(label: text, amount: value));
-    }
-    if (items.isEmpty) {
-      setState(() => _error = context.l10n.allocationAddLeastOneLine);
-      return;
-    }
-    Navigator.of(context).pop(items);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        for (final (TextEditingController label, TextEditingController amount) in _rows) ...[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 3,
-                child: AppTextField(
-                  label: context.l10n.allocationItem,
-                  controller: label,
-                  onChanged: (_) => setState(() => _error = null),
-                ),
-              ),
-              const SizedBox(width: Insets.md),
-              Expanded(
-                flex: 2,
-                child: AppTextField(
-                  label: context.l10n.allocationAmount,
-                  controller: amount,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  prefixText: '₹',
-                  onChanged: (_) => setState(() => _error = null),
-                ),
-              ),
-            ],
-          ),
-          const Gap.md(),
-        ],
-        GhostButton(
-          label: context.l10n.allocationAddLine,
-          icon: Icons.add_rounded,
-          onPressed: () => setState(() => _rows.add((TextEditingController(), TextEditingController()))),
-        ),
-        const Gap.md(),
-        KeyValueRow(label: context.l10n.commonTotal, value: Fmt.money(_total), valueStyle: AppText.titleMedium),
-        if (_error != null) ...[
-          const Gap.sm(),
-          Text(_error!, style: AppText.bodySmall.copyWith(color: AppColors.danger)),
-        ],
-        const Gap.lg(),
-        PrimaryButton(label: context.l10n.allocationSendPaymentRequest, icon: Icons.send_rounded, onPressed: _submit),
-        const Gap.md(),
-      ],
     );
   }
 }

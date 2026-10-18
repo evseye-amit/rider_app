@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../api/api_client.dart';
 import '../api/attendance_api.dart';
 import '../api/auth_api.dart';
+import '../api/commercial_api.dart';
 import '../api/company_api.dart';
 import '../api/deployment_api.dart';
 import '../api/legal_api.dart';
@@ -42,6 +43,8 @@ final authApiProvider = Provider<AuthApi>(
 final riderAppApiProvider = Provider<RiderAppApi>((ref) => RiderAppApi(ref.watch(apiClientProvider)));
 
 final deploymentApiProvider = Provider<DeploymentApi>((ref) => DeploymentApi(ref.watch(apiClientProvider)));
+
+final commercialApiProvider = Provider<CommercialApi>((ref) => CommercialApi(ref.watch(apiClientProvider)));
 
 final mediaApiProvider = Provider<MediaApi>((ref) => MediaApi(ref.watch(apiClientProvider)));
 

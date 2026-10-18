@@ -1,10 +1,12 @@
 import '../l10n/l10n.dart';
 import '../utils/result.dart';
 import 'api_client.dart';
+import 'commercial_api.dart';
 import 'media_api.dart';
 enum RiderScreen {
   onboarding,
   waiting,
+  planAcceptance,
   payment,
   pdi,
   training,
@@ -12,6 +14,7 @@ enum RiderScreen {
 
   static RiderScreen parse(String? wire) => switch (wire?.toUpperCase()) {
         'ONBOARDING' => RiderScreen.onboarding,
+        'PLAN_ACCEPTANCE' => RiderScreen.planAcceptance,
         'PAYMENT' => RiderScreen.payment,
         'PDI' => RiderScreen.pdi,
         'TRAINING' => RiderScreen.training,
@@ -104,6 +107,7 @@ class DeploymentWorkflow {
     required this.pdiChecklist,
     required this.trainingViewedContentCodes,
     this.workPartnerName,
+    this.paymentTotal,
     this.paymentPaidAt,
     this.riderPdiAcceptedAt,
     this.trainingCompletedAt,
@@ -112,6 +116,7 @@ class DeploymentWorkflow {
   });
 
   factory DeploymentWorkflow.fromJson(Map<String, dynamic> json) => DeploymentWorkflow(
+        paymentTotal: json['paymentBreakdown'] is Map ? _num((json['paymentBreakdown'] as Map)['total']) : null,
         id: json['id']?.toString() ?? '',
         allocationId: json['allocationId']?.toString() ?? '',
         status: DeploymentStatus.parse(json['status']?.toString()),
@@ -137,6 +142,7 @@ class DeploymentWorkflow {
   final List<PdiChecklistItem> pdiChecklist;
   final List<String> trainingViewedContentCodes;
   final String? workPartnerName;
+  final num? paymentTotal;
   final DateTime? paymentPaidAt;
   final DateTime? riderPdiAcceptedAt;
   final DateTime? trainingCompletedAt;
@@ -275,6 +281,9 @@ class DeploymentAllocation {
     this.rider,
     this.fleet,
     this.workflow,
+    this.commercialOfferId,
+    this.rentalAgreementId,
+    this.isExchangeReplacement = false,
   });
 
   factory DeploymentAllocation.fromJson(Map<String, dynamic> json) => DeploymentAllocation(
@@ -282,6 +291,9 @@ class DeploymentAllocation {
         fleetId: json['fleetId']?.toString() ?? '',
         riderId: json['riderId']?.toString() ?? '',
         status: json['status']?.toString() ?? '',
+        commercialOfferId: json['commercialOfferId']?.toString(),
+        rentalAgreementId: json['rentalAgreementId']?.toString(),
+        isExchangeReplacement: json['idempotencyKey']?.toString().startsWith('exchange:') ?? false,
         allocatedAt: _date(json['allocatedAt']),
         createdAt: _date(json['createdAt']),
         updatedAt: _date(json['updatedAt']),
@@ -303,6 +315,9 @@ class DeploymentAllocation {
   final DeploymentRider? rider;
   final DeploymentFleet? fleet;
   final DeploymentWorkflow? workflow;
+  final String? commercialOfferId;
+  final String? rentalAgreementId;
+  final bool isExchangeReplacement;
 
   DeploymentStatus get deploymentStatus =>
       workflow?.status ?? (status == 'ACTIVE' ? DeploymentStatus.deployed : DeploymentStatus.unknown);
@@ -318,8 +333,6 @@ class PaymentLineItem {
 
   final String label;
   final num amount;
-
-  Map<String, dynamic> toJson() => {'label': label, 'amount': amount.toStringAsFixed(2)};
 }
 
 class DeploymentPayment {
@@ -329,6 +342,8 @@ class DeploymentPayment {
     required this.currency,
     required this.amount,
     required this.items,
+    this.nonRefundableAmount,
+    this.depositAmount,
     this.provider,
     this.providerReference,
     this.submittedAt,
@@ -343,15 +358,31 @@ class DeploymentPayment {
         json['breakdown'] is Map ? Map<String, dynamic>.from(json['breakdown'] as Map) : const {};
     final Map<String, dynamic>? fleet =
         json['fleet'] is Map ? Map<String, dynamic>.from(json['fleet'] as Map) : null;
+    final num? nonRefundable = _num(breakdown['nonRefundableAmount']);
+    final num? deposits = breakdown['deposits'] is List
+        ? (breakdown['deposits'] as List)
+            .whereType<Map>()
+            .fold<num>(0, (sum, line) => sum + (_num(line['amount']) ?? 0))
+        : null;
+    final List<PaymentLineItem> legacy = (breakdown['items'] as List<dynamic>? ?? const [])
+        .whereType<Map>()
+        .map((e) => PaymentLineItem.fromJson(Map<String, dynamic>.from(e)))
+        .toList(growable: false);
     return DeploymentPayment(
       id: json['id']?.toString() ?? '',
       status: (json['status']?.toString() ?? 'PENDING').toUpperCase(),
       currency: json['currency']?.toString() ?? 'INR',
       amount: _num(json['amount']) ?? 0,
-      items: (breakdown['items'] as List<dynamic>? ?? const [])
-          .whereType<Map>()
-          .map((e) => PaymentLineItem.fromJson(Map<String, dynamic>.from(e)))
-          .toList(growable: false),
+      nonRefundableAmount: nonRefundable,
+      depositAmount: deposits,
+      items: legacy.isNotEmpty
+          ? legacy
+          : [
+              if (nonRefundable != null && nonRefundable > 0)
+                PaymentLineItem(label: ActiveLocale.strings.paymentRentAndFees, amount: nonRefundable),
+              if (deposits != null && deposits > 0)
+                PaymentLineItem(label: ActiveLocale.strings.paymentRefundableDeposit, amount: deposits),
+            ],
       provider: json['provider']?.toString(),
       providerReference: json['providerReference']?.toString(),
       submittedAt: _date(json['submittedAt']),
@@ -368,6 +399,8 @@ class DeploymentPayment {
   final String currency;
   final num amount;
   final List<PaymentLineItem> items;
+  final num? nonRefundableAmount;
+  final num? depositAmount;
   final String? provider;
   final String? providerReference;
   final DateTime? submittedAt;
@@ -383,10 +416,13 @@ class DeploymentPayment {
 }
 
 class RiderDeployment {
-  const RiderDeployment({required this.screen, this.allocation, this.workflow, this.payment});
+  const RiderDeployment({required this.screen, this.allocation, this.workflow, this.payment, this.commercial});
 
   factory RiderDeployment.fromJson(Map<String, dynamic> json) => RiderDeployment(
         screen: RiderScreen.parse(json['screen']?.toString()),
+        commercial: json['commercial'] is Map
+            ? AllocationCommercial.fromJson(Map<String, dynamic>.from(json['commercial'] as Map))
+            : null,
         allocation: json['allocation'] is Map
             ? DeploymentAllocation.fromJson(Map<String, dynamic>.from(json['allocation'] as Map))
             : null,
@@ -402,6 +438,7 @@ class RiderDeployment {
   final DeploymentAllocation? allocation;
   final DeploymentWorkflow? workflow;
   final DeploymentPayment? payment;
+  final AllocationCommercial? commercial;
 
   DeploymentStatus get status => workflow?.status ?? DeploymentStatus.unknown;
 
@@ -690,14 +727,9 @@ class DeploymentApi {
         parse: (data) => DeploymentWorkflow.fromJson(Map<String, dynamic>.from(data as Map)),
       );
 
-  Future<Result<DeploymentPayment>> askPayment(
-    String allocationId, {
-    required List<PaymentLineItem> items,
-    String currency = 'INR',
-  }) =>
-      _client.post<DeploymentPayment>(
+  Future<Result<DeploymentPayment>> askPayment(String allocationId) => _client.post<DeploymentPayment>(
         '$_base/$allocationId/ask-payment',
-        body: {'currency': currency, 'items': items.map((i) => i.toJson()).toList(growable: false)},
+        body: const <String, dynamic>{},
         parse: (data) => DeploymentPayment.fromJson(Map<String, dynamic>.from(data as Map)),
       );
 

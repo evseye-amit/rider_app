@@ -8,14 +8,6 @@
   "@allocationAddLeastOneItem": {
     "description": "Add at least one item"
   },
-  "allocationAddLeastOneLine": "Add at least one line",
-  "@allocationAddLeastOneLine": {
-    "description": "Add at least one line"
-  },
-  "allocationAddLine": "Add a line",
-  "@allocationAddLine": {
-    "description": "Add a line"
-  },
   "allocationAllHubs": "All hubs",
   "@allocationAllHubs": {
     "description": "All hubs"
@@ -28,13 +20,17 @@
   "@allocationAllocateVehicleWaitingRiderStart": {
     "description": "Allocate a vehicle to a waiting rider to start one."
   },
-  "allocationAmount": "Amount",
-  "@allocationAmount": {
-    "description": "Amount"
-  },
   "allocationAskPayment": "Ask for payment",
   "@allocationAskPayment": {
     "description": "Ask for payment"
+  },
+  "allocationAskPaymentConfirm": "The amount is worked out from the plan the rider accepted. Send the payment request to the rider?",
+  "@allocationAskPaymentConfirm": {
+    "description": "The amount is worked out from the plan the rider accepted. Send the payment request to the rider?"
+  },
+  "allocationAskPaymentExchange": "This is an exchange scooter. Its plan is already agreed, so nothing is collected for this handover. Continue?",
+  "@allocationAskPaymentExchange": {
+    "description": "This is an exchange scooter. Its plan is already agreed, so nothing is collected for this handover. Continue?"
   },
   "allocationAssign": "Assign",
   "@allocationAssign": {
@@ -60,6 +56,10 @@
   "@allocationBodyPaintwork": {
     "description": "Body and paintwork"
   },
+  "allocationChangePlan": "Change plan",
+  "@allocationChangePlan": {
+    "description": "Change plan"
+  },
   "allocationChecklistRiderWillAcceptItem": "The checklist the rider will accept item by item",
   "@allocationChecklistRiderWillAcceptItem": {
     "description": "The checklist the rider will accept item by item"
@@ -68,6 +68,10 @@
   "@allocationChecklistTapToggleMandatory": {
     "description": "Checklist · tap to toggle mandatory"
   },
+  "allocationChoosePlan": "Choose rental plan",
+  "@allocationChoosePlan": {
+    "description": "Choose rental plan"
+  },
   "allocationComplete2": "Complete.",
   "@allocationComplete2": {
     "description": "Complete."
@@ -75,6 +79,15 @@
   "allocationConfirmHaveReceivedAmountRider": "Confirm you have received the amount the rider submitted a reference for. This cannot be undone.",
   "@allocationConfirmHaveReceivedAmountRider": {
     "description": "Confirm you have received the amount the rider submitted a reference for. This cannot be undone."
+  },
+  "allocationConfirmReceivedAmount": "Confirm you have received {amount} from the rider.",
+  "@allocationConfirmReceivedAmount": {
+    "description": "Confirm you have received {amount} from the rider.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "allocationConfirmsPhotos": "Confirms the vehicle's photos are on file.",
   "@allocationConfirmsPhotos": {
@@ -107,10 +120,6 @@
   "allocationDeployed": "Deployed",
   "@allocationDeployed": {
     "description": "Deployed"
-  },
-  "allocationEveryLineNeedsLabelAmount": "Every line needs a label and an amount above zero",
-  "@allocationEveryLineNeedsLabelAmount": {
-    "description": "Every line needs a label and an amount above zero"
   },
   "allocationEveryOnboardedRiderHubsHas": "Every onboarded rider in your hubs has a vehicle or a handover under way.",
   "@allocationEveryOnboardedRiderHubsHas": {
@@ -168,10 +177,6 @@
   "@allocationInspectionTraining": {
     "description": "Inspection and training"
   },
-  "allocationItem": "Item",
-  "@allocationItem": {
-    "description": "Item"
-  },
   "allocationLeftSide": "Left side",
   "@allocationLeftSide": {
     "description": "Left side"
@@ -195,6 +200,10 @@
   "allocationNameWorkPartnerWorkshopInspected": "Name the work partner or workshop that inspected the vehicle",
   "@allocationNameWorkPartnerWorkshopInspected": {
     "description": "Name the work partner or workshop that inspected the vehicle"
+  },
+  "allocationNoBatteryPlan": "No battery plan",
+  "@allocationNoBatteryPlan": {
+    "description": "No battery plan"
   },
   "allocationNobodyWaiting": "Nobody waiting",
   "@allocationNobodyWaiting": {
@@ -220,16 +229,16 @@
   "@allocationNumber": {
     "description": "Number"
   },
-  "allocationOnboardingFee": "Onboarding fee",
-  "@allocationOnboardingFee": {
-    "description": "Onboarding fee"
-  },
   "allocationPaymentReceived": "Payment received?",
   "@allocationPaymentReceived": {
     "description": "Payment received?"
   },
   "allocationPaymentRequested": "Payment requested",
   "@allocationPaymentRequested": {
+    "description": "Payment requested"
+  },
+  "allocationPaymentRequestedAmount": "Payment requested",
+  "@allocationPaymentRequestedAmount": {
     "description": "Payment requested"
   },
   "allocationPaymentRequestedRiderSeesNow": "Payment requested — the rider sees it now",
@@ -272,17 +281,81 @@
   "@allocationPhotoUploaded": {
     "description": "Uploaded"
   },
-  "allocationRaiseDepositFeesRiderPays": "You raise the deposit and fees; the rider pays and submits the reference; you verify it.",
+  "allocationPlanAcceptedChip": "Accepted by rider",
+  "@allocationPlanAcceptedChip": {
+    "description": "Accepted by rider"
+  },
+  "allocationPlanAwaitingBody": "Waiting for the rider to accept this plan in their app. You can still change it until they accept.",
+  "@allocationPlanAwaitingBody": {
+    "description": "Waiting for the rider to accept this plan in their app. You can still change it until they accept."
+  },
+  "allocationPlanAwaitingChip": "Waiting for rider",
+  "@allocationPlanAwaitingChip": {
+    "description": "Waiting for rider"
+  },
+  "allocationPlanCouldNotLoad": "Couldn't load rental plans",
+  "@allocationPlanCouldNotLoad": {
+    "description": "Couldn't load rental plans"
+  },
+  "allocationPlanExchangeBody": "This scooter replaces one from an exchange. The rider's exchange plan carries over, so there's no new plan or deposit to collect.",
+  "@allocationPlanExchangeBody": {
+    "description": "This scooter replaces one from an exchange. The rider's exchange plan carries over, so there's no new plan or deposit to collect."
+  },
+  "allocationPlanExchangeChip": "Exchange plan",
+  "@allocationPlanExchangeChip": {
+    "description": "Exchange plan"
+  },
+  "allocationPlanExpiredBody": "The plan offer expired or was replaced. Choose a plan again and send it to the rider.",
+  "@allocationPlanExpiredBody": {
+    "description": "The plan offer expired or was replaced. Choose a plan again and send it to the rider."
+  },
+  "allocationPlanNoneBody": "No published rental plan matches this scooter and hub. Ask your admin to publish a rate card.",
+  "@allocationPlanNoneBody": {
+    "description": "No published rental plan matches this scooter and hub. Ask your admin to publish a rate card."
+  },
+  "allocationPlanNoneTitle": "No plans available",
+  "@allocationPlanNoneTitle": {
+    "description": "No plans available"
+  },
+  "allocationPlanNotChosenBody": "Choose the rental plan for this rider. They review and accept it in their app, and the payment is worked out from it.",
+  "@allocationPlanNotChosenBody": {
+    "description": "Choose the rental plan for this rider. They review and accept it in their app, and the payment is worked out from it."
+  },
+  "allocationPlanNotChosenChip": "Not chosen",
+  "@allocationPlanNotChosenChip": {
+    "description": "Not chosen"
+  },
+  "allocationPlanPickSubtitle": "Prices are worked out for this rider, scooter and hub.",
+  "@allocationPlanPickSubtitle": {
+    "description": "Prices are worked out for this rider, scooter and hub."
+  },
+  "allocationPlanPickTitle": "Choose a rental plan",
+  "@allocationPlanPickTitle": {
+    "description": "Choose a rental plan"
+  },
+  "allocationPlanSend": "Send to rider",
+  "@allocationPlanSend": {
+    "description": "Send to rider"
+  },
+  "allocationPlanSentSnack": "Plan sent. The rider can accept it in their app.",
+  "@allocationPlanSentSnack": {
+    "description": "Plan sent. The rider can accept it in their app."
+  },
+  "allocationPlanTitle": "Rental plan",
+  "@allocationPlanTitle": {
+    "description": "Rental plan"
+  },
+  "allocationPlanWaitingButton": "Waiting for rider to accept",
+  "@allocationPlanWaitingButton": {
+    "description": "Waiting for rider to accept"
+  },
+  "allocationRaiseDepositFeesRiderPays": "You choose the rental plan; the rider accepts it, pays and submits the reference; you verify it.",
   "@allocationRaiseDepositFeesRiderPays": {
-    "description": "You raise the deposit and fees; the rider pays and submits the reference; you verify it."
+    "description": "You choose the rental plan; the rider accepts it, pays and submits the reference; you verify it."
   },
   "allocationReason": "Reason",
   "@allocationReason": {
     "description": "Reason"
-  },
-  "allocationRentalFeeWeek": "Rental fee (week)",
-  "@allocationRentalFeeWeek": {
-    "description": "Rental fee (week)"
   },
   "allocationRequestVehicle": "Request the vehicle",
   "@allocationRequestVehicle": {
@@ -328,6 +401,15 @@
   "@allocationRoad": {
     "description": "On road"
   },
+  "allocationScooterAge": "Scooter age (months): {months}",
+  "@allocationScooterAge": {
+    "description": "Scooter age (months): {months}",
+    "placeholders": {
+      "months": {
+        "type": "int"
+      }
+    }
+  },
   "allocationSearchRiderNameCodeMobile": "Search rider name, code or mobile",
   "@allocationSearchRiderNameCodeMobile": {
     "description": "Search rider name, code or mobile"
@@ -339,10 +421,6 @@
   "allocationSearchRiderVehicleNumber": "Search rider or vehicle number",
   "@allocationSearchRiderVehicleNumber": {
     "description": "Search rider or vehicle number"
-  },
-  "allocationSecurityDeposit": "Security deposit",
-  "@allocationSecurityDeposit": {
-    "description": "Security deposit"
   },
   "allocationSendPaymentRequest": "Send payment request",
   "@allocationSendPaymentRequest": {
@@ -411,10 +489,6 @@
   "allocationWaitingRiderTraining": "Waiting for rider: training",
   "@allocationWaitingRiderTraining": {
     "description": "Waiting for rider: training"
-  },
-  "allocationWhatRiderPaysBeforeHandover": "What the rider pays before the handover",
-  "@allocationWhatRiderPaysBeforeHandover": {
-    "description": "What the rider pays before the handover"
   },
   "allocationWhatWasAllocated": "What was allocated",
   "@allocationWhatWasAllocated": {
@@ -1599,6 +1673,26 @@
   "@deploymentPayScooter": {
     "description": "Pay for your scooter"
   },
+  "deploymentPlanAcceptedSnack": "Plan accepted. Your fleet manager will ask for payment next.",
+  "@deploymentPlanAcceptedSnack": {
+    "description": "Plan accepted. Your fleet manager will ask for payment next."
+  },
+  "deploymentPlanCouldNotLoad": "Couldn't load your plan",
+  "@deploymentPlanCouldNotLoad": {
+    "description": "Couldn't load your plan"
+  },
+  "deploymentPlanIntro": "Your fleet manager picked this plan for you. Check the rent and what you pay today, read the terms, then accept to continue.",
+  "@deploymentPlanIntro": {
+    "description": "Your fleet manager picked this plan for you. Check the rent and what you pay today, read the terms, then accept to continue."
+  },
+  "deploymentPlanNextPayment": "You've accepted this plan. Your fleet manager will ask for payment next.",
+  "@deploymentPlanNextPayment": {
+    "description": "You've accepted this plan. Your fleet manager will ask for payment next."
+  },
+  "deploymentPlanTitle": "Your rental plan",
+  "@deploymentPlanTitle": {
+    "description": "Your rental plan"
+  },
   "deploymentPreparingScooter": "Preparing your scooter",
   "@deploymentPreparingScooter": {
     "description": "Preparing your scooter"
@@ -1671,6 +1765,10 @@
         "type": "String"
       }
     }
+  },
+  "deploymentYourPlan": "Your plan",
+  "@deploymentYourPlan": {
+    "description": "Your plan"
   },
   "earningsAchieved": "Achieved",
   "@earningsAchieved": {
@@ -3433,6 +3531,14 @@
   "@onboardingUploadRejectedAgain": {
     "description": "Snack when the rider submits while a rejected document is still not re-uploaded"
   },
+  "paymentRefundableDeposit": "Refundable deposit",
+  "@paymentRefundableDeposit": {
+    "description": "Refundable deposit"
+  },
+  "paymentRentAndFees": "Rent and fees",
+  "@paymentRentAndFees": {
+    "description": "Rent and fees"
+  },
   "paymentsAllClear": "You are all paid up",
   "@paymentsAllClear": {
     "description": "You are all paid up"
@@ -3555,6 +3661,185 @@
     "placeholders": {
       "partner": {
         "type": "String"
+      }
+    }
+  },
+  "planAccept": "Accept plan",
+  "@planAccept": {
+    "description": "Accept plan"
+  },
+  "planBatteryDeposit": "Battery security deposit",
+  "@planBatteryDeposit": {
+    "description": "Battery security deposit"
+  },
+  "planConsent": "I have read this plan and its terms, and I agree to them",
+  "@planConsent": {
+    "description": "I have read this plan and its terms, and I agree to them"
+  },
+  "planCustom": "Custom plan",
+  "@planCustom": {
+    "description": "Custom plan"
+  },
+  "planDaily": "Daily plan",
+  "@planDaily": {
+    "description": "Daily plan"
+  },
+  "planDays": "{count}-day plan",
+  "@planDays": {
+    "description": "{count}-day plan",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planDiscount": "Discount",
+  "@planDiscount": {
+    "description": "Discount"
+  },
+  "planErrorAgreementMismatch": "This rental doesn't match the scooter. Contact your fleet manager.",
+  "@planErrorAgreementMismatch": {
+    "description": "This rental doesn't match the scooter. Contact your fleet manager."
+  },
+  "planErrorAgreementNotActive": "Your rental isn't active yet, so this can't be done now.",
+  "@planErrorAgreementNotActive": {
+    "description": "Your rental isn't active yet, so this can't be done now."
+  },
+  "planErrorAgreementNotReady": "The accepted plan isn't ready for handover. Refresh and try again.",
+  "@planErrorAgreementNotReady": {
+    "description": "The accepted plan isn't ready for handover. Refresh and try again."
+  },
+  "planErrorDepositNotConfigured": "No scooter security deposit is set up for this plan. Ask your admin to add one, even if it's zero.",
+  "@planErrorDepositNotConfigured": {
+    "description": "No scooter security deposit is set up for this plan. Ask your admin to add one, even if it's zero."
+  },
+  "planErrorExchangePlan": "This is an exchange scooter, so its plan is already agreed.",
+  "@planErrorExchangePlan": {
+    "description": "This is an exchange scooter, so its plan is already agreed."
+  },
+  "planErrorFeeNotConfigured": "No onboarding fee is set up for this plan. Ask your admin to add one, even if it's zero.",
+  "@planErrorFeeNotConfigured": {
+    "description": "No onboarding fee is set up for this plan. Ask your admin to add one, even if it's zero."
+  },
+  "planErrorFleetRequestRequired": "Request the scooter before asking for payment.",
+  "@planErrorFleetRequestRequired": {
+    "description": "Request the scooter before asking for payment."
+  },
+  "planErrorOfferNotValid": "This plan offer is no longer valid. Ask for a new one.",
+  "@planErrorOfferNotValid": {
+    "description": "This plan offer is no longer valid. Ask for a new one."
+  },
+  "planErrorPaymentReferenceRequired": "The rider hasn't sent a payment reference yet.",
+  "@planErrorPaymentReferenceRequired": {
+    "description": "The rider hasn't sent a payment reference yet."
+  },
+  "planErrorPaymentStale": "The amount has changed. Refresh and ask for payment again.",
+  "@planErrorPaymentStale": {
+    "description": "The amount has changed. Refresh and ask for payment again."
+  },
+  "planErrorRequired": "Choose a rental plan and get the rider to accept it first.",
+  "@planErrorRequired": {
+    "description": "Choose a rental plan and get the rider to accept it first."
+  },
+  "planErrorSelectionChanged": "Another plan was just chosen. Refresh and try again.",
+  "@planErrorSelectionChanged": {
+    "description": "Another plan was just chosen. Refresh and try again."
+  },
+  "planErrorSelectionClosed": "The plan can't be changed any more.",
+  "@planErrorSelectionClosed": {
+    "description": "The plan can't be changed any more."
+  },
+  "planErrorTermsChanged": "The plan terms changed. Refresh and accept again.",
+  "@planErrorTermsChanged": {
+    "description": "The plan terms changed. Refresh and accept again."
+  },
+  "planFortnightly": "Fortnightly plan",
+  "@planFortnightly": {
+    "description": "Fortnightly plan"
+  },
+  "planFree": "Free",
+  "@planFree": {
+    "description": "Free"
+  },
+  "planIncluded": "Included",
+  "@planIncluded": {
+    "description": "Included"
+  },
+  "planInsurance": "Insurance",
+  "@planInsurance": {
+    "description": "Insurance"
+  },
+  "planMonthly": "Monthly plan",
+  "@planMonthly": {
+    "description": "Monthly plan"
+  },
+  "planOfferNotLive": "This offer is no longer open. Your fleet manager will send a new one.",
+  "@planOfferNotLive": {
+    "description": "This offer is no longer open. Your fleet manager will send a new one."
+  },
+  "planOnboardingFee": "Onboarding fee",
+  "@planOnboardingFee": {
+    "description": "Onboarding fee"
+  },
+  "planPayableToday": "Pay today",
+  "@planPayableToday": {
+    "description": "Pay today"
+  },
+  "planQuarterly": "Quarterly plan",
+  "@planQuarterly": {
+    "description": "Quarterly plan"
+  },
+  "planRefundableNote": "Includes {amount} refundable deposit",
+  "@planRefundableNote": {
+    "description": "Includes {amount} refundable deposit",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "planRent": "Rent",
+  "@planRent": {
+    "description": "Rent"
+  },
+  "planScooterAgeAdjustment": "Scooter age adjustment",
+  "@planScooterAgeAdjustment": {
+    "description": "Scooter age adjustment"
+  },
+  "planScooterDeposit": "Scooter security deposit",
+  "@planScooterDeposit": {
+    "description": "Scooter security deposit"
+  },
+  "planTermsTitle": "Plan terms",
+  "@planTermsTitle": {
+    "description": "Plan terms"
+  },
+  "planUsageRate": "{rate} per {unit}",
+  "@planUsageRate": {
+    "description": "{rate} per {unit}",
+    "placeholders": {
+      "rate": {
+        "type": "String"
+      },
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "planValidUntil": "Offer valid until",
+  "@planValidUntil": {
+    "description": "Offer valid until"
+  },
+  "planWeekly": "Weekly plan",
+  "@planWeekly": {
+    "description": "Weekly plan"
+  },
+  "planWeeks": "{count}-week plan",
+  "@planWeeks": {
+    "description": "{count}-week plan",
+    "placeholders": {
+      "count": {
+        "type": "int"
       }
     }
   },

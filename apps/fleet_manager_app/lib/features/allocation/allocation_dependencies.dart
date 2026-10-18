@@ -13,6 +13,7 @@ import 'domain/usecases/get_allocation_evidence.dart';
 import 'domain/usecases/get_deployment_request.dart';
 import 'domain/usecases/get_eligible_fleets.dart';
 import 'domain/usecases/get_pending_rider.dart';
+import 'domain/usecases/rental_plan_usecases.dart';
 import 'domain/usecases/request_fleet.dart';
 import 'domain/usecases/rider_verification_usecases.dart';
 import 'domain/usecases/start_return.dart';
@@ -25,6 +26,7 @@ final allocationRepositoryProvider = Provider<AllocationRepository>(
     ref.watch(deploymentApiProvider),
     ref.watch(mediaApiProvider),
     ref.watch(vehicleSubmissionApiProvider),
+    ref.watch(commercialApiProvider),
   ),
 );
 
@@ -85,6 +87,18 @@ final getAllocationEvidenceProvider = Provider<GetAllocationEvidence>(
 final requestFleetProvider = Provider<RequestFleet>((ref) => RequestFleet(ref.watch(allocationRepositoryProvider)));
 
 final askPaymentProvider = Provider<AskPayment>((ref) => AskPayment(ref.watch(allocationRepositoryProvider)));
+
+final getRentalPlansProvider = Provider<GetRentalPlans>(
+  (ref) => GetRentalPlans(ref.watch(allocationRepositoryProvider)),
+);
+
+final selectRentalPlanProvider = Provider<SelectRentalPlan>(
+  (ref) => SelectRentalPlan(ref.watch(allocationRepositoryProvider)),
+);
+
+final getAllocationCommercialProvider = Provider<GetAllocationCommercial>(
+  (ref) => GetAllocationCommercial(ref.watch(allocationRepositoryProvider)),
+);
 
 final verifyPaymentProvider = Provider<VerifyPayment>((ref) => VerifyPayment(ref.watch(allocationRepositoryProvider)));
 

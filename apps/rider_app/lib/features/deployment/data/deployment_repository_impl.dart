@@ -3,12 +3,17 @@ import 'package:evseye_core/evseye_core.dart';
 import '../domain/deployment_repository.dart';
 
 class DeploymentRepositoryImpl implements DeploymentRepository {
-  const DeploymentRepositoryImpl(this._api);
+  const DeploymentRepositoryImpl(this._api, this._commercial);
 
   final DeploymentApi _api;
+  final CommercialApi _commercial;
 
   @override
   Future<Result<RiderDeployment>> current() => _api.riderCurrent();
+
+  @override
+  Future<Result<CommercialAgreement>> acceptPlan(String offerId, {required String termsVersion}) =>
+      _commercial.acceptOffer(offerId, termsVersion: termsVersion);
 
   @override
   Future<Result<RiderWallet>> wallet() => _api.riderWallet();
