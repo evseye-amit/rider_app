@@ -63,6 +63,14 @@ android {
                 variant.buildType.name,
             ).joinToString("-") + ".apk"
         }
+        assembleProvider.configure {
+            doLast {
+                project.copy {
+                    from(variant.outputs.map { it.outputFile })
+                    into(project.layout.buildDirectory.dir("outputs/flutter-apk").get().asFile)
+                }
+            }
+        }
     }
 }
 
