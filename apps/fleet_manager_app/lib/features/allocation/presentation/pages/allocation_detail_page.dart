@@ -12,6 +12,7 @@ import '../providers/allocation_board_provider.dart';
 import '../providers/deployment_detail_provider.dart';
 import '../widgets/allocation_widgets.dart';
 import '../widgets/deployed_dialog.dart';
+import '../widgets/payment_review_sheet.dart';
 import '../widgets/rental_plan_widgets.dart';
 import '../widgets/team_lead_widgets.dart';
 import '../widgets/work_partner_widgets.dart';
@@ -715,6 +716,14 @@ class _Footer extends ConsumerWidget {
   }
 
   Future<void> _verifyPayment(BuildContext context, WidgetRef ref) async {
+    final PaymentDecision? decision = await PaymentReviewSheet.show(context, allocationId: allocationId);
+    if (decision == null || !context.mounted) return;
+    final DeploymentDetailNotifier notifier = _notifier(ref);
+    if (decision.rejectReason case final String reason) {
+      final Result<void> rejected = await notifier.rejectPayment(reason: reason, expectedVersion: decision.version);
+      if (context.mounted) _announce(context, rejected, context.l10n.allocationPaymentRejected);
+      return;
+    }
     final num? total = detail.request.workflow?.paymentTotal;
     final bool confirmed = await AppDialog.confirm(
       context,
@@ -727,7 +736,7 @@ class _Footer extends ConsumerWidget {
       tone: AppColors.success,
     );
     if (!confirmed || !context.mounted) return;
-    final Result<void> verified = await _notifier(ref).verifyPayment();
+    final Result<void> verified = await notifier.verifyPayment(expectedVersion: decision.version);
     if (context.mounted) _announce(context, verified, context.l10n.allocationPaymentVerified);
   }
 

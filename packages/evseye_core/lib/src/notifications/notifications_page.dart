@@ -116,24 +116,28 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
 
     return HeroScaffold(
       onRefresh: _refresh,
+      overlap: value.items.isEmpty ? 0 : 26,
+      fill: value.items.isEmpty
+          ? ArtBlock(
+              art: BrandArt.empty,
+              artSize: 112,
+              title: context.l10n.notificationsAllClear,
+              message: context.l10n.notificationsEmptyMessage,
+            )
+          : visible.isEmpty
+          ? EmptyState(
+              compact: true,
+              title: context.l10n.notificationsNoMatchingNotifications,
+              icon: Icons.search_off_rounded,
+            )
+          : null,
       band: _Band(
         total: value.items.length,
         unread: value.unread,
         onMarkAllRead: value.unread == 0 ? null : _markAllRead,
       ),
       children: value.items.isEmpty
-          ? [
-              ModuleCard(
-                padding: const EdgeInsets.symmetric(vertical: Insets.x3l),
-                child: Center(
-                  child: ArtBlock(
-                    art: BrandArt.empty,
-                    title: context.l10n.notificationsAllClear,
-                    message: context.l10n.notificationsEmptyMessage,
-                  ),
-                ),
-              ),
-            ]
+          ? const []
           : [
               AppSearchField(
                 hint: context.l10n.notificationsSearchNotifications,
@@ -148,15 +152,6 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
                 padding: EdgeInsets.zero,
               ),
               const Gap.lg(),
-              if (visible.isEmpty)
-                ModuleCard(
-                  padding: const EdgeInsets.symmetric(vertical: Insets.xxl),
-                  child: EmptyState(
-                    compact: true,
-                    title: context.l10n.notificationsNoMatchingNotifications,
-                    icon: Icons.search_off_rounded,
-                  ),
-                ),
               if (today.isNotEmpty) ...[
                 _Section(title: context.l10n.notificationsToday, items: today, onOpen: _open),
                 const Gap.lg(),

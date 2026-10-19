@@ -14,8 +14,15 @@ class DamagePhoto extends Equatable {
 }
 
 class DamagedItem extends Equatable {
-  const DamagedItem({required this.part, required this.quantity, required this.note, required this.photos});
+  const DamagedItem({
+    required this.findingId,
+    required this.part,
+    required this.quantity,
+    required this.note,
+    required this.photos,
+  });
 
+  final String findingId;
   final PenaltyPriceDto part;
   final int quantity;
   final String note;
@@ -27,11 +34,12 @@ class DamagedItem extends Equatable {
     priceId: part.id,
     configurationVersion: part.version,
     findingType: PenaltyCategory.damage,
+    findingId: findingId,
     quantity: quantity,
     details: note.isEmpty ? part.name : note,
     evidencePhotoIds: [for (final DamagePhoto photo in photos) photo.id],
   );
 
   @override
-  List<Object?> get props => [part.id, part.version, quantity, note, photos];
+  List<Object?> get props => [findingId, part.id, part.version, quantity, note, photos];
 }

@@ -219,7 +219,21 @@ class AppL10nTe extends AppL10n {
   String get allocationNoWorkPartnersMessage => 'పని భాగస్వాములను జోడించమని మీ అడ్మిన్‌ను అడగండి.';
 
   @override
+  String get allocationPaymentCouldNotLoad => 'చెల్లింపు లోడ్ కాలేదు';
+
+  @override
+  String get allocationPaymentNoScreenshot => 'రైడర్ స్క్రీన్‌షాట్ జోడించలేదు.';
+
+  @override
   String get allocationPaymentReceived => 'చెల్లింపు అందిందా?';
+
+  @override
+  String get allocationPaymentRejected => 'చెల్లింపు తిరస్కరించబడింది. రైడర్ సరిచేసి మళ్లీ పంపవచ్చు.';
+
+  @override
+  String allocationPaymentRejectedNote(String reason) {
+    return 'మీరు ఈ చెల్లింపును తిరస్కరించారు: $reason. రైడర్ మళ్లీ పంపే వరకు వేచి ఉంది.';
+  }
 
   @override
   String get allocationPaymentRequested => 'చెల్లింపు అడిగారు';
@@ -231,7 +245,13 @@ class AppL10nTe extends AppL10n {
   String get allocationPaymentRequestedRiderSeesNow => 'చెల్లింపు అడిగారు, రైడర్‌కు ఇప్పుడు కనిపిస్తోంది';
 
   @override
+  String get allocationPaymentScreenshots => 'చెల్లింపు స్క్రీన్‌షాట్‌లు';
+
+  @override
   String get allocationPaymentVerified => 'చెల్లింపు ధృవీకరించబడింది';
+
+  @override
+  String get allocationPaymentWaitingRider => 'రైడర్ ఇంకా చెల్లింపు వివరాలు పంపలేదు.';
 
   @override
   String get allocationPhotoBack => 'వెనుక';
@@ -321,6 +341,21 @@ class AppL10nTe extends AppL10n {
   String get allocationReason => 'కారణం';
 
   @override
+  String get allocationRejectConfirm => 'చెల్లింపును తిరస్కరించండి';
+
+  @override
+  String get allocationRejectPayment => 'తిరస్కరించండి';
+
+  @override
+  String get allocationRejectReason => 'మీరు దీన్ని ఎందుకు తిరస్కరిస్తున్నారు?';
+
+  @override
+  String get allocationRejectReasonHint => 'ఉదా: రిఫరెన్స్ వచ్చిన డబ్బుతో సరిపోలడం లేదు';
+
+  @override
+  String get allocationRejectReasonNeeded => 'కనీసం 3 అక్షరాలు నమోదు చేయండి';
+
+  @override
   String get allocationRequestVehicle => 'వాహనం అడగండి';
 
   @override
@@ -328,6 +363,9 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationReserved2 => 'రిజర్వ్ చేసిన తేదీ';
+
+  @override
+  String get allocationReviewPayment => 'చెల్లింపును పరిశీలించండి';
 
   @override
   String get allocationRider => 'రైడర్';
@@ -1443,7 +1481,19 @@ class AppL10nTe extends AppL10n {
   String get deploymentPaymentReceived => 'చెల్లింపు అందింది';
 
   @override
+  String deploymentPaymentRejectedBody(String reason) {
+    return 'మీ ఫ్లీట్ మేనేజర్ ఈ చెల్లింపును నిర్ధారించలేకపోయారు: $reason. వివరాలు చూసి మళ్లీ పంపండి.';
+  }
+
+  @override
+  String get deploymentPaymentRejectedTitle => 'చెల్లింపు నిర్ధారించబడలేదు';
+
+  @override
   String get deploymentPaymentSubmitted => 'చెల్లింపు సమర్పించబడింది';
+
+  @override
+  String get deploymentPaymentSupport =>
+      'ఈ చెల్లింపును ఇప్పుడు యాప్ నుంచి పంపలేరు. దయచేసి మీ హబ్ లేదా సపోర్ట్‌ను సంప్రదించండి.';
 
   @override
   String get deploymentPayScooter => 'మీ స్కూటర్‌కు చెల్లించండి';
@@ -1471,6 +1521,25 @@ class AppL10nTe extends AppL10n {
   @override
   String get deploymentProgressSavedSignAgainAny =>
       'మీ పురోగతి సేవ్ అయింది. ఎప్పుడైనా మళ్ళీ సైన్ ఇన్ చేసి అక్కడి నుంచే కొనసాగించండి.';
+
+  @override
+  String get deploymentReceiptAdd => 'స్క్రీన్‌షాట్ జోడించండి';
+
+  @override
+  String get deploymentReceiptAdded => 'స్క్రీన్‌షాట్ జోడించబడింది';
+
+  @override
+  String get deploymentReceiptHint =>
+      'చెల్లింపు స్క్రీన్‌షాట్ జోడించండి. దీంతో మీ ఫ్లీట్ మేనేజర్ త్వరగా తనిఖీ చేయగలరు.';
+
+  @override
+  String get deploymentReceiptsSent => 'పంపిన స్క్రీన్‌షాట్‌లు';
+
+  @override
+  String get deploymentReceiptTitle => 'చెల్లింపు స్క్రీన్‌షాట్ (ఐచ్ఛికం)';
+
+  @override
+  String get deploymentReceiptTooLarge => 'ఈ చిత్రం 5 MB కంటే పెద్దది. చిన్నది ఎంచుకోండి.';
 
   @override
   String get deploymentReference => 'రిఫరెన్స్';
@@ -2020,6 +2089,83 @@ class AppL10nTe extends AppL10n {
   String get fleetOnboardingRejected => 'తిరస్కరించబడింది';
 
   @override
+  String get fleetSearchAllocationActive => 'రైడర్ దగ్గర';
+
+  @override
+  String get fleetSearchAllocationCancelled => 'రద్దయింది';
+
+  @override
+  String get fleetSearchAllocationHandover => 'అప్పగింత జరుగుతోంది';
+
+  @override
+  String get fleetSearchAllocationReturned => 'తిరిగి ఇచ్చారు';
+
+  @override
+  String get fleetSearchAllocationReturning => 'రిటర్న్ జరుగుతోంది';
+
+  @override
+  String get fleetSearchCouldNotLoad => 'స్కూటర్లను వెతకలేకపోయాం';
+
+  @override
+  String get fleetSearchCouldNotLoadRiderHistory => 'రైడర్ చరిత్ర లోడ్ కాలేదు';
+
+  @override
+  String get fleetSearchCouldNotLoadScooter => 'ఈ స్కూటర్ లోడ్ కాలేదు';
+
+  @override
+  String get fleetSearchCurrentRider => 'ప్రస్తుత రైడర్';
+
+  @override
+  String get fleetSearchEmptyMessage => 'వాహన నంబర్, ఫ్లీట్ కోడ్ లేదా చాసిస్ నంబర్ చూసి మళ్లీ ప్రయత్నించండి.';
+
+  @override
+  String get fleetSearchEmptyTitle => 'స్కూటర్ కనిపించలేదు';
+
+  @override
+  String get fleetSearchHint => 'నంబర్, కోడ్ లేదా చాసిస్‌తో స్కూటర్లను వెతకండి';
+
+  @override
+  String get fleetSearchLatestSubmission => 'తాజా రిటర్న్ లేదా ఎక్స్ఛేంజ్';
+
+  @override
+  String get fleetSearchNoRider => 'ప్రస్తుతం ఈ స్కూటర్ ఏ రైడర్ దగ్గరా లేదు.';
+
+  @override
+  String get fleetSearchNoRiderHistory => 'ఇప్పటివరకు ఈ స్కూటర్ ఏ రైడర్‌కూ ఇవ్వలేదు.';
+
+  @override
+  String get fleetSearchNoSubmission => 'ఇంకా ఏ రిటర్న్ లేదా ఎక్స్ఛేంజ్ జరగలేదు.';
+
+  @override
+  String get fleetSearchOtherHub => 'వేరే హబ్';
+
+  @override
+  String get fleetSearchRiderHistory => 'రైడర్ చరిత్ర';
+
+  @override
+  String get fleetSearchRiderHistoryOtherHub => 'రైడర్ చరిత్ర మీ హబ్‌లలోని స్కూటర్లకు మాత్రమే కనిపిస్తుంది.';
+
+  @override
+  String fleetSearchSince(String date) {
+    return '$date నుండి';
+  }
+
+  @override
+  String get fleetSearchStartMessage => 'వాహన నంబర్, ఫ్లీట్ కోడ్ లేదా చాసిస్ నంబర్‌లో కనీసం 2 అక్షరాలు టైప్ చేయండి.';
+
+  @override
+  String get fleetSearchStartTitle => 'అన్ని హబ్‌లలో వెతకండి';
+
+  @override
+  String get fleetSearchSubmissionDone => 'పూర్తయింది';
+
+  @override
+  String get fleetSearchSubmissionOpen => 'జరుగుతోంది';
+
+  @override
+  String get fleetSearchTitle => 'స్కూటర్ వెతకండి';
+
+  @override
   String get fleetStatusAllocated => 'కేటాయించబడింది';
 
   @override
@@ -2027,6 +2173,12 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get fleetStatusAvailable => 'అందుబాటులో ఉంది';
+
+  @override
+  String get fleetStatusAwaitingParts => 'విడిభాగాల కోసం వేచి ఉంది';
+
+  @override
+  String get fleetStatusBroken => 'చెడిపోయింది';
 
   @override
   String get fleetStatusInspectionPending => 'తనిఖీ కోసం వేచి ఉంది';
@@ -2152,6 +2304,11 @@ class AppL10nTe extends AppL10n {
   String get hubFleetUtilisation => 'ఫ్లీట్ వినియోగం';
 
   @override
+  String hubGstinLine(String gstin) {
+    return 'GSTIN: $gstin';
+  }
+
+  @override
   String get hubHome => 'హోమ్';
 
   @override
@@ -2165,6 +2322,11 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get hubNoHubAssigned => 'మీకు ఏ హబ్ కేటాయించలేదు.';
+
+  @override
+  String hubQuickSupportLine(String number) {
+    return 'త్వరిత సహాయం: $number';
+  }
 
   @override
   String get hubQuickView => 'హబ్ త్వరిత వీక్షణ';
@@ -2269,10 +2431,57 @@ class AppL10nTe extends AppL10n {
   String get introVehicleTitle => 'మీ స్కూటర్,\nపూర్తిగా అనుసంధానం';
 
   @override
+  String get issueCategoryAccessories => 'యాక్సెసరీలు';
+
+  @override
+  String get issueCategoryBattery => 'బ్యాటరీ';
+
+  @override
+  String get issueCategoryBodyChassis => 'బాడీ & చాసిస్';
+
+  @override
+  String get issueCategoryBrakes => 'బ్రేకులు';
+
+  @override
+  String get issueCategoryElectrical => 'ఎలక్ట్రికల్';
+
+  @override
+  String get issueCategoryOther => 'ఇతర';
+
+  @override
+  String get issueCategoryPowertrain => 'మోటార్ & పవర్‌ట్రెయిన్';
+
+  @override
+  String get issueCategorySuspensionSteering => 'సస్పెన్షన్ & స్టీరింగ్';
+
+  @override
+  String get issueCategoryTyresWheels => 'టైర్లు & చక్రాలు';
+
+  @override
+  String issueChargeLine(String name) {
+    return 'నష్టం ఛార్జీ: $name';
+  }
+
+  @override
+  String get issueChargeLinked => 'నష్టం ఛార్జీకి లింక్ అయింది';
+
+  @override
+  String get issueStatusInProgress => 'జరుగుతోంది';
+
+  @override
+  String get issueStatusOpen => 'తెరిచి ఉంది';
+
+  @override
+  String get issueStatusResolved => 'పరిష్కరించబడింది';
+
+  @override
   String get legalAppName => 'యాప్';
 
   @override
   String get legalDocumentCouldNotLoad => 'ఈ పత్రాన్ని లోడ్ చేయలేకపోయాం';
+
+  @override
+  String get maintenanceAllCategories => 'అన్ని వర్గాలు';
 
   @override
   String get maintenanceAllocation => 'కేటాయింపు';
@@ -2282,6 +2491,9 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get maintenanceAllocationOn => 'అనుమతించబడింది';
+
+  @override
+  String get maintenanceAllStatuses => 'అన్ని స్థితులు';
 
   @override
   String get maintenanceAwaitingReport => 'ఇంకా నివేదిక లేదు';
@@ -2342,6 +2554,9 @@ class AppL10nTe extends AppL10n {
   String get maintenanceHomeHub => 'హోమ్ హబ్';
 
   @override
+  String get maintenanceIssues => 'సమస్యలు';
+
+  @override
   String get maintenanceLatestReport => 'తాజా మెకానిక్ నివేదిక';
 
   @override
@@ -2357,6 +2572,9 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get maintenanceNoHistory => 'స్థితి మార్పులు ఏవీ నమోదు కాలేదు.';
+
+  @override
+  String get maintenanceNoIssues => 'ఏ సమస్యా నమోదు కాలేదు.';
 
   @override
   String get maintenanceNoMatchBody => 'వేరే వాహన నంబర్, ఫ్లీట్ కోడ్, ఛాసిస్ లేదా మోడల్ ప్రయత్నించండి.';
@@ -2375,6 +2593,11 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get maintenanceOnboarding => 'ఆన్‌బోర్డింగ్';
+
+  @override
+  String maintenanceOpenIssues(int count) {
+    return 'తెరిచిన సమస్యలు: $count';
+  }
 
   @override
   String maintenancePhotoCount(int count) {
@@ -3296,9 +3519,6 @@ class AppL10nTe extends AppL10n {
   String get referSubtitle => 'రైడర్లను ఆహ్వానించి రివార్డులు పొందండి';
 
   @override
-  String get referTerms => 'నిబంధనలు & షరతులు';
-
-  @override
   String get referTimeline => 'కాలక్రమం';
 
   @override
@@ -3964,6 +4184,16 @@ class AppL10nTe extends AppL10n {
   String get submissionAddDamagedItem => 'దెబ్బతిన్న భాగం జోడించండి';
 
   @override
+  String get submissionAddIssue => 'సమస్య జోడించండి';
+
+  @override
+  String get submissionAvailableNeedsResolved =>
+      '\'అందుబాటులో ఉంది\' ఎంచుకోవడానికి, ప్రతి సమస్యను \'పరిష్కరించబడింది\'గా మార్చండి.';
+
+  @override
+  String get submissionAwaitingPartsNeedsParts => 'పరిష్కరించని కనీసం ఒక సమస్యకు కావాల్సిన విడిభాగాలు జోడించండి.';
+
+  @override
   String get submissionBypass => 'కోడ్ వాడలేకపోతున్నారా?';
 
   @override
@@ -4064,6 +4294,9 @@ class AppL10nTe extends AppL10n {
       'స్పేర్ పార్ట్స్ జాబితా నుండి ప్రతి దెబ్బతిన్న భాగాన్ని జోడించండి. దాని ధర ఆటోమేటిక్‌గా వస్తుంది.';
 
   @override
+  String get submissionEditIssue => 'సమస్యను మార్చండి';
+
+  @override
   String get submissionEvidence => 'ఆధార ఫోటోలు';
 
   @override
@@ -4097,6 +4330,57 @@ class AppL10nTe extends AppL10n {
   String get submissionImposeTitle => 'ఈ రిపోర్ట్‌ను అమలు చేయాలా?';
 
   @override
+  String get submissionIssueCategory => 'వర్గం';
+
+  @override
+  String get submissionIssueCategoryNeeded => 'వర్గం ఎంచుకోండి';
+
+  @override
+  String get submissionIssueCharge => 'నష్టం ఛార్జీ';
+
+  @override
+  String get submissionIssueChargeEarlier => 'మునుపటి రిపోర్ట్‌లోని నష్టం ఛార్జీకి లింక్ అయింది.';
+
+  @override
+  String get submissionIssueChargeHint => 'రైడర్‌కు ఛార్జీ వేసే దెబ్బతిన్న భాగంతో ఈ సమస్యను లింక్ చేయండి.';
+
+  @override
+  String get submissionIssueDescription => 'ఏం సమస్య';
+
+  @override
+  String get submissionIssueDescriptionNeeded => 'సమస్యను వివరించండి';
+
+  @override
+  String get submissionIssueNoCharge => 'లింక్ చేయలేదు';
+
+  @override
+  String get submissionIssueParts => 'కావాల్సిన విడిభాగాలు';
+
+  @override
+  String get submissionIssuePartsHint => 'స్కూటర్ విడిభాగాల కోసం వేచి ఉంటే అవసరం';
+
+  @override
+  String submissionIssuePartsLine(String parts) {
+    return 'విడిభాగాలు: $parts';
+  }
+
+  @override
+  String get submissionIssuePhotoNeeded => 'కనీసం ఒక ఫోటో జోడించండి';
+
+  @override
+  String get submissionIssuePhotosHint => 'ఈ సమస్య యొక్క కనీసం ఒక ఫోటో ఎంచుకోండి, లేదా కొత్తది తీయండి.';
+
+  @override
+  String get submissionIssueProgress => 'పురోగతి';
+
+  @override
+  String get submissionIssues => 'కనిపించిన సమస్యలు';
+
+  @override
+  String get submissionIssuesHint =>
+      'ప్రతి సమస్యను ఫోటోతో జోడించండి. బాగైన తర్వాత దాన్ని \'పరిష్కరించబడింది\'గా మార్చండి.';
+
+  @override
   String get submissionItemNote => 'గమనిక (ఐచ్ఛికం)';
 
   @override
@@ -4123,6 +4407,9 @@ class AppL10nTe extends AppL10n {
   String get submissionNameNeeded => 'మెకానిక్ పేరు నమోదు చేయండి';
 
   @override
+  String get submissionNewIssue => 'కొత్త సమస్య';
+
+  @override
   String get submissionNextComplete => 'అన్ని తనిఖీలు పూర్తయ్యాయి. ఇక్కడ ఇంకేమీ చేయాల్సిన పని లేదు.';
 
   @override
@@ -4147,6 +4434,9 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get submissionNoDamagedItems => 'దెబ్బతిన్న భాగాలు ఏవీ జోడించలేదు, కాబట్టి రైడర్‌కు ఛార్జీ ఉండదు.';
+
+  @override
+  String get submissionNoIssues => 'ఏ సమస్యా జోడించలేదు.';
 
   @override
   String get submissionNoPrices => 'ఇంకా పెనాల్టీ ధరలు సెట్ చేయలేదు. డ్యాష్‌బోర్డ్‌లో జోడించమని అడ్మిన్‌ను అడగండి.';
@@ -4254,10 +4544,18 @@ class AppL10nTe extends AppL10n {
   String get submissionsAll => 'అన్నీ';
 
   @override
+  String get submissionSaveIssue => 'సమస్యను సేవ్ చేయండి';
+
+  @override
   String get submissionSaveItem => 'భాగం సేవ్ చేయండి';
 
   @override
   String get submissionSaveReport => 'రిపోర్ట్ సేవ్ చేయండి';
+
+  @override
+  String submissionScooterStatusLine(String status) {
+    return 'స్కూటర్ స్థితి: $status';
+  }
 
   @override
   String get submissionsCouldNotLoad => 'రిటర్న్‌లు, ఎక్స్ఛేంజ్‌లు లోడ్ కాలేదు';
@@ -4362,33 +4660,22 @@ class AppL10nTe extends AppL10n {
   String get submissionStartTitle => 'సబ్మిషన్ ప్రారంభించండి';
 
   @override
+  String get submissionStatusAvailableHint => 'నడపడానికి సురక్షితం. స్కూటర్ ఫ్లీట్‌కు తిరిగి వెళ్తుంది.';
+
+  @override
+  String get submissionStatusAwaitingPartsHint => 'విడిభాగాల కోసం వేచి ఉంది. అవి అమర్చే వరకు దీన్ని కేటాయించలేరు.';
+
+  @override
+  String get submissionStatusBrokenHint => 'పెద్ద రిపేర్ అవసరం. రిపేర్ అయ్యే వరకు దీన్ని కేటాయించలేరు.';
+
+  @override
   String get submissionStatusCancelled => 'రద్దయింది';
 
   @override
-  String get submissionStatusMok => 'MOKగా గుర్తించండి';
+  String get submissionStatusMaintenanceHint => 'రిపేర్ అవసరం. బాగయ్యే వరకు దీన్ని కేటాయించలేరు.';
 
   @override
-  String get submissionStatusMokHint => 'మెకానికల్‌గా సరిగ్గా ఉంది. స్కూటర్ మళ్లీ ఫ్లీట్‌లోకి వెళ్తుంది.';
-
-  @override
-  String get submissionStatusRfd => 'RFDగా గుర్తించండి';
-
-  @override
-  String get submissionStatusRfdHint => 'డిప్లాయ్‌మెంట్‌కు సిద్ధం. స్కూటర్ మళ్లీ ఫ్లీట్‌లోకి వెళ్తుంది.';
-
-  @override
-  String get submissionStatusUmMajor => 'UM majorగా గుర్తించండి';
-
-  @override
-  String get submissionStatusUmMajorHint =>
-      'మెయింటెనెన్స్‌లో ఉంది (పెద్ద మరమ్మతు). మరమ్మతు అయ్యే వరకు దీన్ని కేటాయించలేరు.';
-
-  @override
-  String get submissionStatusUmMinor => 'UM minorగా గుర్తించండి';
-
-  @override
-  String get submissionStatusUmMinorHint =>
-      'మెయింటెనెన్స్‌లో ఉంది (చిన్న మరమ్మతు). మరమ్మతు అయ్యే వరకు దీన్ని కేటాయించలేరు.';
+  String get submissionStatusNeedsIssue => 'ఈ స్థితికి కనీసం ఒక సమస్య జోడించండి.';
 
   @override
   String get submissionsTitle => 'రిటర్న్‌లు & ఎక్స్ఛేంజ్‌లు';

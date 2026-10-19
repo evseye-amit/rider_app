@@ -1,5 +1,6 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../domain/entities/hub_profile.dart';
 import '../../domain/entities/hub_summary.dart';
@@ -22,14 +23,19 @@ class HubCard extends StatelessWidget {
   final int? selectedIndex;
   final ValueChanged<int?> onSelected;
 
+  Future<void> _call(BuildContext context, String number) async {
+    final bool opened = await launchUrl(Uri(scheme: 'tel', path: number.replaceAll(RegExp(r'[^0-9+]'), '')));
+    if (!opened && context.mounted) AppSnack.error(context, context.l10n.commonSomethingWentWrongPleaseTry);
+  }
+
   @override
   Widget build(BuildContext context) {
     final bool all = selectedIndex == null && hubs.length > 1;
     final List<TeamLead> leads = all
         ? {for (final HubProfile hub in hubs) ...hub.teamLeads}.toList()
         : profile.teamLeads;
-    final int chargingBays = all ? hubs.fold(0, (sum, hub) => sum + hub.chargingBays) : profile.chargingBays;
-    final int serviceBays = all ? hubs.fold(0, (sum, hub) => sum + hub.serviceBays) : profile.serviceBays;
+    final String? gstin = summary.gstin;
+    final String? support = summary.supportNumber;
 
     return Container(
       padding: const EdgeInsets.all(Insets.lg),
@@ -77,18 +83,18 @@ class HubCard extends StatelessWidget {
             _Line(icon: Icons.hub_rounded, text: hubs.map((hub) => hub.name).join(', '))
           else
             _Line(icon: Icons.location_on_rounded, text: profile.address),
-          const Gap.md(),
-          _Line(
-            icon: Icons.electric_scooter_rounded,
-            text: '${summary.parkingOccupied} of ${summary.parkingCapacity} slots in use',
-          ),
-          const Gap.md(),
-          _Line(
-            icon: Icons.ev_station_rounded,
-            text:
-                '$chargingBays charging bays · '
-                '$serviceBays service bays',
-          ),
+          if (gstin != null) ...[
+            const Gap.md(),
+            _Line(icon: Icons.receipt_long_rounded, text: context.l10n.hubGstinLine(gstin)),
+          ],
+          if (support != null) ...[
+            const Gap.md(),
+            _Line(
+              icon: Icons.support_agent_rounded,
+              text: context.l10n.hubQuickSupportLine(support),
+              onTap: () => _call(context, support),
+            ),
+          ],
           if (leads.isNotEmpty) ...[
             const Gap.md(),
             _Line(icon: Icons.groups_rounded, text: leads.map((l) => l.name.split(' ').first).join(', ')),
@@ -224,20 +230,26 @@ class _HubOption extends StatelessWidget {
 }
 
 class _Line extends StatelessWidget {
-  const _Line({required this.icon, required this.text});
+  const _Line({required this.icon, required this.text, this.onTap});
 
   final IconData icon;
   final String text;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    final Widget line = Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(icon, size: 17, color: AppColors.primary),
         const SizedBox(width: Insets.sm + 2),
         Expanded(child: Text(text, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45))),
+        if (onTap != null) ...[
+          const SizedBox(width: Insets.sm),
+          const Icon(Icons.call_rounded, size: 16, color: AppColors.primary),
+        ],
       ],
     );
+    return onTap == null ? line : Pressable(onTap: onTap, child: line);
   }
 }

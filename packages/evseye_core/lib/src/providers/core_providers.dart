@@ -8,6 +8,7 @@ import '../api/banks_api.dart';
 import '../api/commercial_api.dart';
 import '../api/company_api.dart';
 import '../api/deployment_api.dart';
+import '../api/fleet_search_api.dart';
 import '../api/legal_api.dart';
 import '../api/media_api.dart';
 import '../api/notifications_api.dart';
@@ -93,6 +94,8 @@ final returnDeskApiProvider = Provider<ReturnDeskApi>((ref) => ReturnDeskApi(ref
 final riderBillingApiProvider = Provider<RiderBillingApi>((ref) => RiderBillingApi(ref.watch(apiClientProvider)));
 
 final banksApiProvider = Provider<BanksApi>((ref) => BanksApi(ref.watch(apiClientProvider)));
+
+final fleetSearchApiProvider = Provider<FleetSearchApi>((ref) => FleetSearchApi(ref.watch(apiClientProvider)));
 
 final submissionPenaltyApiProvider = Provider<SubmissionPenaltyApi>(
   (ref) => SubmissionPenaltyApi(ref.watch(apiClientProvider)),

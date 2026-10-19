@@ -338,6 +338,26 @@ class PaymentLineItem {
   final num amount;
 }
 
+class DeploymentPaymentReceipt {
+  const DeploymentPaymentReceipt({required this.id, this.mimeType, this.uploadedAt});
+
+  factory DeploymentPaymentReceipt.fromJson(Map<String, dynamic> json) => DeploymentPaymentReceipt(
+        id: json['id']?.toString() ?? '',
+        mimeType: json['mimeType']?.toString(),
+        uploadedAt: _date(json['uploadedAt']),
+      );
+
+  static List<DeploymentPaymentReceipt> list(Object? raw) => [
+        if (raw is List)
+          for (final Object? item in raw)
+            if (item is Map) DeploymentPaymentReceipt.fromJson(Map<String, dynamic>.from(item)),
+      ];
+
+  final String id;
+  final String? mimeType;
+  final DateTime? uploadedAt;
+}
+
 class DeploymentPayment {
   const DeploymentPayment({
     required this.id,
@@ -354,6 +374,11 @@ class DeploymentPayment {
     this.createdAt,
     this.fleetCode,
     this.vehicleNumber,
+    this.submissionVersion = 0,
+    this.rejectionReason,
+    this.nextAction,
+    this.canSubmit,
+    this.receipts = const [],
   });
 
   factory DeploymentPayment.fromJson(Map<String, dynamic> json) {
@@ -371,6 +396,7 @@ class DeploymentPayment {
         .whereType<Map>()
         .map((e) => PaymentLineItem.fromJson(Map<String, dynamic>.from(e)))
         .toList(growable: false);
+    final String rejection = json['rejectionReason']?.toString().trim() ?? '';
     return DeploymentPayment(
       id: json['id']?.toString() ?? '',
       status: (json['status']?.toString() ?? 'PENDING').toUpperCase(),
@@ -393,6 +419,11 @@ class DeploymentPayment {
       createdAt: _date(json['createdAt']),
       fleetCode: fleet?['fleetCode']?.toString(),
       vehicleNumber: fleet?['vehicleNumber']?.toString(),
+      submissionVersion: _num(json['submissionVersion'])?.toInt() ?? 0,
+      rejectionReason: rejection.isEmpty ? null : rejection,
+      nextAction: json['nextAction']?.toString(),
+      canSubmit: json['canSubmit'] is bool ? json['canSubmit'] as bool : null,
+      receipts: DeploymentPaymentReceipt.list(json['receipts']),
     );
   }
 
@@ -411,11 +442,18 @@ class DeploymentPayment {
   final DateTime? createdAt;
   final String? fleetCode;
   final String? vehicleNumber;
+  final int submissionVersion;
+  final String? rejectionReason;
+  final String? nextAction;
+  final bool? canSubmit;
+  final List<DeploymentPaymentReceipt> receipts;
 
   bool get isPending => status == 'PENDING';
   bool get isSubmitted => status == 'SUBMITTED';
   bool get isPaid => status == 'PAID';
+  bool get isRejected => status == 'REJECTED';
   bool get isOpen => isPending || isSubmitted;
+  bool get needsSupport => nextAction == 'CONTACT_SUPPORT' || (canSubmit == false && (isPending || isRejected));
 }
 
 class WorkPartnerOption {
@@ -700,6 +738,7 @@ class DeploymentApi {
   final ApiClient _client;
 
   static const String _base = '/mobile-deployments';
+  static const String _receipts = '/rider-app/billing/payment-transactions/DEPLOYMENT';
 
   Future<Result<RiderDeployment>> riderCurrent() => _client.get<RiderDeployment>(
         '$_base/rider/current',
@@ -720,11 +759,26 @@ class DeploymentApi {
     String allocationId, {
     required String provider,
     required String providerReference,
+    List<String> receiptPhotoIds = const [],
   }) =>
       _client.post<DeploymentPayment>(
         '$_base/$allocationId/payment/submit',
-        body: {'provider': provider, 'providerReference': providerReference},
+        body: {
+          'provider': provider,
+          'providerReference': providerReference,
+          if (receiptPhotoIds.isNotEmpty) 'receiptPhotoIds': receiptPhotoIds,
+        },
         parse: (data) => DeploymentPayment.fromJson(Map<String, dynamic>.from(data as Map)),
+      );
+
+  Future<Result<List<DeploymentPaymentReceipt>>> paymentReceipts(String paymentId) => _client.get<List<DeploymentPaymentReceipt>>(
+        '$_receipts/$paymentId',
+        parse: (data) => data is Map ? DeploymentPaymentReceipt.list(data['receipts']) : const [],
+      );
+
+  Future<Result<String>> receiptUrl(String paymentId, String photoId) => _client.get<String>(
+        '$_receipts/$paymentId/receipts/$photoId/download-url',
+        parse: (data) => data is Map ? data['url']?.toString() ?? '' : data.toString(),
       );
 
   Future<Result<DeploymentWorkflow>> acceptPdi(String allocationId, List<PdiItemResponse> items) =>
@@ -817,9 +871,22 @@ class DeploymentApi {
         parse: (data) => DeploymentPayment.fromJson(Map<String, dynamic>.from(data as Map)),
       );
 
-  Future<Result<DeploymentWorkflow>> verifyPayment(String allocationId) => _client.post<DeploymentWorkflow>(
+  Future<Result<DeploymentWorkflow>> verifyPayment(String allocationId, {int? expectedVersion}) =>
+      _client.post<DeploymentWorkflow>(
         '$_base/$allocationId/payment/verify',
+        body: expectedVersion == null ? null : {'expectedVersion': expectedVersion},
         parse: (data) => DeploymentWorkflow.fromJson(Map<String, dynamic>.from(data as Map)),
+      );
+
+  Future<Result<DeploymentPayment>> rejectPayment(
+    String allocationId, {
+    required String reason,
+    required int expectedVersion,
+  }) =>
+      _client.post<DeploymentPayment>(
+        '$_base/$allocationId/payment/reject',
+        body: {'reason': reason, 'expectedVersion': expectedVersion},
+        parse: (data) => DeploymentPayment.fromJson(Map<String, dynamic>.from(data as Map)),
       );
 
   Future<Result<AllocationEvidence>> evidence(String allocationId) => _client.get<AllocationEvidence>(

@@ -3,6 +3,21 @@ import 'dart:io';
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/maintenance/maintenance_issue_widgets.dart';
+
+List<(SubmissionPhotoDto, String)> labelledSubmissionPhotos(AppL10n l10n, VehicleSubmissionDto submission) {
+  int damage = 0;
+  return [
+    for (final SubmissionPhotoDto photo in submission.photos)
+      (
+        photo,
+        photo.photoType.startsWith(damagePhotoPrefix)
+            ? '${l10n.submissionPhotoDamage} ${++damage}'
+            : submissionPhotoLabel(l10n, photo.photoType, submission.assets),
+      ),
+  ];
+}
+
 class SubmissionStageStyle {
   const SubmissionStageStyle._(this.label, this.tone, this.icon, {this.needsAction = false});
 
@@ -310,6 +325,14 @@ class SubmissionReportCard extends StatelessWidget {
     final String? riderBypass = report.riderBypassReason;
     final String? teamLeadBypass = report.teamLeadBypassReason;
     final String? cancelled = report.cancellationReason;
+    final String? unsafeReason = report.unsafeReason;
+    String? charge(MaintenanceIssueDto issue) {
+      final String? findingId = issue.penaltyFindingId;
+      if (findingId == null) return null;
+      final SubmissionPenaltyItemDto? item = report.items.where((entry) => entry.findingId == findingId).firstOrNull;
+      return item == null ? context.l10n.issueChargeLinked : context.l10n.issueChargeLine(item.description);
+    }
+
     final bool muted = report.status == SubmissionReportStatus.cancelled;
     return Container(
       padding: const EdgeInsets.all(Insets.md),
@@ -341,14 +364,40 @@ class SubmissionReportCard extends StatelessWidget {
           const Gap.sm(),
           Text(report.summary, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45)),
           const Gap.sm(),
-          Text(
-            report.safeForReuse ? context.l10n.checkInSafe : context.l10n.checkInUnsafe(report.unsafeReason ?? '—'),
-            style: AppText.bodySmall.copyWith(
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-              color: report.safeForReuse ? AppColors.success : AppColors.warning,
+          if (report.fleetStatus case final MaintenanceFleetStatus status) ...[
+            Text(
+              context.l10n.submissionScooterStatusLine(fleetConditionLabel(context.l10n, status)),
+              style: AppText.bodySmall.copyWith(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: fleetConditionTone(status).color,
+              ),
             ),
-          ),
+            if (!report.safeForReuse && unsafeReason != null) ...[
+              const SizedBox(height: 2),
+              Text(unsafeReason, style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.textSecondary)),
+            ],
+          ] else
+            Text(
+              report.safeForReuse ? context.l10n.checkInSafe : context.l10n.checkInUnsafe(unsafeReason ?? '—'),
+              style: AppText.bodySmall.copyWith(
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                color: report.safeForReuse ? AppColors.success : AppColors.warning,
+              ),
+            ),
+          if (report.issues.isNotEmpty) ...[
+            const Gap.xs(),
+            for (final MaintenanceIssueDto issue in report.issues)
+              MaintenanceIssueRow(
+                category: issue.category,
+                description: issue.description,
+                status: issue.status,
+                photoCount: issue.evidencePhotoIds.length,
+                requiredParts: issue.requiredParts,
+                charge: charge(issue),
+              ),
+          ],
           if (report.checksComplete) ...[
             const SizedBox(height: 2),
             Text(

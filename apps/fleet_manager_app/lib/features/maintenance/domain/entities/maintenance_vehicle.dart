@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:evseye_core/evseye_core.dart';
 
 class MaintenanceHub extends Equatable {
   const MaintenanceHub({required this.id, required this.code, required this.name});
@@ -33,6 +34,8 @@ class MechanicReport extends Equatable {
     this.unsafeReason,
     this.confirmedAt,
     this.evidencePhotoIds = const [],
+    this.fleetStatus,
+    this.issues = const [],
   });
 
   final String id;
@@ -45,9 +48,11 @@ class MechanicReport extends Equatable {
   final List<String> evidencePhotoIds;
   final DateTime createdAt;
   final DateTime? confirmedAt;
+  final MaintenanceFleetStatus? fleetStatus;
+  final List<MaintenanceIssueDto> issues;
 
   @override
-  List<Object?> get props => [id, safeForReuse, checksComplete, createdAt, confirmedAt];
+  List<Object?> get props => [id, safeForReuse, checksComplete, createdAt, confirmedAt, fleetStatus];
 }
 
 class MaintenanceVehicle extends Equatable {
@@ -71,6 +76,8 @@ class MaintenanceVehicle extends Equatable {
     this.updatedAt,
     this.movedToMaintenance,
     this.latestReport,
+    this.status = 'MAINTENANCE',
+    this.issues = const [],
   });
 
   final String id;
@@ -92,11 +99,17 @@ class MaintenanceVehicle extends Equatable {
   final DateTime? updatedAt;
   final MaintenanceMove? movedToMaintenance;
   final MechanicReport? latestReport;
+  final String status;
+  final List<MaintenanceIssueDto> issues;
 
   String get modelLine => [modelName, variantName, colour].whereType<String>().join(' · ');
 
+  MaintenanceFleetStatus? get condition => MaintenanceFleetStatus.maybe(status);
+
+  int get openIssueCount => issues.where((issue) => !issue.status.isResolved).length;
+
   @override
-  List<Object?> get props => [id, vehicleNumber, updatedAt, movedToMaintenance, latestReport];
+  List<Object?> get props => [id, vehicleNumber, updatedAt, movedToMaintenance, latestReport, status];
 }
 
 class MaintenanceStatusChange extends Equatable {

@@ -5,6 +5,7 @@ import 'package:evseye_core/evseye_core.dart';
 import '../domain/allocation_repository.dart';
 import '../domain/entities/active_allocation.dart';
 import '../domain/entities/allocation_board.dart';
+import '../domain/entities/payment_review.dart';
 
 class AllocationRepositoryImpl implements AllocationRepository {
   const AllocationRepositoryImpl(this._api, this._deployments, this._media, this._submissions, this._commercial);
@@ -99,7 +100,28 @@ class AllocationRepositoryImpl implements AllocationRepository {
       _commercial.allocationCommercial(allocationId);
 
   @override
-  Future<Result<DeploymentWorkflow>> verifyPayment(String allocationId) => _deployments.verifyPayment(allocationId);
+  Future<Result<DeploymentWorkflow>> verifyPayment(String allocationId, {int? expectedVersion}) =>
+      _deployments.verifyPayment(allocationId, expectedVersion: expectedVersion);
+
+  @override
+  Future<Result<PaymentReview>> paymentReview(String allocationId) async {
+    final Result<DeploymentPayment> payment = await _deployments.askPayment(allocationId);
+    if (payment case Err<DeploymentPayment>(:final failure)) return Result.err(failure);
+    final DeploymentPayment value = payment.getOrThrow();
+    final Result<List<DeploymentPaymentReceipt>> receipts = await _deployments.paymentReceipts(value.id);
+    return receipts.map((list) => PaymentReview(payment: value, receipts: list));
+  }
+
+  @override
+  Future<Result<DeploymentPayment>> rejectPayment(
+    String allocationId, {
+    required String reason,
+    required int expectedVersion,
+  }) => _deployments.rejectPayment(allocationId, reason: reason, expectedVersion: expectedVersion);
+
+  @override
+  Future<Result<String>> paymentReceiptUrl(String paymentId, String photoId) =>
+      _deployments.receiptUrl(paymentId, photoId);
 
   @override
   Future<Result<AllocationEvidence>> getEvidence(String allocationId) => _deployments.evidence(allocationId);

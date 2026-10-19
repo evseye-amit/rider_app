@@ -309,7 +309,13 @@ class _DamagedItemSheetState extends ConsumerState<DamagedItemSheet> {
       return;
     }
     Navigator.of(context).pop(
-      DamagedItem(part: widget.part, quantity: _quantity, note: _note.text.trim(), photos: List.unmodifiable(_photos)),
+      DamagedItem(
+        findingId: widget.initial?.findingId ?? newUuid(),
+        part: widget.part,
+        quantity: _quantity,
+        note: _note.text.trim(),
+        photos: List.unmodifiable(_photos),
+      ),
     );
   }
 

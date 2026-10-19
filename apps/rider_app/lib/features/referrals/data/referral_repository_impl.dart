@@ -74,7 +74,6 @@ class ReferralRepositoryImpl implements ReferralRepository {
         title: campaign.title,
         code: campaign.code,
         description: campaign.description,
-        terms: campaign.terms,
         endsAt: campaign.endAt,
         milestones: [for (final ReferralMilestoneDto item in campaign.milestones) _milestone(item)],
       ),

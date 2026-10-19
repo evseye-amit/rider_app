@@ -162,7 +162,7 @@ class _PendingList extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: Insets.lg),
         child: ArtBlock(
           art: BrandArt.empty,
-          artSize: 130,
+          artSize: 112,
           title: context.l10n.allocationNobodyWaiting,
           message: context.l10n.allocationEveryOnboardedRiderHubsHas,
         ),
@@ -191,7 +191,7 @@ class _InProgressList extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: Insets.lg),
         child: ArtBlock(
           art: BrandArt.empty,
-          artSize: 130,
+          artSize: 112,
           title: context.l10n.allocationNoHandoversProgress,
           message: context.l10n.allocationAllocateVehicleWaitingRiderStart,
         ),
@@ -223,7 +223,7 @@ class _ActiveList extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: Insets.lg),
         child: ArtBlock(
           art: BrandArt.empty,
-          artSize: 130,
+          artSize: 112,
           title: context.l10n.allocationNoVehiclesOut,
           message: context.l10n.allocationNothingCurrentlyAllocatedRider,
         ),

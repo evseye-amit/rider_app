@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/maintenance/maintenance_issue_widgets.dart';
 import '../../domain/entities/maintenance_vehicle.dart';
 import '../providers/maintenance_providers.dart';
 import '../widgets/maintenance_widgets.dart';
@@ -53,6 +54,29 @@ class MaintenanceVehiclePage extends ConsumerWidget {
         child: latest == null
             ? _EmptyLine(icon: Icons.assignment_late_rounded, text: l10n.maintenanceNoReportYet)
             : MechanicReportView(report: latest),
+      ),
+      const Gap.lg(),
+      ModuleCard(
+        title: l10n.maintenanceIssues,
+        child: vehicle.issues.isEmpty
+            ? _EmptyLine(icon: Icons.task_alt_rounded, text: l10n.maintenanceNoIssues)
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (final (int i, MaintenanceIssueDto issue) in vehicle.issues.indexed) ...[
+                    MaintenanceIssueRow(
+                      category: issue.category,
+                      description: issue.description,
+                      status: issue.status,
+                      photoCount: issue.evidencePhotoIds.length,
+                      requiredParts: issue.requiredParts,
+                      charge: issue.penaltyFindingId == null ? null : l10n.issueChargeLinked,
+                    ),
+                    if (i != vehicle.issues.length - 1)
+                      Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
+                  ],
+                ],
+              ),
       ),
       if (data.photos.isNotEmpty) ...[
         const Gap.lg(),
@@ -114,6 +138,7 @@ class _Band extends StatelessWidget {
     final MaintenanceHub? hub = current?.hub;
     final MaintenanceMove? moved = current?.movedToMaintenance;
     final String? reason = moved?.reason;
+    final MaintenanceFleetStatus? condition = current?.condition;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,7 +160,11 @@ class _Band extends StatelessWidget {
           spacing: Insets.sm,
           runSpacing: Insets.sm,
           children: [
-            _InkPill(icon: Icons.build_rounded, text: context.l10n.fleetStatusMaintenance, color: AppColors.onInkAmber),
+            _InkPill(
+              icon: condition == null ? Icons.build_rounded : fleetConditionIcon(condition),
+              text: fleetStatusLabel(context.l10n, current?.status ?? 'MAINTENANCE'),
+              color: condition == MaintenanceFleetStatus.broken ? AppColors.onInkCoral : AppColors.onInkAmber,
+            ),
             if (hub != null) _InkPill(icon: Icons.hub_rounded, text: hub.name),
             if (current != null && current.fleetCode.isNotEmpty)
               _InkPill(icon: Icons.tag_rounded, text: current.fleetCode),

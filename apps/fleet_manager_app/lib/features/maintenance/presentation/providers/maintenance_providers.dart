@@ -5,7 +5,12 @@ import '../../domain/entities/maintenance_vehicle.dart';
 import '../../domain/usecases/maintenance_usecases.dart';
 import '../../maintenance_dependencies.dart';
 
-typedef MaintenanceFilter = ({String? hubId, String search});
+typedef MaintenanceFilter = ({
+  String? hubId,
+  String search,
+  MaintenanceFleetStatus? status,
+  MaintenanceIssueCategory? category,
+});
 
 class MaintenanceListNotifier extends AsyncNotifier<MaintenanceVehicleList> {
   MaintenanceListNotifier(this._filter);
@@ -17,7 +22,13 @@ class MaintenanceListNotifier extends AsyncNotifier<MaintenanceVehicleList> {
   Future<MaintenanceVehicleList> build() async => (await _page(1)).getOrThrow();
 
   Future<Result<MaintenanceVehicleList>> _page(int page) => ref.read(getMaintenanceVehiclesProvider)(
-    MaintenanceQuery(hubId: _filter.hubId, search: _filter.search, page: page),
+    MaintenanceQuery(
+      hubId: _filter.hubId,
+      search: _filter.search,
+      page: page,
+      fleetStatus: _filter.status,
+      category: _filter.category,
+    ),
   );
 
   Future<void> reload() async {

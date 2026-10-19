@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:evseye_core/evseye_core.dart';
 
 import 'entities/allocation_board.dart';
+import 'entities/payment_review.dart';
 
 abstract interface class AllocationRepository {
   Future<Result<AllocationBoard>> getBoard();
@@ -31,7 +32,17 @@ abstract interface class AllocationRepository {
 
   Future<Result<AllocationCommercial>> getCommercial(String allocationId);
 
-  Future<Result<DeploymentWorkflow>> verifyPayment(String allocationId);
+  Future<Result<DeploymentWorkflow>> verifyPayment(String allocationId, {int? expectedVersion});
+
+  Future<Result<PaymentReview>> paymentReview(String allocationId);
+
+  Future<Result<DeploymentPayment>> rejectPayment(
+    String allocationId, {
+    required String reason,
+    required int expectedVersion,
+  });
+
+  Future<Result<String>> paymentReceiptUrl(String paymentId, String photoId);
 
   Future<Result<AllocationEvidence>> getEvidence(String allocationId);
 

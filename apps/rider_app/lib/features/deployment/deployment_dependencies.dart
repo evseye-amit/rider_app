@@ -10,10 +10,23 @@ import 'domain/usecases/get_current_deployment.dart';
 import 'domain/usecases/get_deployment_payment.dart';
 import 'domain/usecases/get_training.dart';
 import 'domain/usecases/mark_training_viewed.dart';
+import 'domain/usecases/payment_receipt_usecases.dart';
 import 'domain/usecases/submit_deployment_payment.dart';
 
 final deploymentRepositoryProvider = Provider<DeploymentRepository>(
-  (ref) => DeploymentRepositoryImpl(ref.watch(deploymentApiProvider), ref.watch(commercialApiProvider)),
+  (ref) => DeploymentRepositoryImpl(
+    ref.watch(deploymentApiProvider),
+    ref.watch(commercialApiProvider),
+    ref.watch(mediaApiProvider),
+  ),
+);
+
+final uploadPaymentReceiptProvider = Provider<UploadPaymentReceipt>(
+  (ref) => UploadPaymentReceipt(ref.watch(deploymentRepositoryProvider)),
+);
+
+final getPaymentReceiptUrlProvider = Provider<GetPaymentReceiptUrl>(
+  (ref) => GetPaymentReceiptUrl(ref.watch(deploymentRepositoryProvider)),
 );
 
 final acceptPlanProvider = Provider<AcceptPlan>((ref) => AcceptPlan(ref.watch(deploymentRepositoryProvider)));

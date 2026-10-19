@@ -23,6 +23,8 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
         'pageSize': _pageSize,
         'hubId': ?query.hubId,
         if (search.isNotEmpty) 'search': search,
+        'fleetStatus': ?query.fleetStatus?.wire,
+        'issueCategory': ?query.category?.wire,
       },
       parse: (data) => _list(_map(data)),
     );
@@ -88,6 +90,8 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
       updatedAt: _date(json['updatedAt']),
       movedToMaintenance: movedAt == null ? null : MaintenanceMove(at: movedAt, reason: _text(move['reason'])),
       latestReport: report ?? _report(json['latestMechanicReport']),
+      status: _text(json['status']) ?? 'MAINTENANCE',
+      issues: MaintenanceIssueDto.list(json['maintenanceIssues']),
     );
   }
 
@@ -115,6 +119,8 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
       evidencePhotoIds: [for (final Object? photoId in json['evidencePhotoIds'] as List? ?? const []) ?_text(photoId)],
       createdAt: createdAt,
       confirmedAt: _date(json['confirmedAt']),
+      fleetStatus: MaintenanceFleetStatus.maybe(json['fleetStatus']),
+      issues: MaintenanceIssueDto.list(json['issues']),
     );
   }
 

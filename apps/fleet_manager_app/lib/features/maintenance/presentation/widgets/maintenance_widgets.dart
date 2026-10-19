@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/maintenance/maintenance_issue_widgets.dart';
 import '../../domain/entities/maintenance_vehicle.dart';
 import '../providers/maintenance_providers.dart';
 
@@ -16,6 +17,8 @@ String fleetStatusLabel(AppL10n l10n, String status) => switch (status.toUpperCa
   'DEALLOCATION_IN_PROGRESS' => l10n.fleetStatusReturning,
   'INSPECTION_PENDING' => l10n.fleetStatusInspectionPending,
   'MAINTENANCE' => l10n.fleetStatusMaintenance,
+  'BROKEN' => l10n.fleetStatusBroken,
+  'AWAITING_PARTS' => l10n.fleetStatusAwaitingParts,
   'OUT_OF_SERVICE' => l10n.fleetStatusOutOfService,
   _ => _spaced(status),
 };
@@ -52,6 +55,22 @@ class ReportVerdictChip extends StatelessWidget {
     return current.safeForReuse
         ? StatusChip(label: context.l10n.maintenanceSafeToReuse, tone: StatusTone.success, dense: true)
         : StatusChip(label: context.l10n.maintenanceNotSafe, tone: StatusTone.danger, dense: true);
+  }
+}
+
+class FleetConditionChip extends StatelessWidget {
+  const FleetConditionChip({required this.status, super.key});
+
+  final String status;
+
+  @override
+  Widget build(BuildContext context) {
+    final MaintenanceFleetStatus? condition = MaintenanceFleetStatus.maybe(status);
+    return StatusChip(
+      label: fleetStatusLabel(context.l10n, status),
+      tone: condition == null ? StatusTone.warning : fleetConditionTone(condition),
+      dense: true,
+    );
   }
 }
 
@@ -95,6 +114,7 @@ class MaintenanceVehicleCard extends StatelessWidget {
     final MaintenanceHub? hub = vehicle.hub;
     final num? km = vehicle.odometerKm;
     final String model = vehicle.modelLine;
+    final int openIssues = vehicle.openIssueCount;
 
     return Pressable(
       onTap: onTap,
@@ -130,7 +150,7 @@ class MaintenanceVehicleCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: Insets.sm),
-                ReportVerdictChip(report: report),
+                FleetConditionChip(status: vehicle.status),
               ],
             ),
             const Gap.md(),
@@ -141,6 +161,12 @@ class MaintenanceVehicleCard extends StatelessWidget {
                 MaintenanceFact(icon: Icons.tag_rounded, text: vehicle.fleetCode),
                 if (hub != null) MaintenanceFact(icon: Icons.hub_rounded, text: hub.name),
                 if (km != null) MaintenanceFact(icon: Icons.speed_rounded, text: '${Fmt.number(km)} km'),
+                if (openIssues > 0)
+                  MaintenanceFact(
+                    icon: Icons.report_problem_rounded,
+                    text: context.l10n.maintenanceOpenIssues(openIssues),
+                    color: AppColors.warning,
+                  ),
               ],
             ),
             if (moved != null) ...[
@@ -232,12 +258,31 @@ class MechanicReportView extends StatelessWidget {
               ),
             ),
             const SizedBox(width: Insets.sm),
-            ReportVerdictChip(report: report),
+            if (report.fleetStatus case final MaintenanceFleetStatus status)
+              StatusChip(
+                label: fleetConditionLabel(context.l10n, status),
+                tone: fleetConditionTone(status),
+                dense: true,
+              )
+            else
+              ReportVerdictChip(report: report),
           ],
         ),
         if (report.summary.isNotEmpty) ...[
           const Gap.md(),
           Text(report.summary, style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.5)),
+        ],
+        if (report.issues.isNotEmpty) ...[
+          const Gap.sm(),
+          for (final MaintenanceIssueDto issue in report.issues)
+            MaintenanceIssueRow(
+              category: issue.category,
+              description: issue.description,
+              status: issue.status,
+              photoCount: issue.evidencePhotoIds.length,
+              requiredParts: issue.requiredParts,
+              charge: issue.penaltyFindingId == null ? null : context.l10n.issueChargeLinked,
+            ),
         ],
         if (!report.safeForReuse) ...[
           const Gap.md(),

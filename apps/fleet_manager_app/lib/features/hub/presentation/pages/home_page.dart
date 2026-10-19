@@ -43,6 +43,7 @@ class HomePage extends ConsumerWidget {
         ref.invalidate(unreadNotificationsProvider);
         return ref.refreshQuietly(hubOverviewProvider);
       },
+      pinnedBar: const _TopBar(),
       band: _Band(summary: overview?.summary),
       children: overview == null ? const [_HomeSkeleton()] : _content(context, ref, overview),
     );
@@ -95,6 +96,44 @@ class HomePage extends ConsumerWidget {
         ),
       ),
     ];
+  }
+}
+
+class _SearchBar extends StatelessWidget {
+  const _SearchBar({required this.onTap});
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Pressable(
+      onTap: onTap,
+      scale: 0.99,
+      child: Container(
+        height: 48,
+        padding: const EdgeInsets.symmetric(horizontal: Insets.lg),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: Corners.pill,
+          border: Border.all(color: AppColors.primary.withValues(alpha: 0.35)),
+          boxShadow: Shadows.lift(AppColors.primary, opacity: 0.16),
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.search_rounded, size: 20, color: AppColors.primary),
+            const SizedBox(width: Insets.md),
+            Expanded(
+              child: Text(
+                context.l10n.fleetSearchHint,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.bodyMedium.copyWith(color: AppColors.textSecondary),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -173,10 +212,8 @@ class _QueueInfo extends StatelessWidget {
   }
 }
 
-class _Band extends ConsumerWidget {
-  const _Band({required this.summary});
-
-  final HubSummary? summary;
+class _TopBar extends ConsumerWidget {
+  const _TopBar();
 
   Future<void> _markAttendance(BuildContext context, WidgetRef ref, bool next) async {
     final Result<bool> result = await ref.read(fleetSessionProvider.notifier).setAttendance(next);
@@ -195,37 +232,49 @@ class _Band extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final FleetSession session = ref.watch(fleetSessionProvider);
     final int unread = ref.watch(unreadNotificationsProvider).value ?? 0;
+
+    return Row(
+      children: [
+        Builder(
+          builder: (context) =>
+              InkCircleButton(icon: Icons.menu_rounded, onTap: () => Scaffold.of(context).openDrawer()),
+        ),
+        const SizedBox(width: Insets.md),
+        Expanded(
+          child: Text(
+            session.managerName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppText.titleLarge.copyWith(fontSize: 20, color: AppColors.onInk),
+          ),
+        ),
+        const SizedBox(width: Insets.sm),
+        AttendanceToggle(present: session.present, onChanged: (next) => _markAttendance(context, ref, next)),
+        const SizedBox(width: Insets.sm),
+        InkCircleButton(
+          icon: Icons.notifications_none_rounded,
+          badgeCount: unread,
+          onTap: () => context.push(Routes.notifications),
+        ),
+      ],
+    );
+  }
+}
+
+class _Band extends StatelessWidget {
+  const _Band({required this.summary});
+
+  final HubSummary? summary;
+
+  @override
+  Widget build(BuildContext context) {
     final HubSummary? current = summary;
     final double? utilisation = current?.utilisation;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Builder(
-              builder: (context) =>
-                  InkCircleButton(icon: Icons.menu_rounded, onTap: () => Scaffold.of(context).openDrawer()),
-            ),
-            const SizedBox(width: Insets.md),
-            Expanded(
-              child: Text(
-                session.managerName,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.titleLarge.copyWith(fontSize: 20, color: AppColors.onInk),
-              ),
-            ),
-            const SizedBox(width: Insets.sm),
-            AttendanceToggle(present: session.present, onChanged: (next) => _markAttendance(context, ref, next)),
-            const SizedBox(width: Insets.sm),
-            InkCircleButton(
-              icon: Icons.notifications_none_rounded,
-              badgeCount: unread,
-              onTap: () => context.push(Routes.notifications),
-            ),
-          ],
-        ),
+        _SearchBar(onTap: () => context.push(Routes.fleetSearch)),
         const Gap.xxl(),
         Text(context.l10n.hubFleetUtilisation, style: AppText.label.copyWith(color: AppColors.onInkSecondary)),
         const Gap.sm(),

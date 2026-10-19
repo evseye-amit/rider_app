@@ -78,6 +78,15 @@ class MediaApi {
 
   final ApiClient _client;
 
+  static const int maxReceiptBytes = 5 * 1024 * 1024;
+
+  static String imageMimeType(String path) {
+    final String lower = path.toLowerCase();
+    if (lower.endsWith('.png')) return 'image/png';
+    if (lower.endsWith('.webp')) return 'image/webp';
+    return 'image/jpeg';
+  }
+
   Future<Result<List<PhotoRequirement>>> requirements(PhotoEntity entity) {
     return _client.get<List<PhotoRequirement>>(
       '/media/photo-requirements',
@@ -214,6 +223,34 @@ class MediaApi {
 
     return _client.post<RemotePhoto>(
       completePath(photoId),
+      parse: (data) => RemotePhoto.fromJson(Map<String, dynamic>.from(data as Map)),
+    );
+  }
+
+  Future<Result<RemotePhoto>> uploadPaymentReceipt({required String paymentId, required File file}) async {
+    final String base = '/rider-app/billing/payment-transactions/DEPLOYMENT/$paymentId/receipts';
+    final String mimeType = imageMimeType(file.path);
+    final Uint8List bytes = await file.readAsBytes();
+    final Result<Map<String, dynamic>> intent = await _client.post<Map<String, dynamic>>(
+      '$base/upload-intent',
+      body: {'fileName': _fileNameFor('receipt', mimeType), 'mimeType': mimeType, 'sizeBytes': bytes.length},
+      parse: (data) => Map<String, dynamic>.from(data as Map),
+    );
+    if (intent case Err<Map<String, dynamic>>(:final failure)) return Result.err(failure);
+
+    final Map<String, dynamic> payload = (intent as Ok<Map<String, dynamic>>).value;
+    final String photoId = Map<String, dynamic>.from(payload['photo'] as Map)['id'] as String;
+    final Result<bool> sent = await _putObject(
+      payload['uploadUrl'] as String,
+      bytes,
+      mimeType,
+      null,
+      alwaysSendContentType: true,
+    );
+    if (sent case Err<bool>(:final failure)) return Result.err(failure);
+
+    return _client.post<RemotePhoto>(
+      '$base/$photoId/complete',
       parse: (data) => RemotePhoto.fromJson(Map<String, dynamic>.from(data as Map)),
     );
   }

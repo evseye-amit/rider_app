@@ -7,9 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../allocation_dependencies.dart';
 import '../../domain/usecases/evidence_photo_usecases.dart';
+import '../../domain/usecases/payment_review_usecases.dart';
 import '../../domain/usecases/rental_plan_usecases.dart';
 import '../../domain/usecases/submit_pdi.dart';
 import '../../domain/usecases/team_lead_usecases.dart';
+import '../../domain/usecases/verify_payment.dart';
 
 class DeploymentDetail extends Equatable {
   const DeploymentDetail({required this.request, this.evidence, this.commercial, this.teamLead, this.busy = false});
@@ -99,7 +101,17 @@ class DeploymentDetailNotifier extends AsyncNotifier<DeploymentDetail> {
     () => ref.read(selectRentalPlanProvider)(SelectRentalPlanParams(allocationId: _allocationId, plan: plan)),
   );
 
-  Future<Result<void>> verifyPayment() => _perform(() => ref.read(verifyPaymentProvider)(_allocationId));
+  Future<Result<void>> verifyPayment({int? expectedVersion}) => _perform(
+    () => ref.read(verifyPaymentProvider)(
+      VerifyPaymentParams(allocationId: _allocationId, expectedVersion: expectedVersion),
+    ),
+  );
+
+  Future<Result<void>> rejectPayment({required String reason, required int expectedVersion}) => _perform(
+    () => ref.read(rejectPaymentProvider)(
+      RejectPaymentParams(allocationId: _allocationId, reason: reason, expectedVersion: expectedVersion),
+    ),
+  );
 
   Future<Result<void>> assignTeamLead(TeamLeadOption lead) => _perform(
     () => ref.read(assignTeamLeadProvider)(AssignTeamLeadParams(allocationId: _allocationId, teamLeaderId: lead.id)),

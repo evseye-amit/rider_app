@@ -275,18 +275,8 @@ class HowItWorksCard extends StatelessWidget {
 
   final ReferralCampaign campaign;
 
-  void _showTerms(BuildContext context, String terms) => AppSheet.show<void>(
-    context,
-    title: context.l10n.referTerms,
-    child: Padding(
-      padding: const EdgeInsets.only(bottom: Insets.lg),
-      child: Text(terms, style: AppText.bodyMedium.copyWith(height: 1.5)),
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {
-    final String? terms = campaign.terms;
     return ModuleCard(
       title: context.l10n.referHowItWorks,
       leading: const IconTile(icon: Icons.route_rounded, solid: true, size: 28),
@@ -312,18 +302,6 @@ class HowItWorksCard extends StatelessWidget {
                   ],
                 ),
               ),
-          ],
-          if (terms != null) ...[
-            const Gap.xs(),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: GhostButton(
-                label: context.l10n.referTerms,
-                icon: Icons.description_outlined,
-                dense: true,
-                onPressed: () => _showTerms(context, terms),
-              ),
-            ),
           ],
         ],
       ),

@@ -153,7 +153,7 @@ class _AssignVehiclePageState extends ConsumerState<AssignVehiclePage> {
             padding: const EdgeInsets.symmetric(vertical: Insets.lg),
             child: ArtBlock(
               art: BrandArt.empty,
-              artSize: 130,
+              artSize: 112,
               title: context.l10n.allocationNoVehiclesReady,
               message: context.l10n.allocationVehicleHasAvailableOnboardedAllocation,
             ),

@@ -21,8 +21,6 @@ class HubProfile extends Equatable {
     required this.city,
     required this.capacity,
     required this.openedOn,
-    required this.chargingBays,
-    required this.serviceBays,
     required this.teamLeads,
   });
 
@@ -34,12 +32,10 @@ class HubProfile extends Equatable {
   final String city;
   final int capacity;
   final DateTime? openedOn;
-  final int chargingBays;
-  final int serviceBays;
   final List<TeamLead> teamLeads;
 
   bool get hasTeamLeads => teamLeads.isNotEmpty;
 
   @override
-  List<Object?> get props => [id, name, code, address, city, capacity, openedOn, chargingBays, serviceBays, teamLeads];
+  List<Object?> get props => [id, name, code, address, city, capacity, openedOn, teamLeads];
 }

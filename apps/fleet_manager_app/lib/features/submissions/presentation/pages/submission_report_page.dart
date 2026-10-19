@@ -3,28 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/maintenance/maintenance_issue_widgets.dart';
 import '../../domain/entities/damaged_item.dart';
+import '../../domain/entities/issue_draft.dart';
 import '../../domain/usecases/submission_usecases.dart';
 import '../../submission_dependencies.dart';
 import '../providers/damaged_items_provider.dart';
 import '../providers/submission_providers.dart';
 import '../widgets/damaged_items.dart';
+import '../widgets/issue_editor.dart';
 import '../widgets/submission_widgets.dart';
 
 const int _maxReportEvidence = 40;
-
-List<(SubmissionPhotoDto, String)> _labelledPhotos(AppL10n l10n, VehicleSubmissionDto submission) {
-  int damage = 0;
-  return [
-    for (final SubmissionPhotoDto photo in submission.photos)
-      (
-        photo,
-        photo.photoType.startsWith(damagePhotoPrefix)
-            ? '${l10n.submissionPhotoDamage} ${++damage}'
-            : submissionPhotoLabel(l10n, photo.photoType, submission.assets),
-      ),
-  ];
-}
+const int _maxUnsafeReason = 500;
 
 class SubmissionReportPage extends ConsumerStatefulWidget {
   const SubmissionReportPage({required this.submissionId, super.key});
@@ -41,8 +32,9 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
   final TextEditingController _summary = TextEditingController();
   final TextEditingController _unsafe = TextEditingController();
 
-  _ScooterStatus? _status;
+  MaintenanceFleetStatus? _status;
   Set<String>? _evidence;
+  List<IssueDraft>? _issues;
   bool _saving = false;
   bool _showErrors = false;
 
@@ -58,6 +50,9 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
       _evidence ??
       {for (final SubmissionPhotoDto photo in submission.photos.reversed.take(_maxReportEvidence)) photo.id};
 
+  List<IssueDraft> _issuesFor(VehicleSubmissionDto submission) =>
+      _issues ?? [for (final MaintenanceIssueDto issue in submission.maintenanceIssues) IssueDraft.fromDto(issue)];
+
   void _toggleEvidence(VehicleSubmissionDto submission, String photoId) {
     final Set<String> next = {..._evidenceFor(submission)};
     if (!next.remove(photoId)) {
@@ -70,18 +65,67 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
     setState(() => _evidence = next);
   }
 
+  Future<void> _openIssue(VehicleSubmissionDto submission, [IssueDraft? initial]) async {
+    final IssueDraft? saved = await IssueSheet.show(context, submission: submission, initial: initial);
+    if (!mounted) return;
+    ref.invalidate(submissionProvider(submission.id));
+    if (saved == null) return;
+    final List<IssueDraft> current = _issuesFor(submission);
+    setState(
+      () => _issues = [
+        for (final IssueDraft issue in current) issue.key == saved.key ? saved : issue,
+        if (!current.any((issue) => issue.key == saved.key)) saved,
+      ],
+    );
+  }
+
+  void _removeIssue(VehicleSubmissionDto submission, IssueDraft removed) {
+    setState(
+      () => _issues = [
+        for (final IssueDraft issue in _issuesFor(submission))
+          if (issue.key != removed.key) issue,
+      ],
+    );
+  }
+
+  String? _issueProblem(MaintenanceFleetStatus? status, List<IssueDraft> issues) {
+    final AppL10n l10n = context.l10n;
+    return switch (status) {
+      null => null,
+      MaintenanceFleetStatus.available =>
+        issues.every((issue) => issue.status.isResolved) ? null : l10n.submissionAvailableNeedsResolved,
+      _ when issues.isEmpty => l10n.submissionStatusNeedsIssue,
+      MaintenanceFleetStatus.awaitingParts when !issues.any((issue) => issue.waitsForParts) =>
+        l10n.submissionAwaitingPartsNeedsParts,
+      _ => null,
+    };
+  }
+
+  String _statusHint(MaintenanceFleetStatus status) => switch (status) {
+    MaintenanceFleetStatus.available => context.l10n.submissionStatusAvailableHint,
+    MaintenanceFleetStatus.maintenance => context.l10n.submissionStatusMaintenanceHint,
+    MaintenanceFleetStatus.broken => context.l10n.submissionStatusBrokenHint,
+    MaintenanceFleetStatus.awaitingParts => context.l10n.submissionStatusAwaitingPartsHint,
+  };
+
   Future<void> _save(VehicleSubmissionDto submission) async {
     FocusManager.instance.primaryFocus?.unfocus();
     final String mechanic = _mechanic.text.trim();
     final String summary = _summary.text.trim();
-    final String unsafe = _unsafe.text.trim();
-    final _ScooterStatus? status = _status;
+    final String notes = _unsafe.text.trim();
+    final MaintenanceFleetStatus? status = _status;
     final Set<String> evidence = _evidenceFor(submission);
+    final List<IssueDraft> issues = _issuesFor(submission);
     final List<DamagedItem> items = ref.read(damagedItemsProvider(submission.id));
-    if (mechanic.isEmpty || summary.isEmpty || status == null || evidence.isEmpty) {
+    if (mechanic.isEmpty ||
+        summary.isEmpty ||
+        status == null ||
+        evidence.isEmpty ||
+        _issueProblem(status, issues) != null) {
       setState(() => _showErrors = true);
       return;
     }
+    final String reason = notes.isNotEmpty ? notes : issues.map((issue) => issue.description).join('; ');
     setState(() => _saving = true);
     final Result<void> result = await ref.read(recordSubmissionReportProvider)(
       RecordReportParams(
@@ -91,13 +135,16 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
           stage: submission.isConfirmed ? SubmissionStage.deep : SubmissionStage.basic,
           mechanicName: mechanic,
           summary: summary,
-          safeForReuse: status.safe,
-          unsafeReason: status.safe ? null : [status.code, if (unsafe.isNotEmpty) unsafe].join(' — '),
+          fleetStatus: status,
+          unsafeReason: status.isAvailable
+              ? null
+              : (reason.length > _maxUnsafeReason ? reason.substring(0, _maxUnsafeReason) : reason),
           checksComplete: true,
           evidencePhotoIds: [
             for (final SubmissionPhotoDto photo in submission.photos)
               if (evidence.contains(photo.id)) photo.id,
           ],
+          issues: [for (final IssueDraft issue in issues) issue.toInput()],
           items: [for (final DamagedItem item in items) item.toInput()],
         ),
       ),
@@ -153,7 +200,8 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
   }
 
   Widget _form(VehicleSubmissionDto submission) {
-    final _ScooterStatus? status = _status;
+    final MaintenanceFleetStatus? status = _status;
+    final List<IssueDraft> issues = _issuesFor(submission);
     return PageBody(
       children: [
         ModuleCard(
@@ -197,46 +245,17 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              for (final (_ScooterStatus option, String title, String hint, IconData icon, Color tone) in [
-                (
-                  _ScooterStatus.umMajor,
-                  context.l10n.submissionStatusUmMajor,
-                  context.l10n.submissionStatusUmMajorHint,
-                  Icons.car_repair_rounded,
-                  AppColors.danger,
-                ),
-                (
-                  _ScooterStatus.umMinor,
-                  context.l10n.submissionStatusUmMinor,
-                  context.l10n.submissionStatusUmMinorHint,
-                  Icons.build_circle_rounded,
-                  AppColors.warning,
-                ),
-                (
-                  _ScooterStatus.mok,
-                  context.l10n.submissionStatusMok,
-                  context.l10n.submissionStatusMokHint,
-                  Icons.verified_rounded,
-                  AppColors.info,
-                ),
-                (
-                  _ScooterStatus.rfd,
-                  context.l10n.submissionStatusRfd,
-                  context.l10n.submissionStatusRfdHint,
-                  Icons.check_circle_rounded,
-                  AppColors.success,
-                ),
-              ]) ...[
+              for (final MaintenanceFleetStatus option in MaintenanceFleetStatus.values) ...[
                 AppRadioTile(
                   selected: status == option,
                   onTap: () => setState(() => _status = option),
-                  title: title,
-                  subtitle: hint,
-                  leading: IconTile(icon: icon, tone: tone, size: 36),
+                  title: fleetConditionLabel(context.l10n, option),
+                  subtitle: _statusHint(option),
+                  leading: IconTile(icon: fleetConditionIcon(option), tone: fleetConditionTone(option).color, size: 36),
                 ),
-                if (option != _ScooterStatus.rfd) const Gap.sm(),
+                if (option != MaintenanceFleetStatus.values.last) const Gap.sm(),
               ],
-              if (status != null && !status.safe) ...[
+              if (status != null && !status.isAvailable) ...[
                 const Gap.md(),
                 AppTextField(
                   label: context.l10n.submissionMaintenanceDetails,
@@ -255,6 +274,15 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
               ],
             ],
           ),
+        ),
+        const Gap.lg(),
+        IssuesCard(
+          issues: issues,
+          items: ref.watch(damagedItemsProvider(submission.id)),
+          onAdd: () => _openIssue(submission),
+          onEdit: (issue) => _openIssue(submission, issue),
+          onRemove: (issue) => _removeIssue(submission, issue),
+          error: _showErrors ? _issueProblem(status, issues) : null,
         ),
         const Gap.lg(),
         _summaryCard(submission),
@@ -284,7 +312,7 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
             spacing: Insets.sm,
             runSpacing: Insets.sm,
             children: [
-              for (final (SubmissionPhotoDto photo, String label) in _labelledPhotos(context.l10n, submission))
+              for (final (SubmissionPhotoDto photo, String label) in labelledSubmissionPhotos(context.l10n, submission))
                 EvidenceChip(
                   label: label,
                   selected: evidence.contains(photo.id),
@@ -315,17 +343,4 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
       ),
     );
   }
-}
-
-enum _ScooterStatus {
-  umMajor('UM major'),
-  umMinor('UM minor'),
-  mok('MOK'),
-  rfd('RFD');
-
-  const _ScooterStatus(this.code);
-
-  final String code;
-
-  bool get safe => this == mok || this == rfd;
 }

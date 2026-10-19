@@ -7,9 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../../../../core/referral/referral_link.dart';
 import '../../../../core/referral/referral_qr_card.dart';
-import '../../../../core/referral/store_links.dart';
 import '../../domain/entities/referral_invite.dart';
 import '../../domain/entities/referral_overview.dart';
 
@@ -47,22 +45,11 @@ class _ReferralShareSheetState extends State<ReferralShareSheet> {
   }
 
   String _message(AppL10n l10n) {
-    final ReferralInvite invite = widget.invite;
-    final ReferralLink link = ReferralLink(
-      code: invite.code,
-      inviteToken: invite.inviteToken,
-      campaignCode: invite.inviteToken == null ? widget.overview.campaign?.code : null,
-    );
-    final String? backend = widget.overview.inviteMessage(invite.shareLink);
-    final String? appStore = ReferralStoreLinks.appStore();
     final num? reward = widget.overview.refereeReward;
     return [
-      backend ?? l10n.referShareIntro(FlavorConfig.riderAppName),
-      if (backend == null && reward != null && reward > 0) l10n.referShareReward(Fmt.money(reward)),
-      if (backend == null || !backend.contains(invite.code)) l10n.referShareCodeLine(invite.code),
-      '',
-      l10n.referShareAndroid(ReferralStoreLinks.playStore(link)),
-      if (appStore != null) l10n.referShareIphone(appStore),
+      l10n.referShareIntro(FlavorConfig.riderAppName),
+      if (reward != null && reward > 0) l10n.referShareReward(Fmt.money(reward)),
+      l10n.referShareCodeLine(widget.invite.code),
     ].join('\n');
   }
 
@@ -129,7 +116,7 @@ class _ReferralShareSheetState extends State<ReferralShareSheet> {
               key: _card,
               child: ReferralQrCard(
                 code: invite.code,
-                data: invite.qrData,
+                data: invite.code,
                 title: widget.overview.campaign?.title,
                 caption: reward != null && reward > 0 ? context.l10n.referCardReward(Fmt.money(reward)) : null,
               ),

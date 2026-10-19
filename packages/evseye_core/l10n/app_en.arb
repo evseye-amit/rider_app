@@ -281,9 +281,30 @@
   "@allocationNoWorkPartnersMessage": {
     "description": "Empty work partner list message"
   },
+  "allocationPaymentCouldNotLoad": "Couldn't load the payment",
+  "@allocationPaymentCouldNotLoad": {
+    "description": "Error title when the payment review fails to load"
+  },
+  "allocationPaymentNoScreenshot": "The rider didn't attach a screenshot.",
+  "@allocationPaymentNoScreenshot": {
+    "description": "Shown when the payment has no screenshot"
+  },
   "allocationPaymentReceived": "Payment received?",
   "@allocationPaymentReceived": {
     "description": "Payment received?"
+  },
+  "allocationPaymentRejected": "Payment rejected. The rider can fix it and send it again.",
+  "@allocationPaymentRejected": {
+    "description": "Shown after the fleet manager rejects the payment"
+  },
+  "allocationPaymentRejectedNote": "You rejected this payment: {reason}. Waiting for the rider to send it again.",
+  "@allocationPaymentRejectedNote": {
+    "description": "Shown when the payment was rejected",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
   },
   "allocationPaymentRequested": "Payment requested",
   "@allocationPaymentRequested": {
@@ -297,9 +318,17 @@
   "@allocationPaymentRequestedRiderSeesNow": {
     "description": "Payment requested — the rider sees it now"
   },
+  "allocationPaymentScreenshots": "Payment screenshots",
+  "@allocationPaymentScreenshots": {
+    "description": "Title of the rider's payment screenshots"
+  },
   "allocationPaymentVerified": "Payment verified",
   "@allocationPaymentVerified": {
     "description": "Payment verified"
+  },
+  "allocationPaymentWaitingRider": "The rider hasn't sent payment details yet.",
+  "@allocationPaymentWaitingRider": {
+    "description": "Shown when the rider has not submitted the payment"
   },
   "allocationPhotoBack": "Back",
   "@allocationPhotoBack": {
@@ -409,6 +438,26 @@
   "@allocationReason": {
     "description": "Reason"
   },
+  "allocationRejectConfirm": "Reject payment",
+  "@allocationRejectConfirm": {
+    "description": "Button that confirms the payment rejection"
+  },
+  "allocationRejectPayment": "Reject",
+  "@allocationRejectPayment": {
+    "description": "Button that rejects the rider's payment"
+  },
+  "allocationRejectReason": "Why are you rejecting it?",
+  "@allocationRejectReason": {
+    "description": "Label of the payment rejection reason"
+  },
+  "allocationRejectReasonHint": "For example: the reference doesn't match the money received",
+  "@allocationRejectReasonHint": {
+    "description": "Hint of the payment rejection reason"
+  },
+  "allocationRejectReasonNeeded": "Enter at least 3 characters",
+  "@allocationRejectReasonNeeded": {
+    "description": "Error when the rejection reason is too short"
+  },
   "allocationRequestVehicle": "Request the vehicle",
   "@allocationRequestVehicle": {
     "description": "Request the vehicle"
@@ -420,6 +469,10 @@
   "allocationReserved2": "Reserved on",
   "@allocationReserved2": {
     "description": "Reserved on"
+  },
+  "allocationReviewPayment": "Review payment",
+  "@allocationReviewPayment": {
+    "description": "Title of the fleet manager payment review sheet"
   },
   "allocationRider": "Rider",
   "@allocationRider": {
@@ -1916,9 +1969,26 @@
   "@deploymentPaymentReceived": {
     "description": "Payment received"
   },
+  "deploymentPaymentRejectedBody": "Your fleet manager couldn't confirm this payment: {reason}. Check the details and send them again.",
+  "@deploymentPaymentRejectedBody": {
+    "description": "Message when the fleet manager rejected the payment",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "deploymentPaymentRejectedTitle": "Payment not confirmed",
+  "@deploymentPaymentRejectedTitle": {
+    "description": "Title when the fleet manager rejected the payment"
+  },
   "deploymentPaymentSubmitted": "Payment submitted",
   "@deploymentPaymentSubmitted": {
     "description": "Payment submitted"
+  },
+  "deploymentPaymentSupport": "This payment can't be sent from the app right now. Please contact your hub or support.",
+  "@deploymentPaymentSupport": {
+    "description": "Shown when the payment can no longer be submitted"
   },
   "deploymentPayScooter": "Pay for your scooter",
   "@deploymentPayScooter": {
@@ -1951,6 +2021,30 @@
   "deploymentProgressSavedSignAgainAny": "Your progress is saved. Sign in again any time to pick up where you left off.",
   "@deploymentProgressSavedSignAgainAny": {
     "description": "Your progress is saved. Sign in again any time to pick up where you left off."
+  },
+  "deploymentReceiptAdd": "Add screenshot",
+  "@deploymentReceiptAdd": {
+    "description": "Button that adds a payment screenshot"
+  },
+  "deploymentReceiptAdded": "Screenshot added",
+  "@deploymentReceiptAdded": {
+    "description": "Shown after a payment screenshot is uploaded"
+  },
+  "deploymentReceiptHint": "Add a screenshot of the payment. It helps your fleet manager check it faster.",
+  "@deploymentReceiptHint": {
+    "description": "Hint of the optional payment screenshot section"
+  },
+  "deploymentReceiptsSent": "Screenshots sent",
+  "@deploymentReceiptsSent": {
+    "description": "Title of the payment screenshots already sent"
+  },
+  "deploymentReceiptTitle": "Payment screenshot (optional)",
+  "@deploymentReceiptTitle": {
+    "description": "Title of the optional payment screenshot section"
+  },
+  "deploymentReceiptTooLarge": "This image is over 5 MB. Pick a smaller one.",
+  "@deploymentReceiptTooLarge": {
+    "description": "Error when a payment screenshot is too large"
   },
   "deploymentReference": "Reference",
   "@deploymentReference": {
@@ -2681,6 +2775,111 @@
   "@fleetOnboardingRejected": {
     "description": "Rejected"
   },
+  "fleetSearchAllocationActive": "With rider",
+  "@fleetSearchAllocationActive": {
+    "description": "Allocation status while the rider has the scooter"
+  },
+  "fleetSearchAllocationCancelled": "Cancelled",
+  "@fleetSearchAllocationCancelled": {
+    "description": "Allocation status when it was cancelled"
+  },
+  "fleetSearchAllocationHandover": "Handover in progress",
+  "@fleetSearchAllocationHandover": {
+    "description": "Allocation status while the handover is not finished"
+  },
+  "fleetSearchAllocationReturned": "Returned",
+  "@fleetSearchAllocationReturned": {
+    "description": "Allocation status after the scooter was returned"
+  },
+  "fleetSearchAllocationReturning": "Return in progress",
+  "@fleetSearchAllocationReturning": {
+    "description": "Allocation status while the scooter is being returned"
+  },
+  "fleetSearchCouldNotLoad": "Couldn't search scooters",
+  "@fleetSearchCouldNotLoad": {
+    "description": "Error title when the scooter search fails"
+  },
+  "fleetSearchCouldNotLoadRiderHistory": "Couldn't load rider history",
+  "@fleetSearchCouldNotLoadRiderHistory": {
+    "description": "Error title when the scooter's rider history fails to load"
+  },
+  "fleetSearchCouldNotLoadScooter": "Couldn't load this scooter",
+  "@fleetSearchCouldNotLoadScooter": {
+    "description": "Error title when one scooter fails to load"
+  },
+  "fleetSearchCurrentRider": "Current rider",
+  "@fleetSearchCurrentRider": {
+    "description": "Title of the current rider section"
+  },
+  "fleetSearchEmptyMessage": "Check the vehicle number, fleet code or chassis number and try again.",
+  "@fleetSearchEmptyMessage": {
+    "description": "Message when the scooter search finds nothing"
+  },
+  "fleetSearchEmptyTitle": "No scooter found",
+  "@fleetSearchEmptyTitle": {
+    "description": "Title when the scooter search finds nothing"
+  },
+  "fleetSearchHint": "Search scooters by number, code or chassis",
+  "@fleetSearchHint": {
+    "description": "Hint of the global scooter search"
+  },
+  "fleetSearchLatestSubmission": "Latest return or exchange",
+  "@fleetSearchLatestSubmission": {
+    "description": "Title of the latest submission section"
+  },
+  "fleetSearchNoRider": "No rider has this scooter right now.",
+  "@fleetSearchNoRider": {
+    "description": "Shown when no rider has the scooter"
+  },
+  "fleetSearchNoRiderHistory": "No rider has had this scooter yet.",
+  "@fleetSearchNoRiderHistory": {
+    "description": "Shown when the scooter has no rider history"
+  },
+  "fleetSearchNoSubmission": "No return or exchange yet.",
+  "@fleetSearchNoSubmission": {
+    "description": "Shown when the scooter has no return or exchange"
+  },
+  "fleetSearchOtherHub": "Other hub",
+  "@fleetSearchOtherHub": {
+    "description": "Tag on a scooter that is at a hub the fleet manager does not manage"
+  },
+  "fleetSearchRiderHistory": "Rider history",
+  "@fleetSearchRiderHistory": {
+    "description": "Title of the list of riders who had the scooter"
+  },
+  "fleetSearchRiderHistoryOtherHub": "Rider history is shown only for scooters in your hubs.",
+  "@fleetSearchRiderHistoryOtherHub": {
+    "description": "Shown instead of rider history for a scooter at another hub"
+  },
+  "fleetSearchSince": "Since {date}",
+  "@fleetSearchSince": {
+    "description": "Start date of an allocation that has not ended",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "fleetSearchStartMessage": "Type at least 2 characters of a vehicle number, fleet code or chassis number.",
+  "@fleetSearchStartMessage": {
+    "description": "Message shown before the fleet manager types a search"
+  },
+  "fleetSearchStartTitle": "Search every hub",
+  "@fleetSearchStartTitle": {
+    "description": "Shown before the fleet manager types a search"
+  },
+  "fleetSearchSubmissionDone": "Done",
+  "@fleetSearchSubmissionDone": {
+    "description": "Status of a finished return or exchange"
+  },
+  "fleetSearchSubmissionOpen": "In progress",
+  "@fleetSearchSubmissionOpen": {
+    "description": "Status of an open return or exchange"
+  },
+  "fleetSearchTitle": "Find a scooter",
+  "@fleetSearchTitle": {
+    "description": "Title of the global scooter search screen"
+  },
   "fleetStatusAllocated": "Allocated",
   "@fleetStatusAllocated": {
     "description": "Allocated"
@@ -2692,6 +2891,14 @@
   "fleetStatusAvailable": "Available",
   "@fleetStatusAvailable": {
     "description": "Available"
+  },
+  "fleetStatusAwaitingParts": "Awaiting parts",
+  "@fleetStatusAwaitingParts": {
+    "description": "Scooter status: waiting for spare parts"
+  },
+  "fleetStatusBroken": "Broken",
+  "@fleetStatusBroken": {
+    "description": "Scooter status: needs a major repair"
   },
   "fleetStatusInspectionPending": "Waiting for inspection",
   "@fleetStatusInspectionPending": {
@@ -2865,6 +3072,15 @@
   "@hubFleetUtilisation": {
     "description": "Fleet utilisation"
   },
+  "hubGstinLine": "GSTIN: {gstin}",
+  "@hubGstinLine": {
+    "description": "Company GSTIN shown on the fleet manager home hub card",
+    "placeholders": {
+      "gstin": {
+        "type": "String"
+      }
+    }
+  },
   "hubHome": "Home",
   "@hubHome": {
     "description": "Home"
@@ -2884,6 +3100,15 @@
   "hubNoHubAssigned": "No hub is assigned to you.",
   "@hubNoHubAssigned": {
     "description": "No hub is assigned to you."
+  },
+  "hubQuickSupportLine": "Quick support: {number}",
+  "@hubQuickSupportLine": {
+    "description": "Quick support phone number shown on the fleet manager home hub card",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
   },
   "hubQuickView": "Quick Hub View",
   "@hubQuickView": {
@@ -3017,6 +3242,67 @@
   "@introVehicleTitle": {
     "description": "Your scooter, fully connected"
   },
+  "issueCategoryAccessories": "Accessories",
+  "@issueCategoryAccessories": {
+    "description": "Issue category: accessories"
+  },
+  "issueCategoryBattery": "Battery",
+  "@issueCategoryBattery": {
+    "description": "Issue category: battery pack, BMS, battery connectors"
+  },
+  "issueCategoryBodyChassis": "Body & chassis",
+  "@issueCategoryBodyChassis": {
+    "description": "Issue category: body and chassis"
+  },
+  "issueCategoryBrakes": "Brakes",
+  "@issueCategoryBrakes": {
+    "description": "Issue category: brakes"
+  },
+  "issueCategoryElectrical": "Electrical",
+  "@issueCategoryElectrical": {
+    "description": "Issue category: wiring, lights, charger, charging port"
+  },
+  "issueCategoryOther": "Other",
+  "@issueCategoryOther": {
+    "description": "Issue category: anything else"
+  },
+  "issueCategoryPowertrain": "Motor & powertrain",
+  "@issueCategoryPowertrain": {
+    "description": "Issue category: motor, controller, drivetrain"
+  },
+  "issueCategorySuspensionSteering": "Suspension & steering",
+  "@issueCategorySuspensionSteering": {
+    "description": "Issue category: suspension and steering"
+  },
+  "issueCategoryTyresWheels": "Tyres & wheels",
+  "@issueCategoryTyresWheels": {
+    "description": "Issue category: tyres and wheels"
+  },
+  "issueChargeLine": "Damage charge: {name}",
+  "@issueChargeLine": {
+    "description": "Damaged item an issue is linked to",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "issueChargeLinked": "Linked to a damage charge",
+  "@issueChargeLinked": {
+    "description": "Shown on an issue linked to a damage charge whose name isn't known"
+  },
+  "issueStatusInProgress": "In progress",
+  "@issueStatusInProgress": {
+    "description": "Issue progress: being worked on"
+  },
+  "issueStatusOpen": "Open",
+  "@issueStatusOpen": {
+    "description": "Issue progress: not started"
+  },
+  "issueStatusResolved": "Resolved",
+  "@issueStatusResolved": {
+    "description": "Issue progress: fixed"
+  },
   "legalAppName": "App",
   "@legalAppName": {
     "description": "App"
@@ -3024,6 +3310,10 @@
   "legalDocumentCouldNotLoad": "Could not load this document",
   "@legalDocumentCouldNotLoad": {
     "description": "Could not load this document"
+  },
+  "maintenanceAllCategories": "All categories",
+  "@maintenanceAllCategories": {
+    "description": "Filter chip showing every issue category"
   },
   "maintenanceAllocation": "Allocation",
   "@maintenanceAllocation": {
@@ -3036,6 +3326,10 @@
   "maintenanceAllocationOn": "Allowed",
   "@maintenanceAllocationOn": {
     "description": "Allowed"
+  },
+  "maintenanceAllStatuses": "All statuses",
+  "@maintenanceAllStatuses": {
+    "description": "Filter chip showing every maintenance status"
   },
   "maintenanceAwaitingReport": "No report yet",
   "@maintenanceAwaitingReport": {
@@ -3119,6 +3413,10 @@
   "@maintenanceHomeHub": {
     "description": "Home hub"
   },
+  "maintenanceIssues": "Issues",
+  "@maintenanceIssues": {
+    "description": "Title of the issues card on a maintenance scooter"
+  },
   "maintenanceLatestReport": "Latest mechanic report",
   "@maintenanceLatestReport": {
     "description": "Latest mechanic report"
@@ -3144,6 +3442,10 @@
   "@maintenanceNoHistory": {
     "description": "No status changes have been recorded."
   },
+  "maintenanceNoIssues": "No issues recorded.",
+  "@maintenanceNoIssues": {
+    "description": "Shown when a maintenance scooter has no issues"
+  },
   "maintenanceNoMatchBody": "Try a different vehicle number, fleet code, chassis or model.",
   "@maintenanceNoMatchBody": {
     "description": "Try a different vehicle number, fleet code, chassis or model."
@@ -3167,6 +3469,15 @@
   "maintenanceOnboarding": "Onboarding",
   "@maintenanceOnboarding": {
     "description": "Onboarding"
+  },
+  "maintenanceOpenIssues": "Open issues: {count}",
+  "@maintenanceOpenIssues": {
+    "description": "Number of unresolved issues on a maintenance scooter",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "maintenancePhotoCount": "Photos attached: {count}",
   "@maintenancePhotoCount": {
@@ -4455,10 +4766,6 @@
   "@referSubtitle": {
     "description": "Invite riders and earn rewards"
   },
-  "referTerms": "Terms & conditions",
-  "@referTerms": {
-    "description": "Terms & conditions"
-  },
   "referTimeline": "Timeline",
   "@referTimeline": {
     "description": "Timeline"
@@ -5357,6 +5664,18 @@
   "@submissionAddDamagedItem": {
     "description": "Button that opens the spare parts list"
   },
+  "submissionAddIssue": "Add an issue",
+  "@submissionAddIssue": {
+    "description": "Button that adds an issue to the mechanic report"
+  },
+  "submissionAvailableNeedsResolved": "To choose Available, set every issue to Resolved.",
+  "@submissionAvailableNeedsResolved": {
+    "description": "Error when Available is chosen but an issue is not resolved"
+  },
+  "submissionAwaitingPartsNeedsParts": "Add the parts needed to at least one issue that isn't resolved.",
+  "@submissionAwaitingPartsNeedsParts": {
+    "description": "Error when Awaiting parts is chosen but no open issue lists parts"
+  },
   "submissionBypass": "Can't use a code?",
   "@submissionBypass": {
     "description": "Can't use a code?"
@@ -5497,6 +5816,10 @@
   "@submissionDamagedItemsHint": {
     "description": "Hint under the damaged items title"
   },
+  "submissionEditIssue": "Edit issue",
+  "@submissionEditIssue": {
+    "description": "Title of the sheet that edits an issue"
+  },
   "submissionEvidence": "Proof photos",
   "@submissionEvidence": {
     "description": "Proof photos"
@@ -5542,6 +5865,75 @@
   "@submissionImposeTitle": {
     "description": "Impose this report?"
   },
+  "submissionIssueCategory": "Category",
+  "@submissionIssueCategory": {
+    "description": "Label of the issue category choice"
+  },
+  "submissionIssueCategoryNeeded": "Choose a category",
+  "@submissionIssueCategoryNeeded": {
+    "description": "Error when no issue category is chosen"
+  },
+  "submissionIssueCharge": "Damage charge",
+  "@submissionIssueCharge": {
+    "description": "Label of the damage charge link on an issue"
+  },
+  "submissionIssueChargeEarlier": "Linked to a damage charge from an earlier report.",
+  "@submissionIssueChargeEarlier": {
+    "description": "Shown when an issue is linked to a damage charge from an earlier report"
+  },
+  "submissionIssueChargeHint": "Link this issue to a damaged item the rider is charged for.",
+  "@submissionIssueChargeHint": {
+    "description": "Hint of the damage charge link on an issue"
+  },
+  "submissionIssueDescription": "What's wrong",
+  "@submissionIssueDescription": {
+    "description": "Label of the issue description field"
+  },
+  "submissionIssueDescriptionNeeded": "Describe the issue",
+  "@submissionIssueDescriptionNeeded": {
+    "description": "Error when the issue description is empty"
+  },
+  "submissionIssueNoCharge": "Not linked",
+  "@submissionIssueNoCharge": {
+    "description": "Choice for an issue with no damage charge"
+  },
+  "submissionIssueParts": "Parts needed",
+  "@submissionIssueParts": {
+    "description": "Label of the required parts field on an issue"
+  },
+  "submissionIssuePartsHint": "Needed if the scooter is awaiting parts",
+  "@submissionIssuePartsHint": {
+    "description": "Hint of the required parts field on an issue"
+  },
+  "submissionIssuePartsLine": "Parts: {parts}",
+  "@submissionIssuePartsLine": {
+    "description": "Required parts shown on an issue",
+    "placeholders": {
+      "parts": {
+        "type": "String"
+      }
+    }
+  },
+  "submissionIssuePhotoNeeded": "Add at least one photo",
+  "@submissionIssuePhotoNeeded": {
+    "description": "Error when an issue has no photo"
+  },
+  "submissionIssuePhotosHint": "Pick at least one photo of this issue, or take a new one.",
+  "@submissionIssuePhotosHint": {
+    "description": "Hint of the photo choice on an issue"
+  },
+  "submissionIssueProgress": "Progress",
+  "@submissionIssueProgress": {
+    "description": "Label of the issue progress choice"
+  },
+  "submissionIssues": "Issues found",
+  "@submissionIssues": {
+    "description": "Title of the issues section on the mechanic report"
+  },
+  "submissionIssuesHint": "Add each problem with a photo. Set it to Resolved once it's fixed.",
+  "@submissionIssuesHint": {
+    "description": "Hint of the issues section on the mechanic report"
+  },
   "submissionItemNote": "Note (optional)",
   "@submissionItemNote": {
     "description": "Label of the optional note on a damaged item"
@@ -5573,6 +5965,10 @@
   "submissionNameNeeded": "Enter the mechanic's name",
   "@submissionNameNeeded": {
     "description": "Enter the mechanic's name"
+  },
+  "submissionNewIssue": "New issue",
+  "@submissionNewIssue": {
+    "description": "Title of the sheet that adds an issue"
   },
   "submissionNextComplete": "All checks are done. Nothing more to do here.",
   "@submissionNextComplete": {
@@ -5610,6 +6006,10 @@
   "submissionNoDamagedItems": "No damaged items added, so the rider won't be charged.",
   "@submissionNoDamagedItems": {
     "description": "Shown in the report summary when there are no charges"
+  },
+  "submissionNoIssues": "No issues added.",
+  "@submissionNoIssues": {
+    "description": "Shown when the mechanic report has no issues"
   },
   "submissionNoPrices": "No penalty prices are set up yet. Ask an admin to add them on the dashboard.",
   "@submissionNoPrices": {
@@ -5754,6 +6154,10 @@
   "@submissionsAll": {
     "description": "All"
   },
+  "submissionSaveIssue": "Save issue",
+  "@submissionSaveIssue": {
+    "description": "Button that saves an issue"
+  },
   "submissionSaveItem": "Save item",
   "@submissionSaveItem": {
     "description": "Button that saves a damaged item"
@@ -5761,6 +6165,15 @@
   "submissionSaveReport": "Save report",
   "@submissionSaveReport": {
     "description": "Save report"
+  },
+  "submissionScooterStatusLine": "Scooter status: {status}",
+  "@submissionScooterStatusLine": {
+    "description": "Scooter status chosen on a mechanic report",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
   },
   "submissionsCouldNotLoad": "Couldn't load returns and exchanges",
   "@submissionsCouldNotLoad": {
@@ -5903,41 +6316,29 @@
   "@submissionStartTitle": {
     "description": "Title of the sheet that starts a return submission"
   },
+  "submissionStatusAvailableHint": "Safe to ride. The scooter goes back into the fleet.",
+  "@submissionStatusAvailableHint": {
+    "description": "Hint for the Available scooter status on the mechanic report"
+  },
+  "submissionStatusAwaitingPartsHint": "Waiting for spare parts. It can't be assigned until they're fitted.",
+  "@submissionStatusAwaitingPartsHint": {
+    "description": "Hint for the Awaiting parts scooter status on the mechanic report"
+  },
+  "submissionStatusBrokenHint": "Needs a major repair. It can't be assigned until it's repaired.",
+  "@submissionStatusBrokenHint": {
+    "description": "Hint for the Broken scooter status on the mechanic report"
+  },
   "submissionStatusCancelled": "Cancelled",
   "@submissionStatusCancelled": {
     "description": "Cancelled"
   },
-  "submissionStatusMok": "Mark as MOK",
-  "@submissionStatusMok": {
-    "description": "Mechanic report status: MOK"
+  "submissionStatusMaintenanceHint": "Needs a repair. It can't be assigned until it's fixed.",
+  "@submissionStatusMaintenanceHint": {
+    "description": "Hint for the Under maintenance scooter status on the mechanic report"
   },
-  "submissionStatusMokHint": "Mechanically OK. The scooter goes back into the fleet.",
-  "@submissionStatusMokHint": {
-    "description": "Hint for MOK: mechanically OK"
-  },
-  "submissionStatusRfd": "Mark as RFD",
-  "@submissionStatusRfd": {
-    "description": "Mechanic report status: ready for deployment"
-  },
-  "submissionStatusRfdHint": "Ready for deployment. The scooter goes back into the fleet.",
-  "@submissionStatusRfdHint": {
-    "description": "Hint for the RFD status"
-  },
-  "submissionStatusUmMajor": "Mark as UM major",
-  "@submissionStatusUmMajor": {
-    "description": "Mechanic report status: under maintenance, major repair"
-  },
-  "submissionStatusUmMajorHint": "Under maintenance (major repair). It can't be assigned until it's repaired.",
-  "@submissionStatusUmMajorHint": {
-    "description": "Hint for UM major: under maintenance, major repair"
-  },
-  "submissionStatusUmMinor": "Mark as UM minor",
-  "@submissionStatusUmMinor": {
-    "description": "Mechanic report status: under maintenance, minor repair"
-  },
-  "submissionStatusUmMinorHint": "Under maintenance (minor repair). It can't be assigned until it's repaired.",
-  "@submissionStatusUmMinorHint": {
-    "description": "Hint for UM minor: under maintenance, minor repair"
+  "submissionStatusNeedsIssue": "Add at least one issue for this status.",
+  "@submissionStatusNeedsIssue": {
+    "description": "Error when a maintenance status has no issue"
   },
   "submissionsTitle": "Returns & exchanges",
   "@submissionsTitle": {

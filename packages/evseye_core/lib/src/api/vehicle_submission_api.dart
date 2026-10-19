@@ -71,6 +71,92 @@ enum SubmissionParty {
   final String wire;
 }
 
+enum MaintenanceFleetStatus {
+  available('AVAILABLE'),
+  maintenance('MAINTENANCE'),
+  broken('BROKEN'),
+  awaitingParts('AWAITING_PARTS');
+
+  const MaintenanceFleetStatus(this.wire);
+
+  final String wire;
+
+  bool get isAvailable => this == available;
+
+  static MaintenanceFleetStatus? maybe(Object? raw) =>
+      values.where((status) => status.wire == raw?.toString()).firstOrNull;
+}
+
+enum MaintenanceIssueCategory {
+  powertrain('POWERTRAIN'),
+  battery('BATTERY'),
+  electrical('ELECTRICAL'),
+  brakes('BRAKES'),
+  tyresWheels('TYRES_WHEELS'),
+  suspensionSteering('SUSPENSION_STEERING'),
+  bodyChassis('BODY_CHASSIS'),
+  accessories('ACCESSORIES'),
+  other('OTHER');
+
+  const MaintenanceIssueCategory(this.wire);
+
+  final String wire;
+
+  static MaintenanceIssueCategory parse(Object? raw) =>
+      values.firstWhere((category) => category.wire == raw?.toString(), orElse: () => MaintenanceIssueCategory.other);
+}
+
+enum MaintenanceIssueStatus {
+  open('OPEN'),
+  inProgress('IN_PROGRESS'),
+  resolved('RESOLVED');
+
+  const MaintenanceIssueStatus(this.wire);
+
+  final String wire;
+
+  bool get isResolved => this == resolved;
+
+  static MaintenanceIssueStatus parse(Object? raw) =>
+      values.firstWhere((status) => status.wire == raw?.toString(), orElse: () => MaintenanceIssueStatus.open);
+}
+
+class MaintenanceIssueDto {
+  const MaintenanceIssueDto({
+    required this.id,
+    required this.category,
+    required this.description,
+    required this.status,
+    required this.evidencePhotoIds,
+    this.requiredParts,
+    this.penaltyFindingId,
+    this.updatedAt,
+  });
+
+  factory MaintenanceIssueDto.fromJson(Map<String, dynamic> json) => MaintenanceIssueDto(
+    id: jsonTextOrNull(json['issueId']) ?? jsonText(json['id']),
+    category: MaintenanceIssueCategory.parse(json['category']),
+    description: jsonText(json['description']),
+    status: MaintenanceIssueStatus.parse(json['status']),
+    evidencePhotoIds: jsonStrings(json['evidencePhotoIds']),
+    requiredParts: jsonTextOrNull(json['requiredParts']),
+    penaltyFindingId: jsonTextOrNull(json['penaltyFindingId']),
+    updatedAt: jsonDate(json['updatedAt']),
+  );
+
+  static List<MaintenanceIssueDto> list(Object? raw) =>
+      jsonMaps(raw).map(MaintenanceIssueDto.fromJson).toList(growable: false);
+
+  final String id;
+  final MaintenanceIssueCategory category;
+  final String description;
+  final MaintenanceIssueStatus status;
+  final List<String> evidencePhotoIds;
+  final String? requiredParts;
+  final String? penaltyFindingId;
+  final DateTime? updatedAt;
+}
+
 class SubmissionSummaryDto {
   const SubmissionSummaryDto({
     required this.id,
@@ -242,6 +328,7 @@ class SubmissionPenaltyItemDto {
     required this.currency,
     required this.details,
     required this.evidencePhotoIds,
+    this.findingId,
   });
 
   factory SubmissionPenaltyItemDto.fromJson(Map<String, dynamic> json) => SubmissionPenaltyItemDto(
@@ -255,6 +342,7 @@ class SubmissionPenaltyItemDto {
     currency: jsonTextOrNull(json['currency']) ?? 'INR',
     details: jsonText(json['details']),
     evidencePhotoIds: jsonStrings(json['evidencePhotoIds']),
+    findingId: jsonTextOrNull(json['findingId']),
   );
 
   final String priceId;
@@ -267,6 +355,7 @@ class SubmissionPenaltyItemDto {
   final String currency;
   final String details;
   final List<String> evidencePhotoIds;
+  final String? findingId;
 }
 
 class SubmissionReportDto {
@@ -290,6 +379,8 @@ class SubmissionReportDto {
     this.teamLeadBypassReason,
     this.confirmedAt,
     this.cancellationReason,
+    this.fleetStatus,
+    this.issues = const [],
   });
 
   factory SubmissionReportDto.fromJson(Map<String, dynamic> json) => SubmissionReportDto(
@@ -312,6 +403,8 @@ class SubmissionReportDto {
     teamLeadBypassReason: jsonTextOrNull(json['teamLeadBypassReason']),
     confirmedAt: jsonDate(json['confirmedAt']),
     cancellationReason: jsonTextOrNull(json['cancellationReason']),
+    fleetStatus: MaintenanceFleetStatus.maybe(json['fleetStatus']),
+    issues: MaintenanceIssueDto.list(json['issues']),
   );
 
   final String id;
@@ -333,6 +426,8 @@ class SubmissionReportDto {
   final String? teamLeadBypassReason;
   final DateTime? confirmedAt;
   final String? cancellationReason;
+  final MaintenanceFleetStatus? fleetStatus;
+  final List<MaintenanceIssueDto> issues;
 
   bool get isOpen => status == SubmissionReportStatus.draft || status == SubmissionReportStatus.submitted;
 }
@@ -357,6 +452,7 @@ class VehicleSubmissionDto {
     required this.createdAt,
     this.guidance,
     this.confirmedAt,
+    this.maintenanceIssues = const [],
   });
 
   factory VehicleSubmissionDto.fromJson(Map<String, dynamic> json) {
@@ -382,6 +478,7 @@ class VehicleSubmissionDto {
       createdAt: jsonDateOr(json['createdAt'], DateTime.now()),
       guidance: jsonTextOrNull(json['confirmationGuidance']),
       confirmedAt: jsonDate(json['confirmedAt']),
+      maintenanceIssues: MaintenanceIssueDto.list(json['maintenanceIssues']),
     );
   }
 
@@ -403,6 +500,7 @@ class VehicleSubmissionDto {
   final DateTime createdAt;
   final String? guidance;
   final DateTime? confirmedAt;
+  final List<MaintenanceIssueDto> maintenanceIssues;
 
   bool get isConfirmed => status == 'CONFIRMED';
 
@@ -516,6 +614,7 @@ class SubmissionPenaltyInput {
     required this.evidencePhotoIds,
     this.configurationVersion,
     this.findingType,
+    this.findingId,
   });
 
   final String priceId;
@@ -524,14 +623,46 @@ class SubmissionPenaltyInput {
   final List<String> evidencePhotoIds;
   final int? configurationVersion;
   final PenaltyCategory? findingType;
+  final String? findingId;
 
   Map<String, dynamic> toJson() => {
     'priceId': priceId,
     'configurationVersion': ?configurationVersion,
     'findingType': ?findingType?.wire,
+    'findingId': ?findingId,
     'quantity': quantity,
     'details': details,
     'evidencePhotoIds': evidencePhotoIds,
+  };
+}
+
+class MaintenanceIssueInput {
+  const MaintenanceIssueInput({
+    required this.category,
+    required this.description,
+    required this.status,
+    required this.evidencePhotoIds,
+    this.issueId,
+    this.requiredParts,
+    this.penaltyFindingId,
+  });
+
+  final MaintenanceIssueCategory category;
+  final String description;
+  final MaintenanceIssueStatus status;
+  final List<String> evidencePhotoIds;
+  final String? issueId;
+  final String? requiredParts;
+  final String? penaltyFindingId;
+
+  Map<String, dynamic> toJson() => {
+    'issueId': ?issueId,
+    'category': category.wire,
+    'description': description,
+    'status': status.wire,
+    'evidencePhotoIds': evidencePhotoIds,
+    'requiredParts': ?requiredParts,
+    'penaltyFindingId': ?penaltyFindingId,
   };
 }
 
@@ -540,9 +671,10 @@ class SubmissionReportInput {
     required this.stage,
     required this.mechanicName,
     required this.summary,
-    required this.safeForReuse,
+    required this.fleetStatus,
     required this.checksComplete,
     required this.evidencePhotoIds,
+    required this.issues,
     required this.items,
     this.unsafeReason,
   });
@@ -550,20 +682,25 @@ class SubmissionReportInput {
   final SubmissionStage stage;
   final String mechanicName;
   final String summary;
-  final bool safeForReuse;
+  final MaintenanceFleetStatus fleetStatus;
   final bool checksComplete;
   final List<String> evidencePhotoIds;
+  final List<MaintenanceIssueInput> issues;
   final List<SubmissionPenaltyInput> items;
   final String? unsafeReason;
+
+  bool get safeForReuse => fleetStatus.isAvailable;
 
   Map<String, dynamic> toJson() => {
     'stage': stage.wire,
     'mechanicName': mechanicName,
     'summary': summary,
+    'fleetStatus': fleetStatus.wire,
     'safeForReuse': safeForReuse,
     if (!safeForReuse) 'unsafeReason': unsafeReason,
     'checksComplete': checksComplete,
     'evidencePhotoIds': evidencePhotoIds,
+    'issues': [for (final MaintenanceIssueInput issue in issues) issue.toJson()],
     'items': [for (final SubmissionPenaltyInput item in items) item.toJson()],
   };
 }

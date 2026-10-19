@@ -3,24 +3,16 @@ import 'package:equatable/equatable.dart';
 import 'referral.dart';
 
 class ReferralCampaign extends Equatable {
-  const ReferralCampaign({
-    required this.title,
-    this.code,
-    this.description,
-    this.terms,
-    this.endsAt,
-    this.milestones = const [],
-  });
+  const ReferralCampaign({required this.title, this.code, this.description, this.endsAt, this.milestones = const []});
 
   final String title;
   final String? code;
   final String? description;
-  final String? terms;
   final DateTime? endsAt;
   final List<ReferralMilestone> milestones;
 
   @override
-  List<Object?> get props => [title, code, description, terms, endsAt, milestones];
+  List<Object?> get props => [title, code, description, endsAt, milestones];
 }
 
 class ReferralSummary extends Equatable {
@@ -64,14 +56,6 @@ class ReferralOverview extends Equatable {
   final String? shareMessage;
   final num? referrerReward;
   final num? refereeReward;
-
-  String? inviteMessage(String inviteLink) {
-    final String? message = shareMessage;
-    final String? link = shareLink;
-    if (message == null) return null;
-    if (link != null && message.contains(link)) return message.replaceAll(link, inviteLink);
-    return '$message\n$inviteLink';
-  }
 
   @override
   List<Object?> get props => [

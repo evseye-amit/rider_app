@@ -37,9 +37,9 @@ class HubSummary extends Equatable {
     required this.fleetTotal,
     required this.ridersPresent,
     required this.ridersActive,
-    required this.parkingOccupied,
-    required this.parkingCapacity,
     required this.queue,
+    this.gstin,
+    this.supportNumber,
   });
 
   final String hubName;
@@ -48,9 +48,9 @@ class HubSummary extends Equatable {
   final int fleetTotal;
   final int ridersPresent;
   final int ridersActive;
-  final int parkingOccupied;
-  final int parkingCapacity;
   final HubQueue? queue;
+  final String? gstin;
+  final String? supportNumber;
 
   double? get utilisation => fleetTotal == 0 ? null : fleetAllocated / fleetTotal;
 
@@ -65,9 +65,9 @@ class HubSummary extends Equatable {
       fleetTotal: sum((p) => p.fleetTotal),
       ridersPresent: sum((p) => p.ridersPresent),
       ridersActive: sum((p) => p.ridersActive),
-      parkingOccupied: sum((p) => p.parkingOccupied),
-      parkingCapacity: sum((p) => p.parkingCapacity),
       queue: HubQueue.combine([for (final HubSummary p in parts) p.queue]),
+      gstin: parts.map((p) => p.gstin).nonNulls.firstOrNull,
+      supportNumber: parts.map((p) => p.supportNumber).nonNulls.firstOrNull,
     );
   }
 
@@ -79,8 +79,8 @@ class HubSummary extends Equatable {
     fleetTotal,
     ridersPresent,
     ridersActive,
-    parkingOccupied,
-    parkingCapacity,
     queue,
+    gstin,
+    supportNumber,
   ];
 }

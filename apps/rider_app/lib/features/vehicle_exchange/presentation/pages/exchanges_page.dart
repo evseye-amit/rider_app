@@ -64,7 +64,7 @@ class ExchangesPage extends ConsumerWidget {
                           padding: const EdgeInsets.symmetric(vertical: Insets.xl),
                           child: ArtBlock(
                             art: BrandArt.empty,
-                            artSize: 140,
+                            artSize: 112,
                             title: context.l10n.exchangeNone,
                             message: context.l10n.exchangeNoneMessage,
                           ),

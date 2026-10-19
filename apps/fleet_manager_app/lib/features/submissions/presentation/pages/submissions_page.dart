@@ -145,7 +145,7 @@ class _QueueList extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: Insets.lg),
         child: ArtBlock(
           art: BrandArt.empty,
-          artSize: 130,
+          artSize: 112,
           title: context.l10n.submissionsEmptyTitle,
           message: switch (phase) {
             SubmissionPhase.scheduled => context.l10n.submissionsEmptyScheduled,

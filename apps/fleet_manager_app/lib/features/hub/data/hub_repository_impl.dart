@@ -35,8 +35,6 @@ class HubRepositoryImpl implements HubRepository {
       city: city.isEmpty ? '—' : city,
       capacity: (json['vehicleCapacity'] as num?)?.toInt() ?? 0,
       openedOn: DateTime.tryParse(json['createdAt']?.toString() ?? ''),
-      chargingBays: (json['chargingPoints'] as num?)?.toInt() ?? 0,
-      serviceBays: 0,
       teamLeads: const [],
     );
   }
@@ -55,7 +53,7 @@ class HubRepositoryImpl implements HubRepository {
         final Map<String, dynamic> summary = _map(home['summary']);
         final Map<String, dynamic> fleet = _map(summary['fleetUtilisation']);
         final Map<String, dynamic> riders = _map(summary['riders']);
-        final Map<String, dynamic> parking = _map(selected['parking']);
+        final Map<String, dynamic> company = _map(home['company']);
 
         int count(Map<String, dynamic> m, String key) => (m[key] as num?)?.toInt() ?? 0;
 
@@ -66,8 +64,8 @@ class HubRepositoryImpl implements HubRepository {
           fleetTotal: count(fleet, 'total'),
           ridersPresent: count(riders, 'present'),
           ridersActive: count(riders, 'active'),
-          parkingOccupied: count(parking, 'occupiedSlots'),
-          parkingCapacity: count(parking, 'capacity'),
+          gstin: _text(company['gstin']),
+          supportNumber: _text(company['supportNumber']),
           queue: summary.isEmpty
               ? null
               : HubQueue(
@@ -93,6 +91,11 @@ class HubRepositoryImpl implements HubRepository {
   }
 
   static Map<String, dynamic> _map(Object? value) => value is Map ? Map<String, dynamic>.from(value) : const {};
+
+  static String? _text(Object? value) {
+    final String text = value?.toString().trim() ?? '';
+    return text.isEmpty ? null : text;
+  }
 
   Future<Map<String, dynamic>> _hub(String hubCode) async {
     final Result<List<Map<String, dynamic>>> rows = await _api.get<List<Map<String, dynamic>>>(

@@ -1,12 +1,15 @@
+import 'dart:io';
+
 import 'package:evseye_core/evseye_core.dart';
 
 import '../domain/deployment_repository.dart';
 
 class DeploymentRepositoryImpl implements DeploymentRepository {
-  const DeploymentRepositoryImpl(this._api, this._commercial);
+  const DeploymentRepositoryImpl(this._api, this._commercial, this._media);
 
   final DeploymentApi _api;
   final CommercialApi _commercial;
+  final MediaApi _media;
 
   @override
   Future<Result<RiderDeployment>> current() => _api.riderCurrent();
@@ -26,7 +29,20 @@ class DeploymentRepositoryImpl implements DeploymentRepository {
     String allocationId, {
     required String provider,
     required String reference,
-  }) => _api.submitPayment(allocationId, provider: provider, providerReference: reference);
+    List<String> receiptPhotoIds = const [],
+  }) => _api.submitPayment(
+    allocationId,
+    provider: provider,
+    providerReference: reference,
+    receiptPhotoIds: receiptPhotoIds,
+  );
+
+  @override
+  Future<Result<String>> uploadReceipt(String paymentId, File file) async =>
+      (await _media.uploadPaymentReceipt(paymentId: paymentId, file: file)).map((photo) => photo.id);
+
+  @override
+  Future<Result<String>> receiptUrl(String paymentId, String photoId) => _api.receiptUrl(paymentId, photoId);
 
   @override
   Future<Result<DeploymentWorkflow>> acceptPdi(String allocationId, List<PdiItemResponse> items) =>

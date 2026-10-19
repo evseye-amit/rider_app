@@ -11,6 +11,8 @@ import '../../features/allocation/presentation/pages/assign_vehicle_page.dart';
 import '../../features/allocation/presentation/pages/rider_verification_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_page.dart';
+import '../../features/fleet_search/presentation/pages/fleet_search_page.dart';
+import '../../features/fleet_search/presentation/pages/scooter_detail_page.dart';
 import '../../features/hub/presentation/pages/home_page.dart';
 import '../../features/hub/presentation/widgets/fleet_shell.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
@@ -144,6 +146,12 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.maintenanceDetail,
         name: 'maintenanceDetail',
         builder: (context, state) => MaintenanceVehiclePage(fleetId: state.uri.queryParameters['id'] ?? ''),
+      ),
+      GoRoute(path: Routes.fleetSearch, name: 'fleetSearch', builder: (context, state) => const FleetSearchPage()),
+      GoRoute(
+        path: Routes.fleetSearchScooter,
+        name: 'fleetSearchScooter',
+        builder: (context, state) => ScooterDetailPage(fleetId: state.uri.queryParameters['id'] ?? ''),
       ),
       GoRoute(path: Routes.support, name: 'support', builder: (context, state) => const SupportDeskPage()),
       GoRoute(

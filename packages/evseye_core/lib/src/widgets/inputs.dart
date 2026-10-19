@@ -434,6 +434,7 @@ class AppSearchField extends StatelessWidget {
     this.onChanged,
     this.controller,
     this.trailing,
+    this.autofocus = false,
     super.key,
   });
 
@@ -441,6 +442,7 @@ class AppSearchField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final TextEditingController? controller;
   final Widget? trailing;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -460,6 +462,7 @@ class AppSearchField extends StatelessWidget {
             child: TextField(
               controller: controller,
               onChanged: onChanged,
+              autofocus: autofocus,
               cursorColor: AppColors.cyan,
               style: AppText.bodyMedium.copyWith(color: AppColors.textPrimary),
               decoration: InputDecoration(

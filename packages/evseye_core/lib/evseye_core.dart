@@ -9,6 +9,7 @@ export 'src/api/commercial_api.dart';
 export 'src/api/company_api.dart';
 export 'src/api/config_api.dart';
 export 'src/api/deployment_api.dart';
+export 'src/api/fleet_search_api.dart';
 export 'src/api/legal_api.dart';
 export 'src/api/media_api.dart';
 export 'src/api/notifications_api.dart';

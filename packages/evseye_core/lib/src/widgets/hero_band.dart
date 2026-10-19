@@ -304,12 +304,18 @@ class HeroScaffold extends StatelessWidget {
     this.controller,
     this.onRefresh,
     this.pinBand = false,
+    this.fill,
+    this.pinnedBar,
     super.key,
   });
 
   final Widget band;
 
+  final Widget? pinnedBar;
+
   final List<Widget> children;
+
+  final Widget? fill;
 
   final double overlap;
 
@@ -325,51 +331,68 @@ class HeroScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget body = pinBand ? _pinned() : _scrolling(context);
+    final Widget? bar = pinnedBar;
     return Scaffold(
       backgroundColor: AppColors.canvas,
       drawer: drawer,
       extendBody: bottomNavigationBar != null,
       bottomNavigationBar: bottomNavigationBar,
       floatingActionButton: floatingAction,
-      body: pinBand ? _pinned() : _scrolling(context),
+      body: bar == null ? body : _withBar(context, bar, body),
     );
   }
 
+  Widget _withBar(BuildContext context, Widget bar, Widget body) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      ColoredBox(
+        color: bandColor,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(
+            Insets.gutter,
+            MediaQuery.paddingOf(context).top + Insets.md,
+            Insets.gutter,
+            Insets.sm,
+          ),
+          child: bar,
+        ),
+      ),
+      Expanded(
+        child: MediaQuery.removePadding(context: context, removeTop: true, child: body),
+      ),
+    ],
+  );
+
   Widget _scrolling(BuildContext context) {
-    final Widget body = SingleChildScrollView(
-      controller: controller,
-      physics: const AlwaysScrollableScrollPhysics(parent: ClampingScrollPhysics()),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          HeroBand(
-            color: bandColor,
-            padding: EdgeInsets.fromLTRB(
-              Insets.gutter,
-              Insets.md,
-              Insets.gutter,
-              Insets.xxl + math.max(overlap, 0),
-            ),
-            child: band,
-          ),
-          Transform.translate(
-            offset: Offset(0, -overlap),
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                Insets.gutter,
-                0,
-                Insets.gutter,
-                bottomPadding,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: children,
-              ),
-            ),
-          ),
-        ],
+    final Widget hero = HeroBand(
+      color: bandColor,
+      padding: EdgeInsets.fromLTRB(Insets.gutter, Insets.md, Insets.gutter, Insets.xxl + math.max(overlap, 0)),
+      child: band,
+    );
+    final Widget content = Transform.translate(
+      offset: Offset(0, -overlap),
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(Insets.gutter, 0, Insets.gutter, fill == null ? bottomPadding : 0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
       ),
     );
+    final Widget body = switch (fill) {
+      final Widget fill => CustomScrollView(
+        controller: controller,
+        physics: const AlwaysScrollableScrollPhysics(parent: ClampingScrollPhysics()),
+        slivers: [
+          SliverToBoxAdapter(child: hero),
+          SliverToBoxAdapter(child: content),
+          SliverFillRemaining(hasScrollBody: false, child: _filled(fill)),
+        ],
+      ),
+      null => SingleChildScrollView(
+        controller: controller,
+        physics: const AlwaysScrollableScrollPhysics(parent: ClampingScrollPhysics()),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [hero, content]),
+      ),
+    };
 
     return Stack(
       children: [
@@ -406,14 +429,27 @@ class HeroScaffold extends StatelessWidget {
                 child: HeroBandEdge(color: bandColor),
               ),
               Positioned.fill(
-                child: _refreshable(
-                  SingleChildScrollView(
+                child: _refreshable(switch (fill) {
+                  final Widget fill => CustomScrollView(
+                    controller: controller,
+                    physics: const AlwaysScrollableScrollPhysics(parent: ClampingScrollPhysics()),
+                    slivers: [
+                      SliverPadding(
+                        padding: EdgeInsets.fromLTRB(Insets.gutter, math.max(-overlap, 0), Insets.gutter, 0),
+                        sliver: SliverToBoxAdapter(
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
+                        ),
+                      ),
+                      SliverFillRemaining(hasScrollBody: false, child: _filled(fill)),
+                    ],
+                  ),
+                  null => SingleChildScrollView(
                     controller: controller,
                     physics: const AlwaysScrollableScrollPhysics(parent: ClampingScrollPhysics()),
                     padding: EdgeInsets.fromLTRB(Insets.gutter, math.max(-overlap, 0), Insets.gutter, bottomPadding),
                     child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
                   ),
-                ),
+                }),
               ),
             ],
           ),
@@ -421,6 +457,11 @@ class HeroScaffold extends StatelessWidget {
       ],
     );
   }
+
+  Widget _filled(Widget fill) => Padding(
+    padding: EdgeInsets.fromLTRB(Insets.gutter, Insets.lg, Insets.gutter, bottomPadding),
+    child: Center(child: fill),
+  );
 
   Widget _refreshable(Widget scrollable) => onRefresh == null
       ? scrollable

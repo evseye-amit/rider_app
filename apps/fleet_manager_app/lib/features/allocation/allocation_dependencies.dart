@@ -14,6 +14,7 @@ import 'domain/usecases/get_deployment_request.dart';
 import 'domain/usecases/get_eligible_fleets.dart';
 import 'domain/usecases/get_pending_rider.dart';
 import 'domain/usecases/get_work_partners.dart';
+import 'domain/usecases/payment_review_usecases.dart';
 import 'domain/usecases/rental_plan_usecases.dart';
 import 'domain/usecases/request_fleet.dart';
 import 'domain/usecases/rider_verification_usecases.dart';
@@ -113,6 +114,16 @@ final getAllocationCommercialProvider = Provider<GetAllocationCommercial>(
 );
 
 final verifyPaymentProvider = Provider<VerifyPayment>((ref) => VerifyPayment(ref.watch(allocationRepositoryProvider)));
+
+final getPaymentReviewProvider = Provider<GetPaymentReview>(
+  (ref) => GetPaymentReview(ref.watch(allocationRepositoryProvider)),
+);
+
+final rejectPaymentProvider = Provider<RejectPayment>((ref) => RejectPayment(ref.watch(allocationRepositoryProvider)));
+
+final getPaymentReceiptUrlProvider = Provider<GetPaymentReceiptUrl>(
+  (ref) => GetPaymentReceiptUrl(ref.watch(allocationRepositoryProvider)),
+);
 
 final submitPdiProvider = Provider<SubmitPdi>((ref) => SubmitPdi(ref.watch(allocationRepositoryProvider)));
 

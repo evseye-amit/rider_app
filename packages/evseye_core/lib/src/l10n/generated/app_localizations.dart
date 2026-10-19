@@ -496,11 +496,35 @@ abstract class AppL10n {
   /// **'Ask your admin to add work partners.'**
   String get allocationNoWorkPartnersMessage;
 
+  /// Error title when the payment review fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load the payment'**
+  String get allocationPaymentCouldNotLoad;
+
+  /// Shown when the payment has no screenshot
+  ///
+  /// In en, this message translates to:
+  /// **'The rider didn\'t attach a screenshot.'**
+  String get allocationPaymentNoScreenshot;
+
   /// Payment received?
   ///
   /// In en, this message translates to:
   /// **'Payment received?'**
   String get allocationPaymentReceived;
+
+  /// Shown after the fleet manager rejects the payment
+  ///
+  /// In en, this message translates to:
+  /// **'Payment rejected. The rider can fix it and send it again.'**
+  String get allocationPaymentRejected;
+
+  /// Shown when the payment was rejected
+  ///
+  /// In en, this message translates to:
+  /// **'You rejected this payment: {reason}. Waiting for the rider to send it again.'**
+  String allocationPaymentRejectedNote(String reason);
 
   /// Payment requested
   ///
@@ -520,11 +544,23 @@ abstract class AppL10n {
   /// **'Payment requested — the rider sees it now'**
   String get allocationPaymentRequestedRiderSeesNow;
 
+  /// Title of the rider's payment screenshots
+  ///
+  /// In en, this message translates to:
+  /// **'Payment screenshots'**
+  String get allocationPaymentScreenshots;
+
   /// Payment verified
   ///
   /// In en, this message translates to:
   /// **'Payment verified'**
   String get allocationPaymentVerified;
+
+  /// Shown when the rider has not submitted the payment
+  ///
+  /// In en, this message translates to:
+  /// **'The rider hasn\'t sent payment details yet.'**
+  String get allocationPaymentWaitingRider;
 
   /// Back
   ///
@@ -688,6 +724,36 @@ abstract class AppL10n {
   /// **'Reason'**
   String get allocationReason;
 
+  /// Button that confirms the payment rejection
+  ///
+  /// In en, this message translates to:
+  /// **'Reject payment'**
+  String get allocationRejectConfirm;
+
+  /// Button that rejects the rider's payment
+  ///
+  /// In en, this message translates to:
+  /// **'Reject'**
+  String get allocationRejectPayment;
+
+  /// Label of the payment rejection reason
+  ///
+  /// In en, this message translates to:
+  /// **'Why are you rejecting it?'**
+  String get allocationRejectReason;
+
+  /// Hint of the payment rejection reason
+  ///
+  /// In en, this message translates to:
+  /// **'For example: the reference doesn\'t match the money received'**
+  String get allocationRejectReasonHint;
+
+  /// Error when the rejection reason is too short
+  ///
+  /// In en, this message translates to:
+  /// **'Enter at least 3 characters'**
+  String get allocationRejectReasonNeeded;
+
   /// Request the vehicle
   ///
   /// In en, this message translates to:
@@ -705,6 +771,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Reserved on'**
   String get allocationReserved2;
+
+  /// Title of the fleet manager payment review sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Review payment'**
+  String get allocationReviewPayment;
 
   /// Rider
   ///
@@ -2812,11 +2884,29 @@ abstract class AppL10n {
   /// **'Payment received'**
   String get deploymentPaymentReceived;
 
+  /// Message when the fleet manager rejected the payment
+  ///
+  /// In en, this message translates to:
+  /// **'Your fleet manager couldn\'t confirm this payment: {reason}. Check the details and send them again.'**
+  String deploymentPaymentRejectedBody(String reason);
+
+  /// Title when the fleet manager rejected the payment
+  ///
+  /// In en, this message translates to:
+  /// **'Payment not confirmed'**
+  String get deploymentPaymentRejectedTitle;
+
   /// Payment submitted
   ///
   /// In en, this message translates to:
   /// **'Payment submitted'**
   String get deploymentPaymentSubmitted;
+
+  /// Shown when the payment can no longer be submitted
+  ///
+  /// In en, this message translates to:
+  /// **'This payment can\'t be sent from the app right now. Please contact your hub or support.'**
+  String get deploymentPaymentSupport;
 
   /// Pay for your scooter
   ///
@@ -2865,6 +2955,42 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Your progress is saved. Sign in again any time to pick up where you left off.'**
   String get deploymentProgressSavedSignAgainAny;
+
+  /// Button that adds a payment screenshot
+  ///
+  /// In en, this message translates to:
+  /// **'Add screenshot'**
+  String get deploymentReceiptAdd;
+
+  /// Shown after a payment screenshot is uploaded
+  ///
+  /// In en, this message translates to:
+  /// **'Screenshot added'**
+  String get deploymentReceiptAdded;
+
+  /// Hint of the optional payment screenshot section
+  ///
+  /// In en, this message translates to:
+  /// **'Add a screenshot of the payment. It helps your fleet manager check it faster.'**
+  String get deploymentReceiptHint;
+
+  /// Title of the payment screenshots already sent
+  ///
+  /// In en, this message translates to:
+  /// **'Screenshots sent'**
+  String get deploymentReceiptsSent;
+
+  /// Title of the optional payment screenshot section
+  ///
+  /// In en, this message translates to:
+  /// **'Payment screenshot (optional)'**
+  String get deploymentReceiptTitle;
+
+  /// Error when a payment screenshot is too large
+  ///
+  /// In en, this message translates to:
+  /// **'This image is over 5 MB. Pick a smaller one.'**
+  String get deploymentReceiptTooLarge;
 
   /// Reference
   ///
@@ -3922,6 +4048,156 @@ abstract class AppL10n {
   /// **'Rejected'**
   String get fleetOnboardingRejected;
 
+  /// Allocation status while the rider has the scooter
+  ///
+  /// In en, this message translates to:
+  /// **'With rider'**
+  String get fleetSearchAllocationActive;
+
+  /// Allocation status when it was cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get fleetSearchAllocationCancelled;
+
+  /// Allocation status while the handover is not finished
+  ///
+  /// In en, this message translates to:
+  /// **'Handover in progress'**
+  String get fleetSearchAllocationHandover;
+
+  /// Allocation status after the scooter was returned
+  ///
+  /// In en, this message translates to:
+  /// **'Returned'**
+  String get fleetSearchAllocationReturned;
+
+  /// Allocation status while the scooter is being returned
+  ///
+  /// In en, this message translates to:
+  /// **'Return in progress'**
+  String get fleetSearchAllocationReturning;
+
+  /// Error title when the scooter search fails
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t search scooters'**
+  String get fleetSearchCouldNotLoad;
+
+  /// Error title when the scooter's rider history fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load rider history'**
+  String get fleetSearchCouldNotLoadRiderHistory;
+
+  /// Error title when one scooter fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load this scooter'**
+  String get fleetSearchCouldNotLoadScooter;
+
+  /// Title of the current rider section
+  ///
+  /// In en, this message translates to:
+  /// **'Current rider'**
+  String get fleetSearchCurrentRider;
+
+  /// Message when the scooter search finds nothing
+  ///
+  /// In en, this message translates to:
+  /// **'Check the vehicle number, fleet code or chassis number and try again.'**
+  String get fleetSearchEmptyMessage;
+
+  /// Title when the scooter search finds nothing
+  ///
+  /// In en, this message translates to:
+  /// **'No scooter found'**
+  String get fleetSearchEmptyTitle;
+
+  /// Hint of the global scooter search
+  ///
+  /// In en, this message translates to:
+  /// **'Search scooters by number, code or chassis'**
+  String get fleetSearchHint;
+
+  /// Title of the latest submission section
+  ///
+  /// In en, this message translates to:
+  /// **'Latest return or exchange'**
+  String get fleetSearchLatestSubmission;
+
+  /// Shown when no rider has the scooter
+  ///
+  /// In en, this message translates to:
+  /// **'No rider has this scooter right now.'**
+  String get fleetSearchNoRider;
+
+  /// Shown when the scooter has no rider history
+  ///
+  /// In en, this message translates to:
+  /// **'No rider has had this scooter yet.'**
+  String get fleetSearchNoRiderHistory;
+
+  /// Shown when the scooter has no return or exchange
+  ///
+  /// In en, this message translates to:
+  /// **'No return or exchange yet.'**
+  String get fleetSearchNoSubmission;
+
+  /// Tag on a scooter that is at a hub the fleet manager does not manage
+  ///
+  /// In en, this message translates to:
+  /// **'Other hub'**
+  String get fleetSearchOtherHub;
+
+  /// Title of the list of riders who had the scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Rider history'**
+  String get fleetSearchRiderHistory;
+
+  /// Shown instead of rider history for a scooter at another hub
+  ///
+  /// In en, this message translates to:
+  /// **'Rider history is shown only for scooters in your hubs.'**
+  String get fleetSearchRiderHistoryOtherHub;
+
+  /// Start date of an allocation that has not ended
+  ///
+  /// In en, this message translates to:
+  /// **'Since {date}'**
+  String fleetSearchSince(String date);
+
+  /// Message shown before the fleet manager types a search
+  ///
+  /// In en, this message translates to:
+  /// **'Type at least 2 characters of a vehicle number, fleet code or chassis number.'**
+  String get fleetSearchStartMessage;
+
+  /// Shown before the fleet manager types a search
+  ///
+  /// In en, this message translates to:
+  /// **'Search every hub'**
+  String get fleetSearchStartTitle;
+
+  /// Status of a finished return or exchange
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get fleetSearchSubmissionDone;
+
+  /// Status of an open return or exchange
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get fleetSearchSubmissionOpen;
+
+  /// Title of the global scooter search screen
+  ///
+  /// In en, this message translates to:
+  /// **'Find a scooter'**
+  String get fleetSearchTitle;
+
   /// Allocated
   ///
   /// In en, this message translates to:
@@ -3939,6 +4215,18 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Available'**
   String get fleetStatusAvailable;
+
+  /// Scooter status: waiting for spare parts
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting parts'**
+  String get fleetStatusAwaitingParts;
+
+  /// Scooter status: needs a major repair
+  ///
+  /// In en, this message translates to:
+  /// **'Broken'**
+  String get fleetStatusBroken;
 
   /// Waiting for inspection
   ///
@@ -4168,6 +4456,12 @@ abstract class AppL10n {
   /// **'Fleet utilisation'**
   String get hubFleetUtilisation;
 
+  /// Company GSTIN shown on the fleet manager home hub card
+  ///
+  /// In en, this message translates to:
+  /// **'GSTIN: {gstin}'**
+  String hubGstinLine(String gstin);
+
   /// Home
   ///
   /// In en, this message translates to:
@@ -4197,6 +4491,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'No hub is assigned to you.'**
   String get hubNoHubAssigned;
+
+  /// Quick support phone number shown on the fleet manager home hub card
+  ///
+  /// In en, this message translates to:
+  /// **'Quick support: {number}'**
+  String hubQuickSupportLine(String number);
 
   /// Quick Hub View
   ///
@@ -4396,6 +4696,90 @@ abstract class AppL10n {
   /// **'Your scooter,\nfully connected'**
   String get introVehicleTitle;
 
+  /// Issue category: accessories
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories'**
+  String get issueCategoryAccessories;
+
+  /// Issue category: battery pack, BMS, battery connectors
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get issueCategoryBattery;
+
+  /// Issue category: body and chassis
+  ///
+  /// In en, this message translates to:
+  /// **'Body & chassis'**
+  String get issueCategoryBodyChassis;
+
+  /// Issue category: brakes
+  ///
+  /// In en, this message translates to:
+  /// **'Brakes'**
+  String get issueCategoryBrakes;
+
+  /// Issue category: wiring, lights, charger, charging port
+  ///
+  /// In en, this message translates to:
+  /// **'Electrical'**
+  String get issueCategoryElectrical;
+
+  /// Issue category: anything else
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get issueCategoryOther;
+
+  /// Issue category: motor, controller, drivetrain
+  ///
+  /// In en, this message translates to:
+  /// **'Motor & powertrain'**
+  String get issueCategoryPowertrain;
+
+  /// Issue category: suspension and steering
+  ///
+  /// In en, this message translates to:
+  /// **'Suspension & steering'**
+  String get issueCategorySuspensionSteering;
+
+  /// Issue category: tyres and wheels
+  ///
+  /// In en, this message translates to:
+  /// **'Tyres & wheels'**
+  String get issueCategoryTyresWheels;
+
+  /// Damaged item an issue is linked to
+  ///
+  /// In en, this message translates to:
+  /// **'Damage charge: {name}'**
+  String issueChargeLine(String name);
+
+  /// Shown on an issue linked to a damage charge whose name isn't known
+  ///
+  /// In en, this message translates to:
+  /// **'Linked to a damage charge'**
+  String get issueChargeLinked;
+
+  /// Issue progress: being worked on
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get issueStatusInProgress;
+
+  /// Issue progress: not started
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get issueStatusOpen;
+
+  /// Issue progress: fixed
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get issueStatusResolved;
+
   /// App
   ///
   /// In en, this message translates to:
@@ -4407,6 +4791,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Could not load this document'**
   String get legalDocumentCouldNotLoad;
+
+  /// Filter chip showing every issue category
+  ///
+  /// In en, this message translates to:
+  /// **'All categories'**
+  String get maintenanceAllCategories;
 
   /// Allocation
   ///
@@ -4425,6 +4815,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Allowed'**
   String get maintenanceAllocationOn;
+
+  /// Filter chip showing every maintenance status
+  ///
+  /// In en, this message translates to:
+  /// **'All statuses'**
+  String get maintenanceAllStatuses;
 
   /// No report yet
   ///
@@ -4534,6 +4930,12 @@ abstract class AppL10n {
   /// **'Home hub'**
   String get maintenanceHomeHub;
 
+  /// Title of the issues card on a maintenance scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Issues'**
+  String get maintenanceIssues;
+
   /// Latest mechanic report
   ///
   /// In en, this message translates to:
@@ -4563,6 +4965,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'No status changes have been recorded.'**
   String get maintenanceNoHistory;
+
+  /// Shown when a maintenance scooter has no issues
+  ///
+  /// In en, this message translates to:
+  /// **'No issues recorded.'**
+  String get maintenanceNoIssues;
 
   /// Try a different vehicle number, fleet code, chassis or model.
   ///
@@ -4599,6 +5007,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Onboarding'**
   String get maintenanceOnboarding;
+
+  /// Number of unresolved issues on a maintenance scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Open issues: {count}'**
+  String maintenanceOpenIssues(int count);
 
   /// Photos attached: {count}
   ///
@@ -6292,12 +6706,6 @@ abstract class AppL10n {
   /// **'Invite riders and earn rewards'**
   String get referSubtitle;
 
-  /// Terms & conditions
-  ///
-  /// In en, this message translates to:
-  /// **'Terms & conditions'**
-  String get referTerms;
-
   /// Timeline
   ///
   /// In en, this message translates to:
@@ -7570,6 +7978,24 @@ abstract class AppL10n {
   /// **'Add damaged item'**
   String get submissionAddDamagedItem;
 
+  /// Button that adds an issue to the mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Add an issue'**
+  String get submissionAddIssue;
+
+  /// Error when Available is chosen but an issue is not resolved
+  ///
+  /// In en, this message translates to:
+  /// **'To choose Available, set every issue to Resolved.'**
+  String get submissionAvailableNeedsResolved;
+
+  /// Error when Awaiting parts is chosen but no open issue lists parts
+  ///
+  /// In en, this message translates to:
+  /// **'Add the parts needed to at least one issue that isn\'t resolved.'**
+  String get submissionAwaitingPartsNeedsParts;
+
   /// Can't use a code?
   ///
   /// In en, this message translates to:
@@ -7750,6 +8176,12 @@ abstract class AppL10n {
   /// **'Add each damaged part from the spare parts list. Its price is filled in for you.'**
   String get submissionDamagedItemsHint;
 
+  /// Title of the sheet that edits an issue
+  ///
+  /// In en, this message translates to:
+  /// **'Edit issue'**
+  String get submissionEditIssue;
+
   /// Proof photos
   ///
   /// In en, this message translates to:
@@ -7810,6 +8242,102 @@ abstract class AppL10n {
   /// **'Impose this report?'**
   String get submissionImposeTitle;
 
+  /// Label of the issue category choice
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get submissionIssueCategory;
+
+  /// Error when no issue category is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a category'**
+  String get submissionIssueCategoryNeeded;
+
+  /// Label of the damage charge link on an issue
+  ///
+  /// In en, this message translates to:
+  /// **'Damage charge'**
+  String get submissionIssueCharge;
+
+  /// Shown when an issue is linked to a damage charge from an earlier report
+  ///
+  /// In en, this message translates to:
+  /// **'Linked to a damage charge from an earlier report.'**
+  String get submissionIssueChargeEarlier;
+
+  /// Hint of the damage charge link on an issue
+  ///
+  /// In en, this message translates to:
+  /// **'Link this issue to a damaged item the rider is charged for.'**
+  String get submissionIssueChargeHint;
+
+  /// Label of the issue description field
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s wrong'**
+  String get submissionIssueDescription;
+
+  /// Error when the issue description is empty
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the issue'**
+  String get submissionIssueDescriptionNeeded;
+
+  /// Choice for an issue with no damage charge
+  ///
+  /// In en, this message translates to:
+  /// **'Not linked'**
+  String get submissionIssueNoCharge;
+
+  /// Label of the required parts field on an issue
+  ///
+  /// In en, this message translates to:
+  /// **'Parts needed'**
+  String get submissionIssueParts;
+
+  /// Hint of the required parts field on an issue
+  ///
+  /// In en, this message translates to:
+  /// **'Needed if the scooter is awaiting parts'**
+  String get submissionIssuePartsHint;
+
+  /// Required parts shown on an issue
+  ///
+  /// In en, this message translates to:
+  /// **'Parts: {parts}'**
+  String submissionIssuePartsLine(String parts);
+
+  /// Error when an issue has no photo
+  ///
+  /// In en, this message translates to:
+  /// **'Add at least one photo'**
+  String get submissionIssuePhotoNeeded;
+
+  /// Hint of the photo choice on an issue
+  ///
+  /// In en, this message translates to:
+  /// **'Pick at least one photo of this issue, or take a new one.'**
+  String get submissionIssuePhotosHint;
+
+  /// Label of the issue progress choice
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get submissionIssueProgress;
+
+  /// Title of the issues section on the mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Issues found'**
+  String get submissionIssues;
+
+  /// Hint of the issues section on the mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Add each problem with a photo. Set it to Resolved once it\'s fixed.'**
+  String get submissionIssuesHint;
+
   /// Label of the optional note on a damaged item
   ///
   /// In en, this message translates to:
@@ -7858,6 +8386,12 @@ abstract class AppL10n {
   /// **'Enter the mechanic\'s name'**
   String get submissionNameNeeded;
 
+  /// Title of the sheet that adds an issue
+  ///
+  /// In en, this message translates to:
+  /// **'New issue'**
+  String get submissionNewIssue;
+
   /// All checks are done. Nothing more to do here.
   ///
   /// In en, this message translates to:
@@ -7905,6 +8439,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'No damaged items added, so the rider won\'t be charged.'**
   String get submissionNoDamagedItems;
+
+  /// Shown when the mechanic report has no issues
+  ///
+  /// In en, this message translates to:
+  /// **'No issues added.'**
+  String get submissionNoIssues;
 
   /// No penalty prices are set up yet. Ask an admin to add them on the dashboard.
   ///
@@ -8098,6 +8638,12 @@ abstract class AppL10n {
   /// **'All'**
   String get submissionsAll;
 
+  /// Button that saves an issue
+  ///
+  /// In en, this message translates to:
+  /// **'Save issue'**
+  String get submissionSaveIssue;
+
   /// Button that saves a damaged item
   ///
   /// In en, this message translates to:
@@ -8109,6 +8655,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Save report'**
   String get submissionSaveReport;
+
+  /// Scooter status chosen on a mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter status: {status}'**
+  String submissionScooterStatusLine(String status);
 
   /// Couldn't load returns and exchanges
   ///
@@ -8302,59 +8854,41 @@ abstract class AppL10n {
   /// **'Start submission'**
   String get submissionStartTitle;
 
+  /// Hint for the Available scooter status on the mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Safe to ride. The scooter goes back into the fleet.'**
+  String get submissionStatusAvailableHint;
+
+  /// Hint for the Awaiting parts scooter status on the mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for spare parts. It can\'t be assigned until they\'re fitted.'**
+  String get submissionStatusAwaitingPartsHint;
+
+  /// Hint for the Broken scooter status on the mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Needs a major repair. It can\'t be assigned until it\'s repaired.'**
+  String get submissionStatusBrokenHint;
+
   /// Cancelled
   ///
   /// In en, this message translates to:
   /// **'Cancelled'**
   String get submissionStatusCancelled;
 
-  /// Mechanic report status: MOK
+  /// Hint for the Under maintenance scooter status on the mechanic report
   ///
   /// In en, this message translates to:
-  /// **'Mark as MOK'**
-  String get submissionStatusMok;
+  /// **'Needs a repair. It can\'t be assigned until it\'s fixed.'**
+  String get submissionStatusMaintenanceHint;
 
-  /// Hint for MOK: mechanically OK
+  /// Error when a maintenance status has no issue
   ///
   /// In en, this message translates to:
-  /// **'Mechanically OK. The scooter goes back into the fleet.'**
-  String get submissionStatusMokHint;
-
-  /// Mechanic report status: ready for deployment
-  ///
-  /// In en, this message translates to:
-  /// **'Mark as RFD'**
-  String get submissionStatusRfd;
-
-  /// Hint for the RFD status
-  ///
-  /// In en, this message translates to:
-  /// **'Ready for deployment. The scooter goes back into the fleet.'**
-  String get submissionStatusRfdHint;
-
-  /// Mechanic report status: under maintenance, major repair
-  ///
-  /// In en, this message translates to:
-  /// **'Mark as UM major'**
-  String get submissionStatusUmMajor;
-
-  /// Hint for UM major: under maintenance, major repair
-  ///
-  /// In en, this message translates to:
-  /// **'Under maintenance (major repair). It can\'t be assigned until it\'s repaired.'**
-  String get submissionStatusUmMajorHint;
-
-  /// Mechanic report status: under maintenance, minor repair
-  ///
-  /// In en, this message translates to:
-  /// **'Mark as UM minor'**
-  String get submissionStatusUmMinor;
-
-  /// Hint for UM minor: under maintenance, minor repair
-  ///
-  /// In en, this message translates to:
-  /// **'Under maintenance (minor repair). It can\'t be assigned until it\'s repaired.'**
-  String get submissionStatusUmMinorHint;
+  /// **'Add at least one issue for this status.'**
+  String get submissionStatusNeedsIssue;
 
   /// Returns & exchanges
   ///
