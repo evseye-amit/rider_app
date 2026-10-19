@@ -51,10 +51,11 @@ String androidStringsSource(String appName) {
       '</resources>\n';
 }
 
-String androidFlavorSource(AppFlavor app) =>
+String androidFlavorSource(AppFlavor app, {required String apkName}) =>
     'applicationId=${app.androidApplicationId}\n'
     'versionName=${app.versionName}\n'
-    'versionCode=${app.buildNumber}\n';
+    'versionCode=${app.buildNumber}\n'
+    'apkName=$apkName\n';
 
 String iosFlavorSource(AppFlavor app) =>
     'FLAVOR_BUNDLE_ID=${app.iosBundleId}\n'

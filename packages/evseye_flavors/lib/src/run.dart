@@ -110,6 +110,14 @@ void _applyCore(Workspace workspace, Flavor flavor) {
   stdout.writeln('evseye_core: colours, names, banner, intro images, ${art.length} illustrations$note');
 }
 
+String _apkName(Flavor flavor, AppTarget app) {
+  final String client = flavor.name
+      .toLowerCase()
+      .replaceAll(RegExp(r'[^a-z0-9]+'), '-')
+      .replaceAll(RegExp(r'^-+|-+$'), '');
+  return [if (client.isNotEmpty) client, app.apkLabel].join('-');
+}
+
 String _hex(int argb) => '#${(argb & 0xFFFFFF).toRadixString(16).toUpperCase().padLeft(6, '0')}';
 
 void _applyApp(Workspace workspace, Flavor flavor, AppTarget app) {
@@ -118,7 +126,7 @@ void _applyApp(Workspace workspace, Flavor flavor, AppTarget app) {
     _copy(flavor.file(app.key, icon), p.join(workspace.imagesDir(app), icon));
   }
   _write(workspace.stringsFile(app), androidStringsSource(config.appName));
-  _write(workspace.androidFlavorFile(app), androidFlavorSource(config));
+  _write(workspace.androidFlavorFile(app), androidFlavorSource(config, apkName: _apkName(flavor, app)));
   _write(workspace.iosFlavorFile(app), iosFlavorSource(config));
   stdout.writeln(
     '${app.folder}: "${config.appName}", Android ${config.androidApplicationId}, '

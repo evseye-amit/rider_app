@@ -3,15 +3,16 @@ import 'dart:io';
 import 'package:path/path.dart' as p;
 
 class AppTarget {
-  const AppTarget({required this.key, required this.folder});
+  const AppTarget({required this.key, required this.folder, required this.apkLabel});
 
   final String key;
   final String folder;
+  final String apkLabel;
 }
 
 const List<AppTarget> appTargets = [
-  AppTarget(key: 'rider', folder: 'rider_app'),
-  AppTarget(key: 'fleet', folder: 'fleet_manager_app'),
+  AppTarget(key: 'rider', folder: 'rider_app', apkLabel: 'rider'),
+  AppTarget(key: 'fleet', folder: 'fleet_manager_app', apkLabel: 'fleet-manager'),
 ];
 
 const List<String> brandImages = ['banner.png', 'intro_1.png', 'intro_2.png'];
