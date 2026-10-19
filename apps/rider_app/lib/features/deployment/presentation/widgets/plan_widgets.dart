@@ -2,9 +2,10 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 
 class PlanSummary extends StatelessWidget {
-  const PlanSummary({required this.breakdown, super.key});
+  const PlanSummary({required this.breakdown, this.paid = false, super.key});
 
   final CommercialBreakdown breakdown;
+  final bool paid;
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +50,24 @@ class PlanSummary extends StatelessWidget {
         const Gap.sm(),
         Container(
           padding: const EdgeInsets.all(Insets.md),
-          decoration: BoxDecoration(color: AppColors.primaryWash, borderRadius: Corners.brMd),
+          decoration: BoxDecoration(
+            color: paid ? AppColors.successWash : AppColors.primaryWash,
+            borderRadius: Corners.brMd,
+          ),
           child: Row(
             children: [
+              if (paid) ...[
+                const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 22),
+                const SizedBox(width: Insets.sm),
+              ],
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(l10n.planPayableToday, style: AppText.titleSmall.copyWith(fontSize: 13.5)),
+                    Text(
+                      paid ? l10n.deploymentPaymentReceived : l10n.planPayableToday,
+                      style: AppText.titleSmall.copyWith(fontSize: 13.5),
+                    ),
                     if (breakdown.refundableAmount > 0) ...[
                       const SizedBox(height: 2),
                       Text(
@@ -69,7 +80,7 @@ class PlanSummary extends StatelessWidget {
               ),
               Text(
                 Fmt.money(breakdown.payableToday),
-                style: AppText.numeric.copyWith(fontSize: 20, color: AppColors.primary),
+                style: AppText.numeric.copyWith(fontSize: 20, color: paid ? AppColors.success : AppColors.primary),
               ),
             ],
           ),

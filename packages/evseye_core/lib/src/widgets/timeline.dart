@@ -76,9 +76,14 @@ class TimelineRow extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (time != null) Text(time!, style: AppText.bodySmall.copyWith(fontSize: 11)),
-                  if (current)
+                  if (time != null) ...[
+                    const SizedBox(width: Insets.sm),
+                    Text(time!, style: AppText.bodySmall.copyWith(fontSize: 11)),
+                  ],
+                  if (current) ...[
+                    const SizedBox(width: Insets.sm),
                     StatusChip(label: currentLabel, tone: StatusTone.brand, dense: true, showDot: false),
+                  ],
                 ],
               ),
             ),

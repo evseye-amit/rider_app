@@ -59,6 +59,9 @@ class AppL10nTe extends AppL10n {
   String get allocationBodyPaintwork => 'బాడీ మరియు పెయింట్ పని';
 
   @override
+  String get allocationCallRider => 'కాల్ చేయండి';
+
+  @override
   String get allocationChangePlan => 'ప్లాన్ మార్చండి';
 
   @override
@@ -144,6 +147,9 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationHandoverCompleteMessage => 'శిక్షణ పూర్తయింది, స్కూటర్ రైడర్ వద్ద ఉంది. ఈ అప్పగింత పూర్తయింది.';
+
+  @override
+  String get allocationHandoverHistory => 'అప్పగింత చరిత్ర';
 
   @override
   String get allocationHelmetHandedOver => 'హెల్మెట్ అప్పగించారు';
@@ -374,6 +380,12 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationStartReturn => 'వాపసు మొదలుపెట్టండి';
+
+  @override
+  String get allocationStepPhotos => 'ఫోటోలు & తనిఖీ';
+
+  @override
+  String get allocationStepRider => 'రైడర్ తనిఖీ & శిక్షణ';
 
   @override
   String get allocationTeamLead => 'టీమ్ లీడ్';
@@ -744,9 +756,6 @@ class AppL10nTe extends AppL10n {
   String get commonIncentives => 'ప్రోత్సాహకాలు';
 
   @override
-  String get commonInsurance => 'బీమా';
-
-  @override
   String get commonIotUnit => 'పరికరం';
 
   @override
@@ -966,9 +975,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get commonWallet => 'వాలెట్';
-
-  @override
-  String get commonWeek => 'ఈ వారం';
 
   @override
   String get commonWhatHappensNext => 'తర్వాత ఏమి జరుగుతుంది';
@@ -1385,7 +1391,7 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get deploymentFleetManagerPreparingVehicleIts =>
-      'మీ ఫ్లీట్ మేనేజర్ వాహనం మరియు దాని పరికరం సిద్ధం చేస్తున్నారు. సిద్ధం కాగానే చెల్లింపు వివరాలు ఇక్కడ కనిపిస్తాయి.';
+      'మీ ఫ్లీట్ మేనేజర్ వాహనాన్ని సిద్ధం చేస్తున్నారు. సిద్ధం కాగానే చెల్లింపు వివరాలు ఇక్కడ కనిపిస్తాయి.';
 
   @override
   String get deploymentFleetManagerPuttingTogetherPayment =>
@@ -1515,96 +1521,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get deploymentYourPlan => 'మీ ప్లాన్';
-
-  @override
-  String get earningsAchieved => 'సాధించారు';
-
-  @override
-  String get earningsActiveSchemes => 'అమలులో ఉన్న పథకాలు';
-
-  @override
-  String get earningsAlreadyClearedCredited => 'ఇప్పటికే పూర్తయి జమ అయింది';
-
-  @override
-  String get earningsBonusesCanStillClearWeek => 'ఈ వారం ఇంకా పొందగల బోనస్‌లు';
-
-  @override
-  String get earningsCancelledTripsDoNotCount => 'రద్దైన ట్రిప్‌లు లెక్కించబడవు. అర్ధరాత్రిలోపు జమ అవుతుంది.';
-
-  @override
-  String get earningsCheckBackTomorrowNewIncentives => 'కొత్త ప్రోత్సాహకాల కోసం రేపు చూడండి.';
-
-  @override
-  String get earningsCleared => 'పూర్తయింది';
-
-  @override
-  String get earningsClearSchemeWeekLandsWallet => 'ఈ వారం ఒక పథకం పూర్తి చేయండి, డబ్బు వెంటనే వాలెట్‌లోకి వస్తుంది';
-
-  @override
-  String get earningsComplete20TripsToday => 'ఈరోజు 20 ట్రిప్‌లు పూర్తి చేయండి';
-
-  @override
-  String get earningsCompletedRewardCreditedWallet => 'పూర్తయింది, బహుమతి మీ వాలెట్‌కు జమ అయింది.';
-
-  @override
-  String get earningsCouldNotLoadIncentives => 'మీ ప్రోత్సాహకాలు తెరవలేకపోయాం';
-
-  @override
-  String get earningsCover400KmWeek => 'ఈ వారం 400 కిమీ ప్రయాణించండి';
-
-  @override
-  String get earningsDaily => 'ప్రతిరోజు';
-
-  @override
-  String get earningsDailyTripTarget => 'రోజువారీ ట్రిప్ లక్ష్యం';
-
-  @override
-  String get earningsEarnedWeek => 'ఈ వారం సంపాదన';
-
-  @override
-  String get earningsEveningSurge => 'సాయంత్రం అధిక రేటు';
-
-  @override
-  String get earningsMeasuredByVehicleOdometerNot => 'వాహన ఓడోమీటర్‌తో కొలుస్తారు, యాప్‌తో కాదు.';
-
-  @override
-  String get earningsMonthly => 'నెలవారీ';
-
-  @override
-  String get earningsNoActiveSchemesRightNow => 'ప్రస్తుతం ఏ పథకం అమలులో లేదు';
-
-  @override
-  String get earningsOneClearedSchemeSoAchieved => 'ఒక పథకం పూర్తయింది, కాబట్టి సాధించిన స్థితి కనిపిస్తోంది.';
-
-  @override
-  String get earningsPerfectWeek => 'అద్భుతమైన వారం';
-
-  @override
-  String get earningsReferralCompletes20Trips => 'మీ సిఫారసు 20 ట్రిప్‌లు పూర్తి చేస్తుంది';
-
-  @override
-  String get earningsReferRider => 'రైడర్‌ను సిఫారసు చేయండి';
-
-  @override
-  String get earningsRideBetween6Pm9 => 'ఓఖ్లాలో సాయంత్రం 6 నుంచి 9 మధ్య ప్రయాణించండి';
-
-  @override
-  String get earningsSixDaysPresentWithNo => 'ఆరు రోజులు హాజరు, ఆలస్య వాపసు లేదు';
-
-  @override
-  String get earningsTerms => 'నిబంధనలు';
-
-  @override
-  String get earningsTermsConditions => 'నిబంధనలు మరియు షరతులు';
-
-  @override
-  String get earningsTurnExtraTripsIntoExtra => 'ఎక్కువ ట్రిప్‌లతో ఎక్కువ సంపాదించండి';
-
-  @override
-  String get earningsWeekly => 'వారపు';
-
-  @override
-  String get earningsWeeklyDistance => 'వారపు దూరం';
 
   @override
   String get errorActiveScooterRequired => 'దీనికి మీకు స్కూటర్ కేటాయించి ఉండాలి.';
@@ -3978,16 +3894,10 @@ class AppL10nTe extends AppL10n {
   String get scooterBatteryType => 'బ్యాటరీ రకం';
 
   @override
-  String get scooterCharger => 'చార్జర్';
-
-  @override
   String get scooterCharging => 'చార్జింగ్';
 
   @override
   String get scooterClusterManager => 'క్లస్టర్ మేనేజర్';
-
-  @override
-  String get scooterCommercialPermit => 'వాణిజ్య అనుమతి';
 
   @override
   String get scooterControllerNumber => 'కంట్రోలర్ నంబర్';
@@ -3997,9 +3907,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get scooterDeliveryBox => 'డెలివరీ బాక్స్';
-
-  @override
-  String get scooterFitnessCertificate => 'ఫిట్‌నెస్ సర్టిఫికెట్';
 
   @override
   String get scooterHealth => 'స్థితి';
@@ -4033,19 +3940,10 @@ class AppL10nTe extends AppL10n {
   String get scooterParked => 'నిలిపిన చోటు';
 
   @override
-  String get scooterPhoneMount => 'ఫోన్ మౌంట్';
-
-  @override
   String get scooterPowertrain => 'పవర్‌ట్రెయిన్';
 
   @override
   String get scooterRange => 'పరిధి';
-
-  @override
-  String get scooterRegistrationCertificate => 'రిజిస్ట్రేషన్ సర్టిఫికెట్';
-
-  @override
-  String get scooterToolkit => 'టూల్ కిట్';
 
   @override
   String get scooterVehicleDetails => 'వాహన వివరాలు';

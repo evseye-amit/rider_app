@@ -64,6 +64,10 @@
   "@allocationBodyPaintwork": {
     "description": "Body and paintwork"
   },
+  "allocationCallRider": "Call",
+  "@allocationCallRider": {
+    "description": "Action on the rider card that calls the rider"
+  },
   "allocationChangePlan": "Change plan",
   "@allocationChangePlan": {
     "description": "Change plan"
@@ -184,6 +188,10 @@
   "allocationHandoverCompleteMessage": "Training is done and the scooter is with the rider. This handover is complete.",
   "@allocationHandoverCompleteMessage": {
     "description": "Training is done and the scooter is with the rider. This handover is complete."
+  },
+  "allocationHandoverHistory": "Handover history",
+  "@allocationHandoverHistory": {
+    "description": "Title of the timeline card at the bottom of the handover screen"
   },
   "allocationHelmetHandedOver": "Helmet handed over",
   "@allocationHelmetHandedOver": {
@@ -481,6 +489,14 @@
   "allocationStartReturn": "Start a return",
   "@allocationStartReturn": {
     "description": "Start a return"
+  },
+  "allocationStepPhotos": "Photos & inspection",
+  "@allocationStepPhotos": {
+    "description": "Handover step where the fleet manager takes vehicle photos and submits the inspection"
+  },
+  "allocationStepRider": "Rider check & training",
+  "@allocationStepRider": {
+    "description": "Handover step where the rider accepts the inspection and finishes training"
   },
   "allocationTeamLead": "Team lead",
   "@allocationTeamLead": {
@@ -983,10 +999,6 @@
   "@commonIncentives": {
     "description": "Incentives"
   },
-  "commonInsurance": "Insurance",
-  "@commonInsurance": {
-    "description": "Insurance"
-  },
   "commonIotUnit": "IoT unit",
   "@commonIotUnit": {
     "description": "IoT unit"
@@ -1283,10 +1295,6 @@
   "commonWallet": "Wallet",
   "@commonWallet": {
     "description": "Wallet"
-  },
-  "commonWeek": "This week",
-  "@commonWeek": {
-    "description": "This week"
   },
   "commonWhatHappensNext": "What happens next",
   "@commonWhatHappensNext": {
@@ -1843,9 +1851,9 @@
   "@deploymentFleetManagerHasNotSubmitted": {
     "description": "Your fleet manager has not submitted the inspection yet."
   },
-  "deploymentFleetManagerPreparingVehicleIts": "Your fleet manager is preparing the vehicle and its IoT unit. Your payment details appear here as soon as they are ready.",
+  "deploymentFleetManagerPreparingVehicleIts": "Your fleet manager is preparing the vehicle. Your payment details appear here as soon as they are ready.",
   "@deploymentFleetManagerPreparingVehicleIts": {
-    "description": "Your fleet manager is preparing the vehicle and its IoT unit. Your payment details appear here as soon as they are ready."
+    "description": "Message on the rider's preparing-your-scooter screen"
   },
   "deploymentFleetManagerPuttingTogetherPayment": "Your fleet manager is putting together your payment details. You will be asked to pay in a moment.",
   "@deploymentFleetManagerPuttingTogetherPayment": {
@@ -2012,126 +2020,6 @@
   "deploymentYourPlan": "Your plan",
   "@deploymentYourPlan": {
     "description": "Your plan"
-  },
-  "earningsAchieved": "Achieved",
-  "@earningsAchieved": {
-    "description": "Achieved"
-  },
-  "earningsActiveSchemes": "Active schemes",
-  "@earningsActiveSchemes": {
-    "description": "Active schemes"
-  },
-  "earningsAlreadyClearedCredited": "Already cleared and credited",
-  "@earningsAlreadyClearedCredited": {
-    "description": "Already cleared and credited"
-  },
-  "earningsBonusesCanStillClearWeek": "Bonuses you can still clear this week",
-  "@earningsBonusesCanStillClearWeek": {
-    "description": "Bonuses you can still clear this week"
-  },
-  "earningsCancelledTripsDoNotCount": "Cancelled trips do not count. Credited by midnight.",
-  "@earningsCancelledTripsDoNotCount": {
-    "description": "Cancelled trips do not count. Credited by midnight."
-  },
-  "earningsCheckBackTomorrowNewIncentives": "Check back tomorrow for new incentives.",
-  "@earningsCheckBackTomorrowNewIncentives": {
-    "description": "Check back tomorrow for new incentives."
-  },
-  "earningsCleared": "Cleared",
-  "@earningsCleared": {
-    "description": "Cleared"
-  },
-  "earningsClearSchemeWeekLandsWallet": "Clear a scheme this week and it lands in your wallet instantly",
-  "@earningsClearSchemeWeekLandsWallet": {
-    "description": "Clear a scheme this week and it lands in your wallet instantly"
-  },
-  "earningsComplete20TripsToday": "Complete 20 trips today",
-  "@earningsComplete20TripsToday": {
-    "description": "Complete 20 trips today"
-  },
-  "earningsCompletedRewardCreditedWallet": "Completed — reward credited to your wallet.",
-  "@earningsCompletedRewardCreditedWallet": {
-    "description": "Completed — reward credited to your wallet."
-  },
-  "earningsCouldNotLoadIncentives": "Could not load your incentives",
-  "@earningsCouldNotLoadIncentives": {
-    "description": "Could not load your incentives"
-  },
-  "earningsCover400KmWeek": "Cover 400 km this week",
-  "@earningsCover400KmWeek": {
-    "description": "Cover 400 km this week"
-  },
-  "earningsDaily": "Daily",
-  "@earningsDaily": {
-    "description": "Daily"
-  },
-  "earningsDailyTripTarget": "Daily trip target",
-  "@earningsDailyTripTarget": {
-    "description": "Daily trip target"
-  },
-  "earningsEarnedWeek": "Earned this week",
-  "@earningsEarnedWeek": {
-    "description": "Earned this week"
-  },
-  "earningsEveningSurge": "Evening surge",
-  "@earningsEveningSurge": {
-    "description": "Evening surge"
-  },
-  "earningsMeasuredByVehicleOdometerNot": "Measured by the vehicle odometer, not the app.",
-  "@earningsMeasuredByVehicleOdometerNot": {
-    "description": "Measured by the vehicle odometer, not the app."
-  },
-  "earningsMonthly": "Monthly",
-  "@earningsMonthly": {
-    "description": "Monthly"
-  },
-  "earningsNoActiveSchemesRightNow": "No active schemes right now",
-  "@earningsNoActiveSchemesRightNow": {
-    "description": "No active schemes right now"
-  },
-  "earningsOneClearedSchemeSoAchieved": "One cleared scheme, so the achieved state is on screen.",
-  "@earningsOneClearedSchemeSoAchieved": {
-    "description": "One cleared scheme, so the achieved state is on screen."
-  },
-  "earningsPerfectWeek": "Perfect week",
-  "@earningsPerfectWeek": {
-    "description": "Perfect week"
-  },
-  "earningsReferralCompletes20Trips": "Your referral completes 20 trips",
-  "@earningsReferralCompletes20Trips": {
-    "description": "Your referral completes 20 trips"
-  },
-  "earningsReferRider": "Refer a rider",
-  "@earningsReferRider": {
-    "description": "Refer a rider"
-  },
-  "earningsRideBetween6Pm9": "Ride between 6 pm and 9 pm in Okhla",
-  "@earningsRideBetween6Pm9": {
-    "description": "Ride between 6 pm and 9 pm in Okhla"
-  },
-  "earningsSixDaysPresentWithNo": "Six days present with no late returns",
-  "@earningsSixDaysPresentWithNo": {
-    "description": "Six days present with no late returns"
-  },
-  "earningsTerms": "Terms",
-  "@earningsTerms": {
-    "description": "Terms"
-  },
-  "earningsTermsConditions": "Terms & conditions",
-  "@earningsTermsConditions": {
-    "description": "Terms & conditions"
-  },
-  "earningsTurnExtraTripsIntoExtra": "Turn extra trips into extra pay",
-  "@earningsTurnExtraTripsIntoExtra": {
-    "description": "Turn extra trips into extra pay"
-  },
-  "earningsWeekly": "Weekly",
-  "@earningsWeekly": {
-    "description": "Weekly"
-  },
-  "earningsWeeklyDistance": "Weekly distance",
-  "@earningsWeeklyDistance": {
-    "description": "Weekly distance"
   },
   "errorActiveScooterRequired": "You need a scooter assigned to you for this.",
   "@errorActiveScooterRequired": {
@@ -5377,10 +5265,6 @@
   "@scooterBatteryType": {
     "description": "Battery type"
   },
-  "scooterCharger": "Charger",
-  "@scooterCharger": {
-    "description": "Charger"
-  },
   "scooterCharging": "Charging",
   "@scooterCharging": {
     "description": "Charging"
@@ -5388,10 +5272,6 @@
   "scooterClusterManager": "Cluster manager",
   "@scooterClusterManager": {
     "description": "Cluster manager"
-  },
-  "scooterCommercialPermit": "Commercial permit",
-  "@scooterCommercialPermit": {
-    "description": "Commercial permit"
   },
   "scooterControllerNumber": "Controller number",
   "@scooterControllerNumber": {
@@ -5404,10 +5284,6 @@
   "scooterDeliveryBox": "Delivery box",
   "@scooterDeliveryBox": {
     "description": "Delivery box"
-  },
-  "scooterFitnessCertificate": "Fitness certificate",
-  "@scooterFitnessCertificate": {
-    "description": "Fitness certificate"
   },
   "scooterHealth": "Health",
   "@scooterHealth": {
@@ -5449,10 +5325,6 @@
   "@scooterParked": {
     "description": "Parked at"
   },
-  "scooterPhoneMount": "Phone mount",
-  "@scooterPhoneMount": {
-    "description": "Phone mount"
-  },
   "scooterPowertrain": "Powertrain",
   "@scooterPowertrain": {
     "description": "Powertrain"
@@ -5460,14 +5332,6 @@
   "scooterRange": "Range",
   "@scooterRange": {
     "description": "Range"
-  },
-  "scooterRegistrationCertificate": "Registration certificate",
-  "@scooterRegistrationCertificate": {
-    "description": "Registration certificate"
-  },
-  "scooterToolkit": "Toolkit",
-  "@scooterToolkit": {
-    "description": "Toolkit"
   },
   "scooterVehicleDetails": "Vehicle details",
   "@scooterVehicleDetails": {

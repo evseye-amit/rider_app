@@ -26,7 +26,6 @@ abstract final class Routes {
   static const String nearbyHubs = '/nearby-hubs';
   static const String referEarn = '/refer-and-earn';
 
-  static const String incentives = '/incentives';
   static const String rentals = '/rentals';
   static const String profile = '/profile';
   static const String notifications = '/notifications';

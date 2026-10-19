@@ -190,6 +190,12 @@ abstract class AppL10n {
   /// **'Body and paintwork'**
   String get allocationBodyPaintwork;
 
+  /// Action on the rider card that calls the rider
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get allocationCallRider;
+
   /// Change plan
   ///
   /// In en, this message translates to:
@@ -351,6 +357,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Training is done and the scooter is with the rider. This handover is complete.'**
   String get allocationHandoverCompleteMessage;
+
+  /// Title of the timeline card at the bottom of the handover screen
+  ///
+  /// In en, this message translates to:
+  /// **'Handover history'**
+  String get allocationHandoverHistory;
 
   /// Helmet handed over
   ///
@@ -789,6 +801,18 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Start a return'**
   String get allocationStartReturn;
+
+  /// Handover step where the fleet manager takes vehicle photos and submits the inspection
+  ///
+  /// In en, this message translates to:
+  /// **'Photos & inspection'**
+  String get allocationStepPhotos;
+
+  /// Handover step where the rider accepts the inspection and finishes training
+  ///
+  /// In en, this message translates to:
+  /// **'Rider check & training'**
+  String get allocationStepRider;
 
   /// Team lead label in the allocation flow
   ///
@@ -1480,12 +1504,6 @@ abstract class AppL10n {
   /// **'Incentives'**
   String get commonIncentives;
 
-  /// Insurance
-  ///
-  /// In en, this message translates to:
-  /// **'Insurance'**
-  String get commonInsurance;
-
   /// IoT unit
   ///
   /// In en, this message translates to:
@@ -1923,12 +1941,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Wallet'**
   String get commonWallet;
-
-  /// This week
-  ///
-  /// In en, this message translates to:
-  /// **'This week'**
-  String get commonWeek;
 
   /// What happens next
   ///
@@ -2710,10 +2722,10 @@ abstract class AppL10n {
   /// **'Your fleet manager has not submitted the inspection yet.'**
   String get deploymentFleetManagerHasNotSubmitted;
 
-  /// Your fleet manager is preparing the vehicle and its IoT unit. Your payment details appear here as soon as they are ready.
+  /// Message on the rider's preparing-your-scooter screen
   ///
   /// In en, this message translates to:
-  /// **'Your fleet manager is preparing the vehicle and its IoT unit. Your payment details appear here as soon as they are ready.'**
+  /// **'Your fleet manager is preparing the vehicle. Your payment details appear here as soon as they are ready.'**
   String get deploymentFleetManagerPreparingVehicleIts;
 
   /// Your fleet manager is putting together your payment details. You will be asked to pay in a moment.
@@ -2949,186 +2961,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Your plan'**
   String get deploymentYourPlan;
-
-  /// Achieved
-  ///
-  /// In en, this message translates to:
-  /// **'Achieved'**
-  String get earningsAchieved;
-
-  /// Active schemes
-  ///
-  /// In en, this message translates to:
-  /// **'Active schemes'**
-  String get earningsActiveSchemes;
-
-  /// Already cleared and credited
-  ///
-  /// In en, this message translates to:
-  /// **'Already cleared and credited'**
-  String get earningsAlreadyClearedCredited;
-
-  /// Bonuses you can still clear this week
-  ///
-  /// In en, this message translates to:
-  /// **'Bonuses you can still clear this week'**
-  String get earningsBonusesCanStillClearWeek;
-
-  /// Cancelled trips do not count. Credited by midnight.
-  ///
-  /// In en, this message translates to:
-  /// **'Cancelled trips do not count. Credited by midnight.'**
-  String get earningsCancelledTripsDoNotCount;
-
-  /// Check back tomorrow for new incentives.
-  ///
-  /// In en, this message translates to:
-  /// **'Check back tomorrow for new incentives.'**
-  String get earningsCheckBackTomorrowNewIncentives;
-
-  /// Cleared
-  ///
-  /// In en, this message translates to:
-  /// **'Cleared'**
-  String get earningsCleared;
-
-  /// Clear a scheme this week and it lands in your wallet instantly
-  ///
-  /// In en, this message translates to:
-  /// **'Clear a scheme this week and it lands in your wallet instantly'**
-  String get earningsClearSchemeWeekLandsWallet;
-
-  /// Complete 20 trips today
-  ///
-  /// In en, this message translates to:
-  /// **'Complete 20 trips today'**
-  String get earningsComplete20TripsToday;
-
-  /// Completed — reward credited to your wallet.
-  ///
-  /// In en, this message translates to:
-  /// **'Completed — reward credited to your wallet.'**
-  String get earningsCompletedRewardCreditedWallet;
-
-  /// Could not load your incentives
-  ///
-  /// In en, this message translates to:
-  /// **'Could not load your incentives'**
-  String get earningsCouldNotLoadIncentives;
-
-  /// Cover 400 km this week
-  ///
-  /// In en, this message translates to:
-  /// **'Cover 400 km this week'**
-  String get earningsCover400KmWeek;
-
-  /// Daily
-  ///
-  /// In en, this message translates to:
-  /// **'Daily'**
-  String get earningsDaily;
-
-  /// Daily trip target
-  ///
-  /// In en, this message translates to:
-  /// **'Daily trip target'**
-  String get earningsDailyTripTarget;
-
-  /// Earned this week
-  ///
-  /// In en, this message translates to:
-  /// **'Earned this week'**
-  String get earningsEarnedWeek;
-
-  /// Evening surge
-  ///
-  /// In en, this message translates to:
-  /// **'Evening surge'**
-  String get earningsEveningSurge;
-
-  /// Measured by the vehicle odometer, not the app.
-  ///
-  /// In en, this message translates to:
-  /// **'Measured by the vehicle odometer, not the app.'**
-  String get earningsMeasuredByVehicleOdometerNot;
-
-  /// Monthly
-  ///
-  /// In en, this message translates to:
-  /// **'Monthly'**
-  String get earningsMonthly;
-
-  /// No active schemes right now
-  ///
-  /// In en, this message translates to:
-  /// **'No active schemes right now'**
-  String get earningsNoActiveSchemesRightNow;
-
-  /// One cleared scheme, so the achieved state is on screen.
-  ///
-  /// In en, this message translates to:
-  /// **'One cleared scheme, so the achieved state is on screen.'**
-  String get earningsOneClearedSchemeSoAchieved;
-
-  /// Perfect week
-  ///
-  /// In en, this message translates to:
-  /// **'Perfect week'**
-  String get earningsPerfectWeek;
-
-  /// Your referral completes 20 trips
-  ///
-  /// In en, this message translates to:
-  /// **'Your referral completes 20 trips'**
-  String get earningsReferralCompletes20Trips;
-
-  /// Refer a rider
-  ///
-  /// In en, this message translates to:
-  /// **'Refer a rider'**
-  String get earningsReferRider;
-
-  /// Ride between 6 pm and 9 pm in Okhla
-  ///
-  /// In en, this message translates to:
-  /// **'Ride between 6 pm and 9 pm in Okhla'**
-  String get earningsRideBetween6Pm9;
-
-  /// Six days present with no late returns
-  ///
-  /// In en, this message translates to:
-  /// **'Six days present with no late returns'**
-  String get earningsSixDaysPresentWithNo;
-
-  /// Terms
-  ///
-  /// In en, this message translates to:
-  /// **'Terms'**
-  String get earningsTerms;
-
-  /// Terms & conditions
-  ///
-  /// In en, this message translates to:
-  /// **'Terms & conditions'**
-  String get earningsTermsConditions;
-
-  /// Turn extra trips into extra pay
-  ///
-  /// In en, this message translates to:
-  /// **'Turn extra trips into extra pay'**
-  String get earningsTurnExtraTripsIntoExtra;
-
-  /// Weekly
-  ///
-  /// In en, this message translates to:
-  /// **'Weekly'**
-  String get earningsWeekly;
-
-  /// Weekly distance
-  ///
-  /// In en, this message translates to:
-  /// **'Weekly distance'**
-  String get earningsWeeklyDistance;
 
   /// You need a scooter assigned to you for this.
   ///
@@ -7600,12 +7432,6 @@ abstract class AppL10n {
   /// **'Battery type'**
   String get scooterBatteryType;
 
-  /// Charger
-  ///
-  /// In en, this message translates to:
-  /// **'Charger'**
-  String get scooterCharger;
-
   /// Charging
   ///
   /// In en, this message translates to:
@@ -7617,12 +7443,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Cluster manager'**
   String get scooterClusterManager;
-
-  /// Commercial permit
-  ///
-  /// In en, this message translates to:
-  /// **'Commercial permit'**
-  String get scooterCommercialPermit;
 
   /// Controller number
   ///
@@ -7641,12 +7461,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Delivery box'**
   String get scooterDeliveryBox;
-
-  /// Fitness certificate
-  ///
-  /// In en, this message translates to:
-  /// **'Fitness certificate'**
-  String get scooterFitnessCertificate;
 
   /// Health
   ///
@@ -7708,12 +7522,6 @@ abstract class AppL10n {
   /// **'Parked at'**
   String get scooterParked;
 
-  /// Phone mount
-  ///
-  /// In en, this message translates to:
-  /// **'Phone mount'**
-  String get scooterPhoneMount;
-
   /// Powertrain
   ///
   /// In en, this message translates to:
@@ -7725,18 +7533,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Range'**
   String get scooterRange;
-
-  /// Registration certificate
-  ///
-  /// In en, this message translates to:
-  /// **'Registration certificate'**
-  String get scooterRegistrationCertificate;
-
-  /// Toolkit
-  ///
-  /// In en, this message translates to:
-  /// **'Toolkit'**
-  String get scooterToolkit;
 
   /// Vehicle details
   ///

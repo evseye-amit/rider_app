@@ -17,7 +17,6 @@ import '../../features/deployment/presentation/pages/pdi_page.dart';
 import '../../features/deployment/presentation/pages/plan_acceptance_page.dart';
 import '../../features/deployment/presentation/pages/training_page.dart';
 import '../../features/deployment/presentation/pages/waiting_page.dart';
-import '../../features/earnings/presentation/pages/incentives_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/home/presentation/widgets/rider_shell.dart';
 import '../../features/nearby_hubs/presentation/pages/nearby_hubs_page.dart';
@@ -203,7 +202,6 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
-      GoRoute(path: Routes.incentives, name: 'incentives', builder: (context, state) => const IncentivesPage()),
       GoRoute(path: Routes.rentals, name: 'rentals', builder: (context, state) => const RentalsPage()),
       GoRoute(path: Routes.payments, name: 'payments', builder: (context, state) => const PaymentsPage()),
       GoRoute(path: Routes.profile, name: 'profile', builder: (context, state) => const ProfilePage()),

@@ -59,6 +59,9 @@ class AppL10nKn extends AppL10n {
   String get allocationBodyPaintwork => 'ಬಾಡಿ ಮತ್ತು ಬಣ್ಣದ ಕೆಲಸ';
 
   @override
+  String get allocationCallRider => 'ಕರೆ ಮಾಡಿ';
+
+  @override
   String get allocationChangePlan => 'ಪ್ಲಾನ್ ಬದಲಿಸಿ';
 
   @override
@@ -145,6 +148,9 @@ class AppL10nKn extends AppL10n {
   @override
   String get allocationHandoverCompleteMessage =>
       'ತರಬೇತಿ ಮುಗಿದಿದೆ ಮತ್ತು ಸ್ಕೂಟರ್ ರೈಡರ್ ಬಳಿ ಇದೆ. ಈ ಹಸ್ತಾಂತರ ಪೂರ್ಣಗೊಂಡಿದೆ.';
+
+  @override
+  String get allocationHandoverHistory => 'ಹಸ್ತಾಂತರ ಇತಿಹಾಸ';
 
   @override
   String get allocationHelmetHandedOver => 'ಹೆಲ್ಮೆಟ್ ಹಸ್ತಾಂತರಿಸಲಾಗಿದೆ';
@@ -374,6 +380,12 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationStartReturn => 'ಹಿಂತಿರುಗಿಸುವಿಕೆ ಪ್ರಾರಂಭಿಸಿ';
+
+  @override
+  String get allocationStepPhotos => 'ಫೋಟೋ ಮತ್ತು ಪರಿಶೀಲನೆ';
+
+  @override
+  String get allocationStepRider => 'ರೈಡರ್ ಪರಿಶೀಲನೆ ಮತ್ತು ತರಬೇತಿ';
 
   @override
   String get allocationTeamLead => 'ಟೀಮ್ ಲೀಡ್';
@@ -745,9 +757,6 @@ class AppL10nKn extends AppL10n {
   String get commonIncentives => 'ಪ್ರೋತ್ಸಾಹ';
 
   @override
-  String get commonInsurance => 'ವಿಮೆ';
-
-  @override
   String get commonIotUnit => 'ಸಾಧನ';
 
   @override
@@ -967,9 +976,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get commonWallet => 'ವ್ಯಾಲೆಟ್';
-
-  @override
-  String get commonWeek => 'ಈ ವಾರ';
 
   @override
   String get commonWhatHappensNext => 'ಮುಂದೆ ಏನಾಗುತ್ತದೆ';
@@ -1389,7 +1395,7 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get deploymentFleetManagerPreparingVehicleIts =>
-      'ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ವಾಹನ ಮತ್ತು ಅದರ ಸಾಧನ ಸಿದ್ಧಪಡಿಸುತ್ತಿದ್ದಾರೆ. ಸಿದ್ಧವಾದ ಕೂಡಲೇ ಪಾವತಿ ವಿವರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
+      'ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ವಾಹನವನ್ನು ಸಿದ್ಧಪಡಿಸುತ್ತಿದ್ದಾರೆ. ಸಿದ್ಧವಾದ ಕೂಡಲೇ ಪಾವತಿ ವಿವರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
 
   @override
   String get deploymentFleetManagerPuttingTogetherPayment =>
@@ -1518,97 +1524,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get deploymentYourPlan => 'ನಿಮ್ಮ ಪ್ಲಾನ್';
-
-  @override
-  String get earningsAchieved => 'ಸಾಧಿಸಲಾಗಿದೆ';
-
-  @override
-  String get earningsActiveSchemes => 'ಸಕ್ರಿಯ ಯೋಜನೆಗಳು';
-
-  @override
-  String get earningsAlreadyClearedCredited => 'ಈಗಾಗಲೇ ಪೂರ್ಣಗೊಂಡು ಜಮಾ ಆಗಿದೆ';
-
-  @override
-  String get earningsBonusesCanStillClearWeek => 'ಈ ವಾರ ಇನ್ನೂ ಪಡೆಯಬಹುದಾದ ಬೋನಸ್';
-
-  @override
-  String get earningsCancelledTripsDoNotCount =>
-      'ರದ್ದಾದ ಟ್ರಿಪ್‌ಗಳು ಲೆಕ್ಕಕ್ಕೆ ಬರುವುದಿಲ್ಲ. ಮಧ್ಯರಾತ್ರಿಯೊಳಗೆ ಜಮಾ ಆಗುತ್ತದೆ.';
-
-  @override
-  String get earningsCheckBackTomorrowNewIncentives => 'ಹೊಸ ಪ್ರೋತ್ಸಾಹಕ್ಕಾಗಿ ನಾಳೆ ನೋಡಿ.';
-
-  @override
-  String get earningsCleared => 'ಪೂರ್ಣಗೊಂಡಿದೆ';
-
-  @override
-  String get earningsClearSchemeWeekLandsWallet => 'ಈ ವಾರ ಯೋಜನೆ ಪೂರ್ಣಗೊಳಿಸಿ, ಹಣ ತಕ್ಷಣ ವ್ಯಾಲೆಟ್‌ಗೆ ಬರುತ್ತದೆ';
-
-  @override
-  String get earningsComplete20TripsToday => 'ಇಂದು 20 ಟ್ರಿಪ್ ಪೂರ್ಣಗೊಳಿಸಿ';
-
-  @override
-  String get earningsCompletedRewardCreditedWallet => 'ಪೂರ್ಣಗೊಂಡಿದೆ, ಬಹುಮಾನ ನಿಮ್ಮ ವ್ಯಾಲೆಟ್‌ಗೆ ಜಮಾ ಆಗಿದೆ.';
-
-  @override
-  String get earningsCouldNotLoadIncentives => 'ನಿಮ್ಮ ಪ್ರೋತ್ಸಾಹ ತೆರೆಯಲಿಲ್ಲ';
-
-  @override
-  String get earningsCover400KmWeek => 'ಈ ವಾರ 400 ಕಿಮೀ ಕ್ರಮಿಸಿ';
-
-  @override
-  String get earningsDaily => 'ಪ್ರತಿದಿನ';
-
-  @override
-  String get earningsDailyTripTarget => 'ದಿನದ ಟ್ರಿಪ್ ಗುರಿ';
-
-  @override
-  String get earningsEarnedWeek => 'ಈ ವಾರದ ಗಳಿಕೆ';
-
-  @override
-  String get earningsEveningSurge => 'ಸಂಜೆಯ ಹೆಚ್ಚಿನ ದರ';
-
-  @override
-  String get earningsMeasuredByVehicleOdometerNot => 'ವಾಹನದ ಓಡೋಮೀಟರ್‌ನಿಂದ ಅಳೆಯಲಾಗುತ್ತದೆ, ಆ್ಯಪ್‌ನಿಂದ ಅಲ್ಲ.';
-
-  @override
-  String get earningsMonthly => 'ಮಾಸಿಕ';
-
-  @override
-  String get earningsNoActiveSchemesRightNow => 'ಈಗ ಯಾವುದೇ ಯೋಜನೆ ಚಾಲ್ತಿಯಲ್ಲಿಲ್ಲ';
-
-  @override
-  String get earningsOneClearedSchemeSoAchieved => 'ಒಂದು ಯೋಜನೆ ಪೂರ್ಣಗೊಂಡಿದೆ, ಹಾಗಾಗಿ ಸಾಧಿಸಿದ ಸ್ಥಿತಿ ಕಾಣಿಸುತ್ತಿದೆ.';
-
-  @override
-  String get earningsPerfectWeek => 'ಪರಿಪೂರ್ಣ ವಾರ';
-
-  @override
-  String get earningsReferralCompletes20Trips => 'ನಿಮ್ಮ ಶಿಫಾರಸು 20 ಟ್ರಿಪ್ ಪೂರ್ಣಗೊಳಿಸುತ್ತದೆ';
-
-  @override
-  String get earningsReferRider => 'ರೈಡರ್ ಅನ್ನು ಶಿಫಾರಸು ಮಾಡಿ';
-
-  @override
-  String get earningsRideBetween6Pm9 => 'ಓಖ್ಲಾದಲ್ಲಿ ಸಂಜೆ 6 ರಿಂದ 9 ರ ನಡುವೆ ಸವಾರಿ ಮಾಡಿ';
-
-  @override
-  String get earningsSixDaysPresentWithNo => 'ಆರು ದಿನ ಹಾಜರು, ತಡವಾದ ಹಿಂತಿರುಗಿಸುವಿಕೆ ಇಲ್ಲ';
-
-  @override
-  String get earningsTerms => 'ನಿಯಮಗಳು';
-
-  @override
-  String get earningsTermsConditions => 'ನಿಯಮ ಮತ್ತು ಷರತ್ತುಗಳು';
-
-  @override
-  String get earningsTurnExtraTripsIntoExtra => 'ಹೆಚ್ಚು ಟ್ರಿಪ್‌ಗಳಿಂದ ಹೆಚ್ಚು ಸಂಪಾದಿಸಿ';
-
-  @override
-  String get earningsWeekly => 'ವಾರದ';
-
-  @override
-  String get earningsWeeklyDistance => 'ವಾರದ ದೂರ';
 
   @override
   String get errorActiveScooterRequired => 'ಇದಕ್ಕೆ ನಿಮಗೆ ಸ್ಕೂಟರ್ ನೀಡಿರಬೇಕು.';
@@ -3982,16 +3897,10 @@ class AppL10nKn extends AppL10n {
   String get scooterBatteryType => 'ಬ್ಯಾಟರಿ ಬಗೆ';
 
   @override
-  String get scooterCharger => 'ಚಾರ್ಜರ್';
-
-  @override
   String get scooterCharging => 'ಚಾರ್ಜಿಂಗ್';
 
   @override
   String get scooterClusterManager => 'ಕ್ಲಸ್ಟರ್ ಮ್ಯಾನೇಜರ್';
-
-  @override
-  String get scooterCommercialPermit => 'ವಾಣಿಜ್ಯ ಪರವಾನಗಿ';
 
   @override
   String get scooterControllerNumber => 'ಕಂಟ್ರೋಲರ್ ಸಂಖ್ಯೆ';
@@ -4001,9 +3910,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get scooterDeliveryBox => 'ಡೆಲಿವರಿ ಬಾಕ್ಸ್';
-
-  @override
-  String get scooterFitnessCertificate => 'ಫಿಟ್‌ನೆಸ್ ಪ್ರಮಾಣಪತ್ರ';
 
   @override
   String get scooterHealth => 'ಸ್ಥಿತಿ';
@@ -4036,19 +3942,10 @@ class AppL10nKn extends AppL10n {
   String get scooterParked => 'ನಿಲ್ಲಿಸಿದ ಸ್ಥಳ';
 
   @override
-  String get scooterPhoneMount => 'ಫೋನ್ ಮೌಂಟ್';
-
-  @override
   String get scooterPowertrain => 'ಪವರ್‌ಟ್ರೈನ್';
 
   @override
   String get scooterRange => 'ವ್ಯಾಪ್ತಿ';
-
-  @override
-  String get scooterRegistrationCertificate => 'ನೋಂದಣಿ ಪ್ರಮಾಣಪತ್ರ';
-
-  @override
-  String get scooterToolkit => 'ಉಪಕರಣ ಕಿಟ್';
 
   @override
   String get scooterVehicleDetails => 'ವಾಹನದ ವಿವರ';

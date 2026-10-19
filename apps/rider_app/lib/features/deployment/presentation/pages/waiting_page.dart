@@ -130,7 +130,7 @@ class _WaitingPageState extends ConsumerState<WaitingPage> with SingleTickerProv
             const Gap.lg(),
             ScaleTransition(
               scale: _pulse.drive(Tween(begin: 0.97, end: 1.0)),
-              child: ArtBlock(art: copy.art, artSize: 176, title: copy.title, message: copy.message),
+              child: ArtBlock(art: copy.art, artSize: 112, title: copy.title, message: copy.message),
             ),
             const Gap.xl(),
             if (fleet != null)
@@ -173,7 +173,16 @@ class _WaitingPageState extends ConsumerState<WaitingPage> with SingleTickerProv
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    PlanSummary(breakdown: agreement.breakdown),
+                    PlanSummary(
+                      breakdown: agreement.breakdown,
+                      paid: switch (current.status) {
+                        DeploymentStatus.paymentPaid ||
+                        DeploymentStatus.pdiPendingRider ||
+                        DeploymentStatus.trainingPending ||
+                        DeploymentStatus.deployed => true,
+                        _ => false,
+                      },
+                    ),
                     if (current.status == DeploymentStatus.riderWaiting ||
                         current.status == DeploymentStatus.fleetRequested) ...[
                       const Gap.md(),

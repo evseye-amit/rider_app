@@ -84,6 +84,7 @@ class _Loaded extends ConsumerWidget {
     final DeploymentStatus status = detail.status;
     final DeploymentRider? rider = request.rider;
     final DeploymentFleet? fleet = request.fleet;
+    final _HandoverStep? step = _stepOf(status);
 
     return HeroScaffold(
       bandColor: AppColors.ink,
@@ -92,8 +93,53 @@ class _Loaded extends ConsumerWidget {
       band: _Band(detail: detail),
       bottomNavigationBar: _Footer(allocationId: allocationId, detail: detail),
       children: [
-        OverlapModuleCard(
+        if (step != null) ...[
+          OverlapModuleCard(
+            title: context.l10n.commonHandover,
+            child: StepProgress(
+              steps: [for (final _HandoverStep item in _HandoverStep.values) _stepLabel(context.l10n, item)],
+              currentIndex: step.index,
+              compact: true,
+            ),
+          ),
+          const Gap.lg(),
+        ],
+        ...switch (step) {
+          _HandoverStep.plan || _HandoverStep.payment => [
+            RentalPlanCard(
+              commercial: detail.commercial,
+              isExchange: request.isExchangeReplacement,
+              paymentTotal: _planOpen(status) ? null : request.workflow?.paymentTotal,
+              onChange: detail.busy ? null : () => _choosePlan(context, ref, allocationId),
+            ),
+            const Gap.lg(),
+          ],
+          _HandoverStep.photos => [
+            _VehiclePhotosCard(allocationId: allocationId, evidence: detail.evidence),
+            const Gap.lg(),
+          ],
+          _HandoverStep.rider => [_RiderTurnCard(status: status), const Gap.lg()],
+          _HandoverStep.deployed => [
+            ArtBlock(
+              art: BrandArt.success,
+              artSize: 120,
+              title: context.l10n.allocationDeployed,
+              message: context.l10n.allocationHandoverCompleteMessage,
+            ),
+            const Gap.lg(),
+          ],
+          null => const <Widget>[],
+        },
+        ModuleCard(
           title: context.l10n.allocationRider,
+          leading: const IconTile(icon: Icons.person_rounded, solid: true, size: 28),
+          actionLabel: rider == null ? null : context.l10n.allocationCallRider,
+          onAction: rider == null
+              ? null
+              : () {
+                  HapticFeedback.selectionClick();
+                  AppSnack.info(context, 'Calling ${Fmt.phone(rider.mobile)}…');
+                },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -101,19 +147,6 @@ class _Loaded extends ConsumerWidget {
                 label: context.l10n.commonMobile,
                 value: rider == null ? '—' : Fmt.phone(rider.mobile),
                 icon: Icons.phone_rounded,
-                trailing: rider == null
-                    ? null
-                    : CircleIconButton(
-                        icon: Icons.call_rounded,
-                        size: 34,
-                        iconSize: 16,
-                        background: AppColors.primaryWash,
-                        foreground: AppColors.primary,
-                        onTap: () {
-                          HapticFeedback.selectionClick();
-                          AppSnack.info(context, 'Calling ${Fmt.phone(rider.mobile)}…');
-                        },
-                      ),
               ),
               if (request.createdAt != null)
                 KeyValueRow(
@@ -162,35 +195,34 @@ class _Loaded extends ConsumerWidget {
           ),
         ),
         const Gap.lg(),
-        if (status.beforeInspection) ...[
-          RentalPlanCard(
-            commercial: detail.commercial,
-            isExchange: request.isExchangeReplacement,
-            paymentTotal: _planOpen(status) ? null : request.workflow?.paymentTotal,
-            onChange: detail.busy ? null : () => _choosePlan(context, ref, allocationId),
-          ),
-          const Gap.lg(),
-        ],
         ModuleCard(
-          title: context.l10n.commonHandover,
+          title: context.l10n.allocationHandoverHistory,
           leading: const IconTile(icon: Icons.timeline_rounded, solid: true, size: 28),
           child: DeploymentTimeline(status: status, workflow: request.workflow),
         ),
-        const Gap.lg(),
-        if (status.beforeInspection) _VehiclePhotosCard(allocationId: allocationId, evidence: detail.evidence),
-        if (status == DeploymentStatus.pdiPendingRider || status == DeploymentStatus.trainingPending)
-          _RiderTurnCard(status: status),
-        if (status.isDeployed)
-          ArtBlock(
-            art: BrandArt.success,
-            artSize: 120,
-            title: context.l10n.allocationDeployed,
-            message: context.l10n.allocationHandoverCompleteMessage,
-          ),
       ],
     );
   }
 }
+
+enum _HandoverStep { plan, payment, photos, rider, deployed }
+
+_HandoverStep? _stepOf(DeploymentStatus status) => switch (status) {
+  DeploymentStatus.riderWaiting || DeploymentStatus.fleetRequested => _HandoverStep.plan,
+  DeploymentStatus.paymentPending => _HandoverStep.payment,
+  DeploymentStatus.paymentPaid => _HandoverStep.photos,
+  DeploymentStatus.pdiPendingRider || DeploymentStatus.trainingPending => _HandoverStep.rider,
+  DeploymentStatus.deployed => _HandoverStep.deployed,
+  DeploymentStatus.unknown => null,
+};
+
+String _stepLabel(AppL10n l10n, _HandoverStep step) => switch (step) {
+  _HandoverStep.plan => l10n.allocationPlanTitle,
+  _HandoverStep.payment => l10n.commonPayment,
+  _HandoverStep.photos => l10n.allocationStepPhotos,
+  _HandoverStep.rider => l10n.allocationStepRider,
+  _HandoverStep.deployed => l10n.allocationDeployed,
+};
 
 enum _PlanStep { choose, awaitingRider, ready }
 

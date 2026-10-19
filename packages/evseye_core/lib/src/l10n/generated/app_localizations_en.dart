@@ -59,6 +59,9 @@ class AppL10nEn extends AppL10n {
   String get allocationBodyPaintwork => 'Body and paintwork';
 
   @override
+  String get allocationCallRider => 'Call';
+
+  @override
   String get allocationChangePlan => 'Change plan';
 
   @override
@@ -145,6 +148,9 @@ class AppL10nEn extends AppL10n {
   @override
   String get allocationHandoverCompleteMessage =>
       'Training is done and the scooter is with the rider. This handover is complete.';
+
+  @override
+  String get allocationHandoverHistory => 'Handover history';
 
   @override
   String get allocationHelmetHandedOver => 'Helmet handed over';
@@ -375,6 +381,12 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationStartReturn => 'Start a return';
+
+  @override
+  String get allocationStepPhotos => 'Photos & inspection';
+
+  @override
+  String get allocationStepRider => 'Rider check & training';
 
   @override
   String get allocationTeamLead => 'Team lead';
@@ -745,9 +757,6 @@ class AppL10nEn extends AppL10n {
   String get commonIncentives => 'Incentives';
 
   @override
-  String get commonInsurance => 'Insurance';
-
-  @override
   String get commonIotUnit => 'IoT unit';
 
   @override
@@ -967,9 +976,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get commonWallet => 'Wallet';
-
-  @override
-  String get commonWeek => 'This week';
 
   @override
   String get commonWhatHappensNext => 'What happens next';
@@ -1385,7 +1391,7 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentFleetManagerPreparingVehicleIts =>
-      'Your fleet manager is preparing the vehicle and its IoT unit. Your payment details appear here as soon as they are ready.';
+      'Your fleet manager is preparing the vehicle. Your payment details appear here as soon as they are ready.';
 
   @override
   String get deploymentFleetManagerPuttingTogetherPayment =>
@@ -1514,96 +1520,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentYourPlan => 'Your plan';
-
-  @override
-  String get earningsAchieved => 'Achieved';
-
-  @override
-  String get earningsActiveSchemes => 'Active schemes';
-
-  @override
-  String get earningsAlreadyClearedCredited => 'Already cleared and credited';
-
-  @override
-  String get earningsBonusesCanStillClearWeek => 'Bonuses you can still clear this week';
-
-  @override
-  String get earningsCancelledTripsDoNotCount => 'Cancelled trips do not count. Credited by midnight.';
-
-  @override
-  String get earningsCheckBackTomorrowNewIncentives => 'Check back tomorrow for new incentives.';
-
-  @override
-  String get earningsCleared => 'Cleared';
-
-  @override
-  String get earningsClearSchemeWeekLandsWallet => 'Clear a scheme this week and it lands in your wallet instantly';
-
-  @override
-  String get earningsComplete20TripsToday => 'Complete 20 trips today';
-
-  @override
-  String get earningsCompletedRewardCreditedWallet => 'Completed — reward credited to your wallet.';
-
-  @override
-  String get earningsCouldNotLoadIncentives => 'Could not load your incentives';
-
-  @override
-  String get earningsCover400KmWeek => 'Cover 400 km this week';
-
-  @override
-  String get earningsDaily => 'Daily';
-
-  @override
-  String get earningsDailyTripTarget => 'Daily trip target';
-
-  @override
-  String get earningsEarnedWeek => 'Earned this week';
-
-  @override
-  String get earningsEveningSurge => 'Evening surge';
-
-  @override
-  String get earningsMeasuredByVehicleOdometerNot => 'Measured by the vehicle odometer, not the app.';
-
-  @override
-  String get earningsMonthly => 'Monthly';
-
-  @override
-  String get earningsNoActiveSchemesRightNow => 'No active schemes right now';
-
-  @override
-  String get earningsOneClearedSchemeSoAchieved => 'One cleared scheme, so the achieved state is on screen.';
-
-  @override
-  String get earningsPerfectWeek => 'Perfect week';
-
-  @override
-  String get earningsReferralCompletes20Trips => 'Your referral completes 20 trips';
-
-  @override
-  String get earningsReferRider => 'Refer a rider';
-
-  @override
-  String get earningsRideBetween6Pm9 => 'Ride between 6 pm and 9 pm in Okhla';
-
-  @override
-  String get earningsSixDaysPresentWithNo => 'Six days present with no late returns';
-
-  @override
-  String get earningsTerms => 'Terms';
-
-  @override
-  String get earningsTermsConditions => 'Terms & conditions';
-
-  @override
-  String get earningsTurnExtraTripsIntoExtra => 'Turn extra trips into extra pay';
-
-  @override
-  String get earningsWeekly => 'Weekly';
-
-  @override
-  String get earningsWeeklyDistance => 'Weekly distance';
 
   @override
   String get errorActiveScooterRequired => 'You need a scooter assigned to you for this.';
@@ -3975,16 +3891,10 @@ class AppL10nEn extends AppL10n {
   String get scooterBatteryType => 'Battery type';
 
   @override
-  String get scooterCharger => 'Charger';
-
-  @override
   String get scooterCharging => 'Charging';
 
   @override
   String get scooterClusterManager => 'Cluster manager';
-
-  @override
-  String get scooterCommercialPermit => 'Commercial permit';
 
   @override
   String get scooterControllerNumber => 'Controller number';
@@ -3994,9 +3904,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get scooterDeliveryBox => 'Delivery box';
-
-  @override
-  String get scooterFitnessCertificate => 'Fitness certificate';
 
   @override
   String get scooterHealth => 'Health';
@@ -4029,19 +3936,10 @@ class AppL10nEn extends AppL10n {
   String get scooterParked => 'Parked at';
 
   @override
-  String get scooterPhoneMount => 'Phone mount';
-
-  @override
   String get scooterPowertrain => 'Powertrain';
 
   @override
   String get scooterRange => 'Range';
-
-  @override
-  String get scooterRegistrationCertificate => 'Registration certificate';
-
-  @override
-  String get scooterToolkit => 'Toolkit';
 
   @override
   String get scooterVehicleDetails => 'Vehicle details';
