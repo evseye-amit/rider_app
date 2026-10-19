@@ -1,0 +1,17 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../damage_charges_dependencies.dart';
+import '../../domain/entities/damage_charge.dart';
+import '../../domain/usecases/damage_charge_usecases.dart';
+
+final damageChargesProvider = FutureProvider.autoDispose.family<List<DamageCharge>, bool>(
+  (ref, includePaid) async => (await ref.watch(getDamageChargesProvider)(includePaid)).getOrThrow(),
+);
+
+final damageChargeProvider = FutureProvider.autoDispose.family<DamageCharge, String>(
+  (ref, id) async => (await ref.watch(getDamageChargeProvider)(id)).getOrThrow(),
+);
+
+final damagePhotoUrlProvider = FutureProvider.autoDispose.family<String, DamagePhotoParams>(
+  (ref, params) async => (await ref.watch(getDamagePhotoUrlProvider)(params)).getOrThrow(),
+);

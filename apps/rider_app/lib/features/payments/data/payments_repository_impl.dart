@@ -4,12 +4,20 @@ import '../domain/entities/payments_overview.dart';
 import '../domain/payments_repository.dart';
 
 class PaymentsRepositoryImpl implements PaymentsRepository {
-  const PaymentsRepositoryImpl(this._api);
+  const PaymentsRepositoryImpl(this._api, this._penalties);
 
   final RiderPaymentsApi _api;
+  final SubmissionPenaltyApi _penalties;
 
   @override
-  Future<Result<PaymentsOverview>> getOverview() async => (await _api.home()).map(_overview);
+  Future<Result<PaymentsOverview>> getOverview() async {
+    final (Result<PaymentsHome> home, Result<SubmissionPenaltyPage> penalties) = await (
+      _api.home(),
+      _penalties.list(limit: 100),
+    ).wait;
+    final List<SubmissionPenaltyDto> unpaid = penalties.valueOrNull?.items ?? const [];
+    return home.map((value) => _overview(value, unpaid));
+  }
 
   @override
   Future<Result<List<PaymentRecord>>> getHistory() async =>
@@ -32,7 +40,7 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
     ],
   );
 
-  static PaymentsOverview _overview(PaymentsHome home) => PaymentsOverview(
+  static PaymentsOverview _overview(PaymentsHome home, List<SubmissionPenaltyDto> unpaid) => PaymentsOverview(
     amountDue: home.amountDue,
     overdueAmount: home.overdueAmount,
     currency: home.currency,
@@ -44,6 +52,8 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
     mandateMaxAmount: home.mandateMaxAmount,
     mandateExpiresAt: home.mandateExpiresAt,
     nextAutoPayDate: home.nextAutoPayDate,
+    damageDue: unpaid.fold<num>(0, (sum, item) => sum + item.outstandingAmount),
+    damageCount: unpaid.length,
   );
 
   static AutoPayState _autoPay(AutoPayStatus status) => switch (status) {

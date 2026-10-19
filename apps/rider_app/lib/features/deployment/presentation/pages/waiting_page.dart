@@ -182,15 +182,6 @@ class _WaitingPageState extends ConsumerState<WaitingPage> with SingleTickerProv
                         style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5),
                       ),
                     ],
-                    if (!agreement.terms.isEmpty) ...[
-                      const Gap.sm(),
-                      GhostButton(
-                        label: context.l10n.exchangeReadTerms,
-                        icon: Icons.description_rounded,
-                        dense: true,
-                        onPressed: () => showPlanTerms(context, agreement.terms),
-                      ),
-                    ],
                   ],
                 ),
               ),

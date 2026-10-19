@@ -91,13 +91,3 @@ class PlanSummary extends StatelessWidget {
     );
   }
 }
-
-Future<void> showPlanTerms(BuildContext context, CommercialTerms terms) => AppSheet.show<void>(
-  context,
-  title: terms.title.isEmpty ? context.l10n.planTermsTitle : terms.title,
-  subtitle: terms.version.isEmpty ? null : terms.version,
-  child: Padding(
-    padding: const EdgeInsets.only(bottom: Insets.lg),
-    child: Text(plainTextFromHtml(terms.content), style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.55)),
-  ),
-);

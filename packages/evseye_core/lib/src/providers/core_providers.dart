@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../api/api_client.dart';
 import '../api/attendance_api.dart';
 import '../api/auth_api.dart';
+import '../api/banks_api.dart';
 import '../api/commercial_api.dart';
 import '../api/company_api.dart';
 import '../api/deployment_api.dart';
@@ -17,6 +18,7 @@ import '../api/rider_app_api.dart';
 import '../api/rider_billing_api.dart';
 import '../api/rider_hubs_api.dart';
 import '../api/rider_payments_api.dart';
+import '../api/submission_penalty_api.dart';
 import '../api/support_api.dart';
 import '../api/swap_stations_api.dart';
 import '../api/token_store.dart';
@@ -89,6 +91,12 @@ final rideReturnsApiProvider = Provider<RideReturnsApi>((ref) => RideReturnsApi(
 final returnDeskApiProvider = Provider<ReturnDeskApi>((ref) => ReturnDeskApi(ref.watch(apiClientProvider)));
 
 final riderBillingApiProvider = Provider<RiderBillingApi>((ref) => RiderBillingApi(ref.watch(apiClientProvider)));
+
+final banksApiProvider = Provider<BanksApi>((ref) => BanksApi(ref.watch(apiClientProvider)));
+
+final submissionPenaltyApiProvider = Provider<SubmissionPenaltyApi>(
+  (ref) => SubmissionPenaltyApi(ref.watch(apiClientProvider)),
+);
 
 final attendanceApiProvider = Provider<AttendanceApi>((ref) => AttendanceApi(ref.watch(apiClientProvider)));
 

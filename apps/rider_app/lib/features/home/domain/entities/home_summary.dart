@@ -11,9 +11,11 @@ class HomeSummary extends Equatable {
     this.nextDebitDate,
     this.lastPaymentAmount,
     this.lastPaymentAt,
-    this.category,
+    this.workPartner,
     this.dailyRent,
     this.workingDays,
+    this.damageDue = 0,
+    this.damageCount = 0,
   });
 
   final num? rentDue;
@@ -24,9 +26,11 @@ class HomeSummary extends Equatable {
   final DateTime? nextDebitDate;
   final num? lastPaymentAmount;
   final DateTime? lastPaymentAt;
-  final String? category;
+  final String? workPartner;
   final num? dailyRent;
   final int? workingDays;
+  final num damageDue;
+  final int damageCount;
 
   bool get isOverdue => rentOverdue > 0;
 
@@ -40,8 +44,10 @@ class HomeSummary extends Equatable {
     nextDebitDate,
     lastPaymentAmount,
     lastPaymentAt,
-    category,
+    workPartner,
     dailyRent,
     workingDays,
+    damageDue,
+    damageCount,
   ];
 }

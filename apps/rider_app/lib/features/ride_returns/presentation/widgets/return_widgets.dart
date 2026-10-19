@@ -124,8 +124,6 @@ class ReturnTile extends StatelessWidget {
       scale: 0.99,
       child: GlassCard(
         padding: const EdgeInsets.all(Insets.md),
-        tint: item.needsYou ? AppColors.primaryWash : null,
-        borderColor: item.needsYou ? AppColors.primary.withValues(alpha: 0.35) : null,
         child: Row(
           children: [
             IconTile(icon: style.icon, tone: style.tone.color, size: 42),

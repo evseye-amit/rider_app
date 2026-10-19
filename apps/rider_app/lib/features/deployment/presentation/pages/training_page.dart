@@ -18,7 +18,7 @@ class _TrainingPageState extends ConsumerState<TrainingPage> {
   bool _finishing = false;
 
   Future<void> _open(TrainingModule module) async {
-    await AppSheet.show<void>(
+    final bool? done = await AppSheet.show<bool>(
       context,
       title: module.title(context.l10n),
       subtitle: module.summary(context.l10n),
@@ -27,10 +27,10 @@ class _TrainingPageState extends ConsumerState<TrainingPage> {
       footer: PrimaryButton(
         label: context.l10n.deploymentDone,
         icon: Icons.check_rounded,
-        onPressed: () => Navigator.of(context).pop(),
+        onPressed: () => Navigator.of(context).pop(true),
       ),
     );
-    if (mounted) setState(() => _viewed.add(module));
+    if (done == true && mounted) setState(() => _viewed.add(module));
   }
 
   Future<void> _finish(String allocationId) async {

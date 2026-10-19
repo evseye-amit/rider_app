@@ -146,8 +146,6 @@ class DeploymentRequestTile extends StatelessWidget {
       scale: 0.99,
       child: GlassCard(
         padding: const EdgeInsets.all(Insets.md),
-        tint: mine ? AppColors.primaryWash : null,
-        borderColor: mine ? AppColors.primary.withValues(alpha: 0.35) : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -193,10 +191,7 @@ class DeploymentRequestTile extends StatelessWidget {
                 ),
                 Text(
                   mine ? context.l10n.allocationMove : context.l10n.allocationWaitingRider,
-                  style: AppText.bodySmall.copyWith(
-                    fontSize: 11.5,
-                    color: mine ? AppColors.primary : AppColors.textMuted,
-                  ),
+                  style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted),
                 ),
                 if (allocation.updatedAt != null)
                   Text(

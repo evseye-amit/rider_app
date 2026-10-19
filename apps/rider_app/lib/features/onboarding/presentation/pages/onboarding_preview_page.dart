@@ -190,6 +190,7 @@ class _StepCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<OnboardingFieldConfig> shown = step.fields.where((field) => field.isInput || field.isUpload).toList();
+    final List<Widget> items = [for (final OnboardingFieldConfig field in shown) ..._rows(context, field)];
 
     return ModuleCard(
       title: step.stepName,
@@ -202,7 +203,15 @@ class _StepCard extends StatelessWidget {
                   : step.capabilities.map((capability) => capability.label).join(' · '),
               style: AppText.bodySmall.copyWith(height: 1.5),
             )
-          : Column(children: [for (final OnboardingFieldConfig field in shown) ..._rows(context, field)]),
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final (int i, Widget item) in items.indexed) ...[
+                  if (i > 0) Divider(height: 1, color: AppColors.stroke.withValues(alpha: 0.6)),
+                  item,
+                ],
+              ],
+            ),
     );
   }
 
@@ -210,7 +219,7 @@ class _StepCard extends StatelessWidget {
     final Object? value = _decoded(valueOf(field.formKey));
     if (field.isUpload && value == null && isRejected(field)) {
       return [
-        KeyValueRow(
+        _ReviewRow(
           label: field.label,
           value: context.l10n.commonRejectedUploadAgain,
           icon: Icons.error_outline_rounded,
@@ -227,19 +236,21 @@ class _StepCard extends StatelessWidget {
     if (entries.isNotEmpty) {
       return [
         for (final (int i, Map<String, dynamic> entry) in entries.indexed)
-          KeyValueRow(
-            label: entries.length == 1 ? field.label : '${field.label} ${i + 1}',
-            value: _entry(context, entry),
+          _ReviewGroup(
+            title: entries.length == 1 ? field.label : '${field.label} ${i + 1}',
+            rows: _entryRows(context, entry),
           ),
       ];
     }
 
     final Object? answer = value is List ? (value.isEmpty ? null : value.join(', ')) : value;
+    final bool attached = field.isUpload && answer != null && answer.toString().trim().isNotEmpty;
     return [
-      KeyValueRow(
+      _ReviewRow(
         label: field.label,
         value: _display(context.l10n, field, answer),
-        icon: field.isUpload ? Icons.attach_file_rounded : null,
+        icon: attached ? Icons.check_circle_rounded : null,
+        iconColor: AppColors.success,
         valueColor: answer == null ? AppColors.textMuted : null,
       ),
     ];
@@ -254,21 +265,22 @@ class _StepCard extends StatelessWidget {
     }
   }
 
-  static String _entry(BuildContext context, Map<String, dynamic> entry) {
+  static List<(String, String)> _entryRows(BuildContext context, Map<String, dynamic> entry) {
     String? text(String key) {
       final String value = entry[key]?.toString().trim() ?? '';
       return value.isEmpty ? null : value;
     }
 
+    final String? name = text('name');
     final String? relation = text('relation');
     final String? mobile = text('mobile');
     final String? share = text('share');
-    final String details = [
-      if (relation != null) relationLabel(context, relation),
-      if (mobile != null) Fmt.phone(mobile),
-      if (share != null) '$share%',
-    ].join(' · ');
-    return [?text('name'), if (details.isNotEmpty) details].join('\n');
+    return [
+      if (name != null) (context.l10n.commonFullName, name),
+      if (relation != null) (context.l10n.commonRelationship, relationLabel(context, relation)),
+      if (mobile != null) (context.l10n.commonMobileNumber, Fmt.phone(mobile)),
+      if (share != null) (context.l10n.commonShare, '$share%'),
+    ];
   }
 
   static String _display(AppL10n l10n, OnboardingFieldConfig field, Object? value) {
@@ -284,5 +296,92 @@ class _StepCard extends StatelessWidget {
       return date == null ? text : Fmt.date(date);
     }
     return text;
+  }
+}
+
+class _ReviewGroup extends StatelessWidget {
+  const _ReviewGroup({required this.title, required this.rows});
+
+  final String title;
+  final List<(String, String)> rows;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: Insets.md, bottom: Insets.xs),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(title, style: AppText.titleSmall.copyWith(fontSize: 13.5, height: 1.4)),
+          const Gap.xs(),
+          for (final (String label, String value) in rows) _ReviewRow(label: label, value: value, dense: true),
+        ],
+      ),
+    );
+  }
+}
+
+class _ReviewRow extends StatelessWidget {
+  const _ReviewRow({
+    required this.label,
+    required this.value,
+    this.valueColor,
+    this.icon,
+    this.iconColor,
+    this.dense = false,
+  });
+
+  final String label;
+  final String value;
+  final Color? valueColor;
+  final IconData? icon;
+  final Color? iconColor;
+  final bool dense;
+
+  @override
+  Widget build(BuildContext context) {
+    final IconData? icon = this.icon;
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: dense ? Insets.xs + 2 : Insets.md),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              style: AppText.bodySmall.copyWith(fontSize: 13.5, height: 1.4, color: AppColors.textSecondary),
+            ),
+          ),
+          const SizedBox(width: Insets.lg),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (icon != null) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 1.5),
+                    child: Icon(icon, size: 16, color: iconColor ?? valueColor ?? AppColors.textMuted),
+                  ),
+                  const SizedBox(width: 6),
+                ],
+                Flexible(
+                  child: Text(
+                    value,
+                    textAlign: TextAlign.right,
+                    style: AppText.bodyMedium.copyWith(
+                      fontSize: 13.5,
+                      height: 1.4,
+                      fontWeight: FontWeight.w700,
+                      color: valueColor ?? AppColors.textPrimary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

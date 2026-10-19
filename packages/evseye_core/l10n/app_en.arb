@@ -36,6 +36,10 @@
   "@allocationAssign": {
     "description": "Assign"
   },
+  "allocationAssignTeamLead": "Assign team lead",
+  "@allocationAssignTeamLead": {
+    "description": "Button to assign a team lead"
+  },
   "allocationAssignVehicle": "Assign a vehicle",
   "@allocationAssignVehicle": {
     "description": "Assign a vehicle"
@@ -47,6 +51,10 @@
   "allocationBackDesk": "Back to the desk",
   "@allocationBackDesk": {
     "description": "Back to the desk"
+  },
+  "allocationBackToAllocations": "Back to allocations",
+  "@allocationBackToAllocations": {
+    "description": "Button in the scooter deployed popup that opens the allocations list"
   },
   "allocationBatteryChargeCharger": "Battery charge and charger",
   "@allocationBatteryChargeCharger": {
@@ -60,6 +68,10 @@
   "@allocationChangePlan": {
     "description": "Change plan"
   },
+  "allocationChangeTeamLead": "Change team lead",
+  "@allocationChangeTeamLead": {
+    "description": "Button to change the team lead"
+  },
   "allocationChecklistRiderWillAcceptItem": "The checklist the rider will accept item by item",
   "@allocationChecklistRiderWillAcceptItem": {
     "description": "The checklist the rider will accept item by item"
@@ -71,6 +83,14 @@
   "allocationChoosePlan": "Choose rental plan",
   "@allocationChoosePlan": {
     "description": "Choose rental plan"
+  },
+  "allocationChooseTeamLead": "Choose a team lead",
+  "@allocationChooseTeamLead": {
+    "description": "Placeholder and sheet title for choosing a team lead"
+  },
+  "allocationChooseWorkPartner": "Choose work partner",
+  "@allocationChooseWorkPartner": {
+    "description": "Hint and picker title for the rider's work partner"
   },
   "allocationComplete2": "Complete.",
   "@allocationComplete2": {
@@ -113,6 +133,14 @@
   "@allocationCouldNotLoadHandover": {
     "description": "Could not load this handover"
   },
+  "allocationCouldNotLoadTeamLeads": "Couldn't load team leads",
+  "@allocationCouldNotLoadTeamLeads": {
+    "description": "Team lead list failed to load"
+  },
+  "allocationCouldNotLoadWorkPartners": "Couldn't load work partners",
+  "@allocationCouldNotLoadWorkPartners": {
+    "description": "Work partner list failed to load"
+  },
   "allocationDeAllocateVehicle": "De-allocate vehicle",
   "@allocationDeAllocateVehicle": {
     "description": "De-allocate vehicle"
@@ -121,13 +149,25 @@
   "@allocationDeployed": {
     "description": "Deployed"
   },
+  "allocationDeployedMessage": "{vehicle} is now on the road with {rider}.",
+  "@allocationDeployedMessage": {
+    "description": "Message in the scooter deployed success popup",
+    "placeholders": {
+      "vehicle": {
+        "type": "String"
+      },
+      "rider": {
+        "type": "String"
+      }
+    }
+  },
+  "allocationDeployedTitle": "Scooter deployed!",
+  "@allocationDeployedTitle": {
+    "description": "Title of the success popup when a scooter handover is complete"
+  },
   "allocationEveryOnboardedRiderHubsHas": "Every onboarded rider in your hubs has a vehicle or a handover under way.",
   "@allocationEveryOnboardedRiderHubsHas": {
     "description": "Every onboarded rider in your hubs has a vehicle or a handover under way."
-  },
-  "allocationFleetCode": "Fleet code",
-  "@allocationFleetCode": {
-    "description": "Fleet code"
   },
   "allocationFleetOnlyBody": "Scooter assignment is done with the hub's fleet manager login.",
   "@allocationFleetOnlyBody": {
@@ -148,10 +188,6 @@
   "allocationHelmetHandedOver": "Helmet handed over",
   "@allocationHelmetHandedOver": {
     "description": "Helmet handed over"
-  },
-  "allocationHintWorkPartner": "e.g. Sharma Auto Works",
-  "@allocationHintWorkPartner": {
-    "description": "e.g. Sharma Auto Works"
   },
   "allocationHornMirrors": "Horn and mirrors",
   "@allocationHornMirrors": {
@@ -197,10 +233,6 @@
   "@allocationMove": {
     "description": "Your move"
   },
-  "allocationNameWorkPartnerWorkshopInspected": "Name the work partner or workshop that inspected the vehicle",
-  "@allocationNameWorkPartnerWorkshopInspected": {
-    "description": "Name the work partner or workshop that inspected the vehicle"
-  },
   "allocationNoBatteryPlan": "No battery plan",
   "@allocationNoBatteryPlan": {
     "description": "No battery plan"
@@ -212,6 +244,14 @@
   "allocationNoHandoversProgress": "No handovers in progress",
   "@allocationNoHandoversProgress": {
     "description": "No handovers in progress"
+  },
+  "allocationNoTeamLeads": "No team leads found",
+  "@allocationNoTeamLeads": {
+    "description": "Empty team lead list title"
+  },
+  "allocationNoTeamLeadsMessage": "Ask your admin to add an active team lead.",
+  "@allocationNoTeamLeadsMessage": {
+    "description": "Empty team lead list message"
   },
   "allocationNothingCurrentlyAllocatedRider": "Nothing is currently allocated to a rider.",
   "@allocationNothingCurrentlyAllocatedRider": {
@@ -225,9 +265,13 @@
   "@allocationNoVehiclesReady": {
     "description": "No vehicles ready"
   },
-  "allocationNumber": "Number",
-  "@allocationNumber": {
-    "description": "Number"
+  "allocationNoWorkPartners": "No work partners found",
+  "@allocationNoWorkPartners": {
+    "description": "Empty work partner list title"
+  },
+  "allocationNoWorkPartnersMessage": "Ask your admin to add work partners.",
+  "@allocationNoWorkPartnersMessage": {
+    "description": "Empty work partner list message"
   },
   "allocationPaymentReceived": "Payment received?",
   "@allocationPaymentReceived": {
@@ -373,10 +417,6 @@
   "@allocationRider": {
     "description": "Rider"
   },
-  "allocationRiderCode": "Rider code",
-  "@allocationRiderCode": {
-    "description": "Rider code"
-  },
   "allocationRiderCompletingSafetyTrainingTheir": "The rider is completing the safety training in their app. The scooter is handed over once every mandatory module is done.",
   "@allocationRiderCompletingSafetyTrainingTheir": {
     "description": "The rider is completing the safety training in their app. The scooter is handed over once every mandatory module is done."
@@ -422,6 +462,14 @@
   "@allocationSearchRiderVehicleNumber": {
     "description": "Search rider or vehicle number"
   },
+  "allocationSearchTeamLead": "Search by name, mobile or employee code",
+  "@allocationSearchTeamLead": {
+    "description": "Search hint in the team lead picker"
+  },
+  "allocationSearchWorkPartner": "Search work partners",
+  "@allocationSearchWorkPartner": {
+    "description": "Search hint in the work partner picker"
+  },
   "allocationSendPaymentRequest": "Send payment request",
   "@allocationSendPaymentRequest": {
     "description": "Send payment request"
@@ -433,6 +481,39 @@
   "allocationStartReturn": "Start a return",
   "@allocationStartReturn": {
     "description": "Start a return"
+  },
+  "allocationTeamLead": "Team lead",
+  "@allocationTeamLead": {
+    "description": "Team lead label in the allocation flow"
+  },
+  "allocationTeamLeadMissing": "No team lead yet. Assign one, the handover can't be completed without it.",
+  "@allocationTeamLeadMissing": {
+    "description": "Warning when the allocation has no team lead"
+  },
+  "allocationTeamLeadNotSaved": "The scooter is reserved, but the team lead wasn't saved. Assign it on the allocation page.",
+  "@allocationTeamLeadNotSaved": {
+    "description": "Allocation succeeded but saving the team lead failed"
+  },
+  "allocationTeamLeadPickerSubtitle": "The team lead looks after this rider.",
+  "@allocationTeamLeadPickerSubtitle": {
+    "description": "Subtitle of the team lead picker"
+  },
+  "allocationTeamLeadRequired": "This handover needs a team lead first. The fleet manager can assign one on the allocation page.",
+  "@allocationTeamLeadRequired": {
+    "description": "Error when the handover needs a team lead first (shown in both apps)"
+  },
+  "allocationTeamLeadRiderCount": "Riders: {count}",
+  "@allocationTeamLeadRiderCount": {
+    "description": "How many riders a team lead already looks after",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "allocationTeamLeadSaved": "Team lead saved",
+  "@allocationTeamLeadSaved": {
+    "description": "Shown after a team lead is saved"
   },
   "allocationTyresPressure": "Tyres and pressure",
   "@allocationTyresPressure": {
@@ -498,9 +579,13 @@
   "@allocationWorkPartner": {
     "description": "Work partner"
   },
-  "allocationWorkshopTechnicianWhoInspectedVehicle": "The workshop or technician who inspected the vehicle",
-  "@allocationWorkshopTechnicianWhoInspectedVehicle": {
-    "description": "The workshop or technician who inspected the vehicle"
+  "allocationWorkPartnerHelper": "The company this rider will work for.",
+  "@allocationWorkPartnerHelper": {
+    "description": "Explains what the work partner is"
+  },
+  "allocationWorkPartnerNeeded": "Choose the rider's work partner",
+  "@allocationWorkPartnerNeeded": {
+    "description": "Error when no work partner is chosen"
   },
   "allocationWritePdiChecklistRiderAccepts": "You write the PDI checklist; the rider accepts it and completes training.",
   "@allocationWritePdiChecklistRiderAccepts": {
@@ -665,9 +750,9 @@
   "@checkInConfirmedByOtp": {
     "description": "Confirmed with your code."
   },
-  "checkInCouldNotLoad": "Couldn't load the check-in.",
+  "checkInCouldNotLoad": "Couldn't load the submission.",
   "@checkInCouldNotLoad": {
-    "description": "Couldn't load the check-in."
+    "description": "Scooter submission failed to load"
   },
   "checkInDeepReport": "Final mechanic check",
   "@checkInDeepReport": {
@@ -717,9 +802,9 @@
   "@checkInStatusSubmitted": {
     "description": "Awaiting confirmation"
   },
-  "checkInTitle": "Scooter check-in",
+  "checkInTitle": "Scooter submission",
   "@checkInTitle": {
-    "description": "Scooter check-in"
+    "description": "Title of the scooter submission screen and card"
   },
   "checkInTotal": "Total charges",
   "@checkInTotal": {
@@ -1267,6 +1352,176 @@
   "consentSubtitle": "Please read how we collect and use your information, then give your consent to continue.",
   "@consentSubtitle": {
     "description": "Please read how we collect and use your information, then give your consent to continue."
+  },
+  "damageChargeAmountToPay": "Amount to pay",
+  "@damageChargeAmountToPay": {
+    "description": "Title of the damage charge bill card"
+  },
+  "damageChargeCancelledBody": "This charge was cancelled. You don't need to pay it.",
+  "@damageChargeCancelledBody": {
+    "description": "Message on a cancelled damage charge"
+  },
+  "damageChargeCouldNotLoad": "Couldn't load this charge",
+  "@damageChargeCouldNotLoad": {
+    "description": "Error title for one damage charge"
+  },
+  "damageChargeCreditUsed": "Credit used",
+  "@damageChargeCreditUsed": {
+    "description": "Row with credit applied to the charge"
+  },
+  "damageChargeEach": "{amount} each",
+  "@damageChargeEach": {
+    "description": "Price of one damaged part",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "damageChargeLeftToPay": "Left to pay",
+  "@damageChargeLeftToPay": {
+    "description": "Row with the amount still to pay"
+  },
+  "damageChargePaidBody": "You've paid this charge in full.",
+  "@damageChargePaidBody": {
+    "description": "Message on a fully paid damage charge"
+  },
+  "damageChargePaidMessage": "Payment done. Thank you!",
+  "@damageChargePaidMessage": {
+    "description": "Shown after a damage charge is paid"
+  },
+  "damageChargePaidSoFar": "Paid so far",
+  "@damageChargePaidSoFar": {
+    "description": "Row with the amount already paid"
+  },
+  "damageChargePaidTitle": "All paid",
+  "@damageChargePaidTitle": {
+    "description": "Title on a fully paid damage charge"
+  },
+  "damageChargePay": "Pay {amount}",
+  "@damageChargePay": {
+    "description": "Button that pays a damage charge",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "damageChargePayAtHubMessage": "Your wallet didn't cover all of it. Paying online isn't available in the app yet, so please pay the remaining {amount} at your hub.",
+  "@damageChargePayAtHubMessage": {
+    "description": "Message when the wallet did not cover the whole charge",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "damageChargePayAtHubTitle": "Pay the rest at your hub",
+  "@damageChargePayAtHubTitle": {
+    "description": "Title when the wallet did not cover the whole charge"
+  },
+  "damageChargePayConfirmMessage": "We'll use your wallet balance first.",
+  "@damageChargePayConfirmMessage": {
+    "description": "Message of the confirm before paying a damage charge"
+  },
+  "damageChargePayConfirmTitle": "Pay {amount}?",
+  "@damageChargePayConfirmTitle": {
+    "description": "Title of the confirm before paying a damage charge",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "damageChargePaymentsOff": "Payments are switched off right now. Please try again later, or pay at your hub.",
+  "@damageChargePaymentsOff": {
+    "description": "Error when the server has payments turned off"
+  },
+  "damageChargeRaisedOn": "Raised on {date}",
+  "@damageChargeRaisedOn": {
+    "description": "When the damage charge was raised",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "damageChargesAll": "All",
+  "@damageChargesAll": {
+    "description": "Filter showing all damage charges"
+  },
+  "damageChargesCouldNotLoad": "Couldn't load damage charges",
+  "@damageChargesCouldNotLoad": {
+    "description": "Error title for the damage charges list"
+  },
+  "damageChargesNoneMessage": "If the hub finds damage when you return or exchange a scooter, the charge shows up here.",
+  "@damageChargesNoneMessage": {
+    "description": "Empty state message for damage charges"
+  },
+  "damageChargesNoneTitle": "No damage charges",
+  "@damageChargesNoneTitle": {
+    "description": "Empty state title when the rider has no damage charges"
+  },
+  "damageChargesNothingToPay": "Nothing to pay",
+  "@damageChargesNothingToPay": {
+    "description": "Empty state title when no damage charge is unpaid"
+  },
+  "damageChargesNothingToPayMessage": "You have no unpaid damage charges.",
+  "@damageChargesNothingToPayMessage": {
+    "description": "Empty state message when no damage charge is unpaid"
+  },
+  "damageChargesNoUnpaid": "No unpaid damage charges",
+  "@damageChargesNoUnpaid": {
+    "description": "Shown on the payments screen when no damage charge is unpaid"
+  },
+  "damageChargesSeeAll": "See all",
+  "@damageChargesSeeAll": {
+    "description": "Opens the full damage charges list"
+  },
+  "damageChargeStatusCancelled": "Cancelled",
+  "@damageChargeStatusCancelled": {
+    "description": "Status of a cancelled damage charge"
+  },
+  "damageChargeStatusPaid": "Paid",
+  "@damageChargeStatusPaid": {
+    "description": "Status of a paid damage charge"
+  },
+  "damageChargeStatusPartlyPaid": "Partly paid",
+  "@damageChargeStatusPartlyPaid": {
+    "description": "Status of a damage charge that is partly paid"
+  },
+  "damageChargesTitle": "Damage charges",
+  "@damageChargesTitle": {
+    "description": "Title for the rider's scooter damage charges"
+  },
+  "damageChargesToPay": "{count} to pay",
+  "@damageChargesToPay": {
+    "description": "How many damage charges are unpaid",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "damageChargesUnpaid": "Unpaid",
+  "@damageChargesUnpaid": {
+    "description": "Filter and status for unpaid damage charges"
+  },
+  "damageChargesViewAndPay": "View and pay",
+  "@damageChargesViewAndPay": {
+    "description": "Button that opens a damage charge"
+  },
+  "damageChargeTitle": "Damage charge",
+  "@damageChargeTitle": {
+    "description": "Title of one damage charge screen"
+  },
+  "damageChargeTotal": "Total charges",
+  "@damageChargeTotal": {
+    "description": "Row with the full damage charge"
+  },
+  "damageChargeWhatWasCharged": "What was charged",
+  "@damageChargeWhatWasCharged": {
+    "description": "Title of the damaged parts list on a charge"
   },
   "deallocAccessoriesReturned": "Accessories returned",
   "@deallocAccessoriesReturned": {
@@ -1978,9 +2233,9 @@
   "@exchangeCompleted": {
     "description": "Completed"
   },
-  "exchangeConsent": "I have read and agree to the updated terms",
+  "exchangeConsent": "I have read this offer and I agree to it",
   "@exchangeConsent": {
-    "description": "I have read and agree to the updated terms"
+    "description": "Checkbox the rider ticks before accepting an exchange offer"
   },
   "exchangeCouldNotLoad": "Could not load exchanges",
   "@exchangeCouldNotLoad": {
@@ -2175,9 +2430,9 @@
   "@exchangeNextApproved": {
     "description": "Approved. Your hub will ask you to bring your current scooter in for a check."
   },
-  "exchangeNextBringIn": "Bring your current scooter to the hub you picked on {date}. The hub team will check it in.",
+  "exchangeNextBringIn": "Bring your current scooter to the hub you picked on {date}. The hub team will start the exchange.",
   "@exchangeNextBringIn": {
-    "description": "Exchange requested, waiting for drop-off",
+    "description": "Exchange next step: bring the current scooter to the hub",
     "placeholders": {
       "date": {
         "type": "String"
@@ -2312,10 +2567,6 @@
   "@exchangeRaised": {
     "description": "Raised"
   },
-  "exchangeReadTerms": "Read the terms",
-  "@exchangeReadTerms": {
-    "description": "Read the terms"
-  },
   "exchangeReason": "Reason",
   "@exchangeReason": {
     "description": "Reason"
@@ -2432,9 +2683,9 @@
   "@exchangeStatusCancelled": {
     "description": "Cancelled"
   },
-  "exchangeStatusCheckingIn": "Checking in",
+  "exchangeStatusCheckingIn": "Exchange in progress",
   "@exchangeStatusCheckingIn": {
-    "description": "Checking in"
+    "description": "Exchange status while the old scooter submission is in progress"
   },
   "exchangeStatusChoosing": "Choosing scooter",
   "@exchangeStatusChoosing": {
@@ -2581,10 +2832,6 @@
   "fleetStatusReturning": "Being returned",
   "@fleetStatusReturning": {
     "description": "Being returned"
-  },
-  "homeCategory": "Category",
-  "@homeCategory": {
-    "description": "Category"
   },
   "homeCouldNotLoadDashboard": "Could not load your dashboard",
   "@homeCouldNotLoadDashboard": {
@@ -2806,9 +3053,9 @@
   "@hubSubmissionsInQueue": {
     "description": "Submissions in Queue"
   },
-  "hubSubmissionsInQueueInfo": "Returns and exchanges due at this hub whose vehicle check-in isn't complete yet.",
+  "hubSubmissionsInQueueInfo": "Returns and exchanges due at this hub whose vehicle submission isn't complete yet.",
   "@hubSubmissionsInQueueInfo": {
-    "description": "Returns and exchanges due at this hub whose vehicle check-in isn't complete yet."
+    "description": "Info for the returns and exchanges queue card"
   },
   "hubUnderMaintenanceFleet": "Under Maintenance Fleet",
   "@hubUnderMaintenanceFleet": {
@@ -3292,6 +3539,62 @@
   "@onboardingAttached": {
     "description": "Attached"
   },
+  "onboardingBankAccount": "Bank account",
+  "@onboardingBankAccount": {
+    "description": "Title of the bank details group on the onboarding bank screen"
+  },
+  "onboardingBankAccountNeeded": "Enter your account number and type it again to confirm.",
+  "@onboardingBankAccountNeeded": {
+    "description": "Error when the account number is missing or not confirmed"
+  },
+  "onboardingBankAccountTooShort": "This account number looks too short.",
+  "@onboardingBankAccountTooShort": {
+    "description": "Error when the account number is too short"
+  },
+  "onboardingBankBranch": "Branch",
+  "@onboardingBankBranch": {
+    "description": "Read-only branch found from the IFSC"
+  },
+  "onboardingBankCity": "City",
+  "@onboardingBankCity": {
+    "description": "Bank branch city on the onboarding bank screen"
+  },
+  "onboardingBankIfsc": "IFSC code",
+  "@onboardingBankIfsc": {
+    "description": "Label of the IFSC field"
+  },
+  "onboardingBankIfscFailed": "Couldn't check this IFSC right now. Fill in your bank details below.",
+  "@onboardingBankIfscFailed": {
+    "description": "Shown when the IFSC lookup fails; the rider can type the details"
+  },
+  "onboardingBankIfscHelper": "11 characters. You'll find it on your passbook or cheque.",
+  "@onboardingBankIfscHelper": {
+    "description": "Helper under the IFSC field"
+  },
+  "onboardingBankIfscHint": "e.g. SBIN0001234",
+  "@onboardingBankIfscHint": {
+    "description": "Hint of the IFSC field"
+  },
+  "onboardingBankIfscNotFound": "No bank found for this IFSC. Check the code, or fill in your bank details below.",
+  "@onboardingBankIfscNotFound": {
+    "description": "Shown when the IFSC lookup finds no bank; the rider can type the details"
+  },
+  "onboardingBankIfscPending": "Enter your IFSC and wait for your bank to show.",
+  "@onboardingBankIfscPending": {
+    "description": "Error when continuing before the IFSC is looked up"
+  },
+  "onboardingBankName": "Bank name",
+  "@onboardingBankName": {
+    "description": "Read-only bank name found from the IFSC"
+  },
+  "onboardingBankProof": "Bank proof (passbook or cancelled cheque)",
+  "@onboardingBankProof": {
+    "description": "Label of the bank proof upload when the package has none"
+  },
+  "onboardingBankState": "State",
+  "@onboardingBankState": {
+    "description": "Bank branch state on the onboarding bank screen"
+  },
   "onboardingCheckEverythingBeforeSubmitCan": "Check everything before you submit. You can still edit any step.",
   "@onboardingCheckEverythingBeforeSubmitCan": {
     "description": "Check everything before you submit. You can still edit any step."
@@ -3344,6 +3647,15 @@
   "onboardingExitOnboarding": "Exit onboarding?",
   "@onboardingExitOnboarding": {
     "description": "Exit onboarding?"
+  },
+  "onboardingFieldRequired": "{field} is required",
+  "@onboardingFieldRequired": {
+    "description": "Error when a required onboarding field is empty",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
   },
   "onboardingGoOnboarding": "Go to onboarding",
   "@onboardingGoOnboarding": {
@@ -3618,9 +3930,9 @@
   "@pdiHintTyreWorn": {
     "description": "e.g. Front tyre worn below limit"
   },
-  "pdiInspectedBy": "Inspected by {partner}",
-  "@pdiInspectedBy": {
-    "description": "Inspected by {partner}",
+  "pdiWorkPartner": "Work partner: {partner}",
+  "@pdiWorkPartner": {
+    "description": "Rider's work partner shown on the PDI screen",
     "placeholders": {
       "partner": {
         "type": "String"
@@ -3631,13 +3943,17 @@
   "@planAccept": {
     "description": "Accept plan"
   },
+  "planAdvanceRental": "Advance Rental",
+  "@planAdvanceRental": {
+    "description": "Plan breakdown row for the rent collected in advance at handover"
+  },
   "planBatteryDeposit": "Battery security deposit",
   "@planBatteryDeposit": {
     "description": "Battery security deposit"
   },
-  "planConsent": "I have read this plan and its terms, and I agree to them",
+  "planConsent": "I have read this plan and I agree to it",
   "@planConsent": {
-    "description": "I have read this plan and its terms, and I agree to them"
+    "description": "Checkbox the rider ticks before accepting a rental plan"
   },
   "planCustom": "Custom plan",
   "@planCustom": {
@@ -3772,10 +4088,6 @@
   "planScooterDeposit": "Scooter security deposit",
   "@planScooterDeposit": {
     "description": "Scooter security deposit"
-  },
-  "planTermsTitle": "Plan terms",
-  "@planTermsTitle": {
-    "description": "Plan terms"
   },
   "planUsageRate": "{rate} per {unit}",
   "@planUsageRate": {
@@ -4757,9 +5069,9 @@
   "@returnsNoteCancelled": {
     "description": "You cancelled this return. Your rental carries on as before."
   },
-  "returnsNoteCheckInDone": "Return closed. The check-in report below shows any charges.",
+  "returnsNoteCheckInDone": "Return closed. The submission report below shows any charges.",
   "@returnsNoteCheckInDone": {
-    "description": "Return closed. The check-in report below shows any charges."
+    "description": "Return closed note"
   },
   "returnsNoteCheckingIn": "The hub team is checking your scooter. When the mechanic's report is ready, you'll get a code on your phone to confirm it.",
   "@returnsNoteCheckingIn": {
@@ -4769,9 +5081,9 @@
   "@returnsNoteDisputed": {
     "description": "You disputed these charges. The hub team will review them and may revise them."
   },
-  "returnsNoteFinalChecks": "Your scooter is checked in and your rental has ended. A mechanic is doing a final check, and if it finds anything more you'll be asked to confirm it.",
+  "returnsNoteFinalChecks": "Your scooter submission is done and your rental has ended. A mechanic is doing a final check, and if it finds anything more you'll be asked to confirm it.",
   "@returnsNoteFinalChecks": {
-    "description": "Your scooter is checked in and your rental has ended. A mechanic is doing a final check, and if it finds anything more you'll be asked to confirm it."
+    "description": "Return note while the final mechanic check runs"
   },
   "returnsNoteInspecting": "The hub has your scooter and is inspecting it. Any charges will show up here for your approval.",
   "@returnsNoteInspecting": {
@@ -4785,9 +5097,9 @@
   "@returnsNoteNoCharges": {
     "description": "Return closed. The scooter came back fine, so there are no charges."
   },
-  "returnsNoteRequested": "Take the scooter to the hub you picked on {date}. The hub team will check it in.",
+  "returnsNoteRequested": "Take the scooter to the hub you picked on {date}. The hub team will start the submission.",
   "@returnsNoteRequested": {
-    "description": "Status note while a return is requested",
+    "description": "Return note after the return is requested",
     "placeholders": {
       "date": {
         "type": "String"
@@ -4924,9 +5236,9 @@
   "@returnsStatusCancelled": {
     "description": "Cancelled"
   },
-  "returnsStatusCheckingIn": "Checking in",
+  "returnsStatusCheckingIn": "Submission in progress",
   "@returnsStatusCheckingIn": {
-    "description": "Checking in"
+    "description": "Return status while the scooter submission is in progress"
   },
   "returnsStatusClosed": "Closed",
   "@returnsStatusClosed": {
@@ -4952,9 +5264,9 @@
   "@returnsStatusRequested": {
     "description": "Return requested"
   },
-  "returnsStepCheckIn": "Scooter checked in",
+  "returnsStepCheckIn": "Scooter submitted",
   "@returnsStepCheckIn": {
-    "description": "Scooter checked in"
+    "description": "Return timeline step after the scooter submission"
   },
   "returnsStepClosed": "Return closed",
   "@returnsStepClosed": {
@@ -5121,6 +5433,14 @@
   "@scooterNoScooterHasBeenAllocated": {
     "description": "No scooter has been allocated to you yet."
   },
+  "scooterNoScooterMessage": "When your fleet manager assigns you a scooter, its details show up here.",
+  "@scooterNoScooterMessage": {
+    "description": "Scooter tab message when the rider has no scooter"
+  },
+  "scooterNoScooterTitle": "No scooter right now",
+  "@scooterNoScooterTitle": {
+    "description": "Scooter tab title when the rider has no scooter"
+  },
   "scooterOdometerService": "Odometer and service",
   "@scooterOdometerService": {
     "description": "Odometer and service"
@@ -5169,9 +5489,9 @@
   "@scooterWhoLooksAfter": {
     "description": "Who looks after you"
   },
-  "submissionAddCharge": "Add charge",
-  "@submissionAddCharge": {
-    "description": "Add charge"
+  "submissionAddDamagedItem": "Add damaged item",
+  "@submissionAddDamagedItem": {
+    "description": "Button that opens the spare parts list"
   },
   "submissionBypass": "Can't use a code?",
   "@submissionBypass": {
@@ -5232,45 +5552,25 @@
   "@submissionCancelReportTitle": {
     "description": "Cancel this report?"
   },
-  "submissionChargeDetails": "Details",
-  "@submissionChargeDetails": {
-    "description": "Details"
-  },
-  "submissionChargeDetailsHint": "Where is the damage, or what is missing?",
-  "@submissionChargeDetailsHint": {
-    "description": "Where is the damage, or what is missing?"
-  },
-  "submissionChargeEvidenceNeeded": "Pick at least one photo as proof for this charge.",
-  "@submissionChargeEvidenceNeeded": {
-    "description": "Pick at least one photo as proof for this charge."
-  },
   "submissionCharges": "Charges",
   "@submissionCharges": {
     "description": "Charges"
-  },
-  "submissionChargesHint": "Add a charge for each damaged or missing item. Leave it empty if there's nothing to charge.",
-  "@submissionChargesHint": {
-    "description": "Add a charge for each damaged or missing item. Leave it empty if there's nothing to charge."
   },
   "submissionChassis": "Chassis",
   "@submissionChassis": {
     "description": "Chassis"
   },
-  "submissionChecklistNeeded": "Missing items need the return checklist photo as proof.",
-  "@submissionChecklistNeeded": {
-    "description": "Missing items need the return checklist photo as proof."
-  },
   "submissionChecksComplete": "All mechanic checks are done",
   "@submissionChecksComplete": {
     "description": "All mechanic checks are done"
   },
-  "submissionChecksCompleteConfirm": "This closes the mechanic checks for this scooter. You won't be able to add more reports.",
-  "@submissionChecksCompleteConfirm": {
-    "description": "This closes the mechanic checks for this scooter. You won't be able to add more reports."
+  "submissionChooseSparePart": "Choose the damaged part",
+  "@submissionChooseSparePart": {
+    "description": "Title of the spare parts picker"
   },
-  "submissionChecksCompleteHint": "Turn on only when no more checks are needed. No more reports can be added after this.",
-  "@submissionChecksCompleteHint": {
-    "description": "Turn on only when no more checks are needed. No more reports can be added after this."
+  "submissionChooseSparePartHint": "Prices come from your spare parts list.",
+  "@submissionChooseSparePartHint": {
+    "description": "Subtitle of the spare parts picker"
   },
   "submissionCodeNotSent": "The code couldn't be sent. Try again or record why it can't be used.",
   "@submissionCodeNotSent": {
@@ -5317,17 +5617,21 @@
   "@submissionConfirmTitle": {
     "description": "Confirm report"
   },
-  "submissionCouldNotLoad": "Couldn't load this check-in",
+  "submissionCouldNotLoad": "Couldn't load this submission",
   "@submissionCouldNotLoad": {
-    "description": "Couldn't load this check-in"
+    "description": "Submission failed to load"
   },
-  "submissionDetailsNeeded": "Add details for this charge.",
-  "@submissionDetailsNeeded": {
-    "description": "Add details for this charge."
+  "submissionCouldNotLoadParts": "Couldn't load spare parts",
+  "@submissionCouldNotLoadParts": {
+    "description": "Error title when the spare parts list fails to load"
   },
-  "submissionEditCharge": "Edit charge",
-  "@submissionEditCharge": {
-    "description": "Edit charge"
+  "submissionDamagedItems": "Damaged items",
+  "@submissionDamagedItems": {
+    "description": "Title of the damaged items section on the return and exchange submission screen"
+  },
+  "submissionDamagedItemsHint": "Add each damaged part from the spare parts list. Its price is filled in for you.",
+  "@submissionDamagedItemsHint": {
+    "description": "Hint under the damaged items title"
   },
   "submissionEvidence": "Proof photos",
   "@submissionEvidence": {
@@ -5350,13 +5654,9 @@
   "@submissionEvidenceNeeded": {
     "description": "Pick at least one proof photo."
   },
-  "submissionExtraPhotos": "Damage & extra photos",
-  "@submissionExtraPhotos": {
-    "description": "Damage & extra photos"
-  },
-  "submissionExtraPhotosHint": "Add close-ups of any damage. You can attach them to charges in the report.",
-  "@submissionExtraPhotosHint": {
-    "description": "Add close-ups of any damage. You can attach them to charges in the report."
+  "submissionExchangeStarted": "Exchange started",
+  "@submissionExchangeStarted": {
+    "description": "Shown after an exchange submission starts"
   },
   "submissionFindings": "Findings",
   "@submissionFindings": {
@@ -5378,9 +5678,33 @@
   "@submissionImposeTitle": {
     "description": "Impose this report?"
   },
-  "submissionMechanicName": "Mechanic name",
+  "submissionItemNote": "Note (optional)",
+  "@submissionItemNote": {
+    "description": "Label of the optional note on a damaged item"
+  },
+  "submissionItemNoteHint": "Where is the damage?",
+  "@submissionItemNoteHint": {
+    "description": "Hint of the optional note on a damaged item"
+  },
+  "submissionItemPhotoNeeded": "Take at least one photo of this part.",
+  "@submissionItemPhotoNeeded": {
+    "description": "Error when a part that needs proof has no photo"
+  },
+  "submissionItemPhotoOptionalHint": "A photo is optional for this part, but it helps if the rider has questions.",
+  "@submissionItemPhotoOptionalHint": {
+    "description": "Shown on a damaged item where a photo is optional"
+  },
+  "submissionItemPhotoRequiredHint": "This part needs a photo as proof. Take a clear close-up of the damage.",
+  "@submissionItemPhotoRequiredHint": {
+    "description": "Shown on a damaged item that needs photo proof"
+  },
+  "submissionMaintenanceDetails": "What needs work? (optional)",
+  "@submissionMaintenanceDetails": {
+    "description": "Optional details field for UM major or UM minor"
+  },
+  "submissionMechanicName": "Submitted by / Mechanic name",
   "@submissionMechanicName": {
-    "description": "Mechanic name"
+    "description": "Name field on the vehicle check-in report for returns and exchanges"
   },
   "submissionNameNeeded": "Enter the mechanic's name",
   "@submissionNameNeeded": {
@@ -5390,9 +5714,9 @@
   "@submissionNextComplete": {
     "description": "All checks are done. Nothing more to do here."
   },
-  "submissionNextDeep": "The scooter is checked in. Record the final mechanic check when it's done.",
+  "submissionNextDeep": "The scooter is submitted. Record the final mechanic check when it's done.",
   "@submissionNextDeep": {
-    "description": "The scooter is checked in. Record the final mechanic check when it's done."
+    "description": "Next step once the scooter is submitted"
   },
   "submissionNextLabel": "Next step",
   "@submissionNextLabel": {
@@ -5419,21 +5743,25 @@
   "@submissionNextReview": {
     "description": "Go through the report and any charges with the rider, then impose it."
   },
-  "submissionNoPhotosYet": "No photos yet. Take them on the check-in screen first.",
-  "@submissionNoPhotosYet": {
-    "description": "No photos yet. Take them on the check-in screen first."
+  "submissionNoDamagedItems": "No damaged items added, so the rider won't be charged.",
+  "@submissionNoDamagedItems": {
+    "description": "Shown in the report summary when there are no charges"
   },
   "submissionNoPrices": "No penalty prices are set up yet. Ask an admin to add them on the dashboard.",
   "@submissionNoPrices": {
     "description": "No penalty prices are set up yet. Ask an admin to add them on the dashboard."
   },
+  "submissionNoSparePartMatch": "No part matches your search",
+  "@submissionNoSparePartMatch": {
+    "description": "Shown when the spare parts search finds nothing"
+  },
   "submissionNothingToConfirm": "Nothing to confirm",
   "@submissionNothingToConfirm": {
     "description": "Nothing to confirm"
   },
-  "submissionNothingToConfirmBody": "There's no imposed report waiting for codes on this check-in.",
+  "submissionNothingToConfirmBody": "There's no imposed report waiting for codes on this submission.",
   "@submissionNothingToConfirmBody": {
-    "description": "There's no imposed report waiting for codes on this check-in."
+    "description": "Nothing to confirm on this submission"
   },
   "submissionPartyRider": "Rider",
   "@submissionPartyRider": {
@@ -5489,9 +5817,9 @@
   "@submissionPhotosHint": {
     "description": "Tap an empty slot to take the photo. Tap a taken photo to view it."
   },
-  "submissionPickCharge": "Pick a charge",
-  "@submissionPickCharge": {
-    "description": "Pick a charge"
+  "submissionPriceChanged": "A part's price or photo rule just changed. Remove it and add it again from the list.",
+  "@submissionPriceChanged": {
+    "description": "Error when the spare part catalogue changed before the report was saved"
   },
   "submissionQuantity": "Quantity",
   "@submissionQuantity": {
@@ -5508,6 +5836,10 @@
   "submissionRecordReport": "Record mechanic report",
   "@submissionRecordReport": {
     "description": "Record mechanic report"
+  },
+  "submissionRemovePhoto": "Remove photo",
+  "@submissionRemovePhoto": {
+    "description": "Removes a photo from a damaged item"
   },
   "submissionReportBy": "By {name}",
   "@submissionReportBy": {
@@ -5530,6 +5862,14 @@
   "@submissionReportSaved": {
     "description": "Report saved"
   },
+  "submissionReportSummary": "Summary",
+  "@submissionReportSummary": {
+    "description": "Title of the last section of the mechanic report with proof photos and charges"
+  },
+  "submissionReportSummaryHint": "Check the proof photos and charges before you save. Once you impose the report, the rider is asked to pay these charges.",
+  "@submissionReportSummaryHint": {
+    "description": "Hint at the top of the report summary"
+  },
   "submissionResendAll": "Resend codes",
   "@submissionResendAll": {
     "description": "Resend codes"
@@ -5538,37 +5878,21 @@
   "@submissionRiderNote": {
     "description": "Rider's note"
   },
-  "submissionSafeNo": "No, it needs work",
-  "@submissionSafeNo": {
-    "description": "No, it needs work"
-  },
-  "submissionSafeNoHint": "It stays in maintenance after the checks.",
-  "@submissionSafeNoHint": {
-    "description": "It stays in maintenance after the checks."
-  },
-  "submissionSafeQuestion": "Safe to use again?",
+  "submissionSafeQuestion": "Current scooter status",
   "@submissionSafeQuestion": {
-    "description": "Safe to use again?"
+    "description": "Title of the scooter status card on the mechanic report"
   },
-  "submissionSafetyNeeded": "Choose whether it's safe to use again",
+  "submissionSafetyNeeded": "Choose the current scooter status",
   "@submissionSafetyNeeded": {
-    "description": "Choose whether it's safe to use again"
-  },
-  "submissionSafeYes": "Yes, it's safe",
-  "@submissionSafeYes": {
-    "description": "Yes, it's safe"
-  },
-  "submissionSafeYesHint": "It can go back into the fleet once the checks are done.",
-  "@submissionSafeYesHint": {
-    "description": "It can go back into the fleet once the checks are done."
+    "description": "Error when no scooter status is chosen on the mechanic report"
   },
   "submissionsAll": "All",
   "@submissionsAll": {
     "description": "All"
   },
-  "submissionSaveCharge": "Save charge",
-  "@submissionSaveCharge": {
-    "description": "Save charge"
+  "submissionSaveItem": "Save item",
+  "@submissionSaveItem": {
+    "description": "Button that saves a damaged item"
   },
   "submissionSaveReport": "Save report",
   "@submissionSaveReport": {
@@ -5578,9 +5902,9 @@
   "@submissionsCouldNotLoad": {
     "description": "Couldn't load returns and exchanges"
   },
-  "submissionsDrawerSubtitle": "Check in returned scooters",
+  "submissionsDrawerSubtitle": "Start submissions for returned scooters",
   "@submissionsDrawerSubtitle": {
-    "description": "Check in returned scooters"
+    "description": "Drawer subtitle for returns and exchanges"
   },
   "submissionsDropOff": "Drop-off {date}",
   "@submissionsDropOff": {
@@ -5595,13 +5919,17 @@
   "@submissionsDropOffDate": {
     "description": "Drop-off date"
   },
+  "submissionSearchSpareParts": "Search by part name or code",
+  "@submissionSearchSpareParts": {
+    "description": "Search hint in the spare parts picker"
+  },
   "submissionsEmptyAll": "Returns and exchanges for your hub show up here.",
   "@submissionsEmptyAll": {
     "description": "Returns and exchanges for your hub show up here."
   },
-  "submissionsEmptyChecks": "No check-ins are in progress.",
+  "submissionsEmptyChecks": "No submissions are in progress.",
   "@submissionsEmptyChecks": {
-    "description": "No check-ins are in progress."
+    "description": "Empty list of submissions in progress"
   },
   "submissionsEmptyScheduled": "No scooters are due at your hub right now.",
   "@submissionsEmptyScheduled": {
@@ -5647,11 +5975,11 @@
   "@submissionsScheduled": {
     "description": "Scheduled"
   },
-  "submissionsSubtitle": "Check in scooters that riders bring back to your hub.",
+  "submissionsSubtitle": "Start submissions for scooters that riders bring back to your hub.",
   "@submissionsSubtitle": {
-    "description": "Check in scooters that riders bring back to your hub."
+    "description": "Subtitle of the returns and exchanges screen"
   },
-  "submissionStaffReturnBody": "This starts the check-in for {vehicle} now. {rider}'s rental ends once the mechanic's report is confirmed.",
+  "submissionStaffReturnBody": "This starts the submission for {vehicle} now. {rider}'s rental ends once the mechanic's report is confirmed.",
   "@submissionStaffReturnBody": {
     "description": "Confirm a staff-started return",
     "placeholders": {
@@ -5667,9 +5995,9 @@
   "@submissionStaffReturnTitle": {
     "description": "Take this scooter back?"
   },
-  "submissionStageCheckingIn": "Checking in",
+  "submissionStageCheckingIn": "Submission in progress",
   "@submissionStageCheckingIn": {
-    "description": "Checking in"
+    "description": "Stage label while a submission is in progress"
   },
   "submissionStageDone": "Done",
   "@submissionStageDone": {
@@ -5683,29 +6011,69 @@
   "@submissionStageScheduled": {
     "description": "Scheduled"
   },
-  "submissionStart": "Start check-in",
+  "submissionStart": "Start submission",
   "@submissionStart": {
-    "description": "Start check-in"
+    "description": "Button that starts a return submission"
   },
-  "submissionStartBody": "Start once the rider is at the hub with the scooter. The scooter can't be allocated again until the check-in is finished.",
+  "submissionStartBody": "Start once the rider is at the hub with the scooter. The scooter can't be allocated again until the submission is finished.",
   "@submissionStartBody": {
-    "description": "Start once the rider is at the hub with the scooter. The scooter can't be allocated again until the check-in is finished."
+    "description": "Explains when to start a return submission"
   },
-  "submissionStarted": "Check-in started",
+  "submissionStartBodyExchange": "Start once the rider is at the hub with the scooter. The scooter can't be allocated again until the exchange is finished.",
+  "@submissionStartBodyExchange": {
+    "description": "Explains when to start an exchange submission"
+  },
+  "submissionStarted": "Submission started",
   "@submissionStarted": {
-    "description": "Check-in started"
+    "description": "Shown after a return submission starts"
   },
   "submissionStartedAt": "Started",
   "@submissionStartedAt": {
     "description": "Started"
   },
-  "submissionStartTitle": "Start check-in",
+  "submissionStartExchange": "Start exchange",
+  "@submissionStartExchange": {
+    "description": "Title and button of the sheet that starts an exchange submission"
+  },
+  "submissionStartTitle": "Start submission",
   "@submissionStartTitle": {
-    "description": "Start check-in"
+    "description": "Title of the sheet that starts a return submission"
   },
   "submissionStatusCancelled": "Cancelled",
   "@submissionStatusCancelled": {
     "description": "Cancelled"
+  },
+  "submissionStatusMok": "Mark as MOK",
+  "@submissionStatusMok": {
+    "description": "Mechanic report status: MOK"
+  },
+  "submissionStatusMokHint": "Mechanically OK. The scooter goes back into the fleet.",
+  "@submissionStatusMokHint": {
+    "description": "Hint for MOK: mechanically OK"
+  },
+  "submissionStatusRfd": "Mark as RFD",
+  "@submissionStatusRfd": {
+    "description": "Mechanic report status: ready for deployment"
+  },
+  "submissionStatusRfdHint": "Ready for deployment. The scooter goes back into the fleet.",
+  "@submissionStatusRfdHint": {
+    "description": "Hint for the RFD status"
+  },
+  "submissionStatusUmMajor": "Mark as UM major",
+  "@submissionStatusUmMajor": {
+    "description": "Mechanic report status: under maintenance, major repair"
+  },
+  "submissionStatusUmMajorHint": "Under maintenance (major repair). It can't be assigned until it's repaired.",
+  "@submissionStatusUmMajorHint": {
+    "description": "Hint for UM major: under maintenance, major repair"
+  },
+  "submissionStatusUmMinor": "Mark as UM minor",
+  "@submissionStatusUmMinor": {
+    "description": "Mechanic report status: under maintenance, minor repair"
+  },
+  "submissionStatusUmMinorHint": "Under maintenance (minor repair). It can't be assigned until it's repaired.",
+  "@submissionStatusUmMinorHint": {
+    "description": "Hint for UM minor: under maintenance, minor repair"
   },
   "submissionsTitle": "Returns & exchanges",
   "@submissionsTitle": {
@@ -5722,14 +6090,6 @@
   "submissionSummaryNeeded": "Describe what the mechanic found",
   "@submissionSummaryNeeded": {
     "description": "Describe what the mechanic found"
-  },
-  "submissionUnsafeReason": "Why isn't it safe?",
-  "@submissionUnsafeReason": {
-    "description": "Why isn't it safe?"
-  },
-  "submissionUnsafeReasonNeeded": "Say why it isn't safe",
-  "@submissionUnsafeReasonNeeded": {
-    "description": "Say why it isn't safe"
   },
   "submissionUseCode": "Use a code instead",
   "@submissionUseCode": {
@@ -6768,5 +7128,33 @@
   "walletViewReceipt": "Receipt",
   "@walletViewReceipt": {
     "description": "Receipt"
+  },
+  "workPartnerEcommerce": "E-commerce",
+  "@workPartnerEcommerce": {
+    "description": "Work partner type"
+  },
+  "workPartnerFoodDelivery": "Food delivery",
+  "@workPartnerFoodDelivery": {
+    "description": "Work partner type"
+  },
+  "workPartnerOnDemandLogistics": "On-demand logistics",
+  "@workPartnerOnDemandLogistics": {
+    "description": "Work partner type"
+  },
+  "workPartnerParcelLogistics": "Parcel logistics",
+  "@workPartnerParcelLogistics": {
+    "description": "Work partner type"
+  },
+  "workPartnerPharmacy": "Pharmacy and healthcare",
+  "@workPartnerPharmacy": {
+    "description": "Work partner type"
+  },
+  "workPartnerQuickCommerce": "Quick commerce",
+  "@workPartnerQuickCommerce": {
+    "description": "Work partner type"
+  },
+  "workPartnerSpecialtyDelivery": "Specialty delivery",
+  "@workPartnerSpecialtyDelivery": {
+    "description": "Work partner type"
   }
 }

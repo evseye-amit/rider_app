@@ -122,3 +122,44 @@ class VehicleBand extends StatelessWidget {
     );
   }
 }
+
+class ScooterPhoto extends StatelessWidget {
+  const ScooterPhoto({
+    required this.url,
+    required this.height,
+    this.width,
+    this.borderRadius = Corners.brLg,
+    super.key,
+  });
+
+  final String? url;
+  final double height;
+  final double? width;
+  final BorderRadius borderRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    final Widget fallback = SizedBox(
+      width: width,
+      height: height,
+      child: Center(
+        child: BrandIllustration(art: BrandArt.scooter, size: height),
+      ),
+    );
+    final String? photo = url;
+    if (photo == null) return fallback;
+    return ClipRRect(
+      borderRadius: borderRadius,
+      child: Image.network(
+        photo,
+        width: width ?? double.infinity,
+        height: height,
+        fit: BoxFit.cover,
+        errorBuilder: (_, _, _) => fallback,
+        loadingBuilder: (context, child, progress) => progress == null
+            ? child
+            : ShimmerBox(width: width ?? double.infinity, height: height, borderRadius: borderRadius),
+      ),
+    );
+  }
+}

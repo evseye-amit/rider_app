@@ -35,14 +35,11 @@ class DeskTicketTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DeskStatusStyle style = DeskStatusStyle.of(context, ticket.status);
-    final bool waiting = ticket.status == TicketStatus.open;
     return Pressable(
       onTap: onOpen,
       scale: 0.99,
       child: GlassCard(
         padding: const EdgeInsets.all(Insets.md),
-        tint: waiting ? AppColors.primaryWash : null,
-        borderColor: waiting ? AppColors.primary.withValues(alpha: 0.35) : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -83,28 +83,30 @@ class SubmissionRequestTile extends StatelessWidget {
       scale: 0.99,
       child: GlassCard(
         padding: const EdgeInsets.all(Insets.md),
-        tint: style.needsAction ? AppColors.primaryWash : null,
-        borderColor: style.needsAction ? AppColors.primary.withValues(alpha: 0.35) : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                AppAvatar(name: request.riderName.isEmpty ? '—' : request.riderName, size: 40),
+                const IconTile(icon: Icons.electric_scooter_rounded, size: 40),
                 const SizedBox(width: Insets.md),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        request.riderName.isEmpty ? '—' : request.riderName,
+                        [request.vehicleNumber ?? '—', ?request.vehicleModel].join(' · '),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppText.titleMedium.copyWith(fontSize: 15),
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        [submissionReasonLabel(context.l10n, request), ?hubName].join(' · '),
+                        [
+                          if (request.riderName.isNotEmpty) request.riderName,
+                          submissionReasonLabel(context.l10n, request),
+                          ?hubName,
+                        ].join(' · '),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppText.bodySmall.copyWith(fontSize: 12),
@@ -361,7 +363,7 @@ class SubmissionReportCard extends StatelessWidget {
             for (final SubmissionPenaltyItemDto item in report.items)
               PenaltyLineRow(
                 description: item.description,
-                details: item.details,
+                details: item.details == item.description ? '' : item.details,
                 missing: item.category == PenaltyCategory.missingItem,
                 quantity: item.quantity,
                 evidenceCount: item.evidencePhotoIds.length,

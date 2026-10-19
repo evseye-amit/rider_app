@@ -98,6 +98,7 @@ class Vehicle extends Equatable {
     this.currentHubName,
     this.teamLeadName,
     this.clusterManagerName,
+    this.frontPhotoUrl,
   });
 
   final String vehicleNumber;
@@ -126,6 +127,7 @@ class Vehicle extends Equatable {
   final String? currentHubName;
   final String? teamLeadName;
   final String? clusterManagerName;
+  final String? frontPhotoUrl;
 
   int get kmToNextService => (nextServiceKm - odometerKm).clamp(0, nextServiceKm);
 
@@ -155,5 +157,6 @@ class Vehicle extends Equatable {
     documents,
     accessories,
     recentTrips,
+    frontPhotoUrl,
   ];
 }

@@ -104,8 +104,6 @@ class ExchangeTile extends StatelessWidget {
       scale: 0.99,
       child: GlassCard(
         padding: const EdgeInsets.all(Insets.md),
-        tint: highlight ? AppColors.primaryWash : null,
-        borderColor: highlight ? AppColors.primary.withValues(alpha: 0.35) : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -151,7 +149,7 @@ class ExchangeTile extends StatelessWidget {
                 if (highlight)
                   Text(
                     context.l10n.exchangeNeedsYou,
-                    style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.primary),
+                    style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted),
                   ),
               ],
             ),
@@ -393,13 +391,6 @@ class _ExchangeOfferCardState extends State<ExchangeOfferCard> {
             icon: Icons.schedule_rounded,
             valueColor: offer.hasExpired ? AppColors.danger : null,
           ),
-          const Gap.sm(),
-          GhostButton(
-            label: context.l10n.exchangeReadTerms,
-            icon: Icons.description_rounded,
-            dense: true,
-            onPressed: () => showExchangeTerms(context, offer),
-          ),
           const Gap.md(),
           if (offer.hasExpired)
             AccentCard(
@@ -436,16 +427,6 @@ class _ExchangeOfferCardState extends State<ExchangeOfferCard> {
   }
 }
 
-Future<void> showExchangeTerms(BuildContext context, ExchangeOffer offer) => AppSheet.show<void>(
-  context,
-  title: offer.termsTitle,
-  subtitle: offer.termsVersion,
-  child: Padding(
-    padding: const EdgeInsets.only(bottom: Insets.lg),
-    child: Text(plainTextFromHtml(offer.termsBody), style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.55)),
-  ),
-);
-
 class AcceptedPlanCard extends StatelessWidget {
   const AcceptedPlanCard({required this.request, required this.offer, super.key});
 
@@ -462,13 +443,6 @@ class AcceptedPlanCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           QuoteBreakdown(quote: offer.quote),
-          const Gap.sm(),
-          GhostButton(
-            label: context.l10n.exchangeReadTerms,
-            icon: Icons.description_rounded,
-            dense: true,
-            onPressed: () => showExchangeTerms(context, offer),
-          ),
           if (depositDue) ...[
             const Gap.md(),
             AccentCard(

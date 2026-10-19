@@ -13,6 +13,12 @@ abstract interface class AllocationRepository {
 
   Future<Result<DeploymentAllocation>> allocate({required String riderId, required String fleetId});
 
+  Future<Result<List<TeamLeadOption>>> getTeamLeads({String? search});
+
+  Future<Result<AllocationTeamLead>> getTeamLead(String allocationId);
+
+  Future<Result<AllocationTeamLead>> assignTeamLead(String allocationId, String teamLeaderId);
+
   Future<Result<DeploymentAllocation>> getRequest(String allocationId);
 
   Future<Result<DeploymentWorkflow>> requestFleet(String allocationId);
@@ -33,9 +39,11 @@ abstract interface class AllocationRepository {
 
   Future<Result<String>> photoUrl(String photoId);
 
+  Future<Result<List<WorkPartnerOption>>> getWorkPartners();
+
   Future<Result<DeploymentWorkflow>> submitPdi(
     String allocationId, {
-    required String workPartnerName,
+    required WorkPartnerOption workPartner,
     required List<PdiChecklistItem> checklist,
   });
 

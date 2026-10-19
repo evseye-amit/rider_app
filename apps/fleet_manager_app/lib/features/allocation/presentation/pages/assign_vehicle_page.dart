@@ -6,8 +6,10 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../allocation_dependencies.dart';
 import '../../domain/usecases/allocate_vehicle.dart';
+import '../../domain/usecases/team_lead_usecases.dart';
 import '../providers/assign_vehicle_options_provider.dart';
 import '../widgets/allocation_widgets.dart';
+import '../widgets/team_lead_widgets.dart';
 
 class AssignVehiclePage extends ConsumerStatefulWidget {
   const AssignVehiclePage({required this.riderId, super.key});
@@ -20,10 +22,16 @@ class AssignVehiclePage extends ConsumerStatefulWidget {
 
 class _AssignVehiclePageState extends ConsumerState<AssignVehiclePage> {
   String? _selectedId;
+  TeamLeadOption? _teamLead;
   int _hubFilter = 0;
   bool _allocating = false;
 
-  Future<void> _allocate(PendingRider rider, EligibleFleet vehicle) async {
+  Future<void> _pickTeamLead() async {
+    final TeamLeadOption? picked = await TeamLeadPicker.show(context, selectedId: _teamLead?.id);
+    if (picked != null && mounted) setState(() => _teamLead = picked);
+  }
+
+  Future<void> _allocate(PendingRider rider, EligibleFleet vehicle, TeamLeadOption teamLead) async {
     final bool confirmed = await AppDialog.confirm(
       context,
       title: 'Reserve ${vehicle.vehicleNumber}?',
@@ -45,6 +53,11 @@ class _AssignVehiclePageState extends ConsumerState<AssignVehiclePage> {
 
     switch (result) {
       case Ok<DeploymentAllocation>(:final value):
+        final Result<AllocationTeamLead> assigned = await ref.read(assignTeamLeadProvider)(
+          AssignTeamLeadParams(allocationId: value.id, teamLeaderId: teamLead.id),
+        );
+        if (!mounted) return;
+        if (assigned is Err<AllocationTeamLead>) AppSnack.error(context, context.l10n.allocationTeamLeadNotSaved);
         context.go(
           '${Routes.allocationDone}?rider=${Uri.encodeComponent(rider.name)}'
           '&vehicle=${Uri.encodeComponent(vehicle.vehicleNumber)}&id=${value.id}',
@@ -99,6 +112,7 @@ class _AssignVehiclePageState extends ConsumerState<AssignVehiclePage> {
         .where((vehicle) => hubFilter == 0 || (vehicle.hubName ?? '—') == hubs[hubFilter])
         .toList(growable: false);
     final EligibleFleet? selected = data.vehicles.where((vehicle) => vehicle.id == _selectedId).firstOrNull;
+    final TeamLeadOption? teamLead = _teamLead;
 
     return HeroScaffold(
       bandColor: AppColors.ink,
@@ -106,8 +120,11 @@ class _AssignVehiclePageState extends ConsumerState<AssignVehiclePage> {
       band: _Band(rider: data.rider),
       bottomNavigationBar: _Footer(
         selected: selected,
+        teamLead: teamLead,
         busy: _allocating,
-        onContinue: selected == null || _allocating ? null : () => _allocate(data.rider, selected),
+        onContinue: selected == null || teamLead == null || _allocating
+            ? null
+            : () => _allocate(data.rider, selected, teamLead),
       ),
       children: [
         OverlapModuleCard(
@@ -128,6 +145,8 @@ class _AssignVehiclePageState extends ConsumerState<AssignVehiclePage> {
             ],
           ),
         ),
+        const Gap.lg(),
+        TeamLeadField(teamLead: teamLead, onTap: _pickTeamLead),
         const Gap.lg(),
         if (filtered.isEmpty)
           Padding(
@@ -249,9 +268,10 @@ class _VehicleOptionCard extends StatelessWidget {
 }
 
 class _Footer extends StatelessWidget {
-  const _Footer({required this.selected, required this.busy, required this.onContinue});
+  const _Footer({required this.selected, required this.teamLead, required this.busy, required this.onContinue});
 
   final EligibleFleet? selected;
+  final TeamLeadOption? teamLead;
   final bool busy;
   final VoidCallback? onContinue;
 
@@ -269,7 +289,11 @@ class _Footer extends StatelessWidget {
         border: Border(top: BorderSide(color: AppColors.stroke)),
       ),
       child: PrimaryButton(
-        label: selected == null ? context.l10n.maintenanceSelectVehicle : 'Allocate ${selected!.vehicleNumber}',
+        label: switch ((selected, teamLead)) {
+          (null, _) => context.l10n.maintenanceSelectVehicle,
+          (_, null) => context.l10n.allocationChooseTeamLead,
+          (final EligibleFleet vehicle, _) => 'Allocate ${vehicle.vehicleNumber}',
+        },
         icon: Icons.swap_horiz_rounded,
         loading: busy,
         onPressed: onContinue,

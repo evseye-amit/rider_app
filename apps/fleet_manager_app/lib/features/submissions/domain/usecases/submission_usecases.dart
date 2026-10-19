@@ -150,13 +150,13 @@ class UploadSubmissionPhoto extends UseCase<RemotePhoto, UploadSubmissionPhotoPa
       _repository.uploadPhoto(inspectionId: params.inspectionId, photoType: params.photoType, file: params.file);
 }
 
-class GetPenaltyPrices extends UseCase<List<PenaltyPriceDto>, NoParams> {
+class GetPenaltyPrices extends UseCase<List<PenaltyPriceDto>, String> {
   const GetPenaltyPrices(this._repository);
 
   final SubmissionRepository _repository;
 
   @override
-  Future<Result<List<PenaltyPriceDto>>> call(NoParams params) => _repository.penaltyPrices();
+  Future<Result<List<PenaltyPriceDto>>> call(String submissionId) => _repository.penaltyPrices(submissionId);
 }
 
 class RecordSubmissionReport extends UseCase<void, RecordReportParams> {

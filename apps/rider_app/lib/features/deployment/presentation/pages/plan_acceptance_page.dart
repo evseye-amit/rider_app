@@ -118,14 +118,6 @@ class _PlanAcceptancePageState extends ConsumerState<PlanAcceptancePage> {
             ),
           ),
           const Gap.lg(),
-          if (!offer.terms.isEmpty) ...[
-            GhostButton(
-              label: context.l10n.exchangeReadTerms,
-              icon: Icons.description_rounded,
-              onPressed: () => showPlanTerms(context, offer.terms),
-            ),
-            const Gap.md(),
-          ],
           if (live)
             AppCheckTile(
               value: agreed,

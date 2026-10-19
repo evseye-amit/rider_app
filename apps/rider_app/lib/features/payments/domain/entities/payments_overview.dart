@@ -36,6 +36,8 @@ class PaymentsOverview extends Equatable {
     this.mandateMaxAmount,
     this.mandateExpiresAt,
     this.nextAutoPayDate,
+    this.damageDue = 0,
+    this.damageCount = 0,
   });
 
   final num amountDue;
@@ -49,8 +51,14 @@ class PaymentsOverview extends Equatable {
   final num? mandateMaxAmount;
   final DateTime? mandateExpiresAt;
   final DateTime? nextAutoPayDate;
+  final num damageDue;
+  final int damageCount;
 
-  bool get isOverdue => overdueAmount > 0;
+  num get rentDue => amountDue - damageDue < 0 ? 0 : amountDue - damageDue;
+
+  num get rentOverdue => overdueAmount - damageDue < 0 ? 0 : overdueAmount - damageDue;
+
+  bool get isOverdue => rentOverdue > 0;
 
   bool get isSettled => amountDue <= 0;
 
@@ -76,6 +84,8 @@ class PaymentsOverview extends Equatable {
     mandateMaxAmount,
     mandateExpiresAt,
     nextAutoPayDate,
+    damageDue,
+    damageCount,
   ];
 }
 

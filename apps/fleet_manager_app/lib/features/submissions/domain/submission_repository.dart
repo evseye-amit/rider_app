@@ -21,7 +21,7 @@ abstract interface class SubmissionRepository {
     required File file,
   });
 
-  Future<Result<List<PenaltyPriceDto>>> penaltyPrices();
+  Future<Result<List<PenaltyPriceDto>>> penaltyPrices(String submissionId);
 
   Future<Result<void>> recordReport(String id, SubmissionReportInput input, {required String idempotencyKey});
 

@@ -9,7 +9,7 @@ import 'domain/usecases/get_payment_refunds.dart';
 import 'domain/usecases/get_payments_overview.dart';
 
 final paymentsRepositoryProvider = Provider<PaymentsRepository>(
-  (ref) => PaymentsRepositoryImpl(ref.watch(riderPaymentsApiProvider)),
+  (ref) => PaymentsRepositoryImpl(ref.watch(riderPaymentsApiProvider), ref.watch(submissionPenaltyApiProvider)),
 );
 
 final getPaymentsOverviewProvider = Provider<GetPaymentsOverview>(

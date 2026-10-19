@@ -39,6 +39,8 @@ abstract final class Routes {
   static const String rideReturns = '/returns';
   static const String rideReturnRequest = '/returns/request';
   static const String rideReturnDetail = '/returns/detail';
+  static const String damageCharges = '/damage-charges';
+  static const String damageChargeDetail = '/damage-charges/detail';
 
   const Routes._();
 }

@@ -9,6 +9,7 @@ import '../../../../app/router/app_routes.dart';
 import '../../domain/usecases/submission_usecases.dart';
 import '../../submission_dependencies.dart';
 import '../providers/submission_providers.dart';
+import '../widgets/damaged_items.dart';
 import '../widgets/submission_widgets.dart';
 
 class SubmissionPage extends ConsumerStatefulWidget {
@@ -23,30 +24,22 @@ class SubmissionPage extends ConsumerStatefulWidget {
 class _SubmissionPageState extends ConsumerState<SubmissionPage> {
   final Map<String, File> _local = {};
   final Set<String> _uploading = {};
-  final List<String> _pendingExtra = [];
   bool _busy = false;
 
   Future<void> _refresh() =>
       ref.refresh(submissionProvider(widget.submissionId).future).then<void>((_) {}, onError: (_) {});
 
-  Future<void> _capture(VehicleSubmissionDto submission, String photoType, {bool extra = false}) async {
+  Future<void> _capture(VehicleSubmissionDto submission, String photoType) async {
     final File? file = await PhotoSourceSheet.pick(context);
     if (file == null || !mounted) return;
-    setState(() {
-      _uploading.add(photoType);
-      if (extra && !_pendingExtra.contains(photoType)) _pendingExtra.add(photoType);
-    });
+    setState(() => _uploading.add(photoType));
     final Result<RemotePhoto> result = await ref.read(uploadSubmissionPhotoProvider)(
       UploadSubmissionPhotoParams(inspectionId: submission.inspectionId, photoType: photoType, file: file),
     );
     if (!mounted) return;
     setState(() {
       _uploading.remove(photoType);
-      if (result.isOk) {
-        _local[photoType] = file;
-      } else if (extra) {
-        _pendingExtra.remove(photoType);
-      }
+      if (result.isOk) _local[photoType] = file;
     });
     if (result case Err<RemotePhoto>(:final failure)) {
       AppSnack.error(context, failure.message);
@@ -223,6 +216,7 @@ class _SubmissionPageState extends ConsumerState<SubmissionPage> {
     final SubmissionReportDto? open = submission.openReport;
     final List<String> missing = _missing(submission);
     final bool canCapture = submission.nextAction == SubmissionNextAction.capturePhotos;
+    final bool canRecord = canCapture || submission.nextAction == SubmissionNextAction.deepCheck;
 
     return AppScaffold(
       title: context.l10n.checkInTitle,
@@ -259,8 +253,7 @@ class _SubmissionPageState extends ConsumerState<SubmissionPage> {
             ),
             const Gap.lg(),
             _requiredPhotos(submission, canRetake: canCapture),
-            const Gap.lg(),
-            _extraPhotos(submission),
+            if (canRecord) ...[const Gap.lg(), DamagedItemsCard(submission: submission)],
             if (submission.reports.isNotEmpty) ...[
               const Gap.lg(),
               ModuleCard(
@@ -349,53 +342,6 @@ class _SubmissionPageState extends ConsumerState<SubmissionPage> {
                   onTap: !missing.contains(type) || _local.containsKey(type)
                       ? () => _openCaptured(submission, type, canRetake: canRetake)
                       : () => _capture(submission, type),
-                ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _extraPhotos(VehicleSubmissionDto submission) {
-    final Set<String> required = submission.requiredPhotoTypes.toSet();
-    final List<String> types = [
-      for (final SubmissionPhotoDto photo in submission.photos)
-        if (!required.contains(photo.photoType)) photo.photoType,
-    ];
-    final List<String> extra = [
-      ...{...types, ..._pendingExtra},
-    ];
-    final bool canAdd = submission.nextAction != SubmissionNextAction.complete;
-    if (extra.isEmpty && !canAdd) return const SizedBox.shrink();
-    return ModuleCard(
-      title: context.l10n.submissionExtraPhotos,
-      leading: const IconTile(icon: Icons.car_crash_rounded, tone: AppColors.danger, solid: true, size: 28),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(context.l10n.submissionExtraPhotosHint, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45)),
-          const Gap.md(),
-          SubmissionPhotoGrid(
-            children: [
-              for (final (int i, String type) in extra.indexed)
-                SubmissionPhotoTile(
-                  label: type.startsWith(damagePhotoPrefix)
-                      ? '${context.l10n.submissionPhotoDamage} ${i + 1}'
-                      : submissionPhotoLabel(context.l10n, type, submission.assets),
-                  captured: true,
-                  required: false,
-                  file: _local[type],
-                  uploading: _uploading.contains(type),
-                  onTap: () => _view(submission, type),
-                ),
-              if (canAdd)
-                PhotoSlot(
-                  label: context.l10n.commonAddPhoto,
-                  icon: Icons.add_a_photo_rounded,
-                  required: false,
-                  onTap: () =>
-                      _capture(submission, '$damagePhotoPrefix${DateTime.now().millisecondsSinceEpoch}', extra: true),
                 ),
             ],
           ),

@@ -36,6 +36,7 @@ String rentWithPeriodLabel(AppL10n l10n, CommercialBreakdown breakdown) => [
 ].where((part) => part.isNotEmpty).join(' ');
 
 String commercialChargeLabel(AppL10n l10n, String type) => switch (type.toUpperCase()) {
+  'RENTAL' => l10n.planAdvanceRental,
   'ONBOARDING_FEE' => l10n.planOnboardingFee,
   'VEHICLE_SECURITY' => l10n.planScooterDeposit,
   'BATTERY_SECURITY' => l10n.planBatteryDeposit,

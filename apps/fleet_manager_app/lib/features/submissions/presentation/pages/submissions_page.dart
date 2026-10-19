@@ -249,7 +249,9 @@ class _StartSheet extends ConsumerStatefulWidget {
 
   static Future<String?> show(BuildContext context, SubmissionRequestDto request) => AppSheet.show<String>(
     context,
-    title: context.l10n.submissionStartTitle,
+    title: request.source == SubmissionSource.exchange
+        ? context.l10n.submissionStartExchange
+        : context.l10n.submissionStartTitle,
     subtitle: request.riderName,
     child: _StartSheet(request: request),
   );
@@ -271,7 +273,12 @@ class _StartSheetState extends ConsumerState<_StartSheet> {
     setState(() => _starting = false);
     switch (result) {
       case Ok<String>(:final value):
-        AppSnack.success(context, context.l10n.submissionStarted);
+        AppSnack.success(
+          context,
+          widget.request.source == SubmissionSource.exchange
+              ? context.l10n.submissionExchangeStarted
+              : context.l10n.submissionStarted,
+        );
         Navigator.of(context).pop(value);
       case Err<String>(:final failure):
         AppSnack.error(context, failure.message);
@@ -308,7 +315,12 @@ class _StartSheetState extends ConsumerState<_StartSheet> {
         if (notes != null && notes.isNotEmpty)
           KeyValueRow(label: context.l10n.submissionRiderNote, value: notes, icon: Icons.notes_rounded),
         const Gap.md(),
-        Text(context.l10n.submissionStartBody, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45)),
+        Text(
+          request.source == SubmissionSource.exchange
+              ? context.l10n.submissionStartBodyExchange
+              : context.l10n.submissionStartBody,
+          style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
+        ),
         if (hubs.length > 1) ...[
           const Gap.lg(),
           GroupLabel(context.l10n.submissionReceivingHub),
@@ -325,7 +337,9 @@ class _StartSheetState extends ConsumerState<_StartSheet> {
         ],
         const Gap.lg(),
         PrimaryButton(
-          label: context.l10n.submissionStart,
+          label: request.source == SubmissionSource.exchange
+              ? context.l10n.submissionStartExchange
+              : context.l10n.submissionStart,
           icon: Icons.play_arrow_rounded,
           loading: _starting,
           onPressed: _starting ? null : () => _start(selected),

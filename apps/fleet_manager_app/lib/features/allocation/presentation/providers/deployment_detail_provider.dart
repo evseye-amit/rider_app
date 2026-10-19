@@ -9,14 +9,18 @@ import '../../allocation_dependencies.dart';
 import '../../domain/usecases/evidence_photo_usecases.dart';
 import '../../domain/usecases/rental_plan_usecases.dart';
 import '../../domain/usecases/submit_pdi.dart';
+import '../../domain/usecases/team_lead_usecases.dart';
 
 class DeploymentDetail extends Equatable {
-  const DeploymentDetail({required this.request, this.evidence, this.commercial, this.busy = false});
+  const DeploymentDetail({required this.request, this.evidence, this.commercial, this.teamLead, this.busy = false});
 
   final DeploymentAllocation request;
   final AllocationEvidence? evidence;
   final AllocationCommercial? commercial;
+  final AllocationTeamLead? teamLead;
   final bool busy;
+
+  bool get canChangeTeamLead => const {'INITIATED', 'INSPECTION_PENDING', 'OTP_PENDING'}.contains(request.status);
 
   DeploymentStatus get status => request.deploymentStatus;
 
@@ -26,16 +30,27 @@ class DeploymentDetail extends Equatable {
     DeploymentAllocation? request,
     AllocationEvidence? evidence,
     AllocationCommercial? commercial,
+    AllocationTeamLead? teamLead,
     bool? busy,
   }) => DeploymentDetail(
     request: request ?? this.request,
     evidence: evidence ?? this.evidence,
     commercial: commercial ?? this.commercial,
+    teamLead: teamLead ?? this.teamLead,
     busy: busy ?? this.busy,
   );
 
   @override
-  List<Object?> get props => [request.id, status, request.updatedAt, evidence, commercial, busy];
+  List<Object?> get props => [
+    request.id,
+    status,
+    request.updatedAt,
+    evidence,
+    commercial,
+    teamLead?.teamLead?.id,
+    teamLead == null,
+    busy,
+  ];
 }
 
 class DeploymentDetailNotifier extends AsyncNotifier<DeploymentDetail> {
@@ -86,10 +101,14 @@ class DeploymentDetailNotifier extends AsyncNotifier<DeploymentDetail> {
 
   Future<Result<void>> verifyPayment() => _perform(() => ref.read(verifyPaymentProvider)(_allocationId));
 
-  Future<Result<void>> submitPdi({required String workPartnerName, required List<PdiChecklistItem> checklist}) =>
+  Future<Result<void>> assignTeamLead(TeamLeadOption lead) => _perform(
+    () => ref.read(assignTeamLeadProvider)(AssignTeamLeadParams(allocationId: _allocationId, teamLeaderId: lead.id)),
+  );
+
+  Future<Result<void>> submitPdi({required WorkPartnerOption workPartner, required List<PdiChecklistItem> checklist}) =>
       _perform(
         () => ref.read(submitPdiProvider)(
-          SubmitPdiParams(allocationId: _allocationId, workPartnerName: workPartnerName, checklist: checklist),
+          SubmitPdiParams(allocationId: _allocationId, workPartner: workPartner, checklist: checklist),
         ),
       );
 
@@ -107,15 +126,26 @@ class DeploymentDetailNotifier extends AsyncNotifier<DeploymentDetail> {
   }
 
   Future<void> _loadSideData(DeploymentDetail detail) async {
-    if (!detail.status.beforeInspection) return;
-    final (Result<AllocationEvidence> evidence, Result<AllocationCommercial> commercial) = await (
-      ref.read(getAllocationEvidenceProvider)(_allocationId),
-      ref.read(getAllocationCommercialProvider)(_allocationId),
-    ).wait;
+    final Future<Result<AllocationTeamLead>> teamLead = ref.read(getAllocationTeamLeadProvider)(_allocationId);
+    Result<AllocationEvidence>? evidence;
+    Result<AllocationCommercial>? commercial;
+    if (detail.status.beforeInspection) {
+      (evidence, commercial) = await (
+        ref.read(getAllocationEvidenceProvider)(_allocationId),
+        ref.read(getAllocationCommercialProvider)(_allocationId),
+      ).wait;
+    }
+    final Result<AllocationTeamLead> lead = await teamLead;
     if (!ref.mounted) return;
     final DeploymentDetail? current = state.value;
     if (current == null) return;
-    state = AsyncData(current.copyWith(evidence: evidence.valueOrNull, commercial: commercial.valueOrNull));
+    state = AsyncData(
+      current.copyWith(
+        evidence: evidence?.valueOrNull,
+        commercial: commercial?.valueOrNull,
+        teamLead: lead.valueOrNull,
+      ),
+    );
   }
 
   Future<Result<void>> _perform(Future<Result<Object?>> Function() action) async {

@@ -1,6 +1,12 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../app/router/app_routes.dart';
+import '../../features/damage_charges/domain/entities/damage_charge.dart';
+import '../../features/damage_charges/presentation/providers/damage_charges_providers.dart';
+import '../../features/damage_charges/presentation/widgets/damage_charge_widgets.dart';
 
 final riderCheckInProvider = FutureProvider.autoDispose.family<VehicleSubmissionDto, String>(
   (ref, id) async => (await ref.watch(vehicleSubmissionApiProvider).riderDetail(id)).getOrThrow(),
@@ -113,13 +119,16 @@ class _CheckInBody extends ConsumerWidget {
   }
 }
 
-class _ReportBlock extends StatelessWidget {
+class _ReportBlock extends ConsumerWidget {
   const _ReportBlock({required this.report});
 
   final SubmissionReportDto report;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final DamageCharge? charge = report.items.isEmpty
+        ? null
+        : ref.watch(damageChargesProvider(true)).value?.where((item) => item.reportId == report.id).firstOrNull;
     final (String label, StatusTone tone) = switch (report.status) {
       SubmissionReportStatus.draft => (context.l10n.checkInStatusDraft, StatusTone.neutral),
       SubmissionReportStatus.submitted => (context.l10n.checkInStatusSubmitted, StatusTone.warning),
@@ -177,6 +186,23 @@ class _ReportBlock extends StatelessWidget {
               valueStyle: AppText.titleSmall,
               dense: true,
             ),
+          ],
+          if (charge != null) ...[
+            const Gap.sm(),
+            if (charge.isOpen)
+              PrimaryButton(
+                label: context.l10n.damageChargePay(Fmt.money(charge.due, paise: true)),
+                icon: Icons.payments_rounded,
+                size: AppButtonSize.medium,
+                onPressed: () => context.push('${Routes.damageChargeDetail}?id=${charge.id}'),
+              )
+            else
+              GhostButton(
+                label: damageChargeStatus(context.l10n, charge.state).$1,
+                icon: Icons.receipt_long_rounded,
+                dense: true,
+                onPressed: () => context.push('${Routes.damageChargeDetail}?id=${charge.id}'),
+              ),
           ],
           if (report.status == SubmissionReportStatus.submitted) ...[
             const Gap.sm(),

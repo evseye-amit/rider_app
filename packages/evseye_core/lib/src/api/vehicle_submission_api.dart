@@ -117,10 +117,13 @@ class SubmissionRequestDto {
     this.reasonCode,
     this.notes,
     this.submission,
+    this.vehicleNumber,
+    this.vehicleModel,
   });
 
   factory SubmissionRequestDto.fromJson(Map<String, dynamic> json) {
     final Map<String, dynamic> rider = jsonMap(json['rider']);
+    final Map<String, dynamic> fleet = jsonMap(json['fleet']);
     final SubmissionSource source = json['source'] == 'EXCHANGE' ? SubmissionSource.exchange : SubmissionSource.returns;
     return SubmissionRequestDto(
       id: jsonText(json['id']),
@@ -136,6 +139,8 @@ class SubmissionRequestDto {
       reasonCode: jsonTextOrNull(json['reasonCode']),
       notes: jsonTextOrNull(source == SubmissionSource.exchange ? json['reason'] : json['reasonText']),
       submission: SubmissionSummaryDto.maybe(json['vehicleSubmission']),
+      vehicleNumber: jsonTextOrNull(fleet['vehicleNumber']),
+      vehicleModel: jsonTextOrNull(fleet['modelName']),
     );
   }
 
@@ -150,6 +155,8 @@ class SubmissionRequestDto {
   final String? reasonCode;
   final String? notes;
   final SubmissionSummaryDto? submission;
+  final String? vehicleNumber;
+  final String? vehicleModel;
 }
 
 class SubmissionQueuePage {
@@ -507,15 +514,21 @@ class SubmissionPenaltyInput {
     required this.quantity,
     required this.details,
     required this.evidencePhotoIds,
+    this.configurationVersion,
+    this.findingType,
   });
 
   final String priceId;
   final int quantity;
   final String details;
   final List<String> evidencePhotoIds;
+  final int? configurationVersion;
+  final PenaltyCategory? findingType;
 
   Map<String, dynamic> toJson() => {
     'priceId': priceId,
+    'configurationVersion': ?configurationVersion,
+    'findingType': ?findingType?.wire,
     'quantity': quantity,
     'details': details,
     'evidencePhotoIds': evidencePhotoIds,
@@ -614,10 +627,25 @@ class VehicleSubmissionApi {
   Future<Result<String>> photoUrl(String id, String photoId) =>
       _client.get<String>('$_staff/$id/photos/$photoId/url', parse: _url);
 
-  Future<Result<List<PenaltyPriceDto>>> penaltyPrices() => _client.get<List<PenaltyPriceDto>>(
-    '/client/return-penalty-prices',
-    parse: (data) => jsonMaps(data).map(PenaltyPriceDto.fromJson).toList(growable: false),
-  );
+  Future<Result<List<PenaltyPriceDto>>> penaltyPrices({String? submissionId}) async {
+    const int limit = 100;
+    final List<PenaltyPriceDto> prices = [];
+    for (int page = 1; page <= 20; page++) {
+      final Result<List<PenaltyPriceDto>> next = await _client.get<List<PenaltyPriceDto>>(
+        '/client/return-penalty-prices',
+        query: {'page': page, 'limit': limit, 'submissionId': ?submissionId},
+        parse: (data) => jsonMaps(data).map(PenaltyPriceDto.fromJson).toList(growable: false),
+      );
+      switch (next) {
+        case Err<List<PenaltyPriceDto>>(:final failure):
+          return Result.err(failure);
+        case Ok<List<PenaltyPriceDto>>(:final value):
+          prices.addAll(value);
+          if (value.length < limit) return Result.ok(prices);
+      }
+    }
+    return Result.ok(prices);
+  }
 
   Future<Result<void>> recordReport(String id, SubmissionReportInput input, {required String idempotencyKey}) =>
       _client.post<void>(

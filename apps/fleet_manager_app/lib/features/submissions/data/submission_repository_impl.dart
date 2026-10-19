@@ -41,7 +41,8 @@ class SubmissionRepositoryImpl implements SubmissionRepository {
   );
 
   @override
-  Future<Result<List<PenaltyPriceDto>>> penaltyPrices() => _api.penaltyPrices();
+  Future<Result<List<PenaltyPriceDto>>> penaltyPrices(String submissionId) =>
+      _api.penaltyPrices(submissionId: submissionId);
 
   @override
   Future<Result<void>> recordReport(String id, SubmissionReportInput input, {required String idempotencyKey}) =>

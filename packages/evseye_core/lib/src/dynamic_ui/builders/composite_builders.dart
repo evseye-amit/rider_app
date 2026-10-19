@@ -12,6 +12,7 @@ import '../../widgets/buttons.dart';
 import '../../widgets/feedback.dart';
 import '../../widgets/glass_card.dart';
 import '../../widgets/inputs.dart';
+import '../models/ui_action.dart';
 import '../models/ui_node.dart';
 import '../registry/dynamic_ui_scope.dart';
 import '../registry/widget_registry.dart';
@@ -48,6 +49,7 @@ String relationLabel(BuildContext context, String code) => switch (code) {
 
 Map<String, NodeBuilder> compositeBuilders() => {
   'bankAccountField': (context, node, scope) => _BankAccountField(node: node, scope: scope),
+  'bankIfscField': (context, node, scope) => _BankIfscField(node: node, scope: scope),
   'referenceField': (context, node, scope) => _ReferenceField(node: node, scope: scope),
   'nomineeField': (context, node, scope) => _NomineeField(node: node, scope: scope),
 };
@@ -192,6 +194,95 @@ class _BankAccountFieldState extends State<_BankAccountField> {
           ),
         ],
       ],
+    );
+  }
+}
+
+class _BankIfscField extends StatefulWidget {
+  const _BankIfscField({required this.node, required this.scope});
+
+  final UiNode node;
+  final DynamicUiScope scope;
+
+  @override
+  State<_BankIfscField> createState() => _BankIfscFieldState();
+}
+
+class _BankIfscFieldState extends State<_BankIfscField> {
+  static final RegExp _ifsc = RegExp(r'^[A-Z]{4}0[A-Z0-9]{6}$');
+
+  late final TextEditingController _controller = TextEditingController(text: _text(widget.node.fieldKey));
+
+  String _text(String key) => widget.scope.form.valueOf(key)?.toString() ?? '';
+
+  String _key(String name) => widget.node.props[name]?.toString() ?? '${widget.node.fieldKey}__$name';
+
+  List<String> get _detailKeys => [
+    for (final Object? key in (widget.node.props['detailKeys'] as List?) ?? const [])
+      if (key != null) key.toString(),
+  ];
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _changed(String raw) {
+    final String value = raw.trim().toUpperCase();
+    widget.scope.form.setValue(widget.node.fieldKey, value);
+    if (widget.scope.form.stringOf(_key('checkedKey')) == value) return;
+    for (final String key in [_key('checkedKey'), _key('foundKey'), _key('noteKey'), ..._detailKeys]) {
+      widget.scope.form.setValue(key, null);
+    }
+    if (_ifsc.hasMatch(value)) {
+      widget.scope.onAction(context, widget.node.action ?? const UiAction(type: 'lookupIfsc'), widget.node);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final UiNode node = widget.node;
+    final DynamicUiScope scope = widget.scope;
+    final String key = node.fieldKey;
+    return ListenableBuilder(
+      listenable: scope.form,
+      builder: (context, _) {
+        final bool busy = scope.isBusy(key);
+        final String value = _text(key).trim();
+        final bool checked = value.isNotEmpty && scope.form.stringOf(_key('checkedKey')) == value;
+        final bool found = checked && scope.form.stringOf(_key('foundKey')) == value;
+        final String note = _text(_key('noteKey'));
+        return AppTextField(
+          controller: _controller,
+          label: node.text(scope, 'label', context.l10n.onboardingBankIfsc),
+          hint: node.text(scope, 'hint', context.l10n.onboardingBankIfscHint),
+          helper: checked ? (found || note.isEmpty ? null : note) : context.l10n.onboardingBankIfscHelper,
+          errorText: scope.form.errorOf(key),
+          required: true,
+          enabled: scope.isEnabled(node),
+          prefixIcon: Icons.account_balance_rounded,
+          textCapitalization: TextCapitalization.characters,
+          inputFormatters: [
+            FilteringTextInputFormatter.allow(RegExp('[A-Za-z0-9]')),
+            LengthLimitingTextInputFormatter(11),
+            TextInputFormatter.withFunction(
+              (oldValue, newValue) => newValue.copyWith(text: newValue.text.toUpperCase()),
+            ),
+          ],
+          suffix: busy
+              ? const SizedBox.square(
+                  dimension: 18,
+                  child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+                )
+              : found
+              ? const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 20)
+              : checked
+              ? const Icon(Icons.info_outline_rounded, color: AppColors.warning, size: 20)
+              : null,
+          onChanged: _changed,
+        );
+      },
     );
   }
 }

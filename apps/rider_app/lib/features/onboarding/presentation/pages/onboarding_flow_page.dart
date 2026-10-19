@@ -27,6 +27,7 @@ class OnboardingFlowPage extends ConsumerStatefulWidget {
 
 class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
   static const int _defaultMinAge = 18;
+  static final RegExp _ifscPattern = RegExp(r'^[A-Z]{4}0[A-Z0-9]{6}$');
 
   late final DynamicFormController _form = DynamicFormController(
     initial: Map<String, Object?>.from(ref.read(onboardingDraftProvider)),
@@ -154,6 +155,10 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
   Map<String, Object?> _stepValues(OnboardingStepConfig step) => {
     for (final OnboardingFieldConfig field in step.inputs)
       if (_wireValue(field) case final Object value) field.fieldCode: value,
+    if (OnboardingFlowBuilder.isBankStep(step))
+      for (final MapEntry<String, String> entry in OnboardingFlowBuilder.bankFieldCodes.entries)
+        if (step.fields.any((field) => field.fieldCode == entry.key))
+          if (_form.stringOf(entry.value).trim() case final String value when value.isNotEmpty) entry.key: value,
   };
 
   Object? _wireValue(OnboardingFieldConfig field) {
@@ -355,6 +360,39 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
     }
   }
 
+  Future<void> _lookupIfsc(UiNode node) async {
+    final String key = node.fieldKey;
+    final String ifsc = _form.stringOf(key).trim().toUpperCase();
+    if (!_ifscPattern.hasMatch(ifsc) || _busy.contains(key)) return;
+    setState(() => _busy.add(key));
+    final Result<IfscBankDetails> result = await ref.read(lookupIfscProvider)(ifsc);
+    if (!mounted) return;
+    setState(() => _busy.remove(key));
+
+    final String current = _form.stringOf(key).trim().toUpperCase();
+    if (current != ifsc) {
+      if (_ifscPattern.hasMatch(current)) unawaited(_lookupIfsc(node));
+      return;
+    }
+    final IfscBankDetails? details = result.valueOrNull;
+    for (final (String field, String? value) in [
+      (OnboardingFlowBuilder.bankNameKey, details?.bankName),
+      (OnboardingFlowBuilder.bankBranchKey, details?.branch),
+      (OnboardingFlowBuilder.bankCityKey, details?.city),
+      (OnboardingFlowBuilder.bankStateKey, details?.state),
+    ]) {
+      _form.setValue(field, value?.trim() ?? '');
+    }
+    _form.setValue(OnboardingFlowBuilder.bankIfscVerifiedKey, details == null ? null : ifsc);
+    _form.setValue(OnboardingFlowBuilder.bankIfscNoteKey, switch (result) {
+      Ok<IfscBankDetails>() => null,
+      Err<IfscBankDetails>(failure: NotFoundFailure()) => context.l10n.onboardingBankIfscNotFound,
+      Err<IfscBankDetails>() => context.l10n.onboardingBankIfscFailed,
+    });
+    _form.setValue(OnboardingFlowBuilder.bankIfscCheckedKey, ifsc);
+    _persist();
+  }
+
   void _handleAction(BuildContext context, UiAction action, UiNode node) {
     switch (action.type) {
       case 'next':
@@ -367,6 +405,8 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
         _applyReferral(node);
       case 'scanReferral':
         _scanReferral(node);
+      case 'lookupIfsc':
+        _lookupIfsc(node);
       case 'navigate':
         if (action.target != null) context.push(action.target!);
     }

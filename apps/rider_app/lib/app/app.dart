@@ -22,7 +22,11 @@ class _RiderAppState extends ConsumerState<RiderApp> {
   void initState() {
     super.initState();
     _lifecycle = AppLifecycleListener(
-      onResume: () => unawaited(ref.read(riderSessionProvider.notifier).verifyConsent()),
+      onResume: () {
+        final RiderSessionNotifier session = ref.read(riderSessionProvider.notifier);
+        unawaited(session.verifyConsent());
+        unawaited(session.refreshOnResume());
+      },
     );
   }
 

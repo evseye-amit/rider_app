@@ -16,10 +16,12 @@ export 'rider_stage.dart';
 class RiderSessionNotifier extends Notifier<RiderSession> {
   static const Duration _documentCheckInterval = Duration(seconds: 30);
   static const Duration _consentCheckInterval = Duration(minutes: 5);
+  static const Duration _resumeRefreshInterval = Duration(seconds: 30);
   static const String _hygieneKey = 'deployment.hygiene_done';
 
   DateTime? _documentsCheckedAt;
   DateTime? _consentCheckedAt;
+  DateTime? _resumedAt;
 
   UiConfigService get _config => ref.read(uiConfigServiceProvider);
 
@@ -46,6 +48,14 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     }
     await consent;
     if (state.user case final AuthUser user) unawaited(ref.read(consentProvider.notifier).recordAcceptance(user.id));
+  }
+
+  Future<void> refreshOnResume() async {
+    if (!state.isSignedIn) return;
+    final DateTime now = DateTime.now();
+    if (_resumedAt case final DateTime last when now.difference(last) < _resumeRefreshInterval) return;
+    _resumedAt = now;
+    await refreshState();
   }
 
   Future<void> verifyConsent() async {
@@ -181,7 +191,7 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
   RiderStage _resolveStage(RiderDeployment deployment, RiderOnboardingConfig? onboarding) {
     if (onboarding == null) return _deploymentStage(deployment);
     if (!onboarding.isComplete) return RiderStage.onboarding;
-    if (deployment.allocation != null) return _deploymentStage(deployment);
+    if (deployment.allocation != null || deployment.screen == RiderScreen.home) return _deploymentStage(deployment);
     if (onboarding.needsResubmission) return RiderStage.onboarding;
     return RiderStage.fromScreen(RiderScreen.parse(onboarding.screen));
   }

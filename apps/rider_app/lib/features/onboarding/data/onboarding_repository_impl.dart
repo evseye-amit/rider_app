@@ -5,11 +5,12 @@ import 'package:evseye_core/evseye_core.dart';
 import '../domain/onboarding_repository.dart';
 
 class OnboardingRepositoryImpl implements OnboardingRepository {
-  const OnboardingRepositoryImpl(this._riderApp, this._media, this._referrals);
+  const OnboardingRepositoryImpl(this._riderApp, this._media, this._referrals, this._banks);
 
   final RiderAppApi _riderApp;
   final MediaApi _media;
   final ReferralApi _referrals;
+  final BanksApi _banks;
 
   @override
   Future<Result<RiderOnboardingConfig>> fetch() => _riderApp.onboarding();
@@ -30,6 +31,9 @@ class OnboardingRepositoryImpl implements OnboardingRepository {
         : 'image/jpeg';
     return _media.uploadOnboardingDocument(fieldCode: fieldCode, file: file, mimeType: mime);
   }
+
+  @override
+  Future<Result<IfscBankDetails>> lookupIfsc(String ifsc) => _banks.lookupIfsc(ifsc);
 
   @override
   Future<Result<void>> applyReferralCode(

@@ -171,7 +171,7 @@ class _Band extends StatelessWidget {
           Text(context.l10n.deploymentGoThroughEachItemWith, style: AppText.bodySmall.copyWith(height: 1.5)),
           if (partner != null && partner!.isNotEmpty) ...[
             const Gap.sm(),
-            Text(context.l10n.pdiInspectedBy(partner!), style: AppText.bodySmall.copyWith(color: AppColors.textMuted)),
+            Text(context.l10n.pdiWorkPartner(partner!), style: AppText.bodySmall.copyWith(color: AppColors.textMuted)),
           ],
           const Gap.lg(),
           LabeledProgress(

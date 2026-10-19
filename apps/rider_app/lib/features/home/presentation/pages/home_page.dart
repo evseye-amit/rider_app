@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,6 +7,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/session/rider_session_provider.dart';
+import '../../../damage_charges/presentation/widgets/damage_charge_widgets.dart';
 import '../../domain/entities/home_summary.dart';
 import '../providers/home_summary_provider.dart';
 import '../widgets/rider_drawer.dart';
@@ -39,6 +42,7 @@ class HomePage extends ConsumerWidget {
       bottomPadding: 190,
       onRefresh: () {
         ref.invalidate(unreadNotificationsProvider);
+        unawaited(ref.read(riderSessionProvider.notifier).refreshState());
         return ref.refreshQuietly(homeSummaryProvider);
       },
       floatingAction: Padding(
@@ -84,49 +88,62 @@ class HomePage extends ConsumerWidget {
       ModuleCard(
         title: context.l10n.paymentsTitle,
         padding: const EdgeInsets.all(Insets.md),
-        child: GridView(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: Insets.md,
-            mainAxisSpacing: Insets.sm,
-            mainAxisExtent: 114,
-          ),
-          shrinkWrap: true,
-          padding: EdgeInsets.zero,
-          physics: const NeverScrollableScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            StatCard(
-              label: context.l10n.paymentsAutoPay,
-              value: autoPay == null ? '—' : _autoPayLabel(context.l10n, autoPay),
-              caption: switch (summary.nextDebitDate) {
-                final DateTime date => context.l10n.homeNextDebitOn(Fmt.date(date)),
-                null => null,
-              },
-              icon: Icons.autorenew_rounded,
-              accent: switch (autoPay) {
-                AutoPayStatus.active => AppColors.success,
-                final AutoPayStatus status when status.needsAttention => AppColors.warning,
-                _ => AppColors.primary,
-              },
-              compact: true,
-              onTap: () => context.push(Routes.payments),
+            GridView(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: Insets.md,
+                mainAxisSpacing: Insets.sm,
+                mainAxisExtent: 114,
+              ),
+              shrinkWrap: true,
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                StatCard(
+                  label: context.l10n.paymentsAutoPay,
+                  value: autoPay == null ? '—' : _autoPayLabel(context.l10n, autoPay),
+                  caption: switch (summary.nextDebitDate) {
+                    final DateTime date => context.l10n.homeNextDebitOn(Fmt.date(date)),
+                    null => null,
+                  },
+                  icon: Icons.autorenew_rounded,
+                  accent: switch (autoPay) {
+                    AutoPayStatus.active => AppColors.success,
+                    final AutoPayStatus status when status.needsAttention => AppColors.warning,
+                    _ => AppColors.primary,
+                  },
+                  compact: true,
+                  onTap: () => context.push(Routes.payments),
+                ),
+                StatCard(
+                  label: context.l10n.homeLastPayment,
+                  value: switch (summary.lastPaymentAmount) {
+                    final num amount => Fmt.money(amount),
+                    null => '—',
+                  },
+                  caption: switch (summary) {
+                    HomeSummary(:final DateTime lastPaymentAt) => Fmt.relative(lastPaymentAt),
+                    HomeSummary(lastPaymentAmount: null, rentDue: != null) => context.l10n.paymentsNoPayments,
+                    _ => null,
+                  },
+                  icon: Icons.receipt_long_rounded,
+                  accent: AppColors.primary,
+                  compact: true,
+                  onTap: () => context.push(Routes.payments),
+                ),
+              ],
             ),
-            StatCard(
-              label: context.l10n.homeLastPayment,
-              value: switch (summary.lastPaymentAmount) {
-                final num amount => Fmt.money(amount),
-                null => '—',
-              },
-              caption: switch (summary) {
-                HomeSummary(:final DateTime lastPaymentAt) => Fmt.relative(lastPaymentAt),
-                HomeSummary(lastPaymentAmount: null, rentDue: != null) => context.l10n.paymentsNoPayments,
-                _ => null,
-              },
-              icon: Icons.receipt_long_rounded,
-              accent: AppColors.primary,
-              compact: true,
-              onTap: () => context.push(Routes.payments),
-            ),
+            if (summary.damageCount > 0) ...[
+              const Gap.sm(),
+              DamageChargesNotice(
+                amount: summary.damageDue,
+                count: summary.damageCount,
+                onTap: () => context.push(Routes.damageCharges),
+              ),
+            ],
           ],
         ),
       ),
@@ -298,9 +315,9 @@ class _Band extends ConsumerWidget {
             children: [
               Expanded(
                 child: InkStat(
-                  label: context.l10n.homeCategory,
-                  value: summary?.category ?? '—',
-                  icon: Icons.category_rounded,
+                  label: context.l10n.allocationWorkPartner,
+                  value: summary?.workPartner ?? '—',
+                  icon: Icons.storefront_rounded,
                 ),
               ),
               const InkDivider(),

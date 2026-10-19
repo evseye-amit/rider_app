@@ -10,6 +10,7 @@ final homeRepositoryProvider = Provider<HomeRepository>(
     ref.watch(deploymentApiProvider),
     ref.watch(riderAppApiProvider),
     ref.watch(riderPaymentsApiProvider),
+    ref.watch(submissionPenaltyApiProvider),
   ),
 );
 

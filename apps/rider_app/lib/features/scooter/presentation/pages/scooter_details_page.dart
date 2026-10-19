@@ -2,6 +2,7 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/vehicle.dart';
+import '../widgets/scooter_widgets.dart';
 
 class ScooterDetailsPage extends StatelessWidget {
   const ScooterDetailsPage({required this.vehicle, super.key});
@@ -30,6 +31,10 @@ class ScooterDetailsPage extends StatelessWidget {
       subtitle: vehicle.vehicleNumber,
       body: PageBody(
         children: [
+          if (vehicle.frontPhotoUrl != null) ...[
+            ScooterPhoto(url: vehicle.frontPhotoUrl, height: 200, borderRadius: Corners.brXl),
+            const Gap.lg(),
+          ],
           ModuleCard(
             title: context.l10n.scooterIdentity,
             leading: const IconTile(icon: Icons.badge_rounded, solid: true, size: 28),

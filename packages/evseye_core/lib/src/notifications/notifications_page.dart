@@ -25,8 +25,12 @@ import '../widgets/segmented_tabs.dart';
 import '../widgets/status_chip.dart';
 import 'notifications_inbox.dart';
 
+typedef NotificationAction = ({String label, IconData icon, VoidCallback onTap});
+
 class NotificationsPage extends ConsumerStatefulWidget {
-  const NotificationsPage({super.key});
+  const NotificationsPage({this.actionFor, super.key});
+
+  final NotificationAction? Function(BuildContext context, AppNotification item)? actionFor;
 
   @override
   ConsumerState<NotificationsPage> createState() => _NotificationsPageState();
@@ -50,12 +54,23 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
 
   Future<void> _open(AppNotification item) async {
     unawaited(ref.read(notificationsInboxProvider.notifier).markRead(item));
+    final NotificationAction? action = widget.actionFor?.call(context, item);
     await AppSheet.show<void>(
       context,
       title: item.title,
       subtitle: Fmt.dateTime(item.createdAt),
       child: Text(item.body, style: AppText.bodyMedium.copyWith(height: 1.55)),
-      footer: PrimaryButton(label: context.l10n.notificationsGotIt, onPressed: () => Navigator.of(context).pop()),
+      footer: switch (action) {
+        final NotificationAction action => PrimaryButton(
+          label: action.label,
+          icon: action.icon,
+          onPressed: () {
+            Navigator.of(context).pop();
+            action.onTap();
+          },
+        ),
+        null => PrimaryButton(label: context.l10n.notificationsGotIt, onPressed: () => Navigator.of(context).pop()),
+      },
     );
   }
 

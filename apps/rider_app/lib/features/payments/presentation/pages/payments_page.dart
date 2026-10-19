@@ -1,7 +1,10 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../app/router/app_routes.dart';
+import '../../../damage_charges/presentation/widgets/damage_charge_widgets.dart';
 import '../../domain/entities/payments_overview.dart';
 import '../providers/payments_provider.dart';
 import '../widgets/payments_widgets.dart';
@@ -60,10 +63,23 @@ class PaymentsPage extends ConsumerWidget {
             children: [
               Text(Fmt.money(payments.amountDue), style: AppText.numericLarge.copyWith(color: AppColors.primary)),
               const Gap.md(),
+              if (payments.damageDue > 0) ...[
+                KeyValueRow(
+                  label: context.l10n.paymentRentAndFees,
+                  value: Fmt.money(payments.rentDue),
+                  icon: Icons.electric_scooter_rounded,
+                ),
+                KeyValueRow(
+                  label: context.l10n.damageChargesTitle,
+                  value: Fmt.money(payments.damageDue),
+                  valueColor: AppColors.danger,
+                  icon: Icons.car_crash_rounded,
+                ),
+              ],
               if (payments.isOverdue)
                 KeyValueRow(
                   label: context.l10n.paymentsOverdue,
-                  value: Fmt.money(payments.overdueAmount),
+                  value: Fmt.money(payments.rentOverdue),
                   valueColor: AppColors.danger,
                   icon: Icons.warning_amber_rounded,
                 ),
@@ -78,6 +94,23 @@ class PaymentsPage extends ConsumerWidget {
             ],
           ),
         ),
+      const Gap.lg(),
+      ModuleCard(
+        title: context.l10n.damageChargesTitle,
+        leading: const IconTile(icon: Icons.car_crash_rounded, tone: AppColors.danger, solid: true, size: 28),
+        actionLabel: context.l10n.damageChargesSeeAll,
+        onAction: () => context.push(Routes.damageCharges),
+        child: payments.damageCount > 0
+            ? DamageChargesNotice(
+                amount: payments.damageDue,
+                count: payments.damageCount,
+                onTap: () => context.push(Routes.damageCharges),
+              )
+            : Text(
+                context.l10n.damageChargesNoUnpaid,
+                style: AppText.bodySmall.copyWith(fontSize: 12.5, color: AppColors.textMuted),
+              ),
+      ),
       const Gap.lg(),
       ModuleCard(
         title: context.l10n.paymentsAutoPay,

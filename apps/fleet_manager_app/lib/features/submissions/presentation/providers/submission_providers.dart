@@ -58,6 +58,6 @@ final submissionProvider = FutureProvider.autoDispose.family<VehicleSubmissionDt
   (ref, id) async => (await ref.watch(getSubmissionProvider)(id)).getOrThrow(),
 );
 
-final penaltyPricesProvider = FutureProvider.autoDispose<List<PenaltyPriceDto>>(
-  (ref) async => (await ref.watch(getPenaltyPricesProvider)(const NoParams())).getOrThrow(),
+final penaltyPricesProvider = FutureProvider.autoDispose.family<List<PenaltyPriceDto>, String>(
+  (ref, submissionId) async => (await ref.watch(getPenaltyPricesProvider)(submissionId)).getOrThrow(),
 );

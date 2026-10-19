@@ -8,9 +8,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
 import '../../allocation_dependencies.dart';
+import '../providers/allocation_board_provider.dart';
 import '../providers/deployment_detail_provider.dart';
 import '../widgets/allocation_widgets.dart';
+import '../widgets/deployed_dialog.dart';
 import '../widgets/rental_plan_widgets.dart';
+import '../widgets/team_lead_widgets.dart';
+import '../widgets/work_partner_widgets.dart';
 
 class AllocationDetailPage extends ConsumerWidget {
   const AllocationDetailPage({required this.requestId, super.key});
@@ -19,6 +23,19 @@ class AllocationDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(deploymentDetailProvider(requestId), (previous, next) async {
+      final DeploymentStatus? before = previous?.value?.status;
+      final DeploymentDetail? after = next.value;
+      if (before == null || before.isDeployed || after == null || !after.status.isDeployed) return;
+      await DeployedDialog.show(
+        context,
+        riderName: after.request.rider?.name ?? context.l10n.allocationRider,
+        vehicleNumber: after.request.fleet?.vehicleNumber ?? '—',
+      );
+      if (!context.mounted) return;
+      ref.invalidate(allocationBoardProvider);
+      context.go(Routes.allocations);
+    });
     final AsyncValue<DeploymentDetail> detail = ref.watch(deploymentDetailProvider(requestId));
 
     if (detail.isLoading && !detail.hasValue) {
@@ -98,12 +115,6 @@ class _Loaded extends ConsumerWidget {
                         },
                       ),
               ),
-              KeyValueRow(
-                label: context.l10n.allocationRiderCode,
-                value: (rider?.riderCode ?? '').isEmpty ? '—' : rider!.riderCode!,
-                icon: Icons.badge_rounded,
-              ),
-              KeyValueRow(label: context.l10n.commonCity, value: rider?.city ?? '—', icon: Icons.place_rounded),
               if (request.createdAt != null)
                 KeyValueRow(
                   label: context.l10n.allocationReserved2,
@@ -114,13 +125,21 @@ class _Loaded extends ConsumerWidget {
           ),
         ),
         const Gap.lg(),
+        TeamLeadCard(
+          teamLead: detail.teamLead?.teamLead,
+          loaded: detail.teamLead != null,
+          onChange: detail.canChangeTeamLead && !detail.busy
+              ? () => _chooseTeamLead(context, ref, allocationId, detail.teamLead?.teamLead?.id)
+              : null,
+        ),
+        const Gap.lg(),
         ModuleCard(
           title: context.l10n.commonVehicle,
           leading: const IconTile(icon: Icons.electric_scooter_rounded, solid: true, size: 28),
           child: Column(
             children: [
               KeyValueRow(
-                label: context.l10n.allocationNumber,
+                label: context.l10n.scooterVehicleNumber,
                 value: fleet?.vehicleNumber ?? '—',
                 icon: Icons.confirmation_number_rounded,
               ),
@@ -130,9 +149,14 @@ class _Loaded extends ConsumerWidget {
                 icon: Icons.two_wheeler_rounded,
               ),
               KeyValueRow(
-                label: context.l10n.allocationFleetCode,
-                value: fleet?.fleetCode ?? '—',
+                label: context.l10n.maintenanceChassis,
+                value: (fleet?.chassisNumber ?? '').isEmpty ? '—' : fleet!.chassisNumber,
                 icon: Icons.qr_code_rounded,
+              ),
+              KeyValueRow(
+                label: context.l10n.scooterBatteryType,
+                value: _titleCase(fleet?.batteryType),
+                icon: Icons.battery_charging_full_rounded,
               ),
             ],
           ),
@@ -181,6 +205,29 @@ _PlanStep _planStep(DeploymentDetail detail) {
   }
   if (commercial?.awaitingRider ?? request.commercialOfferId != null) return _PlanStep.awaitingRider;
   return _PlanStep.choose;
+}
+
+String _titleCase(String? code) {
+  final String raw = (code ?? '').trim();
+  if (raw.isEmpty) return '—';
+  return raw
+      .split(RegExp(r'[_\s]+'))
+      .where((word) => word.isNotEmpty)
+      .map((word) => word[0].toUpperCase() + word.substring(1).toLowerCase())
+      .join(' ');
+}
+
+Future<void> _chooseTeamLead(BuildContext context, WidgetRef ref, String allocationId, String? currentId) async {
+  final TeamLeadOption? picked = await TeamLeadPicker.show(context, selectedId: currentId);
+  if (picked == null || picked.id == currentId || !context.mounted) return;
+  final Result<void> result = await ref.read(deploymentDetailProvider(allocationId).notifier).assignTeamLead(picked);
+  if (!context.mounted) return;
+  switch (result) {
+    case Ok<void>():
+      AppSnack.success(context, context.l10n.allocationTeamLeadSaved);
+    case Err<void>(:final failure):
+      AppSnack.error(context, failure.message);
+  }
 }
 
 Future<void> _choosePlan(BuildContext context, WidgetRef ref, String allocationId) async {
@@ -653,10 +700,9 @@ class _Footer extends ConsumerWidget {
   }
 
   Future<void> _submitPdi(BuildContext context, WidgetRef ref) async {
-    final ({String partner, List<PdiChecklistItem> items})? result = await _PdiSheet.show(context);
+    final ({WorkPartnerOption partner, List<PdiChecklistItem> items})? result = await _PdiSheet.show(context);
     if (result == null || !context.mounted) return;
-    final Result<void> submitted = await _notifier(ref)
-        .submitPdi(workPartnerName: result.partner, checklist: result.items);
+    final Result<void> submitted = await _notifier(ref).submitPdi(workPartner: result.partner, checklist: result.items);
     if (context.mounted) _announce(context, submitted, context.l10n.allocationInspectionSentRider2);
   }
 
@@ -727,8 +773,8 @@ class _PdiSheet extends StatefulWidget {
 
   final List<String> defaults;
 
-  static Future<({String partner, List<PdiChecklistItem> items})?> show(BuildContext context) =>
-      AppSheet.show<({String partner, List<PdiChecklistItem> items})>(
+  static Future<({WorkPartnerOption partner, List<PdiChecklistItem> items})?> show(BuildContext context) =>
+      AppSheet.show<({WorkPartnerOption partner, List<PdiChecklistItem> items})>(
         context,
         title: context.l10n.commonPreDeliveryInspection,
         subtitle: context.l10n.allocationChecklistRiderWillAcceptItem,
@@ -750,14 +796,13 @@ class _PdiSheet extends StatefulWidget {
 }
 
 class _PdiSheetState extends State<_PdiSheet> {
-  final TextEditingController _partner = TextEditingController();
+  WorkPartnerOption? _partner;
   final TextEditingController _custom = TextEditingController();
   late final Map<String, bool> _items = {for (final String label in widget.defaults) label: true};
   String? _error;
 
   @override
   void dispose() {
-    _partner.dispose();
     _custom.dispose();
     super.dispose();
   }
@@ -774,10 +819,19 @@ class _PdiSheetState extends State<_PdiSheet> {
     });
   }
 
+  Future<void> _pickPartner() async {
+    final WorkPartnerOption? picked = await WorkPartnerPicker.show(context, selectedId: _partner?.id);
+    if (picked == null || !mounted) return;
+    setState(() {
+      _partner = picked;
+      _error = null;
+    });
+  }
+
   void _submit() {
-    final String partner = _partner.text.trim();
-    if (partner.isEmpty) {
-      setState(() => _error = context.l10n.allocationNameWorkPartnerWorkshopInspected);
+    final WorkPartnerOption? partner = _partner;
+    if (partner == null) {
+      setState(() => _error = context.l10n.allocationWorkPartnerNeeded);
       return;
     }
     final List<PdiChecklistItem> items = [
@@ -796,12 +850,14 @@ class _PdiSheetState extends State<_PdiSheet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        AppTextField(
+        AppPickerField(
           label: context.l10n.allocationWorkPartner,
-          hint: context.l10n.allocationHintWorkPartner,
-          helper: context.l10n.allocationWorkshopTechnicianWhoInspectedVehicle,
-          controller: _partner,
-          onChanged: (_) => setState(() => _error = null),
+          value: _partner?.name,
+          hint: context.l10n.allocationChooseWorkPartner,
+          helper: context.l10n.allocationWorkPartnerHelper,
+          prefixIcon: Icons.storefront_rounded,
+          required: true,
+          onTap: _pickPartner,
         ),
         const Gap.lg(),
         GroupLabel(context.l10n.allocationChecklistTapToggleMandatory),

@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/session/rider_session_provider.dart';
 import '../../domain/entities/vehicle.dart';
 import '../providers/vehicle_provider.dart';
 import '../widgets/scooter_widgets.dart';
@@ -13,6 +16,24 @@ class ScooterPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<Vehicle> vehicle = ref.watch(vehicleProvider);
+
+    if (vehicle.error is NotFoundFailure) {
+      return Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: EmptyState(
+            title: context.l10n.scooterNoScooterTitle,
+            message: context.l10n.scooterNoScooterMessage,
+            icon: Icons.electric_scooter_rounded,
+            actionLabel: context.l10n.commonRefresh,
+            onAction: () {
+              ref.invalidate(vehicleProvider);
+              unawaited(ref.read(riderSessionProvider.notifier).refreshState());
+            },
+          ),
+        ),
+      );
+    }
 
     if (vehicle.hasError) {
       return Scaffold(
@@ -68,7 +89,7 @@ class _VehicleCard extends StatelessWidget {
         decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.card),
         child: Row(
           children: [
-            const BrandIllustration(art: BrandArt.scooter, size: 84),
+            ScooterPhoto(url: vehicle.frontPhotoUrl, height: 84, width: 84),
             const SizedBox(width: Insets.lg),
             Expanded(
               child: Column(

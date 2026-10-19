@@ -5,6 +5,7 @@ import 'data/onboarding_repository_impl.dart';
 import 'domain/onboarding_repository.dart';
 import 'domain/usecases/apply_referral_code.dart';
 import 'domain/usecases/get_onboarding.dart';
+import 'domain/usecases/lookup_ifsc.dart';
 import 'domain/usecases/save_onboarding_step.dart';
 import 'domain/usecases/upload_onboarding_document.dart';
 
@@ -13,6 +14,7 @@ final onboardingRepositoryProvider = Provider<OnboardingRepository>(
     ref.watch(riderAppApiProvider),
     ref.watch(mediaApiProvider),
     ref.watch(referralApiProvider),
+    ref.watch(banksApiProvider),
   ),
 );
 
@@ -25,6 +27,8 @@ final saveOnboardingStepProvider = Provider<SaveOnboardingStep>(
 final uploadOnboardingDocumentProvider = Provider<UploadOnboardingDocument>(
   (ref) => UploadOnboardingDocument(ref.watch(onboardingRepositoryProvider)),
 );
+
+final lookupIfscProvider = Provider<LookupIfsc>((ref) => LookupIfsc(ref.watch(onboardingRepositoryProvider)));
 
 final applyReferralCodeProvider = Provider<ApplyReferralCode>(
   (ref) => ApplyReferralCode(ref.watch(onboardingRepositoryProvider)),

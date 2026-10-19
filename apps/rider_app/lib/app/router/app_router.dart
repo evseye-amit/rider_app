@@ -10,6 +10,8 @@ import '../../core/session/rider_session_provider.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_page.dart';
 import '../../features/battery_swap/presentation/pages/battery_swap_page.dart';
+import '../../features/damage_charges/presentation/pages/damage_charge_page.dart';
+import '../../features/damage_charges/presentation/pages/damage_charges_page.dart';
 import '../../features/deployment/presentation/pages/payment_page.dart';
 import '../../features/deployment/presentation/pages/pdi_page.dart';
 import '../../features/deployment/presentation/pages/plan_acceptance_page.dart';
@@ -208,7 +210,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.notifications,
         name: 'notifications',
-        builder: (context, state) => const NotificationsPage(),
+        builder: (context, state) => const NotificationsPage(actionFor: _notificationAction),
       ),
       GoRoute(
         path: Routes.vehicleExchanges,
@@ -236,6 +238,16 @@ final routerProvider = Provider<GoRouter>((ref) {
         name: 'rideReturnDetail',
         builder: (context, state) => ReturnDetailPage(returnId: state.uri.queryParameters['id'] ?? ''),
       ),
+      GoRoute(
+        path: Routes.damageCharges,
+        name: 'damageCharges',
+        builder: (context, state) => const DamageChargesPage(),
+      ),
+      GoRoute(
+        path: Routes.damageChargeDetail,
+        name: 'damageChargeDetail',
+        builder: (context, state) => DamageChargePage(chargeId: state.uri.queryParameters['id'] ?? ''),
+      ),
     ],
     errorBuilder: (context, state) => _RouteErrorPage(location: state.uri.toString()),
   );
@@ -256,6 +268,15 @@ String? _redirect(RiderStage stage, FirstRunStep? firstRun, String path) {
     RiderStage.active => path.startsWith(Routes.onboarding) || path.startsWith('/deployment') ? Routes.home : null,
   };
 }
+
+NotificationAction? _notificationAction(BuildContext context, AppNotification item) => switch (item.data) {
+  {'route': 'SUBMISSION_PENALTY_PAYMENT', 'invoiceId': final String invoiceId} when invoiceId.isNotEmpty => (
+    label: context.l10n.damageChargesViewAndPay,
+    icon: Icons.receipt_long_rounded,
+    onTap: () => context.push('${Routes.damageChargeDetail}?id=$invoiceId'),
+  ),
+  _ => null,
+};
 
 String? _firstRunRoute(FirstRunStep? step) => switch (step) {
   FirstRunStep.company => Routes.company,

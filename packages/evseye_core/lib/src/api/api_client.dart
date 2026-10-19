@@ -227,6 +227,7 @@ class ApiClient {
 }
 
 String? _messageForCode(String? code) => switch (code) {
+  'PENALTY_CATALOGUE_CHANGED' => ActiveLocale.strings.submissionPriceChanged,
   'EXCHANGE_DISABLED' => ActiveLocale.strings.exchangeErrorDisabled,
   'AGREEMENT_NOT_FOUND' => ActiveLocale.strings.exchangeErrorNoRental,
   'AGREEMENT_NOT_ACTIVE' => ActiveLocale.strings.exchangeErrorRentalInactive,
@@ -304,6 +305,7 @@ String? _messageForCode(String? code) => switch (code) {
   'REFERRAL_FEATURE_NOT_ENABLED' => ActiveLocale.strings.referErrorNotEnabled,
   'REFERRAL_NOT_FOUND' => ActiveLocale.strings.referErrorNotFound,
   'RENTAL_PLAN_REQUIRED' => ActiveLocale.strings.planErrorRequired,
+  'ALLOCATION_TEAM_LEAD_REQUIRED' => ActiveLocale.strings.allocationTeamLeadRequired,
   'RENTAL_AGREEMENT_NOT_READY' => ActiveLocale.strings.planErrorAgreementNotReady,
   'RENTAL_AGREEMENT_NOT_ACTIVE' => ActiveLocale.strings.planErrorAgreementNotActive,
   'ALLOCATION_AGREEMENT_MISMATCH' => ActiveLocale.strings.planErrorAgreementMismatch,

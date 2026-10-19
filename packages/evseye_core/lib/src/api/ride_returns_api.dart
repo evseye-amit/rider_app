@@ -325,27 +325,39 @@ class PenaltyPriceDto {
   const PenaltyPriceDto({
     required this.id,
     required this.code,
+    required this.name,
     required this.category,
     required this.description,
     required this.amount,
     required this.currency,
+    this.isSpare = false,
+    this.evidenceRequired = true,
+    this.version,
   });
 
   factory PenaltyPriceDto.fromJson(Map<String, dynamic> json) => PenaltyPriceDto(
     id: jsonText(json['id']),
     code: jsonText(json['code']),
+    name: jsonTextOrNull(json['name']) ?? jsonText(json['description']),
     category: PenaltyCategory.parse(json['category']),
     description: jsonText(json['description']),
     amount: jsonNum(json['amount']),
     currency: jsonTextOrNull(json['currency']) ?? 'INR',
+    isSpare: jsonBool(json['isSpare']),
+    evidenceRequired: json['evidenceRequired'] != false,
+    version: jsonIntOrNull(json['version']),
   );
 
   final String id;
   final String code;
+  final String name;
   final PenaltyCategory category;
   final String description;
   final num amount;
   final String currency;
+  final bool isSpare;
+  final bool evidenceRequired;
+  final int? version;
 }
 
 class PenaltyLineInput {

@@ -38,6 +38,9 @@ class AppL10nHi extends AppL10n {
   String get allocationAssign => 'सौंपें';
 
   @override
+  String get allocationAssignTeamLead => 'टीम लीड असाइन करें';
+
+  @override
   String get allocationAssignVehicle => 'गाड़ी सौंपें';
 
   @override
@@ -45,6 +48,9 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get allocationBackDesk => 'डेस्क पर वापस';
+
+  @override
+  String get allocationBackToAllocations => 'आवंटन पर वापस जाएँ';
 
   @override
   String get allocationBatteryChargeCharger => 'बैटरी चार्ज और चार्जर';
@@ -56,6 +62,9 @@ class AppL10nHi extends AppL10n {
   String get allocationChangePlan => 'प्लान बदलें';
 
   @override
+  String get allocationChangeTeamLead => 'टीम लीड बदलें';
+
+  @override
   String get allocationChecklistRiderWillAcceptItem => 'वह सूची जिसे राइडर एक-एक करके स्वीकार करेगा';
 
   @override
@@ -63,6 +72,12 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get allocationChoosePlan => 'रेंटल प्लान चुनें';
+
+  @override
+  String get allocationChooseTeamLead => 'टीम लीड चुनें';
+
+  @override
+  String get allocationChooseWorkPartner => 'काम का साथी चुनें';
 
   @override
   String get allocationComplete2 => 'पूरा हुआ।';
@@ -95,16 +110,27 @@ class AppL10nHi extends AppL10n {
   String get allocationCouldNotLoadHandover => 'यह हैंडओवर नहीं खुल पाया';
 
   @override
+  String get allocationCouldNotLoadTeamLeads => 'टीम लीड लोड नहीं हो सके';
+
+  @override
+  String get allocationCouldNotLoadWorkPartners => 'काम के साथी लोड नहीं हो सके';
+
+  @override
   String get allocationDeAllocateVehicle => 'गाड़ी वापस लें';
 
   @override
   String get allocationDeployed => 'तैनात';
 
   @override
-  String get allocationEveryOnboardedRiderHubsHas => 'आपके हब के हर जुड़े राइडर के पास गाड़ी है या हैंडओवर चल रहा है।';
+  String allocationDeployedMessage(String vehicle, String rider) {
+    return '$vehicle अब $rider के साथ सड़क पर है।';
+  }
 
   @override
-  String get allocationFleetCode => 'फ़्लीट कोड';
+  String get allocationDeployedTitle => 'स्कूटर तैनात हो गया!';
+
+  @override
+  String get allocationEveryOnboardedRiderHubsHas => 'आपके हब के हर जुड़े राइडर के पास गाड़ी है या हैंडओवर चल रहा है।';
 
   @override
   String get allocationFleetOnlyBody => 'स्कूटर देने का काम हब के फ़्लीट मैनेजर लॉगिन से होता है।';
@@ -121,9 +147,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get allocationHelmetHandedOver => 'हेलमेट सौंपा गया';
-
-  @override
-  String get allocationHintWorkPartner => 'जैसे शर्मा ऑटो वर्क्स';
 
   @override
   String get allocationHornMirrors => 'हॉर्न और शीशे';
@@ -159,9 +182,6 @@ class AppL10nHi extends AppL10n {
   String get allocationMove => 'अब आपकी बारी';
 
   @override
-  String get allocationNameWorkPartnerWorkshopInspected => 'उस काम के साथी या वर्कशॉप का नाम बताएं जिसने गाड़ी जांची';
-
-  @override
   String get allocationNoBatteryPlan => 'बैटरी प्लान नहीं';
 
   @override
@@ -169,6 +189,12 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get allocationNoHandoversProgress => 'कोई हैंडओवर नहीं चल रहा';
+
+  @override
+  String get allocationNoTeamLeads => 'कोई टीम लीड नहीं मिला';
+
+  @override
+  String get allocationNoTeamLeadsMessage => 'अपने एडमिन से एक सक्रिय टीम लीड जोड़ने को कहें।';
 
   @override
   String get allocationNothingCurrentlyAllocatedRider => 'अभी किसी राइडर को कुछ नहीं दिया गया है।';
@@ -180,7 +206,10 @@ class AppL10nHi extends AppL10n {
   String get allocationNoVehiclesReady => 'कोई गाड़ी तैयार नहीं';
 
   @override
-  String get allocationNumber => 'नंबर';
+  String get allocationNoWorkPartners => 'कोई काम का साथी नहीं मिला';
+
+  @override
+  String get allocationNoWorkPartnersMessage => 'अपने एडमिन से काम के साथी जोड़ने को कहें।';
 
   @override
   String get allocationPaymentReceived => 'भुगतान मिल गया?';
@@ -297,9 +326,6 @@ class AppL10nHi extends AppL10n {
   String get allocationRider => 'राइडर';
 
   @override
-  String get allocationRiderCode => 'राइडर कोड';
-
-  @override
   String get allocationRiderCompletingSafetyTrainingTheir =>
       'राइडर अपने ऐप में सुरक्षा ट्रेनिंग पूरी कर रहा है। हर अनिवार्य पाठ पूरा होते ही स्कूटर सौंप दिया जाएगा।';
 
@@ -334,6 +360,12 @@ class AppL10nHi extends AppL10n {
   String get allocationSearchRiderVehicleNumber => 'राइडर या गाड़ी नंबर खोजें';
 
   @override
+  String get allocationSearchTeamLead => 'नाम, मोबाइल या कर्मचारी कोड से खोजें';
+
+  @override
+  String get allocationSearchWorkPartner => 'काम के साथी खोजें';
+
+  @override
   String get allocationSendPaymentRequest => 'भुगतान की मांग भेजें';
 
   @override
@@ -341,6 +373,32 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get allocationStartReturn => 'वापसी शुरू करें';
+
+  @override
+  String get allocationTeamLead => 'टीम लीड';
+
+  @override
+  String get allocationTeamLeadMissing =>
+      'अभी कोई टीम लीड नहीं है। इसके बिना हैंडओवर पूरा नहीं हो सकता, इसलिए एक चुनें।';
+
+  @override
+  String get allocationTeamLeadNotSaved =>
+      'स्कूटर रिज़र्व हो गया, लेकिन टीम लीड सेव नहीं हुआ। इसे अलॉटमेंट पेज पर असाइन करें।';
+
+  @override
+  String get allocationTeamLeadPickerSubtitle => 'टीम लीड इस राइडर की देखरेख करेगा।';
+
+  @override
+  String get allocationTeamLeadRequired =>
+      'इस हैंडओवर के लिए पहले एक टीम लीड चाहिए। फ्लीट मैनेजर इसे अलॉटमेंट पेज पर असाइन कर सकते हैं।';
+
+  @override
+  String allocationTeamLeadRiderCount(int count) {
+    return 'राइडर: $count';
+  }
+
+  @override
+  String get allocationTeamLeadSaved => 'टीम लीड सेव हो गया';
 
   @override
   String get allocationTyresPressure => 'टायर और हवा';
@@ -393,7 +451,10 @@ class AppL10nHi extends AppL10n {
   String get allocationWorkPartner => 'काम का साथी';
 
   @override
-  String get allocationWorkshopTechnicianWhoInspectedVehicle => 'जिस वर्कशॉप या तकनीशियन ने गाड़ी जांची';
+  String get allocationWorkPartnerHelper => 'वह कंपनी जिसके लिए यह राइडर काम करेगा।';
+
+  @override
+  String get allocationWorkPartnerNeeded => 'राइडर का काम का साथी चुनें';
 
   @override
   String get allocationWritePdiChecklistRiderAccepts =>
@@ -511,7 +572,7 @@ class AppL10nHi extends AppL10n {
   String get checkInConfirmedByOtp => 'आपके कोड से पुष्टि हुई।';
 
   @override
-  String get checkInCouldNotLoad => 'चेक-इन लोड नहीं हो सका।';
+  String get checkInCouldNotLoad => 'सबमिशन लोड नहीं हो सका।';
 
   @override
   String get checkInDeepReport => 'अंतिम मैकेनिक जाँच';
@@ -547,7 +608,7 @@ class AppL10nHi extends AppL10n {
   String get checkInStatusSubmitted => 'पुष्टि बाकी';
 
   @override
-  String get checkInTitle => 'स्कूटर चेक-इन';
+  String get checkInTitle => 'स्कूटर सबमिशन';
 
   @override
   String get checkInTotal => 'कुल शुल्क';
@@ -956,6 +1017,123 @@ class AppL10nHi extends AppL10n {
   @override
   String get consentSubtitle =>
       'कृपया पढ़ें कि हम आपकी जानकारी कैसे इकट्ठा और इस्तेमाल करते हैं, फिर आगे बढ़ने के लिए अपनी सहमति दें।';
+
+  @override
+  String get damageChargeAmountToPay => 'भरने की राशि';
+
+  @override
+  String get damageChargeCancelledBody => 'यह शुल्क रद्द कर दिया गया है। आपको इसे भरने की ज़रूरत नहीं है।';
+
+  @override
+  String get damageChargeCouldNotLoad => 'यह शुल्क लोड नहीं हो सका';
+
+  @override
+  String get damageChargeCreditUsed => 'इस्तेमाल हुआ क्रेडिट';
+
+  @override
+  String damageChargeEach(String amount) {
+    return '$amount प्रति नग';
+  }
+
+  @override
+  String get damageChargeLeftToPay => 'बाकी राशि';
+
+  @override
+  String get damageChargePaidBody => 'आपने यह शुल्क पूरा भर दिया है।';
+
+  @override
+  String get damageChargePaidMessage => 'भुगतान हो गया। धन्यवाद!';
+
+  @override
+  String get damageChargePaidSoFar => 'अब तक भुगतान';
+
+  @override
+  String get damageChargePaidTitle => 'पूरा भुगतान हो गया';
+
+  @override
+  String damageChargePay(String amount) {
+    return '$amount भरें';
+  }
+
+  @override
+  String damageChargePayAtHubMessage(String amount) {
+    return 'आपके वॉलेट से पूरी राशि नहीं भरी जा सकी। ऐप में अभी ऑनलाइन भुगतान उपलब्ध नहीं है, इसलिए बाकी $amount अपने हब पर भरें।';
+  }
+
+  @override
+  String get damageChargePayAtHubTitle => 'बाकी राशि हब पर भरें';
+
+  @override
+  String get damageChargePayConfirmMessage => 'पहले आपके वॉलेट बैलेंस का इस्तेमाल होगा।';
+
+  @override
+  String damageChargePayConfirmTitle(String amount) {
+    return '$amount भरें?';
+  }
+
+  @override
+  String get damageChargePaymentsOff => 'अभी भुगतान बंद हैं। कृपया बाद में फिर कोशिश करें, या अपने हब पर भरें।';
+
+  @override
+  String damageChargeRaisedOn(String date) {
+    return '$date को लगाया गया';
+  }
+
+  @override
+  String get damageChargesAll => 'सभी';
+
+  @override
+  String get damageChargesCouldNotLoad => 'नुकसान के शुल्क लोड नहीं हो सके';
+
+  @override
+  String get damageChargesNoneMessage => 'स्कूटर लौटाते या बदलते समय हब को नुकसान मिलता है, तो उसका शुल्क यहाँ दिखेगा।';
+
+  @override
+  String get damageChargesNoneTitle => 'कोई नुकसान शुल्क नहीं';
+
+  @override
+  String get damageChargesNothingToPay => 'भरने के लिए कुछ नहीं';
+
+  @override
+  String get damageChargesNothingToPayMessage => 'आपका कोई नुकसान शुल्क बकाया नहीं है।';
+
+  @override
+  String get damageChargesNoUnpaid => 'कोई नुकसान शुल्क बकाया नहीं';
+
+  @override
+  String get damageChargesSeeAll => 'सभी देखें';
+
+  @override
+  String get damageChargeStatusCancelled => 'रद्द';
+
+  @override
+  String get damageChargeStatusPaid => 'भुगतान हो गया';
+
+  @override
+  String get damageChargeStatusPartlyPaid => 'आंशिक भुगतान';
+
+  @override
+  String get damageChargesTitle => 'नुकसान के शुल्क';
+
+  @override
+  String damageChargesToPay(int count) {
+    return '$count भरने हैं';
+  }
+
+  @override
+  String get damageChargesUnpaid => 'बकाया';
+
+  @override
+  String get damageChargesViewAndPay => 'देखें और भरें';
+
+  @override
+  String get damageChargeTitle => 'नुकसान का शुल्क';
+
+  @override
+  String get damageChargeTotal => 'कुल शुल्क';
+
+  @override
+  String get damageChargeWhatWasCharged => 'किस चीज़ का शुल्क';
 
   @override
   String get deallocAccessoriesReturned => 'लौटाए गए सामान';
@@ -1498,7 +1676,7 @@ class AppL10nHi extends AppL10n {
   String get exchangeCompleted => 'पूरा हुआ';
 
   @override
-  String get exchangeConsent => 'मैंने नई शर्तें पढ़ ली हैं और मैं सहमत हूँ';
+  String get exchangeConsent => 'मैंने यह ऑफ़र पढ़ लिया है और मैं इससे सहमत हूँ';
 
   @override
   String get exchangeCouldNotLoad => 'बदलने की जानकारी नहीं मिली';
@@ -1648,7 +1826,7 @@ class AppL10nHi extends AppL10n {
 
   @override
   String exchangeNextBringIn(String date) {
-    return '$date को अपना मौजूदा स्कूटर चुने गए हब पर लाएँ। हब टीम उसे चेक-इन करेगी।';
+    return '$date को अपना मौजूदा स्कूटर चुने गए हब पर लाएँ। हब टीम एक्सचेंज शुरू करेगी।';
   }
 
   @override
@@ -1749,9 +1927,6 @@ class AppL10nHi extends AppL10n {
   String get exchangeRaised => 'कब माँगी';
 
   @override
-  String get exchangeReadTerms => 'शर्तें पढ़ें';
-
-  @override
   String get exchangeReason => 'वजह';
 
   @override
@@ -1839,7 +2014,7 @@ class AppL10nHi extends AppL10n {
   String get exchangeStatusCancelled => 'रद्द';
 
   @override
-  String get exchangeStatusCheckingIn => 'चेक-इन हो रहा है';
+  String get exchangeStatusCheckingIn => 'एक्सचेंज हो रहा है';
 
   @override
   String get exchangeStatusChoosing => 'स्कूटर चुना जा रहा है';
@@ -1946,9 +2121,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get fleetStatusReturning => 'वापसी हो रही है';
-
-  @override
-  String get homeCategory => 'श्रेणी';
 
   @override
   String get homeCouldNotLoadDashboard => 'आपका डैशबोर्ड नहीं खुल पाया';
@@ -2110,7 +2282,8 @@ class AppL10nHi extends AppL10n {
   String get hubSubmissionsInQueue => 'कतार में सबमिशन';
 
   @override
-  String get hubSubmissionsInQueueInfo => 'इस हब पर बाकी रिटर्न और एक्सचेंज, जिनके वाहन की जाँच अभी पूरी नहीं हुई है।';
+  String get hubSubmissionsInQueueInfo =>
+      'इस हब पर बाकी रिटर्न और एक्सचेंज, जिनके वाहन का सबमिशन अभी पूरा नहीं हुआ है।';
 
   @override
   String get hubUnderMaintenanceFleet => 'मेंटेनेंस में फ़्लीट';
@@ -2455,6 +2628,49 @@ class AppL10nHi extends AppL10n {
   String get onboardingAttached => 'जुड़ गया';
 
   @override
+  String get onboardingBankAccount => 'बैंक खाता';
+
+  @override
+  String get onboardingBankAccountNeeded => 'अपना खाता नंबर डालें और पुष्टि के लिए फिर से टाइप करें।';
+
+  @override
+  String get onboardingBankAccountTooShort => 'यह खाता नंबर बहुत छोटा लग रहा है।';
+
+  @override
+  String get onboardingBankBranch => 'शाखा';
+
+  @override
+  String get onboardingBankCity => 'शहर';
+
+  @override
+  String get onboardingBankIfsc => 'IFSC कोड';
+
+  @override
+  String get onboardingBankIfscFailed => 'अभी यह IFSC जाँचा नहीं जा सका। नीचे अपने बैंक की जानकारी भरें।';
+
+  @override
+  String get onboardingBankIfscHelper => '11 अक्षर। यह आपकी पासबुक या चेक पर मिलेगा।';
+
+  @override
+  String get onboardingBankIfscHint => 'उदा. SBIN0001234';
+
+  @override
+  String get onboardingBankIfscNotFound =>
+      'इस IFSC के लिए कोई बैंक नहीं मिला। कोड जाँचें, या नीचे अपने बैंक की जानकारी भरें।';
+
+  @override
+  String get onboardingBankIfscPending => 'अपना IFSC डालें और बैंक दिखने तक रुकें।';
+
+  @override
+  String get onboardingBankName => 'बैंक का नाम';
+
+  @override
+  String get onboardingBankProof => 'बैंक प्रमाण (पासबुक या रद्द चेक)';
+
+  @override
+  String get onboardingBankState => 'राज्य';
+
+  @override
   String get onboardingCheckEverythingBeforeSubmitCan =>
       'जमा करने से पहले सब जांच लें। आप कोई भी चरण अब भी बदल सकते हैं।';
 
@@ -2493,6 +2709,11 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get onboardingExitOnboarding => 'फ़ॉर्म से बाहर निकलें?';
+
+  @override
+  String onboardingFieldRequired(String field) {
+    return '$field ज़रूरी है';
+  }
 
   @override
   String get onboardingGoOnboarding => 'फ़ॉर्म पर जाएं';
@@ -2700,18 +2921,21 @@ class AppL10nHi extends AppL10n {
   String get pdiHintTyreWorn => 'जैसे अगला टायर तय सीमा से ज़्यादा घिसा है';
 
   @override
-  String pdiInspectedBy(String partner) {
-    return '$partner ने जांचा';
+  String pdiWorkPartner(String partner) {
+    return 'काम का साथी: $partner';
   }
 
   @override
   String get planAccept => 'प्लान स्वीकार करें';
 
   @override
+  String get planAdvanceRental => 'अग्रिम किराया';
+
+  @override
   String get planBatteryDeposit => 'बैटरी सिक्योरिटी डिपॉज़िट';
 
   @override
-  String get planConsent => 'मैंने यह प्लान और इसकी शर्तें पढ़ ली हैं और मैं इनसे सहमत हूँ';
+  String get planConsent => 'मैंने यह प्लान पढ़ लिया है और मैं इससे सहमत हूँ';
 
   @override
   String get planCustom => 'कस्टम प्लान';
@@ -2812,9 +3036,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get planScooterDeposit => 'स्कूटर सिक्योरिटी डिपॉज़िट';
-
-  @override
-  String get planTermsTitle => 'प्लान की शर्तें';
 
   @override
   String planUsageRate(String rate, String unit) {
@@ -3515,7 +3736,7 @@ class AppL10nHi extends AppL10n {
   String get returnsNoteCancelled => 'आपने यह वापसी रद्द कर दी। आपका किराया पहले की तरह चलता रहेगा।';
 
   @override
-  String get returnsNoteCheckInDone => 'वापसी बंद हुई। नीचे की चेक-इन रिपोर्ट में कोई भी शुल्क दिखता है।';
+  String get returnsNoteCheckInDone => 'वापसी बंद हुई। नीचे की सबमिशन रिपोर्ट में कोई भी शुल्क दिखता है।';
 
   @override
   String get returnsNoteCheckingIn =>
@@ -3526,7 +3747,7 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get returnsNoteFinalChecks =>
-      'आपका स्कूटर चेक-इन हो गया है और आपका किराया खत्म हो गया है। मैकेनिक अंतिम जाँच कर रहा है, कुछ और मिलने पर आपसे पुष्टि माँगी जाएगी।';
+      'आपके स्कूटर का सबमिशन हो गया है और आपका किराया खत्म हो गया है। मैकेनिक अंतिम जाँच कर रहा है, कुछ और मिलने पर आपसे पुष्टि माँगी जाएगी।';
 
   @override
   String get returnsNoteInspecting =>
@@ -3541,7 +3762,7 @@ class AppL10nHi extends AppL10n {
 
   @override
   String returnsNoteRequested(String date) {
-    return '$date को स्कूटर चुने हुए हब पर ले जाएँ। हब टीम उसे जमा कर लेगी।';
+    return '$date को स्कूटर चुने हुए हब पर ले जाएँ। हब टीम सबमिशन शुरू करेगी।';
   }
 
   @override
@@ -3639,7 +3860,7 @@ class AppL10nHi extends AppL10n {
   String get returnsStatusCancelled => 'रद्द';
 
   @override
-  String get returnsStatusCheckingIn => 'चेक-इन हो रहा है';
+  String get returnsStatusCheckingIn => 'सबमिशन हो रहा है';
 
   @override
   String get returnsStatusClosed => 'बंद';
@@ -3660,7 +3881,7 @@ class AppL10nHi extends AppL10n {
   String get returnsStatusRequested => 'वापसी का अनुरोध';
 
   @override
-  String get returnsStepCheckIn => 'स्कूटर चेक-इन हुआ';
+  String get returnsStepCheckIn => 'स्कूटर सबमिट हुआ';
 
   @override
   String get returnsStepClosed => 'वापसी पूरी';
@@ -3785,6 +4006,12 @@ class AppL10nHi extends AppL10n {
   String get scooterNoScooterHasBeenAllocated => 'आपको अभी कोई स्कूटर नहीं दिया गया है।';
 
   @override
+  String get scooterNoScooterMessage => 'जब आपका फ्लीट मैनेजर आपको स्कूटर देगा, उसकी जानकारी यहाँ दिखेगी।';
+
+  @override
+  String get scooterNoScooterTitle => 'अभी कोई स्कूटर नहीं';
+
+  @override
   String get scooterOdometerService => 'ओडोमीटर और सर्विस';
 
   @override
@@ -3821,7 +4048,7 @@ class AppL10nHi extends AppL10n {
   String get scooterWhoLooksAfter => 'आपका ध्यान कौन रखता है';
 
   @override
-  String get submissionAddCharge => 'शुल्क जोड़ें';
+  String get submissionAddDamagedItem => 'खराब पार्ट जोड़ें';
 
   @override
   String get submissionBypass => 'कोड इस्तेमाल नहीं हो सकता?';
@@ -3863,36 +4090,19 @@ class AppL10nHi extends AppL10n {
   String get submissionCancelReportTitle => 'यह रिपोर्ट रद्द करें?';
 
   @override
-  String get submissionChargeDetails => 'विवरण';
-
-  @override
-  String get submissionChargeDetailsHint => 'नुकसान कहाँ है, या क्या गायब है?';
-
-  @override
-  String get submissionChargeEvidenceNeeded => 'इस शुल्क के सबूत के लिए कम से कम एक फ़ोटो चुनें।';
-
-  @override
   String get submissionCharges => 'शुल्क';
-
-  @override
-  String get submissionChargesHint => 'हर खराब या गायब चीज़ के लिए शुल्क जोड़ें। कुछ वसूलना न हो तो खाली छोड़ दें।';
 
   @override
   String get submissionChassis => 'चेसिस';
 
   @override
-  String get submissionChecklistNeeded => 'गायब चीज़ों के लिए सबूत के तौर पर वापसी चेकलिस्ट की फ़ोटो चाहिए।';
-
-  @override
   String get submissionChecksComplete => 'सभी मैकेनिक जाँच पूरी हैं';
 
   @override
-  String get submissionChecksCompleteConfirm =>
-      'इससे इस स्कूटर की मैकेनिक जाँच बंद हो जाएगी। आप और रिपोर्ट नहीं जोड़ पाएँगे।';
+  String get submissionChooseSparePart => 'खराब पार्ट चुनें';
 
   @override
-  String get submissionChecksCompleteHint =>
-      'तभी चालू करें जब और जाँच की ज़रूरत न हो। इसके बाद और रिपोर्ट नहीं जोड़ी जा सकतीं।';
+  String get submissionChooseSparePartHint => 'कीमतें आपकी स्पेयर पार्ट्स सूची से आती हैं।';
 
   @override
   String get submissionCodeNotSent => 'कोड भेजा नहीं जा सका। फिर कोशिश करें या कारण दर्ज करें।';
@@ -3928,13 +4138,17 @@ class AppL10nHi extends AppL10n {
   String get submissionConfirmTitle => 'रिपोर्ट की पुष्टि';
 
   @override
-  String get submissionCouldNotLoad => 'यह चेक-इन लोड नहीं हो सका';
+  String get submissionCouldNotLoad => 'यह सबमिशन लोड नहीं हो सका';
 
   @override
-  String get submissionDetailsNeeded => 'इस शुल्क का विवरण जोड़ें।';
+  String get submissionCouldNotLoadParts => 'स्पेयर पार्ट्स लोड नहीं हो सके';
 
   @override
-  String get submissionEditCharge => 'शुल्क बदलें';
+  String get submissionDamagedItems => 'नुकसान वाले पार्ट्स';
+
+  @override
+  String get submissionDamagedItemsHint =>
+      'स्पेयर पार्ट्स की सूची से हर खराब पार्ट जोड़ें। उसकी कीमत अपने आप भर जाएगी।';
 
   @override
   String get submissionEvidence => 'सबूत की फ़ोटो';
@@ -3951,11 +4165,7 @@ class AppL10nHi extends AppL10n {
   String get submissionEvidenceNeeded => 'कम से कम एक सबूत फ़ोटो चुनें।';
 
   @override
-  String get submissionExtraPhotos => 'नुकसान और अतिरिक्त फ़ोटो';
-
-  @override
-  String get submissionExtraPhotosHint =>
-      'किसी भी नुकसान की नज़दीकी फ़ोटो जोड़ें। आप उन्हें रिपोर्ट में शुल्क के साथ जोड़ सकते हैं।';
+  String get submissionExchangeStarted => 'एक्सचेंज शुरू हुआ';
 
   @override
   String get submissionFindings => 'जाँच के नतीजे';
@@ -3974,7 +4184,27 @@ class AppL10nHi extends AppL10n {
   String get submissionImposeTitle => 'यह रिपोर्ट लागू करें?';
 
   @override
-  String get submissionMechanicName => 'मैकेनिक का नाम';
+  String get submissionItemNote => 'नोट (वैकल्पिक)';
+
+  @override
+  String get submissionItemNoteHint => 'नुकसान कहाँ है?';
+
+  @override
+  String get submissionItemPhotoNeeded => 'इस पार्ट की कम से कम एक फ़ोटो लें।';
+
+  @override
+  String get submissionItemPhotoOptionalHint =>
+      'इस पार्ट के लिए फ़ोटो ज़रूरी नहीं है, पर राइडर के सवाल होने पर यह काम आती है।';
+
+  @override
+  String get submissionItemPhotoRequiredHint =>
+      'इस पार्ट के लिए सबूत की फ़ोटो ज़रूरी है। नुकसान की साफ़ नज़दीकी फ़ोटो लें।';
+
+  @override
+  String get submissionMaintenanceDetails => 'क्या ठीक करना है? (वैकल्पिक)';
+
+  @override
+  String get submissionMechanicName => 'जमा करने वाले / मैकेनिक का नाम';
 
   @override
   String get submissionNameNeeded => 'मैकेनिक का नाम लिखें';
@@ -3983,7 +4213,7 @@ class AppL10nHi extends AppL10n {
   String get submissionNextComplete => 'सभी जाँच पूरी हो गईं। यहाँ और कुछ नहीं करना है।';
 
   @override
-  String get submissionNextDeep => 'स्कूटर चेक-इन हो गया। अंतिम मैकेनिक जाँच पूरी होने पर उसे दर्ज करें।';
+  String get submissionNextDeep => 'स्कूटर सबमिट हो गया। अंतिम मैकेनिक जाँच पूरी होने पर उसे दर्ज करें।';
 
   @override
   String get submissionNextLabel => 'अगला कदम';
@@ -4003,16 +4233,19 @@ class AppL10nHi extends AppL10n {
   String get submissionNextReview => 'राइडर के साथ रिपोर्ट और शुल्क देखें, फिर उसे लागू करें।';
 
   @override
-  String get submissionNoPhotosYet => 'अभी कोई फ़ोटो नहीं। पहले चेक-इन स्क्रीन पर फ़ोटो लें।';
+  String get submissionNoDamagedItems => 'कोई खराब पार्ट नहीं जोड़ा गया, इसलिए राइडर से कोई शुल्क नहीं लिया जाएगा।';
 
   @override
   String get submissionNoPrices => 'अभी कोई पेनल्टी कीमत सेट नहीं है। डैशबोर्ड पर जोड़ने के लिए एडमिन से कहें।';
 
   @override
+  String get submissionNoSparePartMatch => 'आपकी खोज से कोई पार्ट नहीं मिला';
+
+  @override
   String get submissionNothingToConfirm => 'पुष्टि के लिए कुछ नहीं';
 
   @override
-  String get submissionNothingToConfirmBody => 'इस चेक-इन पर कोड का इंतज़ार कर रही कोई लागू रिपोर्ट नहीं है।';
+  String get submissionNothingToConfirmBody => 'इस सबमिशन पर कोड का इंतज़ार कर रही कोई लागू रिपोर्ट नहीं है।';
 
   @override
   String get submissionPartyRider => 'राइडर';
@@ -4053,7 +4286,7 @@ class AppL10nHi extends AppL10n {
       'फ़ोटो लेने के लिए खाली स्लॉट पर टैप करें। ली गई फ़ोटो देखने के लिए उस पर टैप करें।';
 
   @override
-  String get submissionPickCharge => 'शुल्क चुनें';
+  String get submissionPriceChanged => 'किसी पार्ट की कीमत या फ़ोटो का नियम अभी बदला है। उसे हटाकर सूची से फिर जोड़ें।';
 
   @override
   String get submissionQuantity => 'मात्रा';
@@ -4066,6 +4299,9 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get submissionRecordReport => 'मैकेनिक रिपोर्ट दर्ज करें';
+
+  @override
+  String get submissionRemovePhoto => 'फ़ोटो हटाएँ';
 
   @override
   String submissionReportBy(String name) {
@@ -4082,34 +4318,29 @@ class AppL10nHi extends AppL10n {
   String get submissionReportSaved => 'रिपोर्ट सहेजी गई';
 
   @override
+  String get submissionReportSummary => 'सारांश';
+
+  @override
+  String get submissionReportSummaryHint =>
+      'सेव करने से पहले सबूत की फ़ोटो और शुल्क जाँच लें। रिपोर्ट लागू करने पर राइडर से ये शुल्क भरने को कहा जाएगा।';
+
+  @override
   String get submissionResendAll => 'कोड दोबारा भेजें';
 
   @override
   String get submissionRiderNote => 'राइडर का नोट';
 
   @override
-  String get submissionSafeNo => 'नहीं, काम की ज़रूरत है';
+  String get submissionSafeQuestion => 'स्कूटर की मौजूदा स्थिति';
 
   @override
-  String get submissionSafeNoHint => 'जाँच के बाद यह मेंटेनेंस में रहेगा।';
-
-  @override
-  String get submissionSafeQuestion => 'दोबारा इस्तेमाल के लिए सुरक्षित?';
-
-  @override
-  String get submissionSafetyNeeded => 'चुनें कि यह दोबारा इस्तेमाल के लिए सुरक्षित है या नहीं';
-
-  @override
-  String get submissionSafeYes => 'हाँ, सुरक्षित है';
-
-  @override
-  String get submissionSafeYesHint => 'जाँच पूरी होने पर यह फ़्लीट में वापस जा सकता है।';
+  String get submissionSafetyNeeded => 'स्कूटर की मौजूदा स्थिति चुनें';
 
   @override
   String get submissionsAll => 'सभी';
 
   @override
-  String get submissionSaveCharge => 'शुल्क सहेजें';
+  String get submissionSaveItem => 'पार्ट सहेजें';
 
   @override
   String get submissionSaveReport => 'रिपोर्ट सहेजें';
@@ -4118,7 +4349,7 @@ class AppL10nHi extends AppL10n {
   String get submissionsCouldNotLoad => 'वापसी और एक्सचेंज लोड नहीं हो सके';
 
   @override
-  String get submissionsDrawerSubtitle => 'वापस आए स्कूटर चेक-इन करें';
+  String get submissionsDrawerSubtitle => 'वापस आए स्कूटरों का सबमिशन शुरू करें';
 
   @override
   String submissionsDropOff(String date) {
@@ -4129,10 +4360,13 @@ class AppL10nHi extends AppL10n {
   String get submissionsDropOffDate => 'जमा करने की तारीख';
 
   @override
+  String get submissionSearchSpareParts => 'पार्ट के नाम या कोड से खोजें';
+
+  @override
   String get submissionsEmptyAll => 'आपके हब की वापसी और एक्सचेंज यहाँ दिखते हैं।';
 
   @override
-  String get submissionsEmptyChecks => 'कोई चेक-इन चल नहीं रहा है।';
+  String get submissionsEmptyChecks => 'कोई सबमिशन चल नहीं रहा है।';
 
   @override
   String get submissionsEmptyScheduled => 'अभी आपके हब पर कोई स्कूटर आना बाकी नहीं है।';
@@ -4168,18 +4402,18 @@ class AppL10nHi extends AppL10n {
   String get submissionsScheduled => 'निर्धारित';
 
   @override
-  String get submissionsSubtitle => 'राइडर्स जो स्कूटर आपके हब पर वापस लाते हैं, उन्हें चेक-इन करें।';
+  String get submissionsSubtitle => 'राइडर्स जो स्कूटर आपके हब पर वापस लाते हैं, उनका सबमिशन शुरू करें।';
 
   @override
   String submissionStaffReturnBody(String rider, String vehicle) {
-    return 'इससे $vehicle का चेक-इन अभी शुरू होगा। मैकेनिक की रिपोर्ट की पुष्टि होते ही $rider का किराया खत्म हो जाएगा।';
+    return 'इससे $vehicle का सबमिशन अभी शुरू होगा। मैकेनिक की रिपोर्ट की पुष्टि होते ही $rider का किराया खत्म हो जाएगा।';
   }
 
   @override
   String get submissionStaffReturnTitle => 'यह स्कूटर वापस लें?';
 
   @override
-  String get submissionStageCheckingIn => 'चेक-इन हो रहा है';
+  String get submissionStageCheckingIn => 'सबमिशन हो रहा है';
 
   @override
   String get submissionStageDone => 'पूरा';
@@ -4191,23 +4425,54 @@ class AppL10nHi extends AppL10n {
   String get submissionStageScheduled => 'निर्धारित';
 
   @override
-  String get submissionStart => 'चेक-इन शुरू करें';
+  String get submissionStart => 'सबमिशन शुरू करें';
 
   @override
   String get submissionStartBody =>
-      'राइडर स्कूटर के साथ हब पर आ जाए तब शुरू करें। चेक-इन पूरा होने तक स्कूटर दोबारा अलॉट नहीं हो सकता।';
+      'राइडर स्कूटर के साथ हब पर आ जाए तब शुरू करें। सबमिशन पूरा होने तक स्कूटर दोबारा अलॉट नहीं हो सकता।';
 
   @override
-  String get submissionStarted => 'चेक-इन शुरू हुआ';
+  String get submissionStartBodyExchange =>
+      'राइडर स्कूटर के साथ हब पर आ जाए तब शुरू करें। एक्सचेंज पूरा होने तक स्कूटर दोबारा अलॉट नहीं हो सकता।';
+
+  @override
+  String get submissionStarted => 'सबमिशन शुरू हुआ';
 
   @override
   String get submissionStartedAt => 'शुरू हुआ';
 
   @override
-  String get submissionStartTitle => 'चेक-इन शुरू करें';
+  String get submissionStartExchange => 'एक्सचेंज शुरू करें';
+
+  @override
+  String get submissionStartTitle => 'सबमिशन शुरू करें';
 
   @override
   String get submissionStatusCancelled => 'रद्द';
+
+  @override
+  String get submissionStatusMok => 'MOK मार्क करें';
+
+  @override
+  String get submissionStatusMokHint => 'मैकेनिकली ठीक। स्कूटर फ्लीट में वापस जाएगा।';
+
+  @override
+  String get submissionStatusRfd => 'RFD मार्क करें';
+
+  @override
+  String get submissionStatusRfdHint => 'तैनाती के लिए तैयार। स्कूटर फ्लीट में वापस जाएगा।';
+
+  @override
+  String get submissionStatusUmMajor => 'UM major मार्क करें';
+
+  @override
+  String get submissionStatusUmMajorHint => 'मेंटेनेंस में (बड़ी मरम्मत)। मरम्मत होने तक इसे अलॉट नहीं किया जा सकता।';
+
+  @override
+  String get submissionStatusUmMinor => 'UM minor मार्क करें';
+
+  @override
+  String get submissionStatusUmMinorHint => 'मेंटेनेंस में (छोटी मरम्मत)। मरम्मत होने तक इसे अलॉट नहीं किया जा सकता।';
 
   @override
   String get submissionsTitle => 'वापसी और एक्सचेंज';
@@ -4220,12 +4485,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get submissionSummaryNeeded => 'बताएँ कि मैकेनिक को क्या मिला';
-
-  @override
-  String get submissionUnsafeReason => 'यह सुरक्षित क्यों नहीं है?';
-
-  @override
-  String get submissionUnsafeReasonNeeded => 'बताएँ कि यह सुरक्षित क्यों नहीं है';
 
   @override
   String get submissionUseCode => 'इसके बजाय कोड इस्तेमाल करें';
@@ -4985,4 +5244,25 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get walletViewReceipt => 'रसीद';
+
+  @override
+  String get workPartnerEcommerce => 'ई-कॉमर्स';
+
+  @override
+  String get workPartnerFoodDelivery => 'फ़ूड डिलीवरी';
+
+  @override
+  String get workPartnerOnDemandLogistics => 'ऑन-डिमांड लॉजिस्टिक्स';
+
+  @override
+  String get workPartnerParcelLogistics => 'पार्सल लॉजिस्टिक्स';
+
+  @override
+  String get workPartnerPharmacy => 'फ़ार्मेसी और हेल्थकेयर';
+
+  @override
+  String get workPartnerQuickCommerce => 'क्विक कॉमर्स';
+
+  @override
+  String get workPartnerSpecialtyDelivery => 'स्पेशलिटी डिलीवरी';
 }

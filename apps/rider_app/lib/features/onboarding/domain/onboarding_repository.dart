@@ -9,6 +9,8 @@ abstract interface class OnboardingRepository {
 
   Future<Result<RemotePhoto>> uploadDocument({required String fieldCode, required File file});
 
+  Future<Result<IfscBankDetails>> lookupIfsc(String ifsc);
+
   Future<Result<void>> applyReferralCode(
     String input, {
     ReferralSource source = ReferralSource.referralCode,

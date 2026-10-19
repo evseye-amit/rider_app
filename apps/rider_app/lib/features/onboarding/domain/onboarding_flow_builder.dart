@@ -6,6 +6,30 @@ abstract final class OnboardingFlowBuilder {
   static const String referralCodeKey = 'REFERRAL_CODE';
   static const String referralAppliedKey = 'REFERRAL_CODE_APPLIED';
   static const String referralLockedKey = 'REFERRAL_CODE_LOCKED';
+  static const String bankIfscKey = 'RIDER_BANK_IFSC';
+  static const String bankIfscVerifiedKey = 'RIDER_BANK_IFSC_VERIFIED';
+  static const String bankIfscCheckedKey = 'RIDER_BANK_IFSC_CHECKED';
+  static const String bankIfscNoteKey = 'RIDER_BANK_IFSC_NOTE';
+  static const String bankNameKey = 'RIDER_BANK_NAME';
+  static const String bankBranchKey = 'RIDER_BANK_BRANCH';
+  static const String bankCityKey = 'RIDER_BANK_CITY';
+  static const String bankStateKey = 'RIDER_BANK_STATE';
+  static const String bankAccountKey = 'RIDER_BANK_ACCOUNT';
+  static const String bankProofCode = 'BANK_PROOF_DOCUMENT';
+
+  static const Map<String, String> bankFieldCodes = {
+    'BANK_ACCOUNT_NUMBER': bankAccountKey,
+    'IFSC_CODE': bankIfscKey,
+    'BANK_NAME': bankNameKey,
+    'BANK_BRANCH': bankBranchKey,
+    'BANK_CITY': bankCityKey,
+    'BANK_STATE': bankStateKey,
+  };
+
+  static const Set<String> _bankFeatures = {'CAPTURE_BANK_ACCOUNT', 'BANK_VERIFICATION', bankProofCode};
+
+  static bool isBankStep(OnboardingStepConfig step) =>
+      step.fields.any((field) => _bankFeatures.contains(field.featureCode));
 
   static UiFlowConfig build(RiderOnboardingConfig config, AppL10n l10n) {
     final List<OnboardingStepConfig> steps = config.steps;
@@ -36,6 +60,11 @@ abstract final class OnboardingFlowBuilder {
         if (config.document(f)?.isRejected ?? false) f,
     ];
     if (rejected.isNotEmpty) body.add(_rejectedBanner(rejected, l10n));
+
+    if (isBankStep(step)) {
+      body.addAll(_bankBody(config, step, l10n));
+      return _flowStep(step, body, const [], isLast: isLast, l10n: l10n);
+    }
 
     final List<UiNode> inputs = [for (final f in step.inputs) _input(f, l10n)];
     if (inputs.isNotEmpty) {
@@ -74,6 +103,16 @@ abstract final class OnboardingFlowBuilder {
       );
     }
 
+    return _flowStep(step, body, signatures, isLast: isLast, l10n: l10n);
+  }
+
+  static UiFlowStep _flowStep(
+    OnboardingStepConfig step,
+    List<UiNode> body,
+    List<UiNode> signatures, {
+    required bool isLast,
+    required AppL10n l10n,
+  }) {
     return UiFlowStep(
       key: step.stepCode,
       label: step.stepName,
@@ -97,6 +136,78 @@ abstract final class OnboardingFlowBuilder {
         ],
       ),
     );
+  }
+
+  static List<UiNode> _bankBody(RiderOnboardingConfig config, OnboardingStepConfig step, AppL10n l10n) {
+    final List<OnboardingFieldConfig> proofs = step.uploads.toList(growable: false);
+    return [
+      UiNode(
+        type: 'group',
+        props: {'title': l10n.onboardingBankAccount, 'icon': 'wallet', 'gap': 18},
+        children: [
+          UiNode(
+            type: 'bankIfscField',
+            id: bankIfscKey,
+            props: {
+              'key': bankIfscKey,
+              'checkedKey': bankIfscCheckedKey,
+              'foundKey': bankIfscVerifiedKey,
+              'noteKey': bankIfscNoteKey,
+              'detailKeys': [bankNameKey, bankBranchKey, bankCityKey, bankStateKey],
+            },
+            action: const UiAction(type: 'lookupIfsc'),
+            validations: [
+              ValidationRule(type: 'required', message: l10n.onboardingBankIfscPending),
+              const ValidationRule(type: 'ifsc'),
+              ValidationRule(type: 'match', value: bankIfscCheckedKey, message: l10n.onboardingBankIfscPending),
+            ],
+          ),
+          for (final (String key, String label, String icon) in [
+            (bankNameKey, l10n.onboardingBankName, 'bank'),
+            (bankBranchKey, l10n.onboardingBankBranch, 'home'),
+            (bankCityKey, l10n.onboardingBankCity, 'location'),
+            (bankStateKey, l10n.onboardingBankState, 'map'),
+          ])
+            UiNode(
+              type: 'textField',
+              id: key,
+              props: {'key': key, 'label': label, 'icon': icon, 'maxLength': 100},
+              visibleWhen: const UiCondition(field: bankIfscCheckedKey, isNotEmpty: true),
+              validations: [ValidationRule(type: 'required', message: l10n.onboardingFieldRequired(label))],
+            ),
+          UiNode(
+            type: 'bankAccountField',
+            id: bankAccountKey,
+            props: {'key': bankAccountKey},
+            validations: [
+              ValidationRule(type: 'required', message: l10n.onboardingBankAccountNeeded),
+              ValidationRule(type: 'minLength', value: 9, message: l10n.onboardingBankAccountTooShort),
+            ],
+          ),
+        ],
+      ),
+      UiNode(
+        type: 'group',
+        props: {'title': l10n.onboardingDocuments, 'icon': 'upload', 'gap': 14},
+        children: [
+          if (proofs.isEmpty)
+            UiNode(
+              type: 'upload',
+              id: bankProofCode,
+              props: {
+                'key': bankProofCode,
+                'label': l10n.onboardingBankProof,
+                'featureCode': bankProofCode,
+                'fieldCode': bankProofCode,
+                'required': false,
+              },
+              action: const UiAction(type: 'pickFile'),
+            )
+          else
+            for (final OnboardingFieldConfig f in proofs) _upload(f, config.document(f), l10n),
+        ],
+      ),
+    ];
   }
 
   static bool _expectsFutureDate(String code) {

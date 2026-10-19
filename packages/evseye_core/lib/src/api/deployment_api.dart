@@ -171,6 +171,7 @@ class DeploymentFleet {
     this.batterySerial,
     this.homeHubName,
     this.currentHubName,
+    this.frontPhotoUrl,
   });
 
   factory DeploymentFleet.fromJson(Map<String, dynamic> json) {
@@ -196,6 +197,7 @@ class DeploymentFleet {
       batterySerial: _first(json['batteryHistory'])?['battery']?['serialNumber']?.toString(),
       homeHubName: (json['homeHub'] as Map?)?['name']?.toString(),
       currentHubName: (json['currentHub'] as Map?)?['name']?.toString(),
+      frontPhotoUrl: (json['frontPhoto'] as Map?)?['url']?.toString(),
     );
   }
 
@@ -224,6 +226,7 @@ class DeploymentFleet {
   final String? batterySerial;
   final String? homeHubName;
   final String? currentHubName;
+  final String? frontPhotoUrl;
 }
 
 class DeploymentRider {
@@ -413,6 +416,66 @@ class DeploymentPayment {
   bool get isSubmitted => status == 'SUBMITTED';
   bool get isPaid => status == 'PAID';
   bool get isOpen => isPending || isSubmitted;
+}
+
+class WorkPartnerOption {
+  const WorkPartnerOption({required this.id, required this.name, this.code, this.category});
+
+  factory WorkPartnerOption.fromJson(Map<String, dynamic> json) => WorkPartnerOption(
+        id: json['id']?.toString() ?? '',
+        name: json['name']?.toString() ?? '',
+        code: json['code']?.toString(),
+        category: json['category']?.toString(),
+      );
+
+  final String id;
+  final String name;
+  final String? code;
+  final String? category;
+}
+
+class TeamLeadOption {
+  const TeamLeadOption({
+    required this.id,
+    required this.name,
+    this.userId,
+    this.mobile,
+    this.employeeCode,
+    this.designation,
+    this.assignedRiderCount,
+  });
+
+  factory TeamLeadOption.fromJson(Map<String, dynamic> json) => TeamLeadOption(
+        id: json['id']?.toString() ?? '',
+        name: json['name']?.toString() ?? '',
+        userId: json['userId']?.toString(),
+        mobile: json['mobile']?.toString(),
+        employeeCode: json['employeeCode']?.toString(),
+        designation: json['designation']?.toString(),
+        assignedRiderCount: (json['assignedRiderCount'] as num?)?.toInt(),
+      );
+
+  final String id;
+  final String name;
+  final String? userId;
+  final String? mobile;
+  final String? employeeCode;
+  final String? designation;
+  final int? assignedRiderCount;
+}
+
+class AllocationTeamLead {
+  const AllocationTeamLead({required this.allocationId, this.teamLead});
+
+  factory AllocationTeamLead.fromJson(Map<String, dynamic> json) => AllocationTeamLead(
+        allocationId: json['allocationId']?.toString() ?? '',
+        teamLead: json['teamLead'] is Map
+            ? TeamLeadOption.fromJson(Map<String, dynamic>.from(json['teamLead'] as Map))
+            : null,
+      );
+
+  final String allocationId;
+  final TeamLeadOption? teamLead;
 }
 
 class RiderDeployment {
@@ -707,6 +770,27 @@ class DeploymentApi {
             .toList(growable: false),
       );
 
+  Future<Result<List<TeamLeadOption>>> teamLeads({String? search}) => _client.get<List<TeamLeadOption>>(
+        '$_base/fleet-manager/team-leads',
+        query: {'limit': 100, if (search != null && search.trim().isNotEmpty) 'search': search.trim()},
+        parse: (data) => (data as List<dynamic>)
+            .whereType<Map>()
+            .map((e) => TeamLeadOption.fromJson(Map<String, dynamic>.from(e)))
+            .toList(growable: false),
+      );
+
+  Future<Result<AllocationTeamLead>> allocationTeamLead(String allocationId) => _client.get<AllocationTeamLead>(
+        '$_base/$allocationId/team-lead',
+        parse: (data) => AllocationTeamLead.fromJson(Map<String, dynamic>.from(data as Map)),
+      );
+
+  Future<Result<AllocationTeamLead>> assignTeamLead(String allocationId, String teamLeaderId) =>
+      _client.put<AllocationTeamLead>(
+        '$_base/$allocationId/team-lead',
+        body: {'teamLeaderId': teamLeaderId},
+        parse: (data) => AllocationTeamLead.fromJson(Map<String, dynamic>.from(data as Map)),
+      );
+
   Future<Result<DeploymentAllocation>> allocate({required String riderId, required String fleetId}) =>
       _client.post<DeploymentAllocation>(
         '$_base/fleet-manager/allocate',
@@ -743,14 +827,24 @@ class DeploymentApi {
         parse: (data) => AllocationEvidence.fromJson(Map<String, dynamic>.from(data as Map)),
       );
 
+  Future<Result<List<WorkPartnerOption>>> workPartners() => _client.get<List<WorkPartnerOption>>(
+        '/client/work-partners/active',
+        parse: (data) => (data as List<dynamic>)
+            .whereType<Map>()
+            .map((e) => WorkPartnerOption.fromJson(Map<String, dynamic>.from(e)))
+            .toList(growable: false),
+      );
+
   Future<Result<DeploymentWorkflow>> submitPdi(
     String allocationId, {
     required String workPartnerName,
     required List<PdiChecklistItem> checklist,
+    String? workPartnerId,
   }) =>
       _client.post<DeploymentWorkflow>(
         '$_base/$allocationId/pdi',
         body: {
+          'clientWorkPartnerId': ?workPartnerId,
           'workPartnerName': workPartnerName,
           'checklist': checklist.map((i) => i.toJson()).toList(growable: false),
         },

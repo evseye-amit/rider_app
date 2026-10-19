@@ -40,6 +40,7 @@ class ScooterRepositoryImpl implements ScooterRepository {
       teamLeadName: allocation.rider?.teamLeadName,
       colour: fleet.colour ?? '—',
       allocatedOn: allocation.allocatedAt ?? allocation.createdAt,
+      frontPhotoUrl: fleet.frontPhotoUrl,
       odometerKm: odometer,
 
       batteryPercent: 68,

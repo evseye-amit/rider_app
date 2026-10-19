@@ -57,6 +57,16 @@ class AllocationRepositoryImpl implements AllocationRepository {
       _deployments.allocate(riderId: riderId, fleetId: fleetId);
 
   @override
+  Future<Result<List<TeamLeadOption>>> getTeamLeads({String? search}) => _deployments.teamLeads(search: search);
+
+  @override
+  Future<Result<AllocationTeamLead>> getTeamLead(String allocationId) => _deployments.allocationTeamLead(allocationId);
+
+  @override
+  Future<Result<AllocationTeamLead>> assignTeamLead(String allocationId, String teamLeaderId) =>
+      _deployments.assignTeamLead(allocationId, teamLeaderId);
+
+  @override
   Future<Result<DeploymentAllocation>> getRequest(String allocationId) async {
     final Result<List<DeploymentAllocation>> queue = await _deployments.requests();
     if (queue case Ok<List<DeploymentAllocation>>(:final value)) {
@@ -111,11 +121,19 @@ class AllocationRepositoryImpl implements AllocationRepository {
   Future<Result<String>> photoUrl(String photoId) => _media.downloadUrl(photoId);
 
   @override
+  Future<Result<List<WorkPartnerOption>>> getWorkPartners() => _deployments.workPartners();
+
+  @override
   Future<Result<DeploymentWorkflow>> submitPdi(
     String allocationId, {
-    required String workPartnerName,
+    required WorkPartnerOption workPartner,
     required List<PdiChecklistItem> checklist,
-  }) => _deployments.submitPdi(allocationId, workPartnerName: workPartnerName, checklist: checklist);
+  }) => _deployments.submitPdi(
+    allocationId,
+    workPartnerName: workPartner.name,
+    workPartnerId: workPartner.id,
+    checklist: checklist,
+  );
 
   @override
   Future<Result<String>> startReturn({required String riderId, required String idempotencyKey, String? hubId}) async {
