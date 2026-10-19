@@ -256,12 +256,6 @@ abstract class AppL10n {
   /// **'Confirm you have received {amount} from the rider.'**
   String allocationConfirmReceivedAmount(String amount);
 
-  /// Confirms the vehicle's photos are on file.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirms the vehicle\'s photos are on file.'**
-  String get allocationConfirmsPhotos;
-
   /// Continue the handover
   ///
   /// In en, this message translates to:
@@ -399,12 +393,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Inspection sent to the rider'**
   String get allocationInspectionSentRider2;
-
-  /// Inspection and training
-  ///
-  /// In en, this message translates to:
-  /// **'Inspection and training'**
-  String get allocationInspectionTraining;
 
   /// Left side
   ///
@@ -712,12 +700,6 @@ abstract class AppL10n {
   /// **'Waiting for rider to accept'**
   String get allocationPlanWaitingButton;
 
-  /// You choose the rental plan; the rider accepts it, pays and submits the reference; you verify it.
-  ///
-  /// In en, this message translates to:
-  /// **'You choose the rental plan; the rider accepts it, pays and submits the reference; you verify it.'**
-  String get allocationRaiseDepositFeesRiderPays;
-
   /// Reason
   ///
   /// In en, this message translates to:
@@ -753,18 +735,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Enter at least 3 characters'**
   String get allocationRejectReasonNeeded;
-
-  /// Request the vehicle
-  ///
-  /// In en, this message translates to:
-  /// **'Request the vehicle'**
-  String get allocationRequestVehicle;
-
-  /// Reserved
-  ///
-  /// In en, this message translates to:
-  /// **'Reserved'**
-  String get allocationReserved;
 
   /// Reserved on
   ///
@@ -1012,12 +982,6 @@ abstract class AppL10n {
   /// **'Waiting for rider: training'**
   String get allocationWaitingRiderTraining;
 
-  /// What was allocated
-  ///
-  /// In en, this message translates to:
-  /// **'What was allocated'**
-  String get allocationWhatWasAllocated;
-
   /// Work partner
   ///
   /// In en, this message translates to:
@@ -1035,12 +999,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Choose the rider\'s work partner'**
   String get allocationWorkPartnerNeeded;
-
-  /// You write the PDI checklist; the rider accepts it and completes training.
-  ///
-  /// In en, this message translates to:
-  /// **'You write the PDI checklist; the rider accepts it and completes training.'**
-  String get allocationWritePdiChecklistRiderAccepts;
 
   /// Go home
   ///
@@ -2686,6 +2644,12 @@ abstract class AppL10n {
   /// **'Awaiting verification'**
   String get deploymentAwaitingVerification;
 
+  /// Message under Awaiting verification after the rider sends the payment
+  ///
+  /// In en, this message translates to:
+  /// **'Your fleet manager will verify it shortly.'**
+  String get deploymentAwaitingVerificationHint;
+
   /// Bank transfer
   ///
   /// In en, this message translates to:
@@ -3003,18 +2967,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Reference or receipt number'**
   String get deploymentReferenceReceiptNumber;
-
-  /// Reference submitted
-  ///
-  /// In en, this message translates to:
-  /// **'Reference submitted'**
-  String get deploymentReferenceSubmitted;
-
-  /// Reference submitted — waiting for verification
-  ///
-  /// In en, this message translates to:
-  /// **'Reference submitted — waiting for verification'**
-  String get deploymentReferenceSubmittedWaitingVerification;
 
   /// Required
   ///

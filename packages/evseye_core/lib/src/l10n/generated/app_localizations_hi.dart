@@ -95,9 +95,6 @@ class AppL10nHi extends AppL10n {
   }
 
   @override
-  String get allocationConfirmsPhotos => 'पक्का करता है कि गाड़ी की फ़ोटो दर्ज हैं।';
-
-  @override
   String get allocationContinueHandover => 'हैंडओवर जारी रखें';
 
   @override
@@ -168,9 +165,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get allocationInspectionSentRider2 => 'जांच राइडर को भेजी गई';
-
-  @override
-  String get allocationInspectionTraining => 'जांच और ट्रेनिंग';
 
   @override
   String get allocationLeftSide => 'बायां हिस्सा';
@@ -333,10 +327,6 @@ class AppL10nHi extends AppL10n {
   String get allocationPlanWaitingButton => 'राइडर की स्वीकृति का इंतज़ार';
 
   @override
-  String get allocationRaiseDepositFeesRiderPays =>
-      'आप रेंटल प्लान चुनते हैं; राइडर उसे स्वीकार करता है, पेमेंट करके रेफ़रेंस भेजता है; आप उसकी पुष्टि करते हैं।';
-
-  @override
   String get allocationReason => 'कारण';
 
   @override
@@ -353,12 +343,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get allocationRejectReasonNeeded => 'कम से कम 3 अक्षर लिखें';
-
-  @override
-  String get allocationRequestVehicle => 'गाड़ी मांगें';
-
-  @override
-  String get allocationReserved => 'रोकी गई';
 
   @override
   String get allocationReserved2 => 'रोकने की तिथि';
@@ -495,9 +479,6 @@ class AppL10nHi extends AppL10n {
   String get allocationWaitingRiderTraining => 'राइडर का इंतज़ार: ट्रेनिंग';
 
   @override
-  String get allocationWhatWasAllocated => 'क्या दिया गया था';
-
-  @override
   String get allocationWorkPartner => 'काम का साथी';
 
   @override
@@ -505,10 +486,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get allocationWorkPartnerNeeded => 'राइडर का काम का साथी चुनें';
-
-  @override
-  String get allocationWritePdiChecklistRiderAccepts =>
-      'आप जांच सूची बनाते हैं, राइडर उसे स्वीकार करता है और ट्रेनिंग पूरी करता है।';
 
   @override
   String get appGoHome => 'होम पर जाएं';
@@ -1369,6 +1346,9 @@ class AppL10nHi extends AppL10n {
   String get deploymentAwaitingVerification => 'जांच बाकी है';
 
   @override
+  String get deploymentAwaitingVerificationHint => 'आपके फ्लीट मैनेजर जल्द ही इसकी पुष्टि करेंगे।';
+
+  @override
   String get deploymentBankTransfer => 'बैंक ट्रांसफ़र';
 
   @override
@@ -1539,12 +1519,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get deploymentReferenceReceiptNumber => 'रेफ़रेंस या रसीद नंबर';
-
-  @override
-  String get deploymentReferenceSubmitted => 'रेफ़रेंस जमा हो गया';
-
-  @override
-  String get deploymentReferenceSubmittedWaitingVerification => 'रेफ़रेंस जमा हो गया, जांच बाकी है';
 
   @override
   String get deploymentRequired => 'ज़रूरी';

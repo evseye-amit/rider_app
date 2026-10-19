@@ -39,7 +39,7 @@ class _RiderVerificationPageState extends ConsumerState<RiderVerificationPage> {
     switch (result) {
       case Ok<String>(:final value) when value.isNotEmpty:
         if (!document.isPdf) {
-          await PhotoViewer.show(context, value);
+          await PhotoViewer.card(context, value, title: document.title);
           return;
         }
         final bool opened = await launchUrl(Uri.parse(value), mode: LaunchMode.externalApplication);
@@ -220,11 +220,7 @@ class _Documents extends StatelessWidget {
               onApprove: () => onReview(document, true),
               onReject: () => onReview(document, false),
             ),
-            if (document != value.last) ...[
-              const Gap.md(),
-              Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-              const Gap.md(),
-            ],
+            if (document != value.last) const Gap.md(),
           ],
         ],
       ),
@@ -243,7 +239,10 @@ class _Documents extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(context.l10n.verifyDocumentsHint, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45)),
+        Text(
+          context.l10n.verifyDocumentsHint,
+          style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45, color: AppColors.textMuted),
+        ),
         const Gap.md(),
         body,
       ],
@@ -284,11 +283,7 @@ class _References extends StatelessWidget {
               onApprove: () => onReview(reference, true),
               onReject: () => onReview(reference, false),
             ),
-            if (reference != value.last) ...[
-              const Gap.md(),
-              Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-              const Gap.md(),
-            ],
+            if (reference != value.last) const Gap.md(),
           ],
         ],
       ),
@@ -303,7 +298,10 @@ class _References extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(context.l10n.verifyReferencesHint, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45)),
+        Text(
+          context.l10n.verifyReferencesHint,
+          style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45, color: AppColors.textMuted),
+        ),
         const Gap.md(),
         body,
       ],
@@ -318,9 +316,9 @@ class _Loading extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        ShimmerBox(height: 96, borderRadius: Corners.brLg),
+        ShimmerBox(height: 116, borderRadius: Corners.brLg),
         Gap.md(),
-        ShimmerBox(height: 96, borderRadius: Corners.brLg),
+        ShimmerBox(height: 116, borderRadius: Corners.brLg),
       ],
     );
   }

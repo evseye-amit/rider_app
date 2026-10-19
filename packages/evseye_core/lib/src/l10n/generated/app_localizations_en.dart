@@ -95,9 +95,6 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get allocationConfirmsPhotos => 'Confirms the vehicle\'s photos are on file.';
-
-  @override
   String get allocationContinueHandover => 'Continue the handover';
 
   @override
@@ -169,9 +166,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationInspectionSentRider2 => 'Inspection sent to the rider';
-
-  @override
-  String get allocationInspectionTraining => 'Inspection and training';
 
   @override
   String get allocationLeftSide => 'Left side';
@@ -335,10 +329,6 @@ class AppL10nEn extends AppL10n {
   String get allocationPlanWaitingButton => 'Waiting for rider to accept';
 
   @override
-  String get allocationRaiseDepositFeesRiderPays =>
-      'You choose the rental plan; the rider accepts it, pays and submits the reference; you verify it.';
-
-  @override
   String get allocationReason => 'Reason';
 
   @override
@@ -355,12 +345,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationRejectReasonNeeded => 'Enter at least 3 characters';
-
-  @override
-  String get allocationRequestVehicle => 'Request the vehicle';
-
-  @override
-  String get allocationReserved => 'Reserved';
 
   @override
   String get allocationReserved2 => 'Reserved on';
@@ -496,9 +480,6 @@ class AppL10nEn extends AppL10n {
   String get allocationWaitingRiderTraining => 'Waiting for rider: training';
 
   @override
-  String get allocationWhatWasAllocated => 'What was allocated';
-
-  @override
   String get allocationWorkPartner => 'Work partner';
 
   @override
@@ -506,10 +487,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationWorkPartnerNeeded => 'Choose the rider\'s work partner';
-
-  @override
-  String get allocationWritePdiChecklistRiderAccepts =>
-      'You write the PDI checklist; the rider accepts it and completes training.';
 
   @override
   String get appGoHome => 'Go home';
@@ -1373,6 +1350,9 @@ class AppL10nEn extends AppL10n {
   String get deploymentAwaitingVerification => 'Awaiting verification';
 
   @override
+  String get deploymentAwaitingVerificationHint => 'Your fleet manager will verify it shortly.';
+
+  @override
   String get deploymentBankTransfer => 'Bank transfer';
 
   @override
@@ -1544,12 +1524,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentReferenceReceiptNumber => 'Reference or receipt number';
-
-  @override
-  String get deploymentReferenceSubmitted => 'Reference submitted';
-
-  @override
-  String get deploymentReferenceSubmittedWaitingVerification => 'Reference submitted — waiting for verification';
 
   @override
   String get deploymentRequired => 'Required';

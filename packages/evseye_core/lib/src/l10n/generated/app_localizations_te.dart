@@ -95,9 +95,6 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
-  String get allocationConfirmsPhotos => 'వాహనం ఫోటోలు నమోదయ్యాయని ఖరారు చేస్తుంది.';
-
-  @override
   String get allocationContinueHandover => 'అప్పగింత కొనసాగించండి';
 
   @override
@@ -168,9 +165,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationInspectionSentRider2 => 'తనిఖీ రైడర్‌కు పంపబడింది';
-
-  @override
-  String get allocationInspectionTraining => 'తనిఖీ మరియు శిక్షణ';
 
   @override
   String get allocationLeftSide => 'ఎడమ వైపు';
@@ -334,10 +328,6 @@ class AppL10nTe extends AppL10n {
   String get allocationPlanWaitingButton => 'రైడర్ అంగీకారం కోసం వేచి ఉంది';
 
   @override
-  String get allocationRaiseDepositFeesRiderPays =>
-      'మీరు అద్దె ప్లాన్ ఎంచుకుంటారు; రైడర్ దాన్ని అంగీకరించి, చెల్లించి రిఫరెన్స్ పంపుతారు; మీరు దాన్ని నిర్ధారిస్తారు.';
-
-  @override
   String get allocationReason => 'కారణం';
 
   @override
@@ -354,12 +344,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationRejectReasonNeeded => 'కనీసం 3 అక్షరాలు నమోదు చేయండి';
-
-  @override
-  String get allocationRequestVehicle => 'వాహనం అడగండి';
-
-  @override
-  String get allocationReserved => 'రిజర్వ్ చేయబడింది';
 
   @override
   String get allocationReserved2 => 'రిజర్వ్ చేసిన తేదీ';
@@ -496,9 +480,6 @@ class AppL10nTe extends AppL10n {
   String get allocationWaitingRiderTraining => 'రైడర్ కోసం వేచి ఉంది: శిక్షణ';
 
   @override
-  String get allocationWhatWasAllocated => 'ఏమి కేటాయించారు';
-
-  @override
   String get allocationWorkPartner => 'పని భాగస్వామి';
 
   @override
@@ -506,10 +487,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationWorkPartnerNeeded => 'రైడర్ పని భాగస్వామిని ఎంచుకోండి';
-
-  @override
-  String get allocationWritePdiChecklistRiderAccepts =>
-      'మీరు తనిఖీ జాబితా రాస్తారు, రైడర్ దాన్ని అంగీకరించి శిక్షణ పూర్తి చేస్తారు.';
 
   @override
   String get appGoHome => 'హోమ్‌కు వెళ్ళండి';
@@ -1373,6 +1350,9 @@ class AppL10nTe extends AppL10n {
   String get deploymentAwaitingVerification => 'ధృవీకరణ కోసం వేచి ఉంది';
 
   @override
+  String get deploymentAwaitingVerificationHint => 'మీ ఫ్లీట్ మేనేజర్ త్వరలో దీన్ని నిర్ధారిస్తారు.';
+
+  @override
   String get deploymentBankTransfer => 'బ్యాంక్ బదిలీ';
 
   @override
@@ -1546,12 +1526,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get deploymentReferenceReceiptNumber => 'రిఫరెన్స్ లేదా రసీదు నంబర్';
-
-  @override
-  String get deploymentReferenceSubmitted => 'రిఫరెన్స్ సమర్పించబడింది';
-
-  @override
-  String get deploymentReferenceSubmittedWaitingVerification => 'రిఫరెన్స్ సమర్పించారు, ధృవీకరణ కోసం వేచి ఉంది';
 
   @override
   String get deploymentRequired => 'అవసరం';

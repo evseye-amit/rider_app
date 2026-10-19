@@ -341,5 +341,91 @@ abstract final class PhotoViewer {
     ),
   );
 
+  static Future<void> card(BuildContext context, String url, {String? title}) => showDialog<void>(
+    context: context,
+    barrierColor: Colors.black54,
+    builder: (context) => _PhotoCard(url: url, title: title),
+  );
+
   const PhotoViewer._();
+}
+
+class _PhotoCard extends StatelessWidget {
+  const _PhotoCard({required this.url, this.title});
+
+  final String url;
+  final String? title;
+
+  static const double _placeholderHeight = 280;
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: AppColors.surface,
+      insetPadding: const EdgeInsets.symmetric(horizontal: Insets.gutter, vertical: Insets.x4l),
+      shape: const RoundedRectangleBorder(borderRadius: Corners.brXl),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(Insets.lg, Insets.xs, Insets.xs, Insets.xs),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    title ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.titleSmall.copyWith(fontSize: 14.5),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close_rounded),
+                  color: AppColors.textSecondary,
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+          ),
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(Insets.md, 0, Insets.md, Insets.md),
+              child: ClipRRect(
+                borderRadius: Corners.brLg,
+                child: ColoredBox(
+                  color: AppColors.surfaceMuted,
+                  child: InteractiveViewer(
+                    maxScale: 4,
+                    child: Image.network(
+                      url,
+                      fit: BoxFit.contain,
+                      loadingBuilder: (context, child, progress) => progress == null
+                          ? child
+                          : const SizedBox(
+                              height: _placeholderHeight,
+                              child: Center(
+                                child: SizedBox.square(
+                                  dimension: 24,
+                                  child: CircularProgressIndicator(strokeWidth: 2.5, color: AppColors.primary),
+                                ),
+                              ),
+                            ),
+                      errorBuilder: (_, _, _) => const SizedBox(
+                        height: _placeholderHeight,
+                        child: Center(
+                          child: Icon(Icons.image_not_supported_rounded, size: 32, color: AppColors.textMuted),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -113,10 +113,6 @@
       }
     }
   },
-  "allocationConfirmsPhotos": "Confirms the vehicle's photos are on file.",
-  "@allocationConfirmsPhotos": {
-    "description": "Confirms the vehicle's photos are on file."
-  },
   "allocationContinueHandover": "Continue the handover",
   "@allocationContinueHandover": {
     "description": "Continue the handover"
@@ -216,10 +212,6 @@
   "allocationInspectionSentRider2": "Inspection sent to the rider",
   "@allocationInspectionSentRider2": {
     "description": "Inspection sent to the rider"
-  },
-  "allocationInspectionTraining": "Inspection and training",
-  "@allocationInspectionTraining": {
-    "description": "Inspection and training"
   },
   "allocationLeftSide": "Left side",
   "@allocationLeftSide": {
@@ -430,10 +422,6 @@
   "@allocationPlanWaitingButton": {
     "description": "Waiting for rider to accept"
   },
-  "allocationRaiseDepositFeesRiderPays": "You choose the rental plan; the rider accepts it, pays and submits the reference; you verify it.",
-  "@allocationRaiseDepositFeesRiderPays": {
-    "description": "You choose the rental plan; the rider accepts it, pays and submits the reference; you verify it."
-  },
   "allocationReason": "Reason",
   "@allocationReason": {
     "description": "Reason"
@@ -457,14 +445,6 @@
   "allocationRejectReasonNeeded": "Enter at least 3 characters",
   "@allocationRejectReasonNeeded": {
     "description": "Error when the rejection reason is too short"
-  },
-  "allocationRequestVehicle": "Request the vehicle",
-  "@allocationRequestVehicle": {
-    "description": "Request the vehicle"
-  },
-  "allocationReserved": "Reserved",
-  "@allocationReserved": {
-    "description": "Reserved"
   },
   "allocationReserved2": "Reserved on",
   "@allocationReserved2": {
@@ -640,10 +620,6 @@
   "@allocationWaitingRiderTraining": {
     "description": "Waiting for rider: training"
   },
-  "allocationWhatWasAllocated": "What was allocated",
-  "@allocationWhatWasAllocated": {
-    "description": "What was allocated"
-  },
   "allocationWorkPartner": "Work partner",
   "@allocationWorkPartner": {
     "description": "Work partner"
@@ -655,10 +631,6 @@
   "allocationWorkPartnerNeeded": "Choose the rider's work partner",
   "@allocationWorkPartnerNeeded": {
     "description": "Error when no work partner is chosen"
-  },
-  "allocationWritePdiChecklistRiderAccepts": "You write the PDI checklist; the rider accepts it and completes training.",
-  "@allocationWritePdiChecklistRiderAccepts": {
-    "description": "You write the PDI checklist; the rider accepts it and completes training."
   },
   "appGoHome": "Go home",
   "@appGoHome": {
@@ -1832,6 +1804,10 @@
   "@deploymentAwaitingVerification": {
     "description": "Awaiting verification"
   },
+  "deploymentAwaitingVerificationHint": "Your fleet manager will verify it shortly.",
+  "@deploymentAwaitingVerificationHint": {
+    "description": "Message under Awaiting verification after the rider sends the payment"
+  },
   "deploymentBankTransfer": "Bank transfer",
   "@deploymentBankTransfer": {
     "description": "Bank transfer"
@@ -2053,14 +2029,6 @@
   "deploymentReferenceReceiptNumber": "Reference or receipt number",
   "@deploymentReferenceReceiptNumber": {
     "description": "Reference or receipt number"
-  },
-  "deploymentReferenceSubmitted": "Reference submitted",
-  "@deploymentReferenceSubmitted": {
-    "description": "Reference submitted"
-  },
-  "deploymentReferenceSubmittedWaitingVerification": "Reference submitted — waiting for verification",
-  "@deploymentReferenceSubmittedWaitingVerification": {
-    "description": "Reference submitted — waiting for verification"
   },
   "deploymentRequired": "Required",
   "@deploymentRequired": {

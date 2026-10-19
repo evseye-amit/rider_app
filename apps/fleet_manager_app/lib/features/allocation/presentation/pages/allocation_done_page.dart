@@ -28,9 +28,7 @@ class _AllocationDonePageState extends State<AllocationDonePage> with SingleTick
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      title: context.l10n.allocationVehicleReserved,
       showBack: false,
-
       footer: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -41,106 +39,23 @@ class _AllocationDonePageState extends State<AllocationDonePage> with SingleTick
                 ? () => context.go(Routes.allocations)
                 : () => context.go('${Routes.allocationDetail}?id=${widget.allocationId}'),
           ),
-          const Gap.md(),
-          SecondaryButton(
-            label: context.l10n.allocationBackDesk,
-            icon: Icons.swap_horiz_rounded,
-            onPressed: () => context.go(Routes.allocations),
-          ),
+          const Gap.sm(),
+          GhostButton(label: context.l10n.allocationBackDesk, onPressed: () => context.go(Routes.allocations)),
         ],
       ),
-      body: PageBody(
-        children: [
-          const Gap.lg(),
-          Center(
-            child: ScaleTransition(
-              scale: CurvedAnimation(parent: _controller, curve: Motion.spring),
-              child: ArtBlock(
-                art: BrandArt.success,
-                title: context.l10n.allocationVehicleReserved,
-                message: '${widget.vehicleNumber} is reserved for ${widget.riderName}. The handover starts now.',
-              ),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: Insets.gutter),
+          child: ScaleTransition(
+            scale: CurvedAnimation(parent: _controller, curve: Motion.spring),
+            child: ArtBlock(
+              art: BrandArt.success,
+              artSize: 112,
+              title: context.l10n.allocationVehicleReserved,
+              message: '${widget.vehicleNumber} · ${widget.riderName}',
             ),
           ),
-          const Gap.xxl(),
-          ModuleCard(
-            title: context.l10n.allocationWhatWasAllocated,
-            child: Row(
-              children: [
-                const IconTile(icon: Icons.person_rounded, tone: AppColors.primary, size: 38),
-                const SizedBox(width: Insets.md),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(widget.riderName, style: AppText.titleSmall.copyWith(fontSize: 14)),
-                      SizedBox(height: 2),
-                      Text('Vehicle ${widget.vehicleNumber}', style: AppText.bodySmall.copyWith(fontSize: 12)),
-                    ],
-                  ),
-                ),
-                StatusChip(label: context.l10n.allocationReserved, tone: StatusTone.brand, dense: true),
-              ],
-            ),
-          ),
-          Gap.lg(),
-          ModuleCard(
-            title: context.l10n.commonWhatHappensNext,
-            child: Column(
-              children: [
-                _NextStep(
-                  icon: Icons.electric_scooter_rounded,
-                  title: context.l10n.allocationRequestVehicle,
-                  message: context.l10n.allocationConfirmsPhotos,
-                ),
-                Gap.md(),
-                _NextStep(
-                  icon: Icons.receipt_long_rounded,
-                  title: context.l10n.commonPayment,
-                  message: context.l10n.allocationRaiseDepositFeesRiderPays,
-                ),
-                Gap.md(),
-                _NextStep(
-                  icon: Icons.fact_check_rounded,
-                  title: context.l10n.allocationInspectionTraining,
-                  message: context.l10n.allocationWritePdiChecklistRiderAccepts,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _NextStep extends StatelessWidget {
-  const _NextStep({required this.icon, required this.title, required this.message});
-
-  final IconData icon;
-  final String title;
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return AccentCard(
-      accent: AppColors.primary,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 19, color: AppColors.primary),
-          const SizedBox(width: Insets.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: AppText.titleSmall.copyWith(fontSize: 13.5)),
-                const SizedBox(height: 3),
-                Text(message, style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45)),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

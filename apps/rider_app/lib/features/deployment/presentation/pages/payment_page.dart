@@ -102,7 +102,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
           _uploaded.clear();
           _reference.clear();
         });
-        AppSnack.success(context, context.l10n.deploymentReferenceSubmittedWaitingVerification);
         unawaited(ref.read(deploymentProvider.notifier).refresh(silent: true));
       case Err<DeploymentPayment>(:final failure):
         setState(() => _error = failure.message);
@@ -160,6 +159,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
           ? null
           : '${fleet.vehicleNumber}${fleet.modelName == null ? '' : ' · ${fleet.modelName}'}',
       showBack: false,
+      centerTitle: submitted,
       body: RefreshIndicator(
         onRefresh: () async {
           await ref.read(deploymentProvider.notifier).refresh();
@@ -170,16 +170,16 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
           children: [
             if (payment == null)
               const ShimmerBox(height: 180, borderRadius: Corners.brXl)
+            else if (submitted)
+              _Submitted(
+                payment: payment,
+                adding: _adding,
+                onAdd: payment.receipts.length < _maxScreenshots ? () => _addAfterSubmit(allocationId) : null,
+              )
             else ...[
               _Bill(payment: payment),
               const Gap.lg(),
-              if (submitted)
-                _Submitted(
-                  payment: payment,
-                  adding: _adding,
-                  onAdd: payment.receipts.length < _maxScreenshots ? () => _addAfterSubmit(allocationId) : null,
-                )
-              else if (payment.needsSupport)
+              if (payment.needsSupport)
                 AccentCard(
                   accent: AppColors.warning,
                   child: Text(
@@ -333,64 +333,45 @@ class _Submitted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
+    final DateTime? submittedAt = payment.submittedAt;
     final VoidCallback? onAdd = this.onAdd;
+    final bool showReceipts = payment.receipts.isNotEmpty || onAdd != null;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const Gap.lg(),
         ArtBlock(
           art: BrandArt.success,
-          artSize: 140,
-          title: context.l10n.deploymentReferenceSubmitted,
-          message:
-              'Your fleet manager is checking ${payment.provider ?? 'the payment'} reference '
-              '${payment.providerReference ?? ''}. This screen moves on the moment it is verified.',
+          artSize: 112,
+          title: l10n.deploymentAwaitingVerification,
+          message: l10n.deploymentAwaitingVerificationHint,
         ),
-        const Gap.lg(),
+        const Gap.xl(),
         ModuleCard(
-          child: Column(
-            children: [
-              KeyValueRow(
-                label: context.l10n.deploymentPaidVia,
-                value: payment.provider ?? '—',
-                icon: Icons.payments_rounded,
-              ),
-              KeyValueRow(
-                label: context.l10n.deploymentReference,
-                value: payment.providerReference ?? '—',
-                icon: Icons.tag_rounded,
-              ),
-              if (payment.submittedAt != null)
-                KeyValueRow(
-                  label: context.l10n.deploymentSubmitted,
-                  value: Fmt.dateTime(payment.submittedAt!),
-                  icon: Icons.schedule_rounded,
-                ),
-              KeyValueRow(
-                label: context.l10n.commonStatus,
-                value: context.l10n.deploymentAwaitingVerification,
-                icon: Icons.hourglass_top_rounded,
-              ),
-            ],
-          ),
-        ),
-        const Gap.lg(),
-        ModuleCard(
-          title: payment.receipts.isEmpty ? context.l10n.deploymentReceiptTitle : context.l10n.deploymentReceiptsSent,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if (payment.receipts.isEmpty) ...[
-                Text(context.l10n.deploymentReceiptHint, style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45)),
+              KeyValueRow(label: l10n.commonTotal, value: Fmt.money(payment.amount)),
+              KeyValueRow(label: l10n.deploymentPaidVia, value: payment.provider ?? '—'),
+              KeyValueRow(label: l10n.deploymentReference, value: payment.providerReference ?? '—'),
+              if (submittedAt != null) KeyValueRow(label: l10n.deploymentSubmitted, value: Fmt.dateTime(submittedAt)),
+              if (showReceipts) ...[
+                const Gap.sm(),
+                Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
                 const Gap.md(),
+                GroupLabel(payment.receipts.isEmpty ? l10n.deploymentReceiptTitle : l10n.deploymentReceiptsSent),
+                const Gap.sm(),
+                Wrap(
+                  spacing: Insets.sm,
+                  runSpacing: Insets.sm,
+                  children: [
+                    for (final DeploymentPaymentReceipt receipt in payment.receipts)
+                      _ReceiptThumb(paymentId: payment.id, photoId: receipt.id),
+                    if (onAdd != null) _AddThumb(onTap: adding ? null : onAdd, busy: adding),
+                  ],
+                ),
               ],
-              Wrap(
-                spacing: Insets.sm,
-                runSpacing: Insets.sm,
-                children: [
-                  for (final DeploymentPaymentReceipt receipt in payment.receipts)
-                    _ReceiptThumb(paymentId: payment.id, photoId: receipt.id),
-                  if (onAdd != null) _AddThumb(onTap: adding ? null : onAdd, busy: adding),
-                ],
-              ),
             ],
           ),
         ),

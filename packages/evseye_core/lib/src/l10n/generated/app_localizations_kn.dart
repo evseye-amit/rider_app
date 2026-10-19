@@ -95,9 +95,6 @@ class AppL10nKn extends AppL10n {
   }
 
   @override
-  String get allocationConfirmsPhotos => 'ವಾಹನದ ಫೋಟೋಗಳು ದಾಖಲಾಗಿವೆ ಎಂದು ಖಚಿತಪಡಿಸುತ್ತದೆ.';
-
-  @override
   String get allocationContinueHandover => 'ಹಸ್ತಾಂತರ ಮುಂದುವರಿಸಿ';
 
   @override
@@ -169,9 +166,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationInspectionSentRider2 => 'ಪರಿಶೀಲನೆ ರೈಡರ್‌ಗೆ ಕಳುಹಿಸಲಾಗಿದೆ';
-
-  @override
-  String get allocationInspectionTraining => 'ಪರಿಶೀಲನೆ ಮತ್ತು ತರಬೇತಿ';
 
   @override
   String get allocationLeftSide => 'ಎಡಭಾಗ';
@@ -334,10 +328,6 @@ class AppL10nKn extends AppL10n {
   String get allocationPlanWaitingButton => 'ರೈಡರ್ ಒಪ್ಪಿಗೆಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ';
 
   @override
-  String get allocationRaiseDepositFeesRiderPays =>
-      'ನೀವು ಬಾಡಿಗೆ ಪ್ಲಾನ್ ಆಯ್ಕೆಮಾಡುತ್ತೀರಿ; ರೈಡರ್ ಅದನ್ನು ಒಪ್ಪಿ, ಪಾವತಿಸಿ ರೆಫರೆನ್ಸ್ ಕಳುಹಿಸುತ್ತಾರೆ; ನೀವು ಅದನ್ನು ಪರಿಶೀಲಿಸುತ್ತೀರಿ.';
-
-  @override
   String get allocationReason => 'ಕಾರಣ';
 
   @override
@@ -354,12 +344,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationRejectReasonNeeded => 'ಕನಿಷ್ಠ 3 ಅಕ್ಷರಗಳನ್ನು ನಮೂದಿಸಿ';
-
-  @override
-  String get allocationRequestVehicle => 'ವಾಹನ ಕೇಳಿ';
-
-  @override
-  String get allocationReserved => 'ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ';
 
   @override
   String get allocationReserved2 => 'ಕಾಯ್ದಿರಿಸಿದ ದಿನಾಂಕ';
@@ -496,9 +480,6 @@ class AppL10nKn extends AppL10n {
   String get allocationWaitingRiderTraining => 'ರೈಡರ್‌ಗಾಗಿ ಕಾಯುತ್ತಿದೆ: ತರಬೇತಿ';
 
   @override
-  String get allocationWhatWasAllocated => 'ಏನು ನೀಡಲಾಗಿತ್ತು';
-
-  @override
   String get allocationWorkPartner => 'ಕೆಲಸದ ಪಾಲುದಾರ';
 
   @override
@@ -506,10 +487,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationWorkPartnerNeeded => 'ರೈಡರ್‌ನ ಕೆಲಸದ ಪಾಲುದಾರರನ್ನು ಆಯ್ಕೆಮಾಡಿ';
-
-  @override
-  String get allocationWritePdiChecklistRiderAccepts =>
-      'ನೀವು ಪರಿಶೀಲನಾ ಪಟ್ಟಿ ಬರೆಯುತ್ತೀರಿ, ರೈಡರ್ ಅದನ್ನು ಒಪ್ಪಿ ತರಬೇತಿ ಮುಗಿಸುತ್ತಾರೆ.';
 
   @override
   String get appGoHome => 'ಮುಖಪುಟಕ್ಕೆ ಹೋಗಿ';
@@ -1375,6 +1352,9 @@ class AppL10nKn extends AppL10n {
   String get deploymentAwaitingVerification => 'ಪರಿಶೀಲನೆ ಬಾಕಿ ಇದೆ';
 
   @override
+  String get deploymentAwaitingVerificationHint => 'ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಶೀಘ್ರದಲ್ಲೇ ಇದನ್ನು ದೃಢೀಕರಿಸುತ್ತಾರೆ.';
+
+  @override
   String get deploymentBankTransfer => 'ಬ್ಯಾಂಕ್ ವರ್ಗಾವಣೆ';
 
   @override
@@ -1548,12 +1528,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get deploymentReferenceReceiptNumber => 'ಉಲ್ಲೇಖ ಅಥವಾ ರಸೀದಿ ಸಂಖ್ಯೆ';
-
-  @override
-  String get deploymentReferenceSubmitted => 'ಉಲ್ಲೇಖ ಸಲ್ಲಿಸಲಾಗಿದೆ';
-
-  @override
-  String get deploymentReferenceSubmittedWaitingVerification => 'ಉಲ್ಲೇಖ ಸಲ್ಲಿಸಲಾಗಿದೆ, ಪರಿಶೀಲನೆ ಬಾಕಿ ಇದೆ';
 
   @override
   String get deploymentRequired => 'ಅಗತ್ಯ';

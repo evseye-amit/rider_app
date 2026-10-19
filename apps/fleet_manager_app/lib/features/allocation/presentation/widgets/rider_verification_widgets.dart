@@ -46,65 +46,30 @@ class DocumentReviewTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> details = [
-      if (document.fieldLabel != document.title) document.fieldLabel,
-      if (document.uploadedAt case final DateTime uploaded) context.l10n.verifyUploadedOn(Fmt.date(uploaded)),
-    ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            IconTile(
-              icon: document.isPdf ? Icons.picture_as_pdf_rounded : Icons.badge_rounded,
-              tone: reviewTone(document.status).color,
-              size: 42,
-            ),
-            const SizedBox(width: Insets.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    document.title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.titleSmall.copyWith(fontSize: 14.5),
-                  ),
-                  if (details.isNotEmpty) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      details.join(' · '),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.bodySmall.copyWith(fontSize: 12),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            const SizedBox(width: Insets.sm),
-            ReviewStatusChip(status: document.status),
-          ],
+    final DateTime? uploaded = document.uploadedAt;
+    final bool canView = !busy && document.photoId != null;
+    return _ReviewCard(
+      leading: Pressable(
+        onTap: canView ? onView : null,
+        scale: 0.96,
+        child: IconTile(
+          icon: document.isPdf ? Icons.picture_as_pdf_rounded : Icons.description_rounded,
+          tone: AppColors.primary,
+          size: 40,
         ),
-        if (document.status == ReviewStatus.rejected && (document.rejectionReason ?? '').isNotEmpty) ...[
-          const Gap.sm(),
-          _ReasonNote(reason: document.rejectionReason!),
-        ],
-        const Gap.md(),
-        _ReviewActions(
-          busy: busy,
-          pending: document.status == ReviewStatus.pending,
-          lead: SecondaryButton(
-            label: context.l10n.verifyView,
-            icon: Icons.visibility_rounded,
-            size: AppButtonSize.small,
-            onPressed: busy || document.photoId == null ? null : onView,
-          ),
-          onApprove: onApprove,
-          onReject: onReject,
+      ),
+      title: document.title,
+      subtitle: uploaded == null ? null : context.l10n.verifyUploadedOn(Fmt.date(uploaded)),
+      status: document.status,
+      reason: document.status == ReviewStatus.rejected ? document.rejectionReason : null,
+      actions: [
+        _ReviewAction(
+          icon: Icons.visibility_rounded,
+          label: context.l10n.verifyView,
+          color: AppColors.primary,
+          onTap: canView ? onView : null,
         ),
+        if (document.status == ReviewStatus.pending) ..._decisions(context, busy, onApprove, onReject),
       ],
     );
   }
@@ -129,113 +94,195 @@ class ReferenceReviewTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? reviewer = reference.reviewedBy;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppAvatar(name: reference.name, size: 42),
-            const SizedBox(width: Insets.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    reference.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.titleSmall.copyWith(fontSize: 14.5),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    [reference.relation, Fmt.phone(reference.mobile)].where((part) => part.isNotEmpty).join(' · '),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.bodySmall.copyWith(fontSize: 12),
-                  ),
-                  if (reviewer != null && reviewer.isNotEmpty && reference.status != ReviewStatus.pending) ...[
-                    const SizedBox(height: 2),
-                    Text(
-                      context.l10n.verifyReviewedBy(reviewer),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            const SizedBox(width: Insets.sm),
-            ReviewStatusChip(status: reference.status),
-          ],
+    final String details = [
+      reference.relation,
+      Fmt.phone(reference.mobile),
+    ].where((part) => part.isNotEmpty).join(' · ');
+    return _ReviewCard(
+      leading: AppAvatar(name: reference.name, size: 40),
+      title: reference.name,
+      subtitle: details.isEmpty ? null : details,
+      note: reviewer != null && reviewer.isNotEmpty && reference.status != ReviewStatus.pending
+          ? context.l10n.verifyReviewedBy(reviewer)
+          : null,
+      status: reference.status,
+      reason: reference.status == ReviewStatus.rejected ? reference.rejectionReason : null,
+      actions: [
+        _ReviewAction(
+          icon: Icons.call_rounded,
+          label: context.l10n.ridersCall,
+          color: AppColors.primary,
+          onTap: reference.mobile.isEmpty ? null : onCall,
         ),
-        if (reference.status == ReviewStatus.rejected && (reference.rejectionReason ?? '').isNotEmpty) ...[
-          const Gap.sm(),
-          _ReasonNote(reason: reference.rejectionReason!),
-        ],
-        const Gap.md(),
-        _ReviewActions(
-          busy: busy,
-          pending: reference.status == ReviewStatus.pending,
-          lead: SecondaryButton(
-            label: context.l10n.ridersCall,
-            icon: Icons.call_rounded,
-            size: AppButtonSize.small,
-            onPressed: reference.mobile.isEmpty ? null : onCall,
-          ),
-          onApprove: onApprove,
-          onReject: onReject,
-        ),
+        if (reference.status == ReviewStatus.pending) ..._decisions(context, busy, onApprove, onReject),
       ],
     );
   }
 }
 
-class _ReviewActions extends StatelessWidget {
-  const _ReviewActions({
-    required this.busy,
-    required this.pending,
-    required this.lead,
-    required this.onApprove,
-    required this.onReject,
+List<Widget> _decisions(BuildContext context, bool busy, VoidCallback onApprove, VoidCallback onReject) => [
+  _ReviewAction(
+    icon: Icons.close_rounded,
+    label: context.l10n.verifyReject,
+    color: AppColors.danger,
+    onTap: busy ? null : onReject,
+  ),
+  _ReviewAction(
+    icon: Icons.check_rounded,
+    label: context.l10n.verifyApprove,
+    color: AppColors.success,
+    loading: busy,
+    onTap: busy ? null : onApprove,
+  ),
+];
+
+class _ReviewCard extends StatelessWidget {
+  const _ReviewCard({
+    required this.leading,
+    required this.title,
+    required this.status,
+    required this.actions,
+    this.subtitle,
+    this.note,
+    this.reason,
   });
 
-  final bool busy;
-  final bool pending;
-  final Widget lead;
-  final VoidCallback onApprove;
-  final VoidCallback onReject;
+  final Widget leading;
+  final String title;
+  final String? subtitle;
+  final String? note;
+  final ReviewStatus status;
+  final String? reason;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(child: lead),
-        if (pending) ...[
-          const SizedBox(width: Insets.sm),
-          Expanded(
-            child: SecondaryButton(
-              label: context.l10n.verifyReject,
-              icon: Icons.close_rounded,
-              size: AppButtonSize.small,
-              color: AppColors.danger,
-              onPressed: busy ? null : onReject,
+    final String? subtitle = this.subtitle;
+    final String? note = this.note;
+    final String? reason = this.reason;
+    return Container(
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: Corners.brLg,
+        border: Border.all(color: AppColors.stroke),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(Insets.md),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    leading,
+                    const SizedBox(width: Insets.md),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppText.titleSmall.copyWith(fontSize: 14),
+                          ),
+                          if (subtitle != null) ...[
+                            const SizedBox(height: 2),
+                            Text(
+                              subtitle,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.textMuted),
+                            ),
+                          ],
+                          if (note != null) ...[
+                            const SizedBox(height: 2),
+                            Text(
+                              note,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted),
+                            ),
+                          ],
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: Insets.sm),
+                    ReviewStatusChip(status: status),
+                  ],
+                ),
+                if (reason != null && reason.isNotEmpty) ...[const Gap.sm(), _ReasonNote(reason: reason)],
+              ],
             ),
           ),
-          const SizedBox(width: Insets.sm),
-          Expanded(
-            child: PrimaryButton(
-              label: context.l10n.verifyApprove,
-              icon: Icons.check_rounded,
-              size: AppButtonSize.small,
-              fillColor: AppColors.success,
-              loading: busy,
-              onPressed: busy ? null : onApprove,
+          DecoratedBox(
+            decoration: const BoxDecoration(
+              border: Border(top: BorderSide(color: AppColors.stroke)),
+            ),
+            child: IntrinsicHeight(
+              child: Row(
+                children: [
+                  for (int i = 0; i < actions.length; i++) ...[
+                    if (i > 0) const VerticalDivider(width: 1, thickness: 1, color: AppColors.stroke),
+                    Expanded(child: actions[i]),
+                  ],
+                ],
+              ),
             ),
           ),
         ],
-      ],
+      ),
+    );
+  }
+}
+
+class _ReviewAction extends StatelessWidget {
+  const _ReviewAction({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
+    this.loading = false,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback? onTap;
+  final bool loading;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color tone = onTap == null && !loading ? AppColors.textMuted : color;
+    return Pressable(
+      onTap: onTap,
+      scale: 0.97,
+      child: Container(
+        height: 44,
+        color: Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: Insets.xs),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (loading)
+              SizedBox.square(dimension: 16, child: CircularProgressIndicator(strokeWidth: 2, color: tone))
+            else
+              Icon(icon, size: 17, color: tone),
+            const SizedBox(width: 6),
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.titleSmall.copyWith(fontSize: 13, color: tone),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
