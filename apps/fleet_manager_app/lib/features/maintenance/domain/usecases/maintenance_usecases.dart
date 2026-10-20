@@ -5,16 +5,14 @@ import '../entities/maintenance_vehicle.dart';
 import '../maintenance_repository.dart';
 
 class MaintenanceQuery extends Equatable {
-  const MaintenanceQuery({this.hubId, this.search = '', this.page = 1, this.fleetStatus, this.category});
+  const MaintenanceQuery({this.hubId, this.search = '', this.page = 1});
 
   final String? hubId;
   final String search;
   final int page;
-  final MaintenanceFleetStatus? fleetStatus;
-  final MaintenanceIssueCategory? category;
 
   @override
-  List<Object?> get props => [hubId, search, page, fleetStatus, category];
+  List<Object?> get props => [hubId, search, page];
 }
 
 class GetMaintenanceVehicles extends UseCase<MaintenanceVehicleList, MaintenanceQuery> {

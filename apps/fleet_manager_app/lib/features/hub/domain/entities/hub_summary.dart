@@ -35,8 +35,7 @@ class HubSummary extends Equatable {
     required this.hubCode,
     required this.fleetAllocated,
     required this.fleetTotal,
-    required this.ridersPresent,
-    required this.ridersActive,
+    required this.fleetAtHub,
     required this.queue,
     this.gstin,
     this.supportNumber,
@@ -46,8 +45,7 @@ class HubSummary extends Equatable {
   final String hubCode;
   final int fleetAllocated;
   final int fleetTotal;
-  final int ridersPresent;
-  final int ridersActive;
+  final int fleetAtHub;
   final HubQueue? queue;
   final String? gstin;
   final String? supportNumber;
@@ -63,8 +61,7 @@ class HubSummary extends Equatable {
       hubCode: parts.map((p) => p.hubCode).join(' · '),
       fleetAllocated: sum((p) => p.fleetAllocated),
       fleetTotal: sum((p) => p.fleetTotal),
-      ridersPresent: sum((p) => p.ridersPresent),
-      ridersActive: sum((p) => p.ridersActive),
+      fleetAtHub: sum((p) => p.fleetAtHub),
       queue: HubQueue.combine([for (final HubSummary p in parts) p.queue]),
       gstin: parts.map((p) => p.gstin).nonNulls.firstOrNull,
       supportNumber: parts.map((p) => p.supportNumber).nonNulls.firstOrNull,
@@ -72,15 +69,5 @@ class HubSummary extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-    hubName,
-    hubCode,
-    fleetAllocated,
-    fleetTotal,
-    ridersPresent,
-    ridersActive,
-    queue,
-    gstin,
-    supportNumber,
-  ];
+  List<Object?> get props => [hubName, hubCode, fleetAllocated, fleetTotal, fleetAtHub, queue, gstin, supportNumber];
 }

@@ -411,7 +411,7 @@ class _VehiclePhotosCardState extends ConsumerState<_VehiclePhotosCard> {
   final Set<String> _uploading = {};
 
   Future<void> _take(String photoType) async {
-    final File? file = await PhotoSourceSheet.pick(context);
+    final File? file = await PhotoSourceSheet.capture(PhotoSource.camera);
     if (file == null || !mounted) return;
     setState(() => _uploading.add(photoType));
     final Result<void> result = await ref

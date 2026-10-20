@@ -4366,12 +4366,6 @@ abstract class AppL10n {
   /// **'Active riders at this hub who are waiting for a vehicle.'**
   String get hubAllotmentsInQueueInfo;
 
-  /// Bays free
-  ///
-  /// In en, this message translates to:
-  /// **'Bays free'**
-  String get hubBaysFree;
-
   /// Choose a hub
   ///
   /// In en, this message translates to:
@@ -4396,11 +4390,29 @@ abstract class AppL10n {
   /// **'{count} hubs'**
   String hubCount(int count);
 
+  /// Home stat: scooters physically at the hub
+  ///
+  /// In en, this message translates to:
+  /// **'At hub'**
+  String get hubFleetAtHub;
+
   /// Fleet Manager
   ///
   /// In en, this message translates to:
   /// **'Fleet Manager'**
   String get hubFleetManager;
+
+  /// Home stat: scooters mapped to the hub
+  ///
+  /// In en, this message translates to:
+  /// **'Total fleet'**
+  String get hubFleetMapped;
+
+  /// Home stat: scooters currently with riders
+  ///
+  /// In en, this message translates to:
+  /// **'On field'**
+  String get hubFleetOnField;
 
   /// Fleet utilisation
   ///
@@ -4492,12 +4504,6 @@ abstract class AppL10n {
   /// **'Service'**
   String get hubService;
 
-  /// On shift
-  ///
-  /// In en, this message translates to:
-  /// **'On shift'**
-  String get hubShift;
-
   /// Show data for
   ///
   /// In en, this message translates to:
@@ -4551,12 +4557,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Vehicles from this hub that are under maintenance right now.'**
   String get hubUnderMaintenanceFleetInfo;
-
-  /// Uptime
-  ///
-  /// In en, this message translates to:
-  /// **'Uptime'**
-  String get hubUptime;
 
   /// Say whether the scooter is safe to give out again.
   ///
@@ -4744,12 +4744,6 @@ abstract class AppL10n {
   /// **'Could not load this document'**
   String get legalDocumentCouldNotLoad;
 
-  /// Filter chip showing every issue category
-  ///
-  /// In en, this message translates to:
-  /// **'All categories'**
-  String get maintenanceAllCategories;
-
   /// Allocation
   ///
   /// In en, this message translates to:
@@ -4767,12 +4761,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Allowed'**
   String get maintenanceAllocationOn;
-
-  /// Filter chip showing every maintenance status
-  ///
-  /// In en, this message translates to:
-  /// **'All statuses'**
-  String get maintenanceAllStatuses;
 
   /// No report yet
   ///
@@ -7030,6 +7018,30 @@ abstract class AppL10n {
   /// **'Your account'**
   String get rentalsYourAccount;
 
+  /// Mechanic report status shown for AWAITING_PARTS
+  ///
+  /// In en, this message translates to:
+  /// **'Mechanically Ok'**
+  String get reportStatusMechanicallyOk;
+
+  /// Mechanic report status shown for AVAILABLE
+  ///
+  /// In en, this message translates to:
+  /// **'Ready for Allotment'**
+  String get reportStatusReadyForAllotment;
+
+  /// Mechanic report status shown for BROKEN
+  ///
+  /// In en, this message translates to:
+  /// **'Under-repair: Major'**
+  String get reportStatusUnderRepairMajor;
+
+  /// Mechanic report status shown for MAINTENANCE
+  ///
+  /// In en, this message translates to:
+  /// **'Under-repair: Minor'**
+  String get reportStatusUnderRepairMinor;
+
   /// Approve charges
   ///
   /// In en, this message translates to:
@@ -7936,10 +7948,10 @@ abstract class AppL10n {
   /// **'Add an issue'**
   String get submissionAddIssue;
 
-  /// Error when Available is chosen but an issue is not resolved
+  /// Error when Ready for Allotment is chosen but an issue is not resolved
   ///
   /// In en, this message translates to:
-  /// **'To choose Available, set every issue to Resolved.'**
+  /// **'To choose Ready for Allotment, set every issue to Resolved.'**
   String get submissionAvailableNeedsResolved;
 
   /// Error when Awaiting parts is chosen but no open issue lists parts

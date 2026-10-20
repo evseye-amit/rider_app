@@ -245,7 +245,7 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              for (final MaintenanceFleetStatus option in MaintenanceFleetStatus.values) ...[
+              for (final MaintenanceFleetStatus option in reportStatusOrder) ...[
                 AppRadioTile(
                   selected: status == option,
                   onTap: () => setState(() => _status = option),
@@ -253,7 +253,7 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
                   subtitle: _statusHint(option),
                   leading: IconTile(icon: fleetConditionIcon(option), tone: fleetConditionTone(option).color, size: 36),
                 ),
-                if (option != MaintenanceFleetStatus.values.last) const Gap.sm(),
+                if (option != reportStatusOrder.last) const Gap.sm(),
               ],
               if (status != null && !status.isAvailable) ...[
                 const Gap.md(),

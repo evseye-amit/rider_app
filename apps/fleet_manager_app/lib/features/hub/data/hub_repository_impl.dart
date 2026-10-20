@@ -52,7 +52,7 @@ class HubRepositoryImpl implements HubRepository {
         final Map<String, dynamic> selected = _map(home['hub']);
         final Map<String, dynamic> summary = _map(home['summary']);
         final Map<String, dynamic> fleet = _map(summary['fleetUtilisation']);
-        final Map<String, dynamic> riders = _map(summary['riders']);
+        final Map<String, dynamic> parking = _map(selected['parking']);
         final Map<String, dynamic> company = _map(home['company']);
 
         int count(Map<String, dynamic> m, String key) => (m[key] as num?)?.toInt() ?? 0;
@@ -62,8 +62,7 @@ class HubRepositoryImpl implements HubRepository {
           hubCode: selected['code']?.toString() ?? hub['code']?.toString() ?? '—',
           fleetAllocated: count(fleet, 'allocated'),
           fleetTotal: count(fleet, 'total'),
-          ridersPresent: count(riders, 'present'),
-          ridersActive: count(riders, 'active'),
+          fleetAtHub: count(parking, 'occupiedSlots'),
           gstin: _text(company['gstin']),
           supportNumber: _text(company['supportNumber']),
           queue: summary.isEmpty

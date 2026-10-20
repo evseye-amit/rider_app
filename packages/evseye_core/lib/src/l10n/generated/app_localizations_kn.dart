@@ -2254,9 +2254,6 @@ class AppL10nKn extends AppL10n {
   String get hubAllotmentsInQueueInfo => 'ವಾಹನಕ್ಕಾಗಿ ಕಾಯುತ್ತಿರುವ ಈ ಹಬ್‌ನ ಸಕ್ರಿಯ ರೈಡರ್‌ಗಳು.';
 
   @override
-  String get hubBaysFree => 'ಖಾಲಿ ಬೇಗಳು';
-
-  @override
   String get hubChooseHub => 'ಹಬ್ ಆಯ್ಕೆಮಾಡಿ';
 
   @override
@@ -2271,7 +2268,16 @@ class AppL10nKn extends AppL10n {
   }
 
   @override
+  String get hubFleetAtHub => 'ಹಬ್‌ನಲ್ಲಿ';
+
+  @override
   String get hubFleetManager => 'ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್';
+
+  @override
+  String get hubFleetMapped => 'ಒಟ್ಟು ಫ್ಲೀಟ್';
+
+  @override
+  String get hubFleetOnField => 'ಫೀಲ್ಡ್‌ನಲ್ಲಿ';
 
   @override
   String get hubFleetUtilisation => 'ಫ್ಲೀಟ್ ಬಳಕೆ';
@@ -2323,9 +2329,6 @@ class AppL10nKn extends AppL10n {
   String get hubService => 'ಸೇವೆ';
 
   @override
-  String get hubShift => 'ಪಾಳಿಯಲ್ಲಿ';
-
-  @override
   String get hubShowDataFor => 'ಇದರ ಡೇಟಾ ತೋರಿಸಿ';
 
   @override
@@ -2352,9 +2355,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get hubUnderMaintenanceFleetInfo => 'ಈಗ ನಿರ್ವಹಣೆಯಲ್ಲಿರುವ ಈ ಹಬ್‌ನ ವಾಹನಗಳು.';
-
-  @override
-  String get hubUptime => 'ಚಾಲನೆಯ ಸಮಯ';
 
   @override
   String get inspectionErrorSafeForReuse => 'ಸ್ಕೂಟರ್ ಅನ್ನು ಮತ್ತೆ ನೀಡಲು ಸುರಕ್ಷಿತವೇ ಎಂದು ತಿಳಿಸಿ.';
@@ -2454,9 +2454,6 @@ class AppL10nKn extends AppL10n {
   String get legalDocumentCouldNotLoad => 'ಈ ದಾಖಲೆಯನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
 
   @override
-  String get maintenanceAllCategories => 'ಎಲ್ಲಾ ವರ್ಗಗಳು';
-
-  @override
   String get maintenanceAllocation => 'ಹಂಚಿಕೆ';
 
   @override
@@ -2464,9 +2461,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get maintenanceAllocationOn => 'ಅನುಮತಿಸಲಾಗಿದೆ';
-
-  @override
-  String get maintenanceAllStatuses => 'ಎಲ್ಲಾ ಸ್ಥಿತಿಗಳು';
 
   @override
   String get maintenanceAwaitingReport => 'ಇನ್ನೂ ವರದಿ ಇಲ್ಲ';
@@ -3686,6 +3680,18 @@ class AppL10nKn extends AppL10n {
   String get rentalsYourAccount => 'ನಿಮ್ಮ ಖಾತೆ';
 
   @override
+  String get reportStatusMechanicallyOk => 'ಮೆಕ್ಯಾನಿಕಲಿ ಸರಿಯಿದೆ';
+
+  @override
+  String get reportStatusReadyForAllotment => 'ಹಂಚಿಕೆಗೆ ಸಿದ್ಧ';
+
+  @override
+  String get reportStatusUnderRepairMajor => 'ದುರಸ್ತಿಯಲ್ಲಿ: ದೊಡ್ಡದು';
+
+  @override
+  String get reportStatusUnderRepairMinor => 'ದುರಸ್ತಿಯಲ್ಲಿ: ಸಣ್ಣದು';
+
+  @override
   String get returnsApproveCharges => 'ಶುಲ್ಕಗಳನ್ನು ಅನುಮೋದಿಸಿ';
 
   @override
@@ -4163,7 +4169,7 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get submissionAvailableNeedsResolved =>
-      '\'ಲಭ್ಯವಿದೆ\' ಆಯ್ಕೆಮಾಡಲು, ಪ್ರತಿ ಸಮಸ್ಯೆಯನ್ನು \'ಪರಿಹಾರವಾಗಿದೆ\' ಎಂದು ಗುರುತಿಸಿ.';
+      '\'ಹಂಚಿಕೆಗೆ ಸಿದ್ಧ\' ಆಯ್ಕೆಮಾಡಲು, ಪ್ರತಿ ಸಮಸ್ಯೆಯನ್ನು \'ಪರಿಹಾರವಾಗಿದೆ\' ಎಂದು ಗುರುತಿಸಿ.';
 
   @override
   String get submissionAwaitingPartsNeedsParts => 'ಪರಿಹಾರವಾಗದ ಕನಿಷ್ಠ ಒಂದು ಸಮಸ್ಯೆಗೆ ಬೇಕಾದ ಬಿಡಿಭಾಗಗಳನ್ನು ಸೇರಿಸಿ.';

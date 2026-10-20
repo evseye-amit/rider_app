@@ -293,21 +293,30 @@ class _Band extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: InkStat(label: context.l10n.hubUptime, value: '—', icon: Icons.bolt_rounded),
-              ),
-              const InkDivider(),
-              const SizedBox(width: Insets.md),
-              Expanded(
                 child: InkStat(
-                  label: context.l10n.hubShift,
-                  value: current == null ? '—' : '${current.ridersPresent}/${current.ridersActive}',
-                  icon: Icons.groups_rounded,
+                  label: context.l10n.hubFleetMapped,
+                  value: current == null ? '—' : '${current.fleetTotal}',
+                  icon: Icons.electric_scooter_rounded,
+                  centered: true,
                 ),
               ),
               const InkDivider(),
-              const SizedBox(width: Insets.md),
               Expanded(
-                child: InkStat(label: context.l10n.hubBaysFree, value: '—', icon: Icons.ev_station_rounded),
+                child: InkStat(
+                  label: context.l10n.hubFleetOnField,
+                  value: current == null ? '—' : '${current.fleetAllocated}',
+                  icon: Icons.route_rounded,
+                  centered: true,
+                ),
+              ),
+              const InkDivider(),
+              Expanded(
+                child: InkStat(
+                  label: context.l10n.hubFleetAtHub,
+                  value: current == null ? '—' : '${current.fleetAtHub}',
+                  icon: Icons.warehouse_rounded,
+                  centered: true,
+                ),
               ),
             ],
           ),

@@ -2243,9 +2243,6 @@ class AppL10nHi extends AppL10n {
   String get hubAllotmentsInQueueInfo => 'इस हब के सक्रिय राइडर जो वाहन का इंतज़ार कर रहे हैं।';
 
   @override
-  String get hubBaysFree => 'खाली बे';
-
-  @override
   String get hubChooseHub => 'हब चुनें';
 
   @override
@@ -2260,7 +2257,16 @@ class AppL10nHi extends AppL10n {
   }
 
   @override
+  String get hubFleetAtHub => 'हब पर';
+
+  @override
   String get hubFleetManager => 'फ़्लीट मैनेजर';
+
+  @override
+  String get hubFleetMapped => 'कुल फ्लीट';
+
+  @override
+  String get hubFleetOnField => 'फील्ड पर';
 
   @override
   String get hubFleetUtilisation => 'फ़्लीट का उपयोग';
@@ -2312,9 +2318,6 @@ class AppL10nHi extends AppL10n {
   String get hubService => 'सर्विस';
 
   @override
-  String get hubShift => 'शिफ़्ट पर';
-
-  @override
   String get hubShowDataFor => 'इसका डेटा दिखाएँ';
 
   @override
@@ -2341,9 +2344,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get hubUnderMaintenanceFleetInfo => 'इस हब के वाहन जो अभी मेंटेनेंस में हैं।';
-
-  @override
-  String get hubUptime => 'चालू समय';
 
   @override
   String get inspectionErrorSafeForReuse => 'बताएँ कि स्कूटर दोबारा देने के लिए सुरक्षित है या नहीं।';
@@ -2442,9 +2442,6 @@ class AppL10nHi extends AppL10n {
   String get legalDocumentCouldNotLoad => 'यह दस्तावेज़ लोड नहीं हो सका';
 
   @override
-  String get maintenanceAllCategories => 'सभी श्रेणियाँ';
-
-  @override
   String get maintenanceAllocation => 'आवंटन';
 
   @override
@@ -2452,9 +2449,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get maintenanceAllocationOn => 'अनुमति है';
-
-  @override
-  String get maintenanceAllStatuses => 'सभी स्थितियाँ';
 
   @override
   String get maintenanceAwaitingReport => 'अभी रिपोर्ट नहीं';
@@ -3673,6 +3667,18 @@ class AppL10nHi extends AppL10n {
   String get rentalsYourAccount => 'आपका खाता';
 
   @override
+  String get reportStatusMechanicallyOk => 'मैकेनिकली ठीक';
+
+  @override
+  String get reportStatusReadyForAllotment => 'अलॉटमेंट के लिए तैयार';
+
+  @override
+  String get reportStatusUnderRepairMajor => 'मरम्मत में: बड़ी';
+
+  @override
+  String get reportStatusUnderRepairMinor => 'मरम्मत में: छोटी';
+
+  @override
   String get returnsApproveCharges => 'शुल्क मंज़ूर करें';
 
   @override
@@ -4145,7 +4151,8 @@ class AppL10nHi extends AppL10n {
   String get submissionAddIssue => 'समस्या जोड़ें';
 
   @override
-  String get submissionAvailableNeedsResolved => '\'उपलब्ध\' चुनने के लिए हर समस्या को \'ठीक हो गई\' करें।';
+  String get submissionAvailableNeedsResolved =>
+      '\'अलॉटमेंट के लिए तैयार\' चुनने के लिए हर समस्या को \'ठीक हो गई\' करें।';
 
   @override
   String get submissionAwaitingPartsNeedsParts => 'कम से कम एक बिना ठीक हुई समस्या में ज़रूरी पुर्ज़े लिखें।';

@@ -5,6 +5,7 @@ import '../theme/app_colors.dart';
 import '../theme/app_dimens.dart';
 import '../theme/app_typography.dart';
 import '../utils/formatters.dart';
+import 'buttons.dart';
 
 class ThreadEntry {
   const ThreadEntry.message({required this.id, required this.mine, required this.at, required String this.text})
@@ -341,20 +342,36 @@ abstract final class PhotoViewer {
     ),
   );
 
-  static Future<void> card(BuildContext context, String url, {String? title}) => showDialog<void>(
+  static Future<T?> card<T>(
+    BuildContext context,
+    String url, {
+    String? title,
+    List<PhotoCardAction<T>> actions = const [],
+  }) => showDialog<T>(
     context: context,
     barrierColor: Colors.black54,
-    builder: (context) => _PhotoCard(url: url, title: title),
+    builder: (context) => _PhotoCard<T>(url: url, title: title, actions: actions),
   );
 
   const PhotoViewer._();
 }
 
-class _PhotoCard extends StatelessWidget {
-  const _PhotoCard({required this.url, this.title});
+class PhotoCardAction<T> {
+  const PhotoCardAction({required this.label, required this.value, this.icon, this.color, this.primary = false});
+
+  final String label;
+  final T value;
+  final IconData? icon;
+  final Color? color;
+  final bool primary;
+}
+
+class _PhotoCard<T> extends StatelessWidget {
+  const _PhotoCard({required this.url, required this.actions, this.title});
 
   final String url;
   final String? title;
+  final List<PhotoCardAction<T>> actions;
 
   static const double _placeholderHeight = 280;
 
@@ -424,6 +441,34 @@ class _PhotoCard extends StatelessWidget {
               ),
             ),
           ),
+          if (actions.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(Insets.md, 0, Insets.md, Insets.md),
+              child: Row(
+                children: [
+                  for (final (int i, PhotoCardAction<T> action) in actions.indexed) ...[
+                    if (i > 0) const SizedBox(width: Insets.sm),
+                    Expanded(
+                      child: action.primary
+                          ? PrimaryButton(
+                              label: action.label,
+                              icon: action.icon,
+                              size: AppButtonSize.medium,
+                              fillColor: action.color,
+                              onPressed: () => Navigator.of(context).pop(action.value),
+                            )
+                          : SecondaryButton(
+                              label: action.label,
+                              icon: action.icon,
+                              size: AppButtonSize.medium,
+                              color: action.color,
+                              onPressed: () => Navigator.of(context).pop(action.value),
+                            ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
         ],
       ),
     );

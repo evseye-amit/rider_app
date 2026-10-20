@@ -132,26 +132,28 @@ class _BankAccountFieldState extends State<_BankAccountField> {
     super.dispose();
   }
 
-  String? get _mismatch {
-    final String a = _account.text.trim();
-    final String b = _confirm.text.trim();
-    if (a.isEmpty || b.isEmpty) return null;
-    return a == b ? null : context.l10n.commonAccountNumbersDoNotMatch;
-  }
+  String get _accountText => _account.text.trim();
+
+  String get _confirmText => _confirm.text.trim();
+
+  String? get _mismatch => _accountText.isNotEmpty && _confirmText.isNotEmpty && _accountText != _confirmText
+      ? context.l10n.commonAccountNumbersDoNotMatch
+      : null;
 
   void _sync() {
-    final String a = _account.text.trim();
-    final String b = _confirm.text.trim();
+    final String a = _accountText;
+    final String b = _confirmText;
     widget.scope.form.setValue(widget.node.fieldKey, a == b ? a : '');
     widget.scope.form.setValue('${widget.node.fieldKey}__confirm', b);
+    widget.scope.form.setError(widget.node.fieldKey, null);
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     final String label = widget.node.text(widget.scope, 'label', context.l10n.commonBankAccountNumber);
-    final String? error = widget.scope.form.errorOf(widget.node.fieldKey) ?? _mismatch;
-    final bool matched = _account.text.trim().isNotEmpty && _mismatch == null;
+    final String? error = _mismatch ?? widget.scope.form.errorOf(widget.node.fieldKey);
+    final bool matched = _accountText.isNotEmpty && _accountText == _confirmText && error == null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,

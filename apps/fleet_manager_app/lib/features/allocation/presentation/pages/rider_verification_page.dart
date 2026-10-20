@@ -39,7 +39,37 @@ class _RiderVerificationPageState extends ConsumerState<RiderVerificationPage> {
     switch (result) {
       case Ok<String>(:final value) when value.isNotEmpty:
         if (!document.isPdf) {
-          await PhotoViewer.card(context, value, title: document.title);
+          final bool? approve = await PhotoViewer.card<bool>(
+            context,
+            value,
+            title: document.title,
+            actions: document.status == ReviewStatus.pending
+                ? [
+                    PhotoCardAction(
+                      label: context.l10n.verifyReject,
+                      value: false,
+                      icon: Icons.close_rounded,
+                      color: AppColors.danger,
+                    ),
+                    PhotoCardAction(
+                      label: context.l10n.verifyApprove,
+                      value: true,
+                      icon: Icons.check_rounded,
+                      color: AppColors.success,
+                      primary: true,
+                    ),
+                  ]
+                : const [],
+          );
+          if (approve != null && mounted) {
+            await _review(
+              id: document.id,
+              name: document.title,
+              approve: approve,
+              document: true,
+              confirmApprove: false,
+            );
+          }
           return;
         }
         final bool opened = await launchUrl(Uri.parse(value), mode: LaunchMode.externalApplication);
@@ -61,18 +91,21 @@ class _RiderVerificationPageState extends ConsumerState<RiderVerificationPage> {
     required String name,
     required bool approve,
     required bool document,
+    bool confirmApprove = true,
   }) async {
     String? reason;
     if (approve) {
-      final bool confirmed = await AppDialog.confirm(
-        context,
-        title: document ? context.l10n.verifyApproveDocument : context.l10n.verifyApproveReference,
-        message: context.l10n.verifyApproveMessage(name),
-        confirmLabel: context.l10n.verifyApprove,
-        icon: Icons.verified_rounded,
-        tone: AppColors.success,
-      );
-      if (!confirmed) return;
+      if (confirmApprove) {
+        final bool confirmed = await AppDialog.confirm(
+          context,
+          title: document ? context.l10n.verifyApproveDocument : context.l10n.verifyApproveReference,
+          message: context.l10n.verifyApproveMessage(name),
+          confirmLabel: context.l10n.verifyApprove,
+          icon: Icons.verified_rounded,
+          tone: AppColors.success,
+        );
+        if (!confirmed) return;
+      }
     } else {
       reason = await RejectReasonSheet.show(context, name: name);
       if (reason == null) return;

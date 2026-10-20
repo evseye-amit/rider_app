@@ -1,11 +1,18 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 
+const List<MaintenanceFleetStatus> reportStatusOrder = [
+  MaintenanceFleetStatus.available,
+  MaintenanceFleetStatus.awaitingParts,
+  MaintenanceFleetStatus.broken,
+  MaintenanceFleetStatus.maintenance,
+];
+
 String fleetConditionLabel(AppL10n l10n, MaintenanceFleetStatus status) => switch (status) {
-  MaintenanceFleetStatus.available => l10n.fleetStatusAvailable,
-  MaintenanceFleetStatus.maintenance => l10n.fleetStatusMaintenance,
-  MaintenanceFleetStatus.broken => l10n.fleetStatusBroken,
-  MaintenanceFleetStatus.awaitingParts => l10n.fleetStatusAwaitingParts,
+  MaintenanceFleetStatus.available => l10n.reportStatusReadyForAllotment,
+  MaintenanceFleetStatus.awaitingParts => l10n.reportStatusMechanicallyOk,
+  MaintenanceFleetStatus.broken => l10n.reportStatusUnderRepairMajor,
+  MaintenanceFleetStatus.maintenance => l10n.reportStatusUnderRepairMinor,
 };
 
 StatusTone fleetConditionTone(MaintenanceFleetStatus status) => switch (status) {

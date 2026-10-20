@@ -2255,9 +2255,6 @@ class AppL10nTe extends AppL10n {
   String get hubAllotmentsInQueueInfo => 'వాహనం కోసం ఎదురుచూస్తున్న ఈ హబ్ యాక్టివ్ రైడర్లు.';
 
   @override
-  String get hubBaysFree => 'ఖాళీ బేలు';
-
-  @override
   String get hubChooseHub => 'హబ్ ఎంచుకోండి';
 
   @override
@@ -2272,7 +2269,16 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
+  String get hubFleetAtHub => 'హబ్‌లో';
+
+  @override
   String get hubFleetManager => 'ఫ్లీట్ మేనేజర్';
+
+  @override
+  String get hubFleetMapped => 'మొత్తం ఫ్లీట్';
+
+  @override
+  String get hubFleetOnField => 'ఫీల్డ్‌లో';
 
   @override
   String get hubFleetUtilisation => 'ఫ్లీట్ వినియోగం';
@@ -2324,9 +2330,6 @@ class AppL10nTe extends AppL10n {
   String get hubService => 'సర్వీస్';
 
   @override
-  String get hubShift => 'షిఫ్ట్‌లో';
-
-  @override
   String get hubShowDataFor => 'దీని డేటా చూపించు';
 
   @override
@@ -2353,9 +2356,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get hubUnderMaintenanceFleetInfo => 'ప్రస్తుతం మెయింటెనెన్స్‌లో ఉన్న ఈ హబ్ వాహనాలు.';
-
-  @override
-  String get hubUptime => 'నడిచిన సమయం';
 
   @override
   String get inspectionErrorSafeForReuse => 'స్కూటర్‌ను మళ్లీ ఇవ్వడానికి సురక్షితమో కాదో చెప్పండి.';
@@ -2455,9 +2455,6 @@ class AppL10nTe extends AppL10n {
   String get legalDocumentCouldNotLoad => 'ఈ పత్రాన్ని లోడ్ చేయలేకపోయాం';
 
   @override
-  String get maintenanceAllCategories => 'అన్ని వర్గాలు';
-
-  @override
   String get maintenanceAllocation => 'కేటాయింపు';
 
   @override
@@ -2465,9 +2462,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get maintenanceAllocationOn => 'అనుమతించబడింది';
-
-  @override
-  String get maintenanceAllStatuses => 'అన్ని స్థితులు';
 
   @override
   String get maintenanceAwaitingReport => 'ఇంకా నివేదిక లేదు';
@@ -3688,6 +3682,18 @@ class AppL10nTe extends AppL10n {
   String get rentalsYourAccount => 'మీ ఖాతా';
 
   @override
+  String get reportStatusMechanicallyOk => 'మెకానికల్‌గా సరిగా ఉంది';
+
+  @override
+  String get reportStatusReadyForAllotment => 'కేటాయింపుకు సిద్ధం';
+
+  @override
+  String get reportStatusUnderRepairMajor => 'రిపేర్‌లో: పెద్దది';
+
+  @override
+  String get reportStatusUnderRepairMinor => 'రిపేర్‌లో: చిన్నది';
+
+  @override
   String get returnsApproveCharges => 'ఛార్జీలను ఆమోదించండి';
 
   @override
@@ -4162,7 +4168,7 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get submissionAvailableNeedsResolved =>
-      '\'అందుబాటులో ఉంది\' ఎంచుకోవడానికి, ప్రతి సమస్యను \'పరిష్కరించబడింది\'గా మార్చండి.';
+      '\'కేటాయింపుకు సిద్ధం\' ఎంచుకోవడానికి, ప్రతి సమస్యను \'పరిష్కరించబడింది\'గా మార్చండి.';
 
   @override
   String get submissionAwaitingPartsNeedsParts => 'పరిష్కరించని కనీసం ఒక సమస్యకు కావాల్సిన విడిభాగాలు జోడించండి.';

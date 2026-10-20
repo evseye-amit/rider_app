@@ -23,8 +23,6 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
         'pageSize': _pageSize,
         'hubId': ?query.hubId,
         if (search.isNotEmpty) 'search': search,
-        'fleetStatus': ?query.fleetStatus?.wire,
-        'issueCategory': ?query.category?.wire,
       },
       parse: (data) => _list(_map(data)),
     );

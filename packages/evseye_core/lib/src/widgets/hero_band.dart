@@ -215,6 +215,7 @@ class InkStat extends StatelessWidget {
     required this.value,
     this.icon,
     this.valueColor,
+    this.centered = false,
     super.key,
   });
 
@@ -223,14 +224,16 @@ class InkStat extends StatelessWidget {
   final IconData? icon;
 
   final Color? valueColor;
+  final bool centered;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: centered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Row(
+          mainAxisAlignment: centered ? MainAxisAlignment.center : MainAxisAlignment.start,
           children: [
             if (icon != null) ...[
               Icon(icon, size: 13, color: AppColors.onInkMuted),

@@ -6,18 +6,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/maintenance/maintenance_issue_widgets.dart';
 import '../../../../core/session/fleet_session_provider.dart';
 import '../../../hub/domain/entities/hub_profile.dart';
 import '../../domain/entities/maintenance_vehicle.dart';
 import '../providers/maintenance_providers.dart';
 import '../widgets/maintenance_widgets.dart';
-
-const List<MaintenanceFleetStatus> _heldStatuses = [
-  MaintenanceFleetStatus.maintenance,
-  MaintenanceFleetStatus.broken,
-  MaintenanceFleetStatus.awaitingParts,
-];
 
 class MaintenancePage extends ConsumerStatefulWidget {
   const MaintenancePage({super.key});
@@ -31,10 +24,8 @@ class _MaintenancePageState extends ConsumerState<MaintenancePage> {
   Timer? _debounce;
   String? _hubId;
   String _search = '';
-  MaintenanceFleetStatus? _status;
-  MaintenanceIssueCategory? _category;
 
-  MaintenanceFilter get _filter => (hubId: _hubId, search: _search, status: _status, category: _category);
+  MaintenanceFilter get _filter => (hubId: _hubId, search: _search);
 
   @override
   void initState() {
@@ -87,16 +78,11 @@ class _MaintenancePageState extends ConsumerState<MaintenancePage> {
           hubs: hubs,
           selected: hubIndex + 1,
           onHub: (index) => setState(() => _hubId = index == 0 ? null : hubs[index - 1].id),
-          status: _status,
-          onStatus: (index) => setState(() => _status = index == 0 ? null : _heldStatuses[index - 1]),
-          category: _category,
-          onCategory: (index) =>
-              setState(() => _category = index == 0 ? null : MaintenanceIssueCategory.values[index - 1]),
         ),
         const Gap.lg(),
         _Results(
           vehicles: vehicles,
-          searching: _search.isNotEmpty || _status != null || _category != null,
+          searching: _search.isNotEmpty,
           onRetry: () => ref.invalidate(maintenanceListProvider(_filter)),
           onLoadMore: () => ref.read(maintenanceListProvider(_filter).notifier).loadMore(),
           onOpen: (vehicle) => context.push('${Routes.maintenanceDetail}?id=${vehicle.id}'),
@@ -192,10 +178,6 @@ class _Filters extends StatelessWidget {
     required this.hubs,
     required this.selected,
     required this.onHub,
-    required this.status,
-    required this.onStatus,
-    required this.category,
-    required this.onCategory,
   });
 
   final TextEditingController controller;
@@ -204,16 +186,9 @@ class _Filters extends StatelessWidget {
   final List<HubProfile> hubs;
   final int selected;
   final ValueChanged<int> onHub;
-  final MaintenanceFleetStatus? status;
-  final ValueChanged<int> onStatus;
-  final MaintenanceIssueCategory? category;
-  final ValueChanged<int> onCategory;
 
   @override
   Widget build(BuildContext context) {
-    final AppL10n l10n = context.l10n;
-    final MaintenanceFleetStatus? status = this.status;
-    final MaintenanceIssueCategory? category = this.category;
     return Container(
       padding: const EdgeInsets.all(Insets.lg),
       decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.floating),
@@ -243,27 +218,6 @@ class _Filters extends StatelessWidget {
               padding: EdgeInsets.zero,
             ),
           ],
-          const Gap.md(),
-          FilterChipBar(
-            items: [
-              l10n.maintenanceAllStatuses,
-              for (final MaintenanceFleetStatus option in _heldStatuses) fleetConditionLabel(l10n, option),
-            ],
-            selectedIndex: status == null ? 0 : _heldStatuses.indexOf(status) + 1,
-            onChanged: onStatus,
-            padding: EdgeInsets.zero,
-          ),
-          const Gap.sm(),
-          FilterChipBar(
-            items: [
-              l10n.maintenanceAllCategories,
-              for (final MaintenanceIssueCategory option in MaintenanceIssueCategory.values)
-                issueCategoryLabel(l10n, option),
-            ],
-            selectedIndex: category == null ? 0 : category.index + 1,
-            onChanged: onCategory,
-            padding: EdgeInsets.zero,
-          ),
         ],
       ),
     );

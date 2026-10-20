@@ -3007,10 +3007,6 @@
   "@hubAllotmentsInQueueInfo": {
     "description": "Active riders at this hub who are waiting for a vehicle."
   },
-  "hubBaysFree": "Bays free",
-  "@hubBaysFree": {
-    "description": "Bays free"
-  },
   "hubChooseHub": "Choose a hub",
   "@hubChooseHub": {
     "description": "Choose a hub"
@@ -3032,9 +3028,21 @@
       }
     }
   },
+  "hubFleetAtHub": "At hub",
+  "@hubFleetAtHub": {
+    "description": "Home stat: scooters physically at the hub"
+  },
   "hubFleetManager": "Fleet Manager",
   "@hubFleetManager": {
     "description": "Fleet Manager"
+  },
+  "hubFleetMapped": "Total fleet",
+  "@hubFleetMapped": {
+    "description": "Home stat: scooters mapped to the hub"
+  },
+  "hubFleetOnField": "On field",
+  "@hubFleetOnField": {
+    "description": "Home stat: scooters currently with riders"
   },
   "hubFleetUtilisation": "Fleet utilisation",
   "@hubFleetUtilisation": {
@@ -3106,10 +3114,6 @@
   "@hubService": {
     "description": "Service"
   },
-  "hubShift": "On shift",
-  "@hubShift": {
-    "description": "On shift"
-  },
   "hubShowDataFor": "Show data for",
   "@hubShowDataFor": {
     "description": "Show data for"
@@ -3145,10 +3149,6 @@
   "hubUnderMaintenanceFleetInfo": "Vehicles from this hub that are under maintenance right now.",
   "@hubUnderMaintenanceFleetInfo": {
     "description": "Vehicles from this hub that are under maintenance right now."
-  },
-  "hubUptime": "Uptime",
-  "@hubUptime": {
-    "description": "Uptime"
   },
   "inspectionErrorSafeForReuse": "Say whether the scooter is safe to give out again.",
   "@inspectionErrorSafeForReuse": {
@@ -3279,10 +3279,6 @@
   "@legalDocumentCouldNotLoad": {
     "description": "Could not load this document"
   },
-  "maintenanceAllCategories": "All categories",
-  "@maintenanceAllCategories": {
-    "description": "Filter chip showing every issue category"
-  },
   "maintenanceAllocation": "Allocation",
   "@maintenanceAllocation": {
     "description": "Allocation"
@@ -3294,10 +3290,6 @@
   "maintenanceAllocationOn": "Allowed",
   "@maintenanceAllocationOn": {
     "description": "Allowed"
-  },
-  "maintenanceAllStatuses": "All statuses",
-  "@maintenanceAllStatuses": {
-    "description": "Filter chip showing every maintenance status"
   },
   "maintenanceAwaitingReport": "No report yet",
   "@maintenanceAwaitingReport": {
@@ -5002,6 +4994,22 @@
   "@rentalsYourAccount": {
     "description": "Your account"
   },
+  "reportStatusMechanicallyOk": "Mechanically Ok",
+  "@reportStatusMechanicallyOk": {
+    "description": "Mechanic report status shown for AWAITING_PARTS"
+  },
+  "reportStatusReadyForAllotment": "Ready for Allotment",
+  "@reportStatusReadyForAllotment": {
+    "description": "Mechanic report status shown for AVAILABLE"
+  },
+  "reportStatusUnderRepairMajor": "Under-repair: Major",
+  "@reportStatusUnderRepairMajor": {
+    "description": "Mechanic report status shown for BROKEN"
+  },
+  "reportStatusUnderRepairMinor": "Under-repair: Minor",
+  "@reportStatusUnderRepairMinor": {
+    "description": "Mechanic report status shown for MAINTENANCE"
+  },
   "returnsApproveCharges": "Approve charges",
   "@returnsApproveCharges": {
     "description": "Approve charges"
@@ -5636,9 +5644,9 @@
   "@submissionAddIssue": {
     "description": "Button that adds an issue to the mechanic report"
   },
-  "submissionAvailableNeedsResolved": "To choose Available, set every issue to Resolved.",
+  "submissionAvailableNeedsResolved": "To choose Ready for Allotment, set every issue to Resolved.",
   "@submissionAvailableNeedsResolved": {
-    "description": "Error when Available is chosen but an issue is not resolved"
+    "description": "Error when Ready for Allotment is chosen but an issue is not resolved"
   },
   "submissionAwaitingPartsNeedsParts": "Add the parts needed to at least one issue that isn't resolved.",
   "@submissionAwaitingPartsNeedsParts": {

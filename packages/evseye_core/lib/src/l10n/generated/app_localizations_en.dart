@@ -2251,9 +2251,6 @@ class AppL10nEn extends AppL10n {
   String get hubAllotmentsInQueueInfo => 'Active riders at this hub who are waiting for a vehicle.';
 
   @override
-  String get hubBaysFree => 'Bays free';
-
-  @override
   String get hubChooseHub => 'Choose a hub';
 
   @override
@@ -2268,7 +2265,16 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
+  String get hubFleetAtHub => 'At hub';
+
+  @override
   String get hubFleetManager => 'Fleet Manager';
+
+  @override
+  String get hubFleetMapped => 'Total fleet';
+
+  @override
+  String get hubFleetOnField => 'On field';
 
   @override
   String get hubFleetUtilisation => 'Fleet utilisation';
@@ -2320,9 +2326,6 @@ class AppL10nEn extends AppL10n {
   String get hubService => 'Service';
 
   @override
-  String get hubShift => 'On shift';
-
-  @override
   String get hubShowDataFor => 'Show data for';
 
   @override
@@ -2349,9 +2352,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get hubUnderMaintenanceFleetInfo => 'Vehicles from this hub that are under maintenance right now.';
-
-  @override
-  String get hubUptime => 'Uptime';
 
   @override
   String get inspectionErrorSafeForReuse => 'Say whether the scooter is safe to give out again.';
@@ -2452,9 +2452,6 @@ class AppL10nEn extends AppL10n {
   String get legalDocumentCouldNotLoad => 'Could not load this document';
 
   @override
-  String get maintenanceAllCategories => 'All categories';
-
-  @override
   String get maintenanceAllocation => 'Allocation';
 
   @override
@@ -2462,9 +2459,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get maintenanceAllocationOn => 'Allowed';
-
-  @override
-  String get maintenanceAllStatuses => 'All statuses';
 
   @override
   String get maintenanceAwaitingReport => 'No report yet';
@@ -3682,6 +3676,18 @@ class AppL10nEn extends AppL10n {
   String get rentalsYourAccount => 'Your account';
 
   @override
+  String get reportStatusMechanicallyOk => 'Mechanically Ok';
+
+  @override
+  String get reportStatusReadyForAllotment => 'Ready for Allotment';
+
+  @override
+  String get reportStatusUnderRepairMajor => 'Under-repair: Major';
+
+  @override
+  String get reportStatusUnderRepairMinor => 'Under-repair: Minor';
+
+  @override
   String get returnsApproveCharges => 'Approve charges';
 
   @override
@@ -4156,7 +4162,7 @@ class AppL10nEn extends AppL10n {
   String get submissionAddIssue => 'Add an issue';
 
   @override
-  String get submissionAvailableNeedsResolved => 'To choose Available, set every issue to Resolved.';
+  String get submissionAvailableNeedsResolved => 'To choose Ready for Allotment, set every issue to Resolved.';
 
   @override
   String get submissionAwaitingPartsNeedsParts => 'Add the parts needed to at least one issue that isn\'t resolved.';
