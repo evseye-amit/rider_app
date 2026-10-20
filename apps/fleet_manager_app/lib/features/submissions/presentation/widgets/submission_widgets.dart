@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/maintenance/maintenance_issue_widgets.dart';
+import '../../../../core/maintenance/fleet_condition.dart';
 
 List<(SubmissionPhotoDto, String)> labelledSubmissionPhotos(AppL10n l10n, VehicleSubmissionDto submission) {
   int damage = 0;
@@ -32,12 +32,6 @@ class SubmissionStageStyle {
       l10n.submissionStageCheckingIn,
       StatusTone.warning,
       Icons.fact_check_rounded,
-      needsAction: true,
-    ),
-    SubmissionSummaryDto(mechanicChecksComplete: false) => SubmissionStageStyle._(
-      l10n.submissionStageFinalChecks,
-      StatusTone.info,
-      Icons.build_circle_rounded,
       needsAction: true,
     ),
     SubmissionSummaryDto() => SubmissionStageStyle._(
@@ -72,13 +66,11 @@ String submissionNextNote(AppL10n l10n, VehicleSubmissionDto submission) => swit
   SubmissionNextAction.capturePhotos => l10n.submissionNextReport,
   SubmissionNextAction.reviewAndImpose => l10n.submissionNextReview,
   SubmissionNextAction.collectOtps => l10n.submissionNextOtps,
-  SubmissionNextAction.deepCheck => l10n.submissionNextDeep,
   SubmissionNextAction.complete => l10n.submissionNextComplete,
 };
 
 StatusTone submissionNextTone(SubmissionNextAction action) => switch (action) {
   SubmissionNextAction.complete => StatusTone.success,
-  SubmissionNextAction.deepCheck => StatusTone.info,
   _ => StatusTone.warning,
 };
 
@@ -326,13 +318,6 @@ class SubmissionReportCard extends StatelessWidget {
     final String? teamLeadBypass = report.teamLeadBypassReason;
     final String? cancelled = report.cancellationReason;
     final String? unsafeReason = report.unsafeReason;
-    String? charge(MaintenanceIssueDto issue) {
-      final String? findingId = issue.penaltyFindingId;
-      if (findingId == null) return null;
-      final SubmissionPenaltyItemDto? item = report.items.where((entry) => entry.findingId == findingId).firstOrNull;
-      return item == null ? context.l10n.issueChargeLinked : context.l10n.issueChargeLine(item.description);
-    }
-
     final bool muted = report.status == SubmissionReportStatus.cancelled;
     return Container(
       padding: const EdgeInsets.all(Insets.md),
@@ -386,18 +371,6 @@ class SubmissionReportCard extends StatelessWidget {
                 color: report.safeForReuse ? AppColors.success : AppColors.warning,
               ),
             ),
-          if (report.issues.isNotEmpty) ...[
-            const Gap.xs(),
-            for (final MaintenanceIssueDto issue in report.issues)
-              MaintenanceIssueRow(
-                category: issue.category,
-                description: issue.description,
-                status: issue.status,
-                photoCount: issue.evidencePhotoIds.length,
-                requiredParts: issue.requiredParts,
-                charge: charge(issue),
-              ),
-          ],
           if (report.checksComplete) ...[
             const SizedBox(height: 2),
             Text(

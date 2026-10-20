@@ -100,6 +100,7 @@ class AppSheet extends StatelessWidget {
   }) {
     return showModalBottomSheet<T>(
       context: context,
+      showDragHandle: false,
       isScrollControlled: true,
       isDismissible: isDismissible,
       enableDrag: isDismissible,

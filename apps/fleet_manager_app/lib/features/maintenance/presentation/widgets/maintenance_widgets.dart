@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../core/maintenance/maintenance_issue_widgets.dart';
+import '../../../../core/maintenance/fleet_condition.dart';
 import '../../domain/entities/maintenance_vehicle.dart';
 import '../providers/maintenance_providers.dart';
 
@@ -21,6 +21,11 @@ String fleetStatusLabel(AppL10n l10n, String status) => switch (status.toUpperCa
   'AWAITING_PARTS' => l10n.fleetStatusAwaitingParts,
   'OUT_OF_SERVICE' => l10n.fleetStatusOutOfService,
   _ => _spaced(status),
+};
+
+String serviceStatusLabel(AppL10n l10n, String status) => switch (MaintenanceFleetStatus.maybe(status)) {
+  final MaintenanceFleetStatus condition => fleetConditionLabel(l10n, condition),
+  null => fleetStatusLabel(l10n, status),
 };
 
 String onboardingStatusLabel(AppL10n l10n, String status) => switch (status.toUpperCase()) {
@@ -41,23 +46,6 @@ String _spaced(String code) {
   return spaced.isEmpty ? '—' : '${spaced[0].toUpperCase()}${spaced.substring(1)}';
 }
 
-class ReportVerdictChip extends StatelessWidget {
-  const ReportVerdictChip({required this.report, super.key});
-
-  final MechanicReport? report;
-
-  @override
-  Widget build(BuildContext context) {
-    final MechanicReport? current = report;
-    if (current == null) {
-      return StatusChip(label: context.l10n.maintenanceAwaitingReport, tone: StatusTone.neutral, dense: true);
-    }
-    return current.safeForReuse
-        ? StatusChip(label: context.l10n.maintenanceSafeToReuse, tone: StatusTone.success, dense: true)
-        : StatusChip(label: context.l10n.maintenanceNotSafe, tone: StatusTone.danger, dense: true);
-  }
-}
-
 class FleetConditionChip extends StatelessWidget {
   const FleetConditionChip({required this.status, super.key});
 
@@ -67,7 +55,7 @@ class FleetConditionChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final MaintenanceFleetStatus? condition = MaintenanceFleetStatus.maybe(status);
     return StatusChip(
-      label: fleetStatusLabel(context.l10n, status),
+      label: serviceStatusLabel(context.l10n, status),
       tone: condition == null ? StatusTone.warning : fleetConditionTone(condition),
       dense: true,
     );
@@ -109,12 +97,28 @@ class MaintenanceVehicleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
     final MechanicReport? report = vehicle.latestReport;
     final MaintenanceMove? moved = vehicle.movedToMaintenance;
-    final MaintenanceHub? hub = vehicle.hub;
-    final num? km = vehicle.odometerKm;
     final String model = vehicle.modelLine;
-    final int openIssues = vehicle.openIssueCount;
+    final String subtitle = model.isNotEmpty || vehicle.fleetCode == vehicle.vehicleNumber ? model : vehicle.fleetCode;
+    final String? needsWork = report == null || report.safeForReuse ? null : report.unsafeReason;
+    final String? findings = report == null || report.summary.isEmpty ? null : report.summary;
+    final (String, String)? note = needsWork != null
+        ? (l10n.submissionMaintenanceDetails, needsWork)
+        : findings != null
+        ? (l10n.submissionSummary, findings)
+        : null;
+    final List<Widget> footer = [
+      if (report != null && report.mechanicName.isNotEmpty)
+        KeyValueRow(label: l10n.maintenanceReportMechanic, value: report.mechanicName, dense: true),
+      if (moved != null) KeyValueRow(label: l10n.maintenanceInServiceSince, value: Fmt.date(moved.at), dense: true),
+      if (report == null)
+        Text(
+          l10n.maintenanceNoReportYet,
+          style: AppText.bodySmall.copyWith(fontSize: 12.5, color: AppColors.textSecondary),
+        ),
+    ];
 
     return Pressable(
       onTap: onTap,
@@ -139,13 +143,15 @@ class MaintenanceVehicleCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: AppText.titleMedium.copyWith(fontSize: 16),
                       ),
-                      const SizedBox(height: 2),
-                      Text(
-                        model.isEmpty ? vehicle.fleetCode : model,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.bodySmall.copyWith(fontSize: 12),
-                      ),
+                      if (subtitle.isNotEmpty) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          subtitle,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.bodySmall.copyWith(fontSize: 12),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -153,67 +159,20 @@ class MaintenanceVehicleCard extends StatelessWidget {
                 FleetConditionChip(status: vehicle.status),
               ],
             ),
-            const Gap.md(),
-            Wrap(
-              spacing: Insets.lg,
-              runSpacing: Insets.xs,
-              children: [
-                MaintenanceFact(icon: Icons.tag_rounded, text: vehicle.fleetCode),
-                if (hub != null) MaintenanceFact(icon: Icons.hub_rounded, text: hub.name),
-                if (km != null) MaintenanceFact(icon: Icons.speed_rounded, text: '${Fmt.number(km)} km'),
-                if (openIssues > 0)
-                  MaintenanceFact(
-                    icon: Icons.report_problem_rounded,
-                    text: context.l10n.maintenanceOpenIssues(openIssues),
-                    color: AppColors.warning,
-                  ),
-              ],
-            ),
-            if (moved != null) ...[
-              const Gap.sm(),
-              MaintenanceFact(icon: Icons.history_rounded, text: context.l10n.maintenanceMovedOn(Fmt.date(moved.at))),
-            ],
-            if (report != null) ...[
+            if (note case (final String label, final String body)) ...[
               const Gap.md(),
-              Container(
-                padding: const EdgeInsets.all(Insets.md),
-                decoration: BoxDecoration(color: AppColors.surfaceMuted, borderRadius: Corners.brMd),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            reportStageLabel(context.l10n, report),
-                            style: AppText.titleSmall.copyWith(fontSize: 13),
-                          ),
-                        ),
-                        Text(
-                          Fmt.date(report.createdAt),
-                          style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted),
-                        ),
-                      ],
-                    ),
-                    if (report.summary.isNotEmpty) ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        report.summary,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
-                      ),
-                    ],
-                    if (report.mechanicName.isNotEmpty) ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        context.l10n.submissionReportBy(report.mechanicName),
-                        style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted),
-                      ),
-                    ],
-                  ],
-                ),
+              Text(label, style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted)),
+              const SizedBox(height: 2),
+              Text(
+                body,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.45),
               ),
+            ],
+            if (footer.isNotEmpty) ...[
+              Divider(height: Insets.xl, color: AppColors.stroke.withValues(alpha: 0.6)),
+              ...footer,
             ],
           ],
         ),
@@ -229,7 +188,10 @@ class MechanicReportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
     final DateTime? confirmedAt = report.confirmedAt;
+    final MaintenanceFleetStatus? status = report.fleetStatus;
+    final String? needsWork = report.safeForReuse ? null : report.unsafeReason;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -241,78 +203,46 @@ class MechanicReportView extends StatelessWidget {
               size: 36,
             ),
             const SizedBox(width: Insets.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(reportStageLabel(context.l10n, report), style: AppText.titleSmall.copyWith(fontSize: 14)),
-                  const SizedBox(height: 2),
-                  Text(
-                    [
-                      if (report.mechanicName.isNotEmpty) context.l10n.submissionReportBy(report.mechanicName),
-                      Fmt.dateTime(report.createdAt),
-                    ].join(' · '),
-                    style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(width: Insets.sm),
-            if (report.fleetStatus case final MaintenanceFleetStatus status)
-              StatusChip(
-                label: fleetConditionLabel(context.l10n, status),
-                tone: fleetConditionTone(status),
-                dense: true,
-              )
-            else
-              ReportVerdictChip(report: report),
+            Expanded(child: Text(reportStageLabel(l10n, report), style: AppText.titleSmall.copyWith(fontSize: 14))),
           ],
         ),
+        const Gap.sm(),
+        KeyValueRow(
+          label: l10n.maintenanceReportStatus,
+          value: status == null
+              ? (report.safeForReuse ? l10n.maintenanceSafeToReuse : l10n.maintenanceNotSafe)
+              : fleetConditionLabel(l10n, status),
+          valueColor: status == null
+              ? (report.safeForReuse ? AppColors.success : AppColors.danger)
+              : fleetConditionTone(status).color,
+          dense: true,
+        ),
+        if (report.mechanicName.isNotEmpty)
+          KeyValueRow(label: l10n.maintenanceReportMechanic, value: report.mechanicName, dense: true),
+        KeyValueRow(label: l10n.maintenanceReportRecorded, value: Fmt.dateTime(report.createdAt), dense: true),
+        if (confirmedAt != null)
+          KeyValueRow(label: l10n.maintenanceReportConfirmed, value: Fmt.dateTime(confirmedAt), dense: true),
+        if (report.evidencePhotoIds.isNotEmpty)
+          KeyValueRow(label: l10n.maintenanceReportPhotos, value: '${report.evidencePhotoIds.length}', dense: true),
+        if (!report.checksComplete) ...[
+          const Gap.xs(),
+          MaintenanceFact(
+            icon: Icons.pending_actions_rounded,
+            text: l10n.maintenanceChecksOpen,
+            color: AppColors.warning,
+          ),
+        ],
         if (report.summary.isNotEmpty) ...[
           const Gap.md(),
+          GroupLabel(l10n.submissionSummary),
+          const Gap.xs(),
           Text(report.summary, style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.5)),
         ],
-        if (report.issues.isNotEmpty) ...[
-          const Gap.sm(),
-          for (final MaintenanceIssueDto issue in report.issues)
-            MaintenanceIssueRow(
-              category: issue.category,
-              description: issue.description,
-              status: issue.status,
-              photoCount: issue.evidencePhotoIds.length,
-              requiredParts: issue.requiredParts,
-              charge: issue.penaltyFindingId == null ? null : context.l10n.issueChargeLinked,
-            ),
-        ],
-        if (!report.safeForReuse) ...[
+        if (needsWork != null) ...[
           const Gap.md(),
-          AccentCard(
-            accent: AppColors.danger,
-            child: Text(
-              context.l10n.checkInUnsafe(report.unsafeReason ?? '—'),
-              style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45, color: AppColors.danger),
-            ),
-          ),
-        ],
-        const Gap.md(),
-        MaintenanceFact(
-          icon: report.checksComplete ? Icons.task_alt_rounded : Icons.pending_actions_rounded,
-          text: report.checksComplete ? context.l10n.submissionChecksComplete : context.l10n.maintenanceChecksOpen,
-          color: report.checksComplete ? AppColors.success : AppColors.warning,
-        ),
-        if (confirmedAt != null) ...[
+          GroupLabel(l10n.submissionMaintenanceDetails),
           const Gap.xs(),
-          MaintenanceFact(
-            icon: Icons.verified_rounded,
-            text: context.l10n.maintenanceConfirmedOn(Fmt.dateTime(confirmedAt)),
-          ),
-        ],
-        if (report.evidencePhotoIds.isNotEmpty) ...[
-          const Gap.xs(),
-          MaintenanceFact(
-            icon: Icons.photo_library_rounded,
-            text: context.l10n.maintenancePhotoCount(report.evidencePhotoIds.length),
-          ),
+          Text(needsWork, style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.5)),
         ],
       ],
     );
@@ -348,7 +278,7 @@ class _TimelineRow extends StatelessWidget {
     final String? from = change.from;
     final String? reason = change.reason;
     final Color tone = change.to.toUpperCase() == 'MAINTENANCE' ? AppColors.warning : AppColors.primary;
-    final String to = fleetStatusLabel(l10n, change.to);
+    final String to = serviceStatusLabel(l10n, change.to);
 
     return IntrinsicHeight(
       child: Row(
@@ -380,12 +310,15 @@ class _TimelineRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    from == null ? to : '${fleetStatusLabel(l10n, from)} → $to',
+                    from == null ? to : '${serviceStatusLabel(l10n, from)} → $to',
                     style: AppText.titleSmall.copyWith(fontSize: 13.5),
                   ),
                   if (reason != null) ...[
                     const SizedBox(height: 2),
-                    Text(reason, style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.4)),
+                    Text(
+                      change.fromReport ? l10n.maintenanceReasonFromReport(reason) : l10n.maintenanceReasonLine(reason),
+                      style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.4),
+                    ),
                   ],
                   const SizedBox(height: 2),
                   Text(

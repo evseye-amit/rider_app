@@ -173,7 +173,11 @@ class _Band extends StatelessWidget {
             const Gap.sm(),
             Text(
               context.l10n.pdiWorkPartner(partner!),
-              style: AppText.bodySmall.copyWith(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textMuted),
+              style: AppText.bodySmall.copyWith(
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textPrimary,
+              ),
             ),
           ],
           const Gap.lg(),

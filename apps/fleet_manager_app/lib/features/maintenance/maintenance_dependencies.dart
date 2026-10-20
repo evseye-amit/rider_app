@@ -20,3 +20,7 @@ final getMaintenanceVehicleProvider = Provider<GetMaintenanceVehicle>(
 final getEvidencePhotoUrlProvider = Provider<GetEvidencePhotoUrl>(
   (ref) => GetEvidencePhotoUrl(ref.watch(maintenanceRepositoryProvider)),
 );
+
+final changeVehicleStatusProvider = Provider<ChangeVehicleStatus>(
+  (ref) => ChangeVehicleStatus(ref.watch(maintenanceRepositoryProvider)),
+);

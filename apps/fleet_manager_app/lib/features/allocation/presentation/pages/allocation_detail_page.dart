@@ -410,8 +410,24 @@ class _VehiclePhotosCardState extends ConsumerState<_VehiclePhotosCard> {
   final Map<String, File> _local = {};
   final Set<String> _uploading = {};
 
+  Future<File?> _shoot() async {
+    try {
+      return await PhotoSourceSheet.capture(PhotoSource.camera);
+    } on PlatformException catch (e) {
+      if (mounted) {
+        AppSnack.error(
+          context,
+          e.code == 'camera_access_denied'
+              ? context.l10n.commonCameraAccessNeeded
+              : context.l10n.commonSomethingWentWrongPleaseTry,
+        );
+      }
+      return null;
+    }
+  }
+
   Future<void> _take(String photoType) async {
-    final File? file = await PhotoSourceSheet.capture(PhotoSource.camera);
+    final File? file = await _shoot();
     if (file == null || !mounted) return;
     setState(() => _uploading.add(photoType));
     final Result<void> result = await ref

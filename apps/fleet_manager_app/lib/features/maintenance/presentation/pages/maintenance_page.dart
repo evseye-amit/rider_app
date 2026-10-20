@@ -100,6 +100,7 @@ class _Band extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Color line = AppColors.primary.withValues(alpha: 0.5);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -131,35 +132,27 @@ class _Band extends StatelessWidget {
         ),
         const Gap.xl(),
         Container(
-          padding: const EdgeInsets.all(Insets.lg),
+          padding: const EdgeInsets.symmetric(horizontal: Insets.lg, vertical: Insets.md),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.06),
             borderRadius: Corners.brMd,
-            border: Border.all(color: AppColors.inkStroke),
+            border: Border.all(color: line, width: 1.5),
           ),
           child: Row(
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.l10n.maintenanceUnderMaintenance,
-                    style: AppText.label.copyWith(color: AppColors.onInkSecondary),
-                  ),
-                  const Gap.xs(),
-                  Text(
-                    count == null ? '—' : '$count',
-                    style: AppText.numericLarge.copyWith(fontSize: 36, color: AppColors.onInk),
-                  ),
-                ],
+              Expanded(
+                child: Text(
+                  context.l10n.maintenanceUnderMaintenance,
+                  style: AppText.titleMedium.copyWith(fontSize: 16, color: AppColors.onInkSecondary),
+                ),
               ),
               const SizedBox(width: Insets.lg),
-              const InkDivider(),
+              Container(width: 1.5, height: 36, color: line),
               const SizedBox(width: Insets.lg),
               Expanded(
                 child: Text(
-                  context.l10n.maintenanceBandHint,
-                  style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45, color: AppColors.onInkSecondary),
+                  count == null ? '—' : '$count',
+                  textAlign: TextAlign.right,
+                  style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),
                 ),
               ),
             ],
@@ -274,13 +267,6 @@ class _Results extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: Insets.xs, bottom: Insets.md),
-          child: Text(
-            context.l10n.maintenanceShowing(list.items.length, list.total),
-            style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.textMuted),
-          ),
-        ),
         for (final MaintenanceVehicle vehicle in list.items) ...[
           MaintenanceVehicleCard(vehicle: vehicle, onTap: () => onOpen(vehicle)),
           const Gap.md(),
@@ -299,8 +285,6 @@ class _ListSkeleton extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ShimmerBox(height: 14, width: 120),
-        Gap.md(),
         ShimmerBox(height: 168, borderRadius: Corners.brLg),
         Gap.md(),
         ShimmerBox(height: 168, borderRadius: Corners.brLg),

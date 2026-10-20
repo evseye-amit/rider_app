@@ -702,6 +702,9 @@ class AppL10nTe extends AppL10n {
   String get commonCamera => 'కెమెరా';
 
   @override
+  String get commonCameraAccessNeeded => 'ఫోటోలు తీయడానికి Settings లో కెమెరా అనుమతి ఇవ్వండి.';
+
+  @override
   String get commonCancel => 'రద్దు చేయండి';
 
   @override
@@ -2405,50 +2408,6 @@ class AppL10nTe extends AppL10n {
   String get introVehicleTitle => 'మీ స్కూటర్,\nపూర్తిగా అనుసంధానం';
 
   @override
-  String get issueCategoryAccessories => 'యాక్సెసరీలు';
-
-  @override
-  String get issueCategoryBattery => 'బ్యాటరీ';
-
-  @override
-  String get issueCategoryBodyChassis => 'బాడీ & చాసిస్';
-
-  @override
-  String get issueCategoryBrakes => 'బ్రేకులు';
-
-  @override
-  String get issueCategoryElectrical => 'ఎలక్ట్రికల్';
-
-  @override
-  String get issueCategoryOther => 'ఇతర';
-
-  @override
-  String get issueCategoryPowertrain => 'మోటార్ & పవర్‌ట్రెయిన్';
-
-  @override
-  String get issueCategorySuspensionSteering => 'సస్పెన్షన్ & స్టీరింగ్';
-
-  @override
-  String get issueCategoryTyresWheels => 'టైర్లు & చక్రాలు';
-
-  @override
-  String issueChargeLine(String name) {
-    return 'నష్టం ఛార్జీ: $name';
-  }
-
-  @override
-  String get issueChargeLinked => 'నష్టం ఛార్జీకి లింక్ అయింది';
-
-  @override
-  String get issueStatusInProgress => 'జరుగుతోంది';
-
-  @override
-  String get issueStatusOpen => 'తెరిచి ఉంది';
-
-  @override
-  String get issueStatusResolved => 'పరిష్కరించబడింది';
-
-  @override
   String get legalAppName => 'యాప్';
 
   @override
@@ -2464,16 +2423,13 @@ class AppL10nTe extends AppL10n {
   String get maintenanceAllocationOn => 'అనుమతించబడింది';
 
   @override
-  String get maintenanceAwaitingReport => 'ఇంకా నివేదిక లేదు';
-
-  @override
-  String get maintenanceBandHint => 'మీ హబ్‌లలో సర్వీస్‌లో ఉన్న స్కూటర్లు, వాటి తాజా మెకానిక్ నివేదికతో.';
-
-  @override
   String get maintenanceBattery => 'బ్యాటరీ';
 
   @override
   String get maintenanceCategory => 'వర్గం';
+
+  @override
+  String get maintenanceChangeStatus => 'స్థితి మార్చండి';
 
   @override
   String get maintenanceChassis => 'ఛాసిస్ నంబర్';
@@ -2483,11 +2439,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get maintenanceColour => 'రంగు';
-
-  @override
-  String maintenanceConfirmedOn(String date) {
-    return 'నిర్ధారించబడింది $date';
-  }
 
   @override
   String get maintenanceCouldNotLoad => 'సర్వీస్‌లో ఉన్న వాహనాలను లోడ్ చేయలేకపోయాం';
@@ -2522,7 +2473,7 @@ class AppL10nTe extends AppL10n {
   String get maintenanceHomeHub => 'హోమ్ హబ్';
 
   @override
-  String get maintenanceIssues => 'సమస్యలు';
+  String get maintenanceInServiceSince => 'సర్వీస్‌కు వచ్చిన తేదీ';
 
   @override
   String get maintenanceLatestReport => 'తాజా మెకానిక్ నివేదిక';
@@ -2540,9 +2491,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get maintenanceNoHistory => 'స్థితి మార్పులు ఏవీ నమోదు కాలేదు.';
-
-  @override
-  String get maintenanceNoIssues => 'ఏ సమస్యా నమోదు కాలేదు.';
 
   @override
   String get maintenanceNoMatchBody => 'వేరే వాహన నంబర్, ఫ్లీట్ కోడ్, ఛాసిస్ లేదా మోడల్ ప్రయత్నించండి.';
@@ -2563,22 +2511,37 @@ class AppL10nTe extends AppL10n {
   String get maintenanceOnboarding => 'ఆన్‌బోర్డింగ్';
 
   @override
-  String maintenanceOpenIssues(int count) {
-    return 'తెరిచిన సమస్యలు: $count';
-  }
-
-  @override
-  String maintenancePhotoCount(int count) {
-    return 'జత చేసిన ఫోటోలు: $count';
-  }
-
-  @override
   String get maintenanceProgress => 'జరుగుతోంది';
+
+  @override
+  String maintenanceReasonFromReport(String reason) {
+    return 'మెకానిక్ రిపోర్ట్: $reason';
+  }
+
+  @override
+  String maintenanceReasonLine(String reason) {
+    return 'కారణం: $reason';
+  }
+
+  @override
+  String get maintenanceReportConfirmed => 'నిర్ధారించిన తేదీ';
+
+  @override
+  String get maintenanceReportMechanic => 'మెకానిక్';
+
+  @override
+  String get maintenanceReportPhotos => 'ఫోటోలు';
+
+  @override
+  String get maintenanceReportRecorded => 'నమోదు చేసిన తేదీ';
 
   @override
   String maintenanceReportsLimit(int limit) {
     return 'తాజా $limit నివేదికలు చూపిస్తున్నాం.';
   }
+
+  @override
+  String get maintenanceReportStatus => 'స్కూటర్ స్థితి';
 
   @override
   String get maintenanceSafeToReuse => 'మళ్లీ వాడటానికి సురక్షితం';
@@ -2590,9 +2553,18 @@ class AppL10nTe extends AppL10n {
   String get maintenanceSelectVehicle => 'వాహనాన్ని ఎంచుకోండి';
 
   @override
-  String maintenanceShowing(int shown, int total) {
-    return '$total లో $shown చూపిస్తున్నాం';
+  String maintenanceStatusChanged(String status) {
+    return 'స్థితి $statusకి మార్చబడింది';
   }
+
+  @override
+  String maintenanceStatusNow(String status) {
+    return 'ప్రస్తుత స్థితి: $status';
+  }
+
+  @override
+  String get maintenanceStatusOutOfServiceHint =>
+      'రోడ్డు నుండి తీసివేయబడింది. ఇది సర్వీస్ నుండి బయటకు వెళ్తుంది, మీ అడ్మిన్ మాత్రమే దీన్ని తిరిగి తీసుకురాగలరు.';
 
   @override
   String get maintenanceTitle => 'సర్వీస్‌లో ఉన్న వాహనాలు';
@@ -4164,16 +4136,6 @@ class AppL10nTe extends AppL10n {
   String get submissionAddDamagedItem => 'దెబ్బతిన్న భాగం జోడించండి';
 
   @override
-  String get submissionAddIssue => 'సమస్య జోడించండి';
-
-  @override
-  String get submissionAvailableNeedsResolved =>
-      '\'కేటాయింపుకు సిద్ధం\' ఎంచుకోవడానికి, ప్రతి సమస్యను \'పరిష్కరించబడింది\'గా మార్చండి.';
-
-  @override
-  String get submissionAwaitingPartsNeedsParts => 'పరిష్కరించని కనీసం ఒక సమస్యకు కావాల్సిన విడిభాగాలు జోడించండి.';
-
-  @override
   String get submissionBypass => 'కోడ్ వాడలేకపోతున్నారా?';
 
   @override
@@ -4274,9 +4236,6 @@ class AppL10nTe extends AppL10n {
       'స్పేర్ పార్ట్స్ జాబితా నుండి ప్రతి దెబ్బతిన్న భాగాన్ని జోడించండి. దాని ధర ఆటోమేటిక్‌గా వస్తుంది.';
 
   @override
-  String get submissionEditIssue => 'సమస్యను మార్చండి';
-
-  @override
   String get submissionEvidence => 'ఆధార ఫోటోలు';
 
   @override
@@ -4310,57 +4269,6 @@ class AppL10nTe extends AppL10n {
   String get submissionImposeTitle => 'ఈ రిపోర్ట్‌ను అమలు చేయాలా?';
 
   @override
-  String get submissionIssueCategory => 'వర్గం';
-
-  @override
-  String get submissionIssueCategoryNeeded => 'వర్గం ఎంచుకోండి';
-
-  @override
-  String get submissionIssueCharge => 'నష్టం ఛార్జీ';
-
-  @override
-  String get submissionIssueChargeEarlier => 'మునుపటి రిపోర్ట్‌లోని నష్టం ఛార్జీకి లింక్ అయింది.';
-
-  @override
-  String get submissionIssueChargeHint => 'రైడర్‌కు ఛార్జీ వేసే దెబ్బతిన్న భాగంతో ఈ సమస్యను లింక్ చేయండి.';
-
-  @override
-  String get submissionIssueDescription => 'ఏం సమస్య';
-
-  @override
-  String get submissionIssueDescriptionNeeded => 'సమస్యను వివరించండి';
-
-  @override
-  String get submissionIssueNoCharge => 'లింక్ చేయలేదు';
-
-  @override
-  String get submissionIssueParts => 'కావాల్సిన విడిభాగాలు';
-
-  @override
-  String get submissionIssuePartsHint => 'స్కూటర్ విడిభాగాల కోసం వేచి ఉంటే అవసరం';
-
-  @override
-  String submissionIssuePartsLine(String parts) {
-    return 'విడిభాగాలు: $parts';
-  }
-
-  @override
-  String get submissionIssuePhotoNeeded => 'కనీసం ఒక ఫోటో జోడించండి';
-
-  @override
-  String get submissionIssuePhotosHint => 'ఈ సమస్య యొక్క కనీసం ఒక ఫోటో ఎంచుకోండి, లేదా కొత్తది తీయండి.';
-
-  @override
-  String get submissionIssueProgress => 'పురోగతి';
-
-  @override
-  String get submissionIssues => 'కనిపించిన సమస్యలు';
-
-  @override
-  String get submissionIssuesHint =>
-      'ప్రతి సమస్యను ఫోటోతో జోడించండి. బాగైన తర్వాత దాన్ని \'పరిష్కరించబడింది\'గా మార్చండి.';
-
-  @override
   String get submissionItemNote => 'గమనిక (ఐచ్ఛికం)';
 
   @override
@@ -4378,7 +4286,7 @@ class AppL10nTe extends AppL10n {
       'ఈ భాగానికి ఆధారంగా ఫోటో అవసరం. నష్టం యొక్క స్పష్టమైన క్లోజ్-అప్ ఫోటో తీయండి.';
 
   @override
-  String get submissionMaintenanceDetails => 'ఏమి సరిచేయాలి? (ఐచ్ఛికం)';
+  String get submissionMaintenanceDetails => 'ఏమి సరిచేయాలి?';
 
   @override
   String get submissionMechanicName => 'సమర్పించినవారు / మెకానిక్ పేరు';
@@ -4387,13 +4295,7 @@ class AppL10nTe extends AppL10n {
   String get submissionNameNeeded => 'మెకానిక్ పేరు నమోదు చేయండి';
 
   @override
-  String get submissionNewIssue => 'కొత్త సమస్య';
-
-  @override
   String get submissionNextComplete => 'అన్ని తనిఖీలు పూర్తయ్యాయి. ఇక్కడ ఇంకేమీ చేయాల్సిన పని లేదు.';
-
-  @override
-  String get submissionNextDeep => 'స్కూటర్ సబ్మిట్ అయింది. చివరి మెకానిక్ తనిఖీ పూర్తయ్యాక దాన్ని నమోదు చేయండి.';
 
   @override
   String get submissionNextLabel => 'తదుపరి దశ';
@@ -4414,9 +4316,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get submissionNoDamagedItems => 'దెబ్బతిన్న భాగాలు ఏవీ జోడించలేదు, కాబట్టి రైడర్‌కు ఛార్జీ ఉండదు.';
-
-  @override
-  String get submissionNoIssues => 'ఏ సమస్యా జోడించలేదు.';
 
   @override
   String get submissionNoPrices => 'ఇంకా పెనాల్టీ ధరలు సెట్ చేయలేదు. డ్యాష్‌బోర్డ్‌లో జోడించమని అడ్మిన్‌ను అడగండి.';
@@ -4479,9 +4378,6 @@ class AppL10nTe extends AppL10n {
   String get submissionReceivingHub => 'స్వీకరించే హబ్';
 
   @override
-  String get submissionRecordFinal => 'చివరి తనిఖీ నమోదు చేయండి';
-
-  @override
   String get submissionRecordReport => 'మెకానిక్ రిపోర్ట్ నమోదు చేయండి';
 
   @override
@@ -4522,9 +4418,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get submissionsAll => 'అన్నీ';
-
-  @override
-  String get submissionSaveIssue => 'సమస్యను సేవ్ చేయండి';
 
   @override
   String get submissionSaveItem => 'భాగం సేవ్ చేయండి';
@@ -4611,9 +4504,6 @@ class AppL10nTe extends AppL10n {
   String get submissionStageDone => 'పూర్తయింది';
 
   @override
-  String get submissionStageFinalChecks => 'చివరి తనిఖీలు';
-
-  @override
   String get submissionStageScheduled => 'షెడ్యూల్ అయింది';
 
   @override
@@ -4655,9 +4545,6 @@ class AppL10nTe extends AppL10n {
   String get submissionStatusMaintenanceHint => 'రిపేర్ అవసరం. బాగయ్యే వరకు దీన్ని కేటాయించలేరు.';
 
   @override
-  String get submissionStatusNeedsIssue => 'ఈ స్థితికి కనీసం ఒక సమస్య జోడించండి.';
-
-  @override
   String get submissionsTitle => 'రిటర్న్‌లు & ఎక్స్ఛేంజ్‌లు';
 
   @override
@@ -4683,6 +4570,9 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get submissionViewPhoto => 'ఫోటో చూడండి';
+
+  @override
+  String get submissionWhatNeedsWorkNeeded => 'ఏమి సరిచేయాలో వివరించండి';
 
   @override
   String get supportAccidentTheft => 'ప్రమాదం లేదా దొంగతనం';

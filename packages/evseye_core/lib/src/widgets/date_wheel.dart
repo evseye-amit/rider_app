@@ -27,6 +27,7 @@ class AppDateWheel {
 
     return showModalBottomSheet<DateTime>(
       context: context,
+      showDragHandle: false,
       backgroundColor: AppColors.surface,
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(

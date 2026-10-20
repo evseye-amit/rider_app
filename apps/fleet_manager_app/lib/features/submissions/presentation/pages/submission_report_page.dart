@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../core/maintenance/maintenance_issue_widgets.dart';
+import '../../../../core/maintenance/fleet_condition.dart';
 import '../../domain/entities/damaged_item.dart';
-import '../../domain/entities/issue_draft.dart';
 import '../../domain/usecases/submission_usecases.dart';
 import '../../submission_dependencies.dart';
 import '../providers/damaged_items_provider.dart';
 import '../providers/submission_providers.dart';
 import '../widgets/damaged_items.dart';
-import '../widgets/issue_editor.dart';
 import '../widgets/submission_widgets.dart';
 
 const int _maxReportEvidence = 40;
@@ -34,7 +32,6 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
 
   MaintenanceFleetStatus? _status;
   Set<String>? _evidence;
-  List<IssueDraft>? _issues;
   bool _saving = false;
   bool _showErrors = false;
 
@@ -50,9 +47,6 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
       _evidence ??
       {for (final SubmissionPhotoDto photo in submission.photos.reversed.take(_maxReportEvidence)) photo.id};
 
-  List<IssueDraft> _issuesFor(VehicleSubmissionDto submission) =>
-      _issues ?? [for (final MaintenanceIssueDto issue in submission.maintenanceIssues) IssueDraft.fromDto(issue)];
-
   void _toggleEvidence(VehicleSubmissionDto submission, String photoId) {
     final Set<String> next = {..._evidenceFor(submission)};
     if (!next.remove(photoId)) {
@@ -65,49 +59,6 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
     setState(() => _evidence = next);
   }
 
-  Future<void> _openIssue(VehicleSubmissionDto submission, [IssueDraft? initial]) async {
-    final IssueDraft? saved = await IssueSheet.show(context, submission: submission, initial: initial);
-    if (!mounted) return;
-    ref.invalidate(submissionProvider(submission.id));
-    if (saved == null) return;
-    final List<IssueDraft> current = _issuesFor(submission);
-    setState(
-      () => _issues = [
-        for (final IssueDraft issue in current) issue.key == saved.key ? saved : issue,
-        if (!current.any((issue) => issue.key == saved.key)) saved,
-      ],
-    );
-  }
-
-  void _removeIssue(VehicleSubmissionDto submission, IssueDraft removed) {
-    setState(
-      () => _issues = [
-        for (final IssueDraft issue in _issuesFor(submission))
-          if (issue.key != removed.key) issue,
-      ],
-    );
-  }
-
-  String? _issueProblem(MaintenanceFleetStatus? status, List<IssueDraft> issues) {
-    final AppL10n l10n = context.l10n;
-    return switch (status) {
-      null => null,
-      MaintenanceFleetStatus.available =>
-        issues.every((issue) => issue.status.isResolved) ? null : l10n.submissionAvailableNeedsResolved,
-      _ when issues.isEmpty => l10n.submissionStatusNeedsIssue,
-      MaintenanceFleetStatus.awaitingParts when !issues.any((issue) => issue.waitsForParts) =>
-        l10n.submissionAwaitingPartsNeedsParts,
-      _ => null,
-    };
-  }
-
-  String _statusHint(MaintenanceFleetStatus status) => switch (status) {
-    MaintenanceFleetStatus.available => context.l10n.submissionStatusAvailableHint,
-    MaintenanceFleetStatus.maintenance => context.l10n.submissionStatusMaintenanceHint,
-    MaintenanceFleetStatus.broken => context.l10n.submissionStatusBrokenHint,
-    MaintenanceFleetStatus.awaitingParts => context.l10n.submissionStatusAwaitingPartsHint,
-  };
-
   Future<void> _save(VehicleSubmissionDto submission) async {
     FocusManager.instance.primaryFocus?.unfocus();
     final String mechanic = _mechanic.text.trim();
@@ -115,36 +66,31 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
     final String notes = _unsafe.text.trim();
     final MaintenanceFleetStatus? status = _status;
     final Set<String> evidence = _evidenceFor(submission);
-    final List<IssueDraft> issues = _issuesFor(submission);
     final List<DamagedItem> items = ref.read(damagedItemsProvider(submission.id));
     if (mechanic.isEmpty ||
         summary.isEmpty ||
         status == null ||
         evidence.isEmpty ||
-        _issueProblem(status, issues) != null) {
+        (!status.isAvailable && notes.isEmpty)) {
       setState(() => _showErrors = true);
       return;
     }
-    final String reason = notes.isNotEmpty ? notes : issues.map((issue) => issue.description).join('; ');
     setState(() => _saving = true);
     final Result<void> result = await ref.read(recordSubmissionReportProvider)(
       RecordReportParams(
         id: submission.id,
         idempotencyKey: _idempotencyKey,
         input: SubmissionReportInput(
-          stage: submission.isConfirmed ? SubmissionStage.deep : SubmissionStage.basic,
+          stage: SubmissionStage.basic,
           mechanicName: mechanic,
           summary: summary,
           fleetStatus: status,
-          unsafeReason: status.isAvailable
-              ? null
-              : (reason.length > _maxUnsafeReason ? reason.substring(0, _maxUnsafeReason) : reason),
+          unsafeReason: status.isAvailable ? null : notes,
           checksComplete: true,
           evidencePhotoIds: [
             for (final SubmissionPhotoDto photo in submission.photos)
               if (evidence.contains(photo.id)) photo.id,
           ],
-          issues: [for (final IssueDraft issue in issues) issue.toInput()],
           items: [for (final DamagedItem item in items) item.toInput()],
         ),
       ),
@@ -165,10 +111,9 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
   Widget build(BuildContext context) {
     final AsyncValue<VehicleSubmissionDto> detail = ref.watch(submissionProvider(widget.submissionId));
     final VehicleSubmissionDto? submission = detail.value;
-    final bool deep = submission?.isConfirmed ?? false;
 
     return AppScaffold(
-      title: deep ? context.l10n.checkInDeepReport : context.l10n.checkInBasicReport,
+      title: context.l10n.checkInBasicReport,
       subtitle: submission?.assets.vehicleNumber,
       footer: submission == null
           ? null
@@ -201,7 +146,6 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
 
   Widget _form(VehicleSubmissionDto submission) {
     final MaintenanceFleetStatus? status = _status;
-    final List<IssueDraft> issues = _issuesFor(submission);
     return PageBody(
       children: [
         ModuleCard(
@@ -250,7 +194,7 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
                   selected: status == option,
                   onTap: () => setState(() => _status = option),
                   title: fleetConditionLabel(context.l10n, option),
-                  subtitle: _statusHint(option),
+                  subtitle: fleetConditionHint(context.l10n, option),
                   leading: IconTile(icon: fleetConditionIcon(option), tone: fleetConditionTone(option).color, size: 36),
                 ),
                 if (option != reportStatusOrder.last) const Gap.sm(),
@@ -259,10 +203,17 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
                 const Gap.md(),
                 AppTextField(
                   label: context.l10n.submissionMaintenanceDetails,
+                  required: true,
                   controller: _unsafe,
                   maxLines: 3,
-                  maxLength: 480,
+                  maxLength: _maxUnsafeReason,
                   textCapitalization: TextCapitalization.sentences,
+                  errorText: _showErrors && _unsafe.text.trim().isEmpty
+                      ? context.l10n.submissionWhatNeedsWorkNeeded
+                      : null,
+                  onChanged: (_) {
+                    if (_showErrors) setState(() {});
+                  },
                 ),
               ],
               if (_showErrors && status == null) ...[
@@ -274,15 +225,6 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
               ],
             ],
           ),
-        ),
-        const Gap.lg(),
-        IssuesCard(
-          issues: issues,
-          items: ref.watch(damagedItemsProvider(submission.id)),
-          onAdd: () => _openIssue(submission),
-          onEdit: (issue) => _openIssue(submission, issue),
-          onRemove: (issue) => _removeIssue(submission, issue),
-          error: _showErrors ? _issueProblem(status, issues) : null,
         ),
         const Gap.lg(),
         _summaryCard(submission),

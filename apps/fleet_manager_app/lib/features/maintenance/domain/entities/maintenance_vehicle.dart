@@ -13,13 +13,12 @@ class MaintenanceHub extends Equatable {
 }
 
 class MaintenanceMove extends Equatable {
-  const MaintenanceMove({required this.at, this.reason});
+  const MaintenanceMove({required this.at});
 
   final DateTime at;
-  final String? reason;
 
   @override
-  List<Object?> get props => [at, reason];
+  List<Object?> get props => [at];
 }
 
 class MechanicReport extends Equatable {
@@ -35,7 +34,6 @@ class MechanicReport extends Equatable {
     this.confirmedAt,
     this.evidencePhotoIds = const [],
     this.fleetStatus,
-    this.issues = const [],
   });
 
   final String id;
@@ -49,7 +47,6 @@ class MechanicReport extends Equatable {
   final DateTime createdAt;
   final DateTime? confirmedAt;
   final MaintenanceFleetStatus? fleetStatus;
-  final List<MaintenanceIssueDto> issues;
 
   @override
   List<Object?> get props => [id, safeForReuse, checksComplete, createdAt, confirmedAt, fleetStatus];
@@ -77,7 +74,6 @@ class MaintenanceVehicle extends Equatable {
     this.movedToMaintenance,
     this.latestReport,
     this.status = 'MAINTENANCE',
-    this.issues = const [],
   });
 
   final String id;
@@ -100,29 +96,34 @@ class MaintenanceVehicle extends Equatable {
   final MaintenanceMove? movedToMaintenance;
   final MechanicReport? latestReport;
   final String status;
-  final List<MaintenanceIssueDto> issues;
 
   String get modelLine => [modelName, variantName, colour].whereType<String>().join(' · ');
 
   MaintenanceFleetStatus? get condition => MaintenanceFleetStatus.maybe(status);
-
-  int get openIssueCount => issues.where((issue) => !issue.status.isResolved).length;
 
   @override
   List<Object?> get props => [id, vehicleNumber, updatedAt, movedToMaintenance, latestReport, status];
 }
 
 class MaintenanceStatusChange extends Equatable {
-  const MaintenanceStatusChange({required this.id, required this.to, required this.at, this.from, this.reason});
+  const MaintenanceStatusChange({
+    required this.id,
+    required this.to,
+    required this.at,
+    this.from,
+    this.reason,
+    this.fromReport = false,
+  });
 
   final String id;
   final String? from;
   final String to;
   final String? reason;
+  final bool fromReport;
   final DateTime at;
 
   @override
-  List<Object?> get props => [id, from, to, reason, at];
+  List<Object?> get props => [id, from, to, reason, fromReport, at];
 }
 
 class EvidencePhoto extends Equatable {

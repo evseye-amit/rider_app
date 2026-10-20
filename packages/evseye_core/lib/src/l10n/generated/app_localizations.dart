@@ -1396,6 +1396,12 @@ abstract class AppL10n {
   /// **'Camera'**
   String get commonCamera;
 
+  /// Shown when camera permission was refused
+  ///
+  /// In en, this message translates to:
+  /// **'Allow camera access in Settings to take photos.'**
+  String get commonCameraAccessNeeded;
+
   /// Cancel
   ///
   /// In en, this message translates to:
@@ -4648,90 +4654,6 @@ abstract class AppL10n {
   /// **'Your scooter,\nfully connected'**
   String get introVehicleTitle;
 
-  /// Issue category: accessories
-  ///
-  /// In en, this message translates to:
-  /// **'Accessories'**
-  String get issueCategoryAccessories;
-
-  /// Issue category: battery pack, BMS, battery connectors
-  ///
-  /// In en, this message translates to:
-  /// **'Battery'**
-  String get issueCategoryBattery;
-
-  /// Issue category: body and chassis
-  ///
-  /// In en, this message translates to:
-  /// **'Body & chassis'**
-  String get issueCategoryBodyChassis;
-
-  /// Issue category: brakes
-  ///
-  /// In en, this message translates to:
-  /// **'Brakes'**
-  String get issueCategoryBrakes;
-
-  /// Issue category: wiring, lights, charger, charging port
-  ///
-  /// In en, this message translates to:
-  /// **'Electrical'**
-  String get issueCategoryElectrical;
-
-  /// Issue category: anything else
-  ///
-  /// In en, this message translates to:
-  /// **'Other'**
-  String get issueCategoryOther;
-
-  /// Issue category: motor, controller, drivetrain
-  ///
-  /// In en, this message translates to:
-  /// **'Motor & powertrain'**
-  String get issueCategoryPowertrain;
-
-  /// Issue category: suspension and steering
-  ///
-  /// In en, this message translates to:
-  /// **'Suspension & steering'**
-  String get issueCategorySuspensionSteering;
-
-  /// Issue category: tyres and wheels
-  ///
-  /// In en, this message translates to:
-  /// **'Tyres & wheels'**
-  String get issueCategoryTyresWheels;
-
-  /// Damaged item an issue is linked to
-  ///
-  /// In en, this message translates to:
-  /// **'Damage charge: {name}'**
-  String issueChargeLine(String name);
-
-  /// Shown on an issue linked to a damage charge whose name isn't known
-  ///
-  /// In en, this message translates to:
-  /// **'Linked to a damage charge'**
-  String get issueChargeLinked;
-
-  /// Issue progress: being worked on
-  ///
-  /// In en, this message translates to:
-  /// **'In progress'**
-  String get issueStatusInProgress;
-
-  /// Issue progress: not started
-  ///
-  /// In en, this message translates to:
-  /// **'Open'**
-  String get issueStatusOpen;
-
-  /// Issue progress: fixed
-  ///
-  /// In en, this message translates to:
-  /// **'Resolved'**
-  String get issueStatusResolved;
-
   /// App
   ///
   /// In en, this message translates to:
@@ -4762,18 +4684,6 @@ abstract class AppL10n {
   /// **'Allowed'**
   String get maintenanceAllocationOn;
 
-  /// No report yet
-  ///
-  /// In en, this message translates to:
-  /// **'No report yet'**
-  String get maintenanceAwaitingReport;
-
-  /// Scooters at your hubs that are in for service, with their latest mechanic report.
-  ///
-  /// In en, this message translates to:
-  /// **'Scooters at your hubs that are in for service, with their latest mechanic report.'**
-  String get maintenanceBandHint;
-
   /// Battery
   ///
   /// In en, this message translates to:
@@ -4785,6 +4695,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Category'**
   String get maintenanceCategory;
+
+  /// Button and sheet title for changing a service scooter's status
+  ///
+  /// In en, this message translates to:
+  /// **'Change status'**
+  String get maintenanceChangeStatus;
 
   /// Chassis number
   ///
@@ -4803,12 +4719,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Colour'**
   String get maintenanceColour;
-
-  /// Confirmed {date}
-  ///
-  /// In en, this message translates to:
-  /// **'Confirmed {date}'**
-  String maintenanceConfirmedOn(String date);
 
   /// Couldn't load vehicles in service
   ///
@@ -4870,11 +4780,11 @@ abstract class AppL10n {
   /// **'Home hub'**
   String get maintenanceHomeHub;
 
-  /// Title of the issues card on a maintenance scooter
+  /// Label for the date a scooter went into service, on the service list card
   ///
   /// In en, this message translates to:
-  /// **'Issues'**
-  String get maintenanceIssues;
+  /// **'In service since'**
+  String get maintenanceInServiceSince;
 
   /// Latest mechanic report
   ///
@@ -4905,12 +4815,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'No status changes have been recorded.'**
   String get maintenanceNoHistory;
-
-  /// Shown when a maintenance scooter has no issues
-  ///
-  /// In en, this message translates to:
-  /// **'No issues recorded.'**
-  String get maintenanceNoIssues;
 
   /// Try a different vehicle number, fleet code, chassis or model.
   ///
@@ -4948,29 +4852,59 @@ abstract class AppL10n {
   /// **'Onboarding'**
   String get maintenanceOnboarding;
 
-  /// Number of unresolved issues on a maintenance scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Open issues: {count}'**
-  String maintenanceOpenIssues(int count);
-
-  /// Photos attached: {count}
-  ///
-  /// In en, this message translates to:
-  /// **'Photos attached: {count}'**
-  String maintenancePhotoCount(int count);
-
   /// In progress
   ///
   /// In en, this message translates to:
   /// **'In progress'**
   String get maintenanceProgress;
 
+  /// Status history reason when the change came from a mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Mechanic report: {reason}'**
+  String maintenanceReasonFromReport(String reason);
+
+  /// Status history reason entered by staff
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {reason}'**
+  String maintenanceReasonLine(String reason);
+
+  /// Label for when a mechanic report was confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed on'**
+  String get maintenanceReportConfirmed;
+
+  /// Label for the mechanic's name on a mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Mechanic'**
+  String get maintenanceReportMechanic;
+
+  /// Label for the number of photos on a mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Photos'**
+  String get maintenanceReportPhotos;
+
+  /// Label for when a mechanic report was recorded
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded on'**
+  String get maintenanceReportRecorded;
+
   /// Showing the latest {limit} reports.
   ///
   /// In en, this message translates to:
   /// **'Showing the latest {limit} reports.'**
   String maintenanceReportsLimit(int limit);
+
+  /// Label for the status the mechanic chose on a mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter status'**
+  String get maintenanceReportStatus;
 
   /// Safe to reuse
   ///
@@ -4990,11 +4924,23 @@ abstract class AppL10n {
   /// **'Select a vehicle'**
   String get maintenanceSelectVehicle;
 
-  /// Showing {shown} of {total}
+  /// Success message after changing a scooter's status
   ///
   /// In en, this message translates to:
-  /// **'Showing {shown} of {total}'**
-  String maintenanceShowing(int shown, int total);
+  /// **'Status changed to {status}'**
+  String maintenanceStatusChanged(String status);
+
+  /// Subtitle of the change status sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Current status: {status}'**
+  String maintenanceStatusNow(String status);
+
+  /// Hint for the out of service option in the change status sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Taken off the road. It leaves Service, and only your admin can bring it back.'**
+  String get maintenanceStatusOutOfServiceHint;
 
   /// Vehicles in service
   ///
@@ -5002,7 +4948,7 @@ abstract class AppL10n {
   /// **'Vehicles in service'**
   String get maintenanceTitle;
 
-  /// Under maintenance
+  /// Label above the number of scooters in service on the service page header
   ///
   /// In en, this message translates to:
   /// **'Under maintenance'**
@@ -7942,24 +7888,6 @@ abstract class AppL10n {
   /// **'Add damaged item'**
   String get submissionAddDamagedItem;
 
-  /// Button that adds an issue to the mechanic report
-  ///
-  /// In en, this message translates to:
-  /// **'Add an issue'**
-  String get submissionAddIssue;
-
-  /// Error when Ready for Allotment is chosen but an issue is not resolved
-  ///
-  /// In en, this message translates to:
-  /// **'To choose Ready for Allotment, set every issue to Resolved.'**
-  String get submissionAvailableNeedsResolved;
-
-  /// Error when Awaiting parts is chosen but no open issue lists parts
-  ///
-  /// In en, this message translates to:
-  /// **'Add the parts needed to at least one issue that isn\'t resolved.'**
-  String get submissionAwaitingPartsNeedsParts;
-
   /// Can't use a code?
   ///
   /// In en, this message translates to:
@@ -8140,12 +8068,6 @@ abstract class AppL10n {
   /// **'Add each damaged part from the spare parts list. Its price is filled in for you.'**
   String get submissionDamagedItemsHint;
 
-  /// Title of the sheet that edits an issue
-  ///
-  /// In en, this message translates to:
-  /// **'Edit issue'**
-  String get submissionEditIssue;
-
   /// Proof photos
   ///
   /// In en, this message translates to:
@@ -8206,102 +8128,6 @@ abstract class AppL10n {
   /// **'Impose this report?'**
   String get submissionImposeTitle;
 
-  /// Label of the issue category choice
-  ///
-  /// In en, this message translates to:
-  /// **'Category'**
-  String get submissionIssueCategory;
-
-  /// Error when no issue category is chosen
-  ///
-  /// In en, this message translates to:
-  /// **'Choose a category'**
-  String get submissionIssueCategoryNeeded;
-
-  /// Label of the damage charge link on an issue
-  ///
-  /// In en, this message translates to:
-  /// **'Damage charge'**
-  String get submissionIssueCharge;
-
-  /// Shown when an issue is linked to a damage charge from an earlier report
-  ///
-  /// In en, this message translates to:
-  /// **'Linked to a damage charge from an earlier report.'**
-  String get submissionIssueChargeEarlier;
-
-  /// Hint of the damage charge link on an issue
-  ///
-  /// In en, this message translates to:
-  /// **'Link this issue to a damaged item the rider is charged for.'**
-  String get submissionIssueChargeHint;
-
-  /// Label of the issue description field
-  ///
-  /// In en, this message translates to:
-  /// **'What\'s wrong'**
-  String get submissionIssueDescription;
-
-  /// Error when the issue description is empty
-  ///
-  /// In en, this message translates to:
-  /// **'Describe the issue'**
-  String get submissionIssueDescriptionNeeded;
-
-  /// Choice for an issue with no damage charge
-  ///
-  /// In en, this message translates to:
-  /// **'Not linked'**
-  String get submissionIssueNoCharge;
-
-  /// Label of the required parts field on an issue
-  ///
-  /// In en, this message translates to:
-  /// **'Parts needed'**
-  String get submissionIssueParts;
-
-  /// Hint of the required parts field on an issue
-  ///
-  /// In en, this message translates to:
-  /// **'Needed if the scooter is awaiting parts'**
-  String get submissionIssuePartsHint;
-
-  /// Required parts shown on an issue
-  ///
-  /// In en, this message translates to:
-  /// **'Parts: {parts}'**
-  String submissionIssuePartsLine(String parts);
-
-  /// Error when an issue has no photo
-  ///
-  /// In en, this message translates to:
-  /// **'Add at least one photo'**
-  String get submissionIssuePhotoNeeded;
-
-  /// Hint of the photo choice on an issue
-  ///
-  /// In en, this message translates to:
-  /// **'Pick at least one photo of this issue, or take a new one.'**
-  String get submissionIssuePhotosHint;
-
-  /// Label of the issue progress choice
-  ///
-  /// In en, this message translates to:
-  /// **'Progress'**
-  String get submissionIssueProgress;
-
-  /// Title of the issues section on the mechanic report
-  ///
-  /// In en, this message translates to:
-  /// **'Issues found'**
-  String get submissionIssues;
-
-  /// Hint of the issues section on the mechanic report
-  ///
-  /// In en, this message translates to:
-  /// **'Add each problem with a photo. Set it to Resolved once it\'s fixed.'**
-  String get submissionIssuesHint;
-
   /// Label of the optional note on a damaged item
   ///
   /// In en, this message translates to:
@@ -8332,10 +8158,10 @@ abstract class AppL10n {
   /// **'This part needs a photo as proof. Take a clear close-up of the damage.'**
   String get submissionItemPhotoRequiredHint;
 
-  /// Optional details field for UM major or UM minor
+  /// Required note on the mechanic report when the scooter isn't ready for allotment
   ///
   /// In en, this message translates to:
-  /// **'What needs work? (optional)'**
+  /// **'What needs work?'**
   String get submissionMaintenanceDetails;
 
   /// Name field on the vehicle check-in report for returns and exchanges
@@ -8350,23 +8176,11 @@ abstract class AppL10n {
   /// **'Enter the mechanic\'s name'**
   String get submissionNameNeeded;
 
-  /// Title of the sheet that adds an issue
-  ///
-  /// In en, this message translates to:
-  /// **'New issue'**
-  String get submissionNewIssue;
-
   /// All checks are done. Nothing more to do here.
   ///
   /// In en, this message translates to:
   /// **'All checks are done. Nothing more to do here.'**
   String get submissionNextComplete;
-
-  /// Next step once the scooter is submitted
-  ///
-  /// In en, this message translates to:
-  /// **'The scooter is submitted. Record the final mechanic check when it\'s done.'**
-  String get submissionNextDeep;
 
   /// Next step
   ///
@@ -8403,12 +8217,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'No damaged items added, so the rider won\'t be charged.'**
   String get submissionNoDamagedItems;
-
-  /// Shown when the mechanic report has no issues
-  ///
-  /// In en, this message translates to:
-  /// **'No issues added.'**
-  String get submissionNoIssues;
 
   /// No penalty prices are set up yet. Ask an admin to add them on the dashboard.
   ///
@@ -8518,12 +8326,6 @@ abstract class AppL10n {
   /// **'Receiving hub'**
   String get submissionReceivingHub;
 
-  /// Record final check
-  ///
-  /// In en, this message translates to:
-  /// **'Record final check'**
-  String get submissionRecordFinal;
-
   /// Record mechanic report
   ///
   /// In en, this message translates to:
@@ -8601,12 +8403,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'All'**
   String get submissionsAll;
-
-  /// Button that saves an issue
-  ///
-  /// In en, this message translates to:
-  /// **'Save issue'**
-  String get submissionSaveIssue;
 
   /// Button that saves a damaged item
   ///
@@ -8764,12 +8560,6 @@ abstract class AppL10n {
   /// **'Done'**
   String get submissionStageDone;
 
-  /// Final checks
-  ///
-  /// In en, this message translates to:
-  /// **'Final checks'**
-  String get submissionStageFinalChecks;
-
   /// Scheduled
   ///
   /// In en, this message translates to:
@@ -8848,12 +8638,6 @@ abstract class AppL10n {
   /// **'Needs a repair. It can\'t be assigned until it\'s fixed.'**
   String get submissionStatusMaintenanceHint;
 
-  /// Error when a maintenance status has no issue
-  ///
-  /// In en, this message translates to:
-  /// **'Add at least one issue for this status.'**
-  String get submissionStatusNeedsIssue;
-
   /// Returns & exchanges
   ///
   /// In en, this message translates to:
@@ -8907,6 +8691,12 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'View photo'**
   String get submissionViewPhoto;
+
+  /// Error when the what-needs-work note is empty on the mechanic report
+  ///
+  /// In en, this message translates to:
+  /// **'Describe what needs work'**
+  String get submissionWhatNeedsWorkNeeded;
 
   /// Accident or theft
   ///

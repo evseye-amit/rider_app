@@ -932,6 +932,10 @@
   "@commonCamera": {
     "description": "Camera"
   },
+  "commonCameraAccessNeeded": "Allow camera access in Settings to take photos.",
+  "@commonCameraAccessNeeded": {
+    "description": "Shown when camera permission was refused"
+  },
   "commonCancel": "Cancel",
   "@commonCancel": {
     "description": "Cancel"
@@ -3210,67 +3214,6 @@
   "@introVehicleTitle": {
     "description": "Your scooter, fully connected"
   },
-  "issueCategoryAccessories": "Accessories",
-  "@issueCategoryAccessories": {
-    "description": "Issue category: accessories"
-  },
-  "issueCategoryBattery": "Battery",
-  "@issueCategoryBattery": {
-    "description": "Issue category: battery pack, BMS, battery connectors"
-  },
-  "issueCategoryBodyChassis": "Body & chassis",
-  "@issueCategoryBodyChassis": {
-    "description": "Issue category: body and chassis"
-  },
-  "issueCategoryBrakes": "Brakes",
-  "@issueCategoryBrakes": {
-    "description": "Issue category: brakes"
-  },
-  "issueCategoryElectrical": "Electrical",
-  "@issueCategoryElectrical": {
-    "description": "Issue category: wiring, lights, charger, charging port"
-  },
-  "issueCategoryOther": "Other",
-  "@issueCategoryOther": {
-    "description": "Issue category: anything else"
-  },
-  "issueCategoryPowertrain": "Motor & powertrain",
-  "@issueCategoryPowertrain": {
-    "description": "Issue category: motor, controller, drivetrain"
-  },
-  "issueCategorySuspensionSteering": "Suspension & steering",
-  "@issueCategorySuspensionSteering": {
-    "description": "Issue category: suspension and steering"
-  },
-  "issueCategoryTyresWheels": "Tyres & wheels",
-  "@issueCategoryTyresWheels": {
-    "description": "Issue category: tyres and wheels"
-  },
-  "issueChargeLine": "Damage charge: {name}",
-  "@issueChargeLine": {
-    "description": "Damaged item an issue is linked to",
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "issueChargeLinked": "Linked to a damage charge",
-  "@issueChargeLinked": {
-    "description": "Shown on an issue linked to a damage charge whose name isn't known"
-  },
-  "issueStatusInProgress": "In progress",
-  "@issueStatusInProgress": {
-    "description": "Issue progress: being worked on"
-  },
-  "issueStatusOpen": "Open",
-  "@issueStatusOpen": {
-    "description": "Issue progress: not started"
-  },
-  "issueStatusResolved": "Resolved",
-  "@issueStatusResolved": {
-    "description": "Issue progress: fixed"
-  },
   "legalAppName": "App",
   "@legalAppName": {
     "description": "App"
@@ -3291,14 +3234,6 @@
   "@maintenanceAllocationOn": {
     "description": "Allowed"
   },
-  "maintenanceAwaitingReport": "No report yet",
-  "@maintenanceAwaitingReport": {
-    "description": "No report yet"
-  },
-  "maintenanceBandHint": "Scooters at your hubs that are in for service, with their latest mechanic report.",
-  "@maintenanceBandHint": {
-    "description": "Scooters at your hubs that are in for service, with their latest mechanic report."
-  },
   "maintenanceBattery": "Battery",
   "@maintenanceBattery": {
     "description": "Battery"
@@ -3306,6 +3241,10 @@
   "maintenanceCategory": "Category",
   "@maintenanceCategory": {
     "description": "Category"
+  },
+  "maintenanceChangeStatus": "Change status",
+  "@maintenanceChangeStatus": {
+    "description": "Button and sheet title for changing a service scooter's status"
   },
   "maintenanceChassis": "Chassis number",
   "@maintenanceChassis": {
@@ -3318,15 +3257,6 @@
   "maintenanceColour": "Colour",
   "@maintenanceColour": {
     "description": "Colour"
-  },
-  "maintenanceConfirmedOn": "Confirmed {date}",
-  "@maintenanceConfirmedOn": {
-    "description": "Confirmed {date}",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
   },
   "maintenanceCouldNotLoad": "Couldn't load vehicles in service",
   "@maintenanceCouldNotLoad": {
@@ -3373,9 +3303,9 @@
   "@maintenanceHomeHub": {
     "description": "Home hub"
   },
-  "maintenanceIssues": "Issues",
-  "@maintenanceIssues": {
-    "description": "Title of the issues card on a maintenance scooter"
+  "maintenanceInServiceSince": "In service since",
+  "@maintenanceInServiceSince": {
+    "description": "Label for the date a scooter went into service, on the service list card"
   },
   "maintenanceLatestReport": "Latest mechanic report",
   "@maintenanceLatestReport": {
@@ -3402,10 +3332,6 @@
   "@maintenanceNoHistory": {
     "description": "No status changes have been recorded."
   },
-  "maintenanceNoIssues": "No issues recorded.",
-  "@maintenanceNoIssues": {
-    "description": "Shown when a maintenance scooter has no issues"
-  },
   "maintenanceNoMatchBody": "Try a different vehicle number, fleet code, chassis or model.",
   "@maintenanceNoMatchBody": {
     "description": "Try a different vehicle number, fleet code, chassis or model."
@@ -3430,27 +3356,43 @@
   "@maintenanceOnboarding": {
     "description": "Onboarding"
   },
-  "maintenanceOpenIssues": "Open issues: {count}",
-  "@maintenanceOpenIssues": {
-    "description": "Number of unresolved issues on a maintenance scooter",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "maintenancePhotoCount": "Photos attached: {count}",
-  "@maintenancePhotoCount": {
-    "description": "Photos attached: {count}",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "maintenanceProgress": "In progress",
   "@maintenanceProgress": {
     "description": "In progress"
+  },
+  "maintenanceReasonFromReport": "Mechanic report: {reason}",
+  "@maintenanceReasonFromReport": {
+    "description": "Status history reason when the change came from a mechanic report",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "maintenanceReasonLine": "Reason: {reason}",
+  "@maintenanceReasonLine": {
+    "description": "Status history reason entered by staff",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "maintenanceReportConfirmed": "Confirmed on",
+  "@maintenanceReportConfirmed": {
+    "description": "Label for when a mechanic report was confirmed"
+  },
+  "maintenanceReportMechanic": "Mechanic",
+  "@maintenanceReportMechanic": {
+    "description": "Label for the mechanic's name on a mechanic report"
+  },
+  "maintenanceReportPhotos": "Photos",
+  "@maintenanceReportPhotos": {
+    "description": "Label for the number of photos on a mechanic report"
+  },
+  "maintenanceReportRecorded": "Recorded on",
+  "@maintenanceReportRecorded": {
+    "description": "Label for when a mechanic report was recorded"
   },
   "maintenanceReportsLimit": "Showing the latest {limit} reports.",
   "@maintenanceReportsLimit": {
@@ -3460,6 +3402,10 @@
         "type": "int"
       }
     }
+  },
+  "maintenanceReportStatus": "Scooter status",
+  "@maintenanceReportStatus": {
+    "description": "Label for the status the mechanic chose on a mechanic report"
   },
   "maintenanceSafeToReuse": "Safe to reuse",
   "@maintenanceSafeToReuse": {
@@ -3473,17 +3419,27 @@
   "@maintenanceSelectVehicle": {
     "description": "Select a vehicle"
   },
-  "maintenanceShowing": "Showing {shown} of {total}",
-  "@maintenanceShowing": {
-    "description": "Showing {shown} of {total}",
+  "maintenanceStatusChanged": "Status changed to {status}",
+  "@maintenanceStatusChanged": {
+    "description": "Success message after changing a scooter's status",
     "placeholders": {
-      "shown": {
-        "type": "int"
-      },
-      "total": {
-        "type": "int"
+      "status": {
+        "type": "String"
       }
     }
+  },
+  "maintenanceStatusNow": "Current status: {status}",
+  "@maintenanceStatusNow": {
+    "description": "Subtitle of the change status sheet",
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "maintenanceStatusOutOfServiceHint": "Taken off the road. It leaves Service, and only your admin can bring it back.",
+  "@maintenanceStatusOutOfServiceHint": {
+    "description": "Hint for the out of service option in the change status sheet"
   },
   "maintenanceTitle": "Vehicles in service",
   "@maintenanceTitle": {
@@ -3491,7 +3447,7 @@
   },
   "maintenanceUnderMaintenance": "Under maintenance",
   "@maintenanceUnderMaintenance": {
-    "description": "Under maintenance"
+    "description": "Label above the number of scooters in service on the service page header"
   },
   "maintenanceVariant": "Variant",
   "@maintenanceVariant": {
@@ -5640,18 +5596,6 @@
   "@submissionAddDamagedItem": {
     "description": "Button that opens the spare parts list"
   },
-  "submissionAddIssue": "Add an issue",
-  "@submissionAddIssue": {
-    "description": "Button that adds an issue to the mechanic report"
-  },
-  "submissionAvailableNeedsResolved": "To choose Ready for Allotment, set every issue to Resolved.",
-  "@submissionAvailableNeedsResolved": {
-    "description": "Error when Ready for Allotment is chosen but an issue is not resolved"
-  },
-  "submissionAwaitingPartsNeedsParts": "Add the parts needed to at least one issue that isn't resolved.",
-  "@submissionAwaitingPartsNeedsParts": {
-    "description": "Error when Awaiting parts is chosen but no open issue lists parts"
-  },
   "submissionBypass": "Can't use a code?",
   "@submissionBypass": {
     "description": "Can't use a code?"
@@ -5792,10 +5736,6 @@
   "@submissionDamagedItemsHint": {
     "description": "Hint under the damaged items title"
   },
-  "submissionEditIssue": "Edit issue",
-  "@submissionEditIssue": {
-    "description": "Title of the sheet that edits an issue"
-  },
   "submissionEvidence": "Proof photos",
   "@submissionEvidence": {
     "description": "Proof photos"
@@ -5841,75 +5781,6 @@
   "@submissionImposeTitle": {
     "description": "Impose this report?"
   },
-  "submissionIssueCategory": "Category",
-  "@submissionIssueCategory": {
-    "description": "Label of the issue category choice"
-  },
-  "submissionIssueCategoryNeeded": "Choose a category",
-  "@submissionIssueCategoryNeeded": {
-    "description": "Error when no issue category is chosen"
-  },
-  "submissionIssueCharge": "Damage charge",
-  "@submissionIssueCharge": {
-    "description": "Label of the damage charge link on an issue"
-  },
-  "submissionIssueChargeEarlier": "Linked to a damage charge from an earlier report.",
-  "@submissionIssueChargeEarlier": {
-    "description": "Shown when an issue is linked to a damage charge from an earlier report"
-  },
-  "submissionIssueChargeHint": "Link this issue to a damaged item the rider is charged for.",
-  "@submissionIssueChargeHint": {
-    "description": "Hint of the damage charge link on an issue"
-  },
-  "submissionIssueDescription": "What's wrong",
-  "@submissionIssueDescription": {
-    "description": "Label of the issue description field"
-  },
-  "submissionIssueDescriptionNeeded": "Describe the issue",
-  "@submissionIssueDescriptionNeeded": {
-    "description": "Error when the issue description is empty"
-  },
-  "submissionIssueNoCharge": "Not linked",
-  "@submissionIssueNoCharge": {
-    "description": "Choice for an issue with no damage charge"
-  },
-  "submissionIssueParts": "Parts needed",
-  "@submissionIssueParts": {
-    "description": "Label of the required parts field on an issue"
-  },
-  "submissionIssuePartsHint": "Needed if the scooter is awaiting parts",
-  "@submissionIssuePartsHint": {
-    "description": "Hint of the required parts field on an issue"
-  },
-  "submissionIssuePartsLine": "Parts: {parts}",
-  "@submissionIssuePartsLine": {
-    "description": "Required parts shown on an issue",
-    "placeholders": {
-      "parts": {
-        "type": "String"
-      }
-    }
-  },
-  "submissionIssuePhotoNeeded": "Add at least one photo",
-  "@submissionIssuePhotoNeeded": {
-    "description": "Error when an issue has no photo"
-  },
-  "submissionIssuePhotosHint": "Pick at least one photo of this issue, or take a new one.",
-  "@submissionIssuePhotosHint": {
-    "description": "Hint of the photo choice on an issue"
-  },
-  "submissionIssueProgress": "Progress",
-  "@submissionIssueProgress": {
-    "description": "Label of the issue progress choice"
-  },
-  "submissionIssues": "Issues found",
-  "@submissionIssues": {
-    "description": "Title of the issues section on the mechanic report"
-  },
-  "submissionIssuesHint": "Add each problem with a photo. Set it to Resolved once it's fixed.",
-  "@submissionIssuesHint": {
-    "description": "Hint of the issues section on the mechanic report"
-  },
   "submissionItemNote": "Note (optional)",
   "@submissionItemNote": {
     "description": "Label of the optional note on a damaged item"
@@ -5930,9 +5801,9 @@
   "@submissionItemPhotoRequiredHint": {
     "description": "Shown on a damaged item that needs photo proof"
   },
-  "submissionMaintenanceDetails": "What needs work? (optional)",
+  "submissionMaintenanceDetails": "What needs work?",
   "@submissionMaintenanceDetails": {
-    "description": "Optional details field for UM major or UM minor"
+    "description": "Required note on the mechanic report when the scooter isn't ready for allotment"
   },
   "submissionMechanicName": "Submitted by / Mechanic name",
   "@submissionMechanicName": {
@@ -5942,17 +5813,9 @@
   "@submissionNameNeeded": {
     "description": "Enter the mechanic's name"
   },
-  "submissionNewIssue": "New issue",
-  "@submissionNewIssue": {
-    "description": "Title of the sheet that adds an issue"
-  },
   "submissionNextComplete": "All checks are done. Nothing more to do here.",
   "@submissionNextComplete": {
     "description": "All checks are done. Nothing more to do here."
-  },
-  "submissionNextDeep": "The scooter is submitted. Record the final mechanic check when it's done.",
-  "@submissionNextDeep": {
-    "description": "Next step once the scooter is submitted"
   },
   "submissionNextLabel": "Next step",
   "@submissionNextLabel": {
@@ -5982,10 +5845,6 @@
   "submissionNoDamagedItems": "No damaged items added, so the rider won't be charged.",
   "@submissionNoDamagedItems": {
     "description": "Shown in the report summary when there are no charges"
-  },
-  "submissionNoIssues": "No issues added.",
-  "@submissionNoIssues": {
-    "description": "Shown when the mechanic report has no issues"
   },
   "submissionNoPrices": "No penalty prices are set up yet. Ask an admin to add them on the dashboard.",
   "@submissionNoPrices": {
@@ -6069,10 +5928,6 @@
   "@submissionReceivingHub": {
     "description": "Receiving hub"
   },
-  "submissionRecordFinal": "Record final check",
-  "@submissionRecordFinal": {
-    "description": "Record final check"
-  },
   "submissionRecordReport": "Record mechanic report",
   "@submissionRecordReport": {
     "description": "Record mechanic report"
@@ -6129,10 +5984,6 @@
   "submissionsAll": "All",
   "@submissionsAll": {
     "description": "All"
-  },
-  "submissionSaveIssue": "Save issue",
-  "@submissionSaveIssue": {
-    "description": "Button that saves an issue"
   },
   "submissionSaveItem": "Save item",
   "@submissionSaveItem": {
@@ -6256,10 +6107,6 @@
   "@submissionStageDone": {
     "description": "Done"
   },
-  "submissionStageFinalChecks": "Final checks",
-  "@submissionStageFinalChecks": {
-    "description": "Final checks"
-  },
   "submissionStageScheduled": "Scheduled",
   "@submissionStageScheduled": {
     "description": "Scheduled"
@@ -6312,10 +6159,6 @@
   "@submissionStatusMaintenanceHint": {
     "description": "Hint for the Under maintenance scooter status on the mechanic report"
   },
-  "submissionStatusNeedsIssue": "Add at least one issue for this status.",
-  "@submissionStatusNeedsIssue": {
-    "description": "Error when a maintenance status has no issue"
-  },
   "submissionsTitle": "Returns & exchanges",
   "@submissionsTitle": {
     "description": "Returns & exchanges"
@@ -6351,6 +6194,10 @@
   "submissionViewPhoto": "View photo",
   "@submissionViewPhoto": {
     "description": "View photo"
+  },
+  "submissionWhatNeedsWorkNeeded": "Describe what needs work",
+  "@submissionWhatNeedsWorkNeeded": {
+    "description": "Error when the what-needs-work note is empty on the mechanic report"
   },
   "supportAccidentTheft": "Accident or theft",
   "@supportAccidentTheft": {

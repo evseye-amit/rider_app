@@ -703,6 +703,9 @@ class AppL10nEn extends AppL10n {
   String get commonCamera => 'Camera';
 
   @override
+  String get commonCameraAccessNeeded => 'Allow camera access in Settings to take photos.';
+
+  @override
   String get commonCancel => 'Cancel';
 
   @override
@@ -2402,50 +2405,6 @@ class AppL10nEn extends AppL10n {
   String get introVehicleTitle => 'Your scooter,\nfully connected';
 
   @override
-  String get issueCategoryAccessories => 'Accessories';
-
-  @override
-  String get issueCategoryBattery => 'Battery';
-
-  @override
-  String get issueCategoryBodyChassis => 'Body & chassis';
-
-  @override
-  String get issueCategoryBrakes => 'Brakes';
-
-  @override
-  String get issueCategoryElectrical => 'Electrical';
-
-  @override
-  String get issueCategoryOther => 'Other';
-
-  @override
-  String get issueCategoryPowertrain => 'Motor & powertrain';
-
-  @override
-  String get issueCategorySuspensionSteering => 'Suspension & steering';
-
-  @override
-  String get issueCategoryTyresWheels => 'Tyres & wheels';
-
-  @override
-  String issueChargeLine(String name) {
-    return 'Damage charge: $name';
-  }
-
-  @override
-  String get issueChargeLinked => 'Linked to a damage charge';
-
-  @override
-  String get issueStatusInProgress => 'In progress';
-
-  @override
-  String get issueStatusOpen => 'Open';
-
-  @override
-  String get issueStatusResolved => 'Resolved';
-
-  @override
   String get legalAppName => 'App';
 
   @override
@@ -2461,16 +2420,13 @@ class AppL10nEn extends AppL10n {
   String get maintenanceAllocationOn => 'Allowed';
 
   @override
-  String get maintenanceAwaitingReport => 'No report yet';
-
-  @override
-  String get maintenanceBandHint => 'Scooters at your hubs that are in for service, with their latest mechanic report.';
-
-  @override
   String get maintenanceBattery => 'Battery';
 
   @override
   String get maintenanceCategory => 'Category';
+
+  @override
+  String get maintenanceChangeStatus => 'Change status';
 
   @override
   String get maintenanceChassis => 'Chassis number';
@@ -2480,11 +2436,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get maintenanceColour => 'Colour';
-
-  @override
-  String maintenanceConfirmedOn(String date) {
-    return 'Confirmed $date';
-  }
 
   @override
   String get maintenanceCouldNotLoad => 'Couldn\'t load vehicles in service';
@@ -2519,7 +2470,7 @@ class AppL10nEn extends AppL10n {
   String get maintenanceHomeHub => 'Home hub';
 
   @override
-  String get maintenanceIssues => 'Issues';
+  String get maintenanceInServiceSince => 'In service since';
 
   @override
   String get maintenanceLatestReport => 'Latest mechanic report';
@@ -2537,9 +2488,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get maintenanceNoHistory => 'No status changes have been recorded.';
-
-  @override
-  String get maintenanceNoIssues => 'No issues recorded.';
 
   @override
   String get maintenanceNoMatchBody => 'Try a different vehicle number, fleet code, chassis or model.';
@@ -2560,22 +2508,37 @@ class AppL10nEn extends AppL10n {
   String get maintenanceOnboarding => 'Onboarding';
 
   @override
-  String maintenanceOpenIssues(int count) {
-    return 'Open issues: $count';
-  }
-
-  @override
-  String maintenancePhotoCount(int count) {
-    return 'Photos attached: $count';
-  }
-
-  @override
   String get maintenanceProgress => 'In progress';
+
+  @override
+  String maintenanceReasonFromReport(String reason) {
+    return 'Mechanic report: $reason';
+  }
+
+  @override
+  String maintenanceReasonLine(String reason) {
+    return 'Reason: $reason';
+  }
+
+  @override
+  String get maintenanceReportConfirmed => 'Confirmed on';
+
+  @override
+  String get maintenanceReportMechanic => 'Mechanic';
+
+  @override
+  String get maintenanceReportPhotos => 'Photos';
+
+  @override
+  String get maintenanceReportRecorded => 'Recorded on';
 
   @override
   String maintenanceReportsLimit(int limit) {
     return 'Showing the latest $limit reports.';
   }
+
+  @override
+  String get maintenanceReportStatus => 'Scooter status';
 
   @override
   String get maintenanceSafeToReuse => 'Safe to reuse';
@@ -2587,9 +2550,18 @@ class AppL10nEn extends AppL10n {
   String get maintenanceSelectVehicle => 'Select a vehicle';
 
   @override
-  String maintenanceShowing(int shown, int total) {
-    return 'Showing $shown of $total';
+  String maintenanceStatusChanged(String status) {
+    return 'Status changed to $status';
   }
+
+  @override
+  String maintenanceStatusNow(String status) {
+    return 'Current status: $status';
+  }
+
+  @override
+  String get maintenanceStatusOutOfServiceHint =>
+      'Taken off the road. It leaves Service, and only your admin can bring it back.';
 
   @override
   String get maintenanceTitle => 'Vehicles in service';
@@ -4159,15 +4131,6 @@ class AppL10nEn extends AppL10n {
   String get submissionAddDamagedItem => 'Add damaged item';
 
   @override
-  String get submissionAddIssue => 'Add an issue';
-
-  @override
-  String get submissionAvailableNeedsResolved => 'To choose Ready for Allotment, set every issue to Resolved.';
-
-  @override
-  String get submissionAwaitingPartsNeedsParts => 'Add the parts needed to at least one issue that isn\'t resolved.';
-
-  @override
   String get submissionBypass => 'Can\'t use a code?';
 
   @override
@@ -4268,9 +4231,6 @@ class AppL10nEn extends AppL10n {
       'Add each damaged part from the spare parts list. Its price is filled in for you.';
 
   @override
-  String get submissionEditIssue => 'Edit issue';
-
-  @override
   String get submissionEvidence => 'Proof photos';
 
   @override
@@ -4304,56 +4264,6 @@ class AppL10nEn extends AppL10n {
   String get submissionImposeTitle => 'Impose this report?';
 
   @override
-  String get submissionIssueCategory => 'Category';
-
-  @override
-  String get submissionIssueCategoryNeeded => 'Choose a category';
-
-  @override
-  String get submissionIssueCharge => 'Damage charge';
-
-  @override
-  String get submissionIssueChargeEarlier => 'Linked to a damage charge from an earlier report.';
-
-  @override
-  String get submissionIssueChargeHint => 'Link this issue to a damaged item the rider is charged for.';
-
-  @override
-  String get submissionIssueDescription => 'What\'s wrong';
-
-  @override
-  String get submissionIssueDescriptionNeeded => 'Describe the issue';
-
-  @override
-  String get submissionIssueNoCharge => 'Not linked';
-
-  @override
-  String get submissionIssueParts => 'Parts needed';
-
-  @override
-  String get submissionIssuePartsHint => 'Needed if the scooter is awaiting parts';
-
-  @override
-  String submissionIssuePartsLine(String parts) {
-    return 'Parts: $parts';
-  }
-
-  @override
-  String get submissionIssuePhotoNeeded => 'Add at least one photo';
-
-  @override
-  String get submissionIssuePhotosHint => 'Pick at least one photo of this issue, or take a new one.';
-
-  @override
-  String get submissionIssueProgress => 'Progress';
-
-  @override
-  String get submissionIssues => 'Issues found';
-
-  @override
-  String get submissionIssuesHint => 'Add each problem with a photo. Set it to Resolved once it\'s fixed.';
-
-  @override
   String get submissionItemNote => 'Note (optional)';
 
   @override
@@ -4371,7 +4281,7 @@ class AppL10nEn extends AppL10n {
       'This part needs a photo as proof. Take a clear close-up of the damage.';
 
   @override
-  String get submissionMaintenanceDetails => 'What needs work? (optional)';
+  String get submissionMaintenanceDetails => 'What needs work?';
 
   @override
   String get submissionMechanicName => 'Submitted by / Mechanic name';
@@ -4380,13 +4290,7 @@ class AppL10nEn extends AppL10n {
   String get submissionNameNeeded => 'Enter the mechanic\'s name';
 
   @override
-  String get submissionNewIssue => 'New issue';
-
-  @override
   String get submissionNextComplete => 'All checks are done. Nothing more to do here.';
-
-  @override
-  String get submissionNextDeep => 'The scooter is submitted. Record the final mechanic check when it\'s done.';
 
   @override
   String get submissionNextLabel => 'Next step';
@@ -4407,9 +4311,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get submissionNoDamagedItems => 'No damaged items added, so the rider won\'t be charged.';
-
-  @override
-  String get submissionNoIssues => 'No issues added.';
 
   @override
   String get submissionNoPrices => 'No penalty prices are set up yet. Ask an admin to add them on the dashboard.';
@@ -4471,9 +4372,6 @@ class AppL10nEn extends AppL10n {
   String get submissionReceivingHub => 'Receiving hub';
 
   @override
-  String get submissionRecordFinal => 'Record final check';
-
-  @override
   String get submissionRecordReport => 'Record mechanic report';
 
   @override
@@ -4514,9 +4412,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get submissionsAll => 'All';
-
-  @override
-  String get submissionSaveIssue => 'Save issue';
 
   @override
   String get submissionSaveItem => 'Save item';
@@ -4603,9 +4498,6 @@ class AppL10nEn extends AppL10n {
   String get submissionStageDone => 'Done';
 
   @override
-  String get submissionStageFinalChecks => 'Final checks';
-
-  @override
   String get submissionStageScheduled => 'Scheduled';
 
   @override
@@ -4648,9 +4540,6 @@ class AppL10nEn extends AppL10n {
   String get submissionStatusMaintenanceHint => 'Needs a repair. It can\'t be assigned until it\'s fixed.';
 
   @override
-  String get submissionStatusNeedsIssue => 'Add at least one issue for this status.';
-
-  @override
   String get submissionsTitle => 'Returns & exchanges';
 
   @override
@@ -4676,6 +4565,9 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get submissionViewPhoto => 'View photo';
+
+  @override
+  String get submissionWhatNeedsWorkNeeded => 'Describe what needs work';
 
   @override
   String get supportAccidentTheft => 'Accident or theft';

@@ -9,4 +9,6 @@ abstract interface class MaintenanceRepository {
   Future<Result<MaintenanceVehicleDetail>> vehicle(String fleetId);
 
   Future<Result<String>> photoUrl(String photoId);
+
+  Future<Result<void>> changeStatus(String fleetId, String status);
 }

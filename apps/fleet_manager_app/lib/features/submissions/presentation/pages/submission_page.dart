@@ -216,7 +216,6 @@ class _SubmissionPageState extends ConsumerState<SubmissionPage> {
     final SubmissionReportDto? open = submission.openReport;
     final List<String> missing = _missing(submission);
     final bool canCapture = submission.nextAction == SubmissionNextAction.capturePhotos;
-    final bool canRecord = canCapture || submission.nextAction == SubmissionNextAction.deepCheck;
 
     return AppScaffold(
       title: context.l10n.checkInTitle,
@@ -253,7 +252,7 @@ class _SubmissionPageState extends ConsumerState<SubmissionPage> {
             ),
             const Gap.lg(),
             _requiredPhotos(submission, canRetake: canCapture),
-            if (canRecord) ...[const Gap.lg(), DamagedItemsCard(submission: submission)],
+            if (canCapture) ...[const Gap.lg(), DamagedItemsCard(submission: submission)],
             if (submission.reports.isNotEmpty) ...[
               const Gap.lg(),
               ModuleCard(
@@ -311,11 +310,6 @@ class _SubmissionPageState extends ConsumerState<SubmissionPage> {
                   ),
           ),
         ],
-      ),
-      SubmissionNextAction.deepCheck => PrimaryButton(
-        label: context.l10n.submissionRecordFinal,
-        icon: Icons.build_circle_rounded,
-        onPressed: _busy || _uploading.isNotEmpty ? null : _record,
       ),
       SubmissionNextAction.reviewAndImpose || SubmissionNextAction.collectOtps || SubmissionNextAction.complete => null,
     };

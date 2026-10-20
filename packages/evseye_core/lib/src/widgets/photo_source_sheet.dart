@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../l10n/l10n.dart';
@@ -31,16 +32,29 @@ abstract final class PhotoSourceSheet {
   }
 
   static Future<File?> capture(PhotoSource source) async {
+    final bool camera = source == PhotoSource.camera && !_onIosSimulator;
     final ImagePicker picker = ImagePicker();
-    final XFile? shot = await picker.pickImage(
-      source: source == PhotoSource.camera ? ImageSource.camera : ImageSource.gallery,
+    try {
+      final XFile? shot = await picker.pickImage(
+        source: camera ? ImageSource.camera : ImageSource.gallery,
+        maxWidth: 2000,
+        maxHeight: 2000,
+        imageQuality: 85,
+        preferredCameraDevice: CameraDevice.rear,
+      );
+      return shot == null ? null : File(shot.path);
+    } on PlatformException catch (e) {
+      if (camera && e.code == 'no_available_camera') return capture(PhotoSource.gallery);
+      rethrow;
+    }
+  }
 
-      maxWidth: 2000,
-      maxHeight: 2000,
-      imageQuality: 85,
-      preferredCameraDevice: CameraDevice.rear,
-    );
-    return shot == null ? null : File(shot.path);
+  static bool get _onIosSimulator {
+    try {
+      return Platform.isIOS && Platform.resolvedExecutable.contains('/CoreSimulator/');
+    } on Object {
+      return false;
+    }
   }
 }
 

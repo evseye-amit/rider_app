@@ -94,31 +94,23 @@ class GlobalFleetAllocationDto {
 }
 
 class GlobalFleetSubmissionDto {
-  const GlobalFleetSubmissionDto({
-    required this.id,
-    required this.status,
-    required this.mechanicChecksComplete,
-    required this.isExchange,
-    this.confirmedAt,
-  });
+  const GlobalFleetSubmissionDto({required this.id, required this.status, required this.isExchange, this.confirmedAt});
 
   factory GlobalFleetSubmissionDto.fromJson(Map<String, dynamic> json) => GlobalFleetSubmissionDto(
     id: jsonText(json['id']),
     status: jsonText(json['status']),
-    mechanicChecksComplete: jsonBool(json['mechanicChecksComplete']),
     isExchange: jsonTextOrNull(json['exchangeRequestId']) != null,
     confirmedAt: jsonDate(json['confirmedAt']),
   );
 
   final String id;
   final String status;
-  final bool mechanicChecksComplete;
   final bool isExchange;
   final DateTime? confirmedAt;
 
   bool get isCancelled => status == 'CANCELLED';
 
-  bool get isDone => status == 'CONFIRMED' && mechanicChecksComplete;
+  bool get isDone => status == 'CONFIRMED';
 }
 
 class GlobalFleetDetailDto {

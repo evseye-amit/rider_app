@@ -41,3 +41,22 @@ class GetEvidencePhotoUrl extends UseCase<String, String> {
   @override
   Future<Result<String>> call(String photoId) => _repository.photoUrl(photoId);
 }
+
+class StatusChangeRequest extends Equatable {
+  const StatusChangeRequest({required this.fleetId, required this.status});
+
+  final String fleetId;
+  final String status;
+
+  @override
+  List<Object?> get props => [fleetId, status];
+}
+
+class ChangeVehicleStatus extends UseCase<void, StatusChangeRequest> {
+  const ChangeVehicleStatus(this._repository);
+
+  final MaintenanceRepository _repository;
+
+  @override
+  Future<Result<void>> call(StatusChangeRequest request) => _repository.changeStatus(request.fleetId, request.status);
+}

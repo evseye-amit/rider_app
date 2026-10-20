@@ -12,6 +12,7 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
 
   static const String _base = '/fleet-manager/maintenance/fleets';
   static const int _pageSize = 20;
+  static final RegExp _reportReason = RegExp(r'^Submission report [0-9a-fA-F-]{36}:\s*(.*)$', dotAll: true);
 
   @override
   Future<Result<MaintenanceVehicleList>> vehicles(MaintenanceQuery query) {
@@ -34,6 +35,10 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
 
   @override
   Future<Result<String>> photoUrl(String photoId) => _media.downloadUrl(photoId);
+
+  @override
+  Future<Result<void>> changeStatus(String fleetId, String status) =>
+      _api.patch<void>('/fleets/$fleetId/status', body: {'status': status}, parse: (_) {});
 
   static MaintenanceVehicleList _list(Map<String, dynamic> json) {
     final Map<String, dynamic> meta = _map(json['meta']);
@@ -86,10 +91,9 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
       currentHub: _hub(json['currentHub']),
       homeHub: _hub(json['homeHub']),
       updatedAt: _date(json['updatedAt']),
-      movedToMaintenance: movedAt == null ? null : MaintenanceMove(at: movedAt, reason: _text(move['reason'])),
+      movedToMaintenance: movedAt == null ? null : MaintenanceMove(at: movedAt),
       latestReport: report ?? _report(json['latestMechanicReport']),
       status: _text(json['status']) ?? 'MAINTENANCE',
-      issues: MaintenanceIssueDto.list(json['maintenanceIssues']),
     );
   }
 
@@ -118,7 +122,6 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
       createdAt: createdAt,
       confirmedAt: _date(json['confirmedAt']),
       fleetStatus: MaintenanceFleetStatus.maybe(json['fleetStatus']),
-      issues: MaintenanceIssueDto.list(json['issues']),
     );
   }
 
@@ -127,11 +130,14 @@ class MaintenanceRepositoryImpl implements MaintenanceRepository {
     final String? to = _text(json['toStatus']);
     final DateTime? at = _date(json['createdAt']);
     if (id == null || to == null || at == null) return null;
+    final String? reason = _text(json['reason']);
+    final RegExpMatch? report = reason == null ? null : _reportReason.firstMatch(reason);
     return MaintenanceStatusChange(
       id: id,
       from: _text(json['fromStatus']),
       to: to,
-      reason: _text(json['reason']),
+      reason: report == null ? reason : _text(report.group(1)),
+      fromReport: report != null,
       at: at,
     );
   }
