@@ -160,6 +160,15 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
           : '${fleet.vehicleNumber}${fleet.modelName == null ? '' : ' · ${fleet.modelName}'}',
       showBack: false,
       centerTitle: submitted,
+      footer: switch (payment) {
+        final DeploymentPayment due when !submitted && !due.needsSupport => PrimaryButton(
+          label: 'I have paid ${Fmt.money(due.amount)}',
+          icon: Icons.check_circle_rounded,
+          loading: _submitting,
+          onPressed: _submitting ? null : () => _submit(allocationId),
+        ),
+        _ => null,
+      },
       body: RefreshIndicator(
         onRefresh: () async {
           await ref.read(deploymentProvider.notifier).refresh();
@@ -207,7 +216,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                         hint: _providerIndex == 0
                             ? context.l10n.deploymentUpiTransactionIdEG
                             : context.l10n.deploymentReferenceReceiptNumber,
-                        helper: context.l10n.deploymentFleetManagerChecksAgainstWhat,
                         controller: _reference,
                         errorText: _error,
                         prefixIcon: Icons.tag_rounded,
@@ -215,12 +223,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                       ),
                       const Gap.lg(),
                       GroupLabel(context.l10n.deploymentReceiptTitle),
-                      const Gap.xs(),
-                      Text(
-                        context.l10n.deploymentReceiptHint,
-                        style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45),
-                      ),
-                      const Gap.md(),
+                      const Gap.sm(),
                       Wrap(
                         spacing: Insets.sm,
                         runSpacing: Insets.sm,
@@ -235,13 +238,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                       ),
                     ],
                   ),
-                ),
-                const Gap.xl(),
-                PrimaryButton(
-                  label: 'I have paid ${Fmt.money(payment.amount)}',
-                  icon: Icons.check_circle_rounded,
-                  loading: _submitting,
-                  onPressed: _submitting ? null : () => _submit(allocationId),
                 ),
               ],
             ],
@@ -261,27 +257,19 @@ class _Bill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ModuleCard(
-      title: context.l10n.deploymentAmountDue,
-      leading: const IconTile(icon: Icons.receipt_long_rounded, solid: true, size: 28),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(Fmt.money(payment.amount), style: AppText.numericLarge.copyWith(color: AppColors.primary)),
-          const Gap.md(),
-          for (final PaymentLineItem item in payment.items)
-            KeyValueRow(label: item.label, value: Fmt.money(item.amount)),
-          const Divider(),
-          KeyValueRow(
-            label: context.l10n.commonTotal,
-            value: Fmt.money(payment.amount),
-            valueStyle: AppText.titleSmall,
+          Text(
+            context.l10n.deploymentAmountDue,
+            style: AppText.bodySmall.copyWith(fontSize: 13, color: AppColors.textSecondary),
           ),
-          if (payment.createdAt != null) ...[
+          const Gap.xs(),
+          Text(Fmt.money(payment.amount), style: AppText.numericLarge.copyWith(color: AppColors.primary)),
+          if (payment.items.isNotEmpty) ...[
             const Gap.sm(),
-            Text(
-              'Requested ${Fmt.relative(payment.createdAt!)}',
-              style: AppText.bodySmall.copyWith(color: AppColors.textMuted),
-            ),
+            for (final PaymentLineItem item in payment.items)
+              KeyValueRow(label: item.label, value: Fmt.money(item.amount), dense: true),
           ],
         ],
       ),

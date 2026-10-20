@@ -2746,12 +2746,6 @@ abstract class AppL10n {
   /// **'Flagged by rider'**
   String get deploymentFlaggedByRider;
 
-  /// Your fleet manager checks this against what they received.
-  ///
-  /// In en, this message translates to:
-  /// **'Your fleet manager checks this against what they received.'**
-  String get deploymentFleetManagerChecksAgainstWhat;
-
   /// Your fleet manager has not asked for a payment yet.
   ///
   /// In en, this message translates to:
@@ -2937,12 +2931,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Screenshot added'**
   String get deploymentReceiptAdded;
-
-  /// Hint of the optional payment screenshot section
-  ///
-  /// In en, this message translates to:
-  /// **'Add a screenshot of the payment. It helps your fleet manager check it faster.'**
-  String get deploymentReceiptHint;
 
   /// Title of the payment screenshots already sent
   ///

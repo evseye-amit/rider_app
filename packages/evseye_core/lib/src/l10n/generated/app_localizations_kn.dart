@@ -1405,10 +1405,6 @@ class AppL10nKn extends AppL10n {
   String get deploymentFlaggedByRider => 'ರೈಡರ್ ಗುರುತಿಸಿದ್ದಾರೆ';
 
   @override
-  String get deploymentFleetManagerChecksAgainstWhat =>
-      'ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಇದನ್ನು ತಮಗೆ ಸಿಕ್ಕಿದ್ದರ ಜೊತೆ ಹೋಲಿಸುತ್ತಾರೆ.';
-
-  @override
   String get deploymentFleetManagerHasNotAsked => 'ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಇನ್ನೂ ಪಾವತಿ ಕೇಳಿಲ್ಲ.';
 
   @override
@@ -1513,9 +1509,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get deploymentReceiptAdded => 'ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ಸೇರಿಸಲಾಗಿದೆ';
-
-  @override
-  String get deploymentReceiptHint => 'ಪಾವತಿಯ ಸ್ಕ್ರೀನ್‌ಶಾಟ್ ಸೇರಿಸಿ. ಇದರಿಂದ ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಬೇಗ ಪರಿಶೀಲಿಸಬಹುದು.';
 
   @override
   String get deploymentReceiptsSent => 'ಕಳುಹಿಸಿದ ಸ್ಕ್ರೀನ್‌ಶಾಟ್‌ಗಳು';

@@ -1872,10 +1872,6 @@
   "@deploymentFlaggedByRider": {
     "description": "Flagged by rider"
   },
-  "deploymentFleetManagerChecksAgainstWhat": "Your fleet manager checks this against what they received.",
-  "@deploymentFleetManagerChecksAgainstWhat": {
-    "description": "Your fleet manager checks this against what they received."
-  },
   "deploymentFleetManagerHasNotAsked": "Your fleet manager has not asked for a payment yet.",
   "@deploymentFleetManagerHasNotAsked": {
     "description": "Your fleet manager has not asked for a payment yet."
@@ -2009,10 +2005,6 @@
   "deploymentReceiptAdded": "Screenshot added",
   "@deploymentReceiptAdded": {
     "description": "Shown after a payment screenshot is uploaded"
-  },
-  "deploymentReceiptHint": "Add a screenshot of the payment. It helps your fleet manager check it faster.",
-  "@deploymentReceiptHint": {
-    "description": "Hint of the optional payment screenshot section"
   },
   "deploymentReceiptsSent": "Screenshots sent",
   "@deploymentReceiptsSent": {

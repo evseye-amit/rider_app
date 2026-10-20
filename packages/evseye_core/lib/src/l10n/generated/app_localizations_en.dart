@@ -1402,9 +1402,6 @@ class AppL10nEn extends AppL10n {
   String get deploymentFlaggedByRider => 'Flagged by rider';
 
   @override
-  String get deploymentFleetManagerChecksAgainstWhat => 'Your fleet manager checks this against what they received.';
-
-  @override
   String get deploymentFleetManagerHasNotAsked => 'Your fleet manager has not asked for a payment yet.';
 
   @override
@@ -1509,9 +1506,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentReceiptAdded => 'Screenshot added';
-
-  @override
-  String get deploymentReceiptHint => 'Add a screenshot of the payment. It helps your fleet manager check it faster.';
 
   @override
   String get deploymentReceiptsSent => 'Screenshots sent';

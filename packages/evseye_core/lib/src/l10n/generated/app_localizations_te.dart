@@ -1402,9 +1402,6 @@ class AppL10nTe extends AppL10n {
   String get deploymentFlaggedByRider => 'రైడర్ గుర్తించారు';
 
   @override
-  String get deploymentFleetManagerChecksAgainstWhat => 'మీ ఫ్లీట్ మేనేజర్ దీన్ని తమకు అందినదానితో పోలుస్తారు.';
-
-  @override
   String get deploymentFleetManagerHasNotAsked => 'మీ ఫ్లీట్ మేనేజర్ ఇంకా చెల్లింపు అడగలేదు.';
 
   @override
@@ -1510,10 +1507,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get deploymentReceiptAdded => 'స్క్రీన్‌షాట్ జోడించబడింది';
-
-  @override
-  String get deploymentReceiptHint =>
-      'చెల్లింపు స్క్రీన్‌షాట్ జోడించండి. దీంతో మీ ఫ్లీట్ మేనేజర్ త్వరగా తనిఖీ చేయగలరు.';
 
   @override
   String get deploymentReceiptsSent => 'పంపిన స్క్రీన్‌షాట్‌లు';
