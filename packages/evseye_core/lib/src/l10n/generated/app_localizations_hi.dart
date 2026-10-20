@@ -1367,6 +1367,9 @@ class AppL10nHi extends AppL10n {
   String get deploymentCheckingWithFleetManagerEvery => 'हर कुछ सेकंड में आपके फ़्लीट मैनेजर से पूछा जा रहा है…';
 
   @override
+  String get deploymentChooseUpiApp => 'UPI ऐप चुनें';
+
+  @override
   String get deploymentConfirmEveryItemHasBeen =>
       'आप पक्का करते हैं कि हर चीज़ टीम लीड के साथ जांची गई है और स्कूटर चलाने लायक है।';
 
@@ -1447,6 +1450,9 @@ class AppL10nHi extends AppL10n {
   String get deploymentNoteWorkshopTeam => 'वर्कशॉप टीम के लिए नोट';
 
   @override
+  String get deploymentNoUpiApps => 'इस फ़ोन पर कोई UPI ऐप नहीं मिला।';
+
+  @override
   String get deploymentOpenEachModuleReadThrough =>
       'हर पाठ खोलकर पूरा पढ़ें। अनिवार्य पाठ पूरे किए बिना आप ख़त्म नहीं कर सकते।';
 
@@ -1473,6 +1479,11 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get deploymentPayScooter => 'अपने स्कूटर का भुगतान करें';
+
+  @override
+  String deploymentPayWithUpiApp(String amount) {
+    return '$amount UPI ऐप से चुकाएँ';
+  }
 
   @override
   String get deploymentPlanAcceptedSnack => 'प्लान स्वीकार हो गया। अब आपका फ़्लीट मैनेजर पेमेंट मांगेगा।';
@@ -1537,6 +1548,31 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get deploymentTransactionReference => 'लेनदेन रेफ़रेंस';
+
+  @override
+  String deploymentUpiCouldNotOpen(String app) {
+    return '$app नहीं खुल सका। कोई दूसरा ऐप आज़माएँ।';
+  }
+
+  @override
+  String get deploymentUpiFailed => 'भुगतान नहीं हो पाया। फिर से कोशिश करें या कोई दूसरा ऐप चुनें।';
+
+  @override
+  String deploymentUpiOpened(String app) {
+    return '$app में भुगतान पूरा करें, फिर वापस आकर UPI रेफ़रेंस डालें।';
+  }
+
+  @override
+  String get deploymentUpiPaid => 'भुगतान हो गया। हमने UPI रेफ़रेंस भर दिया है। इसे जाँचें, फिर नीचे वाला बटन दबाएँ।';
+
+  @override
+  String deploymentUpiPayingTo(String amount, String payee) {
+    return '$payee को $amount का भुगतान';
+  }
+
+  @override
+  String get deploymentUpiProcessing =>
+      'आपका भुगतान अभी प्रोसेस हो रहा है। अपना UPI ऐप देखें, फिर नीचे वाला बटन दबाएँ।';
 
   @override
   String get deploymentUpiTransactionIdEG => 'यूपीआई लेनदेन आईडी, जैसे 4284 7192 3456';

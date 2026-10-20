@@ -1,5 +1,8 @@
 companyCode: yogmaya
 supportEmail: support@pinkrides.in
+upiId: ""
+upiPayeeName: ""
+upiMerchantCode: ""
 rider:
   appName: Pink Rider App
   androidApplicationId: com.evsi.evseye.pinkrides.rider.android

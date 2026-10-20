@@ -1832,6 +1832,10 @@
   "@deploymentCheckingWithFleetManagerEvery": {
     "description": "Checking with your fleet manager every few seconds…"
   },
+  "deploymentChooseUpiApp": "Choose a UPI app",
+  "@deploymentChooseUpiApp": {
+    "description": "Title of the sheet listing UPI apps installed on the phone"
+  },
   "deploymentConfirmEveryItemHasBeen": "You confirm every item has been checked with your team lead and the scooter is fit to ride.",
   "@deploymentConfirmEveryItemHasBeen": {
     "description": "You confirm every item has been checked with your team lead and the scooter is fit to ride."
@@ -1933,6 +1937,10 @@
   "@deploymentNoteWorkshopTeam": {
     "description": "Note for the workshop team"
   },
+  "deploymentNoUpiApps": "No UPI app found on this phone.",
+  "@deploymentNoUpiApps": {
+    "description": "Shown when no UPI app is installed"
+  },
   "deploymentOpenEachModuleReadThrough": "Open each module and read it through. Mandatory ones must be completed before you can finish.",
   "@deploymentOpenEachModuleReadThrough": {
     "description": "Open each module and read it through. Mandatory ones must be completed before you can finish."
@@ -1969,6 +1977,15 @@
   "deploymentPayScooter": "Pay for your scooter",
   "@deploymentPayScooter": {
     "description": "Pay for your scooter"
+  },
+  "deploymentPayWithUpiApp": "Pay {amount} with a UPI app",
+  "@deploymentPayWithUpiApp": {
+    "description": "Button on the rider payment screen that opens a UPI app",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "deploymentPlanAcceptedSnack": "Plan accepted. Your fleet manager will ask for payment next.",
   "@deploymentPlanAcceptedSnack": {
@@ -2053,6 +2070,48 @@
   "deploymentTransactionReference": "Transaction reference",
   "@deploymentTransactionReference": {
     "description": "Transaction reference"
+  },
+  "deploymentUpiCouldNotOpen": "Couldn't open {app}. Try another app.",
+  "@deploymentUpiCouldNotOpen": {
+    "description": "Shown when the chosen UPI app can't be opened",
+    "placeholders": {
+      "app": {
+        "type": "String"
+      }
+    }
+  },
+  "deploymentUpiFailed": "The payment didn't go through. Try again or pick another app.",
+  "@deploymentUpiFailed": {
+    "description": "Shown when a UPI payment fails or is cancelled"
+  },
+  "deploymentUpiOpened": "Finish paying in {app}, then come back and enter the UPI reference.",
+  "@deploymentUpiOpened": {
+    "description": "Shown on iPhone after opening a UPI app",
+    "placeholders": {
+      "app": {
+        "type": "String"
+      }
+    }
+  },
+  "deploymentUpiPaid": "Payment done. We filled in the UPI reference. Check it, then tap I have paid.",
+  "@deploymentUpiPaid": {
+    "description": "Shown after a successful UPI payment on Android"
+  },
+  "deploymentUpiPayingTo": "Paying {amount} to {payee}",
+  "@deploymentUpiPayingTo": {
+    "description": "Subtitle of the UPI app sheet",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "payee": {
+        "type": "String"
+      }
+    }
+  },
+  "deploymentUpiProcessing": "Your payment is still processing. Check your UPI app, then tap I have paid.",
+  "@deploymentUpiProcessing": {
+    "description": "Shown when the UPI app reports the payment as still processing"
   },
   "deploymentUpiTransactionIdEG": "UPI transaction ID, e.g. 4284 7192 3456",
   "@deploymentUpiTransactionIdEG": {

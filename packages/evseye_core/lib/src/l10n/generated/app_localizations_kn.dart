@@ -1374,6 +1374,9 @@ class AppL10nKn extends AppL10n {
       'ಪ್ರತಿ ಕೆಲವು ಕ್ಷಣಕ್ಕೂ ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಬಳಿ ಕೇಳಲಾಗುತ್ತಿದೆ…';
 
   @override
+  String get deploymentChooseUpiApp => 'UPI ಆ್ಯಪ್ ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
   String get deploymentConfirmEveryItemHasBeen =>
       'ಪ್ರತಿ ವಸ್ತುವನ್ನೂ ತಂಡದ ಮುಖ್ಯಸ್ಥರ ಜೊತೆ ಪರಿಶೀಲಿಸಲಾಗಿದೆ ಮತ್ತು ಸ್ಕೂಟರ್ ಓಡಿಸಲು ಯೋಗ್ಯ ಎಂದು ನೀವು ಖಚಿತಪಡಿಸುತ್ತೀರಿ.';
 
@@ -1454,6 +1457,9 @@ class AppL10nKn extends AppL10n {
   String get deploymentNoteWorkshopTeam => 'ವರ್ಕ್‌ಶಾಪ್ ತಂಡಕ್ಕೆ ಟಿಪ್ಪಣಿ';
 
   @override
+  String get deploymentNoUpiApps => 'ಈ ಫೋನ್‌ನಲ್ಲಿ ಯಾವುದೇ UPI ಆ್ಯಪ್ ಕಂಡುಬಂದಿಲ್ಲ.';
+
+  @override
   String get deploymentOpenEachModuleReadThrough =>
       'ಪ್ರತಿ ಪಾಠ ತೆರೆದು ಪೂರ್ತಿ ಓದಿ. ಕಡ್ಡಾಯ ಪಾಠ ಮುಗಿಸದೆ ನೀವು ಪೂರ್ಣಗೊಳಿಸಲಾಗದು.';
 
@@ -1480,6 +1486,11 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get deploymentPayScooter => 'ನಿಮ್ಮ ಸ್ಕೂಟರ್‌ಗೆ ಪಾವತಿಸಿ';
+
+  @override
+  String deploymentPayWithUpiApp(String amount) {
+    return '$amount ಅನ್ನು UPI ಆ್ಯಪ್ ಮೂಲಕ ಪಾವತಿಸಿ';
+  }
 
   @override
   String get deploymentPlanAcceptedSnack => 'ಪ್ಲಾನ್ ಒಪ್ಪಲಾಗಿದೆ. ಮುಂದೆ ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಪಾವತಿ ಕೇಳುತ್ತಾರೆ.';
@@ -1545,6 +1556,32 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get deploymentTransactionReference => 'ವ್ಯವಹಾರ ಉಲ್ಲೇಖ';
+
+  @override
+  String deploymentUpiCouldNotOpen(String app) {
+    return '$app ತೆರೆಯಲು ಆಗಲಿಲ್ಲ. ಬೇರೆ ಆ್ಯಪ್ ಪ್ರಯತ್ನಿಸಿ.';
+  }
+
+  @override
+  String get deploymentUpiFailed => 'ಪಾವತಿ ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ ಅಥವಾ ಬೇರೆ ಆ್ಯಪ್ ಆಯ್ಕೆಮಾಡಿ.';
+
+  @override
+  String deploymentUpiOpened(String app) {
+    return '$app ನಲ್ಲಿ ಪಾವತಿ ಮುಗಿಸಿ, ನಂತರ ಹಿಂತಿರುಗಿ UPI ರೆಫರೆನ್ಸ್ ನಮೂದಿಸಿ.';
+  }
+
+  @override
+  String get deploymentUpiPaid =>
+      'ಪಾವತಿ ಆಗಿದೆ. ನಾವು UPI ರೆಫರೆನ್ಸ್ ಭರ್ತಿ ಮಾಡಿದ್ದೇವೆ. ಅದನ್ನು ಪರಿಶೀಲಿಸಿ, ನಂತರ ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ.';
+
+  @override
+  String deploymentUpiPayingTo(String amount, String payee) {
+    return '$payee ಅವರಿಗೆ $amount ಪಾವತಿ';
+  }
+
+  @override
+  String get deploymentUpiProcessing =>
+      'ನಿಮ್ಮ ಪಾವತಿ ಇನ್ನೂ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ. ನಿಮ್ಮ UPI ಆ್ಯಪ್ ಪರಿಶೀಲಿಸಿ, ನಂತರ ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ.';
 
   @override
   String get deploymentUpiTransactionIdEG => 'ಯುಪಿಐ ವ್ಯವಹಾರ ಐಡಿ, ಉದಾ. 4284 7192 3456';

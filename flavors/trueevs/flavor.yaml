@@ -1,5 +1,8 @@
 companyCode: yogmaya
 supportEmail: ""
+upiId: ""
+upiPayeeName: ""
+upiMerchantCode: ""
 rider:
   appName: "TrueEV's"
   androidApplicationId: ai.evseye.trueevs.rider
