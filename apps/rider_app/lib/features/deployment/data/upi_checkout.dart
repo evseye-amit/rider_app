@@ -16,9 +16,7 @@ abstract final class UpiCheckout {
   static Future<List<ApplicationMeta>> apps() async {
     try {
       final List<ApplicationMeta> found = await UpiPay.getInstalledUpiApplications(
-        statusType: _merchant
-            ? UpiApplicationDiscoveryAppStatusType.all
-            : UpiApplicationDiscoveryAppStatusType.workingWithWarnings,
+        statusType: UpiApplicationDiscoveryAppStatusType.all,
       );
       return [
         for (final ApplicationMeta app in found)

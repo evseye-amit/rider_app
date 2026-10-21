@@ -1130,9 +1130,6 @@ class AppL10nEn extends AppL10n {
   String get damageChargesNoUnpaid => 'No unpaid damage charges';
 
   @override
-  String get damageChargesSeeAll => 'See all';
-
-  @override
   String get damageChargeStatusCancelled => 'Cancelled';
 
   @override
@@ -2990,10 +2987,15 @@ class AppL10nEn extends AppL10n {
   String get paymentsAutoPaySetupRequired => 'Set-up needed';
 
   @override
+  String get paymentsBreakdown => 'Breakdown';
+
+  @override
   String get paymentsCouldNotLoad => 'Could not load payments';
 
   @override
-  String get paymentsDueOn => 'Due on';
+  String paymentsDueOnDate(String date) {
+    return 'Due on $date';
+  }
 
   @override
   String get paymentsHistory => 'Past payments';

@@ -1129,9 +1129,6 @@ class AppL10nTe extends AppL10n {
   String get damageChargesNoUnpaid => 'బకాయి నష్టం ఛార్జీలు లేవు';
 
   @override
-  String get damageChargesSeeAll => 'అన్నీ చూడండి';
-
-  @override
   String get damageChargeStatusCancelled => 'రద్దు చేశారు';
 
   @override
@@ -2995,10 +2992,15 @@ class AppL10nTe extends AppL10n {
   String get paymentsAutoPaySetupRequired => 'సెటప్ కావాలి';
 
   @override
+  String get paymentsBreakdown => 'వివరాలు';
+
+  @override
   String get paymentsCouldNotLoad => 'చెల్లింపులు లోడ్ కాలేదు';
 
   @override
-  String get paymentsDueOn => 'గడువు తేదీ';
+  String paymentsDueOnDate(String date) {
+    return 'గడువు తేదీ: $date';
+  }
 
   @override
   String get paymentsHistory => 'గత చెల్లింపులు';

@@ -29,6 +29,7 @@ class PaymentsBand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PaymentsOverview? payments = overview;
+    final DateTime? due = payments?.dueDate;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,45 +73,13 @@ class PaymentsBand extends StatelessWidget {
             ],
           ],
         ),
-        const Gap.xl(),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: Insets.md, horizontal: Insets.sm),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.06),
-            borderRadius: Corners.brMd,
-            border: Border.all(color: AppColors.inkStroke),
+        if (payments != null && !payments.isSettled && due != null) ...[
+          const Gap.xs(),
+          Text(
+            context.l10n.paymentsDueOnDate(Fmt.date(due)),
+            style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary),
           ),
-          child: Row(
-            children: [
-              Expanded(
-                child: InkStat(
-                  label: context.l10n.paymentsDueOn,
-                  value: payments?.dueDate == null ? '—' : Fmt.date(payments!.dueDate!),
-                  icon: Icons.event_rounded,
-                ),
-              ),
-              const InkDivider(),
-              const SizedBox(width: Insets.md),
-              Expanded(
-                child: InkStat(
-                  label: context.l10n.paymentsAutoPay,
-                  value: payments == null ? '—' : autoPayLabel(context.l10n, payments.autoPay),
-                  icon: Icons.autorenew_rounded,
-                  valueColor: payments != null && payments.autoPayNeedsAttention ? AppColors.onInkAmber : null,
-                ),
-              ),
-              const InkDivider(),
-              const SizedBox(width: Insets.md),
-              Expanded(
-                child: InkStat(
-                  label: context.l10n.paymentsNextDebit,
-                  value: payments?.nextAutoPayDate == null ? '—' : Fmt.date(payments!.nextAutoPayDate!),
-                  icon: Icons.schedule_rounded,
-                ),
-              ),
-            ],
-          ),
-        ),
+        ],
       ],
     );
   }

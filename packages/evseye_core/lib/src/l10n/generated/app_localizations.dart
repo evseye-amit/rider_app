@@ -2212,12 +2212,6 @@ abstract class AppL10n {
   /// **'No unpaid damage charges'**
   String get damageChargesNoUnpaid;
 
-  /// Opens the full damage charges list
-  ///
-  /// In en, this message translates to:
-  /// **'See all'**
-  String get damageChargesSeeAll;
-
   /// Status of a cancelled damage charge
   ///
   /// In en, this message translates to:
@@ -5734,17 +5728,23 @@ abstract class AppL10n {
   /// **'Set-up needed'**
   String get paymentsAutoPaySetupRequired;
 
+  /// Title of the card that splits the amount due on the rider payments screen
+  ///
+  /// In en, this message translates to:
+  /// **'Breakdown'**
+  String get paymentsBreakdown;
+
   /// Could not load payments
   ///
   /// In en, this message translates to:
   /// **'Could not load payments'**
   String get paymentsCouldNotLoad;
 
-  /// Due on
+  /// Due date line under the amount on the rider payments screen
   ///
   /// In en, this message translates to:
-  /// **'Due on'**
-  String get paymentsDueOn;
+  /// **'Due on {date}'**
+  String paymentsDueOnDate(String date);
 
   /// Past payments
   ///

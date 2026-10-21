@@ -1131,9 +1131,6 @@ class AppL10nKn extends AppL10n {
   String get damageChargesNoUnpaid => 'ಯಾವುದೇ ಹಾನಿ ಶುಲ್ಕ ಬಾಕಿ ಇಲ್ಲ';
 
   @override
-  String get damageChargesSeeAll => 'ಎಲ್ಲಾ ನೋಡಿ';
-
-  @override
   String get damageChargeStatusCancelled => 'ರದ್ದಾಗಿದೆ';
 
   @override
@@ -2993,10 +2990,15 @@ class AppL10nKn extends AppL10n {
   String get paymentsAutoPaySetupRequired => 'ಸೆಟಪ್ ಬೇಕು';
 
   @override
+  String get paymentsBreakdown => 'ವಿವರ';
+
+  @override
   String get paymentsCouldNotLoad => 'ಪಾವತಿಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
 
   @override
-  String get paymentsDueOn => 'ಪಾವತಿ ದಿನಾಂಕ';
+  String paymentsDueOnDate(String date) {
+    return 'ಪಾವತಿ ದಿನಾಂಕ: $date';
+  }
 
   @override
   String get paymentsHistory => 'ಹಿಂದಿನ ಪಾವತಿಗಳು';

@@ -1511,10 +1511,6 @@
   "@damageChargesNoUnpaid": {
     "description": "Shown on the payments screen when no damage charge is unpaid"
   },
-  "damageChargesSeeAll": "See all",
-  "@damageChargesSeeAll": {
-    "description": "Opens the full damage charges list"
-  },
   "damageChargeStatusCancelled": "Cancelled",
   "@damageChargeStatusCancelled": {
     "description": "Status of a cancelled damage charge"
@@ -4032,13 +4028,22 @@
   "@paymentsAutoPaySetupRequired": {
     "description": "Set-up needed"
   },
+  "paymentsBreakdown": "Breakdown",
+  "@paymentsBreakdown": {
+    "description": "Title of the card that splits the amount due on the rider payments screen"
+  },
   "paymentsCouldNotLoad": "Could not load payments",
   "@paymentsCouldNotLoad": {
     "description": "Could not load payments"
   },
-  "paymentsDueOn": "Due on",
-  "@paymentsDueOn": {
-    "description": "Due on"
+  "paymentsDueOnDate": "Due on {date}",
+  "@paymentsDueOnDate": {
+    "description": "Due date line under the amount on the rider payments screen",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "paymentsHistory": "Past payments",
   "@paymentsHistory": {

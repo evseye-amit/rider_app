@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
-import '../../../damage_charges/presentation/widgets/damage_charge_widgets.dart';
 import '../../domain/entities/payments_overview.dart';
 import '../providers/payments_provider.dart';
 import '../widgets/payments_widgets.dart';
@@ -41,148 +40,177 @@ class PaymentsPage extends ConsumerWidget {
         await ref.refreshQuietly(paymentsOverviewProvider);
       },
       band: PaymentsBand(overview: payments),
-      children: payments == null ? const [_PaymentsSkeleton()] : _content(context, payments),
+      children: payments == null
+          ? const [_PaymentsSkeleton()]
+          : [
+              if (payments.isSettled) const _AllClear() else _Breakdown(payments: payments),
+              const Gap.lg(),
+              _DamageChargesTile(count: payments.damageCount, amount: payments.damageDue),
+              const Gap.lg(),
+              _AutoPayCard(payments: payments),
+              const Gap.lg(),
+              const _History(),
+            ],
     );
   }
+}
 
-  List<Widget> _content(BuildContext context, PaymentsOverview payments) {
-    return [
-      if (payments.isSettled)
-        ArtBlock(
-          art: BrandArt.success,
-          artSize: 130,
-          title: context.l10n.paymentsAllClear,
-          message: context.l10n.paymentsAllClearMessage,
-        )
-      else
-        ModuleCard(
-          title: context.l10n.paymentsAmountDue,
-          leading: const IconTile(icon: Icons.receipt_long_rounded, solid: true, size: 28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(Fmt.money(payments.amountDue), style: AppText.numericLarge.copyWith(color: AppColors.primary)),
-              const Gap.md(),
-              if (payments.damageDue > 0) ...[
-                KeyValueRow(
-                  label: context.l10n.paymentRentAndFees,
-                  value: Fmt.money(payments.rentDue),
-                  icon: Icons.electric_scooter_rounded,
-                ),
-                KeyValueRow(
-                  label: context.l10n.damageChargesTitle,
-                  value: Fmt.money(payments.damageDue),
-                  valueColor: AppColors.danger,
-                  icon: Icons.car_crash_rounded,
-                ),
-              ],
-              if (payments.isOverdue)
-                KeyValueRow(
-                  label: context.l10n.paymentsOverdue,
-                  value: Fmt.money(payments.rentOverdue),
-                  valueColor: AppColors.danger,
-                  icon: Icons.warning_amber_rounded,
-                ),
-              if (payments.dueDate != null)
-                KeyValueRow(
-                  label: context.l10n.paymentsDueOn,
-                  value: Fmt.date(payments.dueDate!),
-                  icon: Icons.event_rounded,
-                ),
-              const Gap.md(),
-              Text(context.l10n.paymentsPayAtHub, style: AppText.bodySmall.copyWith(height: 1.5)),
-            ],
-          ),
-        ),
-      const Gap.lg(),
-      ModuleCard(
-        title: context.l10n.damageChargesTitle,
-        leading: const IconTile(icon: Icons.car_crash_rounded, tone: AppColors.danger, solid: true, size: 28),
-        actionLabel: context.l10n.damageChargesSeeAll,
-        onAction: () => context.push(Routes.damageCharges),
-        child: payments.damageCount > 0
-            ? DamageChargesNotice(
-                amount: payments.damageDue,
-                count: payments.damageCount,
-                onTap: () => context.push(Routes.damageCharges),
-              )
-            : Text(
-                context.l10n.damageChargesNoUnpaid,
-                style: AppText.bodySmall.copyWith(fontSize: 12.5, color: AppColors.textMuted),
-              ),
-      ),
-      const Gap.lg(),
-      ModuleCard(
-        title: context.l10n.paymentsAutoPay,
-        leading: const IconTile(icon: Icons.autorenew_rounded, solid: true, size: 28),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+class _AllClear extends StatelessWidget {
+  const _AllClear();
+
+  @override
+  Widget build(BuildContext context) {
+    return ModuleCard(
+      child: Row(
+        children: [
+          const IconTile(icon: Icons.check_circle_rounded, tone: AppColors.success, size: 40),
+          const SizedBox(width: Insets.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Text(
-                    autoPayLabel(context.l10n, payments.autoPay),
-                    style: AppText.titleSmall.copyWith(fontSize: 14),
-                  ),
-                ),
-                StatusChip(
-                  label: autoPayLabel(context.l10n, payments.autoPay),
-                  tone: autoPayTone(payments.autoPay),
-                  dense: true,
+                Text(context.l10n.paymentsAllClear, style: AppText.titleSmall.copyWith(fontSize: 14)),
+                const SizedBox(height: 2),
+                Text(
+                  context.l10n.paymentsAllClearMessage,
+                  style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
                 ),
               ],
             ),
-            const Gap.md(),
-            if (payments.paymentMethod != null)
-              KeyValueRow(
-                label: context.l10n.paymentsMethod,
-                value: payments.paymentMethod!,
-                icon: Icons.payments_rounded,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Breakdown extends StatelessWidget {
+  const _Breakdown({required this.payments});
+
+  final PaymentsOverview payments;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
+    return ModuleCard(
+      title: l10n.paymentsBreakdown,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          KeyValueRow(label: l10n.paymentRentAndFees, value: Fmt.money(payments.rentDue), dense: true),
+          if (payments.damageDue > 0)
+            KeyValueRow(
+              label: l10n.damageChargesTitle,
+              value: Fmt.money(payments.damageDue),
+              valueColor: AppColors.danger,
+              dense: true,
+            ),
+          if (payments.isOverdue)
+            KeyValueRow(
+              label: l10n.paymentsOverdue,
+              value: Fmt.money(payments.rentOverdue),
+              valueColor: AppColors.danger,
+              dense: true,
+            ),
+          const Gap.sm(),
+          Text(
+            l10n.paymentsPayAtHub,
+            style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45, color: AppColors.textMuted),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DamageChargesTile extends StatelessWidget {
+  const _DamageChargesTile({required this.count, required this.amount});
+
+  final int count;
+  final num amount;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool unpaid = count > 0;
+    return Pressable(
+      onTap: () => context.push(Routes.damageCharges),
+      scale: 0.99,
+      child: Container(
+        padding: const EdgeInsets.all(Insets.lg),
+        decoration: BoxDecoration(color: AppColors.surface, borderRadius: Corners.brXl, boxShadow: Shadows.card),
+        child: Row(
+          children: [
+            IconTile(icon: Icons.car_crash_rounded, tone: unpaid ? AppColors.danger : AppColors.textMuted, size: 40),
+            const SizedBox(width: Insets.md),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(context.l10n.damageChargesTitle, style: AppText.titleSmall.copyWith(fontSize: 14)),
+                  const SizedBox(height: 2),
+                  Text(
+                    unpaid ? context.l10n.damageChargesToPay(count) : context.l10n.damageChargesNoUnpaid,
+                    style: AppText.bodySmall.copyWith(fontSize: 12.5),
+                  ),
+                ],
               ),
-            if (payments.mandateMaxAmount != null)
-              KeyValueRow(
-                label: context.l10n.paymentsMandateLimit,
-                value: Fmt.money(payments.mandateMaxAmount!),
-                icon: Icons.speed_rounded,
-              ),
-            if (payments.nextAutoPayDate != null)
-              KeyValueRow(
-                label: context.l10n.paymentsNextDebit,
-                value: Fmt.dateTime(payments.nextAutoPayDate!),
-                icon: Icons.schedule_rounded,
-              ),
-            if (payments.mandateExpiresAt != null)
-              KeyValueRow(
-                label: context.l10n.paymentsMandateExpires,
-                value: Fmt.date(payments.mandateExpiresAt!),
-                icon: Icons.event_busy_rounded,
-              ),
-            if (payments.autoPayNeedsAttention) ...[
-              const Gap.md(),
-              AccentCard(
-                accent: AppColors.warning,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.info_outline_rounded, size: 18, color: AppColors.warning),
-                    const SizedBox(width: Insets.md),
-                    Expanded(
-                      child: Text(
-                        context.l10n.paymentsAutoPayAttention,
-                        style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            ),
+            if (unpaid) ...[
+              Text(Fmt.money(amount), style: AppText.numericSmall.copyWith(fontSize: 14, color: AppColors.danger)),
+              const SizedBox(width: Insets.xs),
             ],
+            const Icon(Icons.chevron_right_rounded, color: AppColors.textMuted),
           ],
         ),
       ),
-      const Gap.lg(),
-      const _History(),
-    ];
+    );
+  }
+}
+
+class _AutoPayCard extends StatelessWidget {
+  const _AutoPayCard({required this.payments});
+
+  final PaymentsOverview payments;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
+    final String? method = payments.paymentMethod;
+    final num? limit = payments.mandateMaxAmount;
+    final DateTime? next = payments.nextAutoPayDate;
+    final DateTime? expires = payments.mandateExpiresAt;
+    final bool hasDetails = method != null || limit != null || next != null || expires != null;
+
+    return ModuleCard(
+      title: l10n.paymentsAutoPay,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          StatusChip(label: autoPayLabel(l10n, payments.autoPay), tone: autoPayTone(payments.autoPay), dense: true),
+          if (hasDetails) const Gap.sm(),
+          if (method != null) KeyValueRow(label: l10n.paymentsMethod, value: method, dense: true),
+          if (limit != null) KeyValueRow(label: l10n.paymentsMandateLimit, value: Fmt.money(limit), dense: true),
+          if (next != null) KeyValueRow(label: l10n.paymentsNextDebit, value: Fmt.dateTime(next), dense: true),
+          if (expires != null) KeyValueRow(label: l10n.paymentsMandateExpires, value: Fmt.date(expires), dense: true),
+          if (payments.autoPayNeedsAttention) ...[
+            const Gap.sm(),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.info_outline_rounded, size: 16, color: AppColors.warning),
+                const SizedBox(width: Insets.sm),
+                Expanded(
+                  child: Text(
+                    l10n.paymentsAutoPayAttention,
+                    style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
   }
 }
 
@@ -197,13 +225,18 @@ class _History extends ConsumerWidget {
     return ModuleCard(
       title: context.l10n.paymentsHistory,
       child: history.isLoading && !history.hasValue
-          ? const ShimmerBox(height: 140, borderRadius: Corners.brLg)
+          ? const ShimmerBox(height: 120, borderRadius: Corners.brLg)
           : records.isEmpty
-          ? EmptyState(
-              compact: true,
-              title: context.l10n.paymentsNoPayments,
-              message: context.l10n.paymentsNoPaymentsMessage,
-              icon: Icons.receipt_long_rounded,
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(context.l10n.paymentsNoPayments, style: AppText.titleSmall.copyWith(fontSize: 13.5)),
+                const SizedBox(height: 2),
+                Text(
+                  context.l10n.paymentsNoPaymentsMessage,
+                  style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45, color: AppColors.textMuted),
+                ),
+              ],
             )
           : Column(
               children: [
@@ -225,11 +258,11 @@ class _PaymentsSkeleton extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ShimmerBox(height: 150, borderRadius: Corners.brXl),
+        ShimmerBox(height: 120, borderRadius: Corners.brXl),
         Gap.lg(),
-        ShimmerBox(height: 180, borderRadius: Corners.brXl),
+        ShimmerBox(height: 72, borderRadius: Corners.brXl),
         Gap.lg(),
-        ShimmerBox(height: 160, borderRadius: Corners.brXl),
+        ShimmerBox(height: 140, borderRadius: Corners.brXl),
       ],
     );
   }

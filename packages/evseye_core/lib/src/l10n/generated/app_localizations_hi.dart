@@ -1125,9 +1125,6 @@ class AppL10nHi extends AppL10n {
   String get damageChargesNoUnpaid => 'कोई नुकसान शुल्क बकाया नहीं';
 
   @override
-  String get damageChargesSeeAll => 'सभी देखें';
-
-  @override
   String get damageChargeStatusCancelled => 'रद्द';
 
   @override
@@ -2981,10 +2978,15 @@ class AppL10nHi extends AppL10n {
   String get paymentsAutoPaySetupRequired => 'सेटअप बाकी';
 
   @override
+  String get paymentsBreakdown => 'विवरण';
+
+  @override
   String get paymentsCouldNotLoad => 'भुगतान लोड नहीं हो सके';
 
   @override
-  String get paymentsDueOn => 'देय तारीख';
+  String paymentsDueOnDate(String date) {
+    return 'देय तारीख: $date';
+  }
 
   @override
   String get paymentsHistory => 'पुराने भुगतान';
