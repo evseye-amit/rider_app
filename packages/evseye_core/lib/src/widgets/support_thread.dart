@@ -331,9 +331,13 @@ abstract final class PhotoViewer {
           SafeArea(
             child: Align(
               alignment: Alignment.topRight,
-              child: IconButton(
-                icon: const Icon(Icons.close_rounded, color: Colors.white),
-                onPressed: () => Navigator.of(context).pop(),
+              child: Padding(
+                padding: const EdgeInsets.all(Insets.sm),
+                child: IconButton(
+                  style: IconButton.styleFrom(backgroundColor: Colors.black54, foregroundColor: Colors.white),
+                  icon: const Icon(Icons.close_rounded),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
               ),
             ),
           ),
