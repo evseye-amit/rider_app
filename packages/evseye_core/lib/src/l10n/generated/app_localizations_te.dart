@@ -5351,4 +5351,14 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get deploymentOnlinePaymentFailed => 'చెల్లింపు జరగలేదు. మళ్లీ ప్రయత్నించండి.';
+
+  @override
+  String submissionPhotoItemsLimit(int count) {
+    return '$count దెబ్బతిన్న భాగాలకు మాత్రమే ఫోటోలు జోడించవచ్చు. ఈ భాగం జోడించడానికి వాటిలో ఒకదాన్ని తీసివేయండి.';
+  }
+
+  @override
+  String submissionPhotoItemsLimitHint(int count) {
+    return '$count దెబ్బతిన్న భాగాలకు మాత్రమే ఫోటోలు జోడించవచ్చు, ఆ పరిమితి పూర్తయింది. ఈ భాగాన్ని ఫోటో లేకుండా సేవ్ చేయవచ్చు.';
+  }
 }

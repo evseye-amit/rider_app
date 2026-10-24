@@ -5350,4 +5350,14 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get deploymentOnlinePaymentFailed => 'ಪಾವತಿ ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String submissionPhotoItemsLimit(int count) {
+    return '$count ಹಾನಿಯಾದ ಭಾಗಗಳಿಗೆ ಮಾತ್ರ ಫೋಟೋ ಸೇರಿಸಬಹುದು. ಈ ಭಾಗ ಸೇರಿಸಲು ಅವುಗಳಲ್ಲಿ ಒಂದನ್ನು ತೆಗೆದುಹಾಕಿ.';
+  }
+
+  @override
+  String submissionPhotoItemsLimitHint(int count) {
+    return '$count ಹಾನಿಯಾದ ಭಾಗಗಳಿಗೆ ಮಾತ್ರ ಫೋಟೋ ಸೇರಿಸಬಹುದು, ಆ ಮಿತಿ ತಲುಪಿದೆ. ಈ ಭಾಗವನ್ನು ಫೋಟೋ ಇಲ್ಲದೆ ಸೇವ್ ಮಾಡಬಹುದು.';
+  }
 }

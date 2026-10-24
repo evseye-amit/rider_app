@@ -7262,5 +7262,23 @@
   "deploymentOnlinePaymentFailed": "The payment didn't go through. Try again.",
   "@deploymentOnlinePaymentFailed": {
     "description": "Shown when a Razorpay payment fails"
+  },
+  "submissionPhotoItemsLimit": "Only {count} damaged items can have photos. Remove one of them to add this part.",
+  "@submissionPhotoItemsLimit": {
+    "description": "Shown when a part that needs a photo is picked but the limit of damaged items with photos is reached",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "submissionPhotoItemsLimitHint": "Only {count} damaged items can have photos, and that limit is reached. You can still save this part without a photo.",
+  "@submissionPhotoItemsLimitHint": {
+    "description": "Evidence hint in the damaged item sheet when the limit of damaged items with photos is reached",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

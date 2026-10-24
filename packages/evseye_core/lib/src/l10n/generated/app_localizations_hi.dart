@@ -5331,4 +5331,14 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get deploymentOnlinePaymentFailed => 'भुगतान नहीं हो पाया। फिर से कोशिश करें।';
+
+  @override
+  String submissionPhotoItemsLimit(int count) {
+    return 'सिर्फ़ $count खराब पार्ट्स में फ़ोटो जोड़ी जा सकती है। यह पार्ट जोड़ने के लिए उनमें से एक हटाएँ।';
+  }
+
+  @override
+  String submissionPhotoItemsLimitHint(int count) {
+    return 'सिर्फ़ $count खराब पार्ट्स में फ़ोटो जोड़ी जा सकती है, और यह सीमा पूरी हो चुकी है। आप यह पार्ट बिना फ़ोटो के सेव कर सकते हैं।';
+  }
 }

@@ -12,6 +12,7 @@ import '../providers/submission_providers.dart';
 import 'submission_widgets.dart';
 
 const int _maxItemPhotos = 20;
+const int _maxPhotoItems = 3;
 const int _maxQuantity = 20;
 
 bool _damageable(PenaltyPriceDto part) => part.isSpare || part.category == PenaltyCategory.damage;
@@ -21,6 +22,13 @@ class DamagedItemsCard extends ConsumerWidget {
 
   final VehicleSubmissionDto submission;
 
+  bool _canAddPhotos(WidgetRef ref, PenaltyPriceDto part) =>
+      ref
+          .read(damagedItemsProvider(submission.id))
+          .where((item) => item.part.id != part.id && item.photos.isNotEmpty)
+          .length <
+      _maxPhotoItems;
+
   Future<void> _add(BuildContext context, WidgetRef ref) async {
     final PenaltyPriceDto? part = await SparePartPicker.show(
       context,
@@ -28,6 +36,10 @@ class DamagedItemsCard extends ConsumerWidget {
       addedIds: {for (final DamagedItem item in ref.read(damagedItemsProvider(submission.id))) item.part.id},
     );
     if (part == null || !context.mounted) return;
+    if (part.evidenceRequired && !_canAddPhotos(ref, part)) {
+      AppSnack.warning(context, context.l10n.submissionPhotoItemsLimit(_maxPhotoItems));
+      return;
+    }
     final DamagedItem? existing = ref
         .read(damagedItemsProvider(submission.id))
         .where((item) => item.part.id == part.id)
@@ -40,6 +52,7 @@ class DamagedItemsCard extends ConsumerWidget {
       context,
       inspectionId: submission.inspectionId,
       part: part,
+      canAddPhotos: _canAddPhotos(ref, part),
       initial: initial,
     );
     if (!context.mounted) return;
@@ -215,23 +228,31 @@ class _SparePartPickerState extends ConsumerState<SparePartPicker> {
 }
 
 class DamagedItemSheet extends ConsumerStatefulWidget {
-  const DamagedItemSheet({required this.inspectionId, required this.part, this.initial, super.key});
+  const DamagedItemSheet({
+    required this.inspectionId,
+    required this.part,
+    required this.canAddPhotos,
+    this.initial,
+    super.key,
+  });
 
   final String inspectionId;
   final PenaltyPriceDto part;
+  final bool canAddPhotos;
   final DamagedItem? initial;
 
   static Future<DamagedItem?> show(
     BuildContext context, {
     required String inspectionId,
     required PenaltyPriceDto part,
+    required bool canAddPhotos,
     DamagedItem? initial,
   }) => AppSheet.show<DamagedItem>(
     context,
     title: part.name,
     subtitle: '${part.code} · ${Fmt.money(part.amount, paise: true)}',
     maxHeightFactor: 0.92,
-    child: DamagedItemSheet(inspectionId: inspectionId, part: part, initial: initial),
+    child: DamagedItemSheet(inspectionId: inspectionId, part: part, canAddPhotos: canAddPhotos, initial: initial),
   );
 
   @override
@@ -331,7 +352,9 @@ class _DamagedItemSheetState extends ConsumerState<DamagedItemSheet> {
           GroupLabel(context.l10n.submissionEvidence),
           const Gap.xs(),
           Text(
-            part.evidenceRequired
+            !widget.canAddPhotos
+                ? context.l10n.submissionPhotoItemsLimitHint(_maxPhotoItems)
+                : part.evidenceRequired
                 ? context.l10n.submissionItemPhotoRequiredHint
                 : context.l10n.submissionItemPhotoOptionalHint,
             style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45),
@@ -357,7 +380,7 @@ class _DamagedItemSheetState extends ConsumerState<DamagedItemSheet> {
                   file: file,
                   onTap: null,
                 ),
-              if (_photos.length + _uploading.length < _maxItemPhotos)
+              if (widget.canAddPhotos && _photos.length + _uploading.length < _maxItemPhotos)
                 PhotoSlot(
                   label: context.l10n.commonAddPhoto,
                   icon: Icons.add_a_photo_rounded,

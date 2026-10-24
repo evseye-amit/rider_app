@@ -1677,5 +1677,7 @@
   "deploymentPayOnline": "{amount} ఆన్‌లైన్‌లో చెల్లించండి",
   "deploymentOnlinePaymentDone": "చెల్లింపు పూర్తయింది. దీన్ని మీ ఫ్లీట్ మేనేజర్‌కు పంపుతున్నాం.",
   "deploymentOnlinePaymentCancelled": "చెల్లింపు రద్దయింది",
-  "deploymentOnlinePaymentFailed": "చెల్లింపు జరగలేదు. మళ్లీ ప్రయత్నించండి."
+  "deploymentOnlinePaymentFailed": "చెల్లింపు జరగలేదు. మళ్లీ ప్రయత్నించండి.",
+  "submissionPhotoItemsLimit": "{count} దెబ్బతిన్న భాగాలకు మాత్రమే ఫోటోలు జోడించవచ్చు. ఈ భాగం జోడించడానికి వాటిలో ఒకదాన్ని తీసివేయండి.",
+  "submissionPhotoItemsLimitHint": "{count} దెబ్బతిన్న భాగాలకు మాత్రమే ఫోటోలు జోడించవచ్చు, ఆ పరిమితి పూర్తయింది. ఈ భాగాన్ని ఫోటో లేకుండా సేవ్ చేయవచ్చు."
 }

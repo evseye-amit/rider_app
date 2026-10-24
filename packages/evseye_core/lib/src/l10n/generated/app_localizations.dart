@@ -10161,6 +10161,18 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'The payment didn\'t go through. Try again.'**
   String get deploymentOnlinePaymentFailed;
+
+  /// Shown when a part that needs a photo is picked but the limit of damaged items with photos is reached
+  ///
+  /// In en, this message translates to:
+  /// **'Only {count} damaged items can have photos. Remove one of them to add this part.'**
+  String submissionPhotoItemsLimit(int count);
+
+  /// Evidence hint in the damaged item sheet when the limit of damaged items with photos is reached
+  ///
+  /// In en, this message translates to:
+  /// **'Only {count} damaged items can have photos, and that limit is reached. You can still save this part without a photo.'**
+  String submissionPhotoItemsLimitHint(int count);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

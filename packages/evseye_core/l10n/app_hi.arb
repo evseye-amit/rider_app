@@ -1677,5 +1677,7 @@
   "deploymentPayOnline": "{amount} ऑनलाइन चुकाएँ",
   "deploymentOnlinePaymentDone": "भुगतान हो गया। इसे आपके फ़्लीट मैनेजर को भेजा जा रहा है।",
   "deploymentOnlinePaymentCancelled": "भुगतान रद्द किया गया",
-  "deploymentOnlinePaymentFailed": "भुगतान नहीं हो पाया। फिर से कोशिश करें।"
+  "deploymentOnlinePaymentFailed": "भुगतान नहीं हो पाया। फिर से कोशिश करें।",
+  "submissionPhotoItemsLimit": "सिर्फ़ {count} खराब पार्ट्स में फ़ोटो जोड़ी जा सकती है। यह पार्ट जोड़ने के लिए उनमें से एक हटाएँ।",
+  "submissionPhotoItemsLimitHint": "सिर्फ़ {count} खराब पार्ट्स में फ़ोटो जोड़ी जा सकती है, और यह सीमा पूरी हो चुकी है। आप यह पार्ट बिना फ़ोटो के सेव कर सकते हैं।"
 }

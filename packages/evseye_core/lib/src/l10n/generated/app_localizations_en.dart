@@ -5343,4 +5343,14 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentOnlinePaymentFailed => 'The payment didn\'t go through. Try again.';
+
+  @override
+  String submissionPhotoItemsLimit(int count) {
+    return 'Only $count damaged items can have photos. Remove one of them to add this part.';
+  }
+
+  @override
+  String submissionPhotoItemsLimitHint(int count) {
+    return 'Only $count damaged items can have photos, and that limit is reached. You can still save this part without a photo.';
+  }
 }
