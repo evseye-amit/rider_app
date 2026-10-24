@@ -5369,4 +5369,85 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get damageChargesOnlineUnavailable => 'Online payment isn\'t available right now. Please pay at your hub.';
+
+  @override
+  String get paymentsAutoPaySetUp => 'Set up auto-debit';
+
+  @override
+  String paymentsAutoPaySetupMessage(String amount) {
+    return 'Your rent is paid automatically from your UPI account on each due date, up to $amount each time. You approve it once in your UPI app and get a notice before every debit.';
+  }
+
+  @override
+  String get paymentsAutoPayEmail => 'Email';
+
+  @override
+  String get paymentsAutoPayEmailHelp => 'Razorpay sends auto-debit updates to this email.';
+
+  @override
+  String get paymentsAutoPayEmailInvalid => 'Enter a valid email address.';
+
+  @override
+  String get paymentsAutoPayContinue => 'Continue to UPI app';
+
+  @override
+  String get paymentsAutoPayFinishSetup => 'Finish setup';
+
+  @override
+  String get paymentsAutoPayCheckStatus => 'Check status';
+
+  @override
+  String get paymentsAutoPayTurnedOn => 'Auto-debit is on';
+
+  @override
+  String get paymentsAutoPayStillWaiting => 'Waiting for your bank to confirm. Check again in a few minutes.';
+
+  @override
+  String get paymentsAutoPaySetupFailed => 'Auto-debit setup didn\'t go through. Please try again.';
+
+  @override
+  String get paymentsAutoPayUnavailable => 'Auto-debit setup isn\'t available right now. Please try again later.';
+
+  @override
+  String get paymentsAutoPayOpenFailed => 'Couldn\'t open the approval page. Please try again.';
+
+  @override
+  String get paymentsAutoPayTurnOff => 'Turn off auto-debit';
+
+  @override
+  String get paymentsAutoPayTurnOn => 'Turn on auto-debit';
+
+  @override
+  String get paymentsAutoPayOffNote => 'Auto-debit is turned off. Rent won\'t be taken automatically.';
+
+  @override
+  String get paymentsAutoPayPause => 'Pause auto-debit';
+
+  @override
+  String get paymentsAutoPayResume => 'Resume auto-debit';
+
+  @override
+  String get paymentsAutoPayManageInUpiApp => 'To pause or resume, use your UPI app.';
+
+  @override
+  String get paymentsAutoPayCancel => 'Cancel auto-debit';
+
+  @override
+  String get paymentsAutoPayCancelTitle => 'Cancel auto-debit?';
+
+  @override
+  String get paymentsAutoPayCancelMessage =>
+      'Your rent won\'t be paid automatically any more. You can set it up again later.';
+
+  @override
+  String get paymentsAutoPayKeep => 'Keep it';
+
+  @override
+  String get paymentsAutoPayCancelled => 'Auto-debit cancelled';
+
+  @override
+  String get paymentsAutoPayCancelPending => 'Cancellation requested. Waiting for your bank to confirm.';
+
+  @override
+  String get paymentsAutoPayUpdated => 'Auto-debit updated';
 }

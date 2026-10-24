@@ -5378,4 +5378,85 @@ class AppL10nTe extends AppL10n {
   @override
   String get damageChargesOnlineUnavailable =>
       'ప్రస్తుతం ఆన్‌లైన్ చెల్లింపు అందుబాటులో లేదు. దయచేసి మీ హబ్‌లో చెల్లించండి.';
+
+  @override
+  String get paymentsAutoPaySetUp => 'ఆటో-డెబిట్ సెట్ చేయండి';
+
+  @override
+  String paymentsAutoPaySetupMessage(String amount) {
+    return 'ప్రతి గడువు తేదీన మీ అద్దె మీ UPI ఖాతా నుండి ఆటోమేటిక్‌గా చెల్లించబడుతుంది, ప్రతిసారి $amount వరకు. మీరు దీన్ని ఒకసారి మీ UPI యాప్‌లో ఆమోదిస్తారు, ప్రతి కోతకు ముందు మీకు సమాచారం వస్తుంది.';
+  }
+
+  @override
+  String get paymentsAutoPayEmail => 'ఇమెయిల్';
+
+  @override
+  String get paymentsAutoPayEmailHelp => 'Razorpay ఆటో-డెబిట్ అప్‌డేట్‌లను ఈ ఇమెయిల్‌కు పంపుతుంది.';
+
+  @override
+  String get paymentsAutoPayEmailInvalid => 'సరైన ఇమెయిల్ చిరునామా ఇవ్వండి.';
+
+  @override
+  String get paymentsAutoPayContinue => 'UPI యాప్‌కు కొనసాగండి';
+
+  @override
+  String get paymentsAutoPayFinishSetup => 'సెటప్ పూర్తి చేయండి';
+
+  @override
+  String get paymentsAutoPayCheckStatus => 'స్థితి చూడండి';
+
+  @override
+  String get paymentsAutoPayTurnedOn => 'ఆటో-డెబిట్ ఆన్ అయింది';
+
+  @override
+  String get paymentsAutoPayStillWaiting =>
+      'మీ బ్యాంక్ నిర్ధారణ కోసం ఎదురుచూస్తున్నాం. కొన్ని నిమిషాల తర్వాత మళ్లీ చూడండి.';
+
+  @override
+  String get paymentsAutoPaySetupFailed => 'ఆటో-డెబిట్ సెట్ కాలేదు. దయచేసి మళ్లీ ప్రయత్నించండి.';
+
+  @override
+  String get paymentsAutoPayUnavailable => 'ప్రస్తుతం ఆటో-డెబిట్ సెటప్ అందుబాటులో లేదు. దయచేసి తర్వాత ప్రయత్నించండి.';
+
+  @override
+  String get paymentsAutoPayOpenFailed => 'ఆమోద పేజీ తెరవలేకపోయాం. దయచేసి మళ్లీ ప్రయత్నించండి.';
+
+  @override
+  String get paymentsAutoPayTurnOff => 'ఆటో-డెబిట్ ఆఫ్ చేయండి';
+
+  @override
+  String get paymentsAutoPayTurnOn => 'ఆటో-డెబిట్ ఆన్ చేయండి';
+
+  @override
+  String get paymentsAutoPayOffNote => 'ఆటో-డెబిట్ ఆఫ్‌లో ఉంది. అద్దె ఆటోమేటిక్‌గా తీసుకోబడదు.';
+
+  @override
+  String get paymentsAutoPayPause => 'ఆటో-డెబిట్ నిలిపివేయండి';
+
+  @override
+  String get paymentsAutoPayResume => 'ఆటో-డెబిట్ మళ్లీ ప్రారంభించండి';
+
+  @override
+  String get paymentsAutoPayManageInUpiApp => 'నిలిపివేయడానికి లేదా మళ్లీ ప్రారంభించడానికి మీ UPI యాప్ ఉపయోగించండి.';
+
+  @override
+  String get paymentsAutoPayCancel => 'ఆటో-డెబిట్ రద్దు చేయండి';
+
+  @override
+  String get paymentsAutoPayCancelTitle => 'ఆటో-డెబిట్ రద్దు చేయాలా?';
+
+  @override
+  String get paymentsAutoPayCancelMessage => 'మీ అద్దె ఇకపై ఆటోమేటిక్‌గా చెల్లించబడదు. తర్వాత మళ్లీ సెట్ చేయవచ్చు.';
+
+  @override
+  String get paymentsAutoPayKeep => 'అలాగే ఉంచండి';
+
+  @override
+  String get paymentsAutoPayCancelled => 'ఆటో-డెబిట్ రద్దయింది';
+
+  @override
+  String get paymentsAutoPayCancelPending => 'రద్దు అభ్యర్థన పంపాం. మీ బ్యాంక్ నిర్ధారణ కోసం ఎదురుచూస్తున్నాం.';
+
+  @override
+  String get paymentsAutoPayUpdated => 'ఆటో-డెబిట్ అప్‌డేట్ అయింది';
 }

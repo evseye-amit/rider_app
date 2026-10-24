@@ -5375,4 +5375,86 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get damageChargesOnlineUnavailable => 'ಈಗ ಆನ್‌ಲೈನ್ ಪಾವತಿ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ.';
+
+  @override
+  String get paymentsAutoPaySetUp => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ಹೊಂದಿಸಿ';
+
+  @override
+  String paymentsAutoPaySetupMessage(String amount) {
+    return 'ಪ್ರತಿ ಬಾಕಿ ದಿನಾಂಕದಂದು ನಿಮ್ಮ ಬಾಡಿಗೆ ನಿಮ್ಮ UPI ಖಾತೆಯಿಂದ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಪಾವತಿಯಾಗುತ್ತದೆ, ಪ್ರತಿ ಬಾರಿ $amount ವರೆಗೆ. ನೀವು ಇದನ್ನು ಒಮ್ಮೆ ನಿಮ್ಮ UPI ಆ್ಯಪ್‌ನಲ್ಲಿ ಅನುಮೋದಿಸುತ್ತೀರಿ ಮತ್ತು ಪ್ರತಿ ಕಡಿತದ ಮೊದಲು ಸೂಚನೆ ಪಡೆಯುತ್ತೀರಿ.';
+  }
+
+  @override
+  String get paymentsAutoPayEmail => 'ಇಮೇಲ್';
+
+  @override
+  String get paymentsAutoPayEmailHelp => 'Razorpay ಸ್ವಯಂ-ಡೆಬಿಟ್ ಮಾಹಿತಿಯನ್ನು ಈ ಇಮೇಲ್‌ಗೆ ಕಳುಹಿಸುತ್ತದೆ.';
+
+  @override
+  String get paymentsAutoPayEmailInvalid => 'ಸರಿಯಾದ ಇಮೇಲ್ ವಿಳಾಸ ನಮೂದಿಸಿ.';
+
+  @override
+  String get paymentsAutoPayContinue => 'UPI ಆ್ಯಪ್‌ಗೆ ಮುಂದುವರಿಯಿರಿ';
+
+  @override
+  String get paymentsAutoPayFinishSetup => 'ಸೆಟಪ್ ಪೂರ್ಣಗೊಳಿಸಿ';
+
+  @override
+  String get paymentsAutoPayCheckStatus => 'ಸ್ಥಿತಿ ಪರಿಶೀಲಿಸಿ';
+
+  @override
+  String get paymentsAutoPayTurnedOn => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ಆನ್ ಆಗಿದೆ';
+
+  @override
+  String get paymentsAutoPayStillWaiting =>
+      'ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಕಾಯುತ್ತಿದೆ. ಕೆಲವು ನಿಮಿಷಗಳ ನಂತರ ಮತ್ತೆ ಪರಿಶೀಲಿಸಿ.';
+
+  @override
+  String get paymentsAutoPaySetupFailed => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ಹೊಂದಿಸಲು ಆಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get paymentsAutoPayUnavailable => 'ಈಗ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಸೆಟಪ್ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ನಂತರ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get paymentsAutoPayOpenFailed => 'ಅನುಮೋದನೆ ಪುಟ ತೆರೆಯಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get paymentsAutoPayTurnOff => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ಆಫ್ ಮಾಡಿ';
+
+  @override
+  String get paymentsAutoPayTurnOn => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ಆನ್ ಮಾಡಿ';
+
+  @override
+  String get paymentsAutoPayOffNote => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ಆಫ್ ಆಗಿದೆ. ಬಾಡಿಗೆ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಕಡಿತವಾಗುವುದಿಲ್ಲ.';
+
+  @override
+  String get paymentsAutoPayPause => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ವಿರಾಮಗೊಳಿಸಿ';
+
+  @override
+  String get paymentsAutoPayResume => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ಮುಂದುವರಿಸಿ';
+
+  @override
+  String get paymentsAutoPayManageInUpiApp => 'ವಿರಾಮ ಅಥವಾ ಮುಂದುವರಿಸಲು ನಿಮ್ಮ UPI ಆ್ಯಪ್ ಬಳಸಿ.';
+
+  @override
+  String get paymentsAutoPayCancel => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ರದ್ದುಮಾಡಿ';
+
+  @override
+  String get paymentsAutoPayCancelTitle => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ರದ್ದುಮಾಡಬೇಕೇ?';
+
+  @override
+  String get paymentsAutoPayCancelMessage =>
+      'ನಿಮ್ಮ ಬಾಡಿಗೆ ಇನ್ನು ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಪಾವತಿಯಾಗುವುದಿಲ್ಲ. ನಂತರ ಮತ್ತೆ ಹೊಂದಿಸಬಹುದು.';
+
+  @override
+  String get paymentsAutoPayKeep => 'ಹಾಗೇ ಇರಲಿ';
+
+  @override
+  String get paymentsAutoPayCancelled => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ರದ್ದಾಗಿದೆ';
+
+  @override
+  String get paymentsAutoPayCancelPending => 'ರದ್ದು ವಿನಂತಿ ಕಳುಹಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಕಾಯುತ್ತಿದೆ.';
+
+  @override
+  String get paymentsAutoPayUpdated => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ಅಪ್‌ಡೇಟ್ ಆಗಿದೆ';
 }

@@ -1,6 +1,7 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/entities/auto_pay_setup.dart';
 import '../../domain/entities/payments_overview.dart';
 import '../../payments_dependencies.dart';
 
@@ -14,4 +15,8 @@ final paymentHistoryProvider = FutureProvider.autoDispose<List<PaymentRecord>>(
 
 final paymentRefundsProvider = FutureProvider.autoDispose<List<PaymentAttemptDetail>>(
   (ref) async => (await ref.watch(getPaymentRefundsProvider)(const NoParams())).getOrThrow(),
+);
+
+final autoPaySetupProvider = FutureProvider.autoDispose<AutoPaySetup?>(
+  (ref) async => (await ref.watch(getAutoPayProvider)(const NoParams())).getOrThrow(),
 );

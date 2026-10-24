@@ -5358,4 +5358,85 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get damageChargesOnlineUnavailable => 'अभी ऑनलाइन भुगतान उपलब्ध नहीं है। कृपया अपने हब पर भुगतान करें।';
+
+  @override
+  String get paymentsAutoPaySetUp => 'ऑटो-डेबिट सेट करें';
+
+  @override
+  String paymentsAutoPaySetupMessage(String amount) {
+    return 'हर ड्यू तारीख पर आपका किराया आपके UPI खाते से अपने आप कट जाएगा, हर बार $amount तक। आप इसे एक बार अपने UPI ऐप में मंज़ूर करते हैं और हर कटौती से पहले आपको सूचना मिलती है।';
+  }
+
+  @override
+  String get paymentsAutoPayEmail => 'ईमेल';
+
+  @override
+  String get paymentsAutoPayEmailHelp => 'Razorpay ऑटो-डेबिट की जानकारी इसी ईमेल पर भेजता है।';
+
+  @override
+  String get paymentsAutoPayEmailInvalid => 'सही ईमेल पता डालें।';
+
+  @override
+  String get paymentsAutoPayContinue => 'UPI ऐप पर जाएँ';
+
+  @override
+  String get paymentsAutoPayFinishSetup => 'सेटअप पूरा करें';
+
+  @override
+  String get paymentsAutoPayCheckStatus => 'स्थिति देखें';
+
+  @override
+  String get paymentsAutoPayTurnedOn => 'ऑटो-डेबिट चालू है';
+
+  @override
+  String get paymentsAutoPayStillWaiting => 'आपके बैंक की पुष्टि का इंतज़ार है। कुछ मिनट बाद फिर देखें।';
+
+  @override
+  String get paymentsAutoPaySetupFailed => 'ऑटो-डेबिट सेट नहीं हो पाया। कृपया फिर से कोशिश करें।';
+
+  @override
+  String get paymentsAutoPayUnavailable => 'अभी ऑटो-डेबिट सेटअप उपलब्ध नहीं है। कृपया बाद में कोशिश करें।';
+
+  @override
+  String get paymentsAutoPayOpenFailed => 'मंज़ूरी पेज नहीं खुल पाया। कृपया फिर से कोशिश करें।';
+
+  @override
+  String get paymentsAutoPayTurnOff => 'ऑटो-डेबिट बंद करें';
+
+  @override
+  String get paymentsAutoPayTurnOn => 'ऑटो-डेबिट चालू करें';
+
+  @override
+  String get paymentsAutoPayOffNote => 'ऑटो-डेबिट बंद है। किराया अपने आप नहीं कटेगा।';
+
+  @override
+  String get paymentsAutoPayPause => 'ऑटो-डेबिट रोकें';
+
+  @override
+  String get paymentsAutoPayResume => 'ऑटो-डेबिट फिर शुरू करें';
+
+  @override
+  String get paymentsAutoPayManageInUpiApp => 'रोकने या फिर शुरू करने के लिए अपना UPI ऐप इस्तेमाल करें।';
+
+  @override
+  String get paymentsAutoPayCancel => 'ऑटो-डेबिट रद्द करें';
+
+  @override
+  String get paymentsAutoPayCancelTitle => 'ऑटो-डेबिट रद्द करें?';
+
+  @override
+  String get paymentsAutoPayCancelMessage =>
+      'आपका किराया अब अपने आप नहीं कटेगा। आप इसे बाद में फिर से सेट कर सकते हैं।';
+
+  @override
+  String get paymentsAutoPayKeep => 'रहने दें';
+
+  @override
+  String get paymentsAutoPayCancelled => 'ऑटो-डेबिट रद्द हो गया';
+
+  @override
+  String get paymentsAutoPayCancelPending => 'रद्द करने का अनुरोध भेजा गया। आपके बैंक की पुष्टि का इंतज़ार है।';
+
+  @override
+  String get paymentsAutoPayUpdated => 'ऑटो-डेबिट अपडेट हो गया';
 }

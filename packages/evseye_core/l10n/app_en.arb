@@ -7300,5 +7300,114 @@
   "damageChargesOnlineUnavailable": "Online payment isn't available right now. Please pay at your hub.",
   "@damageChargesOnlineUnavailable": {
     "description": "Shown on the damage charges screen when online payment is not available"
+  },
+  "paymentsAutoPaySetUp": "Set up auto-debit",
+  "@paymentsAutoPaySetUp": {
+    "description": "Button and sheet title to start auto-debit setup"
+  },
+  "paymentsAutoPaySetupMessage": "Your rent is paid automatically from your UPI account on each due date, up to {amount} each time. You approve it once in your UPI app and get a notice before every debit.",
+  "@paymentsAutoPaySetupMessage": {
+    "description": "Explanation in the auto-debit setup sheet",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsAutoPayEmail": "Email",
+  "@paymentsAutoPayEmail": {
+    "description": "Email field label in the auto-debit setup sheet"
+  },
+  "paymentsAutoPayEmailHelp": "Razorpay sends auto-debit updates to this email.",
+  "@paymentsAutoPayEmailHelp": {
+    "description": "Helper text under the email field"
+  },
+  "paymentsAutoPayEmailInvalid": "Enter a valid email address.",
+  "@paymentsAutoPayEmailInvalid": {
+    "description": "Error when the email is not valid"
+  },
+  "paymentsAutoPayContinue": "Continue to UPI app",
+  "@paymentsAutoPayContinue": {
+    "description": "Button that starts auto-debit approval"
+  },
+  "paymentsAutoPayFinishSetup": "Finish setup",
+  "@paymentsAutoPayFinishSetup": {
+    "description": "Button to reopen the auto-debit approval page"
+  },
+  "paymentsAutoPayCheckStatus": "Check status",
+  "@paymentsAutoPayCheckStatus": {
+    "description": "Button to check auto-debit approval status"
+  },
+  "paymentsAutoPayTurnedOn": "Auto-debit is on",
+  "@paymentsAutoPayTurnedOn": {
+    "description": "Shown when auto-debit approval is confirmed"
+  },
+  "paymentsAutoPayStillWaiting": "Waiting for your bank to confirm. Check again in a few minutes.",
+  "@paymentsAutoPayStillWaiting": {
+    "description": "Shown when auto-debit approval is still pending"
+  },
+  "paymentsAutoPaySetupFailed": "Auto-debit setup didn't go through. Please try again.",
+  "@paymentsAutoPaySetupFailed": {
+    "description": "Shown when auto-debit approval failed"
+  },
+  "paymentsAutoPayUnavailable": "Auto-debit setup isn't available right now. Please try again later.",
+  "@paymentsAutoPayUnavailable": {
+    "description": "Shown when the backend says auto-debit setup is not available"
+  },
+  "paymentsAutoPayOpenFailed": "Couldn't open the approval page. Please try again.",
+  "@paymentsAutoPayOpenFailed": {
+    "description": "Shown when the approval link cannot be opened"
+  },
+  "paymentsAutoPayTurnOff": "Turn off auto-debit",
+  "@paymentsAutoPayTurnOff": {
+    "description": "Button to stop automatic debits for now"
+  },
+  "paymentsAutoPayTurnOn": "Turn on auto-debit",
+  "@paymentsAutoPayTurnOn": {
+    "description": "Button to restart automatic debits"
+  },
+  "paymentsAutoPayOffNote": "Auto-debit is turned off. Rent won't be taken automatically.",
+  "@paymentsAutoPayOffNote": {
+    "description": "Note when the rider turned auto-debit off"
+  },
+  "paymentsAutoPayPause": "Pause auto-debit",
+  "@paymentsAutoPayPause": {
+    "description": "Button to pause the mandate"
+  },
+  "paymentsAutoPayResume": "Resume auto-debit",
+  "@paymentsAutoPayResume": {
+    "description": "Button to resume the mandate"
+  },
+  "paymentsAutoPayManageInUpiApp": "To pause or resume, use your UPI app.",
+  "@paymentsAutoPayManageInUpiApp": {
+    "description": "Hint for Razorpay mandates, which are paused in the UPI app"
+  },
+  "paymentsAutoPayCancel": "Cancel auto-debit",
+  "@paymentsAutoPayCancel": {
+    "description": "Button and confirm label to cancel the mandate"
+  },
+  "paymentsAutoPayCancelTitle": "Cancel auto-debit?",
+  "@paymentsAutoPayCancelTitle": {
+    "description": "Title of the cancel auto-debit dialog"
+  },
+  "paymentsAutoPayCancelMessage": "Your rent won't be paid automatically any more. You can set it up again later.",
+  "@paymentsAutoPayCancelMessage": {
+    "description": "Message of the cancel auto-debit dialog"
+  },
+  "paymentsAutoPayKeep": "Keep it",
+  "@paymentsAutoPayKeep": {
+    "description": "Dismiss button of the cancel auto-debit dialog"
+  },
+  "paymentsAutoPayCancelled": "Auto-debit cancelled",
+  "@paymentsAutoPayCancelled": {
+    "description": "Shown after auto-debit is cancelled"
+  },
+  "paymentsAutoPayCancelPending": "Cancellation requested. Waiting for your bank to confirm.",
+  "@paymentsAutoPayCancelPending": {
+    "description": "Note while a Razorpay mandate cancellation is pending"
+  },
+  "paymentsAutoPayUpdated": "Auto-debit updated",
+  "@paymentsAutoPayUpdated": {
+    "description": "Shown after turning auto-debit on or off, or pausing or resuming it"
   }
 }

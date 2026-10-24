@@ -159,6 +159,73 @@ class PaymentAttempt {
   final DateTime? completedAt;
 }
 
+class AutoPayMandateDto {
+  const AutoPayMandateDto({
+    required this.id,
+    required this.status,
+    required this.provider,
+    required this.maxAmount,
+    required this.autoDebitEnabled,
+    required this.canPause,
+    required this.canResume,
+    required this.canCancel,
+    required this.canTurnOff,
+    required this.cancellationPending,
+    this.authorizationUrl,
+  });
+
+  factory AutoPayMandateDto.fromJson(Map<String, dynamic> json) {
+    final Object? rawCapabilities = json['capabilities'];
+    final Map<Object?, Object?> capabilities = rawCapabilities is Map ? rawCapabilities : const {};
+    final Object? rawAuthorization = json['authorization'];
+    final Object? url = rawAuthorization is Map ? rawAuthorization['url'] : null;
+    return AutoPayMandateDto(
+      id: _text(json['mandateId']),
+      status: _text(json['status']).toUpperCase(),
+      provider: _text(json['provider']).toUpperCase(),
+      maxAmount: _money(json['maxAmount']),
+      autoDebitEnabled: json['autoDebitEnabled'] != false,
+      canPause: capabilities['pause'] == true,
+      canResume: capabilities['resume'] == true,
+      canCancel: capabilities['cancel'] == true,
+      canTurnOff: capabilities['localDisable'] == true,
+      cancellationPending: json['cancellationPending'] == true,
+      authorizationUrl: url == null || url.toString().isEmpty ? null : url.toString(),
+    );
+  }
+
+  final String id;
+  final String status;
+  final String provider;
+  final num maxAmount;
+  final bool autoDebitEnabled;
+  final bool canPause;
+  final bool canResume;
+  final bool canCancel;
+  final bool canTurnOff;
+  final bool cancellationPending;
+  final String? authorizationUrl;
+}
+
+class AutoPaySetupDto {
+  const AutoPaySetupDto({required this.provider, required this.maxAmount, this.mandate});
+
+  factory AutoPaySetupDto.fromJson(Map<String, dynamic> json) {
+    final Object? rawConfiguration = json['configuration'];
+    final Map<Object?, Object?> configuration = rawConfiguration is Map ? rawConfiguration : const {};
+    final Object? mandate = json['mandate'];
+    return AutoPaySetupDto(
+      provider: _text(configuration['provider']).toUpperCase(),
+      maxAmount: _money(configuration['maxAmount']),
+      mandate: mandate is Map ? AutoPayMandateDto.fromJson(Map<String, dynamic>.from(mandate)) : null,
+    );
+  }
+
+  final String provider;
+  final num maxAmount;
+  final AutoPayMandateDto? mandate;
+}
+
 class RiderPaymentsApi {
   const RiderPaymentsApi(this._client);
 
@@ -191,6 +258,44 @@ class RiderPaymentsApi {
         .map((e) => PaymentRefund.fromJson(Map<String, dynamic>.from(e)))
         .toList(growable: false),
   );
+
+  Future<Result<AutoPaySetupDto>> autoPay() => _client.get<AutoPaySetupDto>(
+    '$_base/autopay',
+    parse: (data) => AutoPaySetupDto.fromJson(Map<String, dynamic>.from(data as Map)),
+  );
+
+  Future<Result<AutoPayMandateDto>> setUpAutoPay({required String email, required String idempotencyKey}) =>
+      _client.post<AutoPayMandateDto>(
+        '$_base/autopay',
+        headers: {'Idempotency-Key': idempotencyKey},
+        body: {'method': 'UPI_AUTOPAY', 'email': email},
+        parse: _mandate,
+      );
+
+  Future<Result<AutoPayMandateDto>> verifyAutoPay(String mandateId) =>
+      _client.post<AutoPayMandateDto>('$_base/autopay/$mandateId/verify', parse: _mandate);
+
+  Future<Result<AutoPayMandateDto>> cancelAutoPay(String mandateId, {required String idempotencyKey}) =>
+      _client.post<AutoPayMandateDto>(
+        '$_base/autopay/$mandateId/cancel',
+        headers: {'Idempotency-Key': idempotencyKey},
+        parse: _mandate,
+      );
+
+  Future<Result<AutoPayMandateDto>> pauseAutoPay(
+    String mandateId, {
+    required bool pause,
+    required String idempotencyKey,
+  }) => _client.post<AutoPayMandateDto>(
+    '$_base/autopay/$mandateId/${pause ? 'pause' : 'resume'}',
+    headers: {'Idempotency-Key': idempotencyKey},
+    parse: _mandate,
+  );
+
+  Future<Result<AutoPayMandateDto>> setAutoDebit({required bool enabled}) =>
+      _client.post<AutoPayMandateDto>('$_base/autopay/${enabled ? 'enable' : 'disable'}', parse: _mandate);
+
+  static AutoPayMandateDto _mandate(dynamic data) => AutoPayMandateDto.fromJson(Map<String, dynamic>.from(data as Map));
 }
 
 class PaymentRefund {

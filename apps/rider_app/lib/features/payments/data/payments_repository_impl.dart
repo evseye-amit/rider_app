@@ -1,5 +1,6 @@
 import 'package:evseye_core/evseye_core.dart';
 
+import '../domain/entities/auto_pay_setup.dart';
 import '../domain/entities/payments_overview.dart';
 import '../domain/payments_repository.dart';
 
@@ -37,6 +38,66 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
           completedAt: refund.completedAt,
         ),
     ],
+  );
+
+  @override
+  Future<Result<AutoPaySetup?>> getAutoPay() async => switch (await _api.autoPay()) {
+    Ok<AutoPaySetupDto>(:final value) => Result.ok(_setup(value)),
+    Err<AutoPaySetupDto>(failure: ServerFailure(status: 400 || 404)) => const Result<AutoPaySetup?>.ok(null),
+    Err<AutoPaySetupDto>(:final failure) => Result.err(failure),
+  };
+
+  @override
+  Future<Result<AutoPayMandate>> setUpAutoPay({required String email, required String idempotencyKey}) async =>
+      (await _api.setUpAutoPay(email: email, idempotencyKey: idempotencyKey)).map(_mandate);
+
+  @override
+  Future<Result<AutoPayMandate>> verifyAutoPay(String mandateId) async =>
+      (await _api.verifyAutoPay(mandateId)).map(_mandate);
+
+  @override
+  Future<Result<AutoPayMandate>> cancelAutoPay(String mandateId, {required String idempotencyKey}) async =>
+      (await _api.cancelAutoPay(mandateId, idempotencyKey: idempotencyKey)).map(_mandate);
+
+  @override
+  Future<Result<AutoPayMandate>> pauseAutoPay(
+    String mandateId, {
+    required bool pause,
+    required String idempotencyKey,
+  }) async => (await _api.pauseAutoPay(mandateId, pause: pause, idempotencyKey: idempotencyKey)).map(_mandate);
+
+  @override
+  Future<Result<AutoPayMandate>> setAutoDebit({required bool enabled}) async =>
+      (await _api.setAutoDebit(enabled: enabled)).map(_mandate);
+
+  static AutoPaySetup _setup(AutoPaySetupDto dto) {
+    final AutoPayMandate? mandate = switch (dto.mandate) {
+      final AutoPayMandateDto value => _mandate(value),
+      null => null,
+    };
+    return AutoPaySetup(
+      canSetUp: dto.provider == 'RAZORPAY' && (mandate == null || mandate.state == AutoPayMandateState.closed),
+      maxAmount: dto.maxAmount,
+      mandate: mandate,
+    );
+  }
+
+  static AutoPayMandate _mandate(AutoPayMandateDto dto) => AutoPayMandate(
+    id: dto.id,
+    state: switch (dto.status) {
+      'ACTIVE' => AutoPayMandateState.active,
+      'PAUSED' => AutoPayMandateState.paused,
+      'CANCELLED' || 'FAILED' || 'EXPIRED' => AutoPayMandateState.closed,
+      _ => AutoPayMandateState.awaitingApproval,
+    },
+    autoDebitOn: dto.autoDebitEnabled,
+    canPause: dto.canPause,
+    canResume: dto.canResume,
+    canCancel: dto.canCancel,
+    canTurnOff: dto.canTurnOff,
+    cancellationPending: dto.cancellationPending,
+    managedInUpiApp: dto.provider == 'RAZORPAY',
+    approvalUrl: dto.authorizationUrl,
   );
 
   static PaymentsOverview _overview(PaymentsHome home, SubmissionPenaltySummaryDto? damage) => PaymentsOverview(

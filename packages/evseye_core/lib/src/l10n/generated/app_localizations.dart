@@ -10203,6 +10203,162 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Online payment isn\'t available right now. Please pay at your hub.'**
   String get damageChargesOnlineUnavailable;
+
+  /// Button and sheet title to start auto-debit setup
+  ///
+  /// In en, this message translates to:
+  /// **'Set up auto-debit'**
+  String get paymentsAutoPaySetUp;
+
+  /// Explanation in the auto-debit setup sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Your rent is paid automatically from your UPI account on each due date, up to {amount} each time. You approve it once in your UPI app and get a notice before every debit.'**
+  String paymentsAutoPaySetupMessage(String amount);
+
+  /// Email field label in the auto-debit setup sheet
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get paymentsAutoPayEmail;
+
+  /// Helper text under the email field
+  ///
+  /// In en, this message translates to:
+  /// **'Razorpay sends auto-debit updates to this email.'**
+  String get paymentsAutoPayEmailHelp;
+
+  /// Error when the email is not valid
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address.'**
+  String get paymentsAutoPayEmailInvalid;
+
+  /// Button that starts auto-debit approval
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to UPI app'**
+  String get paymentsAutoPayContinue;
+
+  /// Button to reopen the auto-debit approval page
+  ///
+  /// In en, this message translates to:
+  /// **'Finish setup'**
+  String get paymentsAutoPayFinishSetup;
+
+  /// Button to check auto-debit approval status
+  ///
+  /// In en, this message translates to:
+  /// **'Check status'**
+  String get paymentsAutoPayCheckStatus;
+
+  /// Shown when auto-debit approval is confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-debit is on'**
+  String get paymentsAutoPayTurnedOn;
+
+  /// Shown when auto-debit approval is still pending
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your bank to confirm. Check again in a few minutes.'**
+  String get paymentsAutoPayStillWaiting;
+
+  /// Shown when auto-debit approval failed
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-debit setup didn\'t go through. Please try again.'**
+  String get paymentsAutoPaySetupFailed;
+
+  /// Shown when the backend says auto-debit setup is not available
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-debit setup isn\'t available right now. Please try again later.'**
+  String get paymentsAutoPayUnavailable;
+
+  /// Shown when the approval link cannot be opened
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the approval page. Please try again.'**
+  String get paymentsAutoPayOpenFailed;
+
+  /// Button to stop automatic debits for now
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off auto-debit'**
+  String get paymentsAutoPayTurnOff;
+
+  /// Button to restart automatic debits
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on auto-debit'**
+  String get paymentsAutoPayTurnOn;
+
+  /// Note when the rider turned auto-debit off
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-debit is turned off. Rent won\'t be taken automatically.'**
+  String get paymentsAutoPayOffNote;
+
+  /// Button to pause the mandate
+  ///
+  /// In en, this message translates to:
+  /// **'Pause auto-debit'**
+  String get paymentsAutoPayPause;
+
+  /// Button to resume the mandate
+  ///
+  /// In en, this message translates to:
+  /// **'Resume auto-debit'**
+  String get paymentsAutoPayResume;
+
+  /// Hint for Razorpay mandates, which are paused in the UPI app
+  ///
+  /// In en, this message translates to:
+  /// **'To pause or resume, use your UPI app.'**
+  String get paymentsAutoPayManageInUpiApp;
+
+  /// Button and confirm label to cancel the mandate
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel auto-debit'**
+  String get paymentsAutoPayCancel;
+
+  /// Title of the cancel auto-debit dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel auto-debit?'**
+  String get paymentsAutoPayCancelTitle;
+
+  /// Message of the cancel auto-debit dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Your rent won\'t be paid automatically any more. You can set it up again later.'**
+  String get paymentsAutoPayCancelMessage;
+
+  /// Dismiss button of the cancel auto-debit dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Keep it'**
+  String get paymentsAutoPayKeep;
+
+  /// Shown after auto-debit is cancelled
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-debit cancelled'**
+  String get paymentsAutoPayCancelled;
+
+  /// Note while a Razorpay mandate cancellation is pending
+  ///
+  /// In en, this message translates to:
+  /// **'Cancellation requested. Waiting for your bank to confirm.'**
+  String get paymentsAutoPayCancelPending;
+
+  /// Shown after turning auto-debit on or off, or pausing or resuming it
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-debit updated'**
+  String get paymentsAutoPayUpdated;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {
