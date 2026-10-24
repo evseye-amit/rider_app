@@ -17,7 +17,13 @@ class DamageChargesRepositoryImpl implements DamageChargesRepository {
       credit: dto.settledCreditAmount,
       due: dto.outstandingAmount,
       unpaidCount: dto.pendingCount,
-      processingAmount: dto.paymentInProgressAmount,
+      activity: switch ((dto.paymentInProgressAmount, dto.paymentInProgressSource, dto.paymentInProgressStatus)) {
+        (null, _, _) => DamagePaymentActivity.none,
+        (_, 'RAZORPAY', 'SUCCESS') => DamagePaymentActivity.underReview,
+        (_, 'RAZORPAY', _) => DamagePaymentActivity.unfinishedOnline,
+        _ => DamagePaymentActivity.processing,
+      },
+      activityAmount: dto.paymentInProgressAmount,
     ),
   );
 
@@ -43,7 +49,6 @@ class DamageChargesRepositoryImpl implements DamageChargesRepository {
     state: switch (dto) {
       SubmissionPenaltyDto(isVoid: true) => DamageChargeState.cancelled,
       SubmissionPenaltyDto(:final num outstandingAmount) when outstandingAmount <= 0 => DamageChargeState.paid,
-      SubmissionPenaltyDto(paymentStatus: PenaltyPaymentStatus.partiallyPaid) => DamageChargeState.partlyPaid,
       SubmissionPenaltyDto(:final num paidAmount, :final num settledCreditAmount)
           when paidAmount + settledCreditAmount > 0 =>
         DamageChargeState.partlyPaid,

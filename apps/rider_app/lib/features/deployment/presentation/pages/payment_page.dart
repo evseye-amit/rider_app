@@ -5,8 +5,9 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/payments/online_payments.dart';
+import '../../../../core/payments/razorpay_checkout.dart';
 import '../../../../core/session/rider_session_provider.dart';
-import '../../data/razorpay_checkout.dart';
 import '../../domain/usecases/payment_receipt_usecases.dart';
 import '../providers/deployment_payment_provider.dart';
 import '../providers/deployment_provider.dart';
@@ -25,27 +26,18 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
   final TextEditingController _reference = TextEditingController();
   final List<File> _screenshots = [];
   final Map<String, String> _uploaded = {};
-  int _providerIndex = 0;
+  bool _online = RazorpayCheckout.available;
   bool _submitting = false;
   bool _adding = false;
-  final RazorpayCheckout _checkout = RazorpayCheckout();
   bool _paying = false;
-  String? _onlinePaymentId;
+  String? _notice;
   String? _error;
 
   @override
   void dispose() {
-    _checkout.dispose();
     _reference.dispose();
     super.dispose();
   }
-
-  List<String> _providers(AppL10n l10n) => [
-    'UPI',
-    l10n.deploymentBankTransfer,
-    l10n.deploymentCashHub,
-    l10n.deploymentCard,
-  ];
 
   Future<File?> _pickScreenshot() async {
     final File? file = await PhotoSourceSheet.pick(context);
@@ -67,36 +59,46 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     _uploaded.remove(file.path);
   });
 
-  Future<void> _payOnline(DeploymentPayment payment, String allocationId, String? vehicle) async {
+  Future<void> _payOnline(String allocationId, String? vehicle) async {
     final String mobile = ref.read(riderSessionProvider).mobile;
     setState(() => _paying = true);
-    final OnlinePaymentResult result = await _checkout.pay(
-      amount: payment.amount,
-      description: ['Scooter payment', ?vehicle].join(' '),
-      contact: mobile.isEmpty ? null : mobile,
-      notes: {'paymentId': payment.id, 'allocationId': allocationId, 'vehicle': ?vehicle},
-    );
+    final OnlinePaymentOutcome outcome = await ref
+        .read(onlinePaymentsProvider)
+        .pay(
+          PaymentOrderRequest.deployment(allocationId),
+          description: ['Scooter payment', ?vehicle].join(' '),
+          contact: mobile.isEmpty ? null : mobile,
+        );
     if (!mounted) return;
-    setState(() => _paying = false);
-    final String? paymentId = result.paymentId;
-    switch (result.outcome) {
-      case OnlinePaymentOutcome.paid when paymentId != null:
-        setState(() {
-          _onlinePaymentId = paymentId;
-          _reference.text = paymentId;
-          _error = null;
-        });
-        AppSnack.success(context, context.l10n.deploymentOnlinePaymentDone);
-        await _submit(allocationId);
-      case OnlinePaymentOutcome.cancelled:
-        AppSnack.info(context, context.l10n.deploymentOnlinePaymentCancelled);
-      case OnlinePaymentOutcome.paid:
-      case OnlinePaymentOutcome.failed:
-        AppSnack.error(context, context.l10n.deploymentOnlinePaymentFailed);
+    final AppL10n l10n = context.l10n;
+    setState(() {
+      _paying = false;
+      _notice = switch (outcome) {
+        OnlinePaymentPending() => l10n.onlinePaymentPending,
+        OnlinePaymentNeedsSupport() => l10n.onlinePaymentReview,
+        _ => _notice,
+      };
+    });
+    switch (outcome) {
+      case OnlinePaymentPaid():
+        AppSnack.success(context, l10n.onlinePaymentDone);
+        unawaited(ref.read(deploymentProvider.notifier).refresh(silent: true));
+      case OnlinePaymentCancelled():
+        AppSnack.info(context, l10n.onlinePaymentCancelled);
+      case OnlinePaymentDeclined():
+        AppSnack.error(context, l10n.onlinePaymentFailed);
+      case OnlinePaymentUnavailable():
+        AppSnack.error(context, l10n.deploymentOnlineUnavailable);
+      case OnlinePaymentError(:final message):
+        AppSnack.error(context, message);
+      case OnlinePaymentPending() || OnlinePaymentNeedsSupport():
+        break;
     }
+    unawaited(ref.read(deploymentPaymentProvider(allocationId).notifier).reload());
   }
 
   Future<void> _submit(String allocationId) async {
+    final String provider = context.l10n.deploymentCashHub;
     final String reference = _reference.text.trim();
     if (reference.length < 4) {
       setState(() => _error = context.l10n.deploymentEnterTransactionReferencePaidWith);
@@ -123,7 +125,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     }
 
     final Result<DeploymentPayment> result = await notifier.submit(
-      provider: reference == _onlinePaymentId ? RazorpayCheckout.provider : _providers(context.l10n)[_providerIndex],
+      provider: provider,
       reference: reference,
       receiptPhotoIds: [for (final File file in _screenshots) ?_uploaded[file.path]],
     );
@@ -136,7 +138,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
           _screenshots.clear();
           _uploaded.clear();
           _reference.clear();
-          _onlinePaymentId = null;
         });
         unawaited(ref.read(deploymentProvider.notifier).refresh(silent: true));
       case Err<DeploymentPayment>(:final failure):
@@ -187,7 +188,8 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     final DeploymentPayment? payment = ref.watch(deploymentPaymentProvider(allocationId)).value;
     final DeploymentFleet? fleet = current?.allocation?.fleet;
     final bool submitted = payment?.isSubmitted == true;
-    final List<String> providers = _providers(context.l10n);
+    final bool online = _online && RazorpayCheckout.available;
+    final bool canPay = payment != null && !submitted && !payment.isPaid && !payment.needsSupport;
 
     return AppScaffold(
       title: submitted ? context.l10n.deploymentPaymentSubmitted : context.l10n.deploymentPayScooter,
@@ -197,11 +199,17 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
       showBack: false,
       centerTitle: submitted,
       footer: switch (payment) {
-        final DeploymentPayment due when !submitted && !due.needsSupport => PrimaryButton(
-          label: 'I have paid ${Fmt.money(due.amount)}',
+        final DeploymentPayment due when canPay && online => PrimaryButton(
+          label: context.l10n.deploymentPayOnline(Fmt.money(due.amount)),
+          icon: Icons.lock_rounded,
+          loading: _paying,
+          onPressed: _paying || _notice != null ? null : () => _payOnline(allocationId, fleet?.vehicleNumber),
+        ),
+        final DeploymentPayment due when canPay => PrimaryButton(
+          label: context.l10n.deploymentIHavePaid(Fmt.money(due.amount)),
           icon: Icons.check_circle_rounded,
           loading: _submitting,
-          onPressed: _submitting ? null : () => _submit(allocationId),
+          onPressed: _submitting || _notice != null ? null : () => _submit(allocationId),
         ),
         _ => null,
       },
@@ -224,7 +232,15 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
             else ...[
               _Bill(payment: payment),
               const Gap.lg(),
-              if (payment.needsSupport)
+              if (payment.isPaid)
+                AccentCard(
+                  accent: AppColors.success,
+                  child: Text(
+                    context.l10n.onlinePaymentDone,
+                    style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
+                  ),
+                )
+              else if (payment.needsSupport)
                 AccentCard(
                   accent: AppColors.warning,
                   child: Text(
@@ -234,54 +250,62 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                 )
               else ...[
                 if (payment.isRejected) ...[_Rejected(payment: payment), const Gap.lg()],
+                if (_notice case final String notice) ...[
+                  AccentCard(
+                    accent: AppColors.info,
+                    child: Text(notice, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45)),
+                  ),
+                  const Gap.lg(),
+                ],
                 ModuleCard(
-                  title: context.l10n.deploymentHowDidPay,
+                  title: context.l10n.deploymentHowToPay,
                   leading: const IconTile(icon: Icons.payments_rounded, solid: true, size: 28),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      FilterChipBar(
-                        items: providers,
-                        selectedIndex: _providerIndex,
-                        onChanged: (i) => setState(() => _providerIndex = i),
-                        padding: EdgeInsets.zero,
-                      ),
                       if (RazorpayCheckout.available) ...[
-                        const Gap.lg(),
-                        SecondaryButton(
-                          label: context.l10n.deploymentPayOnline(Fmt.money(payment.amount)),
-                          icon: Icons.lock_rounded,
-                          onPressed: _paying || _submitting
-                              ? null
-                              : () => _payOnline(payment, allocationId, fleet?.vehicleNumber),
+                        AppRadioTile(
+                          selected: online,
+                          onTap: () => setState(() => _online = true),
+                          title: context.l10n.deploymentPayMethodOnline,
+                          subtitle: context.l10n.deploymentPayMethodOnlineHint,
+                          leading: const Icon(Icons.lock_rounded, color: AppColors.primary),
+                        ),
+                        const Gap.sm(),
+                        AppRadioTile(
+                          selected: !online,
+                          onTap: () => setState(() => _online = false),
+                          title: context.l10n.deploymentPayMethodCash,
+                          subtitle: context.l10n.deploymentPayMethodCashHint,
+                          leading: const Icon(Icons.payments_rounded, color: AppColors.primary),
                         ),
                       ],
-                      const Gap.lg(),
-                      AppTextField(
-                        label: context.l10n.deploymentTransactionReference,
-                        hint: _providerIndex == 0
-                            ? context.l10n.deploymentUpiTransactionIdEG
-                            : context.l10n.deploymentReferenceReceiptNumber,
-                        controller: _reference,
-                        errorText: _error,
-                        prefixIcon: Icons.tag_rounded,
-                        onChanged: (_) => setState(() => _error = null),
-                      ),
-                      const Gap.lg(),
-                      GroupLabel(context.l10n.deploymentReceiptTitle),
-                      const Gap.sm(),
-                      Wrap(
-                        spacing: Insets.sm,
-                        runSpacing: Insets.sm,
-                        children: [
-                          for (final DeploymentPaymentReceipt receipt in payment.receipts)
-                            _ReceiptThumb(paymentId: payment.id, photoId: receipt.id),
-                          for (final File file in _screenshots)
-                            _LocalThumb(file: file, onRemove: _submitting ? null : () => _removeScreenshot(file)),
-                          if (payment.receipts.length + _screenshots.length < _maxScreenshots)
-                            _AddThumb(onTap: _submitting ? null : _addScreenshot),
-                        ],
-                      ),
+                      if (!online) ...[
+                        if (RazorpayCheckout.available) const Gap.lg(),
+                        AppTextField(
+                          label: context.l10n.deploymentTransactionReference,
+                          hint: context.l10n.deploymentReferenceReceiptNumber,
+                          controller: _reference,
+                          errorText: _error,
+                          prefixIcon: Icons.tag_rounded,
+                          onChanged: (_) => setState(() => _error = null),
+                        ),
+                        const Gap.lg(),
+                        GroupLabel(context.l10n.deploymentReceiptTitle),
+                        const Gap.sm(),
+                        Wrap(
+                          spacing: Insets.sm,
+                          runSpacing: Insets.sm,
+                          children: [
+                            for (final DeploymentPaymentReceipt receipt in payment.receipts)
+                              _ReceiptThumb(paymentId: payment.id, photoId: receipt.id),
+                            for (final File file in _screenshots)
+                              _LocalThumb(file: file, onRemove: _submitting ? null : () => _removeScreenshot(file)),
+                            if (payment.receipts.length + _screenshots.length < _maxScreenshots)
+                              _AddThumb(onTap: _submitting ? null : _addScreenshot),
+                          ],
+                        ),
+                      ],
                     ],
                   ),
                 ),

@@ -2602,18 +2602,6 @@ abstract class AppL10n {
   /// **'Your fleet manager will verify it shortly.'**
   String get deploymentAwaitingVerificationHint;
 
-  /// Bank transfer
-  ///
-  /// In en, this message translates to:
-  /// **'Bank transfer'**
-  String get deploymentBankTransfer;
-
-  /// Card
-  ///
-  /// In en, this message translates to:
-  /// **'Card'**
-  String get deploymentCard;
-
   /// Cash at hub
   ///
   /// In en, this message translates to:
@@ -2727,12 +2715,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Go through each item with your team lead. Flag anything that is not right — it goes to the workshop with your note.'**
   String get deploymentGoThroughEachItemWith;
-
-  /// How did you pay?
-  ///
-  /// In en, this message translates to:
-  /// **'How did you pay?'**
-  String get deploymentHowDidPay;
 
   /// Snack after the rider finishes the hygiene check
   ///
@@ -2949,12 +2931,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Transaction reference'**
   String get deploymentTransactionReference;
-
-  /// UPI transaction ID, e.g. 4284 7192 3456
-  ///
-  /// In en, this message translates to:
-  /// **'UPI transaction ID, e.g. 4284 7192 3456'**
-  String get deploymentUpiTransactionIdEG;
 
   /// Waiting for an allocation
   ///
@@ -10066,24 +10042,6 @@ abstract class AppL10n {
   /// **'Pay {amount} online'**
   String deploymentPayOnline(String amount);
 
-  /// Shown after a successful Razorpay payment
-  ///
-  /// In en, this message translates to:
-  /// **'Payment done. Sending it to your fleet manager.'**
-  String get deploymentOnlinePaymentDone;
-
-  /// Shown when the rider closes Razorpay checkout without paying
-  ///
-  /// In en, this message translates to:
-  /// **'Payment cancelled'**
-  String get deploymentOnlinePaymentCancelled;
-
-  /// Shown when a Razorpay payment fails
-  ///
-  /// In en, this message translates to:
-  /// **'The payment didn\'t go through. Try again.'**
-  String get deploymentOnlinePaymentFailed;
-
   /// Shown when a part that needs a photo is picked but the limit of damaged items with photos is reached
   ///
   /// In en, this message translates to:
@@ -10150,18 +10108,6 @@ abstract class AppL10n {
   /// **'Same as current address'**
   String get profileSameAsCurrentAddress;
 
-  /// Title of the sheet shown when the rider taps Pay on the damage charges screen
-  ///
-  /// In en, this message translates to:
-  /// **'Pay at your hub'**
-  String get damageChargesPayAtHubTitle;
-
-  /// Message of the pay at hub sheet on the damage charges screen
-  ///
-  /// In en, this message translates to:
-  /// **'Paying online isn\'t available in the app yet. Please pay {amount} at your hub. It will show here once the hub records it.'**
-  String damageChargesPayAtHubMessage(String amount);
-
   /// Notice on the damage charges screen when a payment is already in progress
   ///
   /// In en, this message translates to:
@@ -10179,6 +10125,84 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Paid'**
   String get damageChargesSectionPaid;
+
+  /// Title of the payment method card on the rider payment screen
+  ///
+  /// In en, this message translates to:
+  /// **'How would you like to pay?'**
+  String get deploymentHowToPay;
+
+  /// Payment method option on the rider payment screen
+  ///
+  /// In en, this message translates to:
+  /// **'Pay online'**
+  String get deploymentPayMethodOnline;
+
+  /// Subtitle of the Pay online option
+  ///
+  /// In en, this message translates to:
+  /// **'UPI, card or net banking. Confirmed right away.'**
+  String get deploymentPayMethodOnlineHint;
+
+  /// Payment method option on the rider payment screen
+  ///
+  /// In en, this message translates to:
+  /// **'Pay via cash'**
+  String get deploymentPayMethodCash;
+
+  /// Subtitle of the Pay via cash option
+  ///
+  /// In en, this message translates to:
+  /// **'Pay at your hub, then add the receipt number.'**
+  String get deploymentPayMethodCashHint;
+
+  /// Button to submit a cash payment on the rider payment screen
+  ///
+  /// In en, this message translates to:
+  /// **'I have paid {amount}'**
+  String deploymentIHavePaid(String amount);
+
+  /// Shown when the backend says online payment is not available
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment isn\'t available right now. Please pay via cash.'**
+  String get deploymentOnlineUnavailable;
+
+  /// Shown after any online payment is verified
+  ///
+  /// In en, this message translates to:
+  /// **'Payment done. Thank you!'**
+  String get onlinePaymentDone;
+
+  /// Shown when an online payment is still waiting for confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Payment received. We\'re waiting for the bank to confirm it. Please don\'t pay again.'**
+  String get onlinePaymentPending;
+
+  /// Shown when an online payment needs a manual check
+  ///
+  /// In en, this message translates to:
+  /// **'We received your payment, but it needs a quick check. Please don\'t pay again. Contact support if it doesn\'t update soon.'**
+  String get onlinePaymentReview;
+
+  /// Shown when the rider closes online checkout without paying
+  ///
+  /// In en, this message translates to:
+  /// **'Payment cancelled'**
+  String get onlinePaymentCancelled;
+
+  /// Shown when an online payment fails
+  ///
+  /// In en, this message translates to:
+  /// **'The payment didn\'t go through. Try again.'**
+  String get onlinePaymentFailed;
+
+  /// Shown on the damage charges screen when online payment is not available
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment isn\'t available right now. Please pay at your hub.'**
+  String get damageChargesOnlineUnavailable;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

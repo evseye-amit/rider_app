@@ -1766,14 +1766,6 @@
   "@deploymentAwaitingVerificationHint": {
     "description": "Message under Awaiting verification after the rider sends the payment"
   },
-  "deploymentBankTransfer": "Bank transfer",
-  "@deploymentBankTransfer": {
-    "description": "Bank transfer"
-  },
-  "deploymentCard": "Card",
-  "@deploymentCard": {
-    "description": "Card"
-  },
   "deploymentCashHub": "Cash at hub",
   "@deploymentCashHub": {
     "description": "Cash at hub"
@@ -1849,10 +1841,6 @@
   "deploymentGoThroughEachItemWith": "Go through each item with your team lead. Flag anything that is not right — it goes to the workshop with your note.",
   "@deploymentGoThroughEachItemWith": {
     "description": "Go through each item with your team lead. Flag anything that is not right — it goes to the workshop with your note."
-  },
-  "deploymentHowDidPay": "How did you pay?",
-  "@deploymentHowDidPay": {
-    "description": "How did you pay?"
   },
   "deploymentHygieneComplete": "Hygiene check complete",
   "@deploymentHygieneComplete": {
@@ -2007,10 +1995,6 @@
   "deploymentTransactionReference": "Transaction reference",
   "@deploymentTransactionReference": {
     "description": "Transaction reference"
-  },
-  "deploymentUpiTransactionIdEG": "UPI transaction ID, e.g. 4284 7192 3456",
-  "@deploymentUpiTransactionIdEG": {
-    "description": "UPI transaction ID, e.g. 4284 7192 3456"
   },
   "deploymentWaitingAllocation": "Waiting for an allocation",
   "@deploymentWaitingAllocation": {
@@ -7189,18 +7173,6 @@
       }
     }
   },
-  "deploymentOnlinePaymentDone": "Payment done. Sending it to your fleet manager.",
-  "@deploymentOnlinePaymentDone": {
-    "description": "Shown after a successful Razorpay payment"
-  },
-  "deploymentOnlinePaymentCancelled": "Payment cancelled",
-  "@deploymentOnlinePaymentCancelled": {
-    "description": "Shown when the rider closes Razorpay checkout without paying"
-  },
-  "deploymentOnlinePaymentFailed": "The payment didn't go through. Try again.",
-  "@deploymentOnlinePaymentFailed": {
-    "description": "Shown when a Razorpay payment fails"
-  },
   "submissionPhotoItemsLimit": "Only {count} damaged items can have photos. Remove one of them to add this part.",
   "@submissionPhotoItemsLimit": {
     "description": "Shown when a part that needs a photo is picked but the limit of damaged items with photos is reached",
@@ -7255,19 +7227,6 @@
   "@profileSameAsCurrentAddress": {
     "description": "Shown as the permanent address when it matches the current address"
   },
-  "damageChargesPayAtHubTitle": "Pay at your hub",
-  "@damageChargesPayAtHubTitle": {
-    "description": "Title of the sheet shown when the rider taps Pay on the damage charges screen"
-  },
-  "damageChargesPayAtHubMessage": "Paying online isn't available in the app yet. Please pay {amount} at your hub. It will show here once the hub records it.",
-  "@damageChargesPayAtHubMessage": {
-    "description": "Message of the pay at hub sheet on the damage charges screen",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "damageChargesPaymentProcessing": "A payment of {amount} is being processed. It will show here once it's confirmed.",
   "@damageChargesPaymentProcessing": {
     "description": "Notice on the damage charges screen when a payment is already in progress",
@@ -7284,5 +7243,62 @@
   "damageChargesSectionPaid": "Paid",
   "@damageChargesSectionPaid": {
     "description": "Section title for paid and cancelled damage charges on the damage charges screen"
+  },
+  "deploymentHowToPay": "How would you like to pay?",
+  "@deploymentHowToPay": {
+    "description": "Title of the payment method card on the rider payment screen"
+  },
+  "deploymentPayMethodOnline": "Pay online",
+  "@deploymentPayMethodOnline": {
+    "description": "Payment method option on the rider payment screen"
+  },
+  "deploymentPayMethodOnlineHint": "UPI, card or net banking. Confirmed right away.",
+  "@deploymentPayMethodOnlineHint": {
+    "description": "Subtitle of the Pay online option"
+  },
+  "deploymentPayMethodCash": "Pay via cash",
+  "@deploymentPayMethodCash": {
+    "description": "Payment method option on the rider payment screen"
+  },
+  "deploymentPayMethodCashHint": "Pay at your hub, then add the receipt number.",
+  "@deploymentPayMethodCashHint": {
+    "description": "Subtitle of the Pay via cash option"
+  },
+  "deploymentIHavePaid": "I have paid {amount}",
+  "@deploymentIHavePaid": {
+    "description": "Button to submit a cash payment on the rider payment screen",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "deploymentOnlineUnavailable": "Online payment isn't available right now. Please pay via cash.",
+  "@deploymentOnlineUnavailable": {
+    "description": "Shown when the backend says online payment is not available"
+  },
+  "onlinePaymentDone": "Payment done. Thank you!",
+  "@onlinePaymentDone": {
+    "description": "Shown after any online payment is verified"
+  },
+  "onlinePaymentPending": "Payment received. We're waiting for the bank to confirm it. Please don't pay again.",
+  "@onlinePaymentPending": {
+    "description": "Shown when an online payment is still waiting for confirmation"
+  },
+  "onlinePaymentReview": "We received your payment, but it needs a quick check. Please don't pay again. Contact support if it doesn't update soon.",
+  "@onlinePaymentReview": {
+    "description": "Shown when an online payment needs a manual check"
+  },
+  "onlinePaymentCancelled": "Payment cancelled",
+  "@onlinePaymentCancelled": {
+    "description": "Shown when the rider closes online checkout without paying"
+  },
+  "onlinePaymentFailed": "The payment didn't go through. Try again.",
+  "@onlinePaymentFailed": {
+    "description": "Shown when an online payment fails"
+  },
+  "damageChargesOnlineUnavailable": "Online payment isn't available right now. Please pay at your hub.",
+  "@damageChargesOnlineUnavailable": {
+    "description": "Shown on the damage charges screen when online payment is not available"
   }
 }

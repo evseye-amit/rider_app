@@ -42,7 +42,6 @@ final getDeploymentPaymentProvider = Provider<GetDeploymentPayment>(
 final submitDeploymentPaymentProvider = Provider<SubmitDeploymentPayment>(
   (ref) => SubmitDeploymentPayment(ref.watch(deploymentRepositoryProvider)),
 );
-
 final acceptPdiProvider = Provider<AcceptPdi>((ref) => AcceptPdi(ref.watch(deploymentRepositoryProvider)));
 
 final getTrainingProvider = Provider<GetTraining>((ref) => GetTraining(ref.watch(deploymentRepositoryProvider)));

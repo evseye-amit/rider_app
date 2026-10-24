@@ -1324,12 +1324,6 @@ class AppL10nEn extends AppL10n {
   String get deploymentAwaitingVerificationHint => 'Your fleet manager will verify it shortly.';
 
   @override
-  String get deploymentBankTransfer => 'Bank transfer';
-
-  @override
-  String get deploymentCard => 'Card';
-
-  @override
   String get deploymentCashHub => 'Cash at hub';
 
   @override
@@ -1390,9 +1384,6 @@ class AppL10nEn extends AppL10n {
   @override
   String get deploymentGoThroughEachItemWith =>
       'Go through each item with your team lead. Flag anything that is not right — it goes to the workshop with your note.';
-
-  @override
-  String get deploymentHowDidPay => 'How did you pay?';
 
   @override
   String get deploymentHygieneComplete => 'Hygiene check complete';
@@ -1510,9 +1501,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentTransactionReference => 'Transaction reference';
-
-  @override
-  String get deploymentUpiTransactionIdEG => 'UPI transaction ID, e.g. 4284 7192 3456';
 
   @override
   String get deploymentWaitingAllocation => 'Waiting for an allocation';
@@ -5292,15 +5280,6 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get deploymentOnlinePaymentDone => 'Payment done. Sending it to your fleet manager.';
-
-  @override
-  String get deploymentOnlinePaymentCancelled => 'Payment cancelled';
-
-  @override
-  String get deploymentOnlinePaymentFailed => 'The payment didn\'t go through. Try again.';
-
-  @override
   String submissionPhotoItemsLimit(int count) {
     return 'Only $count damaged items can have photos. Remove one of them to add this part.';
   }
@@ -5338,14 +5317,6 @@ class AppL10nEn extends AppL10n {
   String get profileSameAsCurrentAddress => 'Same as current address';
 
   @override
-  String get damageChargesPayAtHubTitle => 'Pay at your hub';
-
-  @override
-  String damageChargesPayAtHubMessage(String amount) {
-    return 'Paying online isn\'t available in the app yet. Please pay $amount at your hub. It will show here once the hub records it.';
-  }
-
-  @override
   String damageChargesPaymentProcessing(String amount) {
     return 'A payment of $amount is being processed. It will show here once it\'s confirmed.';
   }
@@ -5355,4 +5326,47 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get damageChargesSectionPaid => 'Paid';
+
+  @override
+  String get deploymentHowToPay => 'How would you like to pay?';
+
+  @override
+  String get deploymentPayMethodOnline => 'Pay online';
+
+  @override
+  String get deploymentPayMethodOnlineHint => 'UPI, card or net banking. Confirmed right away.';
+
+  @override
+  String get deploymentPayMethodCash => 'Pay via cash';
+
+  @override
+  String get deploymentPayMethodCashHint => 'Pay at your hub, then add the receipt number.';
+
+  @override
+  String deploymentIHavePaid(String amount) {
+    return 'I have paid $amount';
+  }
+
+  @override
+  String get deploymentOnlineUnavailable => 'Online payment isn\'t available right now. Please pay via cash.';
+
+  @override
+  String get onlinePaymentDone => 'Payment done. Thank you!';
+
+  @override
+  String get onlinePaymentPending =>
+      'Payment received. We\'re waiting for the bank to confirm it. Please don\'t pay again.';
+
+  @override
+  String get onlinePaymentReview =>
+      'We received your payment, but it needs a quick check. Please don\'t pay again. Contact support if it doesn\'t update soon.';
+
+  @override
+  String get onlinePaymentCancelled => 'Payment cancelled';
+
+  @override
+  String get onlinePaymentFailed => 'The payment didn\'t go through. Try again.';
+
+  @override
+  String get damageChargesOnlineUnavailable => 'Online payment isn\'t available right now. Please pay at your hub.';
 }

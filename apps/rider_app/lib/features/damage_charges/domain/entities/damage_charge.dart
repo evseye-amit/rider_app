@@ -71,6 +71,8 @@ class DamageCharge extends Equatable {
   ];
 }
 
+enum DamagePaymentActivity { none, unfinishedOnline, underReview, processing }
+
 class DamageChargesSummary extends Equatable {
   const DamageChargesSummary({
     required this.total,
@@ -78,7 +80,8 @@ class DamageChargesSummary extends Equatable {
     required this.credit,
     required this.due,
     required this.unpaidCount,
-    this.processingAmount,
+    this.activity = DamagePaymentActivity.none,
+    this.activityAmount,
   });
 
   final num total;
@@ -86,10 +89,14 @@ class DamageChargesSummary extends Equatable {
   final num credit;
   final num due;
   final int unpaidCount;
-  final num? processingAmount;
+  final DamagePaymentActivity activity;
+  final num? activityAmount;
 
-  bool get canPay => due > 0 && processingAmount == null;
+  bool get canPay =>
+      due > 0 && (activity == DamagePaymentActivity.none || activity == DamagePaymentActivity.unfinishedOnline);
+
+  num get payAmount => activity == DamagePaymentActivity.unfinishedOnline ? activityAmount ?? due : due;
 
   @override
-  List<Object?> get props => [total, paid, credit, due, unpaidCount, processingAmount];
+  List<Object?> get props => [total, paid, credit, due, unpaidCount, activity, activityAmount];
 }

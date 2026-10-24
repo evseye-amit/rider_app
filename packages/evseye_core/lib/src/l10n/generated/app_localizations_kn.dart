@@ -1326,12 +1326,6 @@ class AppL10nKn extends AppL10n {
   String get deploymentAwaitingVerificationHint => 'ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್ ಶೀಘ್ರದಲ್ಲೇ ಇದನ್ನು ದೃಢೀಕರಿಸುತ್ತಾರೆ.';
 
   @override
-  String get deploymentBankTransfer => 'ಬ್ಯಾಂಕ್ ವರ್ಗಾವಣೆ';
-
-  @override
-  String get deploymentCard => 'ಕಾರ್ಡ್';
-
-  @override
   String get deploymentCashHub => 'ಹಬ್‌ನಲ್ಲಿ ನಗದು';
 
   @override
@@ -1393,9 +1387,6 @@ class AppL10nKn extends AppL10n {
   @override
   String get deploymentGoThroughEachItemWith =>
       'ಪ್ರತಿ ವಸ್ತುವನ್ನೂ ನಿಮ್ಮ ತಂಡದ ಮುಖ್ಯಸ್ಥರ ಜೊತೆ ಪರಿಶೀಲಿಸಿ. ಸರಿ ಇಲ್ಲದ್ದನ್ನು ಗುರುತಿಸಿ, ಅದು ನಿಮ್ಮ ಟಿಪ್ಪಣಿಯೊಂದಿಗೆ ವರ್ಕ್‌ಶಾಪ್‌ಗೆ ಹೋಗುತ್ತದೆ.';
-
-  @override
-  String get deploymentHowDidPay => 'ನೀವು ಹೇಗೆ ಪಾವತಿಸಿದಿರಿ?';
 
   @override
   String get deploymentHygieneComplete => 'ಸ್ವಚ್ಛತಾ ಪರಿಶೀಲನೆ ಪೂರ್ಣಗೊಂಡಿದೆ';
@@ -1513,9 +1504,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get deploymentTransactionReference => 'ವ್ಯವಹಾರ ಉಲ್ಲೇಖ';
-
-  @override
-  String get deploymentUpiTransactionIdEG => 'ಯುಪಿಐ ವ್ಯವಹಾರ ಐಡಿ, ಉದಾ. 4284 7192 3456';
 
   @override
   String get deploymentWaitingAllocation => 'ಹಂಚಿಕೆಗಾಗಿ ಕಾಯುತ್ತಿದೆ';
@@ -5299,15 +5287,6 @@ class AppL10nKn extends AppL10n {
   }
 
   @override
-  String get deploymentOnlinePaymentDone => 'ಪಾವತಿ ಆಗಿದೆ. ಇದನ್ನು ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್‌ಗೆ ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ.';
-
-  @override
-  String get deploymentOnlinePaymentCancelled => 'ಪಾವತಿ ರದ್ದಾಗಿದೆ';
-
-  @override
-  String get deploymentOnlinePaymentFailed => 'ಪಾವತಿ ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
-
-  @override
   String submissionPhotoItemsLimit(int count) {
     return '$count ಹಾನಿಯಾದ ಭಾಗಗಳಿಗೆ ಮಾತ್ರ ಫೋಟೋ ಸೇರಿಸಬಹುದು. ಈ ಭಾಗ ಸೇರಿಸಲು ಅವುಗಳಲ್ಲಿ ಒಂದನ್ನು ತೆಗೆದುಹಾಕಿ.';
   }
@@ -5345,14 +5324,6 @@ class AppL10nKn extends AppL10n {
   String get profileSameAsCurrentAddress => 'ಪ್ರಸ್ತುತ ವಿಳಾಸದಂತೆಯೇ';
 
   @override
-  String get damageChargesPayAtHubTitle => 'ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ';
-
-  @override
-  String damageChargesPayAtHubMessage(String amount) {
-    return 'ಆ್ಯಪ್‌ನಲ್ಲಿ ಇನ್ನೂ ಆನ್‌ಲೈನ್ ಪಾವತಿ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು $amount ಅನ್ನು ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ. ಹಬ್ ಅದನ್ನು ದಾಖಲಿಸಿದ ನಂತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
-  }
-
-  @override
   String damageChargesPaymentProcessing(String amount) {
     return '$amount ಪಾವತಿ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ. ದೃಢಪಡಿಸಿದ ನಂತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
   }
@@ -5362,4 +5333,46 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get damageChargesSectionPaid => 'ಪಾವತಿಸಿದವು';
+
+  @override
+  String get deploymentHowToPay => 'ನೀವು ಹೇಗೆ ಪಾವತಿಸಲು ಬಯಸುತ್ತೀರಿ?';
+
+  @override
+  String get deploymentPayMethodOnline => 'ಆನ್‌ಲೈನ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ';
+
+  @override
+  String get deploymentPayMethodOnlineHint => 'UPI, ಕಾರ್ಡ್ ಅಥವಾ ನೆಟ್ ಬ್ಯಾಂಕಿಂಗ್. ತಕ್ಷಣ ದೃಢಪಡುತ್ತದೆ.';
+
+  @override
+  String get deploymentPayMethodCash => 'ನಗದು ಮೂಲಕ ಪಾವತಿಸಿ';
+
+  @override
+  String get deploymentPayMethodCashHint => 'ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ, ನಂತರ ರಸೀದಿ ಸಂಖ್ಯೆ ಸೇರಿಸಿ.';
+
+  @override
+  String deploymentIHavePaid(String amount) {
+    return 'ನಾನು $amount ಪಾವತಿಸಿದ್ದೇನೆ';
+  }
+
+  @override
+  String get deploymentOnlineUnavailable => 'ಈಗ ಆನ್‌ಲೈನ್ ಪಾವತಿ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ನಗದು ಮೂಲಕ ಪಾವತಿಸಿ.';
+
+  @override
+  String get onlinePaymentDone => 'ಪಾವತಿ ಆಗಿದೆ. ಧನ್ಯವಾದಗಳು!';
+
+  @override
+  String get onlinePaymentPending => 'ಪಾವತಿ ಸಿಕ್ಕಿದೆ. ಬ್ಯಾಂಕ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಕಾಯುತ್ತಿದ್ದೇವೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪಾವತಿಸಬೇಡಿ.';
+
+  @override
+  String get onlinePaymentReview =>
+      'ನಿಮ್ಮ ಪಾವತಿ ಸಿಕ್ಕಿದೆ, ಆದರೆ ಒಮ್ಮೆ ಪರಿಶೀಲಿಸಬೇಕಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪಾವತಿಸಬೇಡಿ. ಬೇಗ ಅಪ್‌ಡೇಟ್ ಆಗದಿದ್ದರೆ ಸಪೋರ್ಟ್ ಸಂಪರ್ಕಿಸಿ.';
+
+  @override
+  String get onlinePaymentCancelled => 'ಪಾವತಿ ರದ್ದಾಗಿದೆ';
+
+  @override
+  String get onlinePaymentFailed => 'ಪಾವತಿ ಆಗಲಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get damageChargesOnlineUnavailable => 'ಈಗ ಆನ್‌ಲೈನ್ ಪಾವತಿ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ.';
 }

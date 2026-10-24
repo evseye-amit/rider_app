@@ -1321,12 +1321,6 @@ class AppL10nHi extends AppL10n {
   String get deploymentAwaitingVerificationHint => 'आपके फ्लीट मैनेजर जल्द ही इसकी पुष्टि करेंगे।';
 
   @override
-  String get deploymentBankTransfer => 'बैंक ट्रांसफ़र';
-
-  @override
-  String get deploymentCard => 'कार्ड';
-
-  @override
   String get deploymentCashHub => 'हब पर नकद';
 
   @override
@@ -1387,9 +1381,6 @@ class AppL10nHi extends AppL10n {
   @override
   String get deploymentGoThroughEachItemWith =>
       'हर चीज़ अपने टीम लीड के साथ जांचें। जो ठीक न हो उसे बताएं, वह आपके नोट के साथ वर्कशॉप जाएगा।';
-
-  @override
-  String get deploymentHowDidPay => 'आपने कैसे भुगतान किया?';
 
   @override
   String get deploymentHygieneComplete => 'स्वच्छता जाँच पूरी हुई';
@@ -1506,9 +1497,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get deploymentTransactionReference => 'लेनदेन रेफ़रेंस';
-
-  @override
-  String get deploymentUpiTransactionIdEG => 'यूपीआई लेनदेन आईडी, जैसे 4284 7192 3456';
 
   @override
   String get deploymentWaitingAllocation => 'आवंटन का इंतज़ार';
@@ -5281,15 +5269,6 @@ class AppL10nHi extends AppL10n {
   }
 
   @override
-  String get deploymentOnlinePaymentDone => 'भुगतान हो गया। इसे आपके फ़्लीट मैनेजर को भेजा जा रहा है।';
-
-  @override
-  String get deploymentOnlinePaymentCancelled => 'भुगतान रद्द किया गया';
-
-  @override
-  String get deploymentOnlinePaymentFailed => 'भुगतान नहीं हो पाया। फिर से कोशिश करें।';
-
-  @override
   String submissionPhotoItemsLimit(int count) {
     return 'सिर्फ़ $count खराब पार्ट्स में फ़ोटो जोड़ी जा सकती है। यह पार्ट जोड़ने के लिए उनमें से एक हटाएँ।';
   }
@@ -5327,14 +5306,6 @@ class AppL10nHi extends AppL10n {
   String get profileSameAsCurrentAddress => 'वर्तमान पते जैसा ही';
 
   @override
-  String get damageChargesPayAtHubTitle => 'अपने हब पर भुगतान करें';
-
-  @override
-  String damageChargesPayAtHubMessage(String amount) {
-    return 'ऐप में अभी ऑनलाइन भुगतान उपलब्ध नहीं है। कृपया $amount अपने हब पर चुकाएँ। हब के दर्ज करने के बाद यह यहाँ दिखेगा।';
-  }
-
-  @override
   String damageChargesPaymentProcessing(String amount) {
     return '$amount का भुगतान प्रोसेस हो रहा है। पुष्टि होने के बाद यह यहाँ दिखेगा।';
   }
@@ -5344,4 +5315,47 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get damageChargesSectionPaid => 'चुकाए गए';
+
+  @override
+  String get deploymentHowToPay => 'आप कैसे भुगतान करना चाहेंगे?';
+
+  @override
+  String get deploymentPayMethodOnline => 'ऑनलाइन भुगतान करें';
+
+  @override
+  String get deploymentPayMethodOnlineHint => 'UPI, कार्ड या नेट बैंकिंग। तुरंत पक्का हो जाता है।';
+
+  @override
+  String get deploymentPayMethodCash => 'नकद भुगतान करें';
+
+  @override
+  String get deploymentPayMethodCashHint => 'अपने हब पर भुगतान करें, फिर रसीद नंबर डालें।';
+
+  @override
+  String deploymentIHavePaid(String amount) {
+    return 'मैंने $amount चुका दिए हैं';
+  }
+
+  @override
+  String get deploymentOnlineUnavailable => 'अभी ऑनलाइन भुगतान उपलब्ध नहीं है। कृपया नकद भुगतान करें।';
+
+  @override
+  String get onlinePaymentDone => 'भुगतान हो गया। धन्यवाद!';
+
+  @override
+  String get onlinePaymentPending =>
+      'भुगतान मिल गया है। हम बैंक की पुष्टि का इंतज़ार कर रहे हैं। कृपया दोबारा भुगतान न करें।';
+
+  @override
+  String get onlinePaymentReview =>
+      'आपका भुगतान मिल गया है, पर इसकी जाँच होनी है। कृपया दोबारा भुगतान न करें। जल्दी अपडेट न हो तो सपोर्ट से संपर्क करें।';
+
+  @override
+  String get onlinePaymentCancelled => 'भुगतान रद्द किया गया';
+
+  @override
+  String get onlinePaymentFailed => 'भुगतान नहीं हो पाया। फिर से कोशिश करें।';
+
+  @override
+  String get damageChargesOnlineUnavailable => 'अभी ऑनलाइन भुगतान उपलब्ध नहीं है। कृपया अपने हब पर भुगतान करें।';
 }

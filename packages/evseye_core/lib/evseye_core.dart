@@ -13,6 +13,7 @@ export 'src/api/fleet_search_api.dart';
 export 'src/api/legal_api.dart';
 export 'src/api/media_api.dart';
 export 'src/api/notifications_api.dart';
+export 'src/api/payment_orders_api.dart';
 export 'src/api/referral_api.dart';
 export 'src/api/rental_agreements_api.dart';
 export 'src/api/ride_returns_api.dart';

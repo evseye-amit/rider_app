@@ -12,6 +12,7 @@ import '../api/fleet_search_api.dart';
 import '../api/legal_api.dart';
 import '../api/media_api.dart';
 import '../api/notifications_api.dart';
+import '../api/payment_orders_api.dart';
 import '../api/referral_api.dart';
 import '../api/rental_agreements_api.dart';
 import '../api/ride_returns_api.dart';
@@ -100,6 +101,8 @@ final fleetSearchApiProvider = Provider<FleetSearchApi>((ref) => FleetSearchApi(
 final submissionPenaltyApiProvider = Provider<SubmissionPenaltyApi>(
   (ref) => SubmissionPenaltyApi(ref.watch(apiClientProvider)),
 );
+
+final paymentOrdersApiProvider = Provider<PaymentOrdersApi>((ref) => PaymentOrdersApi(ref.watch(apiClientProvider)));
 
 final attendanceApiProvider = Provider<AttendanceApi>((ref) => AttendanceApi(ref.watch(apiClientProvider)));
 

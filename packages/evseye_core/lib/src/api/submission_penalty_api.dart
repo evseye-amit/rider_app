@@ -5,8 +5,7 @@ import 'ride_returns_api.dart';
 import 'vehicle_submission_api.dart';
 
 enum PenaltyPaymentStatus {
-  pending('PENDING'),
-  partiallyPaid('PARTIALLY_PAID'),
+  unpaid('UNPAID'),
   paid('PAID');
 
   const PenaltyPaymentStatus(this.wire);
@@ -14,7 +13,7 @@ enum PenaltyPaymentStatus {
   final String wire;
 
   static PenaltyPaymentStatus parse(Object? raw) =>
-      PenaltyPaymentStatus.values.firstWhere((status) => status.wire == raw?.toString(), orElse: () => pending);
+      PenaltyPaymentStatus.values.firstWhere((status) => status.wire == raw?.toString(), orElse: () => unpaid);
 }
 
 class PenaltyChargeLineDto {
@@ -119,6 +118,8 @@ class SubmissionPenaltySummaryDto {
     required this.outstandingAmount,
     required this.pendingCount,
     this.paymentInProgressAmount,
+    this.paymentInProgressSource,
+    this.paymentInProgressStatus,
   });
 
   factory SubmissionPenaltySummaryDto.fromJson(Map<String, dynamic> json) {
@@ -134,6 +135,8 @@ class SubmissionPenaltySummaryDto {
       outstandingAmount: jsonNum(totals['outstandingAmount']),
       pendingCount: jsonIntOrNull(json['pendingCount']) ?? 0,
       paymentInProgressAmount: inProgress.isEmpty ? null : jsonNum(inProgress['amount']),
+      paymentInProgressSource: jsonTextOrNull(inProgress['source']),
+      paymentInProgressStatus: jsonTextOrNull(inProgress['status']),
     );
   }
 
@@ -143,6 +146,8 @@ class SubmissionPenaltySummaryDto {
   final num outstandingAmount;
   final int pendingCount;
   final num? paymentInProgressAmount;
+  final String? paymentInProgressSource;
+  final String? paymentInProgressStatus;
 }
 
 class SubmissionPenaltyPage {

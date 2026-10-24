@@ -19,10 +19,9 @@ import '../widgets/hero_band.dart';
 import '../widgets/illustrations.dart';
 import '../widgets/inputs.dart';
 import '../widgets/load_more_tile.dart';
-import '../widgets/modules.dart';
 import '../widgets/pressable.dart';
+import '../widgets/section_header.dart';
 import '../widgets/segmented_tabs.dart';
-import '../widgets/status_chip.dart';
 import 'notifications_inbox.dart';
 
 typedef NotificationAction = ({String label, IconData icon, VoidCallback onTap});
@@ -224,16 +223,16 @@ class _Section extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ModuleCard(
-      title: title,
-      child: Column(
-        children: [
-          for (final AppNotification item in items) ...[
-            _NotificationRow(item: item, onTap: () => onOpen(item)),
-            if (item != items.last) const Gap.md(),
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        GroupLabel(title),
+        const Gap.md(),
+        for (final AppNotification item in items) ...[
+          _NotificationRow(item: item, onTap: () => onOpen(item)),
+          if (item != items.last) const Gap.md(),
         ],
-      ),
+      ],
     );
   }
 }
@@ -246,24 +245,26 @@ class _NotificationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color tone = AppColors.primary;
+    final bool unread = !item.isRead;
     return Pressable(
       onTap: onTap,
       scale: 0.99,
       child: Container(
         padding: const EdgeInsets.all(Insets.md + 2),
         decoration: BoxDecoration(
-          color: item.isRead ? AppColors.surfaceMuted : AppColors.washFor(tone),
+          color: AppColors.surface,
           borderRadius: Corners.brLg,
+          boxShadow: Shadows.card,
+          border: unread ? Border.all(color: AppColors.primary.withValues(alpha: 0.35), width: 1.2) : null,
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             IconTile(
               icon: item.isBroadcast ? Icons.campaign_rounded : Icons.notifications_active_rounded,
-              tone: tone,
+              tone: AppColors.primary,
               size: 40,
-              solid: !item.isRead,
+              solid: unread,
             ),
             const SizedBox(width: Insets.md),
             Expanded(
@@ -278,36 +279,39 @@ class _NotificationRow extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppText.titleSmall.copyWith(
-                            fontSize: 13.5,
-                            fontWeight: item.isRead ? FontWeight.w600 : FontWeight.w800,
+                            fontSize: 14,
+                            fontWeight: unread ? FontWeight.w800 : FontWeight.w600,
                           ),
                         ),
                       ),
-                      if (!item.isRead) ...[
-                        const SizedBox(width: Insets.sm),
+                      const SizedBox(width: Insets.sm),
+                      Text(
+                        Fmt.relative(item.createdAt),
+                        style: AppText.bodySmall.copyWith(
+                          fontSize: 11.5,
+                          fontWeight: unread ? FontWeight.w700 : FontWeight.w500,
+                          color: unread ? AppColors.primary : AppColors.textMuted,
+                        ),
+                      ),
+                      if (unread) ...[
+                        const SizedBox(width: Insets.xs + 2),
                         Container(
-                          width: 7,
-                          height: 7,
-                          decoration: const BoxDecoration(color: AppColors.cyan, shape: BoxShape.circle),
+                          width: 8,
+                          height: 8,
+                          decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
                         ),
                       ],
                     ],
                   ),
-                  const SizedBox(height: 3),
+                  const SizedBox(height: 4),
                   Text(
                     item.body,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45),
-                  ),
-                  const SizedBox(height: 8),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: StatusChip(
-                      label: Fmt.relative(item.createdAt),
-                      tone: StatusTone.neutral,
-                      dense: true,
-                      showDot: false,
+                    style: AppText.bodySmall.copyWith(
+                      fontSize: 12.5,
+                      height: 1.45,
+                      color: unread ? AppColors.textPrimary : AppColors.textSecondary,
                     ),
                   ),
                 ],
