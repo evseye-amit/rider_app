@@ -8,17 +8,10 @@ import '../../domain/entities/damage_charge.dart';
 import '../providers/damage_charges_providers.dart';
 import '../widgets/damage_charge_widgets.dart';
 
-class DamageChargesPage extends ConsumerStatefulWidget {
+class DamageChargesPage extends ConsumerWidget {
   const DamageChargesPage({super.key});
 
-  @override
-  ConsumerState<DamageChargesPage> createState() => _DamageChargesPageState();
-}
-
-class _DamageChargesPageState extends ConsumerState<DamageChargesPage> {
-  int _filter = 0;
-
-  Future<void> _payAtHub(num amount) => AppSheet.show<void>(
+  Future<void> _payAtHub(BuildContext context, num amount) => AppSheet.show<void>(
     context,
     title: context.l10n.damageChargesPayAtHubTitle,
     child: Text(
@@ -29,12 +22,13 @@ class _DamageChargesPageState extends ConsumerState<DamageChargesPage> {
   );
 
   @override
-  Widget build(BuildContext context) {
-    final bool includePaid = _filter == 1;
+  Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<DamageChargesSummary> summary = ref.watch(damageChargesSummaryProvider);
-    final AsyncValue<List<DamageCharge>> charges = ref.watch(damageChargesProvider(includePaid));
+    final AsyncValue<List<DamageCharge>> charges = ref.watch(damageChargesProvider);
     final DamageChargesSummary? totals = summary.value;
     final List<DamageCharge>? items = charges.value;
+    final List<DamageCharge> toPay = [...?items?.where((charge) => charge.isOpen)];
+    final List<DamageCharge> paid = [...?items?.where((charge) => !charge.isOpen)];
 
     return AppScaffold(
       title: context.l10n.damageChargesTitle,
@@ -42,13 +36,13 @@ class _DamageChargesPageState extends ConsumerState<DamageChargesPage> {
         final DamageChargesSummary value when value.canPay => PrimaryButton(
           label: context.l10n.damageChargePay(Fmt.money(value.due, paise: true)),
           icon: Icons.payments_rounded,
-          onPressed: () => _payAtHub(value.due),
+          onPressed: () => _payAtHub(context, value.due),
         ),
         _ => null,
       },
       body: RefreshIndicator(
         onRefresh: () async {
-          ref.invalidate(damageChargesProvider(includePaid));
+          ref.invalidate(damageChargesProvider);
           await ref.refreshQuietly(damageChargesSummaryProvider);
         },
         color: AppColors.primary,
@@ -73,13 +67,6 @@ class _DamageChargesPageState extends ConsumerState<DamageChargesPage> {
               const ShimmerBox(height: 150, borderRadius: Corners.brXl),
               const Gap.lg(),
             ],
-            FilterChipBar(
-              items: [context.l10n.damageChargesUnpaid, context.l10n.damageChargesAll],
-              selectedIndex: _filter,
-              onChanged: (index) => setState(() => _filter = index),
-              padding: EdgeInsets.zero,
-            ),
-            const Gap.lg(),
             if (items == null && charges.hasError)
               EmptyState(
                 title: context.l10n.damageChargesCouldNotLoad,
@@ -87,29 +74,49 @@ class _DamageChargesPageState extends ConsumerState<DamageChargesPage> {
                 icon: Icons.cloud_off_rounded,
                 tone: AppColors.danger,
                 actionLabel: context.l10n.commonTryAgain,
-                onAction: () => ref.invalidate(damageChargesProvider(includePaid)),
+                onAction: () => ref.invalidate(damageChargesProvider),
               )
             else if (items == null)
               for (int i = 0; i < 3; i++) ...[const ShimmerBox(height: 92, borderRadius: Corners.brLg), const Gap.md()]
             else if (items.isEmpty)
               EmptyState(
-                title: includePaid ? context.l10n.damageChargesNoneTitle : context.l10n.damageChargesNothingToPay,
-                message: includePaid
-                    ? context.l10n.damageChargesNoneMessage
-                    : context.l10n.damageChargesNothingToPayMessage,
-                icon: includePaid ? Icons.receipt_long_rounded : Icons.check_circle_rounded,
-                tone: includePaid ? AppColors.primary : AppColors.success,
+                title: context.l10n.damageChargesNoneTitle,
+                message: context.l10n.damageChargesNoneMessage,
+                icon: Icons.receipt_long_rounded,
+                tone: AppColors.primary,
               )
-            else
-              for (final DamageCharge charge in items) ...[
-                DamageChargeTile(
-                  charge: charge,
-                  onOpen: () => context.push('${Routes.damageChargeDetail}?id=${charge.id}'),
-                ),
-                const Gap.md(),
+            else ...[
+              if (toPay.isNotEmpty) ...[
+                GroupLabel(context.l10n.damageChargesSectionToPay),
+                const Gap.sm(),
+                for (final DamageCharge charge in toPay) _ChargeTile(charge: charge),
               ],
+              if (toPay.isNotEmpty && paid.isNotEmpty) const Gap.sm(),
+              if (paid.isNotEmpty) ...[
+                GroupLabel(context.l10n.damageChargesSectionPaid),
+                const Gap.sm(),
+                for (final DamageCharge charge in paid) _ChargeTile(charge: charge),
+              ],
+            ],
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ChargeTile extends StatelessWidget {
+  const _ChargeTile({required this.charge});
+
+  final DamageCharge charge;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Insets.md),
+      child: DamageChargeTile(
+        charge: charge,
+        onOpen: () => context.push('${Routes.damageChargeDetail}?id=${charge.id}'),
       ),
     );
   }
@@ -138,8 +145,10 @@ class _Total extends StatelessWidget {
                   style: AppText.numericLarge.copyWith(color: summary.due > 0 ? AppColors.primary : AppColors.success),
                 ),
               ),
-              if (summary.unpaidCount > 0)
-                StatusChip(label: l10n.damageChargesToPay(summary.unpaidCount), tone: StatusTone.warning, dense: true),
+              if (summary.due > 0)
+                StatusChip(label: l10n.damageChargesToPay(summary.unpaidCount), tone: StatusTone.warning, dense: true)
+              else
+                StatusChip(label: l10n.damageChargesNothingToPay, tone: StatusTone.success, dense: true),
             ],
           ),
           const Gap.md(),

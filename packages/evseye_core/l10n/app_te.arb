@@ -340,12 +340,10 @@
   "damageChargePaidTitle": "పూర్తిగా చెల్లించారు",
   "damageChargePay": "{amount} చెల్లించండి",
   "damageChargeRaisedOn": "{date}న విధించారు",
-  "damageChargesAll": "అన్నీ",
   "damageChargesCouldNotLoad": "నష్టం ఛార్జీలు లోడ్ కాలేదు",
   "damageChargesNoneMessage": "స్కూటర్ తిరిగి ఇచ్చేటప్పుడు లేదా మార్చేటప్పుడు హబ్‌కు నష్టం కనిపిస్తే, ఆ ఛార్జీ ఇక్కడ కనిపిస్తుంది.",
   "damageChargesNoneTitle": "నష్టం ఛార్జీలు లేవు",
   "damageChargesNothingToPay": "చెల్లించాల్సింది ఏమీ లేదు",
-  "damageChargesNothingToPayMessage": "మీకు బకాయి ఉన్న నష్టం ఛార్జీలు లేవు.",
   "damageChargesNoUnpaid": "బకాయి నష్టం ఛార్జీలు లేవు",
   "damageChargeStatusCancelled": "రద్దు చేశారు",
   "damageChargeStatusPaid": "చెల్లించారు",
@@ -1680,5 +1678,7 @@
   "profileSameAsCurrentAddress": "ప్రస్తుత చిరునామా లాగానే",
   "damageChargesPayAtHubTitle": "మీ హబ్‌లో చెల్లించండి",
   "damageChargesPayAtHubMessage": "యాప్‌లో ఇంకా ఆన్‌లైన్ చెల్లింపు అందుబాటులో లేదు. దయచేసి {amount} మీ హబ్‌లో చెల్లించండి. హబ్ నమోదు చేసిన తర్వాత ఇది ఇక్కడ కనిపిస్తుంది.",
-  "damageChargesPaymentProcessing": "{amount} చెల్లింపు ప్రాసెస్ అవుతోంది. నిర్ధారించిన తర్వాత ఇది ఇక్కడ కనిపిస్తుంది."
+  "damageChargesPaymentProcessing": "{amount} చెల్లింపు ప్రాసెస్ అవుతోంది. నిర్ధారించిన తర్వాత ఇది ఇక్కడ కనిపిస్తుంది.",
+  "damageChargesSectionToPay": "చెల్లించాల్సినవి",
+  "damageChargesSectionPaid": "చెల్లించినవి"
 }

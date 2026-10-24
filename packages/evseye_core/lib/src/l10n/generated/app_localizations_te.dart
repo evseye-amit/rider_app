@@ -1084,9 +1084,6 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
-  String get damageChargesAll => 'అన్నీ';
-
-  @override
   String get damageChargesCouldNotLoad => 'నష్టం ఛార్జీలు లోడ్ కాలేదు';
 
   @override
@@ -1098,9 +1095,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get damageChargesNothingToPay => 'చెల్లించాల్సింది ఏమీ లేదు';
-
-  @override
-  String get damageChargesNothingToPayMessage => 'మీకు బకాయి ఉన్న నష్టం ఛార్జీలు లేవు.';
 
   @override
   String get damageChargesNoUnpaid => 'బకాయి నష్టం ఛార్జీలు లేవు';
@@ -5363,4 +5357,10 @@ class AppL10nTe extends AppL10n {
   String damageChargesPaymentProcessing(String amount) {
     return '$amount చెల్లింపు ప్రాసెస్ అవుతోంది. నిర్ధారించిన తర్వాత ఇది ఇక్కడ కనిపిస్తుంది.';
   }
+
+  @override
+  String get damageChargesSectionToPay => 'చెల్లించాల్సినవి';
+
+  @override
+  String get damageChargesSectionPaid => 'చెల్లించినవి';
 }

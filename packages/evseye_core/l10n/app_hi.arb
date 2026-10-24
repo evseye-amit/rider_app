@@ -340,12 +340,10 @@
   "damageChargePaidTitle": "पूरा भुगतान हो गया",
   "damageChargePay": "{amount} भरें",
   "damageChargeRaisedOn": "{date} को लगाया गया",
-  "damageChargesAll": "सभी",
   "damageChargesCouldNotLoad": "नुकसान के शुल्क लोड नहीं हो सके",
   "damageChargesNoneMessage": "स्कूटर लौटाते या बदलते समय हब को नुकसान मिलता है, तो उसका शुल्क यहाँ दिखेगा।",
   "damageChargesNoneTitle": "कोई नुकसान शुल्क नहीं",
   "damageChargesNothingToPay": "भरने के लिए कुछ नहीं",
-  "damageChargesNothingToPayMessage": "आपका कोई नुकसान शुल्क बकाया नहीं है।",
   "damageChargesNoUnpaid": "कोई नुकसान शुल्क बकाया नहीं",
   "damageChargeStatusCancelled": "रद्द",
   "damageChargeStatusPaid": "भुगतान हो गया",
@@ -1680,5 +1678,7 @@
   "profileSameAsCurrentAddress": "वर्तमान पते जैसा ही",
   "damageChargesPayAtHubTitle": "अपने हब पर भुगतान करें",
   "damageChargesPayAtHubMessage": "ऐप में अभी ऑनलाइन भुगतान उपलब्ध नहीं है। कृपया {amount} अपने हब पर चुकाएँ। हब के दर्ज करने के बाद यह यहाँ दिखेगा।",
-  "damageChargesPaymentProcessing": "{amount} का भुगतान प्रोसेस हो रहा है। पुष्टि होने के बाद यह यहाँ दिखेगा।"
+  "damageChargesPaymentProcessing": "{amount} का भुगतान प्रोसेस हो रहा है। पुष्टि होने के बाद यह यहाँ दिखेगा।",
+  "damageChargesSectionToPay": "भरना बाकी",
+  "damageChargesSectionPaid": "चुकाए गए"
 }

@@ -1449,10 +1449,6 @@
       }
     }
   },
-  "damageChargesAll": "All",
-  "@damageChargesAll": {
-    "description": "Filter showing all damage charges"
-  },
   "damageChargesCouldNotLoad": "Couldn't load damage charges",
   "@damageChargesCouldNotLoad": {
     "description": "Error title for the damage charges list"
@@ -1468,10 +1464,6 @@
   "damageChargesNothingToPay": "Nothing to pay",
   "@damageChargesNothingToPay": {
     "description": "Empty state title when no damage charge is unpaid"
-  },
-  "damageChargesNothingToPayMessage": "You have no unpaid damage charges.",
-  "@damageChargesNothingToPayMessage": {
-    "description": "Empty state message when no damage charge is unpaid"
   },
   "damageChargesNoUnpaid": "No unpaid damage charges",
   "@damageChargesNoUnpaid": {
@@ -7284,5 +7276,13 @@
         "type": "String"
       }
     }
+  },
+  "damageChargesSectionToPay": "To pay",
+  "@damageChargesSectionToPay": {
+    "description": "Section title for unpaid damage charges on the damage charges screen"
+  },
+  "damageChargesSectionPaid": "Paid",
+  "@damageChargesSectionPaid": {
+    "description": "Section title for paid and cancelled damage charges on the damage charges screen"
   }
 }

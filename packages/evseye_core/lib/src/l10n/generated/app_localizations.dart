@@ -2134,12 +2134,6 @@ abstract class AppL10n {
   /// **'Raised on {date}'**
   String damageChargeRaisedOn(String date);
 
-  /// Filter showing all damage charges
-  ///
-  /// In en, this message translates to:
-  /// **'All'**
-  String get damageChargesAll;
-
   /// Error title for the damage charges list
   ///
   /// In en, this message translates to:
@@ -2163,12 +2157,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Nothing to pay'**
   String get damageChargesNothingToPay;
-
-  /// Empty state message when no damage charge is unpaid
-  ///
-  /// In en, this message translates to:
-  /// **'You have no unpaid damage charges.'**
-  String get damageChargesNothingToPayMessage;
 
   /// Shown on the payments screen when no damage charge is unpaid
   ///
@@ -10179,6 +10167,18 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'A payment of {amount} is being processed. It will show here once it\'s confirmed.'**
   String damageChargesPaymentProcessing(String amount);
+
+  /// Section title for unpaid damage charges on the damage charges screen
+  ///
+  /// In en, this message translates to:
+  /// **'To pay'**
+  String get damageChargesSectionToPay;
+
+  /// Section title for paid and cancelled damage charges on the damage charges screen
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get damageChargesSectionPaid;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

@@ -22,8 +22,8 @@ class DamageChargesRepositoryImpl implements DamageChargesRepository {
   );
 
   @override
-  Future<Result<List<DamageCharge>>> getCharges({required bool includePaid}) async => (await _penalties.list(
-    includePaid: includePaid,
+  Future<Result<List<DamageCharge>>> getCharges() async => (await _penalties.list(
+    includePaid: true,
     limit: 100,
   )).map((page) => [for (final SubmissionPenaltyDto dto in page.items) _charge(dto)]);
 

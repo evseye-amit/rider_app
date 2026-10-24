@@ -5,7 +5,7 @@ import 'entities/damage_charge.dart';
 abstract interface class DamageChargesRepository {
   Future<Result<DamageChargesSummary>> getSummary();
 
-  Future<Result<List<DamageCharge>>> getCharges({required bool includePaid});
+  Future<Result<List<DamageCharge>>> getCharges();
 
   Future<Result<DamageCharge>> getCharge(String id);
 

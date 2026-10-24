@@ -128,7 +128,7 @@ class _ReportBlock extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final DamageCharge? charge = report.items.isEmpty
         ? null
-        : ref.watch(damageChargesProvider(true)).value?.where((item) => item.reportId == report.id).firstOrNull;
+        : ref.watch(damageChargesProvider).value?.where((item) => item.reportId == report.id).firstOrNull;
     final (String label, StatusTone tone) = switch (report.status) {
       SubmissionReportStatus.draft => (context.l10n.checkInStatusDraft, StatusTone.neutral),
       SubmissionReportStatus.submitted => (context.l10n.checkInStatusSubmitted, StatusTone.warning),

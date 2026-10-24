@@ -340,12 +340,10 @@
   "damageChargePaidTitle": "ಪೂರ್ತಿ ಪಾವತಿಯಾಗಿದೆ",
   "damageChargePay": "{amount} ಪಾವತಿಸಿ",
   "damageChargeRaisedOn": "{date} ರಂದು ವಿಧಿಸಲಾಗಿದೆ",
-  "damageChargesAll": "ಎಲ್ಲಾ",
   "damageChargesCouldNotLoad": "ಹಾನಿ ಶುಲ್ಕಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ",
   "damageChargesNoneMessage": "ಸ್ಕೂಟರ್ ಹಿಂತಿರುಗಿಸುವಾಗ ಅಥವಾ ಬದಲಾಯಿಸುವಾಗ ಹಬ್‌ಗೆ ಹಾನಿ ಕಂಡುಬಂದರೆ, ಅದರ ಶುಲ್ಕ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.",
   "damageChargesNoneTitle": "ಯಾವುದೇ ಹಾನಿ ಶುಲ್ಕವಿಲ್ಲ",
   "damageChargesNothingToPay": "ಪಾವತಿಸಲು ಏನೂ ಇಲ್ಲ",
-  "damageChargesNothingToPayMessage": "ನಿಮ್ಮ ಯಾವುದೇ ಹಾನಿ ಶುಲ್ಕ ಬಾಕಿ ಇಲ್ಲ.",
   "damageChargesNoUnpaid": "ಯಾವುದೇ ಹಾನಿ ಶುಲ್ಕ ಬಾಕಿ ಇಲ್ಲ",
   "damageChargeStatusCancelled": "ರದ್ದಾಗಿದೆ",
   "damageChargeStatusPaid": "ಪಾವತಿಯಾಗಿದೆ",
@@ -1680,5 +1678,7 @@
   "profileSameAsCurrentAddress": "ಪ್ರಸ್ತುತ ವಿಳಾಸದಂತೆಯೇ",
   "damageChargesPayAtHubTitle": "ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ",
   "damageChargesPayAtHubMessage": "ಆ್ಯಪ್‌ನಲ್ಲಿ ಇನ್ನೂ ಆನ್‌ಲೈನ್ ಪಾವತಿ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು {amount} ಅನ್ನು ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ. ಹಬ್ ಅದನ್ನು ದಾಖಲಿಸಿದ ನಂತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.",
-  "damageChargesPaymentProcessing": "{amount} ಪಾವತಿ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ. ದೃಢಪಡಿಸಿದ ನಂತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ."
+  "damageChargesPaymentProcessing": "{amount} ಪಾವತಿ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ. ದೃಢಪಡಿಸಿದ ನಂತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.",
+  "damageChargesSectionToPay": "ಪಾವತಿಸಬೇಕಿರುವುದು",
+  "damageChargesSectionPaid": "ಪಾವತಿಸಿದವು"
 }

@@ -1086,9 +1086,6 @@ class AppL10nKn extends AppL10n {
   }
 
   @override
-  String get damageChargesAll => 'ಎಲ್ಲಾ';
-
-  @override
   String get damageChargesCouldNotLoad => 'ಹಾನಿ ಶುಲ್ಕಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ';
 
   @override
@@ -1100,9 +1097,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get damageChargesNothingToPay => 'ಪಾವತಿಸಲು ಏನೂ ಇಲ್ಲ';
-
-  @override
-  String get damageChargesNothingToPayMessage => 'ನಿಮ್ಮ ಯಾವುದೇ ಹಾನಿ ಶುಲ್ಕ ಬಾಕಿ ಇಲ್ಲ.';
 
   @override
   String get damageChargesNoUnpaid => 'ಯಾವುದೇ ಹಾನಿ ಶುಲ್ಕ ಬಾಕಿ ಇಲ್ಲ';
@@ -5362,4 +5356,10 @@ class AppL10nKn extends AppL10n {
   String damageChargesPaymentProcessing(String amount) {
     return '$amount ಪಾವತಿ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ. ದೃಢಪಡಿಸಿದ ನಂತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
   }
+
+  @override
+  String get damageChargesSectionToPay => 'ಪಾವತಿಸಬೇಕಿರುವುದು';
+
+  @override
+  String get damageChargesSectionPaid => 'ಪಾವತಿಸಿದವು';
 }

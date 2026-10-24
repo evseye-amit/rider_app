@@ -1085,9 +1085,6 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get damageChargesAll => 'All';
-
-  @override
   String get damageChargesCouldNotLoad => 'Couldn\'t load damage charges';
 
   @override
@@ -1099,9 +1096,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get damageChargesNothingToPay => 'Nothing to pay';
-
-  @override
-  String get damageChargesNothingToPayMessage => 'You have no unpaid damage charges.';
 
   @override
   String get damageChargesNoUnpaid => 'No unpaid damage charges';
@@ -5355,4 +5349,10 @@ class AppL10nEn extends AppL10n {
   String damageChargesPaymentProcessing(String amount) {
     return 'A payment of $amount is being processed. It will show here once it\'s confirmed.';
   }
+
+  @override
+  String get damageChargesSectionToPay => 'To pay';
+
+  @override
+  String get damageChargesSectionPaid => 'Paid';
 }

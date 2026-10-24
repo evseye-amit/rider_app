@@ -9,8 +9,8 @@ final damageChargesSummaryProvider = FutureProvider.autoDispose<DamageChargesSum
   (ref) async => (await ref.watch(getDamageChargesSummaryProvider)(const NoParams())).getOrThrow(),
 );
 
-final damageChargesProvider = FutureProvider.autoDispose.family<List<DamageCharge>, bool>(
-  (ref, includePaid) async => (await ref.watch(getDamageChargesProvider)(includePaid)).getOrThrow(),
+final damageChargesProvider = FutureProvider.autoDispose<List<DamageCharge>>(
+  (ref) async => (await ref.watch(getDamageChargesProvider)(const NoParams())).getOrThrow(),
 );
 
 final damageChargeProvider = FutureProvider.autoDispose.family<DamageCharge, String>(

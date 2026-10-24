@@ -23,13 +23,13 @@ class GetDamageChargesSummary extends UseCase<DamageChargesSummary, NoParams> {
   Future<Result<DamageChargesSummary>> call(NoParams params) => _repository.getSummary();
 }
 
-class GetDamageCharges extends UseCase<List<DamageCharge>, bool> {
+class GetDamageCharges extends UseCase<List<DamageCharge>, NoParams> {
   const GetDamageCharges(this._repository);
 
   final DamageChargesRepository _repository;
 
   @override
-  Future<Result<List<DamageCharge>>> call(bool includePaid) => _repository.getCharges(includePaid: includePaid);
+  Future<Result<List<DamageCharge>>> call(NoParams params) => _repository.getCharges();
 }
 
 class GetDamageCharge extends UseCase<DamageCharge, String> {
