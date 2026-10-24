@@ -18,14 +18,24 @@ final hubOverviewProvider = FutureProvider.autoDispose<HubOverview>((ref) async 
   final GetHubSummary getSummary = ref.watch(getHubSummaryProvider);
   final GetHubProfile getProfile = ref.watch(getHubProfileProvider);
 
-  final (List<Result<HubSummary>> summaries, Result<HubProfile> profile) = await (
+  final (List<Result<HubSummary>> summaries, Result<HubProfile> firstProfile) = await (
     Future.wait([for (final String code in hubCodes) getSummary(code)]),
     getProfile(hubCodes.first),
   ).wait;
 
-  final HubSummary combined = hubCodes.length == 1
-      ? summaries.single.getOrThrow()
-      : HubSummary.combine([for (final Result<HubSummary> summary in summaries) summary.getOrThrow()]);
+  final List<(String, HubSummary)> loaded = [
+    for (final (int i, Result<HubSummary> summary) in summaries.indexed)
+      if (summary case Ok<HubSummary>(:final value)) (hubCodes[i], value),
+  ];
+  if (loaded.isEmpty) {
+    throw switch (summaries.first) {
+      Err<HubSummary>(:final failure) => failure,
+      Ok<HubSummary>() => NotFoundFailure(ActiveLocale.strings.hubSomethingWentWrong),
+    };
+  }
 
-  return (summary: combined, profile: profile.getOrThrow());
+  final String profileCode = loaded.first.$1;
+  final Result<HubProfile> profile = profileCode == hubCodes.first ? firstProfile : await getProfile(profileCode);
+
+  return (summary: HubSummary.combine([for (final (_, summary) in loaded) summary]), profile: profile.getOrThrow());
 });
