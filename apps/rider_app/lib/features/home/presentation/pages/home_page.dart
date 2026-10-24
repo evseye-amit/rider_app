@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/session/rider_session_provider.dart';
 import '../../../damage_charges/presentation/widgets/damage_charge_widgets.dart';
+import '../../../profile/presentation/providers/profile_provider.dart';
 import '../../domain/entities/home_summary.dart';
 import '../providers/home_summary_provider.dart';
 import '../widgets/rider_drawer.dart';
@@ -18,6 +19,9 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<HomeSummary> summary = ref.watch(homeSummaryProvider);
+    ref.listen(riderProfileProvider, (_, next) {
+      if (next.value?.photoUrl case final String url) unawaited(precacheImage(NetworkImage(url), context));
+    });
 
     if (summary.hasError) {
       return Scaffold(
@@ -42,6 +46,7 @@ class HomePage extends ConsumerWidget {
       bottomPadding: 190,
       onRefresh: () {
         ref.invalidate(unreadNotificationsProvider);
+        ref.invalidate(riderProfileProvider);
         unawaited(ref.read(riderSessionProvider.notifier).refreshState());
         return ref.refreshQuietly(homeSummaryProvider);
       },
@@ -214,8 +219,7 @@ class _Band extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String name =
-        ref.watch(riderSessionProvider.select((s) => s.profile['shortName']?.toString())) ??
-        context.l10n.allocationRider;
+        ref.watch(riderProfileProvider.select((profile) => profile.value?.shortName)) ?? context.l10n.allocationRider;
     final bool present = ref.watch(riderSessionProvider.select((s) => s.present));
     final int unread = ref.watch(unreadNotificationsProvider).value ?? 0;
 

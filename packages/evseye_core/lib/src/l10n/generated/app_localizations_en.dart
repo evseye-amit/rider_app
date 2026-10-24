@@ -2201,9 +2201,6 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get homePersonalDetailsKyc => 'Personal details and KYC';
-
-  @override
   String get homeRent => 'Rent';
 
   @override
@@ -3137,19 +3134,7 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get profileAddressHub => 'Address & hub';
-
-  @override
-  String get profileEmail => 'Email';
-
-  @override
   String get profileHub => 'Hub';
-
-  @override
-  String get profileHubCode => 'Hub code';
-
-  @override
-  String get profileJoined => 'Joined on';
 
   @override
   String get profilePersonalDetails => 'Personal details';
@@ -5353,4 +5338,31 @@ class AppL10nEn extends AppL10n {
   String submissionPhotoItemsLimitHint(int count) {
     return 'Only $count damaged items can have photos, and that limit is reached. You can still save this part without a photo.';
   }
+
+  @override
+  String get profileDateOfBirth => 'Date of birth';
+
+  @override
+  String get profileAddress => 'Address';
+
+  @override
+  String get profileState => 'State';
+
+  @override
+  String get profilePinCode => 'PIN code';
+
+  @override
+  String get profileEmergencyContact => 'Emergency contact';
+
+  @override
+  String get profileCouldNotLoad => 'Could not load your profile';
+
+  @override
+  String get profileCurrentAddress => 'Current address';
+
+  @override
+  String get profilePermanentAddress => 'Permanent address';
+
+  @override
+  String get profileSameAsCurrentAddress => 'Same as current address';
 }

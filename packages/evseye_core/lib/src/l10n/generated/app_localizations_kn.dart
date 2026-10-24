@@ -2203,9 +2203,6 @@ class AppL10nKn extends AppL10n {
   }
 
   @override
-  String get homePersonalDetailsKyc => 'ವೈಯಕ್ತಿಕ ವಿವರಗಳು ಮತ್ತು ಕೆವೈಸಿ';
-
-  @override
   String get homeRent => 'ಬಾಡಿಗೆ';
 
   @override
@@ -3138,19 +3135,7 @@ class AppL10nKn extends AppL10n {
   }
 
   @override
-  String get profileAddressHub => 'ವಿಳಾಸ ಮತ್ತು ಹಬ್';
-
-  @override
-  String get profileEmail => 'ಇಮೇಲ್';
-
-  @override
   String get profileHub => 'ಹಬ್';
-
-  @override
-  String get profileHubCode => 'ಹಬ್ ಕೋಡ್';
-
-  @override
-  String get profileJoined => 'ಸೇರಿದ ದಿನಾಂಕ';
 
   @override
   String get profilePersonalDetails => 'ವೈಯಕ್ತಿಕ ವಿವರಗಳು';
@@ -5360,4 +5345,31 @@ class AppL10nKn extends AppL10n {
   String submissionPhotoItemsLimitHint(int count) {
     return '$count ಹಾನಿಯಾದ ಭಾಗಗಳಿಗೆ ಮಾತ್ರ ಫೋಟೋ ಸೇರಿಸಬಹುದು, ಆ ಮಿತಿ ತಲುಪಿದೆ. ಈ ಭಾಗವನ್ನು ಫೋಟೋ ಇಲ್ಲದೆ ಸೇವ್ ಮಾಡಬಹುದು.';
   }
+
+  @override
+  String get profileDateOfBirth => 'ಹುಟ್ಟಿದ ದಿನಾಂಕ';
+
+  @override
+  String get profileAddress => 'ವಿಳಾಸ';
+
+  @override
+  String get profileState => 'ರಾಜ್ಯ';
+
+  @override
+  String get profilePinCode => 'ಪಿನ್ ಕೋಡ್';
+
+  @override
+  String get profileEmergencyContact => 'ತುರ್ತು ಸಂಪರ್ಕ';
+
+  @override
+  String get profileCouldNotLoad => 'ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ತೆರೆಯಲಿಲ್ಲ';
+
+  @override
+  String get profileCurrentAddress => 'ಪ್ರಸ್ತುತ ವಿಳಾಸ';
+
+  @override
+  String get profilePermanentAddress => 'ಶಾಶ್ವತ ವಿಳಾಸ';
+
+  @override
+  String get profileSameAsCurrentAddress => 'ಪ್ರಸ್ತುತ ವಿಳಾಸದಂತೆಯೇ';
 }

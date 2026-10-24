@@ -2204,9 +2204,6 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
-  String get homePersonalDetailsKyc => 'వ్యక్తిగత వివరాలు మరియు కేవైసీ';
-
-  @override
   String get homeRent => 'అద్దె';
 
   @override
@@ -3141,19 +3138,7 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
-  String get profileAddressHub => 'చిరునామా మరియు హబ్';
-
-  @override
-  String get profileEmail => 'ఇమెయిల్';
-
-  @override
   String get profileHub => 'హబ్';
-
-  @override
-  String get profileHubCode => 'హబ్ కోడ్';
-
-  @override
-  String get profileJoined => 'చేరిన తేదీ';
 
   @override
   String get profilePersonalDetails => 'వ్యక్తిగత వివరాలు';
@@ -5361,4 +5346,31 @@ class AppL10nTe extends AppL10n {
   String submissionPhotoItemsLimitHint(int count) {
     return '$count దెబ్బతిన్న భాగాలకు మాత్రమే ఫోటోలు జోడించవచ్చు, ఆ పరిమితి పూర్తయింది. ఈ భాగాన్ని ఫోటో లేకుండా సేవ్ చేయవచ్చు.';
   }
+
+  @override
+  String get profileDateOfBirth => 'పుట్టిన తేదీ';
+
+  @override
+  String get profileAddress => 'చిరునామా';
+
+  @override
+  String get profileState => 'రాష్ట్రం';
+
+  @override
+  String get profilePinCode => 'పిన్ కోడ్';
+
+  @override
+  String get profileEmergencyContact => 'అత్యవసర సంప్రదింపు';
+
+  @override
+  String get profileCouldNotLoad => 'మీ ప్రొఫైల్ తెరవలేకపోయాం';
+
+  @override
+  String get profileCurrentAddress => 'ప్రస్తుత చిరునామా';
+
+  @override
+  String get profilePermanentAddress => 'శాశ్వత చిరునామా';
+
+  @override
+  String get profileSameAsCurrentAddress => 'ప్రస్తుత చిరునామా లాగానే';
 }

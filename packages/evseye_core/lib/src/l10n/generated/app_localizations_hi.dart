@@ -2193,9 +2193,6 @@ class AppL10nHi extends AppL10n {
   }
 
   @override
-  String get homePersonalDetailsKyc => 'निजी जानकारी और केवाईसी';
-
-  @override
   String get homeRent => 'किराया';
 
   @override
@@ -3128,19 +3125,7 @@ class AppL10nHi extends AppL10n {
   }
 
   @override
-  String get profileAddressHub => 'पता और हब';
-
-  @override
-  String get profileEmail => 'ईमेल';
-
-  @override
   String get profileHub => 'हब';
-
-  @override
-  String get profileHubCode => 'हब कोड';
-
-  @override
-  String get profileJoined => 'जुड़ने की तिथि';
 
   @override
   String get profilePersonalDetails => 'निजी जानकारी';
@@ -5341,4 +5326,31 @@ class AppL10nHi extends AppL10n {
   String submissionPhotoItemsLimitHint(int count) {
     return 'सिर्फ़ $count खराब पार्ट्स में फ़ोटो जोड़ी जा सकती है, और यह सीमा पूरी हो चुकी है। आप यह पार्ट बिना फ़ोटो के सेव कर सकते हैं।';
   }
+
+  @override
+  String get profileDateOfBirth => 'जन्म तिथि';
+
+  @override
+  String get profileAddress => 'पता';
+
+  @override
+  String get profileState => 'राज्य';
+
+  @override
+  String get profilePinCode => 'पिन कोड';
+
+  @override
+  String get profileEmergencyContact => 'आपातकालीन संपर्क';
+
+  @override
+  String get profileCouldNotLoad => 'आपकी प्रोफ़ाइल नहीं खुल पाई';
+
+  @override
+  String get profileCurrentAddress => 'वर्तमान पता';
+
+  @override
+  String get profilePermanentAddress => 'स्थायी पता';
+
+  @override
+  String get profileSameAsCurrentAddress => 'वर्तमान पते जैसा ही';
 }

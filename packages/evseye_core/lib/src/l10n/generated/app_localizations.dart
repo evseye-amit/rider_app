@@ -4276,12 +4276,6 @@ abstract class AppL10n {
   /// **'Next debit {date}'**
   String homeNextDebitOn(String date);
 
-  /// Personal details and KYC
-  ///
-  /// In en, this message translates to:
-  /// **'Personal details and KYC'**
-  String get homePersonalDetailsKyc;
-
   /// Rent
   ///
   /// In en, this message translates to:
@@ -6016,35 +6010,11 @@ abstract class AppL10n {
   /// **'{count}-week plan'**
   String planWeeks(int count);
 
-  /// Address & hub
-  ///
-  /// In en, this message translates to:
-  /// **'Address & hub'**
-  String get profileAddressHub;
-
-  /// Email
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get profileEmail;
-
   /// Hub
   ///
   /// In en, this message translates to:
   /// **'Hub'**
   String get profileHub;
-
-  /// Hub code
-  ///
-  /// In en, this message translates to:
-  /// **'Hub code'**
-  String get profileHubCode;
-
-  /// Joined on
-  ///
-  /// In en, this message translates to:
-  /// **'Joined on'**
-  String get profileJoined;
 
   /// Personal details
   ///
@@ -10173,6 +10143,60 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Only {count} damaged items can have photos, and that limit is reached. You can still save this part without a photo.'**
   String submissionPhotoItemsLimitHint(int count);
+
+  /// Row label on the rider profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'Date of birth'**
+  String get profileDateOfBirth;
+
+  /// Section title and row label on the rider profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get profileAddress;
+
+  /// Row label on the rider profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get profileState;
+
+  /// Row label on the rider profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'PIN code'**
+  String get profilePinCode;
+
+  /// Section title on the rider profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency contact'**
+  String get profileEmergencyContact;
+
+  /// Error title when the rider profile fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load your profile'**
+  String get profileCouldNotLoad;
+
+  /// Label for the rider's current address on the profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'Current address'**
+  String get profileCurrentAddress;
+
+  /// Label for the rider's permanent address on the profile screen
+  ///
+  /// In en, this message translates to:
+  /// **'Permanent address'**
+  String get profilePermanentAddress;
+
+  /// Shown as the permanent address when it matches the current address
+  ///
+  /// In en, this message translates to:
+  /// **'Same as current address'**
+  String get profileSameAsCurrentAddress;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

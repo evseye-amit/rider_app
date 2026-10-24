@@ -2937,10 +2937,6 @@
       }
     }
   },
-  "homePersonalDetailsKyc": "Personal details and KYC",
-  "@homePersonalDetailsKyc": {
-    "description": "Personal details and KYC"
-  },
   "homeRent": "Rent",
   "@homeRent": {
     "description": "Rent"
@@ -4230,25 +4226,9 @@
       }
     }
   },
-  "profileAddressHub": "Address & hub",
-  "@profileAddressHub": {
-    "description": "Address & hub"
-  },
-  "profileEmail": "Email",
-  "@profileEmail": {
-    "description": "Email"
-  },
   "profileHub": "Hub",
   "@profileHub": {
     "description": "Hub"
-  },
-  "profileHubCode": "Hub code",
-  "@profileHubCode": {
-    "description": "Hub code"
-  },
-  "profileJoined": "Joined on",
-  "@profileJoined": {
-    "description": "Joined on"
   },
   "profilePersonalDetails": "Personal details",
   "@profilePersonalDetails": {
@@ -7280,5 +7260,41 @@
         "type": "int"
       }
     }
+  },
+  "profileDateOfBirth": "Date of birth",
+  "@profileDateOfBirth": {
+    "description": "Row label on the rider profile screen"
+  },
+  "profileAddress": "Address",
+  "@profileAddress": {
+    "description": "Section title and row label on the rider profile screen"
+  },
+  "profileState": "State",
+  "@profileState": {
+    "description": "Row label on the rider profile screen"
+  },
+  "profilePinCode": "PIN code",
+  "@profilePinCode": {
+    "description": "Row label on the rider profile screen"
+  },
+  "profileEmergencyContact": "Emergency contact",
+  "@profileEmergencyContact": {
+    "description": "Section title on the rider profile screen"
+  },
+  "profileCouldNotLoad": "Could not load your profile",
+  "@profileCouldNotLoad": {
+    "description": "Error title when the rider profile fails to load"
+  },
+  "profileCurrentAddress": "Current address",
+  "@profileCurrentAddress": {
+    "description": "Label for the rider's current address on the profile screen"
+  },
+  "profilePermanentAddress": "Permanent address",
+  "@profilePermanentAddress": {
+    "description": "Label for the rider's permanent address on the profile screen"
+  },
+  "profileSameAsCurrentAddress": "Same as current address",
+  "@profileSameAsCurrentAddress": {
+    "description": "Shown as the permanent address when it matches the current address"
   }
 }

@@ -322,6 +322,77 @@ class RiderHomeDto {
   }
 }
 
+class RiderAddressDto {
+  const RiderAddressDto({this.address, this.addressLine1, this.addressLine2, this.city, this.state, this.postalCode});
+
+  final String? address;
+  final String? addressLine1;
+  final String? addressLine2;
+  final String? city;
+  final String? state;
+  final String? postalCode;
+}
+
+class RiderProfileDto {
+  const RiderProfileDto({
+    this.name,
+    this.mobile,
+    this.photoUrl,
+    this.riderCode,
+    this.dateOfBirth,
+    this.currentAddress = const RiderAddressDto(),
+    this.permanentAddress = const RiderAddressDto(),
+    this.sameAsCurrentAddress = false,
+    this.emergencyContactName,
+    this.emergencyContactMobile,
+  });
+
+  factory RiderProfileDto.fromJson(Map<String, dynamic> json) {
+    final Object? addresses = json['addresses'];
+    final Map<dynamic, dynamic> groups = addresses is Map ? addresses : const {};
+    return RiderProfileDto(
+      name: _text(json['name']),
+      mobile: _text(json['mobile']),
+      photoUrl: _text(json['profilePhotoUrl']),
+      riderCode: _text(json['riderCode']),
+      dateOfBirth: DateTime.tryParse(json['dateOfBirth']?.toString() ?? ''),
+      currentAddress: _address(groups['current'] ?? json),
+      permanentAddress: _address(groups['permanent']),
+      sameAsCurrentAddress: groups['sameAsCurrentAddress'] == true,
+      emergencyContactName: _text(json['emergencyContactName']),
+      emergencyContactMobile: _text(json['emergencyContactMobile']),
+    );
+  }
+
+  final String? name;
+  final String? mobile;
+  final String? photoUrl;
+  final String? riderCode;
+  final DateTime? dateOfBirth;
+  final RiderAddressDto currentAddress;
+  final RiderAddressDto permanentAddress;
+  final bool sameAsCurrentAddress;
+  final String? emergencyContactName;
+  final String? emergencyContactMobile;
+
+  static RiderAddressDto _address(Object? raw) {
+    if (raw is! Map) return const RiderAddressDto();
+    return RiderAddressDto(
+      address: _text(raw['address']),
+      addressLine1: _text(raw['addressLine1']),
+      addressLine2: _text(raw['addressLine2']),
+      city: _text(raw['city']),
+      state: _text(raw['state']),
+      postalCode: _text(raw['postalCode']),
+    );
+  }
+
+  static String? _text(Object? raw) {
+    final String text = raw?.toString().trim() ?? '';
+    return text.isEmpty ? null : text;
+  }
+}
+
 class RiderAppApi {
   const RiderAppApi(this._client);
 
@@ -330,6 +401,11 @@ class RiderAppApi {
   Future<Result<RiderHomeDto>> home() => _client.get<RiderHomeDto>(
     '/rider-app/home',
     parse: (data) => RiderHomeDto.fromJson(Map<String, dynamic>.from(data as Map)),
+  );
+
+  Future<Result<RiderProfileDto>> profile() => _client.get<RiderProfileDto>(
+    '/rider-app/profile',
+    parse: (data) => RiderProfileDto.fromJson(Map<String, dynamic>.from(data as Map)),
   );
 
   Future<Result<RiderEnrollment>> enroll(String mobile, {String? companyCode}) {

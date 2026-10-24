@@ -8,6 +8,8 @@ import '../../../../core/legal/legal_link.dart';
 import '../../../../core/referral/my_referral.dart';
 import '../../../../core/referral/referral_qr_card.dart';
 import '../../../../core/session/rider_session_provider.dart';
+import '../../../profile/domain/entities/rider_profile.dart';
+import '../../../profile/presentation/providers/profile_provider.dart';
 
 class RiderDrawer extends ConsumerWidget {
   const RiderDrawer({super.key});
@@ -61,11 +63,8 @@ class RiderDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Map<String, Object?> rider = ref.watch(riderSessionProvider).profile;
+    final RiderProfile? profile = ref.watch(riderProfileProvider).value;
     final AppLocale locale = ref.watch(localeProvider.select((p) => p.locale));
-    final String name = rider['name']?.toString() ?? context.l10n.allocationRider;
-    final String riderCode = rider['riderCode']?.toString() ?? '—';
-    final String hub = rider['hub']?.toString() ?? '—';
 
     return Drawer(
       width: MediaQuery.sizeOf(context).width * 0.82,
@@ -74,7 +73,12 @@ class RiderDrawer extends ConsumerWidget {
         child: SafeArea(
           child: Column(
             children: [
-              _DrawerHeader(name: name, riderCode: riderCode, hub: hub),
+              _DrawerHeader(
+                name: profile?.name ?? context.l10n.allocationRider,
+                riderCode: profile?.riderCode ?? '—',
+                mobile: profile?.mobile,
+                photoUrl: profile?.photoUrl,
+              ),
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(Insets.md, Insets.sm, Insets.md, Insets.xxl),
@@ -84,7 +88,7 @@ class RiderDrawer extends ConsumerWidget {
                     _DrawerItem(
                       icon: Icons.person_rounded,
                       label: context.l10n.commonProfile,
-                      subtitle: context.l10n.homePersonalDetailsKyc,
+                      subtitle: context.l10n.profilePersonalDetails,
                       onTap: () => _go(context, Routes.profile),
                     ),
                     _DrawerItem(
@@ -230,14 +234,16 @@ class _ReferralQr extends ConsumerWidget {
 }
 
 class _DrawerHeader extends StatelessWidget {
-  const _DrawerHeader({required this.name, required this.riderCode, required this.hub});
+  const _DrawerHeader({required this.name, required this.riderCode, required this.mobile, required this.photoUrl});
 
   final String name;
   final String riderCode;
-  final String hub;
+  final String? mobile;
+  final String? photoUrl;
 
   @override
   Widget build(BuildContext context) {
+    final String? mobile = this.mobile;
     return Padding(
       padding: const EdgeInsets.fromLTRB(Insets.xl, Insets.xl, Insets.lg, Insets.lg),
       child: Column(
@@ -245,7 +251,7 @@ class _DrawerHeader extends StatelessWidget {
         children: [
           Row(
             children: [
-              AppAvatar(name: name, size: 54, showRing: true, ringColor: AppColors.primaryBright),
+              AppAvatar(name: name, imageUrl: photoUrl, size: 54, showRing: true, ringColor: AppColors.primaryBright),
               const SizedBox(width: Insets.md + 2),
               Expanded(
                 child: Column(
@@ -264,33 +270,35 @@ class _DrawerHeader extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: Insets.lg),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: Insets.md, vertical: Insets.sm),
-            decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.10),
-              borderRadius: Corners.pill,
-              border: Border.all(color: AppColors.primary.withValues(alpha: 0.28)),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.hub_rounded, size: 14, color: AppColors.primaryBright),
-                const SizedBox(width: Insets.sm - 2),
-                Flexible(
-                  child: Text(
-                    hub,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.bodySmall.copyWith(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primaryBright,
+          if (mobile != null) ...[
+            const SizedBox(height: Insets.lg),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: Insets.md, vertical: Insets.sm),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.10),
+                borderRadius: Corners.pill,
+                border: Border.all(color: AppColors.primary.withValues(alpha: 0.28)),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.call_rounded, size: 14, color: AppColors.primaryBright),
+                  const SizedBox(width: Insets.sm - 2),
+                  Flexible(
+                    child: Text(
+                      Fmt.phone(mobile),
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.bodySmall.copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryBright,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+          ],
           const SizedBox(height: Insets.lg),
           Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
         ],

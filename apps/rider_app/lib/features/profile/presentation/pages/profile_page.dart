@@ -2,100 +2,61 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/session/rider_session_provider.dart';
+import '../../domain/entities/rider_profile.dart';
+import '../providers/profile_provider.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Map<String, Object?> rider = ref.watch(riderSessionProvider).profile;
+    final AsyncValue<RiderProfile> profile = ref.watch(riderProfileProvider);
 
-    final String name = rider['name']?.toString() ?? context.l10n.allocationRider;
-    final String riderCode = rider['riderCode']?.toString() ?? '—';
-    final num rating = (rider['rating'] as num?) ?? 0;
-    final DateTime? joinedOn = DateTime.tryParse(rider['joinedOn']?.toString() ?? '');
+    if (profile.hasError) {
+      return Scaffold(
+        backgroundColor: AppColors.canvas,
+        body: SafeArea(
+          child: EmptyState(
+            title: context.l10n.profileCouldNotLoad,
+            message: profile.failureMessage,
+            icon: Icons.cloud_off_rounded,
+            tone: AppColors.danger,
+            actionLabel: context.l10n.commonTryAgain,
+            onAction: () => ref.invalidate(riderProfileProvider),
+          ),
+        ),
+      );
+    }
+
+    final RiderProfile? rider = profile.value;
 
     return HeroScaffold(
       bottomPadding: Insets.x4l,
-      band: _Band(name: name, riderCode: riderCode, rating: rating),
-      children: [
-        _SectionCard(
-          icon: Icons.badge_rounded,
-          tone: AppColors.primary,
-          title: context.l10n.profilePersonalDetails,
-          rows: [
-            _DetailRow(label: context.l10n.commonFullName, value: name),
-            _DetailRow(label: context.l10n.commonMobile, value: Fmt.phone(rider['mobile']?.toString() ?? '')),
-            _DetailRow(label: context.l10n.profileEmail, value: rider['email']?.toString() ?? '—'),
-            _DetailRow(label: context.l10n.profileJoined, value: joinedOn == null ? '—' : Fmt.date(joinedOn)),
-          ],
-        ),
-        const Gap.lg(),
-        _SectionCard(
-          icon: Icons.location_on_rounded,
-          tone: AppColors.primary,
-          title: context.l10n.profileAddressHub,
-          rows: [
-            _DetailRow(label: context.l10n.commonCity, value: rider['city']?.toString() ?? '—'),
-            _DetailRow(label: context.l10n.profileHub, value: rider['hub']?.toString() ?? '—'),
-            _DetailRow(label: context.l10n.profileHubCode, value: rider['hubCode']?.toString() ?? '—'),
-          ],
-        ),
-        const Gap.lg(),
-        ModuleCard(
-          title: context.l10n.commonTeamLead,
-          child: Row(
-            children: [
-              AppAvatar(name: rider['teamLead']?.toString() ?? '?', size: 44),
-              const SizedBox(width: Insets.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      rider['teamLead']?.toString() ?? '—',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.titleSmall.copyWith(fontSize: 14),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      Fmt.phone(rider['teamLeadMobile']?.toString() ?? ''),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppText.bodySmall.copyWith(fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: Insets.sm),
-              CircleIconButton(
-                icon: Icons.call_rounded,
-                size: 40,
-                iconSize: 18,
-                background: AppColors.primaryWash,
-                foreground: AppColors.primary,
-                borderColor: Colors.transparent,
-                onTap: () => AppSnack.success(context, 'Calling ${rider['teamLead']}…'),
-              ),
+      onRefresh: () => ref.refreshQuietly(riderProfileProvider),
+      band: _Band(profile: rider),
+      children: rider == null
+          ? const [_ProfileSkeleton()]
+          : [
+              _PersonalDetails(profile: rider),
+              const Gap.lg(),
+              _Address(profile: rider),
+              if (rider.hasEmergencyContact) ...[
+                const Gap.lg(),
+                _EmergencyContact(name: rider.emergencyContactName, mobile: rider.emergencyContactMobile),
+              ],
             ],
-          ),
-        ),
-      ],
     );
   }
 }
 
 class _Band extends StatelessWidget {
-  const _Band({required this.name, required this.riderCode, required this.rating});
+  const _Band({required this.profile});
 
-  final String name;
-  final String riderCode;
-  final num rating;
+  final RiderProfile? profile;
 
   @override
   Widget build(BuildContext context) {
+    final RiderProfile? profile = this.profile;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -111,64 +72,166 @@ class _Band extends StatelessWidget {
             const SizedBox(width: 40),
           ],
         ),
-        const Gap.xl(),
-        Row(
-          children: [
-            Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(3),
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.fromBorderSide(BorderSide(color: Colors.white24, width: 1.4)),
-                  ),
-                  child: AppAvatar(name: name, size: 72),
+        if (profile != null) ...[
+          const Gap.xl(),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(3),
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.fromBorderSide(BorderSide(color: Colors.white24, width: 1.4)),
                 ),
-                Positioned(
-                  right: -2,
-                  bottom: -2,
-                  child: Container(
-                    padding: const EdgeInsets.all(2.5),
-                    decoration: const BoxDecoration(color: AppColors.ink, shape: BoxShape.circle),
-                    child: const Icon(Icons.verified_rounded, size: 20, color: AppColors.mint),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(width: Insets.lg),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.displaySmall.copyWith(fontSize: 21, color: AppColors.onInk),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    riderCode,
-                    style: AppText.code.copyWith(fontSize: 11.5, letterSpacing: 1.2, color: AppColors.onInkSecondary),
-                  ),
-                  const SizedBox(height: 6),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.star_rounded, size: 15, color: AppColors.warning),
-                      const SizedBox(width: 4),
+                child: AppAvatar(name: profile.name ?? '?', imageUrl: profile.photoUrl, size: 72),
+              ),
+              const SizedBox(width: Insets.lg),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      profile.name ?? context.l10n.allocationRider,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.displaySmall.copyWith(fontSize: 21, color: AppColors.onInk),
+                    ),
+                    if (profile.riderCode case final String code) ...[
+                      const SizedBox(height: 4),
                       Text(
-                        '${rating.toStringAsFixed(1)} rating',
-                        style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.onInkSecondary),
+                        code,
+                        style: AppText.code.copyWith(
+                          fontSize: 11.5,
+                          letterSpacing: 1.2,
+                          color: AppColors.onInkSecondary,
+                        ),
                       ),
                     ],
-                  ),
-                ],
+                  ],
+                ),
               ),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _PersonalDetails extends StatelessWidget {
+  const _PersonalDetails({required this.profile});
+
+  final RiderProfile profile;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
+    final String? mobile = profile.mobile;
+    final DateTime? born = profile.dateOfBirth;
+    return _SectionCard(
+      icon: Icons.badge_rounded,
+      title: l10n.profilePersonalDetails,
+      children: [
+        KeyValueRow(label: l10n.commonFullName, value: profile.name ?? '—'),
+        KeyValueRow(label: l10n.commonMobile, value: mobile == null ? '—' : Fmt.phone(mobile)),
+        KeyValueRow(label: l10n.profileDateOfBirth, value: born == null ? '—' : Fmt.date(born)),
+      ],
+    );
+  }
+}
+
+class _Address extends StatelessWidget {
+  const _Address({required this.profile});
+
+  final RiderProfile profile;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
+    String text(RiderAddress address) => address.lines.isEmpty ? '—' : address.lines.join('\n');
+    return _SectionCard(
+      icon: Icons.location_on_rounded,
+      title: l10n.profileAddress,
+      children: [
+        _AddressBlock(label: l10n.profileCurrentAddress, text: text(profile.currentAddress)),
+        Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
+        _AddressBlock(
+          label: l10n.profilePermanentAddress,
+          text: profile.sameAsCurrentAddress ? l10n.profileSameAsCurrentAddress : text(profile.permanentAddress),
+        ),
+      ],
+    );
+  }
+}
+
+class _AddressBlock extends StatelessWidget {
+  const _AddressBlock({required this.label, required this.text});
+
+  final String label;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: Insets.sm + 2),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: AppText.bodySmall.copyWith(fontSize: 12.5)),
+          const SizedBox(height: 4),
+          Text(
+            text,
+            style: AppText.bodyMedium.copyWith(
+              fontSize: 13.5,
+              height: 1.5,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
             ),
-          ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EmergencyContact extends StatelessWidget {
+  const _EmergencyContact({required this.name, required this.mobile});
+
+  final String? name;
+  final String? mobile;
+
+  @override
+  Widget build(BuildContext context) {
+    final String? mobile = this.mobile;
+    return _SectionCard(
+      icon: Icons.contact_phone_rounded,
+      title: context.l10n.profileEmergencyContact,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: Insets.sm),
+          child: Row(
+            children: [
+              AppAvatar(name: name ?? '?', size: 44),
+              const SizedBox(width: Insets.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name ?? '—',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.titleSmall.copyWith(fontSize: 14),
+                    ),
+                    if (mobile != null) ...[
+                      const SizedBox(height: 2),
+                      Text(Fmt.phone(mobile), style: AppText.bodySmall.copyWith(fontSize: 12.5)),
+                    ],
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -176,53 +239,36 @@ class _Band extends StatelessWidget {
 }
 
 class _SectionCard extends StatelessWidget {
-  const _SectionCard({required this.icon, required this.tone, required this.title, required this.rows});
+  const _SectionCard({required this.icon, required this.title, required this.children});
 
   final IconData icon;
-  final Color tone;
   final String title;
-  final List<_DetailRow> rows;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
     return ModuleCard(
       title: title,
-      leading: IconTile(icon: icon, tone: tone, size: 34, solid: true),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: rows),
+      leading: IconTile(icon: icon, tone: AppColors.primary, size: 34, solid: true),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
     );
   }
 }
 
-class _DetailRow extends StatelessWidget {
-  const _DetailRow({required this.label, required this.value});
-
-  final String label;
-  final String value;
+class _ProfileSkeleton extends StatelessWidget {
+  const _ProfileSkeleton();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: Insets.sm + 2),
-      child: Row(
-        children: [
-          Expanded(flex: 4, child: Text(label, style: AppText.bodySmall.copyWith(fontSize: 13))),
-          const SizedBox(width: Insets.md),
-          Expanded(
-            flex: 5,
-            child: Text(
-              value,
-              textAlign: TextAlign.right,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.bodyMedium.copyWith(
-                fontSize: 13.5,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
-              ),
-            ),
-          ),
-        ],
-      ),
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ShimmerBox(height: 210, borderRadius: Corners.brXl),
+        Gap.lg(),
+        ShimmerBox(height: 120, borderRadius: Corners.brXl),
+        Gap.lg(),
+        ShimmerBox(height: 110, borderRadius: Corners.brXl),
+      ],
     );
   }
 }
