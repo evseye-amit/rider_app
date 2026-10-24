@@ -1,8 +1,7 @@
 companyCode: yogmaya
 supportEmail: ""
-upiId: ""
-upiPayeeName: ""
-upiMerchantCode: ""
+razorpayKeyId: ""
+razorpayName: ""
 rider:
   appName: "TrueEV's"
   androidApplicationId: ai.evseye.trueevs.rider

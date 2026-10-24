@@ -1,8 +1,7 @@
 companyCode: yogmaya
 supportEmail: ""
-upiId: ""
-upiPayeeName: ""
-upiMerchantCode: ""
+razorpayKeyId: ""
+razorpayName: ""
 rider:
   appName: Whizz Rider
   androidApplicationId: ai.evseye.whizz.rider

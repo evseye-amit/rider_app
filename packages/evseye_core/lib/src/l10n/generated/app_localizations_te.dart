@@ -1368,9 +1368,6 @@ class AppL10nTe extends AppL10n {
   String get deploymentCheckingWithFleetManagerEvery => 'ప్రతి కొన్ని క్షణాలకు మీ ఫ్లీట్ మేనేజర్‌ను అడుగుతున్నాం…';
 
   @override
-  String get deploymentChooseUpiApp => 'UPI యాప్‌ను ఎంచుకోండి';
-
-  @override
   String get deploymentConfirmEveryItemHasBeen =>
       'ప్రతి అంశాన్నీ టీమ్ లీడ్‌తో పరిశీలించారని, స్కూటర్ నడపడానికి యోగ్యమని మీరు ఖరారు చేస్తున్నారు.';
 
@@ -1451,9 +1448,6 @@ class AppL10nTe extends AppL10n {
   String get deploymentNoteWorkshopTeam => 'వర్క్‌షాప్ బృందానికి సూచన';
 
   @override
-  String get deploymentNoUpiApps => 'ఈ ఫోన్‌లో UPI యాప్ ఏదీ కనిపించలేదు.';
-
-  @override
   String get deploymentOpenEachModuleReadThrough =>
       'ప్రతి పాఠాన్ని తెరిచి పూర్తిగా చదవండి. తప్పనిసరి పాఠాలు పూర్తి చేయకుండా మీరు ముగించలేరు.';
 
@@ -1480,11 +1474,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get deploymentPayScooter => 'మీ స్కూటర్‌కు చెల్లించండి';
-
-  @override
-  String deploymentPayWithUpiApp(String amount) {
-    return '$amount UPI యాప్‌తో చెల్లించండి';
-  }
 
   @override
   String get deploymentPlanAcceptedSnack => 'ప్లాన్ అంగీకరించబడింది. తర్వాత మీ ఫ్లీట్ మేనేజర్ చెల్లింపు అడుగుతారు.';
@@ -1551,32 +1540,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get deploymentTransactionReference => 'లావాదేవీ రిఫరెన్స్';
-
-  @override
-  String deploymentUpiCouldNotOpen(String app) {
-    return '$appను తెరవలేకపోయాం. వేరే యాప్ ప్రయత్నించండి.';
-  }
-
-  @override
-  String get deploymentUpiFailed => 'చెల్లింపు జరగలేదు. మళ్లీ ప్రయత్నించండి లేదా వేరే యాప్ ఎంచుకోండి.';
-
-  @override
-  String deploymentUpiOpened(String app) {
-    return '$appలో చెల్లింపు పూర్తి చేసి, తిరిగి వచ్చి UPI రిఫరెన్స్ నమోదు చేయండి.';
-  }
-
-  @override
-  String get deploymentUpiPaid =>
-      'చెల్లింపు పూర్తయింది. UPI రిఫరెన్స్‌ను మేము నింపాము. దాన్ని తనిఖీ చేసి, కింద ఉన్న బటన్ నొక్కండి.';
-
-  @override
-  String deploymentUpiPayingTo(String amount, String payee) {
-    return '$payeeకి $amount చెల్లింపు';
-  }
-
-  @override
-  String get deploymentUpiProcessing =>
-      'మీ చెల్లింపు ఇంకా ప్రాసెస్ అవుతోంది. మీ UPI యాప్‌ను చూసి, కింద ఉన్న బటన్ నొక్కండి.';
 
   @override
   String get deploymentUpiTransactionIdEG => 'యూపీఐ లావాదేవీ ఐడీ, ఉదా. 4284 7192 3456';
@@ -5374,4 +5337,18 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get workPartnerSpecialtyDelivery => 'ప్రత్యేక డెలివరీ';
+
+  @override
+  String deploymentPayOnline(String amount) {
+    return '$amount ఆన్‌లైన్‌లో చెల్లించండి';
+  }
+
+  @override
+  String get deploymentOnlinePaymentDone => 'చెల్లింపు పూర్తయింది. దీన్ని మీ ఫ్లీట్ మేనేజర్‌కు పంపుతున్నాం.';
+
+  @override
+  String get deploymentOnlinePaymentCancelled => 'చెల్లింపు రద్దయింది';
+
+  @override
+  String get deploymentOnlinePaymentFailed => 'చెల్లింపు జరగలేదు. మళ్లీ ప్రయత్నించండి.';
 }

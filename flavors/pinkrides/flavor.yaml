@@ -1,8 +1,7 @@
 companyCode: yogmaya
 supportEmail: support@pinkrides.in
-upiId: "7310728322@ptyes"
-upiPayeeName: "Pinkrides"
-upiMerchantCode: ""
+razorpayKeyId: "rzp_test_TrasfgOFEQNV7J"
+razorpayName: "Pinkrides"
 rider:
   appName: Pink Rider App
   androidApplicationId: com.evsi.evseye.pinkrides.rider.android

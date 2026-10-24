@@ -1368,9 +1368,6 @@ class AppL10nEn extends AppL10n {
   String get deploymentCheckingWithFleetManagerEvery => 'Checking with your fleet manager every few seconds…';
 
   @override
-  String get deploymentChooseUpiApp => 'Choose a UPI app';
-
-  @override
   String get deploymentConfirmEveryItemHasBeen =>
       'You confirm every item has been checked with your team lead and the scooter is fit to ride.';
 
@@ -1451,9 +1448,6 @@ class AppL10nEn extends AppL10n {
   String get deploymentNoteWorkshopTeam => 'Note for the workshop team';
 
   @override
-  String get deploymentNoUpiApps => 'No UPI app found on this phone.';
-
-  @override
   String get deploymentOpenEachModuleReadThrough =>
       'Open each module and read it through. Mandatory ones must be completed before you can finish.';
 
@@ -1480,11 +1474,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentPayScooter => 'Pay for your scooter';
-
-  @override
-  String deploymentPayWithUpiApp(String amount) {
-    return 'Pay $amount with a UPI app';
-  }
 
   @override
   String get deploymentPlanAcceptedSnack => 'Plan accepted. Your fleet manager will ask for payment next.';
@@ -1550,30 +1539,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentTransactionReference => 'Transaction reference';
-
-  @override
-  String deploymentUpiCouldNotOpen(String app) {
-    return 'Couldn\'t open $app. Try another app.';
-  }
-
-  @override
-  String get deploymentUpiFailed => 'The payment didn\'t go through. Try again or pick another app.';
-
-  @override
-  String deploymentUpiOpened(String app) {
-    return 'Finish paying in $app, then come back and enter the UPI reference.';
-  }
-
-  @override
-  String get deploymentUpiPaid => 'Payment done. We filled in the UPI reference. Check it, then tap I have paid.';
-
-  @override
-  String deploymentUpiPayingTo(String amount, String payee) {
-    return 'Paying $amount to $payee';
-  }
-
-  @override
-  String get deploymentUpiProcessing => 'Your payment is still processing. Check your UPI app, then tap I have paid.';
 
   @override
   String get deploymentUpiTransactionIdEG => 'UPI transaction ID, e.g. 4284 7192 3456';
@@ -5364,4 +5329,18 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get workPartnerSpecialtyDelivery => 'Specialty delivery';
+
+  @override
+  String deploymentPayOnline(String amount) {
+    return 'Pay $amount online';
+  }
+
+  @override
+  String get deploymentOnlinePaymentDone => 'Payment done. Sending it to your fleet manager.';
+
+  @override
+  String get deploymentOnlinePaymentCancelled => 'Payment cancelled';
+
+  @override
+  String get deploymentOnlinePaymentFailed => 'The payment didn\'t go through. Try again.';
 }

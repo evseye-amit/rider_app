@@ -43,32 +43,29 @@
 		<string>$(GOOGLE_MAPS_API_KEY)</string>
 		<key>LSApplicationQueriesSchemes</key>
 		<array>
-			<string>BHIM</string>
-			<string>Bandhan</string>
-			<string>CanaraMobility</string>
-			<string>CentUPI</string>
-			<string>com.amazon.mobile.shopping</string>
-			<string>com.rbl.rblimplicitjourney</string>
-			<string>cred</string>
-			<string>dbin</string>
-			<string>freecharge</string>
-			<string>gpay</string>
-			<string>hdfcnewbb</string>
-			<string>imobileapp</string>
-			<string>in.fampay.app</string>
-			<string>lotza</string>
-			<string>mobikwik</string>
-			<string>myJio</string>
-			<string>myairtel</string>
-			<string>paytm</string>
-			<string>payzapp</string>
+			<string>tez</string>
 			<string>phonepe</string>
-			<string>truecaller</string>
-			<string>ucoupi</string>
-			<string>upi</string>
-			<string>upibillpay</string>
+			<string>paytmmp</string>
+			<string>credpay</string>
+			<string>mobikwik</string>
+			<string>in.fampay.app</string>
+			<string>bhim</string>
+			<string>amazonpay</string>
+			<string>navi</string>
+			<string>kiwi</string>
+			<string>payzapp</string>
+			<string>jupiter</string>
+			<string>omnicard</string>
+			<string>icici</string>
+			<string>popclubapp</string>
+			<string>sbiyono</string>
+			<string>myjio</string>
+			<string>slice-upi</string>
+			<string>bobupi</string>
+			<string>shriramone</string>
+			<string>indusmobile</string>
 			<string>whatsapp</string>
-			<string>www.citruspay.com</string>
+			<string>kotakbank</string>
 		</array>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>

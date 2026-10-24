@@ -2680,12 +2680,6 @@ abstract class AppL10n {
   /// **'Checking with your fleet manager every few seconds…'**
   String get deploymentCheckingWithFleetManagerEvery;
 
-  /// Title of the sheet listing UPI apps installed on the phone
-  ///
-  /// In en, this message translates to:
-  /// **'Choose a UPI app'**
-  String get deploymentChooseUpiApp;
-
   /// You confirm every item has been checked with your team lead and the scooter is fit to ride.
   ///
   /// In en, this message translates to:
@@ -2830,12 +2824,6 @@ abstract class AppL10n {
   /// **'Note for the workshop team'**
   String get deploymentNoteWorkshopTeam;
 
-  /// Shown when no UPI app is installed
-  ///
-  /// In en, this message translates to:
-  /// **'No UPI app found on this phone.'**
-  String get deploymentNoUpiApps;
-
   /// Open each module and read it through. Mandatory ones must be completed before you can finish.
   ///
   /// In en, this message translates to:
@@ -2883,12 +2871,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Pay for your scooter'**
   String get deploymentPayScooter;
-
-  /// Button on the rider payment screen that opens a UPI app
-  ///
-  /// In en, this message translates to:
-  /// **'Pay {amount} with a UPI app'**
-  String deploymentPayWithUpiApp(String amount);
 
   /// Plan accepted. Your fleet manager will ask for payment next.
   ///
@@ -3015,42 +2997,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Transaction reference'**
   String get deploymentTransactionReference;
-
-  /// Shown when the chosen UPI app can't be opened
-  ///
-  /// In en, this message translates to:
-  /// **'Couldn\'t open {app}. Try another app.'**
-  String deploymentUpiCouldNotOpen(String app);
-
-  /// Shown when a UPI payment fails or is cancelled
-  ///
-  /// In en, this message translates to:
-  /// **'The payment didn\'t go through. Try again or pick another app.'**
-  String get deploymentUpiFailed;
-
-  /// Shown on iPhone after opening a UPI app
-  ///
-  /// In en, this message translates to:
-  /// **'Finish paying in {app}, then come back and enter the UPI reference.'**
-  String deploymentUpiOpened(String app);
-
-  /// Shown after a successful UPI payment on Android
-  ///
-  /// In en, this message translates to:
-  /// **'Payment done. We filled in the UPI reference. Check it, then tap I have paid.'**
-  String get deploymentUpiPaid;
-
-  /// Subtitle of the UPI app sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Paying {amount} to {payee}'**
-  String deploymentUpiPayingTo(String amount, String payee);
-
-  /// Shown when the UPI app reports the payment as still processing
-  ///
-  /// In en, this message translates to:
-  /// **'Your payment is still processing. Check your UPI app, then tap I have paid.'**
-  String get deploymentUpiProcessing;
 
   /// UPI transaction ID, e.g. 4284 7192 3456
   ///
@@ -10191,6 +10137,30 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Specialty delivery'**
   String get workPartnerSpecialtyDelivery;
+
+  /// Button on the rider payment screen that opens Razorpay checkout
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount} online'**
+  String deploymentPayOnline(String amount);
+
+  /// Shown after a successful Razorpay payment
+  ///
+  /// In en, this message translates to:
+  /// **'Payment done. Sending it to your fleet manager.'**
+  String get deploymentOnlinePaymentDone;
+
+  /// Shown when the rider closes Razorpay checkout without paying
+  ///
+  /// In en, this message translates to:
+  /// **'Payment cancelled'**
+  String get deploymentOnlinePaymentCancelled;
+
+  /// Shown when a Razorpay payment fails
+  ///
+  /// In en, this message translates to:
+  /// **'The payment didn\'t go through. Try again.'**
+  String get deploymentOnlinePaymentFailed;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

@@ -60,9 +60,8 @@ class Flavor {
     required this.dir,
     required this.companyCode,
     required this.supportEmail,
-    required this.upiId,
-    required this.upiPayeeName,
-    required this.upiMerchantCode,
+    required this.razorpayKeyId,
+    required this.razorpayName,
     required this.apps,
     required this.palette,
   });
@@ -71,9 +70,8 @@ class Flavor {
   final String dir;
   final String companyCode;
   final String supportEmail;
-  final String upiId;
-  final String upiPayeeName;
-  final String upiMerchantCode;
+  final String razorpayKeyId;
+  final String razorpayName;
   final Map<String, AppFlavor> apps;
   final Map<String, int> palette;
 
@@ -122,23 +120,16 @@ class Flavor {
       hint: 'a lowercase code such as yogmaya',
     );
     final String supportEmail = text(yaml, 'supportEmail', required: false);
-    final String upiId = text(
+    final String razorpayKeyId = text(
       yaml,
-      'upiId',
+      'razorpayKeyId',
       required: false,
-      format: RegExp(r'^[\w.\-]{2,}@[a-zA-Z]{2,}$'),
-      hint: 'a UPI ID such as pinkrides@okaxis',
+      format: RegExp(r'^rzp_(test|live)_[A-Za-z0-9]+$'),
+      hint: 'a Razorpay key ID such as rzp_test_xxxxxxxxxxxxxx',
     );
-    final String upiPayeeName = text(yaml, 'upiPayeeName', required: false);
-    final String upiMerchantCode = text(
-      yaml,
-      'upiMerchantCode',
-      required: false,
-      format: RegExp(r'^\d{4}$'),
-      hint: 'a 4-digit merchant category code such as 7512',
-    );
-    if (upiId.isNotEmpty && upiPayeeName.isEmpty) {
-      problems.add('flavors/$name/flavor.yaml: "upiPayeeName" is required when "upiId" is set.');
+    final String razorpayName = text(yaml, 'razorpayName', required: false);
+    if (razorpayKeyId.isNotEmpty && razorpayName.isEmpty) {
+      problems.add('flavors/$name/flavor.yaml: "razorpayName" is required when "razorpayKeyId" is set.');
     }
 
     final Map<String, AppFlavor> apps = {};
@@ -198,9 +189,8 @@ class Flavor {
       dir: dir,
       companyCode: companyCode,
       supportEmail: supportEmail,
-      upiId: upiId,
-      upiPayeeName: upiPayeeName,
-      upiMerchantCode: upiMerchantCode,
+      razorpayKeyId: razorpayKeyId,
+      razorpayName: razorpayName,
       apps: apps,
       palette: palette,
     );

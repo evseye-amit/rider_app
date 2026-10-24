@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_upi_india/flutter_upi_india.dart';
 
-import '../../data/upi_checkout.dart';
+import '../../../../core/session/rider_session_provider.dart';
+import '../../data/razorpay_checkout.dart';
 import '../../domain/usecases/payment_receipt_usecases.dart';
 import '../providers/deployment_payment_provider.dart';
 import '../providers/deployment_provider.dart';
@@ -28,11 +28,14 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
   int _providerIndex = 0;
   bool _submitting = false;
   bool _adding = false;
+  final RazorpayCheckout _checkout = RazorpayCheckout();
   bool _paying = false;
+  String? _onlinePaymentId;
   String? _error;
 
   @override
   void dispose() {
+    _checkout.dispose();
     _reference.dispose();
     super.dispose();
   }
@@ -64,50 +67,32 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     _uploaded.remove(file.path);
   });
 
-  Future<void> _payWithUpi(DeploymentPayment payment, String? vehicle) async {
+  Future<void> _payOnline(DeploymentPayment payment, String allocationId, String? vehicle) async {
+    final String mobile = ref.read(riderSessionProvider).mobile;
     setState(() => _paying = true);
-    final List<ApplicationMeta> apps = await UpiCheckout.apps();
+    final OnlinePaymentResult result = await _checkout.pay(
+      amount: payment.amount,
+      description: ['Scooter payment', ?vehicle].join(' '),
+      contact: mobile.isEmpty ? null : mobile,
+      notes: {'paymentId': payment.id, 'allocationId': allocationId, 'vehicle': ?vehicle},
+    );
     if (!mounted) return;
     setState(() => _paying = false);
-    if (apps.isEmpty) {
-      AppSnack.warning(context, context.l10n.deploymentNoUpiApps);
-      return;
-    }
-    final ApplicationMeta? app = await AppSheet.show<ApplicationMeta>(
-      context,
-      title: context.l10n.deploymentChooseUpiApp,
-      subtitle: context.l10n.deploymentUpiPayingTo(Fmt.money(payment.amount), FlavorConfig.upiPayeeName),
-      child: _UpiAppGrid(apps: apps),
-    );
-    if (app == null || !mounted) return;
-    setState(() => _paying = true);
-    final UpiPaymentResult result = await UpiCheckout.pay(
-      app: app,
-      amount: payment.amount,
-      reference: payment.id.replaceAll('-', ''),
-      note: ['Scooter payment', ?vehicle].join(' '),
-    );
-    if (!mounted) return;
-    final String? upiReference = result.reference;
-    setState(() {
-      _paying = false;
-      if (upiReference != null) {
-        _reference.text = upiReference;
-        _error = null;
-      }
-    });
-    final String name = app.upiApplication.getAppName();
+    final String? paymentId = result.paymentId;
     switch (result.outcome) {
-      case UpiOutcome.paid:
-        AppSnack.success(context, context.l10n.deploymentUpiPaid);
-      case UpiOutcome.processing:
-        AppSnack.warning(context, context.l10n.deploymentUpiProcessing);
-      case UpiOutcome.failed:
-        AppSnack.error(context, context.l10n.deploymentUpiFailed);
-      case UpiOutcome.opened:
-        AppSnack.info(context, context.l10n.deploymentUpiOpened(name));
-      case UpiOutcome.notOpened:
-        AppSnack.error(context, context.l10n.deploymentUpiCouldNotOpen(name));
+      case OnlinePaymentOutcome.paid when paymentId != null:
+        setState(() {
+          _onlinePaymentId = paymentId;
+          _reference.text = paymentId;
+          _error = null;
+        });
+        AppSnack.success(context, context.l10n.deploymentOnlinePaymentDone);
+        await _submit(allocationId);
+      case OnlinePaymentOutcome.cancelled:
+        AppSnack.info(context, context.l10n.deploymentOnlinePaymentCancelled);
+      case OnlinePaymentOutcome.paid:
+      case OnlinePaymentOutcome.failed:
+        AppSnack.error(context, context.l10n.deploymentOnlinePaymentFailed);
     }
   }
 
@@ -138,7 +123,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     }
 
     final Result<DeploymentPayment> result = await notifier.submit(
-      provider: _providers(context.l10n)[_providerIndex],
+      provider: reference == _onlinePaymentId ? RazorpayCheckout.provider : _providers(context.l10n)[_providerIndex],
       reference: reference,
       receiptPhotoIds: [for (final File file in _screenshots) ?_uploaded[file.path]],
     );
@@ -151,6 +136,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
           _screenshots.clear();
           _uploaded.clear();
           _reference.clear();
+          _onlinePaymentId = null;
         });
         unawaited(ref.read(deploymentProvider.notifier).refresh(silent: true));
       case Err<DeploymentPayment>(:final failure):
@@ -260,12 +246,14 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                         onChanged: (i) => setState(() => _providerIndex = i),
                         padding: EdgeInsets.zero,
                       ),
-                      if (_providerIndex == 0 && UpiCheckout.available) ...[
+                      if (RazorpayCheckout.available) ...[
                         const Gap.lg(),
                         SecondaryButton(
-                          label: context.l10n.deploymentPayWithUpiApp(Fmt.money(payment.amount)),
-                          icon: Icons.account_balance_wallet_rounded,
-                          onPressed: _paying || _submitting ? null : () => _payWithUpi(payment, fleet?.vehicleNumber),
+                          label: context.l10n.deploymentPayOnline(Fmt.money(payment.amount)),
+                          icon: Icons.lock_rounded,
+                          onPressed: _paying || _submitting
+                              ? null
+                              : () => _payOnline(payment, allocationId, fleet?.vehicleNumber),
                         ),
                       ],
                       const Gap.lg(),
@@ -303,51 +291,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _UpiAppGrid extends StatelessWidget {
-  const _UpiAppGrid({required this.apps});
-
-  final List<ApplicationMeta> apps;
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 4,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.only(bottom: Insets.lg),
-      mainAxisSpacing: Insets.md,
-      crossAxisSpacing: Insets.sm,
-      childAspectRatio: 0.75,
-      children: [
-        for (final ApplicationMeta app in apps)
-          Pressable(
-            onTap: () => Navigator.of(context).pop(app),
-            scale: 0.95,
-            child: Column(
-              children: [
-                Container(
-                  width: 56,
-                  height: 56,
-                  padding: const EdgeInsets.all(Insets.sm),
-                  decoration: BoxDecoration(color: AppColors.surfaceMuted, borderRadius: Corners.brMd),
-                  child: app.iconImage(40),
-                ),
-                const SizedBox(height: Insets.xs),
-                Text(
-                  app.upiApplication.getAppName(),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textPrimary),
-                ),
-              ],
-            ),
-          ),
-      ],
     );
   }
 }
