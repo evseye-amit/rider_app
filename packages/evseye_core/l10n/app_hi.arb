@@ -336,15 +336,9 @@
   "damageChargeEach": "{amount} प्रति नग",
   "damageChargeLeftToPay": "बाकी राशि",
   "damageChargePaidBody": "आपने यह शुल्क पूरा भर दिया है।",
-  "damageChargePaidMessage": "भुगतान हो गया। धन्यवाद!",
   "damageChargePaidSoFar": "अब तक भुगतान",
   "damageChargePaidTitle": "पूरा भुगतान हो गया",
   "damageChargePay": "{amount} भरें",
-  "damageChargePayAtHubMessage": "आपके वॉलेट से पूरी राशि नहीं भरी जा सकी। ऐप में अभी ऑनलाइन भुगतान उपलब्ध नहीं है, इसलिए बाकी {amount} अपने हब पर भरें।",
-  "damageChargePayAtHubTitle": "बाकी राशि हब पर भरें",
-  "damageChargePayConfirmMessage": "पहले आपके वॉलेट बैलेंस का इस्तेमाल होगा।",
-  "damageChargePayConfirmTitle": "{amount} भरें?",
-  "damageChargePaymentsOff": "अभी भुगतान बंद हैं। कृपया बाद में फिर कोशिश करें, या अपने हब पर भरें।",
   "damageChargeRaisedOn": "{date} को लगाया गया",
   "damageChargesAll": "सभी",
   "damageChargesCouldNotLoad": "नुकसान के शुल्क लोड नहीं हो सके",
@@ -1683,5 +1677,8 @@
   "profileCouldNotLoad": "आपकी प्रोफ़ाइल नहीं खुल पाई",
   "profileCurrentAddress": "वर्तमान पता",
   "profilePermanentAddress": "स्थायी पता",
-  "profileSameAsCurrentAddress": "वर्तमान पते जैसा ही"
+  "profileSameAsCurrentAddress": "वर्तमान पते जैसा ही",
+  "damageChargesPayAtHubTitle": "अपने हब पर भुगतान करें",
+  "damageChargesPayAtHubMessage": "ऐप में अभी ऑनलाइन भुगतान उपलब्ध नहीं है। कृपया {amount} अपने हब पर चुकाएँ। हब के दर्ज करने के बाद यह यहाँ दिखेगा।",
+  "damageChargesPaymentProcessing": "{amount} का भुगतान प्रोसेस हो रहा है। पुष्टि होने के बाद यह यहाँ दिखेगा।"
 }

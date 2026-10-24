@@ -71,14 +71,25 @@ class DamageCharge extends Equatable {
   ];
 }
 
-enum DamagePaymentOutcome { paid, payRestAtHub }
+class DamageChargesSummary extends Equatable {
+  const DamageChargesSummary({
+    required this.total,
+    required this.paid,
+    required this.credit,
+    required this.due,
+    required this.unpaidCount,
+    this.processingAmount,
+  });
 
-class DamagePaymentResult extends Equatable {
-  const DamagePaymentResult({required this.outcome, required this.remaining});
+  final num total;
+  final num paid;
+  final num credit;
+  final num due;
+  final int unpaidCount;
+  final num? processingAmount;
 
-  final DamagePaymentOutcome outcome;
-  final num remaining;
+  bool get canPay => due > 0 && processingAmount == null;
 
   @override
-  List<Object?> get props => [outcome, remaining];
+  List<Object?> get props => [total, paid, credit, due, unpaidCount, processingAmount];
 }

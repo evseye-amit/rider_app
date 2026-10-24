@@ -6,11 +6,12 @@ import 'domain/damage_charges_repository.dart';
 import 'domain/usecases/damage_charge_usecases.dart';
 
 final damageChargesRepositoryProvider = Provider<DamageChargesRepository>(
-  (ref) => DamageChargesRepositoryImpl(
-    ref.watch(submissionPenaltyApiProvider),
-    ref.watch(riderBillingApiProvider),
-    ref.watch(vehicleSubmissionApiProvider),
-  ),
+  (ref) =>
+      DamageChargesRepositoryImpl(ref.watch(submissionPenaltyApiProvider), ref.watch(vehicleSubmissionApiProvider)),
+);
+
+final getDamageChargesSummaryProvider = Provider<GetDamageChargesSummary>(
+  (ref) => GetDamageChargesSummary(ref.watch(damageChargesRepositoryProvider)),
 );
 
 final getDamageChargesProvider = Provider<GetDamageCharges>(
@@ -23,8 +24,4 @@ final getDamageChargeProvider = Provider<GetDamageCharge>(
 
 final getDamagePhotoUrlProvider = Provider<GetDamagePhotoUrl>(
   (ref) => GetDamagePhotoUrl(ref.watch(damageChargesRepositoryProvider)),
-);
-
-final payDamageChargeProvider = Provider<PayDamageCharge>(
-  (ref) => PayDamageCharge(ref.watch(damageChargesRepositoryProvider)),
 );

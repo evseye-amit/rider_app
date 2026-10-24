@@ -11,12 +11,11 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
 
   @override
   Future<Result<PaymentsOverview>> getOverview() async {
-    final (Result<PaymentsHome> home, Result<SubmissionPenaltyPage> penalties) = await (
+    final (Result<PaymentsHome> home, Result<SubmissionPenaltySummaryDto> penalties) = await (
       _api.home(),
-      _penalties.list(limit: 100),
+      _penalties.summary(),
     ).wait;
-    final List<SubmissionPenaltyDto> unpaid = penalties.valueOrNull?.items ?? const [];
-    return home.map((value) => _overview(value, unpaid));
+    return home.map((value) => _overview(value, penalties.valueOrNull));
   }
 
   @override
@@ -40,7 +39,7 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
     ],
   );
 
-  static PaymentsOverview _overview(PaymentsHome home, List<SubmissionPenaltyDto> unpaid) => PaymentsOverview(
+  static PaymentsOverview _overview(PaymentsHome home, SubmissionPenaltySummaryDto? damage) => PaymentsOverview(
     amountDue: home.amountDue,
     overdueAmount: home.overdueAmount,
     currency: home.currency,
@@ -52,8 +51,8 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
     mandateMaxAmount: home.mandateMaxAmount,
     mandateExpiresAt: home.mandateExpiresAt,
     nextAutoPayDate: home.nextAutoPayDate,
-    damageDue: unpaid.fold<num>(0, (sum, item) => sum + item.outstandingAmount),
-    damageCount: unpaid.length,
+    damageDue: damage?.outstandingAmount ?? 0,
+    damageCount: damage?.pendingCount ?? 0,
   );
 
   static AutoPayState _autoPay(AutoPayStatus status) => switch (status) {

@@ -4,11 +4,22 @@ import '../domain/damage_charges_repository.dart';
 import '../domain/entities/damage_charge.dart';
 
 class DamageChargesRepositoryImpl implements DamageChargesRepository {
-  const DamageChargesRepositoryImpl(this._penalties, this._billing, this._submissions);
+  const DamageChargesRepositoryImpl(this._penalties, this._submissions);
 
   final SubmissionPenaltyApi _penalties;
-  final RiderBillingApi _billing;
   final VehicleSubmissionApi _submissions;
+
+  @override
+  Future<Result<DamageChargesSummary>> getSummary() async => (await _penalties.summary()).map(
+    (dto) => DamageChargesSummary(
+      total: dto.totalAmount,
+      paid: dto.paidAmount,
+      credit: dto.settledCreditAmount,
+      due: dto.outstandingAmount,
+      unpaidCount: dto.pendingCount,
+      processingAmount: dto.paymentInProgressAmount,
+    ),
+  );
 
   @override
   Future<Result<List<DamageCharge>>> getCharges({required bool includePaid}) async => (await _penalties.list(
@@ -22,14 +33,6 @@ class DamageChargesRepositoryImpl implements DamageChargesRepository {
   @override
   Future<Result<String>> getPhotoUrl({required String submissionId, required String photoId}) =>
       _submissions.riderPhotoUrl(submissionId, photoId);
-
-  @override
-  Future<Result<DamagePaymentResult>> pay(String id, {required String idempotencyKey}) async =>
-      (await _billing.payInvoice(id, idempotencyKey: idempotencyKey)).map(
-        (checkout) => checkout.isPaid
-            ? const DamagePaymentResult(outcome: DamagePaymentOutcome.paid, remaining: 0)
-            : DamagePaymentResult(outcome: DamagePaymentOutcome.payRestAtHub, remaining: checkout.amount),
-      );
 
   static DamageCharge _charge(SubmissionPenaltyDto dto) => DamageCharge(
     id: dto.invoiceId,

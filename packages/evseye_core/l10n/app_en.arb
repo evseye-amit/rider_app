@@ -1423,10 +1423,6 @@
   "@damageChargePaidBody": {
     "description": "Message on a fully paid damage charge"
   },
-  "damageChargePaidMessage": "Payment done. Thank you!",
-  "@damageChargePaidMessage": {
-    "description": "Shown after a damage charge is paid"
-  },
   "damageChargePaidSoFar": "Paid so far",
   "@damageChargePaidSoFar": {
     "description": "Row with the amount already paid"
@@ -1443,36 +1439,6 @@
         "type": "String"
       }
     }
-  },
-  "damageChargePayAtHubMessage": "Your wallet didn't cover all of it. Paying online isn't available in the app yet, so please pay the remaining {amount} at your hub.",
-  "@damageChargePayAtHubMessage": {
-    "description": "Message when the wallet did not cover the whole charge",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "damageChargePayAtHubTitle": "Pay the rest at your hub",
-  "@damageChargePayAtHubTitle": {
-    "description": "Title when the wallet did not cover the whole charge"
-  },
-  "damageChargePayConfirmMessage": "We'll use your wallet balance first.",
-  "@damageChargePayConfirmMessage": {
-    "description": "Message of the confirm before paying a damage charge"
-  },
-  "damageChargePayConfirmTitle": "Pay {amount}?",
-  "@damageChargePayConfirmTitle": {
-    "description": "Title of the confirm before paying a damage charge",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "damageChargePaymentsOff": "Payments are switched off right now. Please try again later, or pay at your hub.",
-  "@damageChargePaymentsOff": {
-    "description": "Error when the server has payments turned off"
   },
   "damageChargeRaisedOn": "Raised on {date}",
   "@damageChargeRaisedOn": {
@@ -7296,5 +7262,27 @@
   "profileSameAsCurrentAddress": "Same as current address",
   "@profileSameAsCurrentAddress": {
     "description": "Shown as the permanent address when it matches the current address"
+  },
+  "damageChargesPayAtHubTitle": "Pay at your hub",
+  "@damageChargesPayAtHubTitle": {
+    "description": "Title of the sheet shown when the rider taps Pay on the damage charges screen"
+  },
+  "damageChargesPayAtHubMessage": "Paying online isn't available in the app yet. Please pay {amount} at your hub. It will show here once the hub records it.",
+  "@damageChargesPayAtHubMessage": {
+    "description": "Message of the pay at hub sheet on the damage charges screen",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "damageChargesPaymentProcessing": "A payment of {amount} is being processed. It will show here once it's confirmed.",
+  "@damageChargesPaymentProcessing": {
+    "description": "Notice on the damage charges screen when a payment is already in progress",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

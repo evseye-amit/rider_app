@@ -14,14 +14,13 @@ class DamagePhotoParams extends Equatable {
   List<Object?> get props => [submissionId, photoId];
 }
 
-class PayDamageChargeParams extends Equatable {
-  const PayDamageChargeParams({required this.id, required this.idempotencyKey});
+class GetDamageChargesSummary extends UseCase<DamageChargesSummary, NoParams> {
+  const GetDamageChargesSummary(this._repository);
 
-  final String id;
-  final String idempotencyKey;
+  final DamageChargesRepository _repository;
 
   @override
-  List<Object?> get props => [id, idempotencyKey];
+  Future<Result<DamageChargesSummary>> call(NoParams params) => _repository.getSummary();
 }
 
 class GetDamageCharges extends UseCase<List<DamageCharge>, bool> {
@@ -50,14 +49,4 @@ class GetDamagePhotoUrl extends UseCase<String, DamagePhotoParams> {
   @override
   Future<Result<String>> call(DamagePhotoParams params) =>
       _repository.getPhotoUrl(submissionId: params.submissionId, photoId: params.photoId);
-}
-
-class PayDamageCharge extends UseCase<DamagePaymentResult, PayDamageChargeParams> {
-  const PayDamageCharge(this._repository);
-
-  final DamageChargesRepository _repository;
-
-  @override
-  Future<Result<DamagePaymentResult>> call(PayDamageChargeParams params) =>
-      _repository.pay(params.id, idempotencyKey: params.idempotencyKey);
 }

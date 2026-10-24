@@ -1,8 +1,13 @@
+import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../damage_charges_dependencies.dart';
 import '../../domain/entities/damage_charge.dart';
 import '../../domain/usecases/damage_charge_usecases.dart';
+
+final damageChargesSummaryProvider = FutureProvider.autoDispose<DamageChargesSummary>(
+  (ref) async => (await ref.watch(getDamageChargesSummaryProvider)(const NoParams())).getOrThrow(),
+);
 
 final damageChargesProvider = FutureProvider.autoDispose.family<List<DamageCharge>, bool>(
   (ref, includePaid) async => (await ref.watch(getDamageChargesProvider)(includePaid)).getOrThrow(),

@@ -1068,9 +1068,6 @@ class AppL10nTe extends AppL10n {
   String get damageChargePaidBody => 'మీరు ఈ ఛార్జీని పూర్తిగా చెల్లించారు.';
 
   @override
-  String get damageChargePaidMessage => 'చెల్లింపు పూర్తయింది. ధన్యవాదాలు!';
-
-  @override
   String get damageChargePaidSoFar => 'ఇప్పటివరకు చెల్లించింది';
 
   @override
@@ -1080,26 +1077,6 @@ class AppL10nTe extends AppL10n {
   String damageChargePay(String amount) {
     return '$amount చెల్లించండి';
   }
-
-  @override
-  String damageChargePayAtHubMessage(String amount) {
-    return 'మీ వాలెట్ నుండి పూర్తి మొత్తం చెల్లించలేకపోయాం. యాప్‌లో ఇంకా ఆన్‌లైన్ చెల్లింపు అందుబాటులో లేదు, కాబట్టి మిగిలిన $amount మీ హబ్‌లో చెల్లించండి.';
-  }
-
-  @override
-  String get damageChargePayAtHubTitle => 'మిగిలినది మీ హబ్‌లో చెల్లించండి';
-
-  @override
-  String get damageChargePayConfirmMessage => 'ముందుగా మీ వాలెట్ బ్యాలెన్స్ వాడతాం.';
-
-  @override
-  String damageChargePayConfirmTitle(String amount) {
-    return '$amount చెల్లించాలా?';
-  }
-
-  @override
-  String get damageChargePaymentsOff =>
-      'ప్రస్తుతం చెల్లింపులు ఆపివేశారు. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి, లేదా మీ హబ్‌లో చెల్లించండి.';
 
   @override
   String damageChargeRaisedOn(String date) {
@@ -5373,4 +5350,17 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get profileSameAsCurrentAddress => 'ప్రస్తుత చిరునామా లాగానే';
+
+  @override
+  String get damageChargesPayAtHubTitle => 'మీ హబ్‌లో చెల్లించండి';
+
+  @override
+  String damageChargesPayAtHubMessage(String amount) {
+    return 'యాప్‌లో ఇంకా ఆన్‌లైన్ చెల్లింపు అందుబాటులో లేదు. దయచేసి $amount మీ హబ్‌లో చెల్లించండి. హబ్ నమోదు చేసిన తర్వాత ఇది ఇక్కడ కనిపిస్తుంది.';
+  }
+
+  @override
+  String damageChargesPaymentProcessing(String amount) {
+    return '$amount చెల్లింపు ప్రాసెస్ అవుతోంది. నిర్ధారించిన తర్వాత ఇది ఇక్కడ కనిపిస్తుంది.';
+  }
 }

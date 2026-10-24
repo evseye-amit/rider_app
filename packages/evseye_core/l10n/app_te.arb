@@ -336,15 +336,9 @@
   "damageChargeEach": "ఒక్కోటి {amount}",
   "damageChargeLeftToPay": "మిగిలిన మొత్తం",
   "damageChargePaidBody": "మీరు ఈ ఛార్జీని పూర్తిగా చెల్లించారు.",
-  "damageChargePaidMessage": "చెల్లింపు పూర్తయింది. ధన్యవాదాలు!",
   "damageChargePaidSoFar": "ఇప్పటివరకు చెల్లించింది",
   "damageChargePaidTitle": "పూర్తిగా చెల్లించారు",
   "damageChargePay": "{amount} చెల్లించండి",
-  "damageChargePayAtHubMessage": "మీ వాలెట్ నుండి పూర్తి మొత్తం చెల్లించలేకపోయాం. యాప్‌లో ఇంకా ఆన్‌లైన్ చెల్లింపు అందుబాటులో లేదు, కాబట్టి మిగిలిన {amount} మీ హబ్‌లో చెల్లించండి.",
-  "damageChargePayAtHubTitle": "మిగిలినది మీ హబ్‌లో చెల్లించండి",
-  "damageChargePayConfirmMessage": "ముందుగా మీ వాలెట్ బ్యాలెన్స్ వాడతాం.",
-  "damageChargePayConfirmTitle": "{amount} చెల్లించాలా?",
-  "damageChargePaymentsOff": "ప్రస్తుతం చెల్లింపులు ఆపివేశారు. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి, లేదా మీ హబ్‌లో చెల్లించండి.",
   "damageChargeRaisedOn": "{date}న విధించారు",
   "damageChargesAll": "అన్నీ",
   "damageChargesCouldNotLoad": "నష్టం ఛార్జీలు లోడ్ కాలేదు",
@@ -1683,5 +1677,8 @@
   "profileCouldNotLoad": "మీ ప్రొఫైల్ తెరవలేకపోయాం",
   "profileCurrentAddress": "ప్రస్తుత చిరునామా",
   "profilePermanentAddress": "శాశ్వత చిరునామా",
-  "profileSameAsCurrentAddress": "ప్రస్తుత చిరునామా లాగానే"
+  "profileSameAsCurrentAddress": "ప్రస్తుత చిరునామా లాగానే",
+  "damageChargesPayAtHubTitle": "మీ హబ్‌లో చెల్లించండి",
+  "damageChargesPayAtHubMessage": "యాప్‌లో ఇంకా ఆన్‌లైన్ చెల్లింపు అందుబాటులో లేదు. దయచేసి {amount} మీ హబ్‌లో చెల్లించండి. హబ్ నమోదు చేసిన తర్వాత ఇది ఇక్కడ కనిపిస్తుంది.",
+  "damageChargesPaymentProcessing": "{amount} చెల్లింపు ప్రాసెస్ అవుతోంది. నిర్ధారించిన తర్వాత ఇది ఇక్కడ కనిపిస్తుంది."
 }

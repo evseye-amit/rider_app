@@ -111,6 +111,40 @@ class SubmissionPenaltyDto {
   bool get isVoid => status == 'VOID';
 }
 
+class SubmissionPenaltySummaryDto {
+  const SubmissionPenaltySummaryDto({
+    required this.totalAmount,
+    required this.paidAmount,
+    required this.settledCreditAmount,
+    required this.outstandingAmount,
+    required this.pendingCount,
+    this.paymentInProgressAmount,
+  });
+
+  factory SubmissionPenaltySummaryDto.fromJson(Map<String, dynamic> json) {
+    final String currency = jsonTextOrNull(json['currency']) ?? 'INR';
+    final Map<String, dynamic> totals = jsonMaps(
+      json['totals'],
+    ).firstWhere((row) => jsonText(row['currency']) == currency, orElse: () => const <String, dynamic>{});
+    final Map<String, dynamic> inProgress = jsonMap(json['paymentInProgress']);
+    return SubmissionPenaltySummaryDto(
+      totalAmount: jsonNum(totals['totalAmount']),
+      paidAmount: jsonNum(totals['paidAmount']),
+      settledCreditAmount: jsonNum(totals['settledCreditAmount']),
+      outstandingAmount: jsonNum(totals['outstandingAmount']),
+      pendingCount: jsonIntOrNull(json['pendingCount']) ?? 0,
+      paymentInProgressAmount: inProgress.isEmpty ? null : jsonNum(inProgress['amount']),
+    );
+  }
+
+  final num totalAmount;
+  final num paidAmount;
+  final num settledCreditAmount;
+  final num outstandingAmount;
+  final int pendingCount;
+  final num? paymentInProgressAmount;
+}
+
 class SubmissionPenaltyPage {
   const SubmissionPenaltyPage({required this.items, required this.page, required this.hasMore});
 
@@ -137,6 +171,11 @@ class SubmissionPenaltyApi {
           return SubmissionPenaltyPage(items: items, page: page, hasMore: items.length >= limit);
         },
       );
+
+  Future<Result<SubmissionPenaltySummaryDto>> summary() => _client.get<SubmissionPenaltySummaryDto>(
+    '$_base/summary',
+    parse: (data) => SubmissionPenaltySummaryDto.fromJson(jsonMap(data)),
+  );
 
   Future<Result<SubmissionPenaltyDto>> detail(String invoiceId) => _client.get<SubmissionPenaltyDto>(
     '$_base/$invoiceId',

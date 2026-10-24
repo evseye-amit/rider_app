@@ -336,15 +336,9 @@
   "damageChargeEach": "ಪ್ರತಿಯೊಂದಕ್ಕೆ {amount}",
   "damageChargeLeftToPay": "ಉಳಿದ ಮೊತ್ತ",
   "damageChargePaidBody": "ನೀವು ಈ ಶುಲ್ಕವನ್ನು ಪೂರ್ತಿಯಾಗಿ ಪಾವತಿಸಿದ್ದೀರಿ.",
-  "damageChargePaidMessage": "ಪಾವತಿ ಆಗಿದೆ. ಧನ್ಯವಾದಗಳು!",
   "damageChargePaidSoFar": "ಈವರೆಗೆ ಪಾವತಿಸಿದ್ದು",
   "damageChargePaidTitle": "ಪೂರ್ತಿ ಪಾವತಿಯಾಗಿದೆ",
   "damageChargePay": "{amount} ಪಾವತಿಸಿ",
-  "damageChargePayAtHubMessage": "ನಿಮ್ಮ ವಾಲೆಟ್‌ನಿಂದ ಪೂರ್ತಿ ಮೊತ್ತ ಪಾವತಿಯಾಗಲಿಲ್ಲ. ಆ್ಯಪ್‌ನಲ್ಲಿ ಇನ್ನೂ ಆನ್‌ಲೈನ್ ಪಾವತಿ ಲಭ್ಯವಿಲ್ಲ, ಆದ್ದರಿಂದ ಉಳಿದ {amount} ಅನ್ನು ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ.",
-  "damageChargePayAtHubTitle": "ಉಳಿದ ಮೊತ್ತವನ್ನು ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ",
-  "damageChargePayConfirmMessage": "ಮೊದಲು ನಿಮ್ಮ ವಾಲೆಟ್ ಬ್ಯಾಲೆನ್ಸ್ ಬಳಸಲಾಗುತ್ತದೆ.",
-  "damageChargePayConfirmTitle": "{amount} ಪಾವತಿಸುವುದೇ?",
-  "damageChargePaymentsOff": "ಈಗ ಪಾವತಿಗಳು ಸ್ಥಗಿತಗೊಂಡಿವೆ. ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ, ಅಥವಾ ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ.",
   "damageChargeRaisedOn": "{date} ರಂದು ವಿಧಿಸಲಾಗಿದೆ",
   "damageChargesAll": "ಎಲ್ಲಾ",
   "damageChargesCouldNotLoad": "ಹಾನಿ ಶುಲ್ಕಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ",
@@ -1683,5 +1677,8 @@
   "profileCouldNotLoad": "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್ ತೆರೆಯಲಿಲ್ಲ",
   "profileCurrentAddress": "ಪ್ರಸ್ತುತ ವಿಳಾಸ",
   "profilePermanentAddress": "ಶಾಶ್ವತ ವಿಳಾಸ",
-  "profileSameAsCurrentAddress": "ಪ್ರಸ್ತುತ ವಿಳಾಸದಂತೆಯೇ"
+  "profileSameAsCurrentAddress": "ಪ್ರಸ್ತುತ ವಿಳಾಸದಂತೆಯೇ",
+  "damageChargesPayAtHubTitle": "ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ",
+  "damageChargesPayAtHubMessage": "ಆ್ಯಪ್‌ನಲ್ಲಿ ಇನ್ನೂ ಆನ್‌ಲೈನ್ ಪಾವತಿ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು {amount} ಅನ್ನು ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ. ಹಬ್ ಅದನ್ನು ದಾಖಲಿಸಿದ ನಂತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.",
+  "damageChargesPaymentProcessing": "{amount} ಪಾವತಿ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ. ದೃಢಪಡಿಸಿದ ನಂತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ."
 }

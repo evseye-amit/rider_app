@@ -1069,9 +1069,6 @@ class AppL10nEn extends AppL10n {
   String get damageChargePaidBody => 'You\'ve paid this charge in full.';
 
   @override
-  String get damageChargePaidMessage => 'Payment done. Thank you!';
-
-  @override
   String get damageChargePaidSoFar => 'Paid so far';
 
   @override
@@ -1081,26 +1078,6 @@ class AppL10nEn extends AppL10n {
   String damageChargePay(String amount) {
     return 'Pay $amount';
   }
-
-  @override
-  String damageChargePayAtHubMessage(String amount) {
-    return 'Your wallet didn\'t cover all of it. Paying online isn\'t available in the app yet, so please pay the remaining $amount at your hub.';
-  }
-
-  @override
-  String get damageChargePayAtHubTitle => 'Pay the rest at your hub';
-
-  @override
-  String get damageChargePayConfirmMessage => 'We\'ll use your wallet balance first.';
-
-  @override
-  String damageChargePayConfirmTitle(String amount) {
-    return 'Pay $amount?';
-  }
-
-  @override
-  String get damageChargePaymentsOff =>
-      'Payments are switched off right now. Please try again later, or pay at your hub.';
 
   @override
   String damageChargeRaisedOn(String date) {
@@ -5365,4 +5342,17 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get profileSameAsCurrentAddress => 'Same as current address';
+
+  @override
+  String get damageChargesPayAtHubTitle => 'Pay at your hub';
+
+  @override
+  String damageChargesPayAtHubMessage(String amount) {
+    return 'Paying online isn\'t available in the app yet. Please pay $amount at your hub. It will show here once the hub records it.';
+  }
+
+  @override
+  String damageChargesPaymentProcessing(String amount) {
+    return 'A payment of $amount is being processed. It will show here once it\'s confirmed.';
+  }
 }

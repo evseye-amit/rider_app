@@ -1070,9 +1070,6 @@ class AppL10nKn extends AppL10n {
   String get damageChargePaidBody => 'ನೀವು ಈ ಶುಲ್ಕವನ್ನು ಪೂರ್ತಿಯಾಗಿ ಪಾವತಿಸಿದ್ದೀರಿ.';
 
   @override
-  String get damageChargePaidMessage => 'ಪಾವತಿ ಆಗಿದೆ. ಧನ್ಯವಾದಗಳು!';
-
-  @override
   String get damageChargePaidSoFar => 'ಈವರೆಗೆ ಪಾವತಿಸಿದ್ದು';
 
   @override
@@ -1082,26 +1079,6 @@ class AppL10nKn extends AppL10n {
   String damageChargePay(String amount) {
     return '$amount ಪಾವತಿಸಿ';
   }
-
-  @override
-  String damageChargePayAtHubMessage(String amount) {
-    return 'ನಿಮ್ಮ ವಾಲೆಟ್‌ನಿಂದ ಪೂರ್ತಿ ಮೊತ್ತ ಪಾವತಿಯಾಗಲಿಲ್ಲ. ಆ್ಯಪ್‌ನಲ್ಲಿ ಇನ್ನೂ ಆನ್‌ಲೈನ್ ಪಾವತಿ ಲಭ್ಯವಿಲ್ಲ, ಆದ್ದರಿಂದ ಉಳಿದ $amount ಅನ್ನು ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ.';
-  }
-
-  @override
-  String get damageChargePayAtHubTitle => 'ಉಳಿದ ಮೊತ್ತವನ್ನು ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ';
-
-  @override
-  String get damageChargePayConfirmMessage => 'ಮೊದಲು ನಿಮ್ಮ ವಾಲೆಟ್ ಬ್ಯಾಲೆನ್ಸ್ ಬಳಸಲಾಗುತ್ತದೆ.';
-
-  @override
-  String damageChargePayConfirmTitle(String amount) {
-    return '$amount ಪಾವತಿಸುವುದೇ?';
-  }
-
-  @override
-  String get damageChargePaymentsOff =>
-      'ಈಗ ಪಾವತಿಗಳು ಸ್ಥಗಿತಗೊಂಡಿವೆ. ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ, ಅಥವಾ ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ.';
 
   @override
   String damageChargeRaisedOn(String date) {
@@ -5372,4 +5349,17 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get profileSameAsCurrentAddress => 'ಪ್ರಸ್ತುತ ವಿಳಾಸದಂತೆಯೇ';
+
+  @override
+  String get damageChargesPayAtHubTitle => 'ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ';
+
+  @override
+  String damageChargesPayAtHubMessage(String amount) {
+    return 'ಆ್ಯಪ್‌ನಲ್ಲಿ ಇನ್ನೂ ಆನ್‌ಲೈನ್ ಪಾವತಿ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು $amount ಅನ್ನು ನಿಮ್ಮ ಹಬ್‌ನಲ್ಲಿ ಪಾವತಿಸಿ. ಹಬ್ ಅದನ್ನು ದಾಖಲಿಸಿದ ನಂತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
+  }
+
+  @override
+  String damageChargesPaymentProcessing(String amount) {
+    return '$amount ಪಾವತಿ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ. ದೃಢಪಡಿಸಿದ ನಂತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
+  }
 }

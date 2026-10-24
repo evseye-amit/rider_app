@@ -262,41 +262,6 @@ class PaymentReceiptDto {
   bool get isConfirmed => status == 'CONFIRMED';
 }
 
-class InvoiceCheckoutDto {
-  const InvoiceCheckoutDto({
-    required this.status,
-    required this.amount,
-    required this.currency,
-    required this.method,
-    this.collectionId,
-    this.paymentSessionId,
-    this.orderId,
-    this.failureCode,
-  });
-
-  factory InvoiceCheckoutDto.fromJson(Map<String, dynamic> json) => InvoiceCheckoutDto(
-    status: jsonText(json['status']),
-    amount: jsonNum(json['amount']),
-    currency: jsonTextOrNull(json['currency']) ?? 'INR',
-    method: jsonText(json['method']),
-    collectionId: jsonTextOrNull(json['collectionId']),
-    paymentSessionId: jsonTextOrNull(json['paymentSessionId']),
-    orderId: jsonTextOrNull(json['orderId']),
-    failureCode: jsonTextOrNull(json['failureCode']),
-  );
-
-  final String status;
-  final num amount;
-  final String currency;
-  final String method;
-  final String? collectionId;
-  final String? paymentSessionId;
-  final String? orderId;
-  final String? failureCode;
-
-  bool get isPaid => status == 'PAID';
-}
-
 class RiderBillingApi {
   const RiderBillingApi(this._client);
 
@@ -314,14 +279,6 @@ class RiderBillingApi {
 
   Future<Result<InvoiceDetailDto>> invoice(String id) =>
       _client.get<InvoiceDetailDto>('$_base/invoices/$id', parse: (data) => InvoiceDetailDto.fromJson(jsonMap(data)));
-
-  Future<Result<InvoiceCheckoutDto>> payInvoice(String id, {required String idempotencyKey, bool useWallet = true}) =>
-      _client.post<InvoiceCheckoutDto>(
-        '$_base/invoices/$id/pay',
-        headers: {'Idempotency-Key': idempotencyKey},
-        body: {'useWallet': useWallet},
-        parse: (data) => InvoiceCheckoutDto.fromJson(jsonMap(data)),
-      );
 
   Future<Result<List<LedgerEntryDto>>> ledger() => _client.get<List<LedgerEntryDto>>(
     '$_base/ledger',

@@ -2110,12 +2110,6 @@ abstract class AppL10n {
   /// **'You\'ve paid this charge in full.'**
   String get damageChargePaidBody;
 
-  /// Shown after a damage charge is paid
-  ///
-  /// In en, this message translates to:
-  /// **'Payment done. Thank you!'**
-  String get damageChargePaidMessage;
-
   /// Row with the amount already paid
   ///
   /// In en, this message translates to:
@@ -2133,36 +2127,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Pay {amount}'**
   String damageChargePay(String amount);
-
-  /// Message when the wallet did not cover the whole charge
-  ///
-  /// In en, this message translates to:
-  /// **'Your wallet didn\'t cover all of it. Paying online isn\'t available in the app yet, so please pay the remaining {amount} at your hub.'**
-  String damageChargePayAtHubMessage(String amount);
-
-  /// Title when the wallet did not cover the whole charge
-  ///
-  /// In en, this message translates to:
-  /// **'Pay the rest at your hub'**
-  String get damageChargePayAtHubTitle;
-
-  /// Message of the confirm before paying a damage charge
-  ///
-  /// In en, this message translates to:
-  /// **'We\'ll use your wallet balance first.'**
-  String get damageChargePayConfirmMessage;
-
-  /// Title of the confirm before paying a damage charge
-  ///
-  /// In en, this message translates to:
-  /// **'Pay {amount}?'**
-  String damageChargePayConfirmTitle(String amount);
-
-  /// Error when the server has payments turned off
-  ///
-  /// In en, this message translates to:
-  /// **'Payments are switched off right now. Please try again later, or pay at your hub.'**
-  String get damageChargePaymentsOff;
 
   /// When the damage charge was raised
   ///
@@ -10197,6 +10161,24 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Same as current address'**
   String get profileSameAsCurrentAddress;
+
+  /// Title of the sheet shown when the rider taps Pay on the damage charges screen
+  ///
+  /// In en, this message translates to:
+  /// **'Pay at your hub'**
+  String get damageChargesPayAtHubTitle;
+
+  /// Message of the pay at hub sheet on the damage charges screen
+  ///
+  /// In en, this message translates to:
+  /// **'Paying online isn\'t available in the app yet. Please pay {amount} at your hub. It will show here once the hub records it.'**
+  String damageChargesPayAtHubMessage(String amount);
+
+  /// Notice on the damage charges screen when a payment is already in progress
+  ///
+  /// In en, this message translates to:
+  /// **'A payment of {amount} is being processed. It will show here once it\'s confirmed.'**
+  String damageChargesPaymentProcessing(String amount);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

@@ -17,20 +17,20 @@ class HomeRepositoryImpl implements HomeRepository {
       Result<RiderWallet> wallet,
       Result<RiderHomeDto> home,
       Result<PaymentsHome> payments,
-      Result<SubmissionPenaltyPage> penalties,
+      Result<SubmissionPenaltySummaryDto> penalties,
     ) = await (
       _deployments.riderWallet(),
       _riderApp.home(),
       _payments.home(),
-      _penalties.list(limit: 100),
+      _penalties.summary(),
     ).wait;
     if (home case Err<RiderHomeDto>(:final failure) when payments.isErr && wallet.isErr) return Result.err(failure);
 
     final RiderHomeDto? stats = home.valueOrNull;
     final PaymentsHome? dues = payments.valueOrNull;
     final RiderPaymentRecord? lastPayment = dues?.recentPayments.firstOrNull;
-    final List<SubmissionPenaltyDto> unpaid = penalties.valueOrNull?.items ?? const [];
-    final num damageDue = unpaid.fold<num>(0, (sum, item) => sum + item.outstandingAmount);
+    final SubmissionPenaltySummaryDto? damage = penalties.valueOrNull;
+    final num damageDue = damage?.outstandingAmount ?? 0;
 
     return Result.ok(
       HomeSummary(
@@ -46,7 +46,7 @@ class HomeRepositoryImpl implements HomeRepository {
         dailyRent: stats?.dailyRentalAmount,
         workingDays: stats?.rentalDays,
         damageDue: damageDue,
-        damageCount: unpaid.length,
+        damageCount: damage?.pendingCount ?? 0,
       ),
     );
   }

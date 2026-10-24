@@ -2,91 +2,27 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../home/presentation/providers/home_summary_provider.dart';
-import '../../../payments/presentation/providers/payments_provider.dart';
-import '../../damage_charges_dependencies.dart';
 import '../../domain/entities/damage_charge.dart';
-import '../../domain/usecases/damage_charge_usecases.dart';
 import '../providers/damage_charges_providers.dart';
 import '../widgets/damage_charge_widgets.dart';
 
-class DamageChargePage extends ConsumerStatefulWidget {
+class DamageChargePage extends ConsumerWidget {
   const DamageChargePage({required this.chargeId, super.key});
 
   final String chargeId;
 
   @override
-  ConsumerState<DamageChargePage> createState() => _DamageChargePageState();
-}
-
-class _DamageChargePageState extends ConsumerState<DamageChargePage> {
-  final String _idempotencyKey = newIdempotencyKey();
-  bool _paying = false;
-
-  void _refreshAll() {
-    ref.invalidate(damageChargeProvider(widget.chargeId));
-    ref.invalidate(damageChargesProvider);
-    ref.invalidate(homeSummaryProvider);
-    ref.invalidate(paymentsOverviewProvider);
-  }
-
-  Future<void> _pay(DamageCharge charge) async {
-    final String amount = Fmt.money(charge.due, paise: true);
-    final bool confirmed = await AppDialog.confirm(
-      context,
-      title: context.l10n.damageChargePayConfirmTitle(amount),
-      message: context.l10n.damageChargePayConfirmMessage,
-      confirmLabel: context.l10n.damageChargePay(amount),
-      icon: Icons.payments_rounded,
-    );
-    if (!confirmed || !mounted) return;
-    setState(() => _paying = true);
-    final Result<DamagePaymentResult> result = await ref.read(payDamageChargeProvider)(
-      PayDamageChargeParams(id: charge.id, idempotencyKey: _idempotencyKey),
-    );
-    if (!mounted) return;
-    setState(() => _paying = false);
-    _refreshAll();
-    switch (result) {
-      case Ok<DamagePaymentResult>(value: DamagePaymentResult(outcome: DamagePaymentOutcome.paid)):
-        AppSnack.success(context, context.l10n.damageChargePaidMessage);
-      case Ok<DamagePaymentResult>(:final value):
-        await AppSheet.show<void>(
-          context,
-          title: context.l10n.damageChargePayAtHubTitle,
-          child: Text(
-            context.l10n.damageChargePayAtHubMessage(Fmt.money(value.remaining, paise: true)),
-            style: AppText.bodyMedium.copyWith(height: 1.55),
-          ),
-          footer: PrimaryButton(label: context.l10n.notificationsGotIt, onPressed: () => Navigator.of(context).pop()),
-        );
-      case Err<DamagePaymentResult>(failure: ServerFailure(status: 503)):
-        AppSnack.error(context, context.l10n.damageChargePaymentsOff);
-      case Err<DamagePaymentResult>(:final failure):
-        AppSnack.error(context, failure.message);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final AsyncValue<DamageCharge> detail = ref.watch(damageChargeProvider(widget.chargeId));
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<DamageCharge> detail = ref.watch(damageChargeProvider(chargeId));
     final DamageCharge? charge = detail.value;
     final DateTime? raisedAt = charge?.raisedAt;
 
     return AppScaffold(
       title: context.l10n.damageChargeTitle,
       subtitle: raisedAt == null ? null : context.l10n.damageChargeRaisedOn(Fmt.date(raisedAt)),
-      footer: charge == null || !charge.isOpen
-          ? null
-          : PrimaryButton(
-              label: context.l10n.damageChargePay(Fmt.money(charge.due, paise: true)),
-              icon: Icons.payments_rounded,
-              loading: _paying,
-              onPressed: _paying ? null : () => _pay(charge),
-            ),
       body: switch (charge) {
         final DamageCharge value => RefreshIndicator(
-          onRefresh: () => ref.refreshQuietly(damageChargeProvider(widget.chargeId)),
+          onRefresh: () => ref.refreshQuietly(damageChargeProvider(chargeId)),
           color: AppColors.primary,
           child: PageBody(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -122,7 +58,7 @@ class _DamageChargePageState extends ConsumerState<DamageChargePage> {
           icon: Icons.cloud_off_rounded,
           tone: AppColors.danger,
           actionLabel: context.l10n.commonTryAgain,
-          onAction: () => ref.invalidate(damageChargeProvider(widget.chargeId)),
+          onAction: () => ref.invalidate(damageChargeProvider(chargeId)),
         ),
         null => const PageBody(
           children: [
