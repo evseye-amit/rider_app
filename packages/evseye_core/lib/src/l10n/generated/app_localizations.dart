@@ -10359,6 +10359,396 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Auto-debit updated'**
   String get paymentsAutoPayUpdated;
+
+  /// Continue
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get commonContinue;
+
+  /// Accept for the rider
+  ///
+  /// In en, this message translates to:
+  /// **'Accept for the rider'**
+  String get exchangeDeskAcceptForRider;
+
+  /// Offer accepted for the rider
+  ///
+  /// In en, this message translates to:
+  /// **'Offer accepted for the rider'**
+  String get exchangeDeskAcceptedForRider;
+
+  /// Approve request
+  ///
+  /// In en, this message translates to:
+  /// **'Approve request'**
+  String get exchangeDeskApprove;
+
+  /// Request approved
+  ///
+  /// In en, this message translates to:
+  /// **'Request approved'**
+  String get exchangeDeskApproved;
+
+  /// If the rider can't use the app, you can record their answer for them. Do this only with their clear consent.
+  ///
+  /// In en, this message translates to:
+  /// **'If the rider can\'t use the app, you can record their answer for them. Do this only with their clear consent.'**
+  String get exchangeDeskAssistedHint;
+
+  /// Reason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get exchangeDeskAssistedReason;
+
+  /// Add a reason for accepting on their behalf
+  ///
+  /// In en, this message translates to:
+  /// **'Add a reason for accepting on their behalf'**
+  String get exchangeDeskAssistedReasonNeeded;
+
+  /// Why is the rider not accepting in the app themselves?
+  ///
+  /// In en, this message translates to:
+  /// **'Why is the rider not accepting in the app themselves?'**
+  String get exchangeDeskAssistedReasonSubtitle;
+
+  /// Change scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Change scooter'**
+  String get exchangeDeskChangeScooter;
+
+  /// Choose replacement scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Choose replacement scooter'**
+  String get exchangeDeskChooseScooter;
+
+  /// Complete exchange
+  ///
+  /// In en, this message translates to:
+  /// **'Complete exchange'**
+  String get exchangeDeskComplete;
+
+  /// Confirm scooter returned
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm scooter returned'**
+  String get exchangeDeskConfirmReturn;
+
+  /// Add how the rider gave consent
+  ///
+  /// In en, this message translates to:
+  /// **'Add how the rider gave consent'**
+  String get exchangeDeskConsentNeeded;
+
+  /// Consent reference
+  ///
+  /// In en, this message translates to:
+  /// **'Consent reference'**
+  String get exchangeDeskConsentReference;
+
+  /// How did the rider agree? For example a signed form number or a recorded call.
+  ///
+  /// In en, this message translates to:
+  /// **'How did the rider agree? For example a signed form number or a recorded call.'**
+  String get exchangeDeskConsentSubtitle;
+
+  /// Rider declined
+  ///
+  /// In en, this message translates to:
+  /// **'Rider declined'**
+  String get exchangeDeskDeclineForRider;
+
+  /// Record why the rider turned the offer down.
+  ///
+  /// In en, this message translates to:
+  /// **'Record why the rider turned the offer down.'**
+  String get exchangeDeskDeclineSubtitle;
+
+  /// Offer declined for the rider
+  ///
+  /// In en, this message translates to:
+  /// **'Offer declined for the rider'**
+  String get exchangeDeskDeclinedForRider;
+
+  /// Breakdown of deposit still due during an exchange
+  ///
+  /// In en, this message translates to:
+  /// **'{total} is still due: {newDeposit} for the new scooter and {shortfall} to top up the rider\'s security deposit.'**
+  String exchangeDeskDepositBreakdown(String total, String newDeposit, String shortfall);
+
+  /// The rider still has to pay {amount} more deposit.
+  ///
+  /// In en, this message translates to:
+  /// **'The rider still has to pay {amount} more deposit.'**
+  String exchangeDeskDepositDue(String amount);
+
+  /// Deposits settled
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits settled'**
+  String get exchangeDeskDepositsSettled;
+
+  /// When a rider asks for a different scooter, the request shows up here.
+  ///
+  /// In en, this message translates to:
+  /// **'When a rider asks for a different scooter, the request shows up here.'**
+  String get exchangeDeskEmptyBody;
+
+  /// Exchange completed
+  ///
+  /// In en, this message translates to:
+  /// **'Exchange completed'**
+  String get exchangeDeskExchangeCompleted;
+
+  /// The old scooter is back. Choose a replacement scooter for the rider.
+  ///
+  /// In en, this message translates to:
+  /// **'The old scooter is back. Choose a replacement scooter for the rider.'**
+  String get exchangeDeskGuideChoose;
+
+  /// The rider accepted. Settle the deposits to move on to the handover.
+  ///
+  /// In en, this message translates to:
+  /// **'The rider accepted. Settle the deposits to move on to the handover.'**
+  String get exchangeDeskGuideDeposits;
+
+  /// Check the request, then approve or reject it.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the request, then approve or reject it.'**
+  String get exchangeDeskGuideReview;
+
+  /// Check the offer below and send it to the rider.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the offer below and send it to the rider.'**
+  String get exchangeDeskGuideSendOffer;
+
+  /// Deposits are settled. Start the handover of the new scooter.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits are settled. Start the handover of the new scooter.'**
+  String get exchangeDeskGuideStartHandover;
+
+  /// Exchange desk guide while the new scooter handover allocation is in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Hand over the new scooter in the allocation steps. Once it\'s active with the rider, complete the exchange.'**
+  String get exchangeDeskHandoverHint;
+
+  /// Handover started
+  ///
+  /// In en, this message translates to:
+  /// **'Handover started'**
+  String get exchangeDeskHandoverStarted;
+
+  /// Needs action
+  ///
+  /// In en, this message translates to:
+  /// **'Needs action'**
+  String get exchangeDeskNeedsAction;
+
+  /// No scooters are available right now.
+  ///
+  /// In en, this message translates to:
+  /// **'No scooters are available right now.'**
+  String get exchangeDeskNoScooters;
+
+  /// Offer preview
+  ///
+  /// In en, this message translates to:
+  /// **'Offer preview'**
+  String get exchangeDeskOfferPreview;
+
+  /// Offer sent to rider
+  ///
+  /// In en, this message translates to:
+  /// **'Offer sent to rider'**
+  String get exchangeDeskOfferSent;
+
+  /// Open the new allocation
+  ///
+  /// In en, this message translates to:
+  /// **'Open the new allocation'**
+  String get exchangeDeskOpenAllocation;
+
+  /// Reject request
+  ///
+  /// In en, this message translates to:
+  /// **'Reject request'**
+  String get exchangeDeskReject;
+
+  /// Tell the rider why this can't be approved.
+  ///
+  /// In en, this message translates to:
+  /// **'Tell the rider why this can\'t be approved.'**
+  String get exchangeDeskRejectSubtitle;
+
+  /// Request rejected
+  ///
+  /// In en, this message translates to:
+  /// **'Request rejected'**
+  String get exchangeDeskRejectedDone;
+
+  /// Replacement scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Replacement scooter'**
+  String get exchangeDeskReplacement;
+
+  /// Reserve this scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Reserve this scooter'**
+  String get exchangeDeskReserveScooter;
+
+  /// Until {time}
+  ///
+  /// In en, this message translates to:
+  /// **'Until {time}'**
+  String exchangeDeskReservedUntil(String time);
+
+  /// Return confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Return confirmed'**
+  String get exchangeDeskReturnConfirmed;
+
+  /// Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish the return in Returns: verify the rider\'s OTP and complete the inspection. Then confirm it here.'**
+  String get exchangeDeskReturnHint;
+
+  /// Rider's note
+  ///
+  /// In en, this message translates to:
+  /// **'Rider\'s note'**
+  String get exchangeDeskRiderNote;
+
+  /// Scooter reserved
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter reserved'**
+  String get exchangeDeskScooterReserved;
+
+  /// Send offer to rider
+  ///
+  /// In en, this message translates to:
+  /// **'Send offer to rider'**
+  String get exchangeDeskSendOffer;
+
+  /// Settle deposits
+  ///
+  /// In en, this message translates to:
+  /// **'Settle deposits'**
+  String get exchangeDeskSettleDeposits;
+
+  /// Start handover
+  ///
+  /// In en, this message translates to:
+  /// **'Start handover'**
+  String get exchangeDeskStartHandover;
+
+  /// Offer sent
+  ///
+  /// In en, this message translates to:
+  /// **'Offer sent'**
+  String get exchangeDeskStatusOfferSent;
+
+  /// Scooter reserved
+  ///
+  /// In en, this message translates to:
+  /// **'Scooter reserved'**
+  String get exchangeDeskStatusReserved;
+
+  /// Riders asking for a different scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Riders asking for a different scooter'**
+  String get exchangeDeskSubtitle;
+
+  /// Offer sent. Waiting for the rider to accept it in their app.
+  ///
+  /// In en, this message translates to:
+  /// **'Offer sent. Waiting for the rider to accept it in their app.'**
+  String get exchangeDeskWaitingRider;
+
+  /// Waiting for rider
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for rider'**
+  String get exchangeDeskWithRider;
+
+  /// Read the terms
+  ///
+  /// In en, this message translates to:
+  /// **'Read the terms'**
+  String get exchangeReadTerms;
+
+  /// Exchange desk action that starts the shared vehicle check-in for the rider's current scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Check in old scooter'**
+  String get exchangeDeskCheckIn;
+
+  /// Exchange desk action that opens the old scooter check-in already in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Open check-in'**
+  String get exchangeDeskOpenCheckIn;
+
+  /// Snackbar after the exchange check-in of the old scooter starts
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in started'**
+  String get exchangeDeskCheckInStarted;
+
+  /// Exchange desk guide while the old scooter still has to be checked in
+  ///
+  /// In en, this message translates to:
+  /// **'When the rider brings the scooter to the hub, check it in. If the request isn\'t valid, reject it.'**
+  String get exchangeDeskGuideCheckIn;
+
+  /// Exchange desk guide while the old scooter check-in is in progress
+  ///
+  /// In en, this message translates to:
+  /// **'The old scooter check-in is open. Finish the photos, the report and both OTP confirmations, then choose the replacement here.'**
+  String get exchangeDeskCheckInHint;
+
+  /// Exchange desk message after the exchange is completed
+  ///
+  /// In en, this message translates to:
+  /// **'The rider has the new scooter and their agreement now shows it.'**
+  String get exchangeDeskCompletedBody;
+
+  /// Exchange desk message for rejected, cancelled or expired requests
+  ///
+  /// In en, this message translates to:
+  /// **'This request is closed. No more steps are needed.'**
+  String get exchangeDeskClosedBody;
+
+  /// Exchange desk card title for the offer the rider accepted
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted plan'**
+  String get exchangeDeskAcceptedPlan;
+
+  /// Subtitle naming the rider a replacement scooter is chosen for
+  ///
+  /// In en, this message translates to:
+  /// **'For {name}'**
+  String exchangeDeskForRider(String name);
+
+  /// Count of scooters that can be chosen as the exchange replacement
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 scooter ready in your hubs} other{{count} scooters ready in your hubs}}'**
+  String exchangeDeskScootersReady(int count);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

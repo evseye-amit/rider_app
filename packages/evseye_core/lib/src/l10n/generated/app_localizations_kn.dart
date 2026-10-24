@@ -5457,4 +5457,220 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get paymentsAutoPayUpdated => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ಅಪ್‌ಡೇಟ್ ಆಗಿದೆ';
+
+  @override
+  String get commonContinue => 'ಮುಂದುವರಿಸಿ';
+
+  @override
+  String get exchangeDeskAcceptForRider => 'ರೈಡರ್ ಪರವಾಗಿ ಒಪ್ಪಿಕೊಳ್ಳಿ';
+
+  @override
+  String get exchangeDeskAcceptedForRider => 'ರೈಡರ್ ಪರವಾಗಿ ಆಫರ್ ಒಪ್ಪಿಕೊಳ್ಳಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskApprove => 'ಮನವಿ ಅನುಮೋದಿಸಿ';
+
+  @override
+  String get exchangeDeskApproved => 'ಮನವಿ ಅನುಮೋದಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskAssistedHint =>
+      'ರೈಡರ್ ಆ್ಯಪ್ ಬಳಸಲು ಸಾಧ್ಯವಾಗದಿದ್ದರೆ, ಅವರ ಉತ್ತರವನ್ನು ನೀವು ದಾಖಲಿಸಬಹುದು. ಅವರ ಸ್ಪಷ್ಟ ಒಪ್ಪಿಗೆಯೊಂದಿಗೆ ಮಾತ್ರ ಮಾಡಿ.';
+
+  @override
+  String get exchangeDeskAssistedReason => 'ಕಾರಣ';
+
+  @override
+  String get exchangeDeskAssistedReasonNeeded => 'ಅವರ ಪರವಾಗಿ ಒಪ್ಪಲು ಕಾರಣ ಸೇರಿಸಿ';
+
+  @override
+  String get exchangeDeskAssistedReasonSubtitle => 'ರೈಡರ್ ತಾವೇ ಆ್ಯಪ್‌ನಲ್ಲಿ ಏಕೆ ಒಪ್ಪುತ್ತಿಲ್ಲ?';
+
+  @override
+  String get exchangeDeskChangeScooter => 'ಸ್ಕೂಟರ್ ಬದಲಿಸಿ';
+
+  @override
+  String get exchangeDeskChooseScooter => 'ಬದಲಿ ಸ್ಕೂಟರ್ ಆಯ್ಕೆಮಾಡಿ';
+
+  @override
+  String get exchangeDeskComplete => 'ಬದಲಾವಣೆ ಪೂರ್ಣಗೊಳಿಸಿ';
+
+  @override
+  String get exchangeDeskConfirmReturn => 'ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿದೆ ಎಂದು ದೃಢೀಕರಿಸಿ';
+
+  @override
+  String get exchangeDeskConsentNeeded => 'ರೈಡರ್ ಹೇಗೆ ಒಪ್ಪಿಗೆ ನೀಡಿದರು ಎಂದು ಸೇರಿಸಿ';
+
+  @override
+  String get exchangeDeskConsentReference => 'ಒಪ್ಪಿಗೆಯ ಉಲ್ಲೇಖ';
+
+  @override
+  String get exchangeDeskConsentSubtitle => 'ರೈಡರ್ ಹೇಗೆ ಒಪ್ಪಿದರು? ಉದಾಹರಣೆಗೆ ಸಹಿ ಮಾಡಿದ ಫಾರ್ಮ್ ಸಂಖ್ಯೆ ಅಥವಾ ದಾಖಲಾದ ಕರೆ.';
+
+  @override
+  String get exchangeDeskDeclineForRider => 'ರೈಡರ್ ನಿರಾಕರಿಸಿದರು';
+
+  @override
+  String get exchangeDeskDeclineSubtitle => 'ರೈಡರ್ ಆಫರ್ ಅನ್ನು ಏಕೆ ತಿರಸ್ಕರಿಸಿದರು ಎಂದು ದಾಖಲಿಸಿ.';
+
+  @override
+  String get exchangeDeskDeclinedForRider => 'ರೈಡರ್ ಪರವಾಗಿ ಆಫರ್ ತಿರಸ್ಕರಿಸಲಾಗಿದೆ';
+
+  @override
+  String exchangeDeskDepositBreakdown(String total, String newDeposit, String shortfall) {
+    return '$total ಇನ್ನೂ ಬಾಕಿ ಇದೆ: ಹೊಸ ಸ್ಕೂಟರ್‌ಗೆ $newDeposit ಮತ್ತು ರೈಡರ್ ಭದ್ರತಾ ಠೇವಣಿ ಪೂರ್ಣಗೊಳಿಸಲು $shortfall.';
+  }
+
+  @override
+  String exchangeDeskDepositDue(String amount) {
+    return 'ರೈಡರ್ ಇನ್ನೂ $amount ಠೇವಣಿ ಪಾವತಿಸಬೇಕಿದೆ.';
+  }
+
+  @override
+  String get exchangeDeskDepositsSettled => 'ಠೇವಣಿ ಹೊಂದಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskEmptyBody => 'ರೈಡರ್ ಬೇರೆ ಸ್ಕೂಟರ್ ಕೇಳಿದಾಗ, ಮನವಿ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ.';
+
+  @override
+  String get exchangeDeskExchangeCompleted => 'ಬದಲಾವಣೆ ಪೂರ್ಣಗೊಂಡಿದೆ';
+
+  @override
+  String get exchangeDeskGuideChoose => 'ಹಳೆಯ ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿದೆ. ರೈಡರ್‌ಗೆ ಬದಲಿ ಸ್ಕೂಟರ್ ಆಯ್ಕೆಮಾಡಿ.';
+
+  @override
+  String get exchangeDeskGuideDeposits => 'ರೈಡರ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ. ಹಸ್ತಾಂತರಕ್ಕೆ ಮುಂದುವರಿಯಲು ಠೇವಣಿ ಹೊಂದಿಸಿ.';
+
+  @override
+  String get exchangeDeskGuideReview => 'ಮನವಿಯನ್ನು ಪರಿಶೀಲಿಸಿ, ನಂತರ ಅನುಮೋದಿಸಿ ಅಥವಾ ತಿರಸ್ಕರಿಸಿ.';
+
+  @override
+  String get exchangeDeskGuideSendOffer => 'ಕೆಳಗಿನ ಆಫರ್ ಪರಿಶೀಲಿಸಿ ಮತ್ತು ರೈಡರ್‌ಗೆ ಕಳುಹಿಸಿ.';
+
+  @override
+  String get exchangeDeskGuideStartHandover => 'ಠೇವಣಿ ಹೊಂದಿಸಲಾಗಿದೆ. ಹೊಸ ಸ್ಕೂಟರ್ ಹಸ್ತಾಂತರ ಶುರು ಮಾಡಿ.';
+
+  @override
+  String get exchangeDeskHandoverHint =>
+      'ಹೊಸ ಸ್ಕೂಟರ್ ಅನ್ನು ಹಂಚಿಕೆ ಹಂತಗಳಲ್ಲಿ ಹಸ್ತಾಂತರಿಸಿ. ಅದು ರೈಡರ್ ಬಳಿ ಸಕ್ರಿಯವಾದ ನಂತರ ಬದಲಾವಣೆ ಪೂರ್ಣಗೊಳಿಸಿ.';
+
+  @override
+  String get exchangeDeskHandoverStarted => 'ಹಸ್ತಾಂತರ ಶುರುವಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskNeedsAction => 'ಕ್ರಮ ಬೇಕು';
+
+  @override
+  String get exchangeDeskNoScooters => 'ಈಗ ಯಾವುದೇ ಸ್ಕೂಟರ್ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get exchangeDeskOfferPreview => 'ಆಫರ್ ಮುನ್ನೋಟ';
+
+  @override
+  String get exchangeDeskOfferSent => 'ರೈಡರ್‌ಗೆ ಆಫರ್ ಕಳುಹಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskOpenAllocation => 'ಹೊಸ ಹಂಚಿಕೆಯನ್ನು ತೆರೆಯಿರಿ';
+
+  @override
+  String get exchangeDeskReject => 'ಮನವಿ ತಿರಸ್ಕರಿಸಿ';
+
+  @override
+  String get exchangeDeskRejectSubtitle => 'ಇದನ್ನು ಯಾಕೆ ಅನುಮೋದಿಸಲು ಆಗುವುದಿಲ್ಲ ಎಂದು ರೈಡರ್‌ಗೆ ತಿಳಿಸಿ.';
+
+  @override
+  String get exchangeDeskRejectedDone => 'ಮನವಿ ತಿರಸ್ಕರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskReplacement => 'ಬದಲಿ ಸ್ಕೂಟರ್';
+
+  @override
+  String get exchangeDeskReserveScooter => 'ಈ ಸ್ಕೂಟರ್ ಕಾಯ್ದಿರಿಸಿ';
+
+  @override
+  String exchangeDeskReservedUntil(String time) {
+    return '$time ವರೆಗೆ';
+  }
+
+  @override
+  String get exchangeDeskReturnConfirmed => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ದೃಢೀಕರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskReturnHint =>
+      'ರಿಟರ್ನ್‌ನಲ್ಲಿ ಹಿಂದಿರುಗಿಸುವಿಕೆ ಮುಗಿಸಿ: ರೈಡರ್ OTP ಪರಿಶೀಲಿಸಿ ಮತ್ತು ತಪಾಸಣೆ ಪೂರ್ಣಗೊಳಿಸಿ. ನಂತರ ಇಲ್ಲಿ ದೃಢೀಕರಿಸಿ.';
+
+  @override
+  String get exchangeDeskRiderNote => 'ರೈಡರ್ ಟಿಪ್ಪಣಿ';
+
+  @override
+  String get exchangeDeskScooterReserved => 'ಸ್ಕೂಟರ್ ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskSendOffer => 'ರೈಡರ್‌ಗೆ ಆಫರ್ ಕಳುಹಿಸಿ';
+
+  @override
+  String get exchangeDeskSettleDeposits => 'ಠೇವಣಿ ಹೊಂದಿಸಿ';
+
+  @override
+  String get exchangeDeskStartHandover => 'ಹಸ್ತಾಂತರ ಶುರು ಮಾಡಿ';
+
+  @override
+  String get exchangeDeskStatusOfferSent => 'ಆಫರ್ ಕಳುಹಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskStatusReserved => 'ಸ್ಕೂಟರ್ ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskSubtitle => 'ಬೇರೆ ಸ್ಕೂಟರ್ ಕೇಳುತ್ತಿರುವ ರೈಡರ್‌ಗಳು';
+
+  @override
+  String get exchangeDeskWaitingRider => 'ಆಫರ್ ಕಳುಹಿಸಲಾಗಿದೆ. ರೈಡರ್ ತಮ್ಮ ಆ್ಯಪ್‌ನಲ್ಲಿ ಸ್ವೀಕರಿಸುವುದನ್ನು ಕಾಯಲಾಗುತ್ತಿದೆ.';
+
+  @override
+  String get exchangeDeskWithRider => 'ರೈಡರ್‌ಗಾಗಿ ಕಾಯುತ್ತಿದೆ';
+
+  @override
+  String get exchangeReadTerms => 'ನಿಯಮಗಳನ್ನು ಓದಿ';
+
+  @override
+  String get exchangeDeskCheckIn => 'ಹಳೆಯ ಸ್ಕೂಟರ್ ಚೆಕ್-ಇನ್ ಮಾಡಿ';
+
+  @override
+  String get exchangeDeskOpenCheckIn => 'ಚೆಕ್-ಇನ್ ತೆರೆಯಿರಿ';
+
+  @override
+  String get exchangeDeskCheckInStarted => 'ಚೆಕ್-ಇನ್ ಪ್ರಾರಂಭವಾಗಿದೆ';
+
+  @override
+  String get exchangeDeskGuideCheckIn =>
+      'ರೈಡರ್ ಸ್ಕೂಟರ್ ಅನ್ನು ಹಬ್‌ಗೆ ತಂದಾಗ ಅದನ್ನು ಚೆಕ್-ಇನ್ ಮಾಡಿ. ವಿನಂತಿ ಸರಿಯಿಲ್ಲದಿದ್ದರೆ ಅದನ್ನು ತಿರಸ್ಕರಿಸಿ.';
+
+  @override
+  String get exchangeDeskCheckInHint =>
+      'ಹಳೆಯ ಸ್ಕೂಟರ್ ಚೆಕ್-ಇನ್ ನಡೆಯುತ್ತಿದೆ. ಫೋಟೋಗಳು, ವರದಿ ಮತ್ತು ಎರಡೂ OTP ದೃಢೀಕರಣಗಳನ್ನು ಮುಗಿಸಿ, ನಂತರ ಇಲ್ಲಿ ಬದಲಿ ಸ್ಕೂಟರ್ ಆಯ್ಕೆಮಾಡಿ.';
+
+  @override
+  String get exchangeDeskCompletedBody => 'ರೈಡರ್ ಬಳಿ ಹೊಸ ಸ್ಕೂಟರ್ ಇದೆ ಮತ್ತು ಅವರ ಒಪ್ಪಂದದಲ್ಲಿ ಈಗ ಅದೇ ತೋರಿಸುತ್ತದೆ.';
+
+  @override
+  String get exchangeDeskClosedBody => 'ಈ ವಿನಂತಿಯನ್ನು ಮುಚ್ಚಲಾಗಿದೆ. ಇನ್ನು ಯಾವುದೇ ಹಂತಗಳು ಬೇಕಿಲ್ಲ.';
+
+  @override
+  String get exchangeDeskAcceptedPlan => 'ಒಪ್ಪಿಕೊಂಡ ಪ್ಲಾನ್';
+
+  @override
+  String exchangeDeskForRider(String name) {
+    return '$name ಅವರಿಗಾಗಿ';
+  }
+
+  @override
+  String exchangeDeskScootersReady(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'ನಿಮ್ಮ ಹಬ್‌ಗಳಲ್ಲಿ $count ಸ್ಕೂಟರ್‌ಗಳು ಸಿದ್ಧವಾಗಿವೆ',
+      one: 'ನಿಮ್ಮ ಹಬ್‌ಗಳಲ್ಲಿ 1 ಸ್ಕೂಟರ್ ಸಿದ್ಧವಾಗಿದೆ',
+    );
+    return '$_temp0';
+  }
 }

@@ -7409,5 +7409,296 @@
   "paymentsAutoPayUpdated": "Auto-debit updated",
   "@paymentsAutoPayUpdated": {
     "description": "Shown after turning auto-debit on or off, or pausing or resuming it"
+  },
+  "commonContinue": "Continue",
+  "@commonContinue": {
+    "description": "Continue"
+  },
+  "exchangeDeskAcceptForRider": "Accept for the rider",
+  "@exchangeDeskAcceptForRider": {
+    "description": "Accept for the rider"
+  },
+  "exchangeDeskAcceptedForRider": "Offer accepted for the rider",
+  "@exchangeDeskAcceptedForRider": {
+    "description": "Offer accepted for the rider"
+  },
+  "exchangeDeskApprove": "Approve request",
+  "@exchangeDeskApprove": {
+    "description": "Approve request"
+  },
+  "exchangeDeskApproved": "Request approved",
+  "@exchangeDeskApproved": {
+    "description": "Request approved"
+  },
+  "exchangeDeskAssistedHint": "If the rider can't use the app, you can record their answer for them. Do this only with their clear consent.",
+  "@exchangeDeskAssistedHint": {
+    "description": "If the rider can't use the app, you can record their answer for them. Do this only with their clear consent."
+  },
+  "exchangeDeskAssistedReason": "Reason",
+  "@exchangeDeskAssistedReason": {
+    "description": "Reason"
+  },
+  "exchangeDeskAssistedReasonNeeded": "Add a reason for accepting on their behalf",
+  "@exchangeDeskAssistedReasonNeeded": {
+    "description": "Add a reason for accepting on their behalf"
+  },
+  "exchangeDeskAssistedReasonSubtitle": "Why is the rider not accepting in the app themselves?",
+  "@exchangeDeskAssistedReasonSubtitle": {
+    "description": "Why is the rider not accepting in the app themselves?"
+  },
+  "exchangeDeskChangeScooter": "Change scooter",
+  "@exchangeDeskChangeScooter": {
+    "description": "Change scooter"
+  },
+  "exchangeDeskChooseScooter": "Choose replacement scooter",
+  "@exchangeDeskChooseScooter": {
+    "description": "Choose replacement scooter"
+  },
+  "exchangeDeskComplete": "Complete exchange",
+  "@exchangeDeskComplete": {
+    "description": "Complete exchange"
+  },
+  "exchangeDeskConfirmReturn": "Confirm scooter returned",
+  "@exchangeDeskConfirmReturn": {
+    "description": "Confirm scooter returned"
+  },
+  "exchangeDeskConsentNeeded": "Add how the rider gave consent",
+  "@exchangeDeskConsentNeeded": {
+    "description": "Add how the rider gave consent"
+  },
+  "exchangeDeskConsentReference": "Consent reference",
+  "@exchangeDeskConsentReference": {
+    "description": "Consent reference"
+  },
+  "exchangeDeskConsentSubtitle": "How did the rider agree? For example a signed form number or a recorded call.",
+  "@exchangeDeskConsentSubtitle": {
+    "description": "How did the rider agree? For example a signed form number or a recorded call."
+  },
+  "exchangeDeskDeclineForRider": "Rider declined",
+  "@exchangeDeskDeclineForRider": {
+    "description": "Rider declined"
+  },
+  "exchangeDeskDeclineSubtitle": "Record why the rider turned the offer down.",
+  "@exchangeDeskDeclineSubtitle": {
+    "description": "Record why the rider turned the offer down."
+  },
+  "exchangeDeskDeclinedForRider": "Offer declined for the rider",
+  "@exchangeDeskDeclinedForRider": {
+    "description": "Offer declined for the rider"
+  },
+  "exchangeDeskDepositBreakdown": "{total} is still due: {newDeposit} for the new scooter and {shortfall} to top up the rider's security deposit.",
+  "@exchangeDeskDepositBreakdown": {
+    "description": "Breakdown of deposit still due during an exchange",
+    "placeholders": {
+      "total": {
+        "type": "String"
+      },
+      "newDeposit": {
+        "type": "String"
+      },
+      "shortfall": {
+        "type": "String"
+      }
+    }
+  },
+  "exchangeDeskDepositDue": "The rider still has to pay {amount} more deposit.",
+  "@exchangeDeskDepositDue": {
+    "description": "The rider still has to pay {amount} more deposit.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "exchangeDeskDepositsSettled": "Deposits settled",
+  "@exchangeDeskDepositsSettled": {
+    "description": "Deposits settled"
+  },
+  "exchangeDeskEmptyBody": "When a rider asks for a different scooter, the request shows up here.",
+  "@exchangeDeskEmptyBody": {
+    "description": "When a rider asks for a different scooter, the request shows up here."
+  },
+  "exchangeDeskExchangeCompleted": "Exchange completed",
+  "@exchangeDeskExchangeCompleted": {
+    "description": "Exchange completed"
+  },
+  "exchangeDeskGuideChoose": "The old scooter is back. Choose a replacement scooter for the rider.",
+  "@exchangeDeskGuideChoose": {
+    "description": "The old scooter is back. Choose a replacement scooter for the rider."
+  },
+  "exchangeDeskGuideDeposits": "The rider accepted. Settle the deposits to move on to the handover.",
+  "@exchangeDeskGuideDeposits": {
+    "description": "The rider accepted. Settle the deposits to move on to the handover."
+  },
+  "exchangeDeskGuideReview": "Check the request, then approve or reject it.",
+  "@exchangeDeskGuideReview": {
+    "description": "Check the request, then approve or reject it."
+  },
+  "exchangeDeskGuideSendOffer": "Check the offer below and send it to the rider.",
+  "@exchangeDeskGuideSendOffer": {
+    "description": "Check the offer below and send it to the rider."
+  },
+  "exchangeDeskGuideStartHandover": "Deposits are settled. Start the handover of the new scooter.",
+  "@exchangeDeskGuideStartHandover": {
+    "description": "Deposits are settled. Start the handover of the new scooter."
+  },
+  "exchangeDeskHandoverHint": "Hand over the new scooter in the allocation steps. Once it's active with the rider, complete the exchange.",
+  "@exchangeDeskHandoverHint": {
+    "description": "Exchange desk guide while the new scooter handover allocation is in progress"
+  },
+  "exchangeDeskHandoverStarted": "Handover started",
+  "@exchangeDeskHandoverStarted": {
+    "description": "Handover started"
+  },
+  "exchangeDeskNeedsAction": "Needs action",
+  "@exchangeDeskNeedsAction": {
+    "description": "Needs action"
+  },
+  "exchangeDeskNoScooters": "No scooters are available right now.",
+  "@exchangeDeskNoScooters": {
+    "description": "No scooters are available right now."
+  },
+  "exchangeDeskOfferPreview": "Offer preview",
+  "@exchangeDeskOfferPreview": {
+    "description": "Offer preview"
+  },
+  "exchangeDeskOfferSent": "Offer sent to rider",
+  "@exchangeDeskOfferSent": {
+    "description": "Offer sent to rider"
+  },
+  "exchangeDeskOpenAllocation": "Open the new allocation",
+  "@exchangeDeskOpenAllocation": {
+    "description": "Open the new allocation"
+  },
+  "exchangeDeskReject": "Reject request",
+  "@exchangeDeskReject": {
+    "description": "Reject request"
+  },
+  "exchangeDeskRejectSubtitle": "Tell the rider why this can't be approved.",
+  "@exchangeDeskRejectSubtitle": {
+    "description": "Tell the rider why this can't be approved."
+  },
+  "exchangeDeskRejectedDone": "Request rejected",
+  "@exchangeDeskRejectedDone": {
+    "description": "Request rejected"
+  },
+  "exchangeDeskReplacement": "Replacement scooter",
+  "@exchangeDeskReplacement": {
+    "description": "Replacement scooter"
+  },
+  "exchangeDeskReserveScooter": "Reserve this scooter",
+  "@exchangeDeskReserveScooter": {
+    "description": "Reserve this scooter"
+  },
+  "exchangeDeskReservedUntil": "Until {time}",
+  "@exchangeDeskReservedUntil": {
+    "description": "Until {time}",
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "exchangeDeskReturnConfirmed": "Return confirmed",
+  "@exchangeDeskReturnConfirmed": {
+    "description": "Return confirmed"
+  },
+  "exchangeDeskReturnHint": "Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here.",
+  "@exchangeDeskReturnHint": {
+    "description": "Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here."
+  },
+  "exchangeDeskRiderNote": "Rider's note",
+  "@exchangeDeskRiderNote": {
+    "description": "Rider's note"
+  },
+  "exchangeDeskScooterReserved": "Scooter reserved",
+  "@exchangeDeskScooterReserved": {
+    "description": "Scooter reserved"
+  },
+  "exchangeDeskSendOffer": "Send offer to rider",
+  "@exchangeDeskSendOffer": {
+    "description": "Send offer to rider"
+  },
+  "exchangeDeskSettleDeposits": "Settle deposits",
+  "@exchangeDeskSettleDeposits": {
+    "description": "Settle deposits"
+  },
+  "exchangeDeskStartHandover": "Start handover",
+  "@exchangeDeskStartHandover": {
+    "description": "Start handover"
+  },
+  "exchangeDeskStatusOfferSent": "Offer sent",
+  "@exchangeDeskStatusOfferSent": {
+    "description": "Offer sent"
+  },
+  "exchangeDeskStatusReserved": "Scooter reserved",
+  "@exchangeDeskStatusReserved": {
+    "description": "Scooter reserved"
+  },
+  "exchangeDeskSubtitle": "Riders asking for a different scooter",
+  "@exchangeDeskSubtitle": {
+    "description": "Riders asking for a different scooter"
+  },
+  "exchangeDeskWaitingRider": "Offer sent. Waiting for the rider to accept it in their app.",
+  "@exchangeDeskWaitingRider": {
+    "description": "Offer sent. Waiting for the rider to accept it in their app."
+  },
+  "exchangeDeskWithRider": "Waiting for rider",
+  "@exchangeDeskWithRider": {
+    "description": "Waiting for rider"
+  },
+  "exchangeReadTerms": "Read the terms",
+  "@exchangeReadTerms": {
+    "description": "Read the terms"
+  },
+  "exchangeDeskCheckIn": "Check in old scooter",
+  "@exchangeDeskCheckIn": {
+    "description": "Exchange desk action that starts the shared vehicle check-in for the rider's current scooter"
+  },
+  "exchangeDeskOpenCheckIn": "Open check-in",
+  "@exchangeDeskOpenCheckIn": {
+    "description": "Exchange desk action that opens the old scooter check-in already in progress"
+  },
+  "exchangeDeskCheckInStarted": "Check-in started",
+  "@exchangeDeskCheckInStarted": {
+    "description": "Snackbar after the exchange check-in of the old scooter starts"
+  },
+  "exchangeDeskGuideCheckIn": "When the rider brings the scooter to the hub, check it in. If the request isn't valid, reject it.",
+  "@exchangeDeskGuideCheckIn": {
+    "description": "Exchange desk guide while the old scooter still has to be checked in"
+  },
+  "exchangeDeskCheckInHint": "The old scooter check-in is open. Finish the photos, the report and both OTP confirmations, then choose the replacement here.",
+  "@exchangeDeskCheckInHint": {
+    "description": "Exchange desk guide while the old scooter check-in is in progress"
+  },
+  "exchangeDeskCompletedBody": "The rider has the new scooter and their agreement now shows it.",
+  "@exchangeDeskCompletedBody": {
+    "description": "Exchange desk message after the exchange is completed"
+  },
+  "exchangeDeskClosedBody": "This request is closed. No more steps are needed.",
+  "@exchangeDeskClosedBody": {
+    "description": "Exchange desk message for rejected, cancelled or expired requests"
+  },
+  "exchangeDeskAcceptedPlan": "Accepted plan",
+  "@exchangeDeskAcceptedPlan": {
+    "description": "Exchange desk card title for the offer the rider accepted"
+  },
+  "exchangeDeskForRider": "For {name}",
+  "@exchangeDeskForRider": {
+    "description": "Subtitle naming the rider a replacement scooter is chosen for",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "exchangeDeskScootersReady": "{count, plural, =1{1 scooter ready in your hubs} other{{count} scooters ready in your hubs}}",
+  "@exchangeDeskScootersReady": {
+    "description": "Count of scooters that can be chosen as the exchange replacement",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

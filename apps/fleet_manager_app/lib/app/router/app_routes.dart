@@ -22,6 +22,10 @@ abstract final class Routes {
 
   static const String maintenanceDetail = '/maintenance/vehicle';
 
+  static const String exchanges = '/exchanges';
+  static const String exchangeDetail = '/exchanges/detail';
+  static const String exchangeReplacement = '/exchanges/replacement';
+
   static const String fleetSearch = '/search';
   static const String fleetSearchScooter = '/search/scooter';
 

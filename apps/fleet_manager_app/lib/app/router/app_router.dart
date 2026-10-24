@@ -11,6 +11,9 @@ import '../../features/allocation/presentation/pages/assign_vehicle_page.dart';
 import '../../features/allocation/presentation/pages/rider_verification_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/otp_page.dart';
+import '../../features/exchanges/presentation/pages/choose_scooter_page.dart';
+import '../../features/exchanges/presentation/pages/exchange_case_page.dart';
+import '../../features/exchanges/presentation/pages/exchange_cases_page.dart';
 import '../../features/fleet_search/presentation/pages/fleet_search_page.dart';
 import '../../features/fleet_search/presentation/pages/scooter_detail_page.dart';
 import '../../features/hub/presentation/pages/home_page.dart';
@@ -152,6 +155,17 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.fleetSearchScooter,
         name: 'fleetSearchScooter',
         builder: (context, state) => ScooterDetailPage(fleetId: state.uri.queryParameters['id'] ?? ''),
+      ),
+      GoRoute(path: Routes.exchanges, name: 'exchanges', builder: (context, state) => const ExchangeCasesPage()),
+      GoRoute(
+        path: Routes.exchangeDetail,
+        name: 'exchangeDetail',
+        builder: (context, state) => ExchangeCasePage(exchangeId: state.uri.queryParameters['id'] ?? ''),
+      ),
+      GoRoute(
+        path: Routes.exchangeReplacement,
+        name: 'exchangeReplacement',
+        builder: (context, state) => ChooseScooterPage(exchangeId: state.uri.queryParameters['id'] ?? ''),
       ),
       GoRoute(path: Routes.support, name: 'support', builder: (context, state) => const SupportDeskPage()),
       GoRoute(

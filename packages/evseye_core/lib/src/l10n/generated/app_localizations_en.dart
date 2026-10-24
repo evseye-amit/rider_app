@@ -5450,4 +5450,221 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get paymentsAutoPayUpdated => 'Auto-debit updated';
+
+  @override
+  String get commonContinue => 'Continue';
+
+  @override
+  String get exchangeDeskAcceptForRider => 'Accept for the rider';
+
+  @override
+  String get exchangeDeskAcceptedForRider => 'Offer accepted for the rider';
+
+  @override
+  String get exchangeDeskApprove => 'Approve request';
+
+  @override
+  String get exchangeDeskApproved => 'Request approved';
+
+  @override
+  String get exchangeDeskAssistedHint =>
+      'If the rider can\'t use the app, you can record their answer for them. Do this only with their clear consent.';
+
+  @override
+  String get exchangeDeskAssistedReason => 'Reason';
+
+  @override
+  String get exchangeDeskAssistedReasonNeeded => 'Add a reason for accepting on their behalf';
+
+  @override
+  String get exchangeDeskAssistedReasonSubtitle => 'Why is the rider not accepting in the app themselves?';
+
+  @override
+  String get exchangeDeskChangeScooter => 'Change scooter';
+
+  @override
+  String get exchangeDeskChooseScooter => 'Choose replacement scooter';
+
+  @override
+  String get exchangeDeskComplete => 'Complete exchange';
+
+  @override
+  String get exchangeDeskConfirmReturn => 'Confirm scooter returned';
+
+  @override
+  String get exchangeDeskConsentNeeded => 'Add how the rider gave consent';
+
+  @override
+  String get exchangeDeskConsentReference => 'Consent reference';
+
+  @override
+  String get exchangeDeskConsentSubtitle =>
+      'How did the rider agree? For example a signed form number or a recorded call.';
+
+  @override
+  String get exchangeDeskDeclineForRider => 'Rider declined';
+
+  @override
+  String get exchangeDeskDeclineSubtitle => 'Record why the rider turned the offer down.';
+
+  @override
+  String get exchangeDeskDeclinedForRider => 'Offer declined for the rider';
+
+  @override
+  String exchangeDeskDepositBreakdown(String total, String newDeposit, String shortfall) {
+    return '$total is still due: $newDeposit for the new scooter and $shortfall to top up the rider\'s security deposit.';
+  }
+
+  @override
+  String exchangeDeskDepositDue(String amount) {
+    return 'The rider still has to pay $amount more deposit.';
+  }
+
+  @override
+  String get exchangeDeskDepositsSettled => 'Deposits settled';
+
+  @override
+  String get exchangeDeskEmptyBody => 'When a rider asks for a different scooter, the request shows up here.';
+
+  @override
+  String get exchangeDeskExchangeCompleted => 'Exchange completed';
+
+  @override
+  String get exchangeDeskGuideChoose => 'The old scooter is back. Choose a replacement scooter for the rider.';
+
+  @override
+  String get exchangeDeskGuideDeposits => 'The rider accepted. Settle the deposits to move on to the handover.';
+
+  @override
+  String get exchangeDeskGuideReview => 'Check the request, then approve or reject it.';
+
+  @override
+  String get exchangeDeskGuideSendOffer => 'Check the offer below and send it to the rider.';
+
+  @override
+  String get exchangeDeskGuideStartHandover => 'Deposits are settled. Start the handover of the new scooter.';
+
+  @override
+  String get exchangeDeskHandoverHint =>
+      'Hand over the new scooter in the allocation steps. Once it\'s active with the rider, complete the exchange.';
+
+  @override
+  String get exchangeDeskHandoverStarted => 'Handover started';
+
+  @override
+  String get exchangeDeskNeedsAction => 'Needs action';
+
+  @override
+  String get exchangeDeskNoScooters => 'No scooters are available right now.';
+
+  @override
+  String get exchangeDeskOfferPreview => 'Offer preview';
+
+  @override
+  String get exchangeDeskOfferSent => 'Offer sent to rider';
+
+  @override
+  String get exchangeDeskOpenAllocation => 'Open the new allocation';
+
+  @override
+  String get exchangeDeskReject => 'Reject request';
+
+  @override
+  String get exchangeDeskRejectSubtitle => 'Tell the rider why this can\'t be approved.';
+
+  @override
+  String get exchangeDeskRejectedDone => 'Request rejected';
+
+  @override
+  String get exchangeDeskReplacement => 'Replacement scooter';
+
+  @override
+  String get exchangeDeskReserveScooter => 'Reserve this scooter';
+
+  @override
+  String exchangeDeskReservedUntil(String time) {
+    return 'Until $time';
+  }
+
+  @override
+  String get exchangeDeskReturnConfirmed => 'Return confirmed';
+
+  @override
+  String get exchangeDeskReturnHint =>
+      'Finish the return in Returns: verify the rider\'s OTP and complete the inspection. Then confirm it here.';
+
+  @override
+  String get exchangeDeskRiderNote => 'Rider\'s note';
+
+  @override
+  String get exchangeDeskScooterReserved => 'Scooter reserved';
+
+  @override
+  String get exchangeDeskSendOffer => 'Send offer to rider';
+
+  @override
+  String get exchangeDeskSettleDeposits => 'Settle deposits';
+
+  @override
+  String get exchangeDeskStartHandover => 'Start handover';
+
+  @override
+  String get exchangeDeskStatusOfferSent => 'Offer sent';
+
+  @override
+  String get exchangeDeskStatusReserved => 'Scooter reserved';
+
+  @override
+  String get exchangeDeskSubtitle => 'Riders asking for a different scooter';
+
+  @override
+  String get exchangeDeskWaitingRider => 'Offer sent. Waiting for the rider to accept it in their app.';
+
+  @override
+  String get exchangeDeskWithRider => 'Waiting for rider';
+
+  @override
+  String get exchangeReadTerms => 'Read the terms';
+
+  @override
+  String get exchangeDeskCheckIn => 'Check in old scooter';
+
+  @override
+  String get exchangeDeskOpenCheckIn => 'Open check-in';
+
+  @override
+  String get exchangeDeskCheckInStarted => 'Check-in started';
+
+  @override
+  String get exchangeDeskGuideCheckIn =>
+      'When the rider brings the scooter to the hub, check it in. If the request isn\'t valid, reject it.';
+
+  @override
+  String get exchangeDeskCheckInHint =>
+      'The old scooter check-in is open. Finish the photos, the report and both OTP confirmations, then choose the replacement here.';
+
+  @override
+  String get exchangeDeskCompletedBody => 'The rider has the new scooter and their agreement now shows it.';
+
+  @override
+  String get exchangeDeskClosedBody => 'This request is closed. No more steps are needed.';
+
+  @override
+  String get exchangeDeskAcceptedPlan => 'Accepted plan';
+
+  @override
+  String exchangeDeskForRider(String name) {
+    return 'For $name';
+  }
+
+  @override
+  String exchangeDeskScootersReady(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count scooters ready in your hubs',
+      one: '1 scooter ready in your hubs',
+    );
+    return '$_temp0';
+  }
 }

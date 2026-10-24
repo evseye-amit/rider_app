@@ -107,6 +107,12 @@ class FleetDrawer extends ConsumerWidget {
                       onTap: () => _goTab(context, Routes.maintenance),
                     ),
                     _Item(
+                      icon: Icons.published_with_changes_rounded,
+                      label: context.l10n.exchangeTitle,
+                      subtitle: context.l10n.exchangeDeskSubtitle,
+                      onTap: () => _open(context, Routes.exchanges),
+                    ),
+                    _Item(
                       icon: Icons.support_agent_rounded,
                       label: context.l10n.supportDeskTitle,
                       subtitle: context.l10n.supportDeskSubtitle,
