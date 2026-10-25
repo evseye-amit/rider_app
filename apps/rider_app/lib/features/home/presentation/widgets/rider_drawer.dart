@@ -75,7 +75,7 @@ class RiderDrawer extends ConsumerWidget {
             children: [
               _DrawerHeader(
                 name: profile?.name ?? context.l10n.allocationRider,
-                riderCode: profile?.riderCode ?? '—',
+                riderCode: profile?.riderCode,
                 mobile: profile?.mobile,
                 photoUrl: profile?.photoUrl,
               ),
@@ -237,13 +237,14 @@ class _DrawerHeader extends StatelessWidget {
   const _DrawerHeader({required this.name, required this.riderCode, required this.mobile, required this.photoUrl});
 
   final String name;
-  final String riderCode;
+  final String? riderCode;
   final String? mobile;
   final String? photoUrl;
 
   @override
   Widget build(BuildContext context) {
     final String? mobile = this.mobile;
+    final String? riderCode = this.riderCode;
     return Padding(
       padding: const EdgeInsets.fromLTRB(Insets.xl, Insets.xl, Insets.lg, Insets.lg),
       child: Column(
@@ -263,8 +264,10 @@ class _DrawerHeader extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: AppText.titleLarge.copyWith(fontSize: 18),
                     ),
-                    const SizedBox(height: 3),
-                    Text(riderCode, style: AppText.code.copyWith(fontSize: 11.5, letterSpacing: 1)),
+                    if (riderCode != null) ...[
+                      const SizedBox(height: 3),
+                      Text(riderCode, style: AppText.code.copyWith(fontSize: 11.5, letterSpacing: 1)),
+                    ],
                   ],
                 ),
               ),
