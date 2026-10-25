@@ -3370,90 +3370,6 @@ abstract class AppL10n {
   /// **'New scooter'**
   String get exchangeNewScooter;
 
-  /// Approved. Your hub will ask you to bring your current scooter in for a check.
-  ///
-  /// In en, this message translates to:
-  /// **'Approved. Your hub will ask you to bring your current scooter in for a check.'**
-  String get exchangeNextApproved;
-
-  /// Exchange next step: bring the current scooter to the hub
-  ///
-  /// In en, this message translates to:
-  /// **'Bring your current scooter to the hub you picked on {date}. The hub team will start the exchange.'**
-  String exchangeNextBringIn(String date);
-
-  /// This request was cancelled.
-  ///
-  /// In en, this message translates to:
-  /// **'This request was cancelled.'**
-  String get exchangeNextCancelled;
-
-  /// The hub team is checking your current scooter. You'll get a code on your phone to confirm the mechanic's report.
-  ///
-  /// In en, this message translates to:
-  /// **'The hub team is checking your current scooter. You\'ll get a code on your phone to confirm the mechanic\'s report.'**
-  String get exchangeNextCheckingIn;
-
-  /// Your old scooter is returned. Your hub is picking a replacement for you.
-  ///
-  /// In en, this message translates to:
-  /// **'Your old scooter is returned. Your hub is picking a replacement for you.'**
-  String get exchangeNextChoosing;
-
-  /// Exchange complete. Enjoy your new scooter!
-  ///
-  /// In en, this message translates to:
-  /// **'Exchange complete. Enjoy your new scooter!'**
-  String get exchangeNextCompleted;
-
-  /// Offer accepted. Your hub is settling the deposit for your new scooter.
-  ///
-  /// In en, this message translates to:
-  /// **'Offer accepted. Your hub is settling the deposit for your new scooter.'**
-  String get exchangeNextDeposit;
-
-  /// This request expired before it was completed.
-  ///
-  /// In en, this message translates to:
-  /// **'This request expired before it was completed.'**
-  String get exchangeNextExpired;
-
-  /// Your new scooter is ready. Collect it from the hub.
-  ///
-  /// In en, this message translates to:
-  /// **'Your new scooter is ready. Collect it from the hub.'**
-  String get exchangeNextHandover;
-
-  /// Your offer is ready. Check the details and accept or reject it.
-  ///
-  /// In en, this message translates to:
-  /// **'Your offer is ready. Check the details and accept or reject it.'**
-  String get exchangeNextOffer;
-
-  /// Your hub couldn't approve this request.
-  ///
-  /// In en, this message translates to:
-  /// **'Your hub couldn\'t approve this request.'**
-  String get exchangeNextRejected;
-
-  /// Your hub will review your request soon.
-  ///
-  /// In en, this message translates to:
-  /// **'Your hub will review your request soon.'**
-  String get exchangeNextRequested;
-
-  /// A replacement scooter is reserved for you. Your offer will be ready soon.
-  ///
-  /// In en, this message translates to:
-  /// **'A replacement scooter is reserved for you. Your offer will be ready soon.'**
-  String get exchangeNextReserved;
-
-  /// Return your current scooter at the hub so they can inspect it.
-  ///
-  /// In en, this message translates to:
-  /// **'Return your current scooter at the hub so they can inspect it.'**
-  String get exchangeNextReturn;
-
   /// No exchange requests
   ///
   /// In en, this message translates to:
@@ -7954,42 +7870,6 @@ abstract class AppL10n {
   /// **'Enter the mechanic\'s name'**
   String get submissionNameNeeded;
 
-  /// All checks are done. Nothing more to do here.
-  ///
-  /// In en, this message translates to:
-  /// **'All checks are done. Nothing more to do here.'**
-  String get submissionNextComplete;
-
-  /// Next step
-  ///
-  /// In en, this message translates to:
-  /// **'Next step'**
-  String get submissionNextLabel;
-
-  /// Collect the rider's and team lead's codes to confirm the report.
-  ///
-  /// In en, this message translates to:
-  /// **'Collect the rider\'s and team lead\'s codes to confirm the report.'**
-  String get submissionNextOtps;
-
-  /// Required check-in photos still missing
-  ///
-  /// In en, this message translates to:
-  /// **'Photos still to take: {count}. Then record the mechanic\'s report.'**
-  String submissionNextPhotos(int count);
-
-  /// All photos are in. Record the mechanic's report next.
-  ///
-  /// In en, this message translates to:
-  /// **'All photos are in. Record the mechanic\'s report next.'**
-  String get submissionNextReport;
-
-  /// Go through the report and any charges with the rider, then impose it.
-  ///
-  /// In en, this message translates to:
-  /// **'Go through the report and any charges with the rider, then impose it.'**
-  String get submissionNextReview;
-
   /// Shown in the report summary when there are no charges
   ///
   /// In en, this message translates to:
@@ -10677,6 +10557,36 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Handed over'**
   String get returnsHandedOver;
+
+  /// Step counter on the exchange desk current-step card
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String exchangeDeskStepOf(int current, int total);
+
+  /// Card title on the exchange screen during the new scooter handover
+  ///
+  /// In en, this message translates to:
+  /// **'Your new scooter'**
+  String get exchangeHandoverTitle;
+
+  /// Explains the handover step on the rider's exchange screen
+  ///
+  /// In en, this message translates to:
+  /// **'The hub is handing over your new scooter. When they send the inspection list, tap below to check and accept it.'**
+  String get exchangeHandoverBody;
+
+  /// Button that opens the handover inspection for the exchange scooter
+  ///
+  /// In en, this message translates to:
+  /// **'Check my new scooter'**
+  String get exchangeHandoverCheck;
+
+  /// Shown when the rider taps check but the handover inspection isn't ready
+  ///
+  /// In en, this message translates to:
+  /// **'The hub hasn\'t sent the inspection list yet. Please check again in a moment.'**
+  String get exchangeHandoverNotReady;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

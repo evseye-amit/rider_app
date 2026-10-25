@@ -130,22 +130,24 @@ class ExchangeCaseTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
     final String? scooter = exchange.oldScooter?.number;
     final DateTime? planned = exchange.oldScooterReturned ? null : exchange.plannedDate;
+    final bool open = exchange.status.isOpen;
+    final TextStyle meta = AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted);
     return Pressable(
       onTap: onOpen,
       scale: 0.99,
       child: GlassCard(
         padding: const EdgeInsets.all(Insets.md),
-        tint: exchange.needsStaff ? AppColors.primaryWash : null,
-        borderColor: exchange.needsStaff ? AppColors.primary.withValues(alpha: 0.35) : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppAvatar(name: exchange.riderName, size: 40),
-                const SizedBox(width: Insets.md),
+                AppAvatar(name: exchange.riderName, size: 42),
+                const SizedBox(width: Insets.sm),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +160,7 @@ class ExchangeCaseTile extends StatelessWidget {
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        [caseReasonLabel(context.l10n, exchange.reasonCode), ?scooter].join(' · '),
+                        [caseReasonLabel(l10n, exchange.reasonCode), ?scooter].join(' · '),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppText.bodySmall.copyWith(fontSize: 12),
@@ -170,25 +172,25 @@ class ExchangeCaseTile extends StatelessWidget {
               ],
             ),
             const SizedBox(height: Insets.md),
-            Row(
+            Wrap(
+              spacing: Insets.sm,
+              runSpacing: Insets.sm,
+              crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 StatusChip(
-                  label: caseStatusLabel(context.l10n, exchange),
+                  label: caseStatusLabel(l10n, exchange),
                   tone: caseStatusTone(exchange),
-                  icon: exchange.needsStaff ? Icons.touch_app_rounded : null,
+                  icon: !open
+                      ? null
+                      : exchange.needsStaff
+                      ? Icons.touch_app_rounded
+                      : Icons.hourglass_top_rounded,
                   dense: true,
                 ),
-                const SizedBox(width: Insets.sm),
-                Expanded(
-                  child: Text(
-                    planned == null
-                        ? Fmt.relative(exchange.createdAt)
-                        : context.l10n.submissionsDropOff(Fmt.date(planned)),
-                    textAlign: TextAlign.end,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted),
-                  ),
+                if (open) Text(exchange.needsStaff ? l10n.allocationMove : l10n.allocationWaitingRider, style: meta),
+                Text(
+                  '· ${planned == null ? Fmt.relative(exchange.createdAt) : l10n.submissionsDropOff(Fmt.date(planned))}',
+                  style: meta,
                 ),
               ],
             ),

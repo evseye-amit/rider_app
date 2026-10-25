@@ -1732,51 +1732,6 @@ class AppL10nEn extends AppL10n {
   String get exchangeNewScooter => 'New scooter';
 
   @override
-  String get exchangeNextApproved => 'Approved. Your hub will ask you to bring your current scooter in for a check.';
-
-  @override
-  String exchangeNextBringIn(String date) {
-    return 'Bring your current scooter to the hub you picked on $date. The hub team will start the exchange.';
-  }
-
-  @override
-  String get exchangeNextCancelled => 'This request was cancelled.';
-
-  @override
-  String get exchangeNextCheckingIn =>
-      'The hub team is checking your current scooter. You\'ll get a code on your phone to confirm the mechanic\'s report.';
-
-  @override
-  String get exchangeNextChoosing => 'Your old scooter is returned. Your hub is picking a replacement for you.';
-
-  @override
-  String get exchangeNextCompleted => 'Exchange complete. Enjoy your new scooter!';
-
-  @override
-  String get exchangeNextDeposit => 'Offer accepted. Your hub is settling the deposit for your new scooter.';
-
-  @override
-  String get exchangeNextExpired => 'This request expired before it was completed.';
-
-  @override
-  String get exchangeNextHandover => 'Your new scooter is ready. Collect it from the hub.';
-
-  @override
-  String get exchangeNextOffer => 'Your offer is ready. Check the details and accept or reject it.';
-
-  @override
-  String get exchangeNextRejected => 'Your hub couldn\'t approve this request.';
-
-  @override
-  String get exchangeNextRequested => 'Your hub will review your request soon.';
-
-  @override
-  String get exchangeNextReserved => 'A replacement scooter is reserved for you. Your offer will be ready soon.';
-
-  @override
-  String get exchangeNextReturn => 'Return your current scooter at the hub so they can inspect it.';
-
-  @override
   String get exchangeNone => 'No exchange requests';
 
   @override
@@ -4167,26 +4122,6 @@ class AppL10nEn extends AppL10n {
   String get submissionNameNeeded => 'Enter the mechanic\'s name';
 
   @override
-  String get submissionNextComplete => 'All checks are done. Nothing more to do here.';
-
-  @override
-  String get submissionNextLabel => 'Next step';
-
-  @override
-  String get submissionNextOtps => 'Collect the rider\'s and team lead\'s codes to confirm the report.';
-
-  @override
-  String submissionNextPhotos(int count) {
-    return 'Photos still to take: $count. Then record the mechanic\'s report.';
-  }
-
-  @override
-  String get submissionNextReport => 'All photos are in. Record the mechanic\'s report next.';
-
-  @override
-  String get submissionNextReview => 'Go through the report and any charges with the rider, then impose it.';
-
-  @override
   String get submissionNoDamagedItems => 'No damaged items added, so the rider won\'t be charged.';
 
   @override
@@ -5627,4 +5562,23 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get returnsHandedOver => 'Handed over';
+
+  @override
+  String exchangeDeskStepOf(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get exchangeHandoverTitle => 'Your new scooter';
+
+  @override
+  String get exchangeHandoverBody =>
+      'The hub is handing over your new scooter. When they send the inspection list, tap below to check and accept it.';
+
+  @override
+  String get exchangeHandoverCheck => 'Check my new scooter';
+
+  @override
+  String get exchangeHandoverNotReady =>
+      'The hub hasn\'t sent the inspection list yet. Please check again in a moment.';
 }

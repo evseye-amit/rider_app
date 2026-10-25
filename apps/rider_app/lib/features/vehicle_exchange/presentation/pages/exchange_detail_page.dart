@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/check_in/check_in_card.dart';
+import '../../../../core/session/rider_session_provider.dart';
 import '../../domain/entities/exchange_request.dart';
 import '../../domain/usecases/respond_to_offer.dart';
 import '../../exchange_dependencies.dart';
@@ -21,10 +22,31 @@ class ExchangeDetailPage extends ConsumerStatefulWidget {
 class _ExchangeDetailPageState extends ConsumerState<ExchangeDetailPage> {
   bool _busy = false;
 
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) ref.read(riderSessionProvider.notifier).refreshState();
+    });
+  }
+
   Future<void> _refresh() async {
     ref.invalidate(exchangesProvider);
     ref.invalidate(riderCheckInProvider);
-    await ref.refreshQuietly(exchangeProvider(widget.exchangeId));
+    await (
+      ref.refreshQuietly(exchangeProvider(widget.exchangeId)),
+      ref.read(riderSessionProvider.notifier).refreshState(),
+    ).wait;
+  }
+
+  Future<void> _openHandover() async {
+    setState(() => _busy = true);
+    await ref.read(riderSessionProvider.notifier).refreshState();
+    if (!mounted) return;
+    setState(() => _busy = false);
+    if (ref.read(riderSessionProvider).stage == RiderStage.active) {
+      AppSnack.info(context, context.l10n.exchangeHandoverNotReady);
+    }
   }
 
   Future<void> _run(Future<Result<void>> Function() action, String successMessage) async {
@@ -141,81 +163,161 @@ class _ExchangeDetailPageState extends ConsumerState<ExchangeDetailPage> {
 
     final ExchangeOffer? pending = request.pendingOffer;
     final ExchangeOffer? accepted = request.acceptedOffer;
-    final String? note = request.status == ExchangeStatus.rejected ? null : request.reason;
+    final bool rejected = request.status == ExchangeStatus.rejected;
+    final String? note = rejected ? null : request.reason;
+    final String? hubReason = rejected ? request.reason : null;
     final DateTime? completedAt = request.completedAt;
     final DateTime? plannedDate = request.plannedDate;
     final String? checkInId = request.checkInId;
 
-    return AppScaffold(
-      title: context.l10n.exchangeDetailTitle,
-      subtitle: exchangeReasonLabel(context.l10n, request.reasonCode),
-      body: RefreshIndicator(
-        onRefresh: _refresh,
-        child: PageBody(
-          physics: const AlwaysScrollableScrollPhysics(),
+    final List<Widget> sections = [
+      if (request.status == ExchangeStatus.handoverPending)
+        ModuleCard(
+          title: context.l10n.exchangeHandoverTitle,
+          leading: const IconTile(icon: Icons.electric_scooter_rounded, solid: true, size: 28),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(context.l10n.exchangeHandoverBody, style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.5)),
+              const Gap.lg(),
+              PrimaryButton(
+                label: context.l10n.exchangeHandoverCheck,
+                icon: Icons.fact_check_rounded,
+                loading: _busy,
+                onPressed: _busy ? null : _openHandover,
+              ),
+            ],
+          ),
+        ),
+      if (pending != null)
+        ExchangeOfferCard(
+          key: ValueKey(pending.id),
+          offer: pending,
+          busy: _busy,
+          onAccept: () => _accept(pending),
+          onReject: () => _reject(pending),
+        )
+      else if (accepted != null)
+        AcceptedPlanCard(request: request, offer: accepted),
+      if (checkInId != null) CheckInCard(submissionId: checkInId),
+      ExchangeTimeline(request: request),
+      ModuleCard(
+        title: context.l10n.exchangeDetails,
+        leading: const IconTile(icon: Icons.info_outline_rounded, solid: true, size: 28),
+        child: Column(
           children: [
-            ExchangeStatusCard(request: request),
-            const Gap.lg(),
-            if (pending != null) ...[
-              ExchangeOfferCard(
-                key: ValueKey(pending.id),
-                offer: pending,
-                busy: _busy,
-                onAccept: () => _accept(pending),
-                onReject: () => _reject(pending),
-              ),
-              const Gap.lg(),
-            ] else if (accepted != null) ...[
-              AcceptedPlanCard(request: request, offer: accepted),
-              const Gap.lg(),
-            ],
-            if (checkInId != null) ...[CheckInCard(submissionId: checkInId), const Gap.lg()],
-            ExchangeTimeline(request: request),
-            const Gap.lg(),
-            ModuleCard(
-              title: context.l10n.exchangeDetails,
-              leading: const IconTile(icon: Icons.info_outline_rounded, solid: true, size: 28),
-              child: Column(
-                children: [
-                  KeyValueRow(
-                    label: context.l10n.exchangeReason,
-                    value: exchangeReasonLabel(context.l10n, request.reasonCode),
-                    icon: Icons.help_outline_rounded,
-                  ),
-                  if (note != null && note.isNotEmpty)
-                    KeyValueRow(label: context.l10n.exchangeNotes, value: note, icon: Icons.notes_rounded),
-                  if (plannedDate != null)
-                    KeyValueRow(
-                      label: context.l10n.exchangeReturnDate,
-                      value: Fmt.date(plannedDate),
-                      icon: Icons.event_rounded,
-                    ),
-                  KeyValueRow(
-                    label: context.l10n.exchangeRaised,
-                    value: Fmt.dateTime(request.createdAt),
-                    icon: Icons.schedule_rounded,
-                  ),
-                  if (completedAt != null)
-                    KeyValueRow(
-                      label: context.l10n.exchangeCompleted,
-                      value: Fmt.dateTime(completedAt),
-                      icon: Icons.check_circle_rounded,
-                    ),
-                ],
-              ),
+            KeyValueRow(
+              label: context.l10n.exchangeReason,
+              value: exchangeReasonLabel(context.l10n, request.reasonCode),
+              icon: Icons.help_outline_rounded,
             ),
-            if (accepted != null) ...[const Gap.lg(), AgreementHistoryCard(agreementId: request.agreementId)],
-            if (request.canCancel) ...[
-              const Gap.xl(),
-              SecondaryButton(
-                label: context.l10n.exchangeCancelRequest,
-                icon: Icons.cancel_rounded,
-                onPressed: _busy ? null : _cancel,
+            if (note != null && note.isNotEmpty)
+              KeyValueRow(label: context.l10n.exchangeNotes, value: note, icon: Icons.notes_rounded),
+            if (hubReason != null && hubReason.isNotEmpty)
+              KeyValueRow(label: context.l10n.exchangeHubReason, value: hubReason, icon: Icons.info_outline_rounded),
+            if (plannedDate != null)
+              KeyValueRow(
+                label: context.l10n.exchangeReturnDate,
+                value: Fmt.date(plannedDate),
+                icon: Icons.event_rounded,
               ),
-            ],
+            KeyValueRow(
+              label: context.l10n.exchangeRaised,
+              value: Fmt.dateTime(request.createdAt),
+              icon: Icons.schedule_rounded,
+            ),
+            if (completedAt != null)
+              KeyValueRow(
+                label: context.l10n.exchangeCompleted,
+                value: Fmt.dateTime(completedAt),
+                icon: Icons.check_circle_rounded,
+              ),
           ],
         ),
       ),
+      if (accepted != null) AgreementHistoryCard(agreementId: request.agreementId),
+    ];
+
+    return HeroScaffold(
+      onRefresh: _refresh,
+      band: _Band(request: request),
+      children: [
+        for (final (int i, Widget section) in sections.indexed) ...[if (i > 0) const Gap.lg(), section],
+        if (request.canCancel) ...[
+          const Gap.xl(),
+          SecondaryButton(
+            label: context.l10n.exchangeCancelRequest,
+            icon: Icons.cancel_rounded,
+            onPressed: _busy ? null : _cancel,
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _Band extends StatelessWidget {
+  const _Band({required this.request});
+
+  final ExchangeRequest request;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
+    final DateTime? plannedDate = request.plannedDate;
+    final bool showPlanned = plannedDate != null && !request.oldScooterReturned && request.status.isOpen;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
+            const Spacer(),
+            StatusChip(
+              label: exchangeStatusLabel(l10n, request),
+              tone: exchangeStatusTone(request.status),
+              icon: switch (request.status) {
+                ExchangeStatus.completed => Icons.check_circle_rounded,
+                ExchangeStatus.rejected => Icons.cancel_rounded,
+                ExchangeStatus.cancelled || ExchangeStatus.expired => Icons.block_rounded,
+                ExchangeStatus.offerPresented => Icons.local_offer_rounded,
+                _ => Icons.hourglass_top_rounded,
+              },
+              dense: true,
+              solid: true,
+            ),
+          ],
+        ),
+        const Gap.xl(),
+        Row(
+          children: [
+            const IconTile(icon: Icons.swap_horiz_rounded, tone: AppColors.primaryBright, solid: true, size: 46),
+            const SizedBox(width: Insets.md),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    exchangeReasonLabel(l10n, request.reasonCode),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.displaySmall.copyWith(fontSize: 21, color: AppColors.onInk),
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    showPlanned
+                        ? '${l10n.exchangeDetailTitle} · ${l10n.returnsPlannedFor(Fmt.date(plannedDate))}'
+                        : l10n.exchangeDetailTitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

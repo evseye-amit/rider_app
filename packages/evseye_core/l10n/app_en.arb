@@ -2298,67 +2298,6 @@
   "@exchangeNewScooter": {
     "description": "New scooter"
   },
-  "exchangeNextApproved": "Approved. Your hub will ask you to bring your current scooter in for a check.",
-  "@exchangeNextApproved": {
-    "description": "Approved. Your hub will ask you to bring your current scooter in for a check."
-  },
-  "exchangeNextBringIn": "Bring your current scooter to the hub you picked on {date}. The hub team will start the exchange.",
-  "@exchangeNextBringIn": {
-    "description": "Exchange next step: bring the current scooter to the hub",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "exchangeNextCancelled": "This request was cancelled.",
-  "@exchangeNextCancelled": {
-    "description": "This request was cancelled."
-  },
-  "exchangeNextCheckingIn": "The hub team is checking your current scooter. You'll get a code on your phone to confirm the mechanic's report.",
-  "@exchangeNextCheckingIn": {
-    "description": "The hub team is checking your current scooter. You'll get a code on your phone to confirm the mechanic's report."
-  },
-  "exchangeNextChoosing": "Your old scooter is returned. Your hub is picking a replacement for you.",
-  "@exchangeNextChoosing": {
-    "description": "Your old scooter is returned. Your hub is picking a replacement for you."
-  },
-  "exchangeNextCompleted": "Exchange complete. Enjoy your new scooter!",
-  "@exchangeNextCompleted": {
-    "description": "Exchange complete. Enjoy your new scooter!"
-  },
-  "exchangeNextDeposit": "Offer accepted. Your hub is settling the deposit for your new scooter.",
-  "@exchangeNextDeposit": {
-    "description": "Offer accepted. Your hub is settling the deposit for your new scooter."
-  },
-  "exchangeNextExpired": "This request expired before it was completed.",
-  "@exchangeNextExpired": {
-    "description": "This request expired before it was completed."
-  },
-  "exchangeNextHandover": "Your new scooter is ready. Collect it from the hub.",
-  "@exchangeNextHandover": {
-    "description": "Your new scooter is ready. Collect it from the hub."
-  },
-  "exchangeNextOffer": "Your offer is ready. Check the details and accept or reject it.",
-  "@exchangeNextOffer": {
-    "description": "Your offer is ready. Check the details and accept or reject it."
-  },
-  "exchangeNextRejected": "Your hub couldn't approve this request.",
-  "@exchangeNextRejected": {
-    "description": "Your hub couldn't approve this request."
-  },
-  "exchangeNextRequested": "Your hub will review your request soon.",
-  "@exchangeNextRequested": {
-    "description": "Your hub will review your request soon."
-  },
-  "exchangeNextReserved": "A replacement scooter is reserved for you. Your offer will be ready soon.",
-  "@exchangeNextReserved": {
-    "description": "A replacement scooter is reserved for you. Your offer will be ready soon."
-  },
-  "exchangeNextReturn": "Return your current scooter at the hub so they can inspect it.",
-  "@exchangeNextReturn": {
-    "description": "Return your current scooter at the hub so they can inspect it."
-  },
   "exchangeNone": "No exchange requests",
   "@exchangeNone": {
     "description": "No exchange requests"
@@ -5650,35 +5589,6 @@
   "@submissionNameNeeded": {
     "description": "Enter the mechanic's name"
   },
-  "submissionNextComplete": "All checks are done. Nothing more to do here.",
-  "@submissionNextComplete": {
-    "description": "All checks are done. Nothing more to do here."
-  },
-  "submissionNextLabel": "Next step",
-  "@submissionNextLabel": {
-    "description": "Next step"
-  },
-  "submissionNextOtps": "Collect the rider's and team lead's codes to confirm the report.",
-  "@submissionNextOtps": {
-    "description": "Collect the rider's and team lead's codes to confirm the report."
-  },
-  "submissionNextPhotos": "Photos still to take: {count}. Then record the mechanic's report.",
-  "@submissionNextPhotos": {
-    "description": "Required check-in photos still missing",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "submissionNextReport": "All photos are in. Record the mechanic's report next.",
-  "@submissionNextReport": {
-    "description": "All photos are in. Record the mechanic's report next."
-  },
-  "submissionNextReview": "Go through the report and any charges with the rider, then impose it.",
-  "@submissionNextReview": {
-    "description": "Go through the report and any charges with the rider, then impose it."
-  },
   "submissionNoDamagedItems": "No damaged items added, so the rider won't be charged.",
   "@submissionNoDamagedItems": {
     "description": "Shown in the report summary when there are no charges"
@@ -7652,5 +7562,33 @@
   "returnsHandedOver": "Handed over",
   "@returnsHandedOver": {
     "description": "Handed over"
+  },
+  "exchangeDeskStepOf": "Step {current} of {total}",
+  "@exchangeDeskStepOf": {
+    "description": "Step counter on the exchange desk current-step card",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "exchangeHandoverTitle": "Your new scooter",
+  "@exchangeHandoverTitle": {
+    "description": "Card title on the exchange screen during the new scooter handover"
+  },
+  "exchangeHandoverBody": "The hub is handing over your new scooter. When they send the inspection list, tap below to check and accept it.",
+  "@exchangeHandoverBody": {
+    "description": "Explains the handover step on the rider's exchange screen"
+  },
+  "exchangeHandoverCheck": "Check my new scooter",
+  "@exchangeHandoverCheck": {
+    "description": "Button that opens the handover inspection for the exchange scooter"
+  },
+  "exchangeHandoverNotReady": "The hub hasn't sent the inspection list yet. Please check again in a moment.",
+  "@exchangeHandoverNotReady": {
+    "description": "Shown when the rider taps check but the handover inspection isn't ready"
   }
 }

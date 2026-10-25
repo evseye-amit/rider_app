@@ -229,28 +229,6 @@ class _SubmissionPageState extends ConsumerState<SubmissionPage> {
           children: [
             _HeaderCard(submission: submission),
             const Gap.lg(),
-            AccentCard(
-              accent: submissionNextTone(submission.nextAction).color,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  StatusChip(
-                    label: context.l10n.submissionNextLabel,
-                    tone: submissionNextTone(submission.nextAction),
-                    dense: true,
-                    solid: true,
-                  ),
-                  const Gap.md(),
-                  Text(
-                    canCapture && missing.isEmpty
-                        ? context.l10n.submissionNextReport
-                        : submissionNextNote(context.l10n, submission),
-                    style: AppText.bodyMedium.copyWith(height: 1.5),
-                  ),
-                ],
-              ),
-            ),
-            const Gap.lg(),
             _requiredPhotos(submission, canRetake: canCapture),
             if (canCapture) ...[const Gap.lg(), DamagedItemsCard(submission: submission)],
             if (submission.reports.isNotEmpty) ...[

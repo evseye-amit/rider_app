@@ -1734,51 +1734,6 @@ class AppL10nKn extends AppL10n {
   String get exchangeNewScooter => 'ಹೊಸ ಸ್ಕೂಟರ್';
 
   @override
-  String get exchangeNextApproved => 'ಅನುಮೋದಿಸಲಾಗಿದೆ. ತಪಾಸಣೆಗಾಗಿ ಈಗಿನ ಸ್ಕೂಟರ್ ತರಲು ನಿಮ್ಮ ಹಬ್ ಹೇಳುತ್ತದೆ.';
-
-  @override
-  String exchangeNextBringIn(String date) {
-    return '$date ರಂದು ನಿಮ್ಮ ಈಗಿನ ಸ್ಕೂಟರ್ ಅನ್ನು ನೀವು ಆಯ್ಕೆ ಮಾಡಿದ ಹಬ್‌ಗೆ ತನ್ನಿ. ಹಬ್ ತಂಡ ಎಕ್ಸ್‌ಚೇಂಜ್ ಪ್ರಾರಂಭಿಸುತ್ತದೆ.';
-  }
-
-  @override
-  String get exchangeNextCancelled => 'ಈ ಮನವಿ ರದ್ದಾಗಿದೆ.';
-
-  @override
-  String get exchangeNextCheckingIn =>
-      'ಹಬ್ ತಂಡ ನಿಮ್ಮ ಈಗಿನ ಸ್ಕೂಟರ್ ಪರಿಶೀಲಿಸುತ್ತಿದೆ. ಮೆಕ್ಯಾನಿಕ್ ವರದಿಯನ್ನು ದೃಢೀಕರಿಸಲು ನಿಮ್ಮ ಫೋನ್‌ಗೆ ಕೋಡ್ ಬರುತ್ತದೆ.';
-
-  @override
-  String get exchangeNextChoosing => 'ಹಳೆಯ ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ಹಬ್ ನಿಮಗಾಗಿ ಹೊಸ ಸ್ಕೂಟರ್ ಆಯ್ಕೆ ಮಾಡುತ್ತಿದೆ.';
-
-  @override
-  String get exchangeNextCompleted => 'ಬದಲಾವಣೆ ಪೂರ್ಣಗೊಂಡಿದೆ. ನಿಮ್ಮ ಹೊಸ ಸ್ಕೂಟರ್ ಆನಂದಿಸಿ!';
-
-  @override
-  String get exchangeNextDeposit => 'ಆಫರ್ ಸ್ವೀಕರಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ಹಬ್ ಹೊಸ ಸ್ಕೂಟರ್‌ನ ಠೇವಣಿ ಹೊಂದಿಸುತ್ತಿದೆ.';
-
-  @override
-  String get exchangeNextExpired => 'ಈ ಮನವಿ ಪೂರ್ಣಗೊಳ್ಳುವ ಮೊದಲೇ ಅವಧಿ ಮುಗಿದಿದೆ.';
-
-  @override
-  String get exchangeNextHandover => 'ನಿಮ್ಮ ಹೊಸ ಸ್ಕೂಟರ್ ಸಿದ್ಧವಾಗಿದೆ. ಅದನ್ನು ಹಬ್‌ನಿಂದ ಪಡೆದುಕೊಳ್ಳಿ.';
-
-  @override
-  String get exchangeNextOffer => 'ನಿಮ್ಮ ಆಫರ್ ಸಿದ್ಧವಾಗಿದೆ. ವಿವರಗಳನ್ನು ನೋಡಿ ಸ್ವೀಕರಿಸಿ ಅಥವಾ ನಿರಾಕರಿಸಿ.';
-
-  @override
-  String get exchangeNextRejected => 'ನಿಮ್ಮ ಹಬ್ ಈ ಮನವಿಯನ್ನು ಅನುಮೋದಿಸಲು ಆಗಲಿಲ್ಲ.';
-
-  @override
-  String get exchangeNextRequested => 'ನಿಮ್ಮ ಹಬ್ ಶೀಘ್ರದಲ್ಲೇ ನಿಮ್ಮ ಮನವಿಯನ್ನು ಪರಿಶೀಲಿಸುತ್ತದೆ.';
-
-  @override
-  String get exchangeNextReserved => 'ನಿಮಗಾಗಿ ಹೊಸ ಸ್ಕೂಟರ್ ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ. ನಿಮ್ಮ ಆಫರ್ ಶೀಘ್ರದಲ್ಲೇ ಸಿದ್ಧವಾಗುತ್ತದೆ.';
-
-  @override
-  String get exchangeNextReturn => 'ಪರಿಶೀಲನೆಗಾಗಿ ಈಗಿನ ಸ್ಕೂಟರ್ ಅನ್ನು ಹಬ್‌ಗೆ ಹಿಂದಿರುಗಿಸಿ.';
-
-  @override
   String get exchangeNone => 'ಯಾವುದೇ ಮನವಿ ಇಲ್ಲ';
 
   @override
@@ -4167,26 +4122,6 @@ class AppL10nKn extends AppL10n {
   String get submissionNameNeeded => 'ಮೆಕ್ಯಾನಿಕ್ ಹೆಸರು ನಮೂದಿಸಿ';
 
   @override
-  String get submissionNextComplete => 'ಎಲ್ಲಾ ತಪಾಸಣೆಗಳು ಮುಗಿದಿವೆ. ಇಲ್ಲಿ ಇನ್ನೇನೂ ಮಾಡಬೇಕಿಲ್ಲ.';
-
-  @override
-  String get submissionNextLabel => 'ಮುಂದಿನ ಹಂತ';
-
-  @override
-  String get submissionNextOtps => 'ವರದಿ ದೃಢೀಕರಿಸಲು ರೈಡರ್ ಮತ್ತು ಟೀಮ್ ಲೀಡ್ ಕೋಡ್‌ಗಳನ್ನು ಪಡೆಯಿರಿ.';
-
-  @override
-  String submissionNextPhotos(int count) {
-    return 'ಇನ್ನೂ ತೆಗೆಯಬೇಕಾದ ಫೋಟೋಗಳು: $count. ನಂತರ ಮೆಕ್ಯಾನಿಕ್ ವರದಿ ದಾಖಲಿಸಿ.';
-  }
-
-  @override
-  String get submissionNextReport => 'ಎಲ್ಲಾ ಫೋಟೋಗಳು ಬಂದಿವೆ. ಈಗ ಮೆಕ್ಯಾನಿಕ್ ವರದಿ ದಾಖಲಿಸಿ.';
-
-  @override
-  String get submissionNextReview => 'ರೈಡರ್ ಜೊತೆ ವರದಿ ಮತ್ತು ಶುಲ್ಕಗಳನ್ನು ಪರಿಶೀಲಿಸಿ, ನಂತರ ಅದನ್ನು ಜಾರಿಗೊಳಿಸಿ.';
-
-  @override
   String get submissionNoDamagedItems => 'ಯಾವುದೇ ಹಾನಿಯಾದ ಭಾಗ ಸೇರಿಸಿಲ್ಲ, ಆದ್ದರಿಂದ ರೈಡರ್‌ಗೆ ಶುಲ್ಕ ವಿಧಿಸಲಾಗುವುದಿಲ್ಲ.';
 
   @override
@@ -5630,4 +5565,23 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get returnsHandedOver => 'ಹಸ್ತಾಂತರಿಸಲಾಗಿದೆ';
+
+  @override
+  String exchangeDeskStepOf(int current, int total) {
+    return '$total ರಲ್ಲಿ ಹಂತ $current';
+  }
+
+  @override
+  String get exchangeHandoverTitle => 'ನಿಮ್ಮ ಹೊಸ ಸ್ಕೂಟರ್';
+
+  @override
+  String get exchangeHandoverBody =>
+      'ಹಬ್ ನಿಮ್ಮ ಹೊಸ ಸ್ಕೂಟರ್ ಅನ್ನು ಹಸ್ತಾಂತರಿಸುತ್ತಿದೆ. ಅವರು ತಪಾಸಣಾ ಪಟ್ಟಿ ಕಳುಹಿಸಿದಾಗ, ಅದನ್ನು ಪರಿಶೀಲಿಸಿ ಒಪ್ಪಿಕೊಳ್ಳಲು ಕೆಳಗೆ ಟ್ಯಾಪ್ ಮಾಡಿ.';
+
+  @override
+  String get exchangeHandoverCheck => 'ನನ್ನ ಹೊಸ ಸ್ಕೂಟರ್ ಪರಿಶೀಲಿಸಿ';
+
+  @override
+  String get exchangeHandoverNotReady =>
+      'ಹಬ್ ಇನ್ನೂ ತಪಾಸಣಾ ಪಟ್ಟಿಯನ್ನು ಕಳುಹಿಸಿಲ್ಲ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ನೋಡಿ.';
 }

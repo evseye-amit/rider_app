@@ -28,23 +28,6 @@ StatusTone exchangeStatusTone(ExchangeStatus status) => switch (status) {
   _ => StatusTone.info,
 };
 
-String exchangeNextNote(AppL10n l10n, ExchangeRequest request) => switch (request.status) {
-  ExchangeStatus.requested => switch (request.plannedDate) {
-    final DateTime date when request.usesCheckIn => l10n.exchangeNextBringIn(Fmt.date(date)),
-    _ => l10n.exchangeNextRequested,
-  },
-  ExchangeStatus.approved => request.oldScooterReturned ? l10n.exchangeNextChoosing : l10n.exchangeNextApproved,
-  ExchangeStatus.returnPending => request.isCheckingIn ? l10n.exchangeNextCheckingIn : l10n.exchangeNextReturn,
-  ExchangeStatus.replacementSelected => l10n.exchangeNextReserved,
-  ExchangeStatus.offerPresented => l10n.exchangeNextOffer,
-  ExchangeStatus.depositPending => l10n.exchangeNextDeposit,
-  ExchangeStatus.handoverPending => l10n.exchangeNextHandover,
-  ExchangeStatus.completed => l10n.exchangeNextCompleted,
-  ExchangeStatus.rejected => l10n.exchangeNextRejected,
-  ExchangeStatus.cancelled => l10n.exchangeNextCancelled,
-  ExchangeStatus.expired => l10n.exchangeNextExpired,
-};
-
 String exchangeReasonLabel(AppL10n l10n, String code) => switch (code) {
   'VEHICLE_BREAKDOWN' => l10n.exchangeReasonBreakdown,
   'VEHICLE_UNSAFE' => l10n.exchangeReasonUnsafe,
@@ -155,37 +138,6 @@ class ExchangeTile extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class ExchangeStatusCard extends StatelessWidget {
-  const ExchangeStatusCard({required this.request, super.key});
-
-  final ExchangeRequest request;
-
-  @override
-  Widget build(BuildContext context) {
-    final String? hubReason = request.status == ExchangeStatus.rejected ? request.reason : null;
-    return AccentCard(
-      accent: exchangeStatusTone(request.status).color,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          StatusChip(
-            label: exchangeStatusLabel(context.l10n, request),
-            tone: exchangeStatusTone(request.status),
-            dense: true,
-            solid: true,
-          ),
-          const Gap.md(),
-          Text(exchangeNextNote(context.l10n, request), style: AppText.bodyMedium.copyWith(height: 1.5)),
-          if (hubReason != null && hubReason.isNotEmpty) ...[
-            const Gap.md(),
-            KeyValueRow(label: context.l10n.exchangeHubReason, value: hubReason, icon: Icons.info_outline_rounded),
-          ],
-        ],
       ),
     );
   }

@@ -59,21 +59,6 @@ String submissionReasonLabel(AppL10n l10n, SubmissionRequestDto request) {
   };
 }
 
-String submissionNextNote(AppL10n l10n, VehicleSubmissionDto submission) => switch (submission.nextAction) {
-  SubmissionNextAction.capturePhotos when submission.missingPhotoTypes.isNotEmpty => l10n.submissionNextPhotos(
-    submission.missingPhotoTypes.length,
-  ),
-  SubmissionNextAction.capturePhotos => l10n.submissionNextReport,
-  SubmissionNextAction.reviewAndImpose => l10n.submissionNextReview,
-  SubmissionNextAction.collectOtps => l10n.submissionNextOtps,
-  SubmissionNextAction.complete => l10n.submissionNextComplete,
-};
-
-StatusTone submissionNextTone(SubmissionNextAction action) => switch (action) {
-  SubmissionNextAction.complete => StatusTone.success,
-  _ => StatusTone.warning,
-};
-
 class SubmissionRequestTile extends StatelessWidget {
   const SubmissionRequestTile({required this.request, required this.hubName, required this.onOpen, super.key});
 

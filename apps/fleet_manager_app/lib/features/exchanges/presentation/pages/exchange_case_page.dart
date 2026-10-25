@@ -254,9 +254,8 @@ class _ExchangeCasePageState extends ConsumerState<ExchangeCasePage> {
       );
     }
 
-    final CaseStage? stage = exchange.stage;
     final String? guide = switch (exchange.status) {
-      CaseStatus.completed => null,
+      CaseStatus.completed => context.l10n.exchangeDeskCompletedBody,
       CaseStatus.rejected || CaseStatus.cancelled || CaseStatus.expired => context.l10n.exchangeDeskClosedBody,
       _ when exchange.holdLapsed => context.l10n.exchangeErrorHoldExpired,
       _ => caseStepGuide(context.l10n, exchange.nextStep),
@@ -269,36 +268,8 @@ class _ExchangeCasePageState extends ConsumerState<ExchangeCasePage> {
       band: _Band(exchange: exchange),
       bottomNavigationBar: primary == null ? null : ExchangeFooter(child: primary),
       children: [
-        if (stage != null) ...[
-          ExchangeFloatingCard(
-            title: context.l10n.exchangeProgress,
-            child: StepProgress(
-              steps: [for (final CaseStage item in CaseStage.values) caseStageLabel(context.l10n, item)],
-              currentIndex: stage.index,
-              compact: true,
-            ),
-          ),
-          const Gap.lg(),
-        ],
-        if (guide != null) ...[
-          AccentCard(
-            accent: caseStatusTone(exchange).color,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                StatusChip(
-                  label: context.l10n.submissionNextLabel,
-                  tone: caseStatusTone(exchange),
-                  dense: true,
-                  solid: true,
-                ),
-                const Gap.md(),
-                Text(guide, style: AppText.bodyMedium.copyWith(height: 1.5)),
-              ],
-            ),
-          ),
-          const Gap.lg(),
-        ],
+        _StepCard(exchange: exchange, guide: guide),
+        const Gap.lg(),
         ..._stepContent(exchange),
         _CaseSummary(exchange: exchange),
         if (exchange.canCancel && exchange.status != CaseStatus.requested) ...[
@@ -439,24 +410,81 @@ class _ExchangeCasePageState extends ConsumerState<ExchangeCasePage> {
           ),
       ],
       CaseStep.none when exchange.status == CaseStatus.completed => [
-        ArtBlock(
-          art: BrandArt.success,
-          artSize: 120,
-          title: context.l10n.exchangeDeskExchangeCompleted,
-          message: context.l10n.exchangeDeskCompletedBody,
-        ),
-        if (exchange.newAllocationId case final String allocationId) ...[
-          const Gap.lg(),
+        if (exchange.newAllocationId case final String allocationId)
           SecondaryButton(
             label: context.l10n.exchangeDeskOpenAllocation,
             icon: Icons.open_in_new_rounded,
             onPressed: () => _openAllocation(allocationId),
           ),
-        ],
       ],
       _ => const [],
     };
     return content.isEmpty ? const [] : [...content, const Gap.lg()];
+  }
+}
+
+class _StepCard extends StatelessWidget {
+  const _StepCard({required this.exchange, required this.guide});
+
+  final ExchangeCase exchange;
+  final String? guide;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
+    final CaseStage? stage = exchange.stage;
+    final String? guide = this.guide;
+    final int total = CaseStage.values.length;
+    return ExchangeFloatingCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (stage != null) ...[
+            Text(
+              l10n.exchangeDeskStepOf(stage.index + 1, total).toUpperCase(),
+              style: AppText.bodySmall.copyWith(
+                fontSize: 11.5,
+                letterSpacing: 0.8,
+                fontWeight: FontWeight.w700,
+                color: AppColors.textMuted,
+              ),
+            ),
+            const SizedBox(height: 4),
+          ],
+          Text(
+            stage == null ? caseStatusLabel(l10n, exchange) : caseStageLabel(l10n, stage),
+            style: AppText.titleMedium.copyWith(fontSize: 18),
+          ),
+          if (stage != null) ...[
+            const Gap.md(),
+            Row(
+              children: [
+                for (int i = 0; i < total; i++) ...[
+                  if (i > 0) const SizedBox(width: 4),
+                  Expanded(
+                    child: Container(
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: i < stage.index || stage == CaseStage.done
+                            ? AppColors.primary
+                            : i == stage.index
+                            ? AppColors.primary.withValues(alpha: 0.4)
+                            : AppColors.stroke,
+                        borderRadius: Corners.pill,
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ],
+          if (guide != null) ...[
+            const Gap.md(),
+            Text(guide, style: AppText.bodyMedium.copyWith(fontSize: 14, height: 1.5)),
+          ],
+        ],
+      ),
+    );
   }
 }
 
@@ -467,7 +495,7 @@ class _Band extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? scooter = exchange.oldScooter?.label;
+    final String? scooter = exchange.oldScooter?.number;
     final bool completed = exchange.status == CaseStatus.completed;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -706,7 +734,6 @@ class _CaseSummary extends StatelessWidget {
       leading: const IconTile(icon: Icons.info_outline_rounded, solid: true, size: 28),
       child: Column(
         children: [
-          KeyValueRow(label: context.l10n.allocationRider, value: exchange.riderName, icon: Icons.person_rounded),
           if (mobile != null)
             KeyValueRow(label: context.l10n.commonMobile, value: Fmt.phone(mobile), icon: Icons.call_rounded),
           if (exchange.oldScooter case final ScooterOption scooter)
@@ -721,11 +748,6 @@ class _CaseSummary extends StatelessWidget {
               value: scooter.label,
               icon: Icons.two_wheeler_rounded,
             ),
-          KeyValueRow(
-            label: context.l10n.exchangeReason,
-            value: caseReasonLabel(context.l10n, exchange.reasonCode),
-            icon: Icons.help_outline_rounded,
-          ),
           if (note != null && note.isNotEmpty)
             KeyValueRow(label: context.l10n.exchangeDeskRiderNote, value: note, icon: Icons.notes_rounded),
           if (hubReason != null && hubReason.isNotEmpty)
