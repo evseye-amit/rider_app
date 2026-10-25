@@ -159,66 +159,64 @@ class _ReturnDetailPageState extends ConsumerState<ReturnDetailPage> {
     final DateTime? cancelledAt = item.cancelledAt;
     final String? checkInId = item.checkInId;
 
+    final List<Widget> sections = [
+      if (checkInId != null) CheckInCard(submissionId: checkInId),
+      if (!item.usesCheckIn && item.status == ReturnStatus.returned)
+        ChargesCard(
+          charges:
+              charges ??
+              const ReturnCharges(
+                stage: ChargesStage.reviewing,
+                total: 0,
+                items: [],
+                approvedByYou: false,
+                approvedByAdmin: false,
+              ),
+          busy: _busy,
+          onApprove: () => _approve(charges!),
+          onDispute: _dispute,
+        ),
+      if (item.status != ReturnStatus.cancelled) ReturnTimeline(item: item),
+      ModuleCard(
+        title: context.l10n.returnsDetails,
+        leading: const IconTile(icon: Icons.info_outline_rounded, solid: true, size: 28),
+        child: Column(
+          children: [
+            KeyValueRow(
+              label: context.l10n.returnsReason,
+              value: returnReasonLabel(context.l10n, item.reasonCode),
+              icon: Icons.help_outline_rounded,
+            ),
+            if (notes != null && notes.isNotEmpty)
+              KeyValueRow(label: context.l10n.returnsNotes, value: notes, icon: Icons.notes_rounded),
+            KeyValueRow(label: context.l10n.returnsDate, value: Fmt.date(item.plannedDate), icon: Icons.event_rounded),
+            KeyValueRow(
+              label: context.l10n.commonRaised,
+              value: Fmt.dateTime(item.createdAt),
+              icon: Icons.schedule_rounded,
+            ),
+            if (receivedAt != null)
+              KeyValueRow(
+                label: context.l10n.returnsHandedOver,
+                value: Fmt.dateTime(receivedAt),
+                icon: Icons.assignment_turned_in_rounded,
+              ),
+            if (cancelledAt != null)
+              KeyValueRow(
+                label: context.l10n.returnsStatusCancelled,
+                value: Fmt.dateTime(cancelledAt),
+                icon: Icons.cancel_outlined,
+              ),
+          ],
+        ),
+      ),
+    ];
+
     return HeroScaffold(
       onRefresh: _refresh,
       band: _Band(item: item),
       children: [
-        if (checkInId != null) ...[CheckInCard(submissionId: checkInId), const Gap.lg()],
-        if (!item.usesCheckIn && item.status == ReturnStatus.returned) ...[
-          ChargesCard(
-            charges:
-                charges ??
-                const ReturnCharges(
-                  stage: ChargesStage.reviewing,
-                  total: 0,
-                  items: [],
-                  approvedByYou: false,
-                  approvedByAdmin: false,
-                ),
-            busy: _busy,
-            onApprove: () => _approve(charges!),
-            onDispute: _dispute,
-          ),
-          const Gap.lg(),
-        ],
-        if (item.status != ReturnStatus.cancelled) ...[ReturnTimeline(item: item), const Gap.lg()],
-        ModuleCard(
-          title: context.l10n.returnsDetails,
-          leading: const IconTile(icon: Icons.info_outline_rounded, solid: true, size: 28),
-          child: Column(
-            children: [
-              KeyValueRow(
-                label: context.l10n.returnsReason,
-                value: returnReasonLabel(context.l10n, item.reasonCode),
-                icon: Icons.help_outline_rounded,
-              ),
-              if (notes != null && notes.isNotEmpty)
-                KeyValueRow(label: context.l10n.returnsNotes, value: notes, icon: Icons.notes_rounded),
-              KeyValueRow(
-                label: context.l10n.returnsDate,
-                value: Fmt.date(item.plannedDate),
-                icon: Icons.event_rounded,
-              ),
-              KeyValueRow(
-                label: context.l10n.commonRaised,
-                value: Fmt.dateTime(item.createdAt),
-                icon: Icons.schedule_rounded,
-              ),
-              if (receivedAt != null)
-                KeyValueRow(
-                  label: context.l10n.returnsHandedOver,
-                  value: Fmt.dateTime(receivedAt),
-                  icon: Icons.assignment_turned_in_rounded,
-                ),
-              if (cancelledAt != null)
-                KeyValueRow(
-                  label: context.l10n.returnsStatusCancelled,
-                  value: Fmt.dateTime(cancelledAt),
-                  icon: Icons.cancel_outlined,
-                ),
-            ],
-          ),
-        ),
+        for (final (int i, Widget section) in sections.indexed) ...[if (i > 0) const Gap.lg(), section],
         if (item.canCancel) ...[
           const Gap.xl(),
           SecondaryButton(

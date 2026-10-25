@@ -333,7 +333,6 @@
   "damageChargeCreditUsed": "ಬಳಸಿದ ಕ್ರೆಡಿಟ್",
   "damageChargeEach": "ಪ್ರತಿಯೊಂದಕ್ಕೆ {amount}",
   "damageChargeLeftToPay": "ಉಳಿದ ಮೊತ್ತ",
-  "damageChargePaidBody": "ನೀವು ಈ ಶುಲ್ಕವನ್ನು ಪೂರ್ತಿಯಾಗಿ ಪಾವತಿಸಿದ್ದೀರಿ.",
   "damageChargePaidSoFar": "ಈವರೆಗೆ ಪಾವತಿಸಿದ್ದು",
   "damageChargePaidTitle": "ಪೂರ್ತಿ ಪಾವತಿಯಾಗಿದೆ",
   "damageChargePay": "{amount} ಪಾವತಿಸಿ",
@@ -1143,7 +1142,6 @@
   "returnsCouldNotLoad": "ನಿಮ್ಮ ಹಿಂದಿರುಗಿಸುವಿಕೆಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ",
   "returnsCouldNotLoadHubs": "ಹಬ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗಲಿಲ್ಲ",
   "returnsDate": "ಹಿಂದಿರುಗಿಸುವ ದಿನಾಂಕ",
-  "returnsDetails": "ವಿವರಗಳು",
   "returnsDetailTitle": "ಹಿಂದಿರುಗಿಸುವಿಕೆ",
   "returnsDisputeCharges": "ಶುಲ್ಕಗಳನ್ನು ಆಕ್ಷೇಪಿಸಿ",
   "returnsDisputeReason": "ಏನು ತಪ್ಪಾಗಿದೆ?",
@@ -1169,7 +1167,6 @@
   "returnsErrorStateChanged": "ಈ ದಂಡಗಳು ಈಗಷ್ಟೇ ಬದಲಾಗಿವೆ. ರಿಫ್ರೆಶ್ ಮಾಡಿ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
   "returnsErrorSubmitFirst": "ಅನುಮೋದಿಸುವ ಮೊದಲು ದಂಡಗಳನ್ನು ಸಲ್ಲಿಸಿ.",
   "returnsEvidenceCount": "ಸಾಕ್ಷಿಯಾಗಿ {count} ಫೋಟೋ(ಗಳು)",
-  "returnsHandedOver": "ಹಸ್ತಾಂತರಿಸಲಾಗಿದೆ",
   "returnsHub": "ಹಿಂದಿರುಗಿಸುವ ಹಬ್",
   "returnsKindDamage": "ಹಾನಿ",
   "returnsKindMissing": "ಕಾಣೆಯಾದ ವಸ್ತು",
@@ -1191,7 +1188,6 @@
   "returnsPickReason": "ಒಂದು ಕಾರಣ ಆಯ್ಕೆಮಾಡಿ",
   "returnsPlannedFor": "{date} ಕ್ಕೆ ಯೋಜಿಸಲಾಗಿದೆ",
   "returnsProgress": "ಪ್ರಗತಿ",
-  "returnsReason": "ಕಾರಣ",
   "returnsReasonBatteryIssues": "ಬ್ಯಾಟರಿ ಅಥವಾ ಚಾರ್ಜಿಂಗ್ ಸಮಸ್ಯೆ",
   "returnsReasonChangingJob": "ಕೆಲಸ ಬದಲಾಯಿಸುತ್ತಿದ್ದೇನೆ",
   "returnsReasonHealthOrFamily": "ಆರೋಗ್ಯ ಅಥವಾ ಕುಟುಂಬದ ಕಾರಣಗಳು",
@@ -1764,5 +1760,8 @@
   "exchangeDeskScootersReady": "{count, plural, =1{ನಿಮ್ಮ ಹಬ್‌ಗಳಲ್ಲಿ 1 ಸ್ಕೂಟರ್ ಸಿದ್ಧವಾಗಿದೆ} other{ನಿಮ್ಮ ಹಬ್‌ಗಳಲ್ಲಿ {count} ಸ್ಕೂಟರ್‌ಗಳು ಸಿದ್ಧವಾಗಿವೆ}}",
   "damageChargePayAll": "ಎಲ್ಲಾ {amount} ಪಾವತಿಸಿ",
   "damageChargePayAllHint": "ಇದರಿಂದ ನಿಮ್ಮ ಉಳಿದ ಬಾಕಿ ಡ್ಯಾಮೇಜ್ ಶುಲ್ಕಗಳೂ ಪಾವತಿಯಾಗುತ್ತವೆ.",
-  "checkInChargesSummary": "{count, plural, =1{1 ಐಟಂ · ಫೋಟೋಗಳು ಮತ್ತು ವಿವರಗಳನ್ನು ನೋಡಿ} other{{count} ಐಟಂಗಳು · ಫೋಟೋಗಳು ಮತ್ತು ವಿವರಗಳನ್ನು ನೋಡಿ}}"
+  "checkInChargesSummary": "{count, plural, =1{1 ಐಟಂ} other{{count} ಐಟಂಗಳು}}",
+  "returnsDetails": "ವಿವರಗಳು",
+  "returnsReason": "ಕಾರಣ",
+  "returnsHandedOver": "ಹಸ್ತಾಂತರಿಸಲಾಗಿದೆ"
 }

@@ -1411,10 +1411,6 @@
   "@damageChargeLeftToPay": {
     "description": "Row with the amount still to pay"
   },
-  "damageChargePaidBody": "You've paid this charge in full.",
-  "@damageChargePaidBody": {
-    "description": "Message on a fully paid damage charge"
-  },
   "damageChargePaidSoFar": "Paid so far",
   "@damageChargePaidSoFar": {
     "description": "Row with the amount already paid"
@@ -4942,10 +4938,6 @@
   "@returnsDate": {
     "description": "Return date"
   },
-  "returnsDetails": "Details",
-  "@returnsDetails": {
-    "description": "Details"
-  },
   "returnsDetailTitle": "Return",
   "@returnsDetailTitle": {
     "description": "Return"
@@ -5051,10 +5043,6 @@
       }
     }
   },
-  "returnsHandedOver": "Handed over",
-  "@returnsHandedOver": {
-    "description": "Handed over"
-  },
   "returnsHub": "Return hub",
   "@returnsHub": {
     "description": "Return hub"
@@ -5143,10 +5131,6 @@
   "returnsProgress": "Progress",
   "@returnsProgress": {
     "description": "Progress"
-  },
-  "returnsReason": "Reason",
-  "@returnsReason": {
-    "description": "Reason"
   },
   "returnsReasonBatteryIssues": "Battery or charging problems",
   "@returnsReasonBatteryIssues": {
@@ -7648,13 +7632,25 @@
   "@damageChargePayAllHint": {
     "description": "Hint under the pay button when the payment covers more than this charge"
   },
-  "checkInChargesSummary": "{count, plural, =1{1 item · See photos and details} other{{count} items · See photos and details}}",
+  "checkInChargesSummary": "{count, plural, =1{1 item} other{{count} items}}",
   "@checkInChargesSummary": {
-    "description": "Subtitle of the damage charges row on the scooter submission card",
+    "description": "Item count under Damage charges on the scooter submission card",
     "placeholders": {
       "count": {
         "type": "int"
       }
     }
+  },
+  "returnsDetails": "Details",
+  "@returnsDetails": {
+    "description": "Details"
+  },
+  "returnsReason": "Reason",
+  "@returnsReason": {
+    "description": "Reason"
+  },
+  "returnsHandedOver": "Handed over",
+  "@returnsHandedOver": {
+    "description": "Handed over"
   }
 }

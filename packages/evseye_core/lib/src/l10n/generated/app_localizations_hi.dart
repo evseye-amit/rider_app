@@ -1057,9 +1057,6 @@ class AppL10nHi extends AppL10n {
   String get damageChargeLeftToPay => 'बाकी राशि';
 
   @override
-  String get damageChargePaidBody => 'आपने यह शुल्क पूरा भर दिया है।';
-
-  @override
   String get damageChargePaidSoFar => 'अब तक भुगतान';
 
   @override
@@ -3633,9 +3630,6 @@ class AppL10nHi extends AppL10n {
   String get returnsDate => 'वापसी की तारीख';
 
   @override
-  String get returnsDetails => 'विवरण';
-
-  @override
   String get returnsDetailTitle => 'वापसी';
 
   @override
@@ -3714,9 +3708,6 @@ class AppL10nHi extends AppL10n {
   }
 
   @override
-  String get returnsHandedOver => 'सौंपा गया';
-
-  @override
   String get returnsHub => 'वापसी हब';
 
   @override
@@ -3781,9 +3772,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get returnsProgress => 'प्रगति';
-
-  @override
-  String get returnsReason => 'कारण';
 
   @override
   String get returnsReasonBatteryIssues => 'बैटरी या चार्जिंग में दिक्कत';
@@ -5616,12 +5604,16 @@ class AppL10nHi extends AppL10n {
 
   @override
   String checkInChargesSummary(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count आइटम · फ़ोटो और विवरण देखें',
-      one: '1 आइटम · फ़ोटो और विवरण देखें',
-    );
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count आइटम', one: '1 आइटम');
     return '$_temp0';
   }
+
+  @override
+  String get returnsDetails => 'विवरण';
+
+  @override
+  String get returnsReason => 'कारण';
+
+  @override
+  String get returnsHandedOver => 'सौंपा गया';
 }

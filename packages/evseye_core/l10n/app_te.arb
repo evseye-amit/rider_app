@@ -333,7 +333,6 @@
   "damageChargeCreditUsed": "వాడిన క్రెడిట్",
   "damageChargeEach": "ఒక్కోటి {amount}",
   "damageChargeLeftToPay": "మిగిలిన మొత్తం",
-  "damageChargePaidBody": "మీరు ఈ ఛార్జీని పూర్తిగా చెల్లించారు.",
   "damageChargePaidSoFar": "ఇప్పటివరకు చెల్లించింది",
   "damageChargePaidTitle": "పూర్తిగా చెల్లించారు",
   "damageChargePay": "{amount} చెల్లించండి",
@@ -1143,7 +1142,6 @@
   "returnsCouldNotLoad": "మీ రిటర్న్‌లను లోడ్ చేయలేకపోయాం",
   "returnsCouldNotLoadHubs": "హబ్‌లను లోడ్ చేయలేకపోయాం",
   "returnsDate": "తిరిగి ఇచ్చే తేదీ",
-  "returnsDetails": "వివరాలు",
   "returnsDetailTitle": "రిటర్న్",
   "returnsDisputeCharges": "ఛార్జీలపై అభ్యంతరం",
   "returnsDisputeReason": "ఏమి తప్పు?",
@@ -1169,7 +1167,6 @@
   "returnsErrorStateChanged": "ఈ జరిమానాలు ఇప్పుడే మారాయి. రిఫ్రెష్ చేసి మళ్లీ ప్రయత్నించండి.",
   "returnsErrorSubmitFirst": "ఆమోదించే ముందు జరిమానాలను సమర్పించండి.",
   "returnsEvidenceCount": "ఆధారంగా {count} ఫోటో(లు)",
-  "returnsHandedOver": "అప్పగించారు",
   "returnsHub": "రిటర్న్ హబ్",
   "returnsKindDamage": "నష్టం",
   "returnsKindMissing": "తప్పిపోయిన వస్తువు",
@@ -1191,7 +1188,6 @@
   "returnsPickReason": "ఒక కారణాన్ని ఎంచుకోండి",
   "returnsPlannedFor": "{date} కి ప్లాన్ చేశారు",
   "returnsProgress": "పురోగతి",
-  "returnsReason": "కారణం",
   "returnsReasonBatteryIssues": "బ్యాటరీ లేదా ఛార్జింగ్ సమస్యలు",
   "returnsReasonChangingJob": "ఉద్యోగం మారుతున్నాను",
   "returnsReasonHealthOrFamily": "ఆరోగ్య లేదా కుటుంబ కారణాలు",
@@ -1764,5 +1760,8 @@
   "exchangeDeskScootersReady": "{count, plural, =1{మీ హబ్‌లలో 1 స్కూటర్ సిద్ధంగా ఉంది} other{మీ హబ్‌లలో {count} స్కూటర్లు సిద్ధంగా ఉన్నాయి}}",
   "damageChargePayAll": "మొత్తం {amount} చెల్లించండి",
   "damageChargePayAllHint": "దీనితో మీ మిగతా బకాయి డ్యామేజ్ ఛార్జీలు కూడా చెల్లించబడతాయి.",
-  "checkInChargesSummary": "{count, plural, =1{1 ఐటమ్ · ఫోటోలు మరియు వివరాలు చూడండి} other{{count} ఐటమ్‌లు · ఫోటోలు మరియు వివరాలు చూడండి}}"
+  "checkInChargesSummary": "{count, plural, =1{1 ఐటమ్} other{{count} ఐటమ్‌లు}}",
+  "returnsDetails": "వివరాలు",
+  "returnsReason": "కారణం",
+  "returnsHandedOver": "అప్పగించారు"
 }

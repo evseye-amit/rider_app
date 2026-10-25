@@ -93,38 +93,33 @@ class _CheckInBody extends ConsumerWidget {
     ];
     final int total = submission.requiredPhotoTypes.length;
     final int taken = total - submission.missingPhotoTypes.length;
+    final String hub = submission.hubName;
+    final String photos = [l10n.checkInPhotosCount(taken, total), if (hub.isNotEmpty) hub].join(' · ');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        KeyValueRow(label: l10n.checkInHub, value: submission.hubName, icon: Icons.store_rounded),
-        const Gap.sm(),
-        if (submission.photos.isEmpty)
-          KeyValueRow(
-            label: l10n.checkInPhotos,
-            value: l10n.checkInPhotosCount(taken, total),
-            icon: Icons.photo_library_rounded,
-          )
+        if (reports.isEmpty)
+          _Note(icon: Icons.hourglass_top_rounded, tone: AppColors.info, text: l10n.checkInWaitingReport)
         else
-          _LinkTile(
-            icon: Icons.photo_library_rounded,
-            title: l10n.checkInPhotos,
-            subtitle: l10n.checkInPhotosCount(taken, total),
-            onTap: () => _showPhotos(context, ref),
-          ),
-        if (reports.isEmpty) ...[
-          const Gap.lg(),
-          _Note(icon: Icons.hourglass_top_rounded, tone: AppColors.info, text: l10n.checkInWaitingReport),
-        ] else
-          for (final SubmissionReportDto report in reports) _ReportSection(report: report),
+          for (final (int i, SubmissionReportDto report) in reports.indexed)
+            _ReportSection(report: report, first: i == 0),
+        const Gap.md(),
+        _LinkTile(
+          icon: Icons.photo_library_rounded,
+          title: l10n.checkInPhotos,
+          subtitle: photos,
+          onTap: submission.photos.isEmpty ? null : () => _showPhotos(context, ref),
+        ),
       ],
     );
   }
 }
 
 class _ReportSection extends ConsumerWidget {
-  const _ReportSection({required this.report});
+  const _ReportSection({required this.report, required this.first});
 
   final SubmissionReportDto report;
+  final bool first;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -143,10 +138,11 @@ class _ReportSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: Insets.md),
-          child: Divider(color: AppColors.stroke.withValues(alpha: 0.7), height: 1),
-        ),
+        if (!first)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: Insets.md),
+            child: Divider(color: AppColors.stroke.withValues(alpha: 0.7), height: 1),
+          ),
         Row(
           children: [
             Expanded(
@@ -180,24 +176,13 @@ class _ReportSection extends ConsumerWidget {
           _LinkTile(
             icon: Icons.receipt_long_rounded,
             title: l10n.damageChargesTitle,
-            subtitle: charge == null ? null : l10n.checkInChargesSummary(report.items.length),
-            trailing: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  Fmt.money(report.totalAmount, paise: true),
-                  style: AppText.titleSmall.copyWith(fontSize: 15, color: AppColors.textPrimary),
-                ),
-                if (charge != null && !charge.isOpen) ...[
-                  const SizedBox(height: 4),
-                  StatusChip(
-                    label: damageChargeStatus(l10n, charge.state).$1,
-                    tone: damageChargeStatus(l10n, charge.state).$2,
-                    dense: true,
-                  ),
-                ],
-              ],
+            subtitle: l10n.checkInChargesSummary(report.items.length),
+            status: charge == null || charge.isOpen
+                ? null
+                : (damageChargeStatus(l10n, charge.state).$1, damageChargeStatus(l10n, charge.state).$2.color),
+            trailing: Text(
+              Fmt.money(report.totalAmount, paise: true),
+              style: AppText.titleSmall.copyWith(fontSize: 15, color: AppColors.textPrimary),
             ),
             onTap: charge == null ? null : () => context.push('${Routes.damageChargeDetail}?id=${charge.id}'),
           ),
@@ -216,11 +201,19 @@ class _ReportSection extends ConsumerWidget {
 }
 
 class _LinkTile extends StatelessWidget {
-  const _LinkTile({required this.icon, required this.title, required this.onTap, this.subtitle, this.trailing});
+  const _LinkTile({
+    required this.icon,
+    required this.title,
+    required this.onTap,
+    this.subtitle,
+    this.status,
+    this.trailing,
+  });
 
   final IconData icon;
   final String title;
   final String? subtitle;
+  final (String, Color)? status;
   final Widget? trailing;
   final VoidCallback? onTap;
 
@@ -228,6 +221,16 @@ class _LinkTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final String? subtitle = this.subtitle;
     final Widget? trailing = this.trailing;
+    final List<InlineSpan> details = [
+      if (subtitle != null) TextSpan(text: subtitle),
+      if (status case (final String label, final Color color)) ...[
+        if (subtitle != null) const TextSpan(text: '  ·  '),
+        TextSpan(
+          text: label,
+          style: TextStyle(color: color, fontWeight: FontWeight.w700),
+        ),
+      ],
+    ];
     return Pressable(
       onTap: onTap,
       scale: onTap == null ? 1 : 0.99,
@@ -252,9 +255,14 @@ class _LinkTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(title, style: AppText.titleSmall.copyWith(fontSize: 14)),
-                  if (subtitle != null) ...[
+                  if (details.isNotEmpty) ...[
                     const SizedBox(height: 2),
-                    Text(subtitle, style: AppText.bodySmall.copyWith(fontSize: 12)),
+                    Text.rich(
+                      TextSpan(children: details),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.bodySmall.copyWith(fontSize: 12),
+                    ),
                   ],
                 ],
               ),

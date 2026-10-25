@@ -333,7 +333,6 @@
   "damageChargeCreditUsed": "इस्तेमाल हुआ क्रेडिट",
   "damageChargeEach": "{amount} प्रति नग",
   "damageChargeLeftToPay": "बाकी राशि",
-  "damageChargePaidBody": "आपने यह शुल्क पूरा भर दिया है।",
   "damageChargePaidSoFar": "अब तक भुगतान",
   "damageChargePaidTitle": "पूरा भुगतान हो गया",
   "damageChargePay": "{amount} भरें",
@@ -1143,7 +1142,6 @@
   "returnsCouldNotLoad": "आपकी वापसी की जानकारी लोड नहीं हो सकी",
   "returnsCouldNotLoadHubs": "हब लोड नहीं हो सके",
   "returnsDate": "वापसी की तारीख",
-  "returnsDetails": "विवरण",
   "returnsDetailTitle": "वापसी",
   "returnsDisputeCharges": "शुल्क पर आपत्ति करें",
   "returnsDisputeReason": "क्या गलत है?",
@@ -1169,7 +1167,6 @@
   "returnsErrorStateChanged": "ये पेनल्टी अभी बदली हैं। रीफ़्रेश करके फिर कोशिश करें।",
   "returnsErrorSubmitFirst": "मंज़ूरी से पहले पेनल्टी सबमिट करें।",
   "returnsEvidenceCount": "सबूत के तौर पर {count} फ़ोटो",
-  "returnsHandedOver": "सौंपा गया",
   "returnsHub": "वापसी हब",
   "returnsKindDamage": "नुकसान",
   "returnsKindMissing": "गायब सामान",
@@ -1191,7 +1188,6 @@
   "returnsPickReason": "एक कारण चुनें",
   "returnsPlannedFor": "{date} के लिए तय",
   "returnsProgress": "प्रगति",
-  "returnsReason": "कारण",
   "returnsReasonBatteryIssues": "बैटरी या चार्जिंग में दिक्कत",
   "returnsReasonChangingJob": "नौकरी बदल रहे हैं",
   "returnsReasonHealthOrFamily": "स्वास्थ्य या पारिवारिक कारण",
@@ -1764,5 +1760,8 @@
   "exchangeDeskScootersReady": "{count, plural, =1{आपके हब में 1 स्कूटर तैयार है} other{आपके हब में {count} स्कूटर तैयार हैं}}",
   "damageChargePayAll": "सभी {amount} भरें",
   "damageChargePayAllHint": "इससे आपके बाकी बकाया डैमेज चार्ज भी भर जाएंगे।",
-  "checkInChargesSummary": "{count, plural, =1{1 आइटम · फ़ोटो और विवरण देखें} other{{count} आइटम · फ़ोटो और विवरण देखें}}"
+  "checkInChargesSummary": "{count, plural, =1{1 आइटम} other{{count} आइटम}}",
+  "returnsDetails": "विवरण",
+  "returnsReason": "कारण",
+  "returnsHandedOver": "सौंपा गया"
 }

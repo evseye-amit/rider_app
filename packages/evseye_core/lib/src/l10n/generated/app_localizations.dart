@@ -2092,12 +2092,6 @@ abstract class AppL10n {
   /// **'Left to pay'**
   String get damageChargeLeftToPay;
 
-  /// Message on a fully paid damage charge
-  ///
-  /// In en, this message translates to:
-  /// **'You\'ve paid this charge in full.'**
-  String get damageChargePaidBody;
-
   /// Row with the amount already paid
   ///
   /// In en, this message translates to:
@@ -6952,12 +6946,6 @@ abstract class AppL10n {
   /// **'Return date'**
   String get returnsDate;
 
-  /// Details
-  ///
-  /// In en, this message translates to:
-  /// **'Details'**
-  String get returnsDetails;
-
   /// Return
   ///
   /// In en, this message translates to:
@@ -7108,12 +7096,6 @@ abstract class AppL10n {
   /// **'{count} photo(s) as evidence'**
   String returnsEvidenceCount(int count);
 
-  /// Handed over
-  ///
-  /// In en, this message translates to:
-  /// **'Handed over'**
-  String get returnsHandedOver;
-
   /// Return hub
   ///
   /// In en, this message translates to:
@@ -7239,12 +7221,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Progress'**
   String get returnsProgress;
-
-  /// Reason
-  ///
-  /// In en, this message translates to:
-  /// **'Reason'**
-  String get returnsReason;
 
   /// Battery or charging problems
   ///
@@ -10678,11 +10654,29 @@ abstract class AppL10n {
   /// **'This also pays your other unpaid damage charges.'**
   String get damageChargePayAllHint;
 
-  /// Subtitle of the damage charges row on the scooter submission card
+  /// Item count under Damage charges on the scooter submission card
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =1{1 item · See photos and details} other{{count} items · See photos and details}}'**
+  /// **'{count, plural, =1{1 item} other{{count} items}}'**
   String checkInChargesSummary(int count);
+
+  /// Details
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get returnsDetails;
+
+  /// Reason
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get returnsReason;
+
+  /// Handed over
+  ///
+  /// In en, this message translates to:
+  /// **'Handed over'**
+  String get returnsHandedOver;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

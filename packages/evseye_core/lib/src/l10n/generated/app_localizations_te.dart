@@ -1059,9 +1059,6 @@ class AppL10nTe extends AppL10n {
   String get damageChargeLeftToPay => 'మిగిలిన మొత్తం';
 
   @override
-  String get damageChargePaidBody => 'మీరు ఈ ఛార్జీని పూర్తిగా చెల్లించారు.';
-
-  @override
   String get damageChargePaidSoFar => 'ఇప్పటివరకు చెల్లించింది';
 
   @override
@@ -3646,9 +3643,6 @@ class AppL10nTe extends AppL10n {
   String get returnsDate => 'తిరిగి ఇచ్చే తేదీ';
 
   @override
-  String get returnsDetails => 'వివరాలు';
-
-  @override
   String get returnsDetailTitle => 'రిటర్న్';
 
   @override
@@ -3727,9 +3721,6 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
-  String get returnsHandedOver => 'అప్పగించారు';
-
-  @override
   String get returnsHub => 'రిటర్న్ హబ్';
 
   @override
@@ -3794,9 +3785,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get returnsProgress => 'పురోగతి';
-
-  @override
-  String get returnsReason => 'కారణం';
 
   @override
   String get returnsReasonBatteryIssues => 'బ్యాటరీ లేదా ఛార్జింగ్ సమస్యలు';
@@ -5636,12 +5624,16 @@ class AppL10nTe extends AppL10n {
 
   @override
   String checkInChargesSummary(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count ఐటమ్‌లు · ఫోటోలు మరియు వివరాలు చూడండి',
-      one: '1 ఐటమ్ · ఫోటోలు మరియు వివరాలు చూడండి',
-    );
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count ఐటమ్‌లు', one: '1 ఐటమ్');
     return '$_temp0';
   }
+
+  @override
+  String get returnsDetails => 'వివరాలు';
+
+  @override
+  String get returnsReason => 'కారణం';
+
+  @override
+  String get returnsHandedOver => 'అప్పగించారు';
 }

@@ -1060,9 +1060,6 @@ class AppL10nEn extends AppL10n {
   String get damageChargeLeftToPay => 'Left to pay';
 
   @override
-  String get damageChargePaidBody => 'You\'ve paid this charge in full.';
-
-  @override
   String get damageChargePaidSoFar => 'Paid so far';
 
   @override
@@ -3641,9 +3638,6 @@ class AppL10nEn extends AppL10n {
   String get returnsDate => 'Return date';
 
   @override
-  String get returnsDetails => 'Details';
-
-  @override
   String get returnsDetailTitle => 'Return';
 
   @override
@@ -3723,9 +3717,6 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get returnsHandedOver => 'Handed over';
-
-  @override
   String get returnsHub => 'Return hub';
 
   @override
@@ -3791,9 +3782,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get returnsProgress => 'Progress';
-
-  @override
-  String get returnsReason => 'Reason';
 
   @override
   String get returnsReasonBatteryIssues => 'Battery or charging problems';
@@ -5627,12 +5615,16 @@ class AppL10nEn extends AppL10n {
 
   @override
   String checkInChargesSummary(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count items · See photos and details',
-      one: '1 item · See photos and details',
-    );
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count items', one: '1 item');
     return '$_temp0';
   }
+
+  @override
+  String get returnsDetails => 'Details';
+
+  @override
+  String get returnsReason => 'Reason';
+
+  @override
+  String get returnsHandedOver => 'Handed over';
 }

@@ -63,15 +63,7 @@ class DamageChargePage extends ConsumerWidget {
           : null,
       children: [
         _Lines(charge: charge),
-        if (charge.state == DamageChargeState.paid) ...[
-          const Gap.xl(),
-          ArtBlock(
-            art: BrandArt.success,
-            artSize: 120,
-            title: context.l10n.damageChargePaidTitle,
-            message: context.l10n.damageChargePaidBody,
-          ),
-        ] else if (charge.state == DamageChargeState.cancelled) ...[
+        if (charge.state == DamageChargeState.cancelled) ...[
           const Gap.lg(),
           AccentCard(
             accent: AppColors.textMuted,
@@ -120,10 +112,12 @@ class _Band extends StatelessWidget {
           ],
         ),
         const Gap.xl(),
-        Text(
-          open ? l10n.damageChargeAmountToPay : l10n.damageChargeTotal,
-          style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary),
-        ),
+        Text(switch (charge.state) {
+          DamageChargeState.paid => l10n.damageChargePaidTitle,
+          DamageChargeState.cancelled => l10n.damageChargeTotal,
+          DamageChargeState.unpaid ||
+          DamageChargeState.partlyPaid => open ? l10n.damageChargeAmountToPay : l10n.damageChargeTotal,
+        }, style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary)),
         const SizedBox(height: 4),
         Text(
           Fmt.money(open ? charge.due : charge.total, paise: true),
@@ -295,20 +289,6 @@ class _Lines extends StatelessWidget {
                 ),
               ),
             ],
-            Container(
-              margin: const EdgeInsets.only(top: Insets.xs),
-              padding: const EdgeInsets.symmetric(horizontal: Insets.md, vertical: Insets.sm + 2),
-              decoration: BoxDecoration(color: AppColors.surfaceMuted, borderRadius: Corners.brMd),
-              child: Row(
-                children: [
-                  Expanded(child: Text(l10n.damageChargeTotal, style: AppText.titleSmall.copyWith(fontSize: 14))),
-                  Text(
-                    Fmt.money(charge.total, paise: true),
-                    style: AppText.titleSmall.copyWith(fontSize: 16, color: AppColors.textPrimary),
-                  ),
-                ],
-              ),
-            ),
           ],
         ],
       ),

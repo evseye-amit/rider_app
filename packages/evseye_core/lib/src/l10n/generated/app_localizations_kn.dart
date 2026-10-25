@@ -1061,9 +1061,6 @@ class AppL10nKn extends AppL10n {
   String get damageChargeLeftToPay => 'ಉಳಿದ ಮೊತ್ತ';
 
   @override
-  String get damageChargePaidBody => 'ನೀವು ಈ ಶುಲ್ಕವನ್ನು ಪೂರ್ತಿಯಾಗಿ ಪಾವತಿಸಿದ್ದೀರಿ.';
-
-  @override
   String get damageChargePaidSoFar => 'ಈವರೆಗೆ ಪಾವತಿಸಿದ್ದು';
 
   @override
@@ -3643,9 +3640,6 @@ class AppL10nKn extends AppL10n {
   String get returnsDate => 'ಹಿಂದಿರುಗಿಸುವ ದಿನಾಂಕ';
 
   @override
-  String get returnsDetails => 'ವಿವರಗಳು';
-
-  @override
   String get returnsDetailTitle => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ';
 
   @override
@@ -3725,9 +3719,6 @@ class AppL10nKn extends AppL10n {
   }
 
   @override
-  String get returnsHandedOver => 'ಹಸ್ತಾಂತರಿಸಲಾಗಿದೆ';
-
-  @override
   String get returnsHub => 'ಹಿಂದಿರುಗಿಸುವ ಹಬ್';
 
   @override
@@ -3792,9 +3783,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get returnsProgress => 'ಪ್ರಗತಿ';
-
-  @override
-  String get returnsReason => 'ಕಾರಣ';
 
   @override
   String get returnsReasonBatteryIssues => 'ಬ್ಯಾಟರಿ ಅಥವಾ ಚಾರ್ಜಿಂಗ್ ಸಮಸ್ಯೆ';
@@ -5630,12 +5618,16 @@ class AppL10nKn extends AppL10n {
 
   @override
   String checkInChargesSummary(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count ಐಟಂಗಳು · ಫೋಟೋಗಳು ಮತ್ತು ವಿವರಗಳನ್ನು ನೋಡಿ',
-      one: '1 ಐಟಂ · ಫೋಟೋಗಳು ಮತ್ತು ವಿವರಗಳನ್ನು ನೋಡಿ',
-    );
+    String _temp0 = intl.Intl.pluralLogic(count, locale: localeName, other: '$count ಐಟಂಗಳು', one: '1 ಐಟಂ');
     return '$_temp0';
   }
+
+  @override
+  String get returnsDetails => 'ವಿವರಗಳು';
+
+  @override
+  String get returnsReason => 'ಕಾರಣ';
+
+  @override
+  String get returnsHandedOver => 'ಹಸ್ತಾಂತರಿಸಲಾಗಿದೆ';
 }
