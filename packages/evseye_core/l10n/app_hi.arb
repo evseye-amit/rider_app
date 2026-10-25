@@ -1775,5 +1775,8 @@
   "exchangeDeskClosedBody": "यह अनुरोध बंद हो गया है। आगे कुछ करने की ज़रूरत नहीं है।",
   "exchangeDeskAcceptedPlan": "स्वीकार किया गया प्लान",
   "exchangeDeskForRider": "{name} के लिए",
-  "exchangeDeskScootersReady": "{count, plural, =1{आपके हब में 1 स्कूटर तैयार है} other{आपके हब में {count} स्कूटर तैयार हैं}}"
+  "exchangeDeskScootersReady": "{count, plural, =1{आपके हब में 1 स्कूटर तैयार है} other{आपके हब में {count} स्कूटर तैयार हैं}}",
+  "damageChargePayAll": "सभी {amount} भरें",
+  "damageChargePayAllHint": "इससे आपके बाकी बकाया डैमेज चार्ज भी भर जाएंगे।",
+  "damageChargeViewDetails": "फ़ोटो और विवरण देखें"
 }

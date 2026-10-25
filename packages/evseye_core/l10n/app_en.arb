@@ -7700,5 +7700,22 @@
         "type": "int"
       }
     }
+  },
+  "damageChargePayAll": "Pay all {amount}",
+  "@damageChargePayAll": {
+    "description": "Pay button when the payment also covers other unpaid damage charges",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "damageChargePayAllHint": "This also pays your other unpaid damage charges.",
+  "@damageChargePayAllHint": {
+    "description": "Hint under the pay button when the payment covers more than this charge"
+  },
+  "damageChargeViewDetails": "View photos and details",
+  "@damageChargeViewDetails": {
+    "description": "Link from the scooter submission card to the damage charge details"
   }
 }

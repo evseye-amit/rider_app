@@ -156,28 +156,6 @@ class ReturnTile extends StatelessWidget {
   }
 }
 
-class ReturnStatusCard extends StatelessWidget {
-  const ReturnStatusCard({required this.item, super.key});
-
-  final RideReturn item;
-
-  @override
-  Widget build(BuildContext context) {
-    final ReturnStatusStyle style = ReturnStatusStyle.of(context.l10n, item);
-    return AccentCard(
-      accent: style.tone.color,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          StatusChip(label: style.label, tone: style.tone, dense: true, solid: true),
-          const Gap.md(),
-          Text(returnNote(context.l10n, item), style: AppText.bodyMedium.copyWith(height: 1.5)),
-        ],
-      ),
-    );
-  }
-}
-
 class ReturnTimeline extends StatelessWidget {
   const ReturnTimeline({required this.item, super.key});
 

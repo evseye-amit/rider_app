@@ -10749,6 +10749,24 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 scooter ready in your hubs} other{{count} scooters ready in your hubs}}'**
   String exchangeDeskScootersReady(int count);
+
+  /// Pay button when the payment also covers other unpaid damage charges
+  ///
+  /// In en, this message translates to:
+  /// **'Pay all {amount}'**
+  String damageChargePayAll(String amount);
+
+  /// Hint under the pay button when the payment covers more than this charge
+  ///
+  /// In en, this message translates to:
+  /// **'This also pays your other unpaid damage charges.'**
+  String get damageChargePayAllHint;
+
+  /// Link from the scooter submission card to the damage charge details
+  ///
+  /// In en, this message translates to:
+  /// **'View photos and details'**
+  String get damageChargeViewDetails;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

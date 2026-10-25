@@ -5673,4 +5673,15 @@ class AppL10nKn extends AppL10n {
     );
     return '$_temp0';
   }
+
+  @override
+  String damageChargePayAll(String amount) {
+    return 'ಎಲ್ಲಾ $amount ಪಾವತಿಸಿ';
+  }
+
+  @override
+  String get damageChargePayAllHint => 'ಇದರಿಂದ ನಿಮ್ಮ ಉಳಿದ ಬಾಕಿ ಡ್ಯಾಮೇಜ್ ಶುಲ್ಕಗಳೂ ಪಾವತಿಯಾಗುತ್ತವೆ.';
+
+  @override
+  String get damageChargeViewDetails => 'ಫೋಟೋಗಳು ಮತ್ತು ವಿವರಗಳನ್ನು ನೋಡಿ';
 }

@@ -29,22 +29,22 @@ class ProfilePage extends ConsumerWidget {
     }
 
     final RiderProfile? rider = profile.value;
+    final List<Widget> sections = rider == null
+        ? const [_ProfileSkeleton()]
+        : [
+            if (rider.hasPersonalDetails) _PersonalDetails(profile: rider),
+            if (rider.hasAddress) _Address(profile: rider),
+            if (rider.hasEmergencyContact)
+              _EmergencyContact(name: rider.emergencyContactName, mobile: rider.emergencyContactMobile),
+          ];
 
     return HeroScaffold(
       bottomPadding: Insets.x4l,
       onRefresh: () => ref.refreshQuietly(riderProfileProvider),
       band: _Band(profile: rider),
-      children: rider == null
-          ? const [_ProfileSkeleton()]
-          : [
-              _PersonalDetails(profile: rider),
-              const Gap.lg(),
-              _Address(profile: rider),
-              if (rider.hasEmergencyContact) ...[
-                const Gap.lg(),
-                _EmergencyContact(name: rider.emergencyContactName, mobile: rider.emergencyContactMobile),
-              ],
-            ],
+      children: [
+        for (final (int i, Widget section) in sections.indexed) ...[if (i > 0) const Gap.lg(), section],
+      ],
     );
   }
 }
@@ -126,15 +126,16 @@ class _PersonalDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppL10n l10n = context.l10n;
+    final String? name = profile.name;
     final String? mobile = profile.mobile;
     final DateTime? born = profile.dateOfBirth;
     return _SectionCard(
       icon: Icons.badge_rounded,
       title: l10n.profilePersonalDetails,
       children: [
-        KeyValueRow(label: l10n.commonFullName, value: profile.name ?? '—'),
-        KeyValueRow(label: l10n.commonMobile, value: mobile == null ? '—' : Fmt.phone(mobile)),
-        KeyValueRow(label: l10n.profileDateOfBirth, value: born == null ? '—' : Fmt.date(born)),
+        if (name != null) KeyValueRow(label: l10n.commonFullName, value: name),
+        if (mobile != null) KeyValueRow(label: l10n.commonMobile, value: Fmt.phone(mobile)),
+        if (born != null) KeyValueRow(label: l10n.profileDateOfBirth, value: Fmt.date(born)),
       ],
     );
   }
@@ -148,17 +149,25 @@ class _Address extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppL10n l10n = context.l10n;
-    String text(RiderAddress address) => address.lines.isEmpty ? '—' : address.lines.join('\n');
+    final List<Widget> blocks = [
+      if (!profile.currentAddress.isEmpty)
+        _AddressBlock(label: l10n.profileCurrentAddress, text: profile.currentAddress.lines.join('\n')),
+      if (profile.showsPermanentAddress)
+        _AddressBlock(
+          label: l10n.profilePermanentAddress,
+          text: profile.sameAsCurrentAddress
+              ? l10n.profileSameAsCurrentAddress
+              : profile.permanentAddress.lines.join('\n'),
+        ),
+    ];
     return _SectionCard(
       icon: Icons.location_on_rounded,
       title: l10n.profileAddress,
       children: [
-        _AddressBlock(label: l10n.profileCurrentAddress, text: text(profile.currentAddress)),
-        Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-        _AddressBlock(
-          label: l10n.profilePermanentAddress,
-          text: profile.sameAsCurrentAddress ? l10n.profileSameAsCurrentAddress : text(profile.permanentAddress),
-        ),
+        for (final (int i, Widget block) in blocks.indexed) ...[
+          if (i > 0) Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
+          block,
+        ],
       ],
     );
   }
@@ -202,7 +211,9 @@ class _EmergencyContact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String? name = this.name;
     final String? mobile = this.mobile;
+    final String? phone = mobile == null ? null : Fmt.phone(mobile);
     return _SectionCard(
       icon: Icons.contact_phone_rounded,
       title: context.l10n.profileEmergencyContact,
@@ -218,14 +229,14 @@ class _EmergencyContact extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      name ?? '—',
+                      name ?? phone ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: AppText.titleSmall.copyWith(fontSize: 14),
                     ),
-                    if (mobile != null) ...[
+                    if (name != null && phone != null) ...[
                       const SizedBox(height: 2),
-                      Text(Fmt.phone(mobile), style: AppText.bodySmall.copyWith(fontSize: 12.5)),
+                      Text(phone, style: AppText.bodySmall.copyWith(fontSize: 12.5)),
                     ],
                   ],
                 ),

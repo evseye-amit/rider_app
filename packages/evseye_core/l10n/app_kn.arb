@@ -1775,5 +1775,8 @@
   "exchangeDeskClosedBody": "ಈ ವಿನಂತಿಯನ್ನು ಮುಚ್ಚಲಾಗಿದೆ. ಇನ್ನು ಯಾವುದೇ ಹಂತಗಳು ಬೇಕಿಲ್ಲ.",
   "exchangeDeskAcceptedPlan": "ಒಪ್ಪಿಕೊಂಡ ಪ್ಲಾನ್",
   "exchangeDeskForRider": "{name} ಅವರಿಗಾಗಿ",
-  "exchangeDeskScootersReady": "{count, plural, =1{ನಿಮ್ಮ ಹಬ್‌ಗಳಲ್ಲಿ 1 ಸ್ಕೂಟರ್ ಸಿದ್ಧವಾಗಿದೆ} other{ನಿಮ್ಮ ಹಬ್‌ಗಳಲ್ಲಿ {count} ಸ್ಕೂಟರ್‌ಗಳು ಸಿದ್ಧವಾಗಿವೆ}}"
+  "exchangeDeskScootersReady": "{count, plural, =1{ನಿಮ್ಮ ಹಬ್‌ಗಳಲ್ಲಿ 1 ಸ್ಕೂಟರ್ ಸಿದ್ಧವಾಗಿದೆ} other{ನಿಮ್ಮ ಹಬ್‌ಗಳಲ್ಲಿ {count} ಸ್ಕೂಟರ್‌ಗಳು ಸಿದ್ಧವಾಗಿವೆ}}",
+  "damageChargePayAll": "ಎಲ್ಲಾ {amount} ಪಾವತಿಸಿ",
+  "damageChargePayAllHint": "ಇದರಿಂದ ನಿಮ್ಮ ಉಳಿದ ಬಾಕಿ ಡ್ಯಾಮೇಜ್ ಶುಲ್ಕಗಳೂ ಪಾವತಿಯಾಗುತ್ತವೆ.",
+  "damageChargeViewDetails": "ಫೋಟೋಗಳು ಮತ್ತು ವಿವರಗಳನ್ನು ನೋಡಿ"
 }

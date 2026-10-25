@@ -5676,4 +5676,15 @@ class AppL10nTe extends AppL10n {
     );
     return '$_temp0';
   }
+
+  @override
+  String damageChargePayAll(String amount) {
+    return 'మొత్తం $amount చెల్లించండి';
+  }
+
+  @override
+  String get damageChargePayAllHint => 'దీనితో మీ మిగతా బకాయి డ్యామేజ్ ఛార్జీలు కూడా చెల్లించబడతాయి.';
+
+  @override
+  String get damageChargeViewDetails => 'ఫోటోలు మరియు వివరాలు చూడండి';
 }

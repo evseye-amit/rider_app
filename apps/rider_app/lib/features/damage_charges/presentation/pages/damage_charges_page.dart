@@ -4,76 +4,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/payments/online_payments.dart';
 import '../../../../core/payments/razorpay_checkout.dart';
-import '../../../../core/session/rider_session_provider.dart';
-import '../../../home/presentation/providers/home_summary_provider.dart';
-import '../../../payments/presentation/providers/payments_provider.dart';
 import '../../domain/entities/damage_charge.dart';
 import '../providers/damage_charges_providers.dart';
+import '../providers/damage_payment_provider.dart';
 import '../widgets/damage_charge_widgets.dart';
+import '../widgets/damage_pay_action.dart';
 
-class DamageChargesPage extends ConsumerStatefulWidget {
+class DamageChargesPage extends ConsumerWidget {
   const DamageChargesPage({super.key});
 
   @override
-  ConsumerState<DamageChargesPage> createState() => _DamageChargesPageState();
-}
-
-class _DamageChargesPageState extends ConsumerState<DamageChargesPage> {
-  bool _paying = false;
-  String? _notice;
-
-  Future<void> _pay() async {
-    final String mobile = ref.read(riderSessionProvider).mobile;
-    final AppL10n l10n = context.l10n;
-    setState(() => _paying = true);
-    final OnlinePaymentOutcome outcome = await ref
-        .read(onlinePaymentsProvider)
-        .pay(
-          PaymentOrderRequest.submissionPenalty(),
-          description: l10n.damageChargesTitle,
-          contact: mobile.isEmpty ? null : mobile,
-        );
-    if (!mounted) return;
-    setState(() {
-      _paying = false;
-      _notice = switch (outcome) {
-        OnlinePaymentPending() => l10n.onlinePaymentPending,
-        OnlinePaymentNeedsSupport() => l10n.onlinePaymentReview,
-        _ => _notice,
-      };
-    });
-    switch (outcome) {
-      case OnlinePaymentPaid():
-        AppSnack.success(context, l10n.onlinePaymentDone);
-      case OnlinePaymentCancelled():
-        AppSnack.info(context, l10n.onlinePaymentCancelled);
-      case OnlinePaymentDeclined():
-        AppSnack.error(context, l10n.onlinePaymentFailed);
-      case OnlinePaymentUnavailable():
-        AppSnack.error(context, l10n.damageChargesOnlineUnavailable);
-      case OnlinePaymentError(:final message):
-        AppSnack.error(context, message);
-      case OnlinePaymentPending() || OnlinePaymentNeedsSupport():
-        break;
-    }
-    ref
-      ..invalidate(damageChargesSummaryProvider)
-      ..invalidate(damageChargesProvider)
-      ..invalidate(homeSummaryProvider)
-      ..invalidate(paymentsOverviewProvider);
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<DamageChargesSummary> summary = ref.watch(damageChargesSummaryProvider);
     final AsyncValue<List<DamageCharge>> charges = ref.watch(damageChargesProvider);
+    final DamagePaymentState payment = ref.watch(damagePaymentProvider);
     final DamageChargesSummary? totals = summary.value;
     final List<DamageCharge>? items = charges.value;
     final List<DamageCharge> toPay = [...?items?.where((charge) => charge.isOpen)];
     final List<DamageCharge> paid = [...?items?.where((charge) => !charge.isOpen)];
-    final String? notice = _notice;
+    final String? notice = payment.notice == null || totals == null
+        ? null
+        : damagePaymentNote(context.l10n, totals, payment.notice);
 
     return AppScaffold(
       title: context.l10n.damageChargesTitle,
@@ -82,8 +34,8 @@ class _DamageChargesPageState extends ConsumerState<DamageChargesPage> {
           PrimaryButton(
             label: context.l10n.damageChargePay(Fmt.money(value.payAmount, paise: true)),
             icon: Icons.lock_rounded,
-            loading: _paying,
-            onPressed: _paying ? null : _pay,
+            loading: payment.paying,
+            onPressed: payment.paying ? null : () => payDamageCharges(context, ref),
           ),
         _ => null,
       },
@@ -184,14 +136,7 @@ class _Total extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppL10n l10n = context.l10n;
-    final String? note = switch (summary.activity) {
-      DamagePaymentActivity.processing => l10n.damageChargesPaymentProcessing(
-        Fmt.money(summary.activityAmount ?? summary.due, paise: true),
-      ),
-      DamagePaymentActivity.underReview => l10n.onlinePaymentReview,
-      _ when summary.due > 0 && !RazorpayCheckout.available => l10n.damageChargesOnlineUnavailable,
-      _ => null,
-    };
+    final String? note = damagePaymentNote(l10n, summary, null);
     return ModuleCard(
       title: l10n.damageChargeAmountToPay,
       leading: const IconTile(icon: Icons.receipt_long_rounded, solid: true, size: 28),
@@ -218,17 +163,7 @@ class _Total extends StatelessWidget {
             KeyValueRow(label: l10n.damageChargePaidSoFar, value: Fmt.money(summary.paid, paise: true)),
           if (summary.credit > 0)
             KeyValueRow(label: l10n.damageChargeCreditUsed, value: Fmt.money(summary.credit, paise: true)),
-          if (note != null) ...[
-            const Gap.md(),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Icon(Icons.hourglass_top_rounded, size: 16, color: AppColors.warning),
-                const SizedBox(width: Insets.sm),
-                Expanded(child: Text(note, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45))),
-              ],
-            ),
-          ],
+          if (note != null) ...[const Gap.md(), DamagePaymentNoteRow(text: note)],
         ],
       ),
     );

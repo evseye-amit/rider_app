@@ -1775,5 +1775,8 @@
   "exchangeDeskClosedBody": "ఈ అభ్యర్థన మూసివేయబడింది. ఇంకా ఎలాంటి దశలు అవసరం లేదు.",
   "exchangeDeskAcceptedPlan": "అంగీకరించిన ప్లాన్",
   "exchangeDeskForRider": "{name} కోసం",
-  "exchangeDeskScootersReady": "{count, plural, =1{మీ హబ్‌లలో 1 స్కూటర్ సిద్ధంగా ఉంది} other{మీ హబ్‌లలో {count} స్కూటర్లు సిద్ధంగా ఉన్నాయి}}"
+  "exchangeDeskScootersReady": "{count, plural, =1{మీ హబ్‌లలో 1 స్కూటర్ సిద్ధంగా ఉంది} other{మీ హబ్‌లలో {count} స్కూటర్లు సిద్ధంగా ఉన్నాయి}}",
+  "damageChargePayAll": "మొత్తం {amount} చెల్లించండి",
+  "damageChargePayAllHint": "దీనితో మీ మిగతా బకాయి డ్యామేజ్ ఛార్జీలు కూడా చెల్లించబడతాయి.",
+  "damageChargeViewDetails": "ఫోటోలు మరియు వివరాలు చూడండి"
 }

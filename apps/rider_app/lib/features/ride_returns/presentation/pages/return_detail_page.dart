@@ -159,85 +159,150 @@ class _ReturnDetailPageState extends ConsumerState<ReturnDetailPage> {
     final DateTime? cancelledAt = item.cancelledAt;
     final String? checkInId = item.checkInId;
 
-    return AppScaffold(
-      title: context.l10n.returnsDetailTitle,
-      subtitle: returnReasonLabel(context.l10n, item.reasonCode),
-      body: RefreshIndicator(
-        onRefresh: _refresh,
-        color: AppColors.primary,
-        child: PageBody(
-          physics: const AlwaysScrollableScrollPhysics(),
-          children: [
-            ReturnStatusCard(item: item),
-            const Gap.lg(),
-            if (checkInId != null) ...[CheckInCard(submissionId: checkInId), const Gap.lg()],
-            if (!item.usesCheckIn && item.status == ReturnStatus.returned) ...[
-              ChargesCard(
-                charges:
-                    charges ??
-                    const ReturnCharges(
-                      stage: ChargesStage.reviewing,
-                      total: 0,
-                      items: [],
-                      approvedByYou: false,
-                      approvedByAdmin: false,
-                    ),
-                busy: _busy,
-                onApprove: () => _approve(charges!),
-                onDispute: _dispute,
+    return HeroScaffold(
+      onRefresh: _refresh,
+      band: _Band(item: item),
+      children: [
+        if (checkInId != null) ...[CheckInCard(submissionId: checkInId), const Gap.lg()],
+        if (!item.usesCheckIn && item.status == ReturnStatus.returned) ...[
+          ChargesCard(
+            charges:
+                charges ??
+                const ReturnCharges(
+                  stage: ChargesStage.reviewing,
+                  total: 0,
+                  items: [],
+                  approvedByYou: false,
+                  approvedByAdmin: false,
+                ),
+            busy: _busy,
+            onApprove: () => _approve(charges!),
+            onDispute: _dispute,
+          ),
+          const Gap.lg(),
+        ],
+        if (item.status != ReturnStatus.cancelled) ...[ReturnTimeline(item: item), const Gap.lg()],
+        ModuleCard(
+          title: context.l10n.returnsDetails,
+          leading: const IconTile(icon: Icons.info_outline_rounded, solid: true, size: 28),
+          child: Column(
+            children: [
+              KeyValueRow(
+                label: context.l10n.returnsReason,
+                value: returnReasonLabel(context.l10n, item.reasonCode),
+                icon: Icons.help_outline_rounded,
               ),
-              const Gap.lg(),
+              if (notes != null && notes.isNotEmpty)
+                KeyValueRow(label: context.l10n.returnsNotes, value: notes, icon: Icons.notes_rounded),
+              KeyValueRow(
+                label: context.l10n.returnsDate,
+                value: Fmt.date(item.plannedDate),
+                icon: Icons.event_rounded,
+              ),
+              KeyValueRow(
+                label: context.l10n.commonRaised,
+                value: Fmt.dateTime(item.createdAt),
+                icon: Icons.schedule_rounded,
+              ),
+              if (receivedAt != null)
+                KeyValueRow(
+                  label: context.l10n.returnsHandedOver,
+                  value: Fmt.dateTime(receivedAt),
+                  icon: Icons.assignment_turned_in_rounded,
+                ),
+              if (cancelledAt != null)
+                KeyValueRow(
+                  label: context.l10n.returnsStatusCancelled,
+                  value: Fmt.dateTime(cancelledAt),
+                  icon: Icons.cancel_outlined,
+                ),
             ],
-            if (item.status != ReturnStatus.cancelled) ...[ReturnTimeline(item: item), const Gap.lg()],
-            ModuleCard(
-              title: context.l10n.returnsDetails,
-              leading: const IconTile(icon: Icons.info_outline_rounded, solid: true, size: 28),
+          ),
+        ),
+        if (item.canCancel) ...[
+          const Gap.xl(),
+          SecondaryButton(
+            label: context.l10n.returnsCancel,
+            icon: Icons.close_rounded,
+            color: AppColors.danger,
+            onPressed: _busy ? null : _cancel,
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _Band extends StatelessWidget {
+  const _Band({required this.item});
+
+  final RideReturn item;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
+    final ReturnStatusStyle style = ReturnStatusStyle.of(l10n, item);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            InkCircleButton(icon: Icons.arrow_back_rounded, onTap: () => Navigator.of(context).maybePop()),
+            const Spacer(),
+            StatusChip(label: style.label, tone: style.tone, icon: style.icon, dense: true, solid: true),
+          ],
+        ),
+        const Gap.xl(),
+        Row(
+          children: [
+            const IconTile(icon: Icons.assignment_return_rounded, tone: AppColors.primaryBright, solid: true, size: 46),
+            const SizedBox(width: Insets.md),
+            Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  KeyValueRow(
-                    label: context.l10n.returnsReason,
-                    value: returnReasonLabel(context.l10n, item.reasonCode),
-                    icon: Icons.help_outline_rounded,
+                  Text(
+                    returnReasonLabel(l10n, item.reasonCode),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.displaySmall.copyWith(fontSize: 21, color: AppColors.onInk),
                   ),
-                  if (notes != null && notes.isNotEmpty)
-                    KeyValueRow(label: context.l10n.returnsNotes, value: notes, icon: Icons.notes_rounded),
-                  KeyValueRow(
-                    label: context.l10n.returnsDate,
-                    value: Fmt.date(item.plannedDate),
-                    icon: Icons.event_rounded,
+                  const SizedBox(height: 3),
+                  Text(
+                    '${l10n.returnsDetailTitle} · ${l10n.returnsPlannedFor(Fmt.date(item.plannedDate))}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.bodyMedium.copyWith(color: AppColors.onInkSecondary),
                   ),
-                  KeyValueRow(
-                    label: context.l10n.commonRaised,
-                    value: Fmt.dateTime(item.createdAt),
-                    icon: Icons.schedule_rounded,
-                  ),
-                  if (receivedAt != null)
-                    KeyValueRow(
-                      label: context.l10n.returnsHandedOver,
-                      value: Fmt.dateTime(receivedAt),
-                      icon: Icons.assignment_turned_in_rounded,
-                    ),
-                  if (cancelledAt != null)
-                    KeyValueRow(
-                      label: context.l10n.returnsStatusCancelled,
-                      value: Fmt.dateTime(cancelledAt),
-                      icon: Icons.cancel_outlined,
-                    ),
                 ],
               ),
             ),
-            if (item.canCancel) ...[
-              const Gap.xl(),
-              SecondaryButton(
-                label: context.l10n.returnsCancel,
-                icon: Icons.close_rounded,
-                color: AppColors.danger,
-                onPressed: _busy ? null : _cancel,
-              ),
-            ],
           ],
         ),
-      ),
+        const Gap.lg(),
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(Insets.md),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.06),
+            borderRadius: Corners.brMd,
+            border: Border.all(color: AppColors.inkStroke),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(style.icon, size: 18, color: style.tone.color),
+              const SizedBox(width: Insets.sm),
+              Expanded(
+                child: Text(
+                  returnNote(l10n, item),
+                  style: AppText.bodySmall.copyWith(fontSize: 13, height: 1.45, color: AppColors.onInkSecondary),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

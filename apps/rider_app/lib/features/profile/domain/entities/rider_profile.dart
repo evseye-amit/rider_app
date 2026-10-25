@@ -14,6 +14,8 @@ class RiderAddress extends Equatable {
     return [?address, if (last.isNotEmpty) last];
   }
 
+  bool get isEmpty => lines.isEmpty;
+
   @override
   List<Object?> get props => [address, city, state, postalCode];
 }
@@ -44,6 +46,12 @@ class RiderProfile extends Equatable {
   final String? emergencyContactMobile;
 
   String? get shortName => name?.split(RegExp(r'\s+')).first;
+
+  bool get hasPersonalDetails => name != null || mobile != null || dateOfBirth != null;
+
+  bool get showsPermanentAddress => sameAsCurrentAddress ? !currentAddress.isEmpty : !permanentAddress.isEmpty;
+
+  bool get hasAddress => !currentAddress.isEmpty || showsPermanentAddress;
 
   bool get hasEmergencyContact => emergencyContactName != null || emergencyContactMobile != null;
 

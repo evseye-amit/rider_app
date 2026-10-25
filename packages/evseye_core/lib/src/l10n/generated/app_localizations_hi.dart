@@ -5656,4 +5656,15 @@ class AppL10nHi extends AppL10n {
     );
     return '$_temp0';
   }
+
+  @override
+  String damageChargePayAll(String amount) {
+    return 'सभी $amount भरें';
+  }
+
+  @override
+  String get damageChargePayAllHint => 'इससे आपके बाकी बकाया डैमेज चार्ज भी भर जाएंगे।';
+
+  @override
+  String get damageChargeViewDetails => 'फ़ोटो और विवरण देखें';
 }

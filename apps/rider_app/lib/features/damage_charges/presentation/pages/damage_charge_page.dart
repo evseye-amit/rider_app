@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/damage_charge.dart';
 import '../providers/damage_charges_providers.dart';
 import '../widgets/damage_charge_widgets.dart';
+import '../widgets/damage_pay_action.dart';
 
 class DamageChargePage extends ConsumerWidget {
   const DamageChargePage({required this.chargeId, super.key});
@@ -20,9 +21,16 @@ class DamageChargePage extends ConsumerWidget {
     return AppScaffold(
       title: context.l10n.damageChargeTitle,
       subtitle: raisedAt == null ? null : context.l10n.damageChargeRaisedOn(Fmt.date(raisedAt)),
+      footer: switch (charge) {
+        final DamageCharge value when value.isOpen => DamagePayAction(charge: value),
+        _ => null,
+      },
       body: switch (charge) {
         final DamageCharge value => RefreshIndicator(
-          onRefresh: () => ref.refreshQuietly(damageChargeProvider(chargeId)),
+          onRefresh: () async {
+            ref.invalidate(damageChargesSummaryProvider);
+            await ref.refreshQuietly(damageChargeProvider(chargeId));
+          },
           color: AppColors.primary,
           child: PageBody(
             physics: const AlwaysScrollableScrollPhysics(),
@@ -48,7 +56,6 @@ class DamageChargePage extends ConsumerWidget {
                 const Gap.lg(),
               ],
               _Lines(charge: value),
-              if (value.summary.isNotEmpty) ...[const Gap.lg(), _Report(charge: value)],
             ],
           ),
         ),
@@ -79,36 +86,65 @@ class _Bill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (String label, StatusTone tone) = damageChargeStatus(context.l10n, charge.state);
+    final AppL10n l10n = context.l10n;
+    final (String label, StatusTone tone) = damageChargeStatus(l10n, charge.state);
+    final bool open = charge.isOpen;
+    final bool breakdown = open ? charge.paid > 0 || charge.credit > 0 : charge.credit > 0;
     return ModuleCard(
-      title: context.l10n.damageChargeAmountToPay,
+      title: open ? l10n.damageChargeAmountToPay : l10n.damageChargeTotal,
       leading: const IconTile(icon: Icons.receipt_long_rounded, solid: true, size: 28),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
               Expanded(
                 child: Text(
-                  Fmt.money(charge.due, paise: true),
-                  style: AppText.numericLarge.copyWith(color: charge.isOpen ? AppColors.primary : AppColors.success),
+                  Fmt.money(open ? charge.due : charge.total, paise: true),
+                  style: AppText.numericLarge.copyWith(color: open ? AppColors.primary : AppColors.success),
                 ),
               ),
               StatusChip(label: label, tone: tone, dense: true),
             ],
           ),
-          const Gap.md(),
-          KeyValueRow(label: context.l10n.damageChargeTotal, value: Fmt.money(charge.total, paise: true)),
-          if (charge.paid > 0)
-            KeyValueRow(label: context.l10n.damageChargePaidSoFar, value: Fmt.money(charge.paid, paise: true)),
-          if (charge.credit > 0)
-            KeyValueRow(label: context.l10n.damageChargeCreditUsed, value: Fmt.money(charge.credit, paise: true)),
-          const Divider(),
-          KeyValueRow(
-            label: context.l10n.damageChargeLeftToPay,
-            value: Fmt.money(charge.due, paise: true),
-            valueStyle: AppText.titleSmall,
-          ),
+          if (breakdown) ...[
+            const Gap.md(),
+            if (open) KeyValueRow(label: l10n.damageChargeTotal, value: Fmt.money(charge.total, paise: true)),
+            if (charge.paid > 0)
+              KeyValueRow(label: l10n.damageChargePaidSoFar, value: Fmt.money(charge.paid, paise: true)),
+            if (charge.credit > 0)
+              KeyValueRow(label: l10n.damageChargeCreditUsed, value: Fmt.money(charge.credit, paise: true)),
+          ],
+          if (charge.summary.isNotEmpty) ...[
+            const Gap.md(),
+            Container(
+              padding: const EdgeInsets.all(Insets.md),
+              decoration: BoxDecoration(color: AppColors.surfaceMuted, borderRadius: Corners.brMd),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Icon(Icons.engineering_rounded, size: 18, color: AppColors.textMuted),
+                  const SizedBox(width: Insets.sm),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          charge.finalCheck ? l10n.checkInDeepReport : l10n.checkInBasicReport,
+                          style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          charge.summary,
+                          style: AppText.bodySmall.copyWith(fontSize: 13, height: 1.45, color: AppColors.textPrimary),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -148,11 +184,13 @@ class _Lines extends StatelessWidget {
                               line.quantity > 1 ? '${line.name} × ${line.quantity}' : line.name,
                               style: AppText.titleSmall.copyWith(fontSize: 14),
                             ),
-                            const SizedBox(height: 2),
-                            Text(
-                              context.l10n.damageChargeEach(Fmt.money(line.unitAmount, paise: true)),
-                              style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.textMuted),
-                            ),
+                            if (line.quantity > 1) ...[
+                              const SizedBox(height: 2),
+                              Text(
+                                context.l10n.damageChargeEach(Fmt.money(line.unitAmount, paise: true)),
+                                style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.textMuted),
+                              ),
+                            ],
                             if (line.note.isNotEmpty) ...[
                               const SizedBox(height: 4),
                               Text(line.note, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.4)),
@@ -182,21 +220,6 @@ class _Lines extends StatelessWidget {
           ],
         ],
       ),
-    );
-  }
-}
-
-class _Report extends StatelessWidget {
-  const _Report({required this.charge});
-
-  final DamageCharge charge;
-
-  @override
-  Widget build(BuildContext context) {
-    return ModuleCard(
-      title: charge.finalCheck ? context.l10n.checkInDeepReport : context.l10n.checkInBasicReport,
-      leading: const IconTile(icon: Icons.engineering_rounded, solid: true, size: 28),
-      child: Text(charge.summary, style: AppText.bodySmall.copyWith(fontSize: 13, height: 1.5)),
     );
   }
 }

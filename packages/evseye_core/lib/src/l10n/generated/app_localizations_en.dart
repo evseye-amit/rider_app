@@ -5667,4 +5667,15 @@ class AppL10nEn extends AppL10n {
     );
     return '$_temp0';
   }
+
+  @override
+  String damageChargePayAll(String amount) {
+    return 'Pay all $amount';
+  }
+
+  @override
+  String get damageChargePayAllHint => 'This also pays your other unpaid damage charges.';
+
+  @override
+  String get damageChargeViewDetails => 'View photos and details';
 }
