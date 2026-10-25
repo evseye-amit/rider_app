@@ -279,29 +279,6 @@ class _Band extends StatelessWidget {
             ),
           ],
         ),
-        const Gap.lg(),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(Insets.md),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.06),
-            borderRadius: Corners.brMd,
-            border: Border.all(color: AppColors.inkStroke),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(style.icon, size: 18, color: style.tone.color),
-              const SizedBox(width: Insets.sm),
-              Expanded(
-                child: Text(
-                  returnNote(l10n, item),
-                  style: AppText.bodySmall.copyWith(fontSize: 13, height: 1.45, color: AppColors.onInkSecondary),
-                ),
-              ),
-            ],
-          ),
-        ),
       ],
     );
   }

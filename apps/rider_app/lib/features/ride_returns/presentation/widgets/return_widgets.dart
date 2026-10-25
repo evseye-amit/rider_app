@@ -82,34 +82,6 @@ class ReturnStatusStyle {
   final IconData icon;
 }
 
-String returnNote(AppL10n l10n, RideReturn item) {
-  final ReturnCharges? charges = item.charges;
-  if (item.usesCheckIn && item.status != ReturnStatus.cancelled) {
-    return switch (item.checkIn) {
-      CheckInStage.none when item.status == ReturnStatus.returned => l10n.returnsNoteCheckInDone,
-      CheckInStage.none => l10n.returnsNoteRequested(Fmt.date(item.plannedDate)),
-      CheckInStage.inProgress => l10n.returnsNoteCheckingIn,
-      CheckInStage.finalChecks => l10n.returnsNoteFinalChecks,
-      CheckInStage.done => l10n.returnsNoteCheckInDone,
-    };
-  }
-  return switch (item.status) {
-    ReturnStatus.cancelled => l10n.returnsNoteCancelled,
-    ReturnStatus.requested => l10n.returnsNoteRequested(Fmt.date(item.plannedDate)),
-    ReturnStatus.returned => switch (charges?.stage) {
-      ChargesStage.awaitingYou => l10n.returnsNoteNeedsYou,
-      ChargesStage.awaitingManager =>
-        charges!.approvedByAdmin && !charges.approvedByYou
-            ? l10n.returnsNoteAdminApproved
-            : l10n.returnsNoteYouApproved,
-      ChargesStage.disputed => l10n.returnsNoteDisputed,
-      ChargesStage.settled =>
-        charges!.total > 0 ? l10n.returnsNoteSettled(Fmt.money(charges.total)) : l10n.returnsNoteNoCharges,
-      ChargesStage.reviewing || null => l10n.returnsNoteInspecting,
-    },
-  };
-}
-
 class ReturnTile extends StatelessWidget {
   const ReturnTile({required this.item, required this.onOpen, super.key});
 

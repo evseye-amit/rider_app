@@ -177,92 +177,40 @@ class _ReportSection extends ConsumerWidget {
         if (report.items.isEmpty)
           _Note(icon: Icons.verified_rounded, tone: AppColors.success, text: l10n.checkInNoCharges, strong: true)
         else
-          _ChargesBox(report: report),
-        if (charge != null) ...[
-          const Gap.sm(),
           _LinkTile(
             icon: Icons.receipt_long_rounded,
-            title: l10n.damageChargeViewDetails,
-            trailing: charge.isOpen
-                ? null
-                : StatusChip(
+            title: l10n.damageChargesTitle,
+            subtitle: charge == null ? null : l10n.checkInChargesSummary(report.items.length),
+            trailing: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  Fmt.money(report.totalAmount, paise: true),
+                  style: AppText.titleSmall.copyWith(fontSize: 15, color: AppColors.textPrimary),
+                ),
+                if (charge != null && !charge.isOpen) ...[
+                  const SizedBox(height: 4),
+                  StatusChip(
                     label: damageChargeStatus(l10n, charge.state).$1,
                     tone: damageChargeStatus(l10n, charge.state).$2,
                     dense: true,
                   ),
-            onTap: () => context.push('${Routes.damageChargeDetail}?id=${charge.id}'),
+                ],
+              ],
+            ),
+            onTap: charge == null ? null : () => context.push('${Routes.damageChargeDetail}?id=${charge.id}'),
           ),
-          if (charge.isOpen) ...[const Gap.md(), DamagePayAction(charge: charge)],
-        ],
-        if (report.status == SubmissionReportStatus.posted) ...[
+        if (charge != null && charge.isOpen) ...[const Gap.md(), DamagePayAction(charge: charge)],
+        if (report.status == SubmissionReportStatus.posted && bypass != null) ...[
           const Gap.md(),
           _Note(
             icon: Icons.verified_user_rounded,
             tone: AppColors.textMuted,
-            text: bypass == null ? l10n.checkInConfirmedByOtp : l10n.checkInConfirmedByManager(bypass),
+            text: l10n.checkInConfirmedByManager(bypass),
           ),
         ],
       ],
-    );
-  }
-}
-
-class _ChargesBox extends StatelessWidget {
-  const _ChargesBox({required this.report});
-
-  final SubmissionReportDto report;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: Insets.md, vertical: Insets.sm),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: Corners.brMd,
-        border: Border.all(color: AppColors.stroke),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          for (final SubmissionPenaltyItemDto item in report.items)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: Insets.sm),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text(
-                      item.quantity > 1 ? '${item.description} × ${item.quantity}' : item.description,
-                      style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.35, color: AppColors.textPrimary),
-                    ),
-                  ),
-                  const SizedBox(width: Insets.md),
-                  Text(
-                    Fmt.money(item.amount, paise: true),
-                    style: AppText.bodyMedium.copyWith(
-                      fontSize: 13.5,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          Divider(color: AppColors.stroke.withValues(alpha: 0.7), height: Insets.md),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: Insets.xs),
-            child: Row(
-              children: [
-                Expanded(child: Text(context.l10n.checkInTotal, style: AppText.titleSmall.copyWith(fontSize: 14))),
-                Text(
-                  Fmt.money(report.totalAmount, paise: true),
-                  style: AppText.titleSmall.copyWith(fontSize: 16, color: AppColors.textPrimary),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -274,7 +222,7 @@ class _LinkTile extends StatelessWidget {
   final String title;
   final String? subtitle;
   final Widget? trailing;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -282,7 +230,7 @@ class _LinkTile extends StatelessWidget {
     final Widget? trailing = this.trailing;
     return Pressable(
       onTap: onTap,
-      scale: 0.99,
+      scale: onTap == null ? 1 : 0.99,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: Insets.md, vertical: Insets.sm + 2),
         decoration: BoxDecoration(
@@ -311,8 +259,11 @@ class _LinkTile extends StatelessWidget {
                 ],
               ),
             ),
-            if (trailing != null) ...[trailing, const SizedBox(width: Insets.xs)],
-            const Icon(Icons.chevron_right_rounded, color: AppColors.textMuted),
+            if (trailing != null) ...[const SizedBox(width: Insets.sm), trailing],
+            if (onTap != null) ...[
+              const SizedBox(width: Insets.xs),
+              const Icon(Icons.chevron_right_rounded, color: AppColors.textMuted),
+            ],
           ],
         ),
       ),

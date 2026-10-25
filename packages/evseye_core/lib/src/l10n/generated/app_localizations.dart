@@ -1198,12 +1198,6 @@ abstract class AppL10n {
   /// **'Confirmed by the hub team without your code: {reason}'**
   String checkInConfirmedByManager(String reason);
 
-  /// Confirmed with your code.
-  ///
-  /// In en, this message translates to:
-  /// **'Confirmed with your code.'**
-  String get checkInConfirmedByOtp;
-
   /// Scooter submission failed to load
   ///
   /// In en, this message translates to:
@@ -1275,12 +1269,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Scooter submission'**
   String get checkInTitle;
-
-  /// Total charges
-  ///
-  /// In en, this message translates to:
-  /// **'Total charges'**
-  String get checkInTotal;
 
   /// Mechanic marked the vehicle unsafe
   ///
@@ -7192,89 +7180,17 @@ abstract class AppL10n {
   /// **'When you hand your scooter back, you can follow the return here.'**
   String get returnsNoneBody;
 
-  /// An admin approved these charges on your behalf. The hub manager confirms them next. You can still dispute them.
-  ///
-  /// In en, this message translates to:
-  /// **'An admin approved these charges on your behalf. The hub manager confirms them next. You can still dispute them.'**
-  String get returnsNoteAdminApproved;
-
-  /// You cancelled this return. Your rental carries on as before.
-  ///
-  /// In en, this message translates to:
-  /// **'You cancelled this return. Your rental carries on as before.'**
-  String get returnsNoteCancelled;
-
-  /// Return closed note
-  ///
-  /// In en, this message translates to:
-  /// **'Return closed. The submission report below shows any charges.'**
-  String get returnsNoteCheckInDone;
-
-  /// The hub team is checking your scooter. When the mechanic's report is ready, you'll get a code on your phone to confirm it.
-  ///
-  /// In en, this message translates to:
-  /// **'The hub team is checking your scooter. When the mechanic\'s report is ready, you\'ll get a code on your phone to confirm it.'**
-  String get returnsNoteCheckingIn;
-
-  /// You disputed these charges. The hub team will review them and may revise them.
-  ///
-  /// In en, this message translates to:
-  /// **'You disputed these charges. The hub team will review them and may revise them.'**
-  String get returnsNoteDisputed;
-
-  /// Return note while the final mechanic check runs
-  ///
-  /// In en, this message translates to:
-  /// **'Your scooter submission is done and your rental has ended. A mechanic is doing a final check, and if it finds anything more you\'ll be asked to confirm it.'**
-  String get returnsNoteFinalChecks;
-
-  /// The hub has your scooter and is inspecting it. Any charges will show up here for your approval.
-  ///
-  /// In en, this message translates to:
-  /// **'The hub has your scooter and is inspecting it. Any charges will show up here for your approval.'**
-  String get returnsNoteInspecting;
-
-  /// The hub found the charges below. Approve them with a code we send to your phone, or dispute them.
-  ///
-  /// In en, this message translates to:
-  /// **'The hub found the charges below. Approve them with a code we send to your phone, or dispute them.'**
-  String get returnsNoteNeedsYou;
-
-  /// Return closed. The scooter came back fine, so there are no charges.
-  ///
-  /// In en, this message translates to:
-  /// **'Return closed. The scooter came back fine, so there are no charges.'**
-  String get returnsNoteNoCharges;
-
-  /// Return note after the return is requested
-  ///
-  /// In en, this message translates to:
-  /// **'Take the scooter to the hub you picked on {date}. The hub team will start the submission.'**
-  String returnsNoteRequested(String date);
-
   /// Anything else?
   ///
   /// In en, this message translates to:
   /// **'Anything else?'**
   String get returnsNotes;
 
-  /// Status note when charges were posted
-  ///
-  /// In en, this message translates to:
-  /// **'Return closed. Charges of {amount} were added to your bill.'**
-  String returnsNoteSettled(String amount);
-
   /// Optional note for the hub team
   ///
   /// In en, this message translates to:
   /// **'Optional note for the hub team'**
   String get returnsNotesHint;
-
-  /// You approved the charges. The hub manager confirms them next.
-  ///
-  /// In en, this message translates to:
-  /// **'You approved the charges. The hub manager confirms them next.'**
-  String get returnsNoteYouApproved;
 
   /// Nothing to return right now
   ///
@@ -10762,11 +10678,11 @@ abstract class AppL10n {
   /// **'This also pays your other unpaid damage charges.'**
   String get damageChargePayAllHint;
 
-  /// Link from the scooter submission card to the damage charge details
+  /// Subtitle of the damage charges row on the scooter submission card
   ///
   /// In en, this message translates to:
-  /// **'View photos and details'**
-  String get damageChargeViewDetails;
+  /// **'{count, plural, =1{1 item · See photos and details} other{{count} items · See photos and details}}'**
+  String checkInChargesSummary(int count);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

@@ -597,9 +597,6 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
-  String get checkInConfirmedByOtp => 'మీ కోడ్‌తో నిర్ధారించబడింది.';
-
-  @override
   String get checkInCouldNotLoad => 'సబ్మిషన్ లోడ్ కాలేదు.';
 
   @override
@@ -637,9 +634,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get checkInTitle => 'స్కూటర్ సబ్మిషన్';
-
-  @override
-  String get checkInTotal => 'మొత్తం ఛార్జీలు';
 
   @override
   String checkInUnsafe(String reason) {
@@ -3770,55 +3764,10 @@ class AppL10nTe extends AppL10n {
   String get returnsNoneBody => 'మీరు స్కూటర్‌ను తిరిగి ఇచ్చినప్పుడు, దాని స్థితిని ఇక్కడ చూడవచ్చు.';
 
   @override
-  String get returnsNoteAdminApproved =>
-      'మీ తరఫున ఒక అడ్మిన్ ఈ ఛార్జీలను ఆమోదించారు. తర్వాత హబ్ మేనేజర్ నిర్ధారిస్తారు. మీరు ఇంకా అభ్యంతరం చెప్పవచ్చు.';
-
-  @override
-  String get returnsNoteCancelled => 'మీరు ఈ రిటర్న్‌ను రద్దు చేశారు. మీ అద్దె ఎప్పటిలాగే కొనసాగుతుంది.';
-
-  @override
-  String get returnsNoteCheckInDone => 'రిటర్న్ పూర్తయింది. ఏవైనా ఛార్జీలు కింద ఉన్న సబ్మిషన్ రిపోర్ట్‌లో కనిపిస్తాయి.';
-
-  @override
-  String get returnsNoteCheckingIn =>
-      'హబ్ బృందం మీ స్కూటర్‌ను తనిఖీ చేస్తోంది. మెకానిక్ రిపోర్ట్ సిద్ధమైనప్పుడు దాన్ని నిర్ధారించడానికి మీ ఫోన్‌కు కోడ్ వస్తుంది.';
-
-  @override
-  String get returnsNoteDisputed => 'మీరు ఈ ఛార్జీలపై అభ్యంతరం చెప్పారు. హబ్ బృందం వాటిని సమీక్షించి సవరించవచ్చు.';
-
-  @override
-  String get returnsNoteFinalChecks =>
-      'మీ స్కూటర్ సబ్మిషన్ పూర్తయింది, మీ అద్దె ముగిసింది. మెకానిక్ చివరి తనిఖీ చేస్తున్నారు, ఇంకేమైనా దొరికితే మిమ్మల్ని నిర్ధారించమని అడుగుతారు.';
-
-  @override
-  String get returnsNoteInspecting =>
-      'మీ స్కూటర్ హబ్‌లో ఉంది, తనిఖీ జరుగుతోంది. ఏవైనా ఛార్జీలు మీ ఆమోదం కోసం ఇక్కడ కనిపిస్తాయి.';
-
-  @override
-  String get returnsNoteNeedsYou =>
-      'హబ్ కింది ఛార్జీలను గుర్తించింది. మీ ఫోన్‌కు పంపే కోడ్‌తో వాటిని ఆమోదించండి, లేదా అభ్యంతరం చెప్పండి.';
-
-  @override
-  String get returnsNoteNoCharges => 'రిటర్న్ పూర్తయింది. స్కూటర్ బాగానే తిరిగి వచ్చింది, కాబట్టి ఛార్జీలు లేవు.';
-
-  @override
-  String returnsNoteRequested(String date) {
-    return '$date న స్కూటర్‌ను ఎంచుకున్న హబ్‌కు తీసుకెళ్లండి. హబ్ బృందం సబ్మిషన్ ప్రారంభిస్తుంది.';
-  }
-
-  @override
   String get returnsNotes => 'ఇంకేమైనా?';
 
   @override
-  String returnsNoteSettled(String amount) {
-    return 'రిటర్న్ పూర్తయింది. $amount ఛార్జీలు మీ బిల్లులో చేర్చబడ్డాయి.';
-  }
-
-  @override
   String get returnsNotesHint => 'హబ్ బృందం కోసం ఐచ్ఛిక గమనిక';
-
-  @override
-  String get returnsNoteYouApproved => 'మీరు ఛార్జీలను ఆమోదించారు. తర్వాత హబ్ మేనేజర్ వాటిని నిర్ధారిస్తారు.';
 
   @override
   String get returnsNothingToReturn => 'ప్రస్తుతం తిరిగి ఇవ్వాల్సింది ఏమీ లేదు';
@@ -5686,5 +5635,13 @@ class AppL10nTe extends AppL10n {
   String get damageChargePayAllHint => 'దీనితో మీ మిగతా బకాయి డ్యామేజ్ ఛార్జీలు కూడా చెల్లించబడతాయి.';
 
   @override
-  String get damageChargeViewDetails => 'ఫోటోలు మరియు వివరాలు చూడండి';
+  String checkInChargesSummary(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ఐటమ్‌లు · ఫోటోలు మరియు వివరాలు చూడండి',
+      one: '1 ఐటమ్ · ఫోటోలు మరియు వివరాలు చూడండి',
+    );
+    return '$_temp0';
+  }
 }

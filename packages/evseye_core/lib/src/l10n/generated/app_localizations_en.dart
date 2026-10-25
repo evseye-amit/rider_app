@@ -598,9 +598,6 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get checkInConfirmedByOtp => 'Confirmed with your code.';
-
-  @override
   String get checkInCouldNotLoad => 'Couldn\'t load the submission.';
 
   @override
@@ -638,9 +635,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get checkInTitle => 'Scooter submission';
-
-  @override
-  String get checkInTotal => 'Total charges';
 
   @override
   String checkInUnsafe(String reason) {
@@ -3766,55 +3760,10 @@ class AppL10nEn extends AppL10n {
   String get returnsNoneBody => 'When you hand your scooter back, you can follow the return here.';
 
   @override
-  String get returnsNoteAdminApproved =>
-      'An admin approved these charges on your behalf. The hub manager confirms them next. You can still dispute them.';
-
-  @override
-  String get returnsNoteCancelled => 'You cancelled this return. Your rental carries on as before.';
-
-  @override
-  String get returnsNoteCheckInDone => 'Return closed. The submission report below shows any charges.';
-
-  @override
-  String get returnsNoteCheckingIn =>
-      'The hub team is checking your scooter. When the mechanic\'s report is ready, you\'ll get a code on your phone to confirm it.';
-
-  @override
-  String get returnsNoteDisputed => 'You disputed these charges. The hub team will review them and may revise them.';
-
-  @override
-  String get returnsNoteFinalChecks =>
-      'Your scooter submission is done and your rental has ended. A mechanic is doing a final check, and if it finds anything more you\'ll be asked to confirm it.';
-
-  @override
-  String get returnsNoteInspecting =>
-      'The hub has your scooter and is inspecting it. Any charges will show up here for your approval.';
-
-  @override
-  String get returnsNoteNeedsYou =>
-      'The hub found the charges below. Approve them with a code we send to your phone, or dispute them.';
-
-  @override
-  String get returnsNoteNoCharges => 'Return closed. The scooter came back fine, so there are no charges.';
-
-  @override
-  String returnsNoteRequested(String date) {
-    return 'Take the scooter to the hub you picked on $date. The hub team will start the submission.';
-  }
-
-  @override
   String get returnsNotes => 'Anything else?';
 
   @override
-  String returnsNoteSettled(String amount) {
-    return 'Return closed. Charges of $amount were added to your bill.';
-  }
-
-  @override
   String get returnsNotesHint => 'Optional note for the hub team';
-
-  @override
-  String get returnsNoteYouApproved => 'You approved the charges. The hub manager confirms them next.';
 
   @override
   String get returnsNothingToReturn => 'Nothing to return right now';
@@ -5677,5 +5626,13 @@ class AppL10nEn extends AppL10n {
   String get damageChargePayAllHint => 'This also pays your other unpaid damage charges.';
 
   @override
-  String get damageChargeViewDetails => 'View photos and details';
+  String checkInChargesSummary(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count items · See photos and details',
+      one: '1 item · See photos and details',
+    );
+    return '$_temp0';
+  }
 }

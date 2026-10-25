@@ -596,9 +596,6 @@ class AppL10nHi extends AppL10n {
   }
 
   @override
-  String get checkInConfirmedByOtp => 'आपके कोड से पुष्टि हुई।';
-
-  @override
   String get checkInCouldNotLoad => 'सबमिशन लोड नहीं हो सका।';
 
   @override
@@ -636,9 +633,6 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get checkInTitle => 'स्कूटर सबमिशन';
-
-  @override
-  String get checkInTotal => 'कुल शुल्क';
 
   @override
   String checkInUnsafe(String reason) {
@@ -3757,55 +3751,10 @@ class AppL10nHi extends AppL10n {
   String get returnsNoneBody => 'जब आप स्कूटर लौटाएँगे, तो उसकी स्थिति यहाँ देख सकेंगे।';
 
   @override
-  String get returnsNoteAdminApproved =>
-      'एक एडमिन ने आपकी ओर से ये शुल्क मंज़ूर किए हैं। अब हब मैनेजर पुष्टि करेंगे। आप अब भी आपत्ति कर सकते हैं।';
-
-  @override
-  String get returnsNoteCancelled => 'आपने यह वापसी रद्द कर दी। आपका किराया पहले की तरह चलता रहेगा।';
-
-  @override
-  String get returnsNoteCheckInDone => 'वापसी बंद हुई। नीचे की सबमिशन रिपोर्ट में कोई भी शुल्क दिखता है।';
-
-  @override
-  String get returnsNoteCheckingIn =>
-      'हब टीम आपके स्कूटर की जाँच कर रही है। मैकेनिक की रिपोर्ट तैयार होने पर पुष्टि के लिए आपके फ़ोन पर कोड आएगा।';
-
-  @override
-  String get returnsNoteDisputed => 'आपने इन शुल्कों पर आपत्ति की है। हब टीम इनकी समीक्षा करेगी और इन्हें बदल सकती है।';
-
-  @override
-  String get returnsNoteFinalChecks =>
-      'आपके स्कूटर का सबमिशन हो गया है और आपका किराया खत्म हो गया है। मैकेनिक अंतिम जाँच कर रहा है, कुछ और मिलने पर आपसे पुष्टि माँगी जाएगी।';
-
-  @override
-  String get returnsNoteInspecting =>
-      'स्कूटर हब पर है और उसकी जाँच हो रही है। कोई भी शुल्क आपकी मंज़ूरी के लिए यहाँ दिखेगा।';
-
-  @override
-  String get returnsNoteNeedsYou =>
-      'हब ने नीचे दिए शुल्क पाए हैं। आपके फ़ोन पर भेजे गए कोड से उन्हें मंज़ूर करें, या उन पर आपत्ति करें।';
-
-  @override
-  String get returnsNoteNoCharges => 'वापसी पूरी हुई। स्कूटर ठीक हालत में लौटा, इसलिए कोई शुल्क नहीं है।';
-
-  @override
-  String returnsNoteRequested(String date) {
-    return '$date को स्कूटर चुने हुए हब पर ले जाएँ। हब टीम सबमिशन शुरू करेगी।';
-  }
-
-  @override
   String get returnsNotes => 'कुछ और?';
 
   @override
-  String returnsNoteSettled(String amount) {
-    return 'वापसी पूरी हुई। $amount का शुल्क आपके बिल में जोड़ा गया।';
-  }
-
-  @override
   String get returnsNotesHint => 'हब टीम के लिए वैकल्पिक नोट';
-
-  @override
-  String get returnsNoteYouApproved => 'आपने शुल्क मंज़ूर कर दिए। अब हब मैनेजर उनकी पुष्टि करेंगे।';
 
   @override
   String get returnsNothingToReturn => 'अभी लौटाने के लिए कुछ नहीं है';
@@ -5666,5 +5615,13 @@ class AppL10nHi extends AppL10n {
   String get damageChargePayAllHint => 'इससे आपके बाकी बकाया डैमेज चार्ज भी भर जाएंगे।';
 
   @override
-  String get damageChargeViewDetails => 'फ़ोटो और विवरण देखें';
+  String checkInChargesSummary(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count आइटम · फ़ोटो और विवरण देखें',
+      one: '1 आइटम · फ़ोटो और विवरण देखें',
+    );
+    return '$_temp0';
+  }
 }
