@@ -102,9 +102,6 @@ class ExchangeOffer extends Equatable {
   const ExchangeOffer({
     required this.id,
     required this.hash,
-    required this.termsTitle,
-    required this.termsBody,
-    required this.termsVersion,
     required this.expiresAt,
     required this.isPresented,
     required this.isAccepted,
@@ -113,9 +110,6 @@ class ExchangeOffer extends Equatable {
 
   final String id;
   final String hash;
-  final String termsTitle;
-  final String termsBody;
-  final String termsVersion;
   final DateTime expiresAt;
   final bool isPresented;
   final bool isAccepted;
@@ -126,7 +120,7 @@ class ExchangeOffer extends Equatable {
   bool get isActionable => isPresented && !hasExpired;
 
   @override
-  List<Object?> get props => [id, hash, termsTitle, termsVersion, expiresAt, isPresented, isAccepted, quote];
+  List<Object?> get props => [id, hash, expiresAt, isPresented, isAccepted, quote];
 }
 
 class ExchangeRequest extends Equatable {

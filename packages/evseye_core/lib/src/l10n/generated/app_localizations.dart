@@ -2800,10 +2800,10 @@ abstract class AppL10n {
   /// **'Couldn\'t load your plan'**
   String get deploymentPlanCouldNotLoad;
 
-  /// Your fleet manager picked this plan for you. Check the rent and what you pay today, read the terms, then accept to continue.
+  /// Intro on the rider's plan acceptance screen
   ///
   /// In en, this message translates to:
-  /// **'Your fleet manager picked this plan for you. Check the rent and what you pay today, read the terms, then accept to continue.'**
+  /// **'Your fleet manager picked this plan for you. Check the rent and what you pay today, then accept to continue.'**
   String get deploymentPlanIntro;
 
   /// You've accepted this plan. Your fleet manager will ask for payment next.

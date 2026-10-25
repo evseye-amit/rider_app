@@ -1436,7 +1436,7 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentPlanIntro =>
-      'Your fleet manager picked this plan for you. Check the rent and what you pay today, read the terms, then accept to continue.';
+      'Your fleet manager picked this plan for you. Check the rent and what you pay today, then accept to continue.';
 
   @override
   String get deploymentPlanNextPayment => 'You\'ve accepted this plan. Your fleet manager will ask for payment next.';

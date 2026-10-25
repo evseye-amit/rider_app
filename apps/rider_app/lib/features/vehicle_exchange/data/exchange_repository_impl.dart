@@ -109,9 +109,6 @@ class ExchangeRepositoryImpl implements ExchangeRepository {
   static ExchangeOffer _offer(VehicleExchangeOffer offer) => ExchangeOffer(
     id: offer.id,
     hash: offer.offerHash,
-    termsTitle: offer.termsTitle,
-    termsBody: offer.termsSnapshot,
-    termsVersion: offer.termsVersion,
     expiresAt: offer.expiresAt,
     isPresented: offer.isPresented,
     isAccepted: offer.status == VehicleExchangeOfferStatus.accepted,

@@ -1908,9 +1908,9 @@
   "@deploymentPlanCouldNotLoad": {
     "description": "Couldn't load your plan"
   },
-  "deploymentPlanIntro": "Your fleet manager picked this plan for you. Check the rent and what you pay today, read the terms, then accept to continue.",
+  "deploymentPlanIntro": "Your fleet manager picked this plan for you. Check the rent and what you pay today, then accept to continue.",
   "@deploymentPlanIntro": {
-    "description": "Your fleet manager picked this plan for you. Check the rent and what you pay today, read the terms, then accept to continue."
+    "description": "Intro on the rider's plan acceptance screen"
   },
   "deploymentPlanNextPayment": "You've accepted this plan. Your fleet manager will ask for payment next.",
   "@deploymentPlanNextPayment": {
