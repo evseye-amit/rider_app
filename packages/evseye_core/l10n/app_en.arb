@@ -7475,10 +7475,6 @@
   "@exchangeDeskWithRider": {
     "description": "Waiting for rider"
   },
-  "exchangeReadTerms": "Read the terms",
-  "@exchangeReadTerms": {
-    "description": "Read the terms"
-  },
   "exchangeDeskCheckIn": "Check in old scooter",
   "@exchangeDeskCheckIn": {
     "description": "Exchange desk action that starts the shared vehicle check-in for the rider's current scooter"

@@ -203,15 +203,6 @@ class _ExchangeCasePageState extends ConsumerState<ExchangeCasePage> {
     );
   }
 
-  void _showTerms(CaseOffer offer) => AppSheet.show<void>(
-    context,
-    title: offer.termsTitle.isEmpty ? context.l10n.exchangeReadTerms : offer.termsTitle,
-    child: Padding(
-      padding: const EdgeInsets.only(bottom: Insets.lg),
-      child: Text(plainTextFromHtml(offer.termsBody), style: AppText.bodyMedium.copyWith(fontSize: 13.5, height: 1.55)),
-    ),
-  );
-
   Future<void> _cancel() async {
     final bool confirmed = await AppDialog.confirm(
       context,
@@ -373,7 +364,7 @@ class _ExchangeCasePageState extends ConsumerState<ExchangeCasePage> {
       ],
       CaseStep.awaitRider => [
         if (exchange.pendingOffer case final CaseOffer offer) ...[
-          _OfferCard(offer: offer, onTerms: () => _showTerms(offer)),
+          _OfferCard(offer: offer),
           if (!offer.hasExpired) ...[
             const Gap.md(),
             Text(context.l10n.exchangeDeskAssistedHint, style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45)),
@@ -642,10 +633,9 @@ class _CheckInSheetState extends ConsumerState<_CheckInSheet> {
 }
 
 class _OfferCard extends StatelessWidget {
-  const _OfferCard({required this.offer, required this.onTerms});
+  const _OfferCard({required this.offer});
 
   final CaseOffer offer;
-  final VoidCallback onTerms;
 
   @override
   Widget build(BuildContext context) {
@@ -662,16 +652,6 @@ class _OfferCard extends StatelessWidget {
             icon: Icons.schedule_rounded,
             valueColor: offer.hasExpired ? AppColors.danger : null,
           ),
-          if (offer.termsBody.isNotEmpty)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: GhostButton(
-                label: context.l10n.exchangeReadTerms,
-                icon: Icons.description_rounded,
-                dense: true,
-                onPressed: onTerms,
-              ),
-            ),
         ],
       ),
     );

@@ -10456,12 +10456,6 @@ abstract class AppL10n {
   /// **'Waiting for rider'**
   String get exchangeDeskWithRider;
 
-  /// Read the terms
-  ///
-  /// In en, this message translates to:
-  /// **'Read the terms'**
-  String get exchangeReadTerms;
-
   /// Exchange desk action that starts the shared vehicle check-in for the rider's current scooter
   ///
   /// In en, this message translates to:

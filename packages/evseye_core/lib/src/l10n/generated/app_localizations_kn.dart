@@ -5499,9 +5499,6 @@ class AppL10nKn extends AppL10n {
   String get exchangeDeskWithRider => 'ರೈಡರ್‌ಗಾಗಿ ಕಾಯುತ್ತಿದೆ';
 
   @override
-  String get exchangeReadTerms => 'ನಿಯಮಗಳನ್ನು ಓದಿ';
-
-  @override
   String get exchangeDeskCheckIn => 'ಹಳೆಯ ಸ್ಕೂಟರ್ ಚೆಕ್-ಇನ್ ಮಾಡಿ';
 
   @override

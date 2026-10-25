@@ -95,26 +95,17 @@ class CaseQuote extends Equatable {
 }
 
 class CaseOffer extends Equatable {
-  const CaseOffer({
-    required this.id,
-    required this.expiresAt,
-    required this.quote,
-    this.hash = '',
-    this.termsTitle = '',
-    this.termsBody = '',
-  });
+  const CaseOffer({required this.id, required this.expiresAt, required this.quote, this.hash = ''});
 
   final String id;
   final DateTime expiresAt;
   final CaseQuote quote;
   final String hash;
-  final String termsTitle;
-  final String termsBody;
 
   bool get hasExpired => !expiresAt.isAfter(DateTime.now());
 
   @override
-  List<Object?> get props => [id, expiresAt, quote, hash, termsTitle, termsBody];
+  List<Object?> get props => [id, expiresAt, quote, hash];
 }
 
 class DepositOutcome extends Equatable {

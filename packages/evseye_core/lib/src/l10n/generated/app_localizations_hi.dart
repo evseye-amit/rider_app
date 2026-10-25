@@ -5485,9 +5485,6 @@ class AppL10nHi extends AppL10n {
   String get exchangeDeskWithRider => 'राइडर का इंतज़ार';
 
   @override
-  String get exchangeReadTerms => 'शर्तें पढ़ें';
-
-  @override
   String get exchangeDeskCheckIn => 'पुराना स्कूटर चेक-इन करें';
 
   @override

@@ -5505,9 +5505,6 @@ class AppL10nTe extends AppL10n {
   String get exchangeDeskWithRider => 'రైడర్ కోసం వేచి ఉంది';
 
   @override
-  String get exchangeReadTerms => 'నిబంధనలు చదవండి';
-
-  @override
   String get exchangeDeskCheckIn => 'పాత స్కూటర్‌ను చెక్-ఇన్ చేయండి';
 
   @override

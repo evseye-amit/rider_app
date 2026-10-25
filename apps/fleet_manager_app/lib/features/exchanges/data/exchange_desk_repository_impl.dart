@@ -245,14 +245,8 @@ class ExchangeDeskRepositoryImpl implements ExchangeDeskRepository {
     VehicleExchangeStatus.expired => CaseStatus.expired,
   };
 
-  static CaseOffer _offer(VehicleExchangeOffer offer) => CaseOffer(
-    id: offer.id,
-    expiresAt: offer.expiresAt,
-    quote: _quote(offer.quote),
-    hash: offer.offerHash,
-    termsTitle: offer.termsTitle,
-    termsBody: offer.termsSnapshot,
-  );
+  static CaseOffer _offer(VehicleExchangeOffer offer) =>
+      CaseOffer(id: offer.id, expiresAt: offer.expiresAt, quote: _quote(offer.quote), hash: offer.offerHash);
 
   static CaseQuote _quote(ExchangeQuoteDto quote) {
     final String scooter = [?quote.vehicleModel, ?quote.vehicleVariant].join(' ').trim();

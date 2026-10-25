@@ -5496,9 +5496,6 @@ class AppL10nEn extends AppL10n {
   String get exchangeDeskWithRider => 'Waiting for rider';
 
   @override
-  String get exchangeReadTerms => 'Read the terms';
-
-  @override
   String get exchangeDeskCheckIn => 'Check in old scooter';
 
   @override
