@@ -41,6 +41,7 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     if (restored case Ok<AuthUser>(:final value)) {
       state = state.copyWith(user: value);
       unawaited(_loadAttendance());
+      unawaited(ref.read(pushRegistrationProvider).start());
       await refreshState();
       await loadPackage();
     } else {
@@ -90,6 +91,7 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
       state = state.copyWith(user: value);
       unawaited(ref.read(consentProvider.notifier).recordAcceptance(value.id));
       unawaited(_loadAttendance());
+      unawaited(ref.read(pushRegistrationProvider).start());
       await refreshState();
       await loadPackage();
     }
@@ -171,11 +173,15 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
   }
 
   Future<void> signOut() async {
+    await ref.read(pushRegistrationProvider).stop();
     await ref.read(signOutProvider)();
     _clearSession();
   }
 
-  void handleSessionExpired() => _clearSession();
+  void handleSessionExpired() {
+    unawaited(ref.read(pushRegistrationProvider).stop(unregister: false));
+    _clearSession();
+  }
 
   Future<RiderOnboardingConfig?> _fetchOnboarding() async {
     _documentsCheckedAt = DateTime.now();

@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/referral/pending_referral.dart';
 import '../core/session/rider_session_provider.dart';
 import 'router/app_router.dart';
+import 'router/push_routes.dart';
 
 class RiderApp extends ConsumerStatefulWidget {
   const RiderApp({super.key});
@@ -17,6 +18,8 @@ class RiderApp extends ConsumerStatefulWidget {
 
 class _RiderAppState extends ConsumerState<RiderApp> {
   late final AppLifecycleListener _lifecycle;
+  late final StreamSubscription<PushMessage> _pushMessages;
+  late final StreamSubscription<Map<String, String>> _pushTaps;
 
   @override
   void initState() {
@@ -28,12 +31,36 @@ class _RiderAppState extends ConsumerState<RiderApp> {
         unawaited(session.refreshOnResume());
       },
     );
+    _pushMessages = PushNotifications.messages.listen(_showPush);
+    _pushTaps = PushNotifications.taps.listen(_openPush);
   }
 
   @override
   void dispose() {
     _lifecycle.dispose();
+    unawaited(_pushMessages.cancel());
+    unawaited(_pushTaps.cancel());
     super.dispose();
+  }
+
+  void _showPush(PushMessage message) {
+    ref
+      ..invalidate(unreadNotificationsProvider)
+      ..invalidate(notificationsInboxProvider);
+    final BuildContext? context = ref.read(routerProvider).routerDelegate.navigatorKey.currentContext;
+    if (context == null || message.title.isEmpty) return;
+    AppSnack.show(
+      context,
+      message.title,
+      icon: Icons.notifications_rounded,
+      actionLabel: context.l10n.commonOpen,
+      onAction: () => _openPush(message.data),
+    );
+  }
+
+  void _openPush(Map<String, String> data) {
+    ref.invalidate(unreadNotificationsProvider);
+    unawaited(ref.read(routerProvider).push(pushLocation(data)));
   }
 
   @override

@@ -7,6 +7,10 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+}
+
 val appEnvironment = Properties().apply {
     val file = rootProject.file("../.env")
     if (file.exists()) file.inputStream().use { load(it) }

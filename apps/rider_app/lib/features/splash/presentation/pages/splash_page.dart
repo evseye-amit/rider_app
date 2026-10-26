@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../app/router/app_routes.dart';
+import '../../../../app/router/push_routes.dart';
 import '../../../../core/session/rider_session_provider.dart';
 
 class SplashPage extends ConsumerStatefulWidget {
@@ -33,7 +34,11 @@ class _SplashPageState extends ConsumerState<SplashPage> with SingleTickerProvid
       await boot;
       if (!mounted) return;
       final RiderSession session = ref.read(riderSessionProvider);
+      final GoRouter router = GoRouter.of(context);
       context.go(session.isSignedIn ? session.homeRoute : Routes.intro);
+      if (!session.isSignedIn) return;
+      final Map<String, String>? tap = await PushNotifications.initialTap();
+      if (tap != null) unawaited(router.push(pushLocation(tap)));
     });
   }
 

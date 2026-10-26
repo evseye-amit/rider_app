@@ -32,7 +32,11 @@ class _SplashPageState extends ConsumerState<SplashPage> with SingleTickerProvid
     _timer = Timer(_dwell, () async {
       await boot;
       if (!mounted) return;
-      context.go(ref.read(fleetSessionProvider).isSignedIn ? Routes.home : Routes.login);
+      final bool signedIn = ref.read(fleetSessionProvider).isSignedIn;
+      final GoRouter router = GoRouter.of(context);
+      context.go(signedIn ? Routes.home : Routes.login);
+      if (!signedIn) return;
+      if (await PushNotifications.initialTap() != null) unawaited(router.push(Routes.notifications));
     });
   }
 

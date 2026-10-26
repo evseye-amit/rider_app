@@ -85,6 +85,7 @@ Future<int> run(List<String> args) async {
 
 void _applyCore(Workspace workspace, Flavor flavor) {
   _write(workspace.flavorConfigFile, flavorConfigSource(flavor));
+  _write(workspace.firebaseConfigFile, firebaseConfigSource(flavor));
   for (final String image in brandImages) {
     _copy(flavor.file(image), p.join(workspace.artDir, image));
   }
@@ -128,9 +129,17 @@ void _applyApp(Workspace workspace, Flavor flavor, AppTarget app) {
   _write(workspace.stringsFile(app), androidStringsSource(config.appName));
   _write(workspace.androidFlavorFile(app), androidFlavorSource(config, apkName: _apkName(flavor, app)));
   _write(workspace.iosFlavorFile(app), iosFlavorSource(config));
+  final String androidFirebase = workspace.androidFirebaseFile(app);
+  if (config.androidFirebase) {
+    _copy(flavor.file(app.key, androidFirebaseName), androidFirebase);
+  } else if (File(androidFirebase).existsSync()) {
+    File(androidFirebase).deleteSync();
+  }
   stdout.writeln(
     '${app.folder}: "${config.appName}", Android ${config.androidApplicationId}, '
-    'iOS ${config.iosBundleId}, version ${config.version}',
+    'iOS ${config.iosBundleId}, version ${config.version}, '
+    'push notifications: Android ${config.androidFirebase ? 'on' : 'off'}, '
+    'iOS ${config.iosFirebase == null ? 'off' : 'on'}',
   );
 }
 

@@ -25,10 +25,14 @@ Future<void> main() async {
   final SharedPreferences preferences = await SharedPreferences.getInstance();
   await ActiveLocale.initializeFormatting();
   await SplashArtwork.precache();
+  await PushNotifications.initialize(PushApp.rider);
 
   runApp(
     ProviderScope(
-      overrides: [sharedPreferencesProvider.overrideWithValue(preferences)],
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(preferences),
+        pushAppProvider.overrideWithValue(PushApp.rider),
+      ],
       retry: noProviderRetry,
       child: const RiderApp(),
     ),

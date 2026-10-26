@@ -45,6 +45,8 @@ app.*.map.json
 /android/app/release
 
 packages/evseye_core/lib/src/flavor/flavor_config.dart
+packages/evseye_core/lib/src/push/firebase_config.dart
+apps/*/android/app/google-services.json
 packages/evseye_core/assets/art/
 apps/*/assets/images/app_icon.png
 apps/*/assets/images/app_icon_foreground.png

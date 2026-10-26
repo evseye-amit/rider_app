@@ -62,6 +62,7 @@ class FleetSessionNotifier extends Notifier<FleetSession> {
   }
 
   Future<void> signOut() async {
+    await ref.read(pushRegistrationProvider).stop();
     await ref.read(signOutProvider)();
     state = FleetSession(flags: state.flags);
   }
@@ -73,6 +74,7 @@ class FleetSessionNotifier extends Notifier<FleetSession> {
 
   Future<void> _openSession(AuthUser user) async {
     unawaited(_loadAttendance());
+    unawaited(ref.read(pushRegistrationProvider).start());
     final FeatureFlags flags = await _config.loadFeatureFlags();
     final List<HubProfile> hubs = (await ref.read(listHubsProvider)(const NoParams())).valueOrNull ?? state.hubs;
     state = state.copyWith(

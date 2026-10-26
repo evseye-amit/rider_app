@@ -38,6 +38,36 @@ String flavorConfigSource(Flavor flavor) {
   return out.toString();
 }
 
+String firebaseConfigSource(Flavor flavor) {
+  final StringBuffer out = StringBuffer()
+    ..writeln("import 'package:firebase_core/firebase_core.dart';")
+    ..writeln()
+    ..writeln('abstract final class FirebaseConfig {');
+  for (final MapEntry<String, AppFlavor> entry in flavor.apps.entries) {
+    final IosFirebase? ios = entry.value.iosFirebase;
+    out.writeln('  static const bool ${entry.key}Android = ${entry.value.androidFirebase};');
+    if (ios == null) {
+      out.writeln('  static const FirebaseOptions? ${entry.key}Ios = null;');
+      continue;
+    }
+    out
+      ..writeln('  static const FirebaseOptions ${entry.key}Ios = FirebaseOptions(')
+      ..writeln('    apiKey: ${_dartString(ios.apiKey)},')
+      ..writeln('    appId: ${_dartString(ios.appId)},')
+      ..writeln('    messagingSenderId: ${_dartString(ios.messagingSenderId)},')
+      ..writeln('    projectId: ${_dartString(ios.projectId)},');
+    if (ios.storageBucket.isNotEmpty) out.writeln('    storageBucket: ${_dartString(ios.storageBucket)},');
+    out
+      ..writeln('    iosBundleId: ${_dartString(ios.bundleId)},')
+      ..writeln('  );');
+  }
+  out
+    ..writeln()
+    ..writeln('  const FirebaseConfig._();')
+    ..writeln('}');
+  return out.toString();
+}
+
 String androidStringsSource(String appName) {
   String escaped = appName
       .replaceAll(r'\', r'\\')

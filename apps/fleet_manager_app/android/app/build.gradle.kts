@@ -7,6 +7,10 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+}
+
 val clientFlavor = Properties().apply {
     val file = rootProject.file("flavor.properties")
     check(file.exists()) { "Missing android/flavor.properties. Apply a client first: dart run evseye_flavors --flavor <client>" }

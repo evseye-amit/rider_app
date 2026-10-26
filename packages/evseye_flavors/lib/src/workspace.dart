@@ -19,6 +19,10 @@ const List<String> brandImages = ['banner.png', 'intro_1.png', 'intro_2.png'];
 
 const List<String> iconImages = ['app_icon.png', 'app_icon_foreground.png'];
 
+const String androidFirebaseName = 'google-services.json';
+
+const String iosFirebaseName = 'GoogleService-Info.plist';
+
 class Workspace {
   const Workspace(this.root);
 
@@ -33,6 +37,10 @@ class Workspace {
   String get artDir => p.join(coreDir, 'assets', 'art');
 
   String get flavorConfigFile => p.join(coreDir, 'lib', 'src', 'flavor', 'flavor_config.dart');
+
+  String get firebaseConfigFile => p.join(coreDir, 'lib', 'src', 'push', 'firebase_config.dart');
+
+  String androidFirebaseFile(AppTarget app) => p.join(appDir(app), 'android', 'app', androidFirebaseName);
 
   String appDir(AppTarget app) => p.join(root, 'apps', app.folder);
 

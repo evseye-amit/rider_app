@@ -13,6 +13,7 @@ import '../api/legal_api.dart';
 import '../api/media_api.dart';
 import '../api/notifications_api.dart';
 import '../api/payment_orders_api.dart';
+import '../api/push_devices_api.dart';
 import '../api/referral_api.dart';
 import '../api/rental_agreements_api.dart';
 import '../api/ride_returns_api.dart';
@@ -107,6 +108,8 @@ final paymentOrdersApiProvider = Provider<PaymentOrdersApi>((ref) => PaymentOrde
 final attendanceApiProvider = Provider<AttendanceApi>((ref) => AttendanceApi(ref.watch(apiClientProvider)));
 
 final notificationsApiProvider = Provider<NotificationsApi>((ref) => NotificationsApi(ref.watch(apiClientProvider)));
+
+final pushDevicesApiProvider = Provider<PushDevicesApi>((ref) => PushDevicesApi(ref.watch(apiClientProvider)));
 
 final vehicleSubmissionApiProvider = Provider<VehicleSubmissionApi>(
   (ref) => VehicleSubmissionApi(ref.watch(apiClientProvider)),

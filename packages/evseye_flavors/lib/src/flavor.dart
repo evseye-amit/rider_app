@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
@@ -34,6 +35,24 @@ class FlavorException implements Exception {
   final List<String> problems;
 }
 
+class IosFirebase {
+  const IosFirebase({
+    required this.apiKey,
+    required this.appId,
+    required this.messagingSenderId,
+    required this.projectId,
+    required this.bundleId,
+    this.storageBucket = '',
+  });
+
+  final String apiKey;
+  final String appId;
+  final String messagingSenderId;
+  final String projectId;
+  final String bundleId;
+  final String storageBucket;
+}
+
 class AppFlavor {
   const AppFlavor({
     required this.appName,
@@ -41,6 +60,8 @@ class AppFlavor {
     required this.iosBundleId,
     required this.version,
     this.appStoreId = '',
+    this.androidFirebase = false,
+    this.iosFirebase,
   });
 
   final String appName;
@@ -48,6 +69,8 @@ class AppFlavor {
   final String iosBundleId;
   final String version;
   final String appStoreId;
+  final bool androidFirebase;
+  final IosFirebase? iosFirebase;
 
   String get versionName => version.split('+').first;
 
@@ -140,16 +163,28 @@ class Flavor {
         continue;
       }
       final String prefix = '${target.key}.';
+      final String androidApplicationId = text(
+        section,
+        'androidApplicationId',
+        prefix: prefix,
+        format: _androidId,
+        hint: 'com.company.app',
+      );
+      final String iosBundleId = text(section, 'iosBundleId', prefix: prefix, format: _iosId, hint: 'com.company.app');
+      final File androidFirebase = File(p.join(dir, target.key, androidFirebaseName));
+      final File iosFirebase = File(p.join(dir, target.key, iosFirebaseName));
+      if (androidFirebase.existsSync()) {
+        final String? problem = _androidFirebaseProblem(androidFirebase, androidApplicationId);
+        if (problem != null) problems.add('flavors/$name/${target.key}/$androidFirebaseName: $problem');
+      }
+      final ({IosFirebase? config, String? problem}) ios = iosFirebase.existsSync()
+          ? _iosFirebase(iosFirebase, iosBundleId)
+          : (config: null, problem: null);
+      if (ios.problem case final String problem) problems.add('flavors/$name/${target.key}/$iosFirebaseName: $problem');
       apps[target.key] = AppFlavor(
         appName: text(section, 'appName', prefix: prefix),
-        androidApplicationId: text(
-          section,
-          'androidApplicationId',
-          prefix: prefix,
-          format: _androidId,
-          hint: 'com.company.app',
-        ),
-        iosBundleId: text(section, 'iosBundleId', prefix: prefix, format: _iosId, hint: 'com.company.app'),
+        androidApplicationId: androidApplicationId,
+        iosBundleId: iosBundleId,
         version: text(section, 'version', prefix: prefix, format: _version, hint: '"1.0.0+1"'),
         appStoreId: text(
           section,
@@ -159,6 +194,8 @@ class Flavor {
           format: _appStoreId,
           hint: 'the numeric Apple ID from App Store Connect, such as "6450000000"',
         ),
+        androidFirebase: androidFirebase.existsSync(),
+        iosFirebase: ios.config,
       );
     }
 
@@ -204,3 +241,64 @@ int? parseColour(String? value) {
   final int parsed = int.parse(hex, radix: 16);
   return hex.length == 6 ? 0xFF000000 | parsed : parsed;
 }
+
+final RegExp _plistString = RegExp(r'<key>([^<]+)</key>\s*<string>([^<]*)</string>');
+
+const List<String> _iosFirebaseKeys = ['API_KEY', 'GOOGLE_APP_ID', 'GCM_SENDER_ID', 'PROJECT_ID', 'BUNDLE_ID'];
+
+String? _androidFirebaseProblem(File file, String applicationId) {
+  final Object? json;
+  try {
+    json = jsonDecode(file.readAsStringSync());
+  } on FormatException {
+    return 'is not valid JSON.';
+  }
+  final bool found = switch (json) {
+    {'client': final List<Object?> clients} => clients.any(
+      (client) => switch (client) {
+        {'client_info': {'android_client_info': {'package_name': final String id}}} => id == applicationId,
+        _ => false,
+      },
+    ),
+    _ => false,
+  };
+  return found
+      ? null
+      : 'has no Android app for $applicationId. Download it from the Firebase app with that package name.';
+}
+
+({IosFirebase? config, String? problem}) _iosFirebase(File file, String bundleId) {
+  final Map<String, String> values = {
+    for (final RegExpMatch match in _plistString.allMatches(file.readAsStringSync()))
+      match.group(1)!: _unescapeXml(match.group(2)!),
+  };
+  final List<String> missing = [
+    for (final String key in _iosFirebaseKeys)
+      if ((values[key] ?? '').isEmpty) key,
+  ];
+  if (missing.isNotEmpty) return (config: null, problem: 'is missing ${missing.join(', ')}.');
+  if (values['BUNDLE_ID'] != bundleId) {
+    return (
+      config: null,
+      problem: 'is for ${values['BUNDLE_ID']}, not $bundleId. Download it from the Firebase app with that bundle ID.',
+    );
+  }
+  return (
+    config: IosFirebase(
+      apiKey: values['API_KEY']!,
+      appId: values['GOOGLE_APP_ID']!,
+      messagingSenderId: values['GCM_SENDER_ID']!,
+      projectId: values['PROJECT_ID']!,
+      bundleId: bundleId,
+      storageBucket: values['STORAGE_BUCKET'] ?? '',
+    ),
+    problem: null,
+  );
+}
+
+String _unescapeXml(String value) => value
+    .replaceAll('&lt;', '<')
+    .replaceAll('&gt;', '>')
+    .replaceAll('&quot;', '"')
+    .replaceAll('&apos;', "'")
+    .replaceAll('&amp;', '&');
