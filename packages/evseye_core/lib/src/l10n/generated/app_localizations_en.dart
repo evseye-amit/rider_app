@@ -98,9 +98,6 @@ class AppL10nEn extends AppL10n {
   String get allocationContinueHandover => 'Continue the handover';
 
   @override
-  String get allocationCouldNotAllocateVehicle => 'Could not allocate the vehicle';
-
-  @override
   String get allocationCouldNotLoadAllocations => 'Could not load allocations';
 
   @override
@@ -327,9 +324,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get allocationPlanWaitingButton => 'Waiting for rider to accept';
-
-  @override
-  String get allocationReason => 'Reason';
 
   @override
   String get allocationRejectConfirm => 'Reject payment';
@@ -712,9 +706,6 @@ class AppL10nEn extends AppL10n {
   String get commonChooseLanguage => 'Choose your language';
 
   @override
-  String get commonCity => 'City';
-
-  @override
   String get commonColleague => 'Colleague';
 
   @override
@@ -1057,9 +1048,6 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get damageChargeLeftToPay => 'Left to pay';
-
-  @override
   String get damageChargePaidSoFar => 'Paid so far';
 
   @override
@@ -1335,9 +1323,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get deploymentCouldNotReachServer => 'Could not reach the server';
-
-  @override
-  String get deploymentCouldNotSubmitInspection => 'Could not submit the inspection';
 
   @override
   String get deploymentDone => 'Done';
@@ -1894,9 +1879,6 @@ class AppL10nEn extends AppL10n {
   String get exchangeStatusReturn => 'Return scooter';
 
   @override
-  String get exchangeStepApproval => 'Hub approval';
-
-  @override
   String get exchangeStepDeposit => 'Deposit';
 
   @override
@@ -2098,9 +2080,6 @@ class AppL10nEn extends AppL10n {
   String get homeMarkYourselfAbsent => 'Mark yourself absent?';
 
   @override
-  String get homeMarkYourselfPresentSwitchVehicle => 'Mark yourself present to switch the vehicle on.';
-
-  @override
   String homeNextDebitOn(String date) {
     return 'Next debit $date';
   }
@@ -2120,9 +2099,6 @@ class AppL10nEn extends AppL10n {
   String homeRentOverdue(String amount) {
     return '$amount overdue';
   }
-
-  @override
-  String get homeScooter => 'Scooter';
 
   @override
   String get homeShiftWillEndScooterWill =>
@@ -2579,9 +2555,6 @@ class AppL10nEn extends AppL10n {
   }
 
   @override
-  String get onboardingAcceptAgreementContinue => 'Accept the agreement to continue';
-
-  @override
   String get onboardingAddDateBirthFirstStep => 'Add your date of birth on the first step before continuing';
 
   @override
@@ -2595,9 +2568,6 @@ class AppL10nEn extends AppL10n {
   @override
   String get onboardingAgreementBody =>
       'This agreement is between you and your fleet operator. It covers the vehicle you are handed, how it may be used, your responsibility for its care, the deposits and fees on your plan, and how the arrangement ends. Read it fully before you accept. By ticking the box below you confirm that you have read and agree to be bound by the rider agreement and the operator\'s rider policies.';
-
-  @override
-  String get onboardingAgreeToRiderAgreement => 'I have read and agree to the rider agreement';
 
   @override
   String get onboardingAnswered => 'Answered';
@@ -3259,11 +3229,6 @@ class AppL10nEn extends AppL10n {
   String get referScanToJoin => 'Scan to join with my referral code';
 
   @override
-  String referShareAndroid(String link) {
-    return 'Get the app on Android: $link';
-  }
-
-  @override
   String referShareCodeLine(String code) {
     return 'Use my referral code $code when you sign up.';
   }
@@ -3275,11 +3240,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get referShareInvite => 'Share invite';
-
-  @override
-  String referShareIphone(String link) {
-    return 'Get the app on iPhone: $link';
-  }
 
   @override
   String get referShareNow => 'Share';
@@ -3546,17 +3506,6 @@ class AppL10nEn extends AppL10n {
   String get reportStatusUnderRepairMinor => 'Under-repair: Minor';
 
   @override
-  String get returnsApproveCharges => 'Approve charges';
-
-  @override
-  String returnsApproveSubtitle(String amount) {
-    return 'We sent a 6-digit code to your phone. Entering it approves charges of $amount.';
-  }
-
-  @override
-  String get returnsApproveTitle => 'Enter the code';
-
-  @override
   String get returnsCancel => 'Cancel return';
 
   @override
@@ -3567,15 +3516,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get returnsCancelTitle => 'Cancel this return?';
-
-  @override
-  String get returnsCharges => 'Charges';
-
-  @override
-  String get returnsChargesApproved => 'Charges approved';
-
-  @override
-  String get returnsChargesPending => 'The hub is still inspecting the scooter. Charges, if any, will appear here.';
 
   @override
   String get returnsCodeExpired => 'That code has expired. Ask for a new one.';
@@ -3594,21 +3534,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get returnsDetailTitle => 'Return';
-
-  @override
-  String get returnsDisputeCharges => 'Dispute charges';
-
-  @override
-  String get returnsDisputeReason => 'What\'s wrong?';
-
-  @override
-  String get returnsDisputeReasonRequired => 'Add a reason so the hub team can review it.';
-
-  @override
-  String get returnsDisputeSent => 'Dispute sent to the hub team';
-
-  @override
-  String get returnsDisputeSubtitle => 'Tell the hub team what is wrong with these charges.';
 
   @override
   String get returnsEndRentalBody =>
@@ -3692,9 +3617,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get returnsNextHandOver => 'Bring the scooter, its battery and charger to the hub on the date you picked.';
-
-  @override
-  String get returnsNoCharges => 'No charges for this return.';
 
   @override
   String get returnsNoHubsNearby => 'No hubs found near you';
@@ -3781,12 +3703,6 @@ class AppL10nEn extends AppL10n {
   String get returnsRequestSubtitle => 'Pick a date and the hub you will bring it to';
 
   @override
-  String get returnsSendDispute => 'Send dispute';
-
-  @override
-  String get returnsStatusAwaitingManager => 'With the hub manager';
-
-  @override
   String get returnsStatusCancelled => 'Cancelled';
 
   @override
@@ -3796,16 +3712,7 @@ class AppL10nEn extends AppL10n {
   String get returnsStatusClosed => 'Closed';
 
   @override
-  String get returnsStatusDisputed => 'Disputed';
-
-  @override
   String get returnsStatusFinalChecks => 'Final checks';
-
-  @override
-  String get returnsStatusInspecting => 'Being inspected';
-
-  @override
-  String get returnsStatusNeedsYou => 'Your approval needed';
 
   @override
   String get returnsStatusRequested => 'Return requested';
@@ -3818,12 +3725,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get returnsStepFinalChecks => 'Final mechanic check';
-
-  @override
-  String get returnsStepHandedOver => 'Scooter handed over';
-
-  @override
-  String get returnsStepInspection => 'Inspection and charges';
 
   @override
   String get returnsStepRequested => 'Return requested';
@@ -3841,16 +3742,7 @@ class AppL10nEn extends AppL10n {
   String get returnsWhy => 'Why are you returning it?';
 
   @override
-  String get returnsYourDispute => 'Your dispute';
-
-  @override
   String get returnsYourReturns => 'Your returns';
-
-  @override
-  String get rideParkedLocked => 'Parked and locked.';
-
-  @override
-  String get rideRideSafeHelmetLightsChecked => 'Ride safe. Helmet on, lights checked.';
 
   @override
   String get ridersActive => 'Active';
@@ -3866,15 +3758,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get ridersTeam => 'Team';
-
-  @override
-  String get rideScooterConnectedUsePowerButton => 'Your scooter is connected. Use the power button to switch it on.';
-
-  @override
-  String get rideVehicle => 'Vehicle is ON';
-
-  @override
-  String get rideVehicleOff => 'Vehicle is OFF';
 
   @override
   String routerNoScreenAt(String location) {
@@ -4851,9 +4734,6 @@ class AppL10nEn extends AppL10n {
   String get walletCouldNotLoadWallet => 'Could not load your wallet';
 
   @override
-  String get walletCredited => 'Credited';
-
-  @override
   String get walletCredits => 'Credits';
 
   @override
@@ -4861,12 +4741,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get walletDebits => 'Debits';
-
-  @override
-  String get walletDeducted => 'Deducted';
-
-  @override
-  String get walletDeploymentPayment => 'Deployment payment';
 
   @override
   String get walletDeposit => 'Deposit';
@@ -4935,9 +4809,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get walletDestination => 'Paid to';
-
-  @override
-  String get walletDueNow => 'Due now';
 
   @override
   String get walletErrorDepositNotFound => 'This deposit isn\'t available.';
@@ -5168,12 +5039,6 @@ class AppL10nEn extends AppL10n {
   String get profileAddress => 'Address';
 
   @override
-  String get profileState => 'State';
-
-  @override
-  String get profilePinCode => 'PIN code';
-
-  @override
   String get profileEmergencyContact => 'Emergency contact';
 
   @override
@@ -5333,12 +5198,6 @@ class AppL10nEn extends AppL10n {
   String get exchangeDeskAcceptedForRider => 'Offer accepted for the rider';
 
   @override
-  String get exchangeDeskApprove => 'Approve request';
-
-  @override
-  String get exchangeDeskApproved => 'Request approved';
-
-  @override
   String get exchangeDeskAssistedHint =>
       'If the rider can\'t use the app, you can record their answer for them. Do this only with their clear consent.';
 
@@ -5359,9 +5218,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get exchangeDeskComplete => 'Complete exchange';
-
-  @override
-  String get exchangeDeskConfirmReturn => 'Confirm scooter returned';
 
   @override
   String get exchangeDeskConsentNeeded => 'Add how the rider gave consent';
@@ -5406,9 +5262,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get exchangeDeskGuideDeposits => 'The rider accepted. Settle the deposits to move on to the handover.';
-
-  @override
-  String get exchangeDeskGuideReview => 'Check the request, then approve or reject it.';
 
   @override
   String get exchangeDeskGuideSendOffer => 'Check the offer below and send it to the rider.';
@@ -5457,13 +5310,6 @@ class AppL10nEn extends AppL10n {
   String exchangeDeskReservedUntil(String time) {
     return 'Until $time';
   }
-
-  @override
-  String get exchangeDeskReturnConfirmed => 'Return confirmed';
-
-  @override
-  String get exchangeDeskReturnHint =>
-      'Finish the return in Returns: verify the rider\'s OTP and complete the inspection. Then confirm it here.';
 
   @override
   String get exchangeDeskRiderNote => 'Rider\'s note';

@@ -25,10 +25,8 @@ StatusTone caseStatusTone(ExchangeCase exchange) => switch (exchange.status) {
 };
 
 String? caseStepGuide(AppL10n l10n, CaseStep step) => switch (step) {
-  CaseStep.review => l10n.exchangeDeskGuideReview,
   CaseStep.checkIn => l10n.exchangeDeskGuideCheckIn,
   CaseStep.finishCheckIn => l10n.exchangeDeskCheckInHint,
-  CaseStep.confirmReturn => l10n.exchangeDeskReturnHint,
   CaseStep.chooseScooter => l10n.exchangeDeskGuideChoose,
   CaseStep.sendOffer => l10n.exchangeDeskGuideSendOffer,
   CaseStep.awaitRider => l10n.exchangeDeskWaitingRider,

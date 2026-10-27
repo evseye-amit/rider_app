@@ -87,16 +87,6 @@ class MediaApi {
     return 'image/jpeg';
   }
 
-  Future<Result<List<PhotoRequirement>>> requirements(PhotoEntity entity) {
-    return _client.get<List<PhotoRequirement>>(
-      '/media/photo-requirements',
-      query: {'entityType': entity.wire},
-      parse: (data) => (data as List<dynamic>)
-          .map((e) => PhotoRequirement.fromJson(Map<String, dynamic>.from(e as Map)))
-          .toList(growable: false),
-    );
-  }
-
   Future<Result<List<RemotePhoto>>> photos({
     required PhotoEntity entity,
     required String entityId,

@@ -88,24 +88,3 @@ class PaymentsOverview extends Equatable {
     damageCount,
   ];
 }
-
-class PaymentAttemptDetail extends Equatable {
-  const PaymentAttemptDetail({
-    required this.id,
-    required this.status,
-    required this.amount,
-    this.method,
-    this.startedAt,
-    this.completedAt,
-  });
-
-  final String id;
-  final String status;
-  final num amount;
-  final String? method;
-  final DateTime? startedAt;
-  final DateTime? completedAt;
-
-  @override
-  List<Object?> get props => [id, status, amount, method, startedAt, completedAt];
-}

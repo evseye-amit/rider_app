@@ -24,23 +24,6 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
       (await _api.history()).map((records) => [for (final RiderPaymentRecord record in records) _record(record)]);
 
   @override
-  Future<Result<PaymentAttemptDetail>> getAttempt(String id) async => (await _api.attempt(id)).map(_attempt);
-
-  @override
-  Future<Result<List<PaymentAttemptDetail>>> getRefunds() async => (await _api.refunds()).map(
-    (refunds) => [
-      for (final PaymentRefund refund in refunds)
-        PaymentAttemptDetail(
-          id: refund.id,
-          status: refund.status,
-          amount: refund.amount,
-          startedAt: refund.requestedAt,
-          completedAt: refund.completedAt,
-        ),
-    ],
-  );
-
-  @override
   Future<Result<AutoPaySetup?>> getAutoPay() async => switch (await _api.autoPay()) {
     Ok<AutoPaySetupDto>(:final value) => Result.ok(_setup(value)),
     Err<AutoPaySetupDto>(failure: ServerFailure(status: 400 || 404)) => const Result<AutoPaySetup?>.ok(null),
@@ -134,14 +117,5 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
     status: record.status,
     receivedAt: record.receivedAt,
     invoiceCount: record.allocations.length,
-  );
-
-  static PaymentAttemptDetail _attempt(PaymentAttempt attempt) => PaymentAttemptDetail(
-    id: attempt.id,
-    status: attempt.status,
-    amount: attempt.amount,
-    method: attempt.method,
-    startedAt: attempt.startedAt,
-    completedAt: attempt.completedAt,
   );
 }

@@ -262,12 +262,6 @@ abstract class AppL10n {
   /// **'Continue the handover'**
   String get allocationContinueHandover;
 
-  /// Could not allocate the vehicle
-  ///
-  /// In en, this message translates to:
-  /// **'Could not allocate the vehicle'**
-  String get allocationCouldNotAllocateVehicle;
-
   /// Could not load allocations
   ///
   /// In en, this message translates to:
@@ -699,12 +693,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Waiting for rider to accept'**
   String get allocationPlanWaitingButton;
-
-  /// Reason
-  ///
-  /// In en, this message translates to:
-  /// **'Reason'**
-  String get allocationReason;
 
   /// Button that confirms the payment rejection
   ///
@@ -1414,12 +1402,6 @@ abstract class AppL10n {
   /// **'Choose your language'**
   String get commonChooseLanguage;
 
-  /// City
-  ///
-  /// In en, this message translates to:
-  /// **'City'**
-  String get commonCity;
-
   /// Colleague
   ///
   /// In en, this message translates to:
@@ -2086,12 +2068,6 @@ abstract class AppL10n {
   /// **'{amount} each'**
   String damageChargeEach(String amount);
 
-  /// Row with the amount still to pay
-  ///
-  /// In en, this message translates to:
-  /// **'Left to pay'**
-  String get damageChargeLeftToPay;
-
   /// Row with the amount already paid
   ///
   /// In en, this message translates to:
@@ -2625,12 +2601,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Could not reach the server'**
   String get deploymentCouldNotReachServer;
-
-  /// Could not submit the inspection
-  ///
-  /// In en, this message translates to:
-  /// **'Could not submit the inspection'**
-  String get deploymentCouldNotSubmitInspection;
 
   /// Done
   ///
@@ -3694,12 +3664,6 @@ abstract class AppL10n {
   /// **'Return scooter'**
   String get exchangeStatusReturn;
 
-  /// Hub approval
-  ///
-  /// In en, this message translates to:
-  /// **'Hub approval'**
-  String get exchangeStepApproval;
-
   /// Deposit
   ///
   /// In en, this message translates to:
@@ -4090,12 +4054,6 @@ abstract class AppL10n {
   /// **'Mark yourself absent?'**
   String get homeMarkYourselfAbsent;
 
-  /// Mark yourself present to switch the vehicle on.
-  ///
-  /// In en, this message translates to:
-  /// **'Mark yourself present to switch the vehicle on.'**
-  String get homeMarkYourselfPresentSwitchVehicle;
-
   /// Caption under the home auto-debit tile
   ///
   /// In en, this message translates to:
@@ -4125,12 +4083,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'{amount} overdue'**
   String homeRentOverdue(String amount);
-
-  /// Scooter
-  ///
-  /// In en, this message translates to:
-  /// **'Scooter'**
-  String get homeScooter;
 
   /// Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans.
   ///
@@ -4972,12 +4924,6 @@ abstract class AppL10n {
   /// **'{count} unread'**
   String notificationsUnreadCount(int count);
 
-  /// Accept the agreement to continue
-  ///
-  /// In en, this message translates to:
-  /// **'Accept the agreement to continue'**
-  String get onboardingAcceptAgreementContinue;
-
   /// Add your date of birth on the first step before continuing
   ///
   /// In en, this message translates to:
@@ -5001,12 +4947,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'This agreement is between you and your fleet operator. It covers the vehicle you are handed, how it may be used, your responsibility for its care, the deposits and fees on your plan, and how the arrangement ends. Read it fully before you accept. By ticking the box below you confirm that you have read and agree to be bound by the rider agreement and the operator\'s rider policies.'**
   String get onboardingAgreementBody;
-
-  /// I have read and agree to the rider agreement
-  ///
-  /// In en, this message translates to:
-  /// **'I have read and agree to the rider agreement'**
-  String get onboardingAgreeToRiderAgreement;
 
   /// Answered
   ///
@@ -6238,12 +6178,6 @@ abstract class AppL10n {
   /// **'Scan to join with my referral code'**
   String get referScanToJoin;
 
-  /// Play Store link line in the invite message
-  ///
-  /// In en, this message translates to:
-  /// **'Get the app on Android: {link}'**
-  String referShareAndroid(String link);
-
   /// Referral code line in the invite message
   ///
   /// In en, this message translates to:
@@ -6261,12 +6195,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Share invite'**
   String get referShareInvite;
-
-  /// App Store link line in the invite message
-  ///
-  /// In en, this message translates to:
-  /// **'Get the app on iPhone: {link}'**
-  String referShareIphone(String link);
 
   /// Share
   ///
@@ -6772,24 +6700,6 @@ abstract class AppL10n {
   /// **'Under-repair: Minor'**
   String get reportStatusUnderRepairMinor;
 
-  /// Approve charges
-  ///
-  /// In en, this message translates to:
-  /// **'Approve charges'**
-  String get returnsApproveCharges;
-
-  /// Subtitle of the charges approval code sheet
-  ///
-  /// In en, this message translates to:
-  /// **'We sent a 6-digit code to your phone. Entering it approves charges of {amount}.'**
-  String returnsApproveSubtitle(String amount);
-
-  /// Enter the code
-  ///
-  /// In en, this message translates to:
-  /// **'Enter the code'**
-  String get returnsApproveTitle;
-
   /// Cancel return
   ///
   /// In en, this message translates to:
@@ -6813,24 +6723,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Cancel this return?'**
   String get returnsCancelTitle;
-
-  /// Charges
-  ///
-  /// In en, this message translates to:
-  /// **'Charges'**
-  String get returnsCharges;
-
-  /// Charges approved
-  ///
-  /// In en, this message translates to:
-  /// **'Charges approved'**
-  String get returnsChargesApproved;
-
-  /// The hub is still inspecting the scooter. Charges, if any, will appear here.
-  ///
-  /// In en, this message translates to:
-  /// **'The hub is still inspecting the scooter. Charges, if any, will appear here.'**
-  String get returnsChargesPending;
 
   /// That code has expired. Ask for a new one.
   ///
@@ -6867,36 +6759,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Return'**
   String get returnsDetailTitle;
-
-  /// Dispute charges
-  ///
-  /// In en, this message translates to:
-  /// **'Dispute charges'**
-  String get returnsDisputeCharges;
-
-  /// What's wrong?
-  ///
-  /// In en, this message translates to:
-  /// **'What\'s wrong?'**
-  String get returnsDisputeReason;
-
-  /// Add a reason so the hub team can review it.
-  ///
-  /// In en, this message translates to:
-  /// **'Add a reason so the hub team can review it.'**
-  String get returnsDisputeReasonRequired;
-
-  /// Dispute sent to the hub team
-  ///
-  /// In en, this message translates to:
-  /// **'Dispute sent to the hub team'**
-  String get returnsDisputeSent;
-
-  /// Tell the hub team what is wrong with these charges.
-  ///
-  /// In en, this message translates to:
-  /// **'Tell the hub team what is wrong with these charges.'**
-  String get returnsDisputeSubtitle;
 
   /// Tell us when and where you will hand it back. The hub team checks it in, and any charges come to you for approval first.
   ///
@@ -7053,12 +6915,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Bring the scooter, its battery and charger to the hub on the date you picked.'**
   String get returnsNextHandOver;
-
-  /// No charges for this return.
-  ///
-  /// In en, this message translates to:
-  /// **'No charges for this return.'**
-  String get returnsNoCharges;
 
   /// No hubs found near you
   ///
@@ -7222,18 +7078,6 @@ abstract class AppL10n {
   /// **'Pick a date and the hub you will bring it to'**
   String get returnsRequestSubtitle;
 
-  /// Send dispute
-  ///
-  /// In en, this message translates to:
-  /// **'Send dispute'**
-  String get returnsSendDispute;
-
-  /// With the hub manager
-  ///
-  /// In en, this message translates to:
-  /// **'With the hub manager'**
-  String get returnsStatusAwaitingManager;
-
   /// Cancelled
   ///
   /// In en, this message translates to:
@@ -7252,29 +7096,11 @@ abstract class AppL10n {
   /// **'Closed'**
   String get returnsStatusClosed;
 
-  /// Disputed
-  ///
-  /// In en, this message translates to:
-  /// **'Disputed'**
-  String get returnsStatusDisputed;
-
   /// Final checks
   ///
   /// In en, this message translates to:
   /// **'Final checks'**
   String get returnsStatusFinalChecks;
-
-  /// Being inspected
-  ///
-  /// In en, this message translates to:
-  /// **'Being inspected'**
-  String get returnsStatusInspecting;
-
-  /// Your approval needed
-  ///
-  /// In en, this message translates to:
-  /// **'Your approval needed'**
-  String get returnsStatusNeedsYou;
 
   /// Return requested
   ///
@@ -7299,18 +7125,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Final mechanic check'**
   String get returnsStepFinalChecks;
-
-  /// Scooter handed over
-  ///
-  /// In en, this message translates to:
-  /// **'Scooter handed over'**
-  String get returnsStepHandedOver;
-
-  /// Inspection and charges
-  ///
-  /// In en, this message translates to:
-  /// **'Inspection and charges'**
-  String get returnsStepInspection;
 
   /// Return requested
   ///
@@ -7342,29 +7156,11 @@ abstract class AppL10n {
   /// **'Why are you returning it?'**
   String get returnsWhy;
 
-  /// Your dispute
-  ///
-  /// In en, this message translates to:
-  /// **'Your dispute'**
-  String get returnsYourDispute;
-
   /// Your returns
   ///
   /// In en, this message translates to:
   /// **'Your returns'**
   String get returnsYourReturns;
-
-  /// Parked and locked.
-  ///
-  /// In en, this message translates to:
-  /// **'Parked and locked.'**
-  String get rideParkedLocked;
-
-  /// Ride safe. Helmet on, lights checked.
-  ///
-  /// In en, this message translates to:
-  /// **'Ride safe. Helmet on, lights checked.'**
-  String get rideRideSafeHelmetLightsChecked;
 
   /// Active
   ///
@@ -7395,24 +7191,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Team'**
   String get ridersTeam;
-
-  /// Your scooter is connected. Use the power button to switch it on.
-  ///
-  /// In en, this message translates to:
-  /// **'Your scooter is connected. Use the power button to switch it on.'**
-  String get rideScooterConnectedUsePowerButton;
-
-  /// Vehicle is ON
-  ///
-  /// In en, this message translates to:
-  /// **'Vehicle is ON'**
-  String get rideVehicle;
-
-  /// Vehicle is OFF
-  ///
-  /// In en, this message translates to:
-  /// **'Vehicle is OFF'**
-  String get rideVehicleOff;
 
   /// No screen at {location}
   ///
@@ -9232,12 +9010,6 @@ abstract class AppL10n {
   /// **'Could not load your wallet'**
   String get walletCouldNotLoadWallet;
 
-  /// Credited
-  ///
-  /// In en, this message translates to:
-  /// **'Credited'**
-  String get walletCredited;
-
   /// Credits
   ///
   /// In en, this message translates to:
@@ -9255,18 +9027,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Debits'**
   String get walletDebits;
-
-  /// Deducted
-  ///
-  /// In en, this message translates to:
-  /// **'Deducted'**
-  String get walletDeducted;
-
-  /// Deployment payment
-  ///
-  /// In en, this message translates to:
-  /// **'Deployment payment'**
-  String get walletDeploymentPayment;
 
   /// Deposit
   ///
@@ -9399,12 +9159,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Paid to'**
   String get walletDestination;
-
-  /// Due now
-  ///
-  /// In en, this message translates to:
-  /// **'Due now'**
-  String get walletDueNow;
 
   /// This deposit isn't available.
   ///
@@ -9838,18 +9592,6 @@ abstract class AppL10n {
   /// **'Address'**
   String get profileAddress;
 
-  /// Row label on the rider profile screen
-  ///
-  /// In en, this message translates to:
-  /// **'State'**
-  String get profileState;
-
-  /// Row label on the rider profile screen
-  ///
-  /// In en, this message translates to:
-  /// **'PIN code'**
-  String get profilePinCode;
-
   /// Section title on the rider profile screen
   ///
   /// In en, this message translates to:
@@ -10150,18 +9892,6 @@ abstract class AppL10n {
   /// **'Offer accepted for the rider'**
   String get exchangeDeskAcceptedForRider;
 
-  /// Approve request
-  ///
-  /// In en, this message translates to:
-  /// **'Approve request'**
-  String get exchangeDeskApprove;
-
-  /// Request approved
-  ///
-  /// In en, this message translates to:
-  /// **'Request approved'**
-  String get exchangeDeskApproved;
-
   /// If the rider can't use the app, you can record their answer for them. Do this only with their clear consent.
   ///
   /// In en, this message translates to:
@@ -10203,12 +9933,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Complete exchange'**
   String get exchangeDeskComplete;
-
-  /// Confirm scooter returned
-  ///
-  /// In en, this message translates to:
-  /// **'Confirm scooter returned'**
-  String get exchangeDeskConfirmReturn;
 
   /// Add how the rider gave consent
   ///
@@ -10287,12 +10011,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'The rider accepted. Settle the deposits to move on to the handover.'**
   String get exchangeDeskGuideDeposits;
-
-  /// Check the request, then approve or reject it.
-  ///
-  /// In en, this message translates to:
-  /// **'Check the request, then approve or reject it.'**
-  String get exchangeDeskGuideReview;
 
   /// Check the offer below and send it to the rider.
   ///
@@ -10383,18 +10101,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Until {time}'**
   String exchangeDeskReservedUntil(String time);
-
-  /// Return confirmed
-  ///
-  /// In en, this message translates to:
-  /// **'Return confirmed'**
-  String get exchangeDeskReturnConfirmed;
-
-  /// Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here.
-  ///
-  /// In en, this message translates to:
-  /// **'Finish the return in Returns: verify the rider\'s OTP and complete the inspection. Then confirm it here.'**
-  String get exchangeDeskReturnHint;
 
   /// Rider's note
   ///

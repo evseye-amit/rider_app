@@ -88,7 +88,6 @@ class ExchangeRepositoryImpl implements ExchangeRepository {
     canCancel: exchange.canCancel,
     offers: [for (final VehicleExchangeOffer offer in exchange.offers) _offer(offer)],
     plannedDate: exchange.plannedReturnDate,
-    usesCheckIn: exchange.submissionRequired,
     checkInId: exchange.submission?.id,
   );
 

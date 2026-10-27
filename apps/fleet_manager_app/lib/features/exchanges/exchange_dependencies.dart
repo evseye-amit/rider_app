@@ -31,20 +31,12 @@ final getExchangeQuoteProvider = Provider<GetExchangeQuote>(
   (ref) => GetExchangeQuote(ref.watch(exchangeDeskRepositoryProvider)),
 );
 
-final approveExchangeProvider = Provider<ApproveExchange>(
-  (ref) => ApproveExchange(ref.watch(exchangeDeskRepositoryProvider)),
-);
-
 final rejectExchangeProvider = Provider<RejectExchange>(
   (ref) => RejectExchange(ref.watch(exchangeDeskRepositoryProvider)),
 );
 
 final startExchangeCheckInProvider = Provider<StartExchangeCheckIn>(
   (ref) => StartExchangeCheckIn(ref.watch(exchangeDeskRepositoryProvider)),
-);
-
-final confirmExchangeReturnProvider = Provider<ConfirmExchangeReturn>(
-  (ref) => ConfirmExchangeReturn(ref.watch(exchangeDeskRepositoryProvider)),
 );
 
 final chooseReplacementScooterProvider = Provider<ChooseReplacementScooter>(

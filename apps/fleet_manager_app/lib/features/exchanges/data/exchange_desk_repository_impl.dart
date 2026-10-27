@@ -75,17 +75,11 @@ class ExchangeDeskRepositoryImpl implements ExchangeDeskRepository {
   Future<Result<CaseQuote>> quote(String id) async => (await _exchanges.preview(id)).map(_quote);
 
   @override
-  Future<Result<void>> approve(String id) => _exchanges.approve(id);
-
-  @override
   Future<Result<void>> reject(String id, {required String reason}) => _exchanges.reject(id, reason: reason);
 
   @override
   Future<Result<String>> startCheckIn(String id, {String? hubId}) =>
       _submissions.start(source: SubmissionSource.exchange, requestId: id, hubId: hubId);
-
-  @override
-  Future<Result<void>> confirmReturn(String id) => _exchanges.confirmReturn(id);
 
   @override
   Future<Result<void>> chooseScooter(ExchangeCase exchange, ScooterOption scooter) {
@@ -215,7 +209,6 @@ class ExchangeDeskRepositoryImpl implements ExchangeDeskRepository {
       oldAllocationId: exchange.oldAllocationId,
       newAllocationId: exchange.newAllocationId,
       oldScooterReturned: exchange.oldVehicleReturned,
-      checkInRequired: exchange.submissionRequired,
       checkInId: exchange.submission?.id,
       plannedHubId: exchange.plannedHubId,
       plannedDate: exchange.plannedReturnDate,

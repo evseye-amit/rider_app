@@ -117,10 +117,6 @@
   "@allocationContinueHandover": {
     "description": "Continue the handover"
   },
-  "allocationCouldNotAllocateVehicle": "Could not allocate the vehicle",
-  "@allocationCouldNotAllocateVehicle": {
-    "description": "Could not allocate the vehicle"
-  },
   "allocationCouldNotLoadAllocations": "Could not load allocations",
   "@allocationCouldNotLoadAllocations": {
     "description": "Could not load allocations"
@@ -421,10 +417,6 @@
   "allocationPlanWaitingButton": "Waiting for rider to accept",
   "@allocationPlanWaitingButton": {
     "description": "Waiting for rider to accept"
-  },
-  "allocationReason": "Reason",
-  "@allocationReason": {
-    "description": "Reason"
   },
   "allocationRejectConfirm": "Reject payment",
   "@allocationRejectConfirm": {
@@ -944,10 +936,6 @@
   "@commonChooseLanguage": {
     "description": "Choose your language"
   },
-  "commonCity": "City",
-  "@commonCity": {
-    "description": "City"
-  },
   "commonColleague": "Colleague",
   "@commonColleague": {
     "description": "Colleague"
@@ -1407,10 +1395,6 @@
       }
     }
   },
-  "damageChargeLeftToPay": "Left to pay",
-  "@damageChargeLeftToPay": {
-    "description": "Row with the amount still to pay"
-  },
   "damageChargePaidSoFar": "Paid so far",
   "@damageChargePaidSoFar": {
     "description": "Row with the amount already paid"
@@ -1781,10 +1765,6 @@
   "deploymentCouldNotReachServer": "Could not reach the server",
   "@deploymentCouldNotReachServer": {
     "description": "Could not reach the server"
-  },
-  "deploymentCouldNotSubmitInspection": "Could not submit the inspection",
-  "@deploymentCouldNotSubmitInspection": {
-    "description": "Could not submit the inspection"
   },
   "deploymentDone": "Done",
   "@deploymentDone": {
@@ -2514,10 +2494,6 @@
   "@exchangeStatusReturn": {
     "description": "Return scooter"
   },
-  "exchangeStepApproval": "Hub approval",
-  "@exchangeStepApproval": {
-    "description": "Hub approval"
-  },
   "exchangeStepDeposit": "Deposit",
   "@exchangeStepDeposit": {
     "description": "Deposit"
@@ -2793,10 +2769,6 @@
   "@homeMarkYourselfAbsent": {
     "description": "Mark yourself absent?"
   },
-  "homeMarkYourselfPresentSwitchVehicle": "Mark yourself present to switch the vehicle on.",
-  "@homeMarkYourselfPresentSwitchVehicle": {
-    "description": "Mark yourself present to switch the vehicle on."
-  },
   "homeNextDebitOn": "Next debit {date}",
   "@homeNextDebitOn": {
     "description": "Caption under the home auto-debit tile",
@@ -2831,10 +2803,6 @@
         "type": "String"
       }
     }
-  },
-  "homeScooter": "Scooter",
-  "@homeScooter": {
-    "description": "Scooter"
   },
   "homeShiftWillEndScooterWill": "Your shift will end and the scooter will switch off. Rent still applies on weekly and monthly plans.",
   "@homeShiftWillEndScooterWill": {
@@ -3466,10 +3434,6 @@
       }
     }
   },
-  "onboardingAcceptAgreementContinue": "Accept the agreement to continue",
-  "@onboardingAcceptAgreementContinue": {
-    "description": "Accept the agreement to continue"
-  },
   "onboardingAddDateBirthFirstStep": "Add your date of birth on the first step before continuing",
   "@onboardingAddDateBirthFirstStep": {
     "description": "Add your date of birth on the first step before continuing"
@@ -3490,10 +3454,6 @@
   "onboardingAgreementBody": "This agreement is between you and your fleet operator. It covers the vehicle you are handed, how it may be used, your responsibility for its care, the deposits and fees on your plan, and how the arrangement ends. Read it fully before you accept. By ticking the box below you confirm that you have read and agree to be bound by the rider agreement and the operator's rider policies.",
   "@onboardingAgreementBody": {
     "description": "This agreement is between you and your fleet operator. It covers the vehicle you are handed, how it may be used, your responsibility for its care, the deposits and fees on your plan, and how the arrangement ends. Read it fully before you accept. By ticking the box below you confirm that you have read and agree to be bound by the rider agreement and the operator's rider policies."
-  },
-  "onboardingAgreeToRiderAgreement": "I have read and agree to the rider agreement",
-  "@onboardingAgreeToRiderAgreement": {
-    "description": "I have read and agree to the rider agreement"
   },
   "onboardingAnswered": "Answered",
   "@onboardingAnswered": {
@@ -4403,15 +4363,6 @@
   "@referScanToJoin": {
     "description": "Scan to join with my referral code"
   },
-  "referShareAndroid": "Get the app on Android: {link}",
-  "@referShareAndroid": {
-    "description": "Play Store link line in the invite message",
-    "placeholders": {
-      "link": {
-        "type": "String"
-      }
-    }
-  },
   "referShareCodeLine": "Use my referral code {code} when you sign up.",
   "@referShareCodeLine": {
     "description": "Referral code line in the invite message",
@@ -4433,15 +4384,6 @@
   "referShareInvite": "Share invite",
   "@referShareInvite": {
     "description": "Share invite"
-  },
-  "referShareIphone": "Get the app on iPhone: {link}",
-  "@referShareIphone": {
-    "description": "App Store link line in the invite message",
-    "placeholders": {
-      "link": {
-        "type": "String"
-      }
-    }
   },
   "referShareNow": "Share",
   "@referShareNow": {
@@ -4812,23 +4754,6 @@
   "@reportStatusUnderRepairMinor": {
     "description": "Mechanic report status shown for MAINTENANCE"
   },
-  "returnsApproveCharges": "Approve charges",
-  "@returnsApproveCharges": {
-    "description": "Approve charges"
-  },
-  "returnsApproveSubtitle": "We sent a 6-digit code to your phone. Entering it approves charges of {amount}.",
-  "@returnsApproveSubtitle": {
-    "description": "Subtitle of the charges approval code sheet",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "returnsApproveTitle": "Enter the code",
-  "@returnsApproveTitle": {
-    "description": "Enter the code"
-  },
   "returnsCancel": "Cancel return",
   "@returnsCancel": {
     "description": "Cancel return"
@@ -4844,18 +4769,6 @@
   "returnsCancelTitle": "Cancel this return?",
   "@returnsCancelTitle": {
     "description": "Cancel this return?"
-  },
-  "returnsCharges": "Charges",
-  "@returnsCharges": {
-    "description": "Charges"
-  },
-  "returnsChargesApproved": "Charges approved",
-  "@returnsChargesApproved": {
-    "description": "Charges approved"
-  },
-  "returnsChargesPending": "The hub is still inspecting the scooter. Charges, if any, will appear here.",
-  "@returnsChargesPending": {
-    "description": "The hub is still inspecting the scooter. Charges, if any, will appear here."
   },
   "returnsCodeExpired": "That code has expired. Ask for a new one.",
   "@returnsCodeExpired": {
@@ -4880,26 +4793,6 @@
   "returnsDetailTitle": "Return",
   "@returnsDetailTitle": {
     "description": "Return"
-  },
-  "returnsDisputeCharges": "Dispute charges",
-  "@returnsDisputeCharges": {
-    "description": "Dispute charges"
-  },
-  "returnsDisputeReason": "What's wrong?",
-  "@returnsDisputeReason": {
-    "description": "What's wrong?"
-  },
-  "returnsDisputeReasonRequired": "Add a reason so the hub team can review it.",
-  "@returnsDisputeReasonRequired": {
-    "description": "Add a reason so the hub team can review it."
-  },
-  "returnsDisputeSent": "Dispute sent to the hub team",
-  "@returnsDisputeSent": {
-    "description": "Dispute sent to the hub team"
-  },
-  "returnsDisputeSubtitle": "Tell the hub team what is wrong with these charges.",
-  "@returnsDisputeSubtitle": {
-    "description": "Tell the hub team what is wrong with these charges."
   },
   "returnsEndRentalBody": "Tell us when and where you will hand it back. The hub team checks it in, and any charges come to you for approval first.",
   "@returnsEndRentalBody": {
@@ -5009,10 +4902,6 @@
   "returnsNextHandOver": "Bring the scooter, its battery and charger to the hub on the date you picked.",
   "@returnsNextHandOver": {
     "description": "Bring the scooter, its battery and charger to the hub on the date you picked."
-  },
-  "returnsNoCharges": "No charges for this return.",
-  "@returnsNoCharges": {
-    "description": "No charges for this return."
   },
   "returnsNoHubsNearby": "No hubs found near you",
   "@returnsNoHubsNearby": {
@@ -5127,14 +5016,6 @@
   "@returnsRequestSubtitle": {
     "description": "Pick a date and the hub you will bring it to"
   },
-  "returnsSendDispute": "Send dispute",
-  "@returnsSendDispute": {
-    "description": "Send dispute"
-  },
-  "returnsStatusAwaitingManager": "With the hub manager",
-  "@returnsStatusAwaitingManager": {
-    "description": "With the hub manager"
-  },
   "returnsStatusCancelled": "Cancelled",
   "@returnsStatusCancelled": {
     "description": "Cancelled"
@@ -5147,21 +5028,9 @@
   "@returnsStatusClosed": {
     "description": "Closed"
   },
-  "returnsStatusDisputed": "Disputed",
-  "@returnsStatusDisputed": {
-    "description": "Disputed"
-  },
   "returnsStatusFinalChecks": "Final checks",
   "@returnsStatusFinalChecks": {
     "description": "Final checks"
-  },
-  "returnsStatusInspecting": "Being inspected",
-  "@returnsStatusInspecting": {
-    "description": "Being inspected"
-  },
-  "returnsStatusNeedsYou": "Your approval needed",
-  "@returnsStatusNeedsYou": {
-    "description": "Your approval needed"
   },
   "returnsStatusRequested": "Return requested",
   "@returnsStatusRequested": {
@@ -5178,14 +5047,6 @@
   "returnsStepFinalChecks": "Final mechanic check",
   "@returnsStepFinalChecks": {
     "description": "Final mechanic check"
-  },
-  "returnsStepHandedOver": "Scooter handed over",
-  "@returnsStepHandedOver": {
-    "description": "Scooter handed over"
-  },
-  "returnsStepInspection": "Inspection and charges",
-  "@returnsStepInspection": {
-    "description": "Inspection and charges"
   },
   "returnsStepRequested": "Return requested",
   "@returnsStepRequested": {
@@ -5207,21 +5068,9 @@
   "@returnsWhy": {
     "description": "Why are you returning it?"
   },
-  "returnsYourDispute": "Your dispute",
-  "@returnsYourDispute": {
-    "description": "Your dispute"
-  },
   "returnsYourReturns": "Your returns",
   "@returnsYourReturns": {
     "description": "Your returns"
-  },
-  "rideParkedLocked": "Parked and locked.",
-  "@rideParkedLocked": {
-    "description": "Parked and locked."
-  },
-  "rideRideSafeHelmetLightsChecked": "Ride safe. Helmet on, lights checked.",
-  "@rideRideSafeHelmetLightsChecked": {
-    "description": "Ride safe. Helmet on, lights checked."
   },
   "ridersActive": "Active",
   "@ridersActive": {
@@ -5242,18 +5091,6 @@
   "ridersTeam": "Team",
   "@ridersTeam": {
     "description": "Team"
-  },
-  "rideScooterConnectedUsePowerButton": "Your scooter is connected. Use the power button to switch it on.",
-  "@rideScooterConnectedUsePowerButton": {
-    "description": "Your scooter is connected. Use the power button to switch it on."
-  },
-  "rideVehicle": "Vehicle is ON",
-  "@rideVehicle": {
-    "description": "Vehicle is ON"
-  },
-  "rideVehicleOff": "Vehicle is OFF",
-  "@rideVehicleOff": {
-    "description": "Vehicle is OFF"
   },
   "routerNoScreenAt": "No screen at {location}",
   "@routerNoScreenAt": {
@@ -6585,10 +6422,6 @@
   "@walletCouldNotLoadWallet": {
     "description": "Could not load your wallet"
   },
-  "walletCredited": "Credited",
-  "@walletCredited": {
-    "description": "Credited"
-  },
   "walletCredits": "Credits",
   "@walletCredits": {
     "description": "Credits"
@@ -6600,14 +6433,6 @@
   "walletDebits": "Debits",
   "@walletDebits": {
     "description": "Debits"
-  },
-  "walletDeducted": "Deducted",
-  "@walletDeducted": {
-    "description": "Deducted"
-  },
-  "walletDeploymentPayment": "Deployment payment",
-  "@walletDeploymentPayment": {
-    "description": "Deployment payment"
   },
   "walletDeposit": "Deposit",
   "@walletDeposit": {
@@ -6701,10 +6526,6 @@
   "walletDestination": "Paid to",
   "@walletDestination": {
     "description": "Paid to"
-  },
-  "walletDueNow": "Due now",
-  "@walletDueNow": {
-    "description": "Due now"
   },
   "walletErrorDepositNotFound": "This deposit isn't available.",
   "@walletErrorDepositNotFound": {
@@ -7027,14 +6848,6 @@
   "@profileAddress": {
     "description": "Section title and row label on the rider profile screen"
   },
-  "profileState": "State",
-  "@profileState": {
-    "description": "Row label on the rider profile screen"
-  },
-  "profilePinCode": "PIN code",
-  "@profilePinCode": {
-    "description": "Row label on the rider profile screen"
-  },
   "profileEmergencyContact": "Emergency contact",
   "@profileEmergencyContact": {
     "description": "Section title on the rider profile screen"
@@ -7250,14 +7063,6 @@
   "@exchangeDeskAcceptedForRider": {
     "description": "Offer accepted for the rider"
   },
-  "exchangeDeskApprove": "Approve request",
-  "@exchangeDeskApprove": {
-    "description": "Approve request"
-  },
-  "exchangeDeskApproved": "Request approved",
-  "@exchangeDeskApproved": {
-    "description": "Request approved"
-  },
   "exchangeDeskAssistedHint": "If the rider can't use the app, you can record their answer for them. Do this only with their clear consent.",
   "@exchangeDeskAssistedHint": {
     "description": "If the rider can't use the app, you can record their answer for them. Do this only with their clear consent."
@@ -7285,10 +7090,6 @@
   "exchangeDeskComplete": "Complete exchange",
   "@exchangeDeskComplete": {
     "description": "Complete exchange"
-  },
-  "exchangeDeskConfirmReturn": "Confirm scooter returned",
-  "@exchangeDeskConfirmReturn": {
-    "description": "Confirm scooter returned"
   },
   "exchangeDeskConsentNeeded": "Add how the rider gave consent",
   "@exchangeDeskConsentNeeded": {
@@ -7358,10 +7159,6 @@
   "@exchangeDeskGuideDeposits": {
     "description": "The rider accepted. Settle the deposits to move on to the handover."
   },
-  "exchangeDeskGuideReview": "Check the request, then approve or reject it.",
-  "@exchangeDeskGuideReview": {
-    "description": "Check the request, then approve or reject it."
-  },
   "exchangeDeskGuideSendOffer": "Check the offer below and send it to the rider.",
   "@exchangeDeskGuideSendOffer": {
     "description": "Check the offer below and send it to the rider."
@@ -7426,14 +7223,6 @@
         "type": "String"
       }
     }
-  },
-  "exchangeDeskReturnConfirmed": "Return confirmed",
-  "@exchangeDeskReturnConfirmed": {
-    "description": "Return confirmed"
-  },
-  "exchangeDeskReturnHint": "Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here.",
-  "@exchangeDeskReturnHint": {
-    "description": "Finish the return in Returns: verify the rider's OTP and complete the inspection. Then confirm it here."
   },
   "exchangeDeskRiderNote": "Rider's note",
   "@exchangeDeskRiderNote": {

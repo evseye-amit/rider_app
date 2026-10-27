@@ -4,9 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'data/payments_repository_impl.dart';
 import 'domain/payments_repository.dart';
 import 'domain/usecases/auto_pay_usecases.dart';
-import 'domain/usecases/get_payment_attempt.dart';
 import 'domain/usecases/get_payment_history.dart';
-import 'domain/usecases/get_payment_refunds.dart';
 import 'domain/usecases/get_payments_overview.dart';
 
 final paymentsRepositoryProvider = Provider<PaymentsRepository>(
@@ -19,14 +17,6 @@ final getPaymentsOverviewProvider = Provider<GetPaymentsOverview>(
 
 final getPaymentHistoryProvider = Provider<GetPaymentHistory>(
   (ref) => GetPaymentHistory(ref.watch(paymentsRepositoryProvider)),
-);
-
-final getPaymentAttemptProvider = Provider<GetPaymentAttempt>(
-  (ref) => GetPaymentAttempt(ref.watch(paymentsRepositoryProvider)),
-);
-
-final getPaymentRefundsProvider = Provider<GetPaymentRefunds>(
-  (ref) => GetPaymentRefunds(ref.watch(paymentsRepositoryProvider)),
 );
 
 final getAutoPayProvider = Provider<GetAutoPay>((ref) => GetAutoPay(ref.watch(paymentsRepositoryProvider)));

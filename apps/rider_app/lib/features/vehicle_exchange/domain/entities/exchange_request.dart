@@ -19,7 +19,7 @@ enum ExchangeStatus {
   };
 }
 
-enum ExchangeStep { requested, approval, returnScooter, offer, deposit, handover }
+enum ExchangeStep { requested, returnScooter, offer, deposit, handover }
 
 enum RentPeriod {
   daily,
@@ -136,7 +136,6 @@ class ExchangeRequest extends Equatable {
     this.canCancel = false,
     this.offers = const [],
     this.plannedDate,
-    this.usesCheckIn = true,
     this.checkInId,
   });
 
@@ -151,17 +150,9 @@ class ExchangeRequest extends Equatable {
   final bool canCancel;
   final List<ExchangeOffer> offers;
   final DateTime? plannedDate;
-  final bool usesCheckIn;
   final String? checkInId;
 
-  List<ExchangeStep> get steps => usesCheckIn
-      ? [
-          for (final ExchangeStep step in ExchangeStep.values)
-            if (step != ExchangeStep.approval) step,
-        ]
-      : ExchangeStep.values;
-
-  bool get isCheckingIn => usesCheckIn && checkInId != null && !oldScooterReturned;
+  bool get isCheckingIn => checkInId != null && !oldScooterReturned;
 
   ExchangeOffer? get pendingOffer => offers.where((offer) => offer.isActionable).firstOrNull;
 
@@ -176,16 +167,6 @@ class ExchangeRequest extends Equatable {
     final bool returned = oldScooterReturned || handedOver;
     return switch (step) {
       ExchangeStep.requested => true,
-      ExchangeStep.approval =>
-        returned ||
-            offerAccepted ||
-            switch (status) {
-              ExchangeStatus.approved ||
-              ExchangeStatus.returnPending ||
-              ExchangeStatus.replacementSelected ||
-              ExchangeStatus.offerPresented => true,
-              _ => false,
-            },
       ExchangeStep.returnScooter => returned,
       ExchangeStep.offer => offerAccepted,
       ExchangeStep.deposit => depositSettled,
@@ -193,7 +174,7 @@ class ExchangeRequest extends Equatable {
     };
   }
 
-  ExchangeStep? get currentStep => steps.where((step) => !isStepDone(step)).firstOrNull;
+  ExchangeStep? get currentStep => ExchangeStep.values.where((step) => !isStepDone(step)).firstOrNull;
 
   @override
   List<Object?> get props => [
@@ -208,7 +189,6 @@ class ExchangeRequest extends Equatable {
     canCancel,
     offers,
     plannedDate,
-    usesCheckIn,
     checkInId,
   ];
 }

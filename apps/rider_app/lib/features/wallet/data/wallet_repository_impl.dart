@@ -19,19 +19,6 @@ class WalletRepositoryImpl implements WalletRepository {
       )).map((entries) => [for (final WalletLedgerEntry entry in entries) _entry(entry)]);
 
   @override
-  Future<Result<WalletEntry>> getTransaction(String id) async => (await _api.transaction(id)).map(_entry);
-
-  @override
-  Future<Result<WithdrawalStatus>> getWithdrawalStatus() async => (await _api.withdrawalEligibility()).map(
-    (eligibility) => WithdrawalStatus(
-      eligible: eligibility.eligible,
-      cashAvailable: eligibility.cashAvailable,
-      depositReturnedSeparately: eligibility.securityDepositReturnSeparate,
-      reason: eligibility.reason,
-    ),
-  );
-
-  @override
   Future<Result<WalletReceipt>> getReceipt(WalletReceiptKind kind, String id) => _api.receipt(kind, id);
 
   @override

@@ -13,10 +13,6 @@ final paymentHistoryProvider = FutureProvider.autoDispose<List<PaymentRecord>>(
   (ref) async => (await ref.watch(getPaymentHistoryProvider)(const NoParams())).getOrThrow(),
 );
 
-final paymentRefundsProvider = FutureProvider.autoDispose<List<PaymentAttemptDetail>>(
-  (ref) async => (await ref.watch(getPaymentRefundsProvider)(const NoParams())).getOrThrow(),
-);
-
 final autoPaySetupProvider = FutureProvider.autoDispose<AutoPaySetup?>(
   (ref) async => (await ref.watch(getAutoPayProvider)(const NoParams())).getOrThrow(),
 );

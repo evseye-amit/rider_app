@@ -16,10 +16,4 @@ abstract interface class RideReturnsRepository {
   });
 
   Future<Result<void>> cancel(String id);
-
-  Future<Result<ApprovalCode>> requestApprovalCode(String id);
-
-  Future<Result<void>> approveCharges(String id, {required String requestId, required String code});
-
-  Future<Result<void>> disputeCharges(String id, String reason);
 }

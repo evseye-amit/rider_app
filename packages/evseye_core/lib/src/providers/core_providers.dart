@@ -91,8 +91,6 @@ final staffSupportApiProvider = Provider<SupportApi>(
 
 final rideReturnsApiProvider = Provider<RideReturnsApi>((ref) => RideReturnsApi(ref.watch(apiClientProvider)));
 
-final returnDeskApiProvider = Provider<ReturnDeskApi>((ref) => ReturnDeskApi(ref.watch(apiClientProvider)));
-
 final riderBillingApiProvider = Provider<RiderBillingApi>((ref) => RiderBillingApi(ref.watch(apiClientProvider)));
 
 final banksApiProvider = Provider<BanksApi>((ref) => BanksApi(ref.watch(apiClientProvider)));

@@ -22,15 +22,3 @@ final requestRideReturnProvider = Provider<RequestRideReturn>(
 final cancelRideReturnProvider = Provider<CancelRideReturn>(
   (ref) => CancelRideReturn(ref.watch(rideReturnsRepositoryProvider)),
 );
-
-final requestChargesApprovalCodeProvider = Provider<RequestChargesApprovalCode>(
-  (ref) => RequestChargesApprovalCode(ref.watch(rideReturnsRepositoryProvider)),
-);
-
-final approveReturnChargesProvider = Provider<ApproveReturnCharges>(
-  (ref) => ApproveReturnCharges(ref.watch(rideReturnsRepositoryProvider)),
-);
-
-final disputeReturnChargesProvider = Provider<DisputeReturnCharges>(
-  (ref) => DisputeReturnCharges(ref.watch(rideReturnsRepositoryProvider)),
-);

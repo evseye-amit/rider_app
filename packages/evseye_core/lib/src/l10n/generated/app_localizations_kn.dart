@@ -98,9 +98,6 @@ class AppL10nKn extends AppL10n {
   String get allocationContinueHandover => 'ಹಸ್ತಾಂತರ ಮುಂದುವರಿಸಿ';
 
   @override
-  String get allocationCouldNotAllocateVehicle => 'ವಾಹನ ಹಂಚಿಕೆ ಆಗಲಿಲ್ಲ';
-
-  @override
   String get allocationCouldNotLoadAllocations => 'ಹಂಚಿಕೆಗಳು ತೆರೆಯಲಿಲ್ಲ';
 
   @override
@@ -326,9 +323,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get allocationPlanWaitingButton => 'ರೈಡರ್ ಒಪ್ಪಿಗೆಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ';
-
-  @override
-  String get allocationReason => 'ಕಾರಣ';
 
   @override
   String get allocationRejectConfirm => 'ಪಾವತಿ ತಿರಸ್ಕರಿಸಿ';
@@ -712,9 +706,6 @@ class AppL10nKn extends AppL10n {
   String get commonChooseLanguage => 'ನಿಮ್ಮ ಭಾಷೆ ಆರಿಸಿ';
 
   @override
-  String get commonCity => 'ನಗರ';
-
-  @override
   String get commonColleague => 'ಸಹೋದ್ಯೋಗಿ';
 
   @override
@@ -1058,9 +1049,6 @@ class AppL10nKn extends AppL10n {
   }
 
   @override
-  String get damageChargeLeftToPay => 'ಉಳಿದ ಮೊತ್ತ';
-
-  @override
   String get damageChargePaidSoFar => 'ಈವರೆಗೆ ಪಾವತಿಸಿದ್ದು';
 
   @override
@@ -1338,9 +1326,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get deploymentCouldNotReachServer => 'ಸರ್ವರ್ ಸಂಪರ್ಕ ಸಿಗಲಿಲ್ಲ';
-
-  @override
-  String get deploymentCouldNotSubmitInspection => 'ಪರಿಶೀಲನೆ ಸಲ್ಲಿಸಲು ಆಗಲಿಲ್ಲ';
 
   @override
   String get deploymentDone => 'ಮುಗಿಯಿತು';
@@ -1896,9 +1881,6 @@ class AppL10nKn extends AppL10n {
   String get exchangeStatusReturn => 'ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿಸಿ';
 
   @override
-  String get exchangeStepApproval => 'ಹಬ್ ಅನುಮೋದನೆ';
-
-  @override
   String get exchangeStepDeposit => 'ಠೇವಣಿ';
 
   @override
@@ -2100,9 +2082,6 @@ class AppL10nKn extends AppL10n {
   String get homeMarkYourselfAbsent => 'ನಿಮ್ಮನ್ನು ಗೈರು ಎಂದು ಗುರುತಿಸಬೇಕೆ?';
 
   @override
-  String get homeMarkYourselfPresentSwitchVehicle => 'ವಾಹನ ಆನ್ ಮಾಡಲು ಮೊದಲು ಹಾಜರಾತಿ ಹಾಕಿ.';
-
-  @override
   String homeNextDebitOn(String date) {
     return 'ಮುಂದಿನ ಕಡಿತ $date';
   }
@@ -2122,9 +2101,6 @@ class AppL10nKn extends AppL10n {
   String homeRentOverdue(String amount) {
     return '$amount ಅವಧಿ ಮೀರಿದೆ';
   }
-
-  @override
-  String get homeScooter => 'ಸ್ಕೂಟರ್';
 
   @override
   String get homeShiftWillEndScooterWill =>
@@ -2581,9 +2557,6 @@ class AppL10nKn extends AppL10n {
   }
 
   @override
-  String get onboardingAcceptAgreementContinue => 'ಮುಂದುವರಿಯಲು ಒಪ್ಪಂದ ಸ್ವೀಕರಿಸಿ';
-
-  @override
   String get onboardingAddDateBirthFirstStep => 'ಮುಂದುವರಿಯುವ ಮೊದಲು ಮೊದಲ ಹಂತದಲ್ಲಿ ಹುಟ್ಟಿದ ದಿನಾಂಕ ಬರೆಯಿರಿ';
 
   @override
@@ -2597,9 +2570,6 @@ class AppL10nKn extends AppL10n {
   @override
   String get onboardingAgreementBody =>
       'ಈ ಒಪ್ಪಂದ ನಿಮ್ಮ ಮತ್ತು ನಿಮ್ಮ ಫ್ಲೀಟ್ ಆಪರೇಟರ್ ನಡುವಿನದು. ಇದರಲ್ಲಿ ನಿಮಗೆ ನೀಡಿದ ವಾಹನ, ಅದನ್ನು ಹೇಗೆ ಬಳಸಬಹುದು, ಅದರ ಆರೈಕೆಯ ನಿಮ್ಮ ಜವಾಬ್ದಾರಿ, ನಿಮ್ಮ ಯೋಜನೆಯ ಠೇವಣಿ ಮತ್ತು ಶುಲ್ಕ, ಹಾಗೂ ಈ ವ್ಯವಸ್ಥೆ ಹೇಗೆ ಮುಗಿಯುತ್ತದೆ ಎಂಬುದೆಲ್ಲ ಸೇರಿದೆ. ಸ್ವೀಕರಿಸುವ ಮೊದಲು ಪೂರ್ತಿ ಓದಿ. ಕೆಳಗಿನ ಪೆಟ್ಟಿಗೆಗೆ ಗುರುತು ಹಾಕುವ ಮೂಲಕ ನೀವು ರೈಡರ್ ಒಪ್ಪಂದ ಮತ್ತು ಆಪರೇಟರ್ ಅವರ ರೈಡರ್ ನೀತಿಗಳನ್ನು ಓದಿದ್ದೀರಿ ಮತ್ತು ಅವುಗಳಿಗೆ ಬದ್ಧರಾಗಿರಲು ಒಪ್ಪುತ್ತೀರಿ ಎಂದು ಖಚಿತಪಡಿಸುತ್ತೀರಿ.';
-
-  @override
-  String get onboardingAgreeToRiderAgreement => 'ನಾನು ರೈಡರ್ ಒಪ್ಪಂದ ಓದಿದ್ದೇನೆ ಮತ್ತು ಒಪ್ಪುತ್ತೇನೆ';
 
   @override
   String get onboardingAnswered => 'ಉತ್ತರಿಸಲಾಗಿದೆ';
@@ -3260,11 +3230,6 @@ class AppL10nKn extends AppL10n {
   String get referScanToJoin => 'ನನ್ನ ರೆಫರಲ್ ಕೋಡ್‌ನೊಂದಿಗೆ ಸೇರಲು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ';
 
   @override
-  String referShareAndroid(String link) {
-    return 'Android ನಲ್ಲಿ ಆ್ಯಪ್ ಪಡೆಯಿರಿ: $link';
-  }
-
-  @override
   String referShareCodeLine(String code) {
     return 'ಸೈನ್ ಅಪ್ ಮಾಡುವಾಗ ನನ್ನ ರೆಫರಲ್ ಕೋಡ್ $code ಬಳಸಿ.';
   }
@@ -3276,11 +3241,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get referShareInvite => 'ಆಹ್ವಾನ ಹಂಚಿಕೊಳ್ಳಿ';
-
-  @override
-  String referShareIphone(String link) {
-    return 'iPhone ನಲ್ಲಿ ಆ್ಯಪ್ ಪಡೆಯಿರಿ: $link';
-  }
 
   @override
   String get referShareNow => 'ಹಂಚಿಕೊಳ್ಳಿ';
@@ -3548,17 +3508,6 @@ class AppL10nKn extends AppL10n {
   String get reportStatusUnderRepairMinor => 'ದುರಸ್ತಿಯಲ್ಲಿ: ಸಣ್ಣದು';
 
   @override
-  String get returnsApproveCharges => 'ಶುಲ್ಕಗಳನ್ನು ಅನುಮೋದಿಸಿ';
-
-  @override
-  String returnsApproveSubtitle(String amount) {
-    return 'ನಿಮ್ಮ ಫೋನ್‌ಗೆ 6 ಅಂಕಿಯ ಕೋಡ್ ಕಳುಹಿಸಿದ್ದೇವೆ. ಅದನ್ನು ನಮೂದಿಸಿದರೆ $amount ಶುಲ್ಕಗಳು ಅನುಮೋದನೆಯಾಗುತ್ತವೆ.';
-  }
-
-  @override
-  String get returnsApproveTitle => 'ಕೋಡ್ ನಮೂದಿಸಿ';
-
-  @override
   String get returnsCancel => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ರದ್ದುಮಾಡಿ';
 
   @override
@@ -3569,15 +3518,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get returnsCancelTitle => 'ಈ ಹಿಂದಿರುಗಿಸುವಿಕೆ ರದ್ದುಮಾಡಬೇಕೆ?';
-
-  @override
-  String get returnsCharges => 'ಶುಲ್ಕಗಳು';
-
-  @override
-  String get returnsChargesApproved => 'ಶುಲ್ಕಗಳು ಅನುಮೋದನೆಯಾದವು';
-
-  @override
-  String get returnsChargesPending => 'ಹಬ್ ಇನ್ನೂ ಸ್ಕೂಟರ್ ಪರಿಶೀಲಿಸುತ್ತಿದೆ. ಶುಲ್ಕಗಳಿದ್ದರೆ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
 
   @override
   String get returnsCodeExpired => 'ಆ ಕೋಡ್ ಅವಧಿ ಮುಗಿದಿದೆ. ಹೊಸದನ್ನು ಕೇಳಿ.';
@@ -3596,21 +3536,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get returnsDetailTitle => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ';
-
-  @override
-  String get returnsDisputeCharges => 'ಶುಲ್ಕಗಳನ್ನು ಆಕ್ಷೇಪಿಸಿ';
-
-  @override
-  String get returnsDisputeReason => 'ಏನು ತಪ್ಪಾಗಿದೆ?';
-
-  @override
-  String get returnsDisputeReasonRequired => 'ಹಬ್ ತಂಡ ಪರಿಶೀಲಿಸಲು ಕಾರಣವನ್ನು ಸೇರಿಸಿ.';
-
-  @override
-  String get returnsDisputeSent => 'ಆಕ್ಷೇಪವನ್ನು ಹಬ್ ತಂಡಕ್ಕೆ ಕಳುಹಿಸಲಾಗಿದೆ';
-
-  @override
-  String get returnsDisputeSubtitle => 'ಈ ಶುಲ್ಕಗಳಲ್ಲಿ ಏನು ತಪ್ಪಿದೆ ಎಂದು ಹಬ್ ತಂಡಕ್ಕೆ ತಿಳಿಸಿ.';
 
   @override
   String get returnsEndRentalBody =>
@@ -3696,9 +3621,6 @@ class AppL10nKn extends AppL10n {
   String get returnsNextHandOver => 'ಆಯ್ಕೆ ಮಾಡಿದ ದಿನಾಂಕದಂದು ಸ್ಕೂಟರ್, ಅದರ ಬ್ಯಾಟರಿ ಮತ್ತು ಚಾರ್ಜರ್ ಅನ್ನು ಹಬ್‌ಗೆ ತನ್ನಿ.';
 
   @override
-  String get returnsNoCharges => 'ಈ ಹಿಂದಿರುಗಿಸುವಿಕೆಗೆ ಯಾವುದೇ ಶುಲ್ಕವಿಲ್ಲ.';
-
-  @override
   String get returnsNoHubsNearby => 'ನಿಮ್ಮ ಹತ್ತಿರ ಯಾವುದೇ ಹಬ್ ಸಿಗಲಿಲ್ಲ';
 
   @override
@@ -3782,12 +3704,6 @@ class AppL10nKn extends AppL10n {
   String get returnsRequestSubtitle => 'ದಿನಾಂಕ ಮತ್ತು ನೀವು ತರುವ ಹಬ್ ಆಯ್ಕೆಮಾಡಿ';
 
   @override
-  String get returnsSendDispute => 'ಆಕ್ಷೇಪ ಕಳುಹಿಸಿ';
-
-  @override
-  String get returnsStatusAwaitingManager => 'ಹಬ್ ಮ್ಯಾನೇಜರ್ ಬಳಿ';
-
-  @override
   String get returnsStatusCancelled => 'ರದ್ದಾಗಿದೆ';
 
   @override
@@ -3797,16 +3713,7 @@ class AppL10nKn extends AppL10n {
   String get returnsStatusClosed => 'ಮುಕ್ತಾಯ';
 
   @override
-  String get returnsStatusDisputed => 'ಆಕ್ಷೇಪಿಸಲಾಗಿದೆ';
-
-  @override
   String get returnsStatusFinalChecks => 'ಅಂತಿಮ ತಪಾಸಣೆ';
-
-  @override
-  String get returnsStatusInspecting => 'ಪರಿಶೀಲನೆ ನಡೆಯುತ್ತಿದೆ';
-
-  @override
-  String get returnsStatusNeedsYou => 'ನಿಮ್ಮ ಅನುಮೋದನೆ ಬೇಕು';
 
   @override
   String get returnsStatusRequested => 'ಹಿಂದಿರುಗಿಸುವ ವಿನಂತಿ';
@@ -3819,12 +3726,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get returnsStepFinalChecks => 'ಅಂತಿಮ ಮೆಕ್ಯಾನಿಕ್ ತಪಾಸಣೆ';
-
-  @override
-  String get returnsStepHandedOver => 'ಸ್ಕೂಟರ್ ಹಸ್ತಾಂತರ';
-
-  @override
-  String get returnsStepInspection => 'ಪರಿಶೀಲನೆ ಮತ್ತು ಶುಲ್ಕಗಳು';
 
   @override
   String get returnsStepRequested => 'ಹಿಂದಿರುಗಿಸುವ ವಿನಂತಿ';
@@ -3842,16 +3743,7 @@ class AppL10nKn extends AppL10n {
   String get returnsWhy => 'ನೀವು ಇದನ್ನು ಏಕೆ ಹಿಂದಿರುಗಿಸುತ್ತಿದ್ದೀರಿ?';
 
   @override
-  String get returnsYourDispute => 'ನಿಮ್ಮ ಆಕ್ಷೇಪ';
-
-  @override
   String get returnsYourReturns => 'ನಿಮ್ಮ ಹಿಂದಿರುಗಿಸುವಿಕೆಗಳು';
-
-  @override
-  String get rideParkedLocked => 'ನಿಲ್ಲಿಸಿ ಬೀಗ ಹಾಕಲಾಗಿದೆ.';
-
-  @override
-  String get rideRideSafeHelmetLightsChecked => 'ಸುರಕ್ಷಿತವಾಗಿ ಓಡಿಸಿ. ಹೆಲ್ಮೆಟ್ ಹಾಕಿ, ದೀಪ ಪರಿಶೀಲಿಸಿ.';
 
   @override
   String get ridersActive => 'ಸಕ್ರಿಯ';
@@ -3867,15 +3759,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get ridersTeam => 'ತಂಡ';
-
-  @override
-  String get rideScooterConnectedUsePowerButton => 'ನಿಮ್ಮ ಸ್ಕೂಟರ್ ಜೋಡಿಸಲಾಗಿದೆ. ಆನ್ ಮಾಡಲು ಪವರ್ ಬಟನ್ ಒತ್ತಿ.';
-
-  @override
-  String get rideVehicle => 'ವಾಹನ ಆನ್ ಆಗಿದೆ';
-
-  @override
-  String get rideVehicleOff => 'ವಾಹನ ಆಫ್ ಆಗಿದೆ';
 
   @override
   String routerNoScreenAt(String location) {
@@ -4855,9 +4738,6 @@ class AppL10nKn extends AppL10n {
   String get walletCouldNotLoadWallet => 'ನಿಮ್ಮ ವ್ಯಾಲೆಟ್ ತೆರೆಯಲಿಲ್ಲ';
 
   @override
-  String get walletCredited => 'ಜಮಾ ಆಗಿದೆ';
-
-  @override
   String get walletCredits => 'ಜಮಾ';
 
   @override
@@ -4865,12 +4745,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get walletDebits => 'ಖರ್ಚು';
-
-  @override
-  String get walletDeducted => 'ಕಡಿತಗೊಳಿಸಲಾಗಿದೆ';
-
-  @override
-  String get walletDeploymentPayment => 'ನಿಯೋಜನೆ ಪಾವತಿ';
 
   @override
   String get walletDeposit => 'ಠೇವಣಿ';
@@ -4939,9 +4813,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get walletDestination => 'ಯಾರಿಗೆ ಪಾವತಿಸಲಾಗಿದೆ';
-
-  @override
-  String get walletDueNow => 'ಈಗ ಪಾವತಿಸಬೇಕು';
 
   @override
   String get walletErrorDepositNotFound => 'ಈ ಠೇವಣಿ ಲಭ್ಯವಿಲ್ಲ.';
@@ -5172,12 +5043,6 @@ class AppL10nKn extends AppL10n {
   String get profileAddress => 'ವಿಳಾಸ';
 
   @override
-  String get profileState => 'ರಾಜ್ಯ';
-
-  @override
-  String get profilePinCode => 'ಪಿನ್ ಕೋಡ್';
-
-  @override
   String get profileEmergencyContact => 'ತುರ್ತು ಸಂಪರ್ಕ';
 
   @override
@@ -5337,12 +5202,6 @@ class AppL10nKn extends AppL10n {
   String get exchangeDeskAcceptedForRider => 'ರೈಡರ್ ಪರವಾಗಿ ಆಫರ್ ಒಪ್ಪಿಕೊಳ್ಳಲಾಗಿದೆ';
 
   @override
-  String get exchangeDeskApprove => 'ಮನವಿ ಅನುಮೋದಿಸಿ';
-
-  @override
-  String get exchangeDeskApproved => 'ಮನವಿ ಅನುಮೋದಿಸಲಾಗಿದೆ';
-
-  @override
   String get exchangeDeskAssistedHint =>
       'ರೈಡರ್ ಆ್ಯಪ್ ಬಳಸಲು ಸಾಧ್ಯವಾಗದಿದ್ದರೆ, ಅವರ ಉತ್ತರವನ್ನು ನೀವು ದಾಖಲಿಸಬಹುದು. ಅವರ ಸ್ಪಷ್ಟ ಒಪ್ಪಿಗೆಯೊಂದಿಗೆ ಮಾತ್ರ ಮಾಡಿ.';
 
@@ -5363,9 +5222,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get exchangeDeskComplete => 'ಬದಲಾವಣೆ ಪೂರ್ಣಗೊಳಿಸಿ';
-
-  @override
-  String get exchangeDeskConfirmReturn => 'ಸ್ಕೂಟರ್ ಹಿಂದಿರುಗಿದೆ ಎಂದು ದೃಢೀಕರಿಸಿ';
 
   @override
   String get exchangeDeskConsentNeeded => 'ರೈಡರ್ ಹೇಗೆ ಒಪ್ಪಿಗೆ ನೀಡಿದರು ಎಂದು ಸೇರಿಸಿ';
@@ -5409,9 +5265,6 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get exchangeDeskGuideDeposits => 'ರೈಡರ್ ಸ್ವೀಕರಿಸಿದ್ದಾರೆ. ಹಸ್ತಾಂತರಕ್ಕೆ ಮುಂದುವರಿಯಲು ಠೇವಣಿ ಹೊಂದಿಸಿ.';
-
-  @override
-  String get exchangeDeskGuideReview => 'ಮನವಿಯನ್ನು ಪರಿಶೀಲಿಸಿ, ನಂತರ ಅನುಮೋದಿಸಿ ಅಥವಾ ತಿರಸ್ಕರಿಸಿ.';
 
   @override
   String get exchangeDeskGuideSendOffer => 'ಕೆಳಗಿನ ಆಫರ್ ಪರಿಶೀಲಿಸಿ ಮತ್ತು ರೈಡರ್‌ಗೆ ಕಳುಹಿಸಿ.';
@@ -5460,13 +5313,6 @@ class AppL10nKn extends AppL10n {
   String exchangeDeskReservedUntil(String time) {
     return '$time ವರೆಗೆ';
   }
-
-  @override
-  String get exchangeDeskReturnConfirmed => 'ಹಿಂದಿರುಗಿಸುವಿಕೆ ದೃಢೀಕರಿಸಲಾಗಿದೆ';
-
-  @override
-  String get exchangeDeskReturnHint =>
-      'ರಿಟರ್ನ್‌ನಲ್ಲಿ ಹಿಂದಿರುಗಿಸುವಿಕೆ ಮುಗಿಸಿ: ರೈಡರ್ OTP ಪರಿಶೀಲಿಸಿ ಮತ್ತು ತಪಾಸಣೆ ಪೂರ್ಣಗೊಳಿಸಿ. ನಂತರ ಇಲ್ಲಿ ದೃಢೀಕರಿಸಿ.';
 
   @override
   String get exchangeDeskRiderNote => 'ರೈಡರ್ ಟಿಪ್ಪಣಿ';

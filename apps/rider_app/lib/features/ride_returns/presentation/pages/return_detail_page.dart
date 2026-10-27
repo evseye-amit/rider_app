@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/check_in/check_in_card.dart';
 import '../../domain/entities/ride_return.dart';
-import '../../domain/usecases/ride_return_usecases.dart';
 import '../../ride_returns_dependencies.dart';
 import '../providers/ride_returns_providers.dart';
 import '../widgets/return_widgets.dart';
@@ -49,81 +48,6 @@ class _ReturnDetailPageState extends ConsumerState<ReturnDetailPage> {
     await _refresh();
   }
 
-  Future<void> _approve(ReturnCharges charges) async {
-    setState(() => _busy = true);
-    final Result<ApprovalCode> first = await ref.read(requestChargesApprovalCodeProvider)(widget.returnId);
-    if (!mounted) return;
-    setState(() => _busy = false);
-    if (first case Err<ApprovalCode>(:final failure)) {
-      AppSnack.error(context, failure.message);
-      await _refresh();
-      return;
-    }
-    ApprovalCode code = (first as Ok<ApprovalCode>).value;
-
-    final bool approved = await ApprovalCodeSheet.show(
-      context,
-      total: charges.total,
-      onResend: () async {
-        final Result<ApprovalCode> again = await ref.read(requestChargesApprovalCodeProvider)(widget.returnId);
-        if (again case Ok<ApprovalCode>(:final value)) code = value;
-        return again.failureOrNull?.message;
-      },
-      onVerify: (entered) async => (await ref.read(approveReturnChargesProvider)(
-        ApproveChargesParams(id: widget.returnId, requestId: code.requestId, code: entered),
-      )).failureOrNull?.message,
-    );
-    if (!mounted) return;
-    if (approved) AppSnack.success(context, context.l10n.returnsChargesApproved);
-    await _refresh();
-  }
-
-  Future<void> _dispute() async {
-    final TextEditingController controller = TextEditingController();
-    final String? reason = await AppSheet.show<String>(
-      context,
-      title: context.l10n.returnsDisputeCharges,
-      subtitle: context.l10n.returnsDisputeSubtitle,
-      child: Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
-        child: AppTextField(
-          label: context.l10n.returnsDisputeReason,
-          maxLines: 4,
-          maxLength: 500,
-          controller: controller,
-          autofocus: true,
-          textCapitalization: TextCapitalization.sentences,
-        ),
-      ),
-      footer: Builder(
-        builder: (sheet) => PrimaryButton(
-          label: context.l10n.returnsSendDispute,
-          icon: Icons.send_rounded,
-          onPressed: () => Navigator.of(sheet).pop(controller.text.trim()),
-        ),
-      ),
-    );
-    controller.dispose();
-    if (reason == null || !mounted) return;
-    if (reason.isEmpty) {
-      AppSnack.error(context, context.l10n.returnsDisputeReasonRequired);
-      return;
-    }
-    setState(() => _busy = true);
-    final Result<void> result = await ref.read(disputeReturnChargesProvider)(
-      DisputeChargesParams(id: widget.returnId, reason: reason),
-    );
-    if (!mounted) return;
-    setState(() => _busy = false);
-    switch (result) {
-      case Ok<void>():
-        AppSnack.success(context, context.l10n.returnsDisputeSent);
-      case Err<void>(:final failure):
-        AppSnack.error(context, failure.message);
-    }
-    await _refresh();
-  }
-
   @override
   Widget build(BuildContext context) {
     final AsyncValue<RideReturn> detail = ref.watch(rideReturnProvider(widget.returnId));
@@ -153,7 +77,6 @@ class _ReturnDetailPageState extends ConsumerState<ReturnDetailPage> {
       );
     }
 
-    final ReturnCharges? charges = item.charges;
     final String? notes = item.notes;
     final DateTime? receivedAt = item.receivedAt;
     final DateTime? cancelledAt = item.cancelledAt;
@@ -161,21 +84,6 @@ class _ReturnDetailPageState extends ConsumerState<ReturnDetailPage> {
 
     final List<Widget> sections = [
       if (checkInId != null) CheckInCard(submissionId: checkInId),
-      if (!item.usesCheckIn && item.status == ReturnStatus.returned)
-        ChargesCard(
-          charges:
-              charges ??
-              const ReturnCharges(
-                stage: ChargesStage.reviewing,
-                total: 0,
-                items: [],
-                approvedByYou: false,
-                approvedByAdmin: false,
-              ),
-          busy: _busy,
-          onApprove: () => _approve(charges!),
-          onDispute: _dispute,
-        ),
       if (item.status != ReturnStatus.cancelled) ReturnTimeline(item: item),
       ModuleCard(
         title: context.l10n.returnsDetails,

@@ -222,7 +222,6 @@ class VehicleExchange {
     this.offers = const [],
     this.plannedReturnDate,
     this.plannedHubId,
-    this.submissionRequired = true,
     this.submission,
   });
 
@@ -259,7 +258,6 @@ class VehicleExchange {
           .toList(growable: false),
       plannedReturnDate: _date(json['plannedReturnDate'])?.toLocal(),
       plannedHubId: _textOrNull(json['plannedHubId']),
-      submissionRequired: json['submissionRequired'] != false,
       submission: SubmissionSummaryDto.maybe(json['vehicleSubmission']),
     );
   }
@@ -289,12 +287,9 @@ class VehicleExchange {
   final List<VehicleExchangeOffer> offers;
   final DateTime? plannedReturnDate;
   final String? plannedHubId;
-  final bool submissionRequired;
   final SubmissionSummaryDto? submission;
 
-  bool get oldVehicleReturned => submissionRequired
-      ? submission?.isConfirmed ?? false
-      : returnInspectionId != null && status != VehicleExchangeStatus.returnPending;
+  bool get oldVehicleReturned => submission?.isConfirmed ?? false;
 
   bool get canCancel => status.canCancel && returnInspectionId == null;
 
@@ -416,14 +411,8 @@ class ExchangeOperationsApi {
 
   Future<Result<VehicleExchange>> details(String id) => _client.get<VehicleExchange>('$_base/$id', parse: _one);
 
-  Future<Result<void>> approve(String id) => _client.post<void>('$_base/$id/approve');
-
   Future<Result<void>> reject(String id, {required String reason}) =>
       _client.post<void>('$_base/$id/reject', body: {'reason': reason});
-
-  Future<Result<void>> startReturn(String id) => _client.post<void>('$_base/$id/return');
-
-  Future<Result<void>> confirmReturn(String id) => _client.post<void>('$_base/$id/confirm-return');
 
   Future<Result<void>> selectReplacement(
     String id, {

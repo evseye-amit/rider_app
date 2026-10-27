@@ -98,9 +98,6 @@ class AppL10nTe extends AppL10n {
   String get allocationContinueHandover => 'అప్పగింత కొనసాగించండి';
 
   @override
-  String get allocationCouldNotAllocateVehicle => 'వాహనం కేటాయించలేకపోయాం';
-
-  @override
   String get allocationCouldNotLoadAllocations => 'కేటాయింపులు తెరవలేకపోయాం';
 
   @override
@@ -326,9 +323,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get allocationPlanWaitingButton => 'రైడర్ అంగీకారం కోసం వేచి ఉంది';
-
-  @override
-  String get allocationReason => 'కారణం';
 
   @override
   String get allocationRejectConfirm => 'చెల్లింపును తిరస్కరించండి';
@@ -711,9 +705,6 @@ class AppL10nTe extends AppL10n {
   String get commonChooseLanguage => 'మీ భాషను ఎంచుకోండి';
 
   @override
-  String get commonCity => 'నగరం';
-
-  @override
   String get commonColleague => 'సహోద్యోగి';
 
   @override
@@ -1056,9 +1047,6 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
-  String get damageChargeLeftToPay => 'మిగిలిన మొత్తం';
-
-  @override
   String get damageChargePaidSoFar => 'ఇప్పటివరకు చెల్లించింది';
 
   @override
@@ -1335,9 +1323,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get deploymentCouldNotReachServer => 'సర్వర్‌ను చేరలేకపోయాం';
-
-  @override
-  String get deploymentCouldNotSubmitInspection => 'తనిఖీ సమర్పించలేకపోయాం';
 
   @override
   String get deploymentDone => 'పూర్తయింది';
@@ -1897,9 +1882,6 @@ class AppL10nTe extends AppL10n {
   String get exchangeStatusReturn => 'స్కూటర్ తిరిగి ఇవ్వండి';
 
   @override
-  String get exchangeStepApproval => 'హబ్ ఆమోదం';
-
-  @override
   String get exchangeStepDeposit => 'డిపాజిట్';
 
   @override
@@ -2101,9 +2083,6 @@ class AppL10nTe extends AppL10n {
   String get homeMarkYourselfAbsent => 'మిమ్మల్ని గైర్హాజరుగా గుర్తించాలా?';
 
   @override
-  String get homeMarkYourselfPresentSwitchVehicle => 'వాహనం ఆన్ చేయడానికి ముందు హాజరు వేయండి.';
-
-  @override
   String homeNextDebitOn(String date) {
     return 'తదుపరి కోత $date';
   }
@@ -2123,9 +2102,6 @@ class AppL10nTe extends AppL10n {
   String homeRentOverdue(String amount) {
     return '$amount గడువు దాటింది';
   }
-
-  @override
-  String get homeScooter => 'స్కూటర్';
 
   @override
   String get homeShiftWillEndScooterWill =>
@@ -2582,9 +2558,6 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
-  String get onboardingAcceptAgreementContinue => 'కొనసాగడానికి ఒప్పందాన్ని అంగీకరించండి';
-
-  @override
   String get onboardingAddDateBirthFirstStep => 'కొనసాగించే ముందు మొదటి దశలో పుట్టిన తేదీ రాయండి';
 
   @override
@@ -2598,9 +2571,6 @@ class AppL10nTe extends AppL10n {
   @override
   String get onboardingAgreementBody =>
       'ఈ ఒప్పందం మీకు మరియు మీ ఫ్లీట్ ఆపరేటర్‌కు మధ్య ఉంది. ఇందులో మీకు అప్పగించిన వాహనం, దాన్ని ఎలా వాడవచ్చు, దాని సంరక్షణలో మీ బాధ్యత, మీ ప్లాన్‌లోని డిపాజిట్లు మరియు రుసుములు, ఈ ఏర్పాటు ఎలా ముగుస్తుంది అనేవన్నీ ఉన్నాయి. అంగీకరించే ముందు పూర్తిగా చదవండి. కింది పెట్టెను గుర్తించడం ద్వారా మీరు రైడర్ ఒప్పందం మరియు ఆపరేటర్ రైడర్ విధానాలను చదివారని, వాటికి కట్టుబడి ఉంటారని ఖరారు చేస్తున్నారు.';
-
-  @override
-  String get onboardingAgreeToRiderAgreement => 'నేను రైడర్ ఒప్పందాన్ని చదివాను మరియు అంగీకరిస్తున్నాను';
 
   @override
   String get onboardingAnswered => 'సమాధానం ఇచ్చారు';
@@ -3263,11 +3233,6 @@ class AppL10nTe extends AppL10n {
   String get referScanToJoin => 'నా రిఫరల్ కోడ్‌తో చేరడానికి స్కాన్ చేయండి';
 
   @override
-  String referShareAndroid(String link) {
-    return 'Androidలో యాప్ పొందండి: $link';
-  }
-
-  @override
   String referShareCodeLine(String code) {
     return 'సైన్ అప్ చేసేటప్పుడు నా రిఫరల్ కోడ్ $code వాడండి.';
   }
@@ -3279,11 +3244,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get referShareInvite => 'ఆహ్వానాన్ని షేర్ చేయండి';
-
-  @override
-  String referShareIphone(String link) {
-    return 'iPhoneలో యాప్ పొందండి: $link';
-  }
 
   @override
   String get referShareNow => 'షేర్ చేయండి';
@@ -3551,17 +3511,6 @@ class AppL10nTe extends AppL10n {
   String get reportStatusUnderRepairMinor => 'రిపేర్‌లో: చిన్నది';
 
   @override
-  String get returnsApproveCharges => 'ఛార్జీలను ఆమోదించండి';
-
-  @override
-  String returnsApproveSubtitle(String amount) {
-    return 'మీ ఫోన్‌కు 6 అంకెల కోడ్ పంపాం. దాన్ని నమోదు చేస్తే $amount ఛార్జీలు ఆమోదించబడతాయి.';
-  }
-
-  @override
-  String get returnsApproveTitle => 'కోడ్ నమోదు చేయండి';
-
-  @override
   String get returnsCancel => 'రిటర్న్ రద్దు చేయండి';
 
   @override
@@ -3572,15 +3521,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get returnsCancelTitle => 'ఈ రిటర్న్‌ను రద్దు చేయాలా?';
-
-  @override
-  String get returnsCharges => 'ఛార్జీలు';
-
-  @override
-  String get returnsChargesApproved => 'ఛార్జీలు ఆమోదించబడ్డాయి';
-
-  @override
-  String get returnsChargesPending => 'హబ్ ఇంకా స్కూటర్‌ను తనిఖీ చేస్తోంది. ఛార్జీలు ఉంటే ఇక్కడ కనిపిస్తాయి.';
 
   @override
   String get returnsCodeExpired => 'ఆ కోడ్ గడువు ముగిసింది. కొత్తది అడగండి.';
@@ -3599,21 +3539,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get returnsDetailTitle => 'రిటర్న్';
-
-  @override
-  String get returnsDisputeCharges => 'ఛార్జీలపై అభ్యంతరం';
-
-  @override
-  String get returnsDisputeReason => 'ఏమి తప్పు?';
-
-  @override
-  String get returnsDisputeReasonRequired => 'హబ్ బృందం సమీక్షించడానికి కారణం జోడించండి.';
-
-  @override
-  String get returnsDisputeSent => 'అభ్యంతరం హబ్ బృందానికి పంపబడింది';
-
-  @override
-  String get returnsDisputeSubtitle => 'ఈ ఛార్జీలలో ఏమి తప్పు ఉందో హబ్ బృందానికి చెప్పండి.';
 
   @override
   String get returnsEndRentalBody =>
@@ -3696,9 +3621,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get returnsNextHandOver => 'ఎంచుకున్న తేదీన స్కూటర్, దాని బ్యాటరీ, ఛార్జర్‌ను హబ్‌కు తీసుకురండి.';
-
-  @override
-  String get returnsNoCharges => 'ఈ రిటర్న్‌కు ఛార్జీలు లేవు.';
 
   @override
   String get returnsNoHubsNearby => 'మీ దగ్గర హబ్‌లు కనిపించలేదు';
@@ -3784,12 +3706,6 @@ class AppL10nTe extends AppL10n {
   String get returnsRequestSubtitle => 'తేదీని, మీరు తీసుకువచ్చే హబ్‌ను ఎంచుకోండి';
 
   @override
-  String get returnsSendDispute => 'అభ్యంతరం పంపండి';
-
-  @override
-  String get returnsStatusAwaitingManager => 'హబ్ మేనేజర్ వద్ద';
-
-  @override
   String get returnsStatusCancelled => 'రద్దు చేశారు';
 
   @override
@@ -3799,16 +3715,7 @@ class AppL10nTe extends AppL10n {
   String get returnsStatusClosed => 'ముగిసింది';
 
   @override
-  String get returnsStatusDisputed => 'వివాదంలో ఉంది';
-
-  @override
   String get returnsStatusFinalChecks => 'చివరి తనిఖీలు';
-
-  @override
-  String get returnsStatusInspecting => 'తనిఖీ జరుగుతోంది';
-
-  @override
-  String get returnsStatusNeedsYou => 'మీ ఆమోదం అవసరం';
 
   @override
   String get returnsStatusRequested => 'రిటర్న్ అభ్యర్థించారు';
@@ -3821,12 +3728,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get returnsStepFinalChecks => 'చివరి మెకానిక్ తనిఖీ';
-
-  @override
-  String get returnsStepHandedOver => 'స్కూటర్ అప్పగింత';
-
-  @override
-  String get returnsStepInspection => 'తనిఖీ, ఛార్జీలు';
 
   @override
   String get returnsStepRequested => 'రిటర్న్ అభ్యర్థన';
@@ -3844,16 +3745,7 @@ class AppL10nTe extends AppL10n {
   String get returnsWhy => 'మీరు దీన్ని ఎందుకు తిరిగి ఇస్తున్నారు?';
 
   @override
-  String get returnsYourDispute => 'మీ అభ్యంతరం';
-
-  @override
   String get returnsYourReturns => 'మీ రిటర్న్‌లు';
-
-  @override
-  String get rideParkedLocked => 'నిలిపి తాళం వేయబడింది.';
-
-  @override
-  String get rideRideSafeHelmetLightsChecked => 'జాగ్రత్తగా నడపండి. హెల్మెట్ పెట్టుకోండి, లైట్లు చూసుకోండి.';
 
   @override
   String get ridersActive => 'చురుకుగా';
@@ -3869,15 +3761,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get ridersTeam => 'బృందం';
-
-  @override
-  String get rideScooterConnectedUsePowerButton => 'మీ స్కూటర్ జత అయింది. ఆన్ చేయడానికి పవర్ బటన్ నొక్కండి.';
-
-  @override
-  String get rideVehicle => 'వాహనం ఆన్‌లో ఉంది';
-
-  @override
-  String get rideVehicleOff => 'వాహనం ఆఫ్‌లో ఉంది';
 
   @override
   String routerNoScreenAt(String location) {
@@ -4859,9 +4742,6 @@ class AppL10nTe extends AppL10n {
   String get walletCouldNotLoadWallet => 'మీ వాలెట్ తెరవలేకపోయాం';
 
   @override
-  String get walletCredited => 'జమ అయింది';
-
-  @override
   String get walletCredits => 'జమ';
 
   @override
@@ -4869,12 +4749,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get walletDebits => 'ఖర్చు';
-
-  @override
-  String get walletDeducted => 'తీసివేయబడింది';
-
-  @override
-  String get walletDeploymentPayment => 'మోహరింపు చెల్లింపు';
 
   @override
   String get walletDeposit => 'డిపాజిట్';
@@ -4943,9 +4817,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get walletDestination => 'ఎవరికి చెల్లించారు';
-
-  @override
-  String get walletDueNow => 'ఇప్పుడు చెల్లించాలి';
 
   @override
   String get walletErrorDepositNotFound => 'ఈ డిపాజిట్ అందుబాటులో లేదు.';
@@ -5176,12 +5047,6 @@ class AppL10nTe extends AppL10n {
   String get profileAddress => 'చిరునామా';
 
   @override
-  String get profileState => 'రాష్ట్రం';
-
-  @override
-  String get profilePinCode => 'పిన్ కోడ్';
-
-  @override
   String get profileEmergencyContact => 'అత్యవసర సంప్రదింపు';
 
   @override
@@ -5342,12 +5207,6 @@ class AppL10nTe extends AppL10n {
   String get exchangeDeskAcceptedForRider => 'రైడర్ తరఫున ఆఫర్ అంగీకరించారు';
 
   @override
-  String get exchangeDeskApprove => 'అభ్యర్థన ఆమోదించండి';
-
-  @override
-  String get exchangeDeskApproved => 'అభ్యర్థన ఆమోదించారు';
-
-  @override
   String get exchangeDeskAssistedHint =>
       'రైడర్ యాప్ వాడలేకపోతే, వారి సమాధానాన్ని మీరు నమోదు చేయవచ్చు. వారి స్పష్టమైన అంగీకారంతో మాత్రమే చేయండి.';
 
@@ -5368,9 +5227,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get exchangeDeskComplete => 'మార్పు పూర్తి చేయండి';
-
-  @override
-  String get exchangeDeskConfirmReturn => 'స్కూటర్ వాపసు నిర్ధారించండి';
 
   @override
   String get exchangeDeskConsentNeeded => 'రైడర్ ఎలా అంగీకారం ఇచ్చారో జోడించండి';
@@ -5415,9 +5271,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get exchangeDeskGuideDeposits => 'రైడర్ ఆమోదించారు. అప్పగింతకు వెళ్లడానికి డిపాజిట్లు సర్దుబాటు చేయండి.';
-
-  @override
-  String get exchangeDeskGuideReview => 'అభ్యర్థనను చూసి, ఆమోదించండి లేదా తిరస్కరించండి.';
 
   @override
   String get exchangeDeskGuideSendOffer => 'కింది ఆఫర్ చూసి రైడర్‌కు పంపండి.';
@@ -5466,13 +5319,6 @@ class AppL10nTe extends AppL10n {
   String exchangeDeskReservedUntil(String time) {
     return '$time వరకు';
   }
-
-  @override
-  String get exchangeDeskReturnConfirmed => 'వాపసు నిర్ధారించారు';
-
-  @override
-  String get exchangeDeskReturnHint =>
-      'రిటర్న్‌లో వాపసు పూర్తి చేయండి: రైడర్ OTP ధృవీకరించి తనిఖీ పూర్తి చేయండి. తర్వాత ఇక్కడ నిర్ధారించండి.';
 
   @override
   String get exchangeDeskRiderNote => 'రైడర్ నోట్';

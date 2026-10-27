@@ -253,20 +253,3 @@ class WalletOverview extends Equatable {
     recentEntries,
   ];
 }
-
-class WithdrawalStatus extends Equatable {
-  const WithdrawalStatus({
-    required this.eligible,
-    required this.cashAvailable,
-    required this.depositReturnedSeparately,
-    this.reason,
-  });
-
-  final bool eligible;
-  final num cashAvailable;
-  final bool depositReturnedSeparately;
-  final String? reason;
-
-  @override
-  List<Object?> get props => [eligible, cashAvailable, depositReturnedSeparately, reason];
-}

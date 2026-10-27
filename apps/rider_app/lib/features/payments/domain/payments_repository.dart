@@ -8,10 +8,6 @@ abstract interface class PaymentsRepository {
 
   Future<Result<List<PaymentRecord>>> getHistory();
 
-  Future<Result<PaymentAttemptDetail>> getAttempt(String id);
-
-  Future<Result<List<PaymentAttemptDetail>>> getRefunds();
-
   Future<Result<AutoPaySetup?>> getAutoPay();
 
   Future<Result<AutoPayMandate>> setUpAutoPay({required String email, required String idempotencyKey});

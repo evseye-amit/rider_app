@@ -66,7 +66,6 @@ String rentWithPeriod(AppL10n l10n, num amount, RentPeriod? period) {
 
 String _stepLabel(AppL10n l10n, ExchangeStep step) => switch (step) {
   ExchangeStep.requested => l10n.exchangeStepRequested,
-  ExchangeStep.approval => l10n.exchangeStepApproval,
   ExchangeStep.returnScooter => l10n.exchangeStepReturn,
   ExchangeStep.offer => l10n.exchangeStepOffer,
   ExchangeStep.deposit => l10n.exchangeStepDeposit,
@@ -158,7 +157,7 @@ class ExchangeTimeline extends StatelessWidget {
       leading: const IconTile(icon: Icons.timeline_rounded, solid: true, size: 28),
       child: Column(
         children: [
-          for (final ExchangeStep step in request.steps)
+          for (final ExchangeStep step in ExchangeStep.values)
             _TimelineRow(
               label: _stepLabel(context.l10n, step),
               state: request.isStepDone(step)
@@ -166,7 +165,7 @@ class ExchangeTimeline extends StatelessWidget {
                   : step == current
                   ? (request.status.isOpen ? _StepState.current : _StepState.stopped)
                   : _StepState.upcoming,
-              last: step == request.steps.last,
+              last: step == ExchangeStep.values.last,
             ),
         ],
       ),

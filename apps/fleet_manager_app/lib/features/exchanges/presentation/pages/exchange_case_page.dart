@@ -281,11 +281,6 @@ class _ExchangeCasePageState extends ConsumerState<ExchangeCasePage> {
         PrimaryButton(label: label, icon: icon, loading: _busy, onPressed: _busy ? null : onTap);
 
     return switch (exchange.nextStep) {
-      CaseStep.review => button(
-        context.l10n.exchangeDeskApprove,
-        Icons.check_circle_rounded,
-        () => _run(() => ref.read(approveExchangeProvider)(_id), context.l10n.exchangeDeskApproved),
-      ),
       CaseStep.checkIn => button(
         exchange.checkInId == null ? context.l10n.exchangeDeskCheckIn : context.l10n.exchangeDeskOpenCheckIn,
         Icons.assignment_return_rounded,
@@ -295,11 +290,6 @@ class _ExchangeCasePageState extends ConsumerState<ExchangeCasePage> {
         context.l10n.exchangeDeskOpenCheckIn,
         Icons.open_in_new_rounded,
         () => _checkIn(exchange),
-      ),
-      CaseStep.confirmReturn => button(
-        context.l10n.exchangeDeskConfirmReturn,
-        Icons.task_alt_rounded,
-        () => _run(() => ref.read(confirmExchangeReturnProvider)(_id), context.l10n.exchangeDeskReturnConfirmed),
       ),
       CaseStep.chooseScooter => button(
         context.l10n.exchangeDeskChooseScooter,
@@ -345,7 +335,7 @@ class _ExchangeCasePageState extends ConsumerState<ExchangeCasePage> {
 
   List<Widget> _stepContent(ExchangeCase exchange) {
     final List<Widget> content = switch (exchange.nextStep) {
-      CaseStep.review || CaseStep.checkIn when exchange.status == CaseStatus.requested => [
+      CaseStep.checkIn when exchange.status == CaseStatus.requested => [
         SecondaryButton(
           label: context.l10n.exchangeDeskReject,
           icon: Icons.close_rounded,

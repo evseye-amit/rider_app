@@ -24,15 +24,6 @@ class ChooseScooterParams extends Equatable {
   List<Object?> get props => [exchange, scooter];
 }
 
-class ApproveExchange extends UseCase<void, String> {
-  const ApproveExchange(this._repository);
-
-  final ExchangeDeskRepository _repository;
-
-  @override
-  Future<Result<void>> call(String params) => _repository.approve(params);
-}
-
 class RejectExchange extends UseCase<void, RejectExchangeParams> {
   const RejectExchange(this._repository);
 
@@ -59,15 +50,6 @@ class StartExchangeCheckIn extends UseCase<String, StartCheckInParams> {
 
   @override
   Future<Result<String>> call(StartCheckInParams params) => _repository.startCheckIn(params.id, hubId: params.hubId);
-}
-
-class ConfirmExchangeReturn extends UseCase<void, String> {
-  const ConfirmExchangeReturn(this._repository);
-
-  final ExchangeDeskRepository _repository;
-
-  @override
-  Future<Result<void>> call(String params) => _repository.confirmReturn(params);
 }
 
 class ChooseReplacementScooter extends UseCase<void, ChooseScooterParams> {

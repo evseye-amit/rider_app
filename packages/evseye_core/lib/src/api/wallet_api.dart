@@ -327,30 +327,6 @@ class RiderWalletSummary {
   final List<WalletLedgerEntry> recentTransactions;
 }
 
-class WithdrawalEligibility {
-  const WithdrawalEligibility({
-    required this.eligible,
-    required this.cashAvailable,
-    required this.rewardRefundable,
-    required this.securityDepositReturnSeparate,
-    this.reason,
-  });
-
-  factory WithdrawalEligibility.fromJson(Map<String, dynamic> json) => WithdrawalEligibility(
-    eligible: json['eligible'] == true,
-    cashAvailable: _money(json['cashAvailable']),
-    rewardRefundable: json['rewardRefundable'] == true,
-    securityDepositReturnSeparate: json['securityDepositReturnSeparate'] == true,
-    reason: json['reason']?.toString(),
-  );
-
-  final bool eligible;
-  final num cashAvailable;
-  final bool rewardRefundable;
-  final bool securityDepositReturnSeparate;
-  final String? reason;
-}
-
 class WalletReceipt {
   const WalletReceipt({
     required this.receiptNumber,
@@ -427,22 +403,12 @@ class WalletApi {
     parse: (data) => WalletBalance.fromJson(Map<String, dynamic>.from(data as Map)),
   );
 
-  Future<Result<WithdrawalEligibility>> withdrawalEligibility() => _client.get<WithdrawalEligibility>(
-    '$_base/withdrawal-eligibility',
-    parse: (data) => WithdrawalEligibility.fromJson(Map<String, dynamic>.from(data as Map)),
-  );
-
   Future<Result<List<WalletLedgerEntry>>> transactions({int page = 1, int pageSize = 20}) =>
       _client.get<List<WalletLedgerEntry>>(
         '$_base/transactions',
         query: {'page': page, 'pageSize': pageSize},
         parse: _entries,
       );
-
-  Future<Result<WalletLedgerEntry>> transaction(String id) => _client.get<WalletLedgerEntry>(
-    '$_base/transactions/$id',
-    parse: (data) => WalletLedgerEntry.fromJson(Map<String, dynamic>.from(data as Map)),
-  );
 
   Future<Result<WalletStatement>> statement({
     required DateTime from,

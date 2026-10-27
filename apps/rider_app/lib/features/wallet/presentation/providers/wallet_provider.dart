@@ -15,10 +15,6 @@ final walletTransactionsProvider = FutureProvider.autoDispose<List<WalletEntry>>
   (ref) async => (await ref.watch(getWalletTransactionsProvider)(const WalletPage(pageSize: 50))).getOrThrow(),
 );
 
-final withdrawalStatusProvider = FutureProvider.autoDispose<WithdrawalStatus>(
-  (ref) async => (await ref.watch(getWithdrawalStatusProvider)(const NoParams())).getOrThrow(),
-);
-
 class WalletStatementNotifier extends AsyncNotifier<WalletStatementView> {
   WalletStatementNotifier(this._month);
 

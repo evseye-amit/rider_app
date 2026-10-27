@@ -11,13 +11,9 @@ abstract interface class ExchangeDeskRepository {
 
   Future<Result<CaseQuote>> quote(String id);
 
-  Future<Result<void>> approve(String id);
-
   Future<Result<void>> reject(String id, {required String reason});
 
   Future<Result<String>> startCheckIn(String id, {String? hubId});
-
-  Future<Result<void>> confirmReturn(String id);
 
   Future<Result<void>> chooseScooter(ExchangeCase exchange, ScooterOption scooter);
 

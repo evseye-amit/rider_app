@@ -129,36 +129,6 @@ class PaymentsHome {
   bool get isOverdue => overdueAmount > 0;
 }
 
-class PaymentAttempt {
-  const PaymentAttempt({
-    required this.id,
-    required this.status,
-    required this.amount,
-    required this.currency,
-    this.method,
-    this.startedAt,
-    this.completedAt,
-  });
-
-  factory PaymentAttempt.fromJson(Map<String, dynamic> json) => PaymentAttempt(
-    id: _text(json['id']),
-    status: _text(json['status']),
-    amount: _money(json['amount']),
-    currency: json['currency']?.toString() ?? 'INR',
-    method: json['method']?.toString(),
-    startedAt: _date(json['createdAt'] ?? json['scheduledAt']),
-    completedAt: _date(json['completedAt']),
-  );
-
-  final String id;
-  final String status;
-  final num amount;
-  final String currency;
-  final String? method;
-  final DateTime? startedAt;
-  final DateTime? completedAt;
-}
-
 class AutoPayMandateDto {
   const AutoPayMandateDto({
     required this.id,
@@ -246,19 +216,6 @@ class RiderPaymentsApi {
         .toList(growable: false),
   );
 
-  Future<Result<PaymentAttempt>> attempt(String id) => _client.get<PaymentAttempt>(
-    '$_base/attempts/$id',
-    parse: (data) => PaymentAttempt.fromJson(Map<String, dynamic>.from(data as Map)),
-  );
-
-  Future<Result<List<PaymentRefund>>> refunds() => _client.get<List<PaymentRefund>>(
-    '$_base/refunds',
-    parse: (data) => (data as List<dynamic>? ?? const [])
-        .whereType<Map>()
-        .map((e) => PaymentRefund.fromJson(Map<String, dynamic>.from(e)))
-        .toList(growable: false),
-  );
-
   Future<Result<AutoPaySetupDto>> autoPay() => _client.get<AutoPaySetupDto>(
     '$_base/autopay',
     parse: (data) => AutoPaySetupDto.fromJson(Map<String, dynamic>.from(data as Map)),
@@ -296,39 +253,4 @@ class RiderPaymentsApi {
       _client.post<AutoPayMandateDto>('$_base/autopay/${enabled ? 'enable' : 'disable'}', parse: _mandate);
 
   static AutoPayMandateDto _mandate(dynamic data) => AutoPayMandateDto.fromJson(Map<String, dynamic>.from(data as Map));
-}
-
-class PaymentRefund {
-  const PaymentRefund({
-    required this.id,
-    required this.paymentId,
-    required this.status,
-    required this.amount,
-    required this.currency,
-    this.refundNumber,
-    this.requestedAt,
-    this.completedAt,
-  });
-
-  factory PaymentRefund.fromJson(Map<String, dynamic> json) => PaymentRefund(
-    id: _text(json['id']),
-    paymentId: _text(json['paymentId']),
-    status: _text(json['status']),
-    amount: _money(json['amount']),
-    currency: json['currency']?.toString() ?? 'INR',
-    refundNumber: json['refundNumber']?.toString(),
-    requestedAt: _date(json['requestedAt']),
-    completedAt: _date(json['completedAt']),
-  );
-
-  final String id;
-  final String paymentId;
-  final String status;
-  final num amount;
-  final String currency;
-  final String? refundNumber;
-  final DateTime? requestedAt;
-  final DateTime? completedAt;
-
-  bool get isSuccessful => status == 'SUCCESS';
 }
