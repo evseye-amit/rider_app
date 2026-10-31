@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,10 +18,7 @@ class OtpPage extends ConsumerStatefulWidget {
 }
 
 class _OtpPageState extends ConsumerState<OtpPage> {
-  static const int _resendSeconds = 30;
-
-  Timer? _ticker;
-  int _remaining = _resendSeconds;
+  late final OtpResendController _resendController;
   _Stage _stage = _Stage.entering;
   bool _hasError = false;
   String? _error;
@@ -33,27 +28,15 @@ class _OtpPageState extends ConsumerState<OtpPage> {
   @override
   void initState() {
     super.initState();
-    _startTimer();
+    _resendController = OtpResendController()..addListener(_onResendChanged)..start();
   }
 
   @override
   void dispose() {
-    _ticker?.cancel();
+    _resendController.dispose();
     super.dispose();
   }
-
-  void _startTimer() {
-    _remaining = _resendSeconds;
-    _ticker?.cancel();
-    _ticker = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_remaining <= 1) {
-        timer.cancel();
-        setState(() => _remaining = 0);
-        return;
-      }
-      setState(() => _remaining -= 1);
-    });
-  }
+  void _onResendChanged() { if (mounted) setState(() {}); }
 
   Future<void> _verify(String code) async {
     if (code.length != 6 || _stage != _Stage.entering) return;
@@ -88,13 +71,13 @@ class _OtpPageState extends ConsumerState<OtpPage> {
   }
 
   Future<void> _resend() async {
-    if (_remaining > 0) return;
-    final Result<OtpChallenge> result = await ref.read(riderSessionProvider.notifier).requestOtp(widget.mobile);
+    final Result<OtpChallenge>? result = await _resendController.run(() => ref.read(riderSessionProvider.notifier).requestOtp(widget.mobile));
+    if (result == null) return;
     if (!mounted) return;
     switch (result) {
       case Ok<OtpChallenge>(:final value):
         _requestId = value.otpRequestId;
-        _startTimer();
+        _resendController.start();
         setState(() => _error = null);
         AppSnack.info(context, 'A new code was sent to +91 ${widget.mobile}');
       case Err<OtpChallenge>(:final failure):
@@ -146,9 +129,9 @@ class _OtpPageState extends ConsumerState<OtpPage> {
           child: switch (_stage) {
             _Stage.entering => Center(
               key: const ValueKey('idle'),
-              child: _remaining > 0
+              child: _resendController.remaining > 0
                   ? Text(
-                      context.l10n.authResendCodeIn('0:${_remaining.toString().padLeft(2, '0')}'),
+                      context.l10n.authResendCodeIn('0:${_resendController.remaining.toString().padLeft(2, '0')}'),
                       style: AppText.bodySmall,
                     )
                   : GhostButton(label: context.l10n.authResendCode, icon: Icons.refresh_rounded, onPressed: _resend),

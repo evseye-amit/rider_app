@@ -9,3 +9,5 @@ const Set<String> authErrorCodes = <String>{
   'SESSION_UNAVAILABLE',
   'SESSION_REVOKED',
 };
+const Set<String> otpAuthErrorCodes = <String>{'OTP_INVALID_REQUEST', 'OTP_INVALID', 'OTP_EXPIRED', 'OTP_ALREADY_USED'};
+const Set<String> sessionAuthErrorCodes = <String>{'REFRESH_TOKEN_EXPIRED', 'REFRESH_TOKEN_INVALID', 'SESSION_UNAVAILABLE', 'SESSION_REVOKED'};

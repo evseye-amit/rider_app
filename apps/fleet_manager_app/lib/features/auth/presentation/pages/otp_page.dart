@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,10 +17,7 @@ class OtpPage extends ConsumerStatefulWidget {
 }
 
 class _OtpPageState extends ConsumerState<OtpPage> {
-  static const int _resendSeconds = 30;
-
-  Timer? _ticker;
-  int _secondsLeft = _resendSeconds;
+  late final OtpResendController _resendController;
   bool _verifying = false;
   bool _hasError = false;
   String? _error;
@@ -32,28 +27,15 @@ class _OtpPageState extends ConsumerState<OtpPage> {
   @override
   void initState() {
     super.initState();
-    _startTicker();
+    _resendController = OtpResendController()..addListener(_onResendChanged)..start();
   }
 
   @override
   void dispose() {
-    _ticker?.cancel();
+    _resendController.dispose();
     super.dispose();
   }
-
-  void _startTicker() {
-    _secondsLeft = _resendSeconds;
-    _ticker?.cancel();
-    _ticker = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (!mounted) return;
-      if (_secondsLeft <= 1) {
-        setState(() => _secondsLeft = 0);
-        timer.cancel();
-      } else {
-        setState(() => _secondsLeft -= 1);
-      }
-    });
-  }
+  void _onResendChanged() { if (mounted) setState(() {}); }
 
   Future<void> _verify(String code) async {
     if (_verifying) return;
@@ -90,13 +72,13 @@ class _OtpPageState extends ConsumerState<OtpPage> {
   }
 
   Future<void> _resend() async {
-    if (_secondsLeft > 0) return;
-    final Result<OtpChallenge> result = await ref.read(fleetSessionProvider.notifier).requestOtp(widget.mobile);
+    final Result<OtpChallenge>? result = await _resendController.run(() => ref.read(fleetSessionProvider.notifier).requestOtp(widget.mobile));
+    if (result == null) return;
     if (!mounted) return;
     switch (result) {
       case Ok<OtpChallenge>(:final value):
         _requestId = value.otpRequestId;
-        _startTicker();
+        _resendController.start();
         setState(() => _error = null);
         AppSnack.info(context, 'A new code has been sent to +91 ${widget.mobile}');
       case Err<OtpChallenge>(:final failure):
@@ -157,9 +139,9 @@ class _OtpPageState extends ConsumerState<OtpPage> {
               onPressed: () => Navigator.of(context).maybePop(),
             ),
             GhostButton(
-              label: _secondsLeft > 0 ? 'Resend in ${_secondsLeft}s' : 'Resend OTP',
+              label: _resendController.remaining > 0 ? 'Resend in ${_resendController.remaining}s' : 'Resend OTP',
               icon: Icons.refresh_rounded,
-              onPressed: _secondsLeft > 0 ? null : _resend,
+              onPressed: _resendController.canResend ? _resend : null,
             ),
           ],
         ),

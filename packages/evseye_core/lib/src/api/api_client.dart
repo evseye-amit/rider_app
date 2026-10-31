@@ -230,9 +230,9 @@ class ApiClient {
 }
 
 String? _messageForCode(String? code) => switch (code) {
-  'OTP_EXPIRED' when authErrorCodes.contains(code) => ActiveLocale.strings.errorSessionHasExpiredSignAgain,
-  'OTP_INVALID' || 'OTP_INVALID_REQUEST' || 'OTP_ALREADY_USED' => ActiveLocale.strings.authCodeDidNotVerifyPlease,
-  'REFRESH_TOKEN_EXPIRED' || 'REFRESH_TOKEN_INVALID' || 'SESSION_UNAVAILABLE' || 'SESSION_REVOKED' => ActiveLocale.strings.errorSessionHasExpiredSignAgain,
+  final value when value != null && otpAuthErrorCodes.contains(value) && value == 'OTP_EXPIRED' => ActiveLocale.strings.errorSessionHasExpiredSignAgain,
+  final value when value != null && otpAuthErrorCodes.contains(value) => ActiveLocale.strings.authCodeDidNotVerifyPlease,
+  final value when value != null && sessionAuthErrorCodes.contains(value) => ActiveLocale.strings.errorSessionHasExpiredSignAgain,
   'PENALTY_CATALOGUE_CHANGED' => ActiveLocale.strings.submissionPriceChanged,
   'EXCHANGE_DISABLED' => ActiveLocale.strings.exchangeErrorDisabled,
   'AGREEMENT_NOT_FOUND' => ActiveLocale.strings.exchangeErrorNoRental,

@@ -47,6 +47,7 @@ export 'src/dynamic_ui/registry/widget_registry.dart';
 export 'src/first_run/company.dart';
 export 'src/first_run/company_resolve_page.dart';
 export 'src/first_run/pre_login_resolution.dart';
+export 'src/auth/otp_resend_controller.dart';
 export 'src/first_run/consent.dart';
 export 'src/first_run/consent_page.dart';
 export 'src/first_run/first_run_step.dart';
