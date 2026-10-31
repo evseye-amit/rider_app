@@ -116,6 +116,10 @@ class PenaltyPriceDto {
     this.isSpare = false,
     this.evidenceRequired = true,
     this.version,
+    this.origin,
+    this.masterUpdateAvailable = false,
+    this.masterInactive = false,
+    this.allowedFindingTypes = const <String>[],
   });
 
   factory PenaltyPriceDto.fromJson(Map<String, dynamic> json) => PenaltyPriceDto(
@@ -128,7 +132,13 @@ class PenaltyPriceDto {
     currency: jsonTextOrNull(json['currency']) ?? 'INR',
     isSpare: jsonBool(json['isSpare']),
     evidenceRequired: json['evidenceRequired'] != false,
-    version: jsonIntOrNull(json['version']),
+    version: jsonIntOrNull(json['configurationVersion'] ?? json['version']),
+    origin: jsonTextOrNull(json['origin']),
+    masterUpdateAvailable: jsonBool(json['masterUpdateAvailable']),
+    masterInactive: jsonBool(json['masterInactive']),
+    allowedFindingTypes: (json['allowedFindingTypes'] is List ? json['allowedFindingTypes'] as List : const <dynamic>[])
+        .map((value) => value.toString())
+        .toList(growable: false),
   );
 
   final String id;
@@ -141,6 +151,12 @@ class PenaltyPriceDto {
   final bool isSpare;
   final bool evidenceRequired;
   final int? version;
+  final String? origin;
+  final bool masterUpdateAvailable;
+  final bool masterInactive;
+  final List<String> allowedFindingTypes;
+
+  int? get configurationVersion => version;
 }
 
 String newIdempotencyKey() {
