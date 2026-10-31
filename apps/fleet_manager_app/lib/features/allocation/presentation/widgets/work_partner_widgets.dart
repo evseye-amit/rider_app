@@ -16,7 +16,7 @@ String workPartnerCategoryLabel(AppL10n l10n, String? category) => switch (categ
   'ON_DEMAND_LOGISTICS' => l10n.workPartnerOnDemandLogistics,
   'PHARMACY_HEALTHCARE' => l10n.workPartnerPharmacy,
   'SPECIALTY_DELIVERY' => l10n.workPartnerSpecialtyDelivery,
-  final String value when value != null && value.isNotEmpty =>
+  final String value when value.isNotEmpty =>
     value
         .replaceAll('_', ' ')
         .toLowerCase()

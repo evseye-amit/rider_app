@@ -229,6 +229,8 @@ class ApiClient {
 }
 
 String? _messageForCode(String? code) => switch (code) {
+  'OTP_EXPIRED' => ActiveLocale.strings.errorSessionHasExpiredSignAgain,
+  'REFRESH_TOKEN_EXPIRED' || 'REFRESH_TOKEN_INVALID' || 'SESSION_UNAVAILABLE' || 'SESSION_REVOKED' => ActiveLocale.strings.errorSessionHasExpiredSignAgain,
   'PENALTY_CATALOGUE_CHANGED' => ActiveLocale.strings.submissionPriceChanged,
   'EXCHANGE_DISABLED' => ActiveLocale.strings.exchangeErrorDisabled,
   'AGREEMENT_NOT_FOUND' => ActiveLocale.strings.exchangeErrorNoRental,
