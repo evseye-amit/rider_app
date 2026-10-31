@@ -24,6 +24,12 @@ class CompanyApi {
 
   static const String _unknownWorkspace = 'Workspace unavailable.';
 
+  String _messageFor(String? serverCode, String message) {
+    if (serverCode == 'WORKSPACE_NOT_FOUND') return ActiveLocale.strings.companyNotFound;
+    if (serverCode != null && preLoginUnavailableCodes.contains(serverCode)) return ActiveLocale.strings.companyNotReady;
+    return message == _unknownWorkspace ? ActiveLocale.strings.companyNotFound : ActiveLocale.strings.companyNotReady;
+  }
+
   Future<Result<CompanyDto>> resolve({required String code, required LegalAudience audience}) async {
     final Result<CompanyDto> result = await _client.get<CompanyDto>(
       '/public/app/bootstrap',
@@ -38,17 +44,7 @@ class CompanyApi {
       ),
       Err<CompanyDto>(failure: NotFoundFailure(:final message, :final serverCode)) => Result.err(
         ValidationFailure(
-          switch (serverCode) {
-            'WORKSPACE_NOT_FOUND' => ActiveLocale.strings.companyNotFound,
-            'WORKSPACE_HOST_MISMATCH' => 'This workspace does not match the current hostname.',
-            'WORKSPACE_UNAVAILABLE' => ActiveLocale.strings.companyNotReady,
-            'WORKSPACE_PENDING_APPROVAL' => 'This workspace is pending approval.',
-            'WORKSPACE_SUSPENDED' => 'This workspace is suspended.',
-            'WORKSPACE_INACTIVE' => 'This workspace is inactive.',
-            'UNSUPPORTED_APP_ROLE' => 'This app is not available for your role.',
-            _ when serverCode != null && !preLoginErrorCodes.contains(serverCode) => message == _unknownWorkspace ? ActiveLocale.strings.companyNotFound : ActiveLocale.strings.companyNotReady,
-            _ => message == _unknownWorkspace ? ActiveLocale.strings.companyNotFound : ActiveLocale.strings.companyNotReady,
-          },
+          _messageFor(serverCode, message),
           serverCode: serverCode,
         ),
       ),

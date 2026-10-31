@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:evseye_core/evseye_core.dart';
 import 'package:evseye_core/src/api/pre_login_error_codes.g.dart';
 
 void main() {

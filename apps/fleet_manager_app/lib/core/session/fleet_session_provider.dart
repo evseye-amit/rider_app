@@ -15,7 +15,15 @@ class FleetSessionNotifier extends Notifier<FleetSession> {
   UiConfigService get _config => ref.read(uiConfigServiceProvider);
 
   @override
-  FleetSession build() => FleetSession();
+  FleetSession build() {
+    ref.read(apiClientProvider).onSessionExpired = handleSessionExpired;
+    return FleetSession();
+  }
+
+  void handleSessionExpired() {
+    unawaited(ref.read(pushRegistrationProvider).stop(unregister: false));
+    state = FleetSession(flags: state.flags);
+  }
 
   Future<void> bootstrap() async {
     final FeatureFlags flags = await _config.loadFeatureFlags();

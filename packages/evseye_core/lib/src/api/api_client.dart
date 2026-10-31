@@ -8,6 +8,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../l10n/l10n.dart';
 import '../utils/result.dart';
 import 'api_env.dart';
+import 'auth_error_codes.g.dart';
 import 'token_store.dart';
 
 class ApiClient {
@@ -229,7 +230,8 @@ class ApiClient {
 }
 
 String? _messageForCode(String? code) => switch (code) {
-  'OTP_EXPIRED' => ActiveLocale.strings.errorSessionHasExpiredSignAgain,
+  'OTP_EXPIRED' when authErrorCodes.contains(code) => ActiveLocale.strings.errorSessionHasExpiredSignAgain,
+  'OTP_INVALID' || 'OTP_INVALID_REQUEST' || 'OTP_ALREADY_USED' => ActiveLocale.strings.authCodeDidNotVerifyPlease,
   'REFRESH_TOKEN_EXPIRED' || 'REFRESH_TOKEN_INVALID' || 'SESSION_UNAVAILABLE' || 'SESSION_REVOKED' => ActiveLocale.strings.errorSessionHasExpiredSignAgain,
   'PENALTY_CATALOGUE_CHANGED' => ActiveLocale.strings.submissionPriceChanged,
   'EXCHANGE_DISABLED' => ActiveLocale.strings.exchangeErrorDisabled,

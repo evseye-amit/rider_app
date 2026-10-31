@@ -79,6 +79,11 @@ class _OtpPageState extends ConsumerState<OtpPage> {
           _hasError = true;
           _error = failure.message;
         });
+        if (failure.serverCode == 'OTP_EXPIRED') {
+          AppSnack.error(context, context.l10n.authCodeDidNotVerifyPlease);
+        } else if (failure.serverCode == 'OTP_RATE_LIMITED') {
+          AppSnack.error(context, context.l10n.commonTooManyAttemptsWaitMoment);
+        }
     }
   }
 

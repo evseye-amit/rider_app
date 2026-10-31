@@ -61,7 +61,7 @@ class _CompanyResolvePageState extends ConsumerState<CompanyResolvePage> {
         setState(() {
           _resolving = false;
           _error = failure.message;
-          _retryable = failure is NetworkFailure || failure is ServerFailure || failure is RateLimitFailure;
+          _retryable = ref.read(companyProvider.notifier).resolution.canRetry;
         });
     }
   }

@@ -1,0 +1,11 @@
+// GENERATED CONTRACT. Do not edit by hand.
+const Set<String> authErrorCodes = <String>{
+  'OTP_INVALID_REQUEST',
+  'OTP_INVALID',
+  'OTP_EXPIRED',
+  'OTP_ALREADY_USED',
+  'REFRESH_TOKEN_EXPIRED',
+  'REFRESH_TOKEN_INVALID',
+  'SESSION_UNAVAILABLE',
+  'SESSION_REVOKED',
+};
