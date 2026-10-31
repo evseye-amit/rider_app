@@ -15,7 +15,15 @@ class FleetSessionNotifier extends Notifier<FleetSession> {
   UiConfigService get _config => ref.read(uiConfigServiceProvider);
 
   @override
-  FleetSession build() => FleetSession();
+  FleetSession build() {
+    ref.read(apiClientProvider).onSessionExpired = handleSessionExpired;
+    return FleetSession();
+  }
+
+  void handleSessionExpired() {
+    unawaited(ref.read(pushRegistrationProvider).stop(unregister: false));
+    state = FleetSession(flags: state.flags);
+  }
 
   Future<void> bootstrap() async {
     final FeatureFlags flags = await _config.loadFeatureFlags();
@@ -38,6 +46,9 @@ class FleetSessionNotifier extends Notifier<FleetSession> {
       VerifyOtpParams(otpRequestId: otpRequestId, code: code),
     );
     if (result case Ok<AuthUser>(:final value)) {
+      if (!value.isFleetManager) {
+        return const Result.err(ForbiddenFailure('This application is not available for your role.', 'UNSUPPORTED_APP_ROLE'));
+      }
       await _openSession(value);
     }
     return result;

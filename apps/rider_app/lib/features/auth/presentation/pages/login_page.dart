@@ -58,7 +58,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       case Err<OtpChallenge>(:final failure):
         setState(() {
           _loading = false;
-          _error = failure.message;
+          _error = switch (authAccessReason(failure)) {
+            AuthAccessReason.pendingApproval => 'Your client account is pending approval.',
+            AuthAccessReason.suspendedClient => 'Your client account is suspended.',
+            AuthAccessReason.inactiveClient => 'Your client account is inactive.',
+            AuthAccessReason.inactiveUser => 'Your user account is inactive.',
+            AuthAccessReason.unsupportedAppRole => 'This app is not available for your role.',
+            null => failure.message,
+          };
         });
     }
   }

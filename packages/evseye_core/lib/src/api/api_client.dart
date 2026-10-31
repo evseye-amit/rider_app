@@ -8,6 +8,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../l10n/l10n.dart';
 import '../utils/result.dart';
 import 'api_env.dart';
+import 'auth_error_codes.g.dart';
 import 'token_store.dart';
 
 class ApiClient {
@@ -196,22 +197,24 @@ class ApiClient {
 
   Failure _failureFor(int status, dynamic body) {
     String? message;
+    String? serverCode;
     if (body is Map && body['error'] is Map) {
       final Map<dynamic, dynamic> error = body['error'] as Map;
       final String? code = error['code']?.toString();
+      serverCode = code;
       final String? raw = error['message']?.toString();
       final bool rawIsCode = raw != null && RegExp(r'^[A-Z][A-Z0-9_]+$').hasMatch(raw);
       final String? effective = code == 'HTTP_ERROR' && rawIsCode ? raw : code;
       message = _messageForCode(effective) ?? (rawIsCode || raw == 'Internal server error' ? null : raw);
     }
     return switch (status) {
-      400 || 422 => ValidationFailure(message ?? ActiveLocale.strings.errorDidNotLookRight),
-      401 => UnauthorizedFailure(message ?? ActiveLocale.strings.commonSignContinue),
+      400 || 422 => ValidationFailure(message ?? ActiveLocale.strings.errorDidNotLookRight, serverCode: serverCode),
+      401 => UnauthorizedFailure(message ?? ActiveLocale.strings.commonSignContinue, serverCode),
 
-      403 => ForbiddenFailure(message ?? ActiveLocale.strings.commonAccountCannotDo),
-      404 => NotFoundFailure(message ?? ActiveLocale.strings.commonNotFound),
-      429 => RateLimitFailure(message ?? ActiveLocale.strings.commonTooManyAttemptsWaitMoment),
-      _ => ServerFailure(message ?? ActiveLocale.strings.commonSomethingWentWrongPleaseTry, status),
+      403 => ForbiddenFailure(message ?? ActiveLocale.strings.commonAccountCannotDo, serverCode),
+      404 => NotFoundFailure(message ?? ActiveLocale.strings.commonNotFound, serverCode),
+      429 => RateLimitFailure(message ?? ActiveLocale.strings.commonTooManyAttemptsWaitMoment, serverCode),
+      _ => ServerFailure(message ?? ActiveLocale.strings.commonSomethingWentWrongPleaseTry, status, serverCode),
     };
   }
 
@@ -227,6 +230,9 @@ class ApiClient {
 }
 
 String? _messageForCode(String? code) => switch (code) {
+  final value when value != null && otpAuthErrorCodes.contains(value) && value == 'OTP_EXPIRED' => ActiveLocale.strings.errorSessionHasExpiredSignAgain,
+  final value when value != null && otpAuthErrorCodes.contains(value) => ActiveLocale.strings.authCodeDidNotVerifyPlease,
+  final value when value != null && sessionAuthErrorCodes.contains(value) => ActiveLocale.strings.errorSessionHasExpiredSignAgain,
   'PENALTY_CATALOGUE_CHANGED' => ActiveLocale.strings.submissionPriceChanged,
   'EXCHANGE_DISABLED' => ActiveLocale.strings.exchangeErrorDisabled,
   'AGREEMENT_NOT_FOUND' => ActiveLocale.strings.exchangeErrorNoRental,

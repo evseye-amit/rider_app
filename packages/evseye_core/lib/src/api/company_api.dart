@@ -3,6 +3,7 @@ import '../utils/result.dart';
 import 'api_client.dart';
 import 'json_fields.dart';
 import 'legal_api.dart';
+import 'pre_login_error_codes.g.dart';
 
 class CompanyDto {
   const CompanyDto({required this.code, required this.name});
@@ -23,6 +24,12 @@ class CompanyApi {
 
   static const String _unknownWorkspace = 'Workspace unavailable.';
 
+  String _messageFor(String? serverCode, String message) {
+    if (serverCode == 'WORKSPACE_NOT_FOUND') return ActiveLocale.strings.companyNotFound;
+    if (serverCode != null && preLoginUnavailableCodes.contains(serverCode)) return ActiveLocale.strings.companyNotReady;
+    return message == _unknownWorkspace ? ActiveLocale.strings.companyNotFound : ActiveLocale.strings.companyNotReady;
+  }
+
   Future<Result<CompanyDto>> resolve({required String code, required LegalAudience audience}) async {
     final Result<CompanyDto> result = await _client.get<CompanyDto>(
       '/public/app/bootstrap',
@@ -32,12 +39,13 @@ class CompanyApi {
     return switch (result) {
       Ok<CompanyDto>(:final value) when value.code.isNotEmpty => result,
       Ok<CompanyDto>() => Result.err(ValidationFailure(ActiveLocale.strings.companyNotFound)),
-      Err<CompanyDto>(failure: ValidationFailure()) => Result.err(
-        ValidationFailure(ActiveLocale.strings.companyNotFound),
+      Err<CompanyDto>(failure: ValidationFailure(:final serverCode)) => Result.err(
+        ValidationFailure(ActiveLocale.strings.companyNotFound, serverCode: serverCode),
       ),
-      Err<CompanyDto>(failure: NotFoundFailure(:final message)) => Result.err(
+      Err<CompanyDto>(failure: NotFoundFailure(:final message, :final serverCode)) => Result.err(
         ValidationFailure(
-          message == _unknownWorkspace ? ActiveLocale.strings.companyNotFound : ActiveLocale.strings.companyNotReady,
+          _messageFor(serverCode, message),
+          serverCode: serverCode,
         ),
       ),
       Err<CompanyDto>() => result,
