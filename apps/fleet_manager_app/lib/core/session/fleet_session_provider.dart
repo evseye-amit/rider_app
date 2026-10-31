@@ -38,6 +38,9 @@ class FleetSessionNotifier extends Notifier<FleetSession> {
       VerifyOtpParams(otpRequestId: otpRequestId, code: code),
     );
     if (result case Ok<AuthUser>(:final value)) {
+      if (!value.isFleetManager) {
+        return const Result.err(ForbiddenFailure('This application is not available for your role.', 'UNSUPPORTED_APP_ROLE'));
+      }
       await _openSession(value);
     }
     return result;

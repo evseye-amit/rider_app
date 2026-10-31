@@ -67,6 +67,7 @@ export 'src/utils/commercial_labels.dart';
 export 'src/utils/formatters.dart';
 export 'src/utils/plain_text.dart';
 export 'src/utils/result.dart';
+export 'src/utils/auth_access.dart';
 export 'src/utils/return_labels.dart';
 export 'src/utils/submission_labels.dart';
 export 'src/widgets/app_scaffold.dart';

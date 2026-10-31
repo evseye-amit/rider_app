@@ -32,12 +32,21 @@ class CompanyApi {
     return switch (result) {
       Ok<CompanyDto>(:final value) when value.code.isNotEmpty => result,
       Ok<CompanyDto>() => Result.err(ValidationFailure(ActiveLocale.strings.companyNotFound)),
-      Err<CompanyDto>(failure: ValidationFailure()) => Result.err(
-        ValidationFailure(ActiveLocale.strings.companyNotFound),
+      Err<CompanyDto>(failure: ValidationFailure(:final serverCode)) => Result.err(
+        ValidationFailure(ActiveLocale.strings.companyNotFound, serverCode: serverCode),
       ),
-      Err<CompanyDto>(failure: NotFoundFailure(:final message)) => Result.err(
+      Err<CompanyDto>(failure: NotFoundFailure(:final message, :final serverCode)) => Result.err(
         ValidationFailure(
-          message == _unknownWorkspace ? ActiveLocale.strings.companyNotFound : ActiveLocale.strings.companyNotReady,
+          switch (serverCode) {
+            'WORKSPACE_NOT_FOUND' => ActiveLocale.strings.companyNotFound,
+            'WORKSPACE_HOST_MISMATCH' => 'This workspace does not match the current hostname.',
+            'WORKSPACE_PENDING_APPROVAL' => 'This workspace is pending approval.',
+            'WORKSPACE_SUSPENDED' => 'This workspace is suspended.',
+            'WORKSPACE_INACTIVE' => 'This workspace is inactive.',
+            'UNSUPPORTED_APP_ROLE' => 'This app is not available for your role.',
+            _ => message == _unknownWorkspace ? ActiveLocale.strings.companyNotFound : ActiveLocale.strings.companyNotReady,
+          },
+          serverCode: serverCode,
         ),
       ),
       Err<CompanyDto>() => result,
