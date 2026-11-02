@@ -114,6 +114,8 @@ class OnboardingStepConfig {
     required this.enabled,
     required this.fields,
     this.description,
+    this.status = 'PENDING',
+    this.rejectionReason,
   });
 
   factory OnboardingStepConfig.fromJson(Map<String, dynamic> json) => OnboardingStepConfig(
@@ -121,6 +123,8 @@ class OnboardingStepConfig {
     stepCode: json['stepCode']?.toString() ?? '',
     stepName: json['stepName']?.toString() ?? '',
     description: json['description']?.toString(),
+    status: json['status']?.toString() ?? 'PENDING',
+    rejectionReason: (json['rejectionReason']?.toString().trim().isEmpty ?? true) ? null : json['rejectionReason']?.toString().trim(),
     sequence: (json['sequence'] as num?)?.toInt() ?? 0,
     enabled: json['enabled'] != false && json['active'] != false,
     fields: (json['fields'] as List<dynamic>? ?? const [])
@@ -133,6 +137,8 @@ class OnboardingStepConfig {
   final String stepCode;
   final String stepName;
   final String? description;
+  final String status;
+  final String? rejectionReason;
   final int sequence;
   final bool enabled;
   final List<OnboardingFieldConfig> fields;
@@ -140,6 +146,7 @@ class OnboardingStepConfig {
   Iterable<OnboardingFieldConfig> get inputs => fields.where((f) => f.isInput && !f.isUpload);
   Iterable<OnboardingFieldConfig> get uploads => fields.where((f) => f.isUpload);
   Iterable<OnboardingFieldConfig> get capabilities => fields.where((f) => f.isCapability);
+  bool get isRejected => status.toUpperCase() == 'REJECTED';
 }
 
 class OnboardingProgress {
@@ -221,6 +228,7 @@ class RiderOnboardingConfig {
     required this.progress,
     this.screen,
     this.documents = const [],
+    this.documentReviewStatus = 'NOT_STARTED',
   });
 
   factory RiderOnboardingConfig.fromJson(Map<String, dynamic> json) {
@@ -246,6 +254,7 @@ class RiderOnboardingConfig {
           .map((e) => OnboardingDocument.fromJson(Map<String, dynamic>.from(e as Map)))
           .where((d) => d.fieldCode.isNotEmpty)
           .toList(growable: false),
+      documentReviewStatus: review['status']?.toString() ?? 'NOT_STARTED',
     );
   }
 
@@ -257,6 +266,7 @@ class RiderOnboardingConfig {
 
   final String? screen;
   final List<OnboardingDocument> documents;
+  final String documentReviewStatus;
 
   bool get isComplete => progress.completed;
 
@@ -264,6 +274,13 @@ class RiderOnboardingConfig {
       documents.where((d) => d.fieldCode == field.uploadCode).firstOrNull;
 
   bool get needsResubmission => steps.any((s) => s.uploads.any((f) => document(f)?.isRejected ?? false));
+
+  String get reviewStatus {
+    if (steps.any((step) => step.isRejected || step.uploads.any((field) => document(field)?.isRejected ?? false))) return 'REJECTED';
+    if (steps.any((step) => step.status.toUpperCase() == 'PENDING' || step.uploads.any((field) => document(field)?.status == OnboardingDocumentStatus.pending))) return 'PENDING';
+    if (steps.isNotEmpty && steps.every((step) => step.status.toUpperCase() == 'APPROVED' || step.status.toUpperCase() == 'COMPLETED')) return 'APPROVED';
+    return 'NOT_STARTED';
+  }
 
   int get resumeIndex {
     final String? id = progress.currentStepId;

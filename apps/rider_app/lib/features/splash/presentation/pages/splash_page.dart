@@ -53,7 +53,28 @@ class _SplashPageState extends ConsumerState<SplashPage> with SingleTickerProvid
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: SplashArtwork.ground,
-      body: SplashArtwork(progress: _progress),
+      body: Stack(
+        children: [
+          SplashArtwork(progress: _progress),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SafeArea(
+              top: false,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 56),
+                child: Text(
+                  'Powered by EV Spares India Pvt Ltd',
+                  textAlign: TextAlign.center,
+                  style: AppText.bodySmall.copyWith(
+                    color: AppColors.textMuted,
+                    fontSize: 11,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

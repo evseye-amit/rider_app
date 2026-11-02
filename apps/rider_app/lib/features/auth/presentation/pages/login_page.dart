@@ -73,6 +73,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return AuthSheetScaffold(
+      bottomNavigationBar: ColoredBox(
+        color: AppColors.surface,
+        child: SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
+            child: Text(
+              'Powered by EV Spares India Pvt Ltd',
+              textAlign: TextAlign.center,
+              style: AppText.bodySmall.copyWith(
+                color: AppColors.textMuted,
+                fontSize: 11,
+              ),
+            ),
+          ),
+        ),
+      ),
       trailing: const LanguageChip(),
       art: BrandArt.banner,
       artSize: 210,
