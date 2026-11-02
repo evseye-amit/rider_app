@@ -6,4 +6,5 @@
          the window does not flash a different colour between the native
          splash and the first Flutter frame. -->
     <color name="evseye_page">#F4F6FA</color>
+    <color name="splash_background">#FFF5FA</color>
 </resources>

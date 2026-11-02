@@ -31,7 +31,6 @@ import '../../features/ride_returns/presentation/pages/request_return_page.dart'
 import '../../features/ride_returns/presentation/pages/return_detail_page.dart';
 import '../../features/ride_returns/presentation/pages/returns_page.dart';
 import '../../features/scooter/presentation/pages/scooter_page.dart';
-import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/support/presentation/pages/raise_ticket_page.dart';
 import '../../features/support/presentation/pages/support_page.dart';
 import '../../features/support/presentation/pages/ticket_thread_page.dart';
@@ -46,7 +45,6 @@ final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(de
 final GlobalKey<NavigatorState> _homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 
 const Set<String> _publicPaths = {
-  Routes.splash,
   Routes.company,
   Routes.language,
   Routes.consent,
@@ -67,17 +65,23 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: Routes.splash,
+    initialLocation: ref.read(riderSessionProvider).isSignedIn
+        ? ref.read(riderSessionProvider).homeRoute
+        : Routes.intro,
     refreshListenable: Listenable.merge([stage, firstRun]),
     redirect: (context, state) => _redirect(stage.value, firstRun.value, state.uri.path),
     routes: [
-      GoRoute(path: Routes.splash, name: 'splash', builder: (context, state) => const SplashPage()),
       GoRoute(path: Routes.intro, name: 'intro', builder: (context, state) => const IntroPage()),
       GoRoute(
         path: Routes.company,
         name: 'company',
-        builder: (context, state) =>
-            CompanyResolvePage(audience: LegalAudience.rider, onResolved: () => context.go(Routes.intro)),
+        builder: (context, state) => CompanyResolvePage(
+          audience: LegalAudience.rider,
+          onResolved: () {
+            final RiderSession session = ref.read(riderSessionProvider);
+            context.go(session.isSignedIn ? session.homeRoute : Routes.intro);
+          },
+        ),
       ),
       GoRoute(
         path: Routes.language,
@@ -252,6 +256,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 });
 
 String? _redirect(RiderStage stage, FirstRunStep? firstRun, String path) {
+  if (firstRun == FirstRunStep.company && path != Routes.company) return Routes.company;
   if (path == Routes.intro || path == Routes.login) return _firstRunRoute(firstRun);
   if (_publicPaths.contains(path)) return null;
   if (firstRun == FirstRunStep.consent) return Routes.consent;
