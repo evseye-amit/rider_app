@@ -8,6 +8,7 @@ import '../api/legal_api.dart';
 import '../flavor/flavor_config.dart';
 import '../providers/core_providers.dart';
 import '../utils/result.dart';
+import 'pre_login_resolution.dart';
 
 class ResolvedCompany extends Equatable {
   const ResolvedCompany({required this.code, this.name});
@@ -24,6 +25,12 @@ class CompanyNotifier extends Notifier<ResolvedCompany?> {
   static const String _nameKey = 'app.company.name';
 
   SharedPreferences get _preferences => ref.read(sharedPreferencesProvider);
+  String? _lastInput;
+  LegalAudience? _lastAudience;
+  bool _resolving = false;
+  PreLoginResolutionState _resolution = const PreLoginResolutionState();
+  PreLoginResolutionState get resolution => _resolution;
+  bool get isResolving => _resolving;
 
   @override
   ResolvedCompany? build() {
@@ -39,17 +46,36 @@ class CompanyNotifier extends Notifier<ResolvedCompany?> {
   }
 
   Future<Result<ResolvedCompany>> resolve(String input, LegalAudience audience) async {
+    _lastInput = input;
+    _lastAudience = audience;
+    _resolving = true;
+    _resolution = _resolution.resolving();
     final Result<CompanyDto> result = await ref
         .read(companyApiProvider)
         .resolve(code: input.trim().toLowerCase(), audience: audience);
-    if (result case Err<CompanyDto>(:final failure)) return Result.err(failure);
+    if (result case Err<CompanyDto>(:final failure)) {
+      _resolving = false;
+      _resolution = _resolution.error(failure);
+      return Result.err(failure);
+    }
     final CompanyDto company = (result as Ok<CompanyDto>).value;
     await _preferences.setString(_codeKey, company.code);
     await _preferences.setString(_nameKey, company.name);
     ApiEnv.companyCode = company.code;
     final ResolvedCompany resolved = ResolvedCompany(code: company.code, name: company.name);
     state = resolved;
+    _resolving = false;
+    _resolution = _resolution.success();
     return Result.ok(resolved);
+  }
+
+  Future<Result<ResolvedCompany>> retry() async {
+    final input = _lastInput;
+    final audience = _lastAudience;
+    if (input == null || audience == null) {
+      return Result.err(const ValidationFailure('Enter your company code to try again.'));
+    }
+    return resolve(input, audience);
   }
 }
 

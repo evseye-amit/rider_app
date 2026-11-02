@@ -88,6 +88,9 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
       VerifyOtpParams(otpRequestId: otpRequestId, code: code),
     );
     if (result case Ok<AuthUser>(:final value)) {
+      if (!value.isRider) {
+        return const Result.err(ForbiddenFailure('This application is not available for your role.', 'UNSUPPORTED_APP_ROLE'));
+      }
       state = state.copyWith(user: value);
       unawaited(ref.read(consentProvider.notifier).recordAcceptance(value.id));
       unawaited(_loadAttendance());

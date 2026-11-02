@@ -15,7 +15,9 @@ const int _maxItemPhotos = 20;
 const int _maxPhotoItems = 3;
 const int _maxQuantity = 20;
 
-bool _damageable(PenaltyPriceDto part) => part.isSpare || part.category == PenaltyCategory.damage;
+bool _damageable(PenaltyPriceDto part) => part.allowedFindingTypes.isNotEmpty
+    ? part.allowedFindingTypes.contains('DAMAGE') || part.allowedFindingTypes.contains('MISSING_ITEM')
+    : part.isSpare || part.category == PenaltyCategory.damage;
 
 class DamagedItemsCard extends ConsumerWidget {
   const DamagedItemsCard({required this.submission, super.key});
@@ -214,7 +216,11 @@ class _SparePartPickerState extends ConsumerState<SparePartPicker> {
               selected: widget.addedIds.contains(part.id),
               onTap: () => Navigator.of(context).pop(part),
               title: part.name,
-              subtitle: '${Fmt.money(part.amount, paise: true)} · ${part.code}',
+              subtitle: [
+                '${Fmt.money(part.amount, paise: true)} · ${part.code}',
+                if (part.masterInactive) 'Master inactive',
+                if (part.masterUpdateAvailable) 'Updated catalogue available',
+              ].join(' · '),
               trailing: part.evidenceRequired
                   ? const Icon(Icons.photo_camera_rounded, size: 18, color: AppColors.textMuted)
                   : null,

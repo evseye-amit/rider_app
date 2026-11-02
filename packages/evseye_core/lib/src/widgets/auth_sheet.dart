@@ -27,6 +27,7 @@ class AuthSheetScaffold extends StatelessWidget {
     this.bandColor = AppColors.ink,
     this.centerTitle = true,
     this.sheetRadius = 34,
+    this.bottomNavigationBar,
     super.key,
   });
 
@@ -54,6 +55,7 @@ class AuthSheetScaffold extends StatelessWidget {
   final Color bandColor;
   final bool centerTitle;
   final double sheetRadius;
+  final Widget? bottomNavigationBar;
 
   static const double _overlap = 30;
 
@@ -63,6 +65,7 @@ class AuthSheetScaffold extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.inkDeep,
+      bottomNavigationBar: bottomNavigationBar,
 
       resizeToAvoidBottomInset: true,
       body: LayoutBuilder(

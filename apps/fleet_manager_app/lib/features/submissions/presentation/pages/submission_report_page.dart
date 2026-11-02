@@ -103,6 +103,13 @@ class _SubmissionReportPageState extends ConsumerState<SubmissionReportPage> {
         AppSnack.success(context, context.l10n.submissionReportSaved);
         context.pop(true);
       case Err<void>(:final failure):
+        if (failure.serverCode == 'PENALTY_CATALOGUE_CHANGED') {
+          ref.read(damagedItemsProvider(submission.id).notifier).clear();
+          await ref.refresh(penaltyPricesProvider(submission.id).future).then<void>((_) {}, onError: (_) {});
+          ref.invalidate(submissionProvider(submission.id));
+          AppSnack.warning(context, context.l10n.submissionPriceChanged);
+          return;
+        }
         AppSnack.error(context, failure.message);
     }
   }

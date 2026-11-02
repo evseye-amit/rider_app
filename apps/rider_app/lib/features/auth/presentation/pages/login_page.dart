@@ -58,7 +58,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       case Err<OtpChallenge>(:final failure):
         setState(() {
           _loading = false;
-          _error = failure.message;
+          _error = switch (authAccessReason(failure)) {
+            AuthAccessReason.pendingApproval => 'Your client account is pending approval.',
+            AuthAccessReason.suspendedClient => 'Your client account is suspended.',
+            AuthAccessReason.inactiveClient => 'Your client account is inactive.',
+            AuthAccessReason.inactiveUser => 'Your user account is inactive.',
+            AuthAccessReason.unsupportedAppRole => 'This app is not available for your role.',
+            null => failure.message,
+          };
         });
     }
   }
@@ -66,6 +73,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return AuthSheetScaffold(
+      bottomNavigationBar: ColoredBox(
+        color: AppColors.surface,
+        child: SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
+            child: Text(
+              'Powered by EV Spares India Pvt Ltd',
+              textAlign: TextAlign.center,
+              style: AppText.bodySmall.copyWith(
+                color: AppColors.textMuted,
+                fontSize: 11,
+              ),
+            ),
+          ),
+        ),
+      ),
       trailing: const LanguageChip(),
       art: BrandArt.banner,
       artSize: 210,

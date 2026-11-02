@@ -14,12 +14,12 @@ class LanguagePicker extends StatefulWidget {
   final AppLocale selected;
 
   static Future<AppLocale?> show(BuildContext context, {required AppLocale selected}) {
-    final AppL10nLabels labels = AppL10nLabels(context);
-    return AppSheet.show<AppLocale>(
-      context,
-      title: labels.title,
-      subtitle: labels.subtitle,
-      child: LanguagePicker(selected: selected),
+    return showModalBottomSheet<AppLocale>(
+      context: context,
+      showDragHandle: false,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) => LanguagePicker(selected: selected),
     );
   }
 
@@ -32,26 +32,38 @@ class _LanguagePickerState extends State<LanguagePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        LanguageOptions(selected: _selected, onChanged: (option) => setState(() => _selected = option)),
-        const SizedBox(height: Insets.md),
-        PrimaryButton(
-          label: AppL10nLabels(context).save,
-          onPressed: () => Navigator.of(context).pop(_selected),
-        ),
-        const SizedBox(height: Insets.sm),
-      ],
+    final AppL10n labels = lookupAppL10n(_selected.locale);
+    return AppSheet(
+      title: labels.commonChooseLanguage,
+      subtitle: labels.commonAppWillChangeRightAway,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          LanguageOptions(selected: _selected, onChanged: (option) => setState(() => _selected = option)),
+          const SizedBox(height: Insets.md),
+          PrimaryButton(label: labels.commonSave, onPressed: () => Navigator.of(context).pop(_selected)),
+          const SizedBox(height: Insets.sm),
+        ],
+      ),
     );
   }
 }
 
 class LanguageOptions extends StatelessWidget {
-  const LanguageOptions({required this.selected, required this.onChanged, super.key});
+  const LanguageOptions({
+    required this.selected,
+    required this.onChanged,
+    this.options = AppLocale.values,
+    this.nativeNames = const {},
+    this.englishNames = const {},
+    super.key,
+  });
 
   final AppLocale selected;
   final ValueChanged<AppLocale> onChanged;
+  final List<AppLocale> options;
+  final Map<String, String> nativeNames;
+  final Map<String, String> englishNames;
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +71,16 @@ class LanguageOptions extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        for (final AppLocale option in AppLocale.values)
+        for (final AppLocale option in options)
           Padding(
             padding: const EdgeInsets.only(bottom: Insets.sm),
-            child: _LanguageTile(option: option, selected: option == selected, onTap: () => onChanged(option)),
+            child: _LanguageTile(
+              option: option,
+              selected: option == selected,
+              nativeName: nativeNames[option.code] ?? option.nativeName,
+              englishName: englishNames[option.code] ?? option.englishName,
+              onTap: () => onChanged(option),
+            ),
           ),
       ],
     );
@@ -81,10 +99,18 @@ class AppL10nLabels {
 }
 
 class _LanguageTile extends StatelessWidget {
-  const _LanguageTile({required this.option, required this.selected, required this.onTap});
+  const _LanguageTile({
+    required this.option,
+    required this.selected,
+    required this.nativeName,
+    required this.englishName,
+    required this.onTap,
+  });
 
   final AppLocale option;
   final bool selected;
+  final String nativeName;
+  final String englishName;
   final VoidCallback onTap;
 
   @override
@@ -98,10 +124,7 @@ class _LanguageTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected ? AppColors.primaryWash : AppColors.surface,
           borderRadius: Corners.brLg,
-          border: Border.all(
-            color: selected ? AppColors.primary : AppColors.stroke,
-            width: selected ? 1.6 : 1,
-          ),
+          border: Border.all(color: selected ? AppColors.primary : AppColors.stroke, width: selected ? 1.6 : 1),
         ),
         child: Row(
           children: [
@@ -109,11 +132,9 @@ class _LanguageTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(option.nativeName,
-                      style: AppText.titleMedium.copyWith(color: AppColors.textPrimary)),
+                  Text(nativeName, style: AppText.titleMedium.copyWith(color: AppColors.textPrimary)),
                   const SizedBox(height: 2),
-                  Text(option.englishName,
-                      style: AppText.bodySmall.copyWith(color: AppColors.textSecondary)),
+                  Text(englishName, style: AppText.bodySmall.copyWith(color: AppColors.textSecondary)),
                 ],
               ),
             ),

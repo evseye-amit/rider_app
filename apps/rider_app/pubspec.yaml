@@ -12,6 +12,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  flutter_native_splash: ^2.4.7
 
   evseye_core:
     path: ../../packages/evseye_core
@@ -43,7 +44,6 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
   flutter_launcher_icons: ^0.14.3
-  flutter_native_splash: ^2.4.7
   evseye_flavors:
     path: ../../packages/evseye_flavors
 
@@ -96,11 +96,14 @@ flutter_launcher_icons:
   adaptive_icon_foreground_inset: 20
 
 flutter_native_splash:
-  color: "#FFFFFF"
+  color: "#FFF5FA"
   image: assets/images/app_icon_foreground.png
+  branding: assets/images/splash_branding.png
+  branding_mode: bottom
   android_12:
-    color: "#FFFFFF"
-    icon_background_color: "#FFFFFF"
+    color: "#FFF5FA"
+    image: assets/images/app_icon_foreground_splash.png
+    branding: assets/images/splash_branding.png
   android: true
   ios: true
   web: false

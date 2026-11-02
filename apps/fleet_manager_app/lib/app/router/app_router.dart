@@ -21,7 +21,6 @@ import '../../features/hub/presentation/widgets/fleet_shell.dart';
 import '../../features/maintenance/presentation/pages/maintenance_page.dart';
 import '../../features/maintenance/presentation/pages/maintenance_vehicle_page.dart';
 import '../../features/riders/presentation/pages/team_page.dart';
-import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/submissions/presentation/pages/submission_confirm_page.dart';
 import '../../features/submissions/presentation/pages/submission_page.dart';
 import '../../features/submissions/presentation/pages/submission_report_page.dart';
@@ -32,21 +31,24 @@ import 'app_routes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 
-const Set<String> _publicPaths = {Routes.splash, Routes.company, Routes.language, Routes.login, Routes.otp};
+const Set<String> _publicPaths = {Routes.company, Routes.language, Routes.login, Routes.otp};
 
 final routerProvider = Provider<GoRouter>((ref) {
   final ValueNotifier<bool> signedIn = ValueNotifier<bool>(ref.read(fleetSessionProvider).isSignedIn);
   ref.onDispose(signedIn.dispose);
   ref.listen(fleetSessionProvider.select((s) => s.isSignedIn), (_, next) => signedIn.value = next);
+  final ValueNotifier<FirstRunStep?> firstRun = ValueNotifier<FirstRunStep?>(
+    ref.read(pendingFirstRunStepProvider(false)),
+  );
+  ref.onDispose(firstRun.dispose);
+  ref.listen(pendingFirstRunStepProvider(false), (_, next) => firstRun.value = next);
 
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: Routes.splash,
-    refreshListenable: signedIn,
-    redirect: (context, state) =>
-        _redirect(signedIn.value, ref.read(pendingFirstRunStepProvider(false)), state.uri.path),
+    initialLocation: signedIn.value ? Routes.home : Routes.login,
+    refreshListenable: Listenable.merge([signedIn, firstRun]),
+    redirect: (context, state) => _redirect(signedIn.value, firstRun.value, state.uri.path),
     routes: [
-      GoRoute(path: Routes.splash, name: 'splash', builder: (context, state) => const SplashPage()),
       GoRoute(
         path: Routes.company,
         name: 'company',
@@ -184,16 +186,17 @@ final routerProvider = Provider<GoRouter>((ref) {
 });
 
 String? _redirect(bool signedIn, FirstRunStep? firstRun, String path) {
-  if (path == Routes.login) {
-    return switch (firstRun) {
-      FirstRunStep.company => Routes.company,
-      FirstRunStep.language => Routes.language,
-      FirstRunStep.consent || null => null,
-    };
-  }
+  if (firstRun == FirstRunStep.company && path != Routes.company) return Routes.company;
+  if (path == Routes.login) return _firstRunRoute(firstRun);
   if (_publicPaths.contains(path)) return null;
   return signedIn ? null : Routes.login;
 }
+
+String? _firstRunRoute(FirstRunStep? step) => switch (step) {
+  FirstRunStep.company => Routes.company,
+  FirstRunStep.language => Routes.language,
+  FirstRunStep.consent || null => null,
+};
 
 class _RouteErrorPage extends StatelessWidget {
   const _RouteErrorPage({required this.location});

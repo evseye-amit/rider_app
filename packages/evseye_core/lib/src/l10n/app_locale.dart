@@ -4,9 +4,18 @@ import 'generated/app_localizations.dart';
 
 enum AppLocale {
   english('en', 'English', 'English'),
+  assamese('as', 'অসমীয়া', 'Assamese'),
+  bengali('bn', 'বাংলা', 'Bengali'),
+  gujarati('gu', 'ગુજરાતી', 'Gujarati'),
   hindi('hi', 'हिन्दी', 'Hindi'),
   kannada('kn', 'ಕನ್ನಡ', 'Kannada'),
-  telugu('te', 'తెలుగు', 'Telugu');
+  malayalam('ml', 'മലയാളം', 'Malayalam'),
+  marathi('mr', 'मराठी', 'Marathi'),
+  odia('or', 'ଓଡ଼ିଆ', 'Odia'),
+  punjabi('pa', 'ਪੰਜਾਬੀ', 'Punjabi'),
+  tamil('ta', 'தமிழ்', 'Tamil'),
+  telugu('te', 'తెలుగు', 'Telugu'),
+  urdu('ur', 'اردو', 'Urdu');
 
   const AppLocale(this.code, this.nativeName, this.englishName);
 

@@ -29,6 +29,7 @@ class _CompanyResolvePageState extends ConsumerState<CompanyResolvePage> {
   final TextEditingController _code = TextEditingController();
   bool _resolving = false;
   String? _error;
+  bool _retryable = false;
 
   @override
   void dispose() {
@@ -40,13 +41,14 @@ class _CompanyResolvePageState extends ConsumerState<CompanyResolvePage> {
     if (_resolving) return;
     final String code = _code.text.trim();
     if (code.isEmpty) {
-      setState(() => _error = context.l10n.companyCodeRequired);
+      setState(() { _error = context.l10n.companyCodeRequired; _retryable = false; });
       return;
     }
     FocusManager.instance.primaryFocus?.unfocus();
     setState(() {
       _resolving = true;
       _error = null;
+      _retryable = false;
     });
     final Result<ResolvedCompany> result = await ref.read(companyProvider.notifier).resolve(code, widget.audience);
     if (!mounted) return;
@@ -59,6 +61,7 @@ class _CompanyResolvePageState extends ConsumerState<CompanyResolvePage> {
         setState(() {
           _resolving = false;
           _error = failure.message;
+          _retryable = ref.read(companyProvider.notifier).resolution.canRetry;
         });
     }
   }
@@ -84,10 +87,21 @@ class _CompanyResolvePageState extends ConsumerState<CompanyResolvePage> {
               enabled: !_resolving,
               inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9-]')), _LowerCase()],
               onChanged: (_) {
-                if (_error != null) setState(() => _error = null);
+                if (_error != null) setState(() { _error = null; _retryable = false; });
               },
               onSubmitted: (_) => _resolve(),
             ),
+            if (_error != null && _retryable) ...[
+              const SizedBox(height: Insets.sm),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                  onPressed: _resolving ? null : _resolve,
+                  icon: const Icon(Icons.refresh_rounded),
+                  label: Text(context.l10n.commonTryAgain),
+                ),
+              ),
+            ],
             const SizedBox(height: Insets.lg),
             Container(
               padding: const EdgeInsets.all(Insets.md),

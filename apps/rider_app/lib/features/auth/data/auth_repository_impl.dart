@@ -16,7 +16,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Result<AuthUser>> verifyOtp({required String otpRequestId, required String code}) =>
-      _auth.verifyOtp(otpRequestId: otpRequestId, code: code);
+      _auth.verifyOtp(otpRequestId: otpRequestId, code: code, appCode: 'RIDER_APP');
 
   @override
   Future<Result<AuthUser>> currentUser() => _auth.me();

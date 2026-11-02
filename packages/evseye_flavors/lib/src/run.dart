@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:args/args.dart';
+import 'package:image/image.dart' as img;
 import 'package:path/path.dart' as p;
 
 import 'flavor.dart';
@@ -126,6 +127,18 @@ void _applyApp(Workspace workspace, Flavor flavor, AppTarget app) {
   for (final String icon in iconImages) {
     _copy(flavor.file(app.key, icon), p.join(workspace.imagesDir(app), icon));
   }
+  final String foreground = p.join(workspace.imagesDir(app), 'app_icon_foreground.png');
+  final img.Image? source = img.decodePng(File(foreground).readAsBytesSync());
+  if (source == null) throw const FormatException('Rider foreground icon must be a PNG image.');
+  final img.Image padded = img.Image(width: 1152, height: 1152, numChannels: 4);
+  img.fill(padded, color: img.ColorRgba8(0, 0, 0, 0));
+  img.compositeImage(
+    padded,
+    img.copyResize(source, width: 600, height: 600, interpolation: img.Interpolation.linear),
+    dstX: 276,
+    dstY: 276,
+  );
+  _writeBytes(p.join(workspace.imagesDir(app), 'app_icon_foreground_splash.png'), img.encodePng(padded));
   _write(workspace.stringsFile(app), androidStringsSource(config.appName));
   _write(workspace.androidFlavorFile(app), androidFlavorSource(config, apkName: _apkName(flavor, app)));
   _write(workspace.iosFlavorFile(app), iosFlavorSource(config));

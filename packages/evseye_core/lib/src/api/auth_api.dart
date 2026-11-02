@@ -65,11 +65,16 @@ class AuthApi {
   Future<Result<AuthUser>> verifyOtp({
     required String otpRequestId,
     required String code,
+    String? appCode,
   }) async {
     final Result<Map<String, dynamic>> tokens = await _client.post<Map<String, dynamic>>(
       '/auth/otp/verify',
       skipAuth: true,
-      body: {'otpRequestId': otpRequestId, 'code': code},
+      body: {
+        'otpRequestId': otpRequestId,
+        'code': code,
+        'appCode': ?appCode,
+      },
       parse: (data) => Map<String, dynamic>.from(data as Map),
     );
 

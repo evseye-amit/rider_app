@@ -14,6 +14,7 @@ flavors/<client>/           branding for each client
 
 ```bash
 dart pub global activate melos
+export PATH="$PATH":"$HOME/.pub-cache/bin"
 melos bootstrap
 melos run flavor pinkrides
 ```

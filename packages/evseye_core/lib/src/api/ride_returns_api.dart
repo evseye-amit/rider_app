@@ -50,10 +50,17 @@ class RideReturnDto {
     this.reasonText,
     this.cancelledAt,
     this.submission,
+    this.inspectionStatus,
+    this.penaltyStatus,
+    this.paymentStatus,
   });
 
   factory RideReturnDto.fromJson(Map<String, dynamic> json) {
     final DateTime createdAt = jsonDateOr(json['createdAt'], DateTime.now());
+    final Map<String, dynamic> allocation = jsonMap(json['allocation']);
+    final Object? inspectionsRaw = allocation['inspections'];
+    final List<dynamic> inspections = inspectionsRaw is List ? inspectionsRaw : const <dynamic>[];
+    final Map<String, dynamic> latestInspection = inspections.isNotEmpty && inspections.last is Map ? Map<String, dynamic>.from(inspections.last as Map) : const <String, dynamic>{};
     return RideReturnDto(
       id: jsonText(json['id']),
       riderId: jsonText(json['riderId']),
@@ -71,6 +78,9 @@ class RideReturnDto {
       reasonText: jsonTextOrNull(json['reasonText']),
       cancelledAt: jsonDate(json['cancelledAt']),
       submission: SubmissionSummaryDto.maybe(json['vehicleSubmission']),
+      inspectionStatus: jsonTextOrNull(latestInspection['status']),
+      penaltyStatus: jsonTextOrNull(jsonMap(json['returnPenaltyCase'])['status']),
+      paymentStatus: jsonTextOrNull(jsonMap(json['returnPenaltyCase'])['paymentStatus']),
     );
   }
 
@@ -90,6 +100,11 @@ class RideReturnDto {
   final String? reasonText;
   final DateTime? cancelledAt;
   final SubmissionSummaryDto? submission;
+  final String? inspectionStatus;
+  final String? penaltyStatus;
+  final String? paymentStatus;
+
+  String get caseStatus => paymentStatus ?? penaltyStatus ?? inspectionStatus ?? status.wire;
 }
 
 class RideReturnPage {
@@ -116,6 +131,10 @@ class PenaltyPriceDto {
     this.isSpare = false,
     this.evidenceRequired = true,
     this.version,
+    this.origin,
+    this.masterUpdateAvailable = false,
+    this.masterInactive = false,
+    this.allowedFindingTypes = const <String>[],
   });
 
   factory PenaltyPriceDto.fromJson(Map<String, dynamic> json) => PenaltyPriceDto(
@@ -128,7 +147,13 @@ class PenaltyPriceDto {
     currency: jsonTextOrNull(json['currency']) ?? 'INR',
     isSpare: jsonBool(json['isSpare']),
     evidenceRequired: json['evidenceRequired'] != false,
-    version: jsonIntOrNull(json['version']),
+    version: jsonIntOrNull(json['configurationVersion'] ?? json['version']),
+    origin: jsonTextOrNull(json['origin']),
+    masterUpdateAvailable: jsonBool(json['masterUpdateAvailable']),
+    masterInactive: jsonBool(json['masterInactive']),
+    allowedFindingTypes: (json['allowedFindingTypes'] is List ? json['allowedFindingTypes'] as List : const <dynamic>[])
+        .map((value) => value.toString())
+        .toList(growable: false),
   );
 
   final String id;
@@ -141,6 +166,12 @@ class PenaltyPriceDto {
   final bool isSpare;
   final bool evidenceRequired;
   final int? version;
+  final String? origin;
+  final bool masterUpdateAvailable;
+  final bool masterInactive;
+  final List<String> allowedFindingTypes;
+
+  int? get configurationVersion => version;
 }
 
 String newIdempotencyKey() {

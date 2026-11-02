@@ -5,10 +5,19 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_as.dart';
+import 'app_localizations_bn.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_gu.dart';
 import 'app_localizations_hi.dart';
 import 'app_localizations_kn.dart';
+import 'app_localizations_ml.dart';
+import 'app_localizations_mr.dart';
+import 'app_localizations_or.dart';
+import 'app_localizations_pa.dart';
+import 'app_localizations_ta.dart';
 import 'app_localizations_te.dart';
+import 'app_localizations_ur.dart';
 
 // ignore_for_file: type=lint
 
@@ -92,7 +101,21 @@ abstract class AppL10n {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('hi'), Locale('kn'), Locale('te')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('as'),
+    Locale('bn'),
+    Locale('en'),
+    Locale('gu'),
+    Locale('hi'),
+    Locale('kn'),
+    Locale('ml'),
+    Locale('mr'),
+    Locale('or'),
+    Locale('pa'),
+    Locale('ta'),
+    Locale('te'),
+    Locale('ur'),
+  ];
 
   /// Add an item
   ///
@@ -10298,7 +10321,21 @@ class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'hi', 'kn', 'te'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'as',
+    'bn',
+    'en',
+    'gu',
+    'hi',
+    'kn',
+    'ml',
+    'mr',
+    'or',
+    'pa',
+    'ta',
+    'te',
+    'ur',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppL10nDelegate old) => false;
@@ -10307,14 +10344,32 @@ class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {
 AppL10n lookupAppL10n(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'as':
+      return AppL10nAs();
+    case 'bn':
+      return AppL10nBn();
     case 'en':
       return AppL10nEn();
+    case 'gu':
+      return AppL10nGu();
     case 'hi':
       return AppL10nHi();
     case 'kn':
       return AppL10nKn();
+    case 'ml':
+      return AppL10nMl();
+    case 'mr':
+      return AppL10nMr();
+    case 'or':
+      return AppL10nOr();
+    case 'pa':
+      return AppL10nPa();
+    case 'ta':
+      return AppL10nTa();
     case 'te':
       return AppL10nTe();
+    case 'ur':
+      return AppL10nUr();
   }
 
   throw FlutterError(

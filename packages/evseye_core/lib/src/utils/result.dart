@@ -46,9 +46,10 @@ final class Err<T> extends Result<T> {
 }
 
 sealed class Failure implements Exception {
-  const Failure([this._message]);
+  const Failure([this._message, this.serverCode]);
 
   final String? _message;
+  final String? serverCode;
 
   /// Message shown to the user, resolved in the active locale.
   String get message => _message ?? defaultMessage;
@@ -62,7 +63,7 @@ sealed class Failure implements Exception {
 }
 
 final class NetworkFailure extends Failure {
-  const NetworkFailure([super._message]);
+  const NetworkFailure([super._message, super.serverCode]);
 
   @override
   String get defaultMessage => ActiveLocale.strings.commonNoInternetConnection;
@@ -72,7 +73,7 @@ final class NetworkFailure extends Failure {
 }
 
 final class ServerFailure extends Failure {
-  const ServerFailure([super._message, this.status]);
+  const ServerFailure([super._message, this.status, super.serverCode]);
 
   @override
   String get defaultMessage => ActiveLocale.strings.commonSomethingWentWrongPleaseTry;
@@ -84,7 +85,7 @@ final class ServerFailure extends Failure {
 }
 
 final class AuthFailure extends Failure {
-  const AuthFailure([super._message]);
+  const AuthFailure([super._message, super.serverCode]);
 
   @override
   String get defaultMessage => ActiveLocale.strings.commonSessionHasExpiredPleaseSign;
@@ -94,7 +95,7 @@ final class AuthFailure extends Failure {
 }
 
 final class ValidationFailure extends Failure {
-  const ValidationFailure(super._message, {this.fieldErrors = const {}});
+  const ValidationFailure(String? message, {this.fieldErrors = const {}, String? serverCode}) : super(message, serverCode);
 
   @override
   String get defaultMessage => ActiveLocale.strings.hubSomethingWentWrong;
@@ -106,7 +107,7 @@ final class ValidationFailure extends Failure {
 }
 
 final class CacheFailure extends Failure {
-  const CacheFailure([super._message]);
+  const CacheFailure([super._message, super.serverCode]);
 
   @override
   String get defaultMessage => ActiveLocale.strings.commonCouldNotReadLocalData;
@@ -116,7 +117,7 @@ final class CacheFailure extends Failure {
 }
 
 final class NotFoundFailure extends Failure {
-  const NotFoundFailure([super._message]);
+  const NotFoundFailure([super._message, super.serverCode]);
 
   @override
   String get defaultMessage => ActiveLocale.strings.commonNotFound;
@@ -126,7 +127,7 @@ final class NotFoundFailure extends Failure {
 }
 
 final class ForbiddenFailure extends Failure {
-  const ForbiddenFailure([super._message]);
+  const ForbiddenFailure([super._message, super.serverCode]);
 
   @override
   String get defaultMessage => ActiveLocale.strings.commonAccountCannotDo;
@@ -136,7 +137,7 @@ final class ForbiddenFailure extends Failure {
 }
 
 final class UnauthorizedFailure extends Failure {
-  const UnauthorizedFailure([super._message]);
+  const UnauthorizedFailure([super._message, super.serverCode]);
 
   @override
   String get defaultMessage => ActiveLocale.strings.commonSignContinue;
@@ -146,7 +147,7 @@ final class UnauthorizedFailure extends Failure {
 }
 
 final class RateLimitFailure extends Failure {
-  const RateLimitFailure([super._message]);
+  const RateLimitFailure([super._message, super.serverCode]);
 
   @override
   String get defaultMessage => ActiveLocale.strings.commonTooManyAttemptsWaitMoment;

@@ -472,6 +472,14 @@ class WorkPartnerOption {
   final String? category;
 }
 
+/// Parses the active Work Partner API contract while preserving unknown
+/// categories for forward compatibility.
+List<WorkPartnerOption> workPartnerOptionsFromJson(Object? data) => (data is List ? data : const <dynamic>[])
+    .whereType<Map>()
+    .map((entry) => WorkPartnerOption.fromJson(Map<String, dynamic>.from(entry)))
+    .where((partner) => partner.id.isNotEmpty && partner.name.isNotEmpty)
+    .toList(growable: false);
+
 class TeamLeadOption {
   const TeamLeadOption({
     required this.id,
@@ -896,10 +904,7 @@ class DeploymentApi {
 
   Future<Result<List<WorkPartnerOption>>> workPartners() => _client.get<List<WorkPartnerOption>>(
         '/client/work-partners/active',
-        parse: (data) => (data as List<dynamic>)
-            .whereType<Map>()
-            .map((e) => WorkPartnerOption.fromJson(Map<String, dynamic>.from(e)))
-            .toList(growable: false),
+        parse: workPartnerOptionsFromJson,
       );
 
   Future<Result<DeploymentWorkflow>> submitPdi(
