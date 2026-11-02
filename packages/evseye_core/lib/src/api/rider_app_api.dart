@@ -38,7 +38,7 @@ class OnboardingFieldConfig {
       fieldName: name,
       label: pick('label')?.toString() ?? name,
       description: json['description']?.toString(),
-      placeholder: pick('placeholder')?.toString(),
+      placeholder: configuration['placeholder']?.toString(),
       fieldType: fieldType,
       dataType: pick('dataType')?.toString(),
       required: pick('required') == true,

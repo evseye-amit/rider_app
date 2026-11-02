@@ -380,46 +380,49 @@ class OtpInput extends StatelessWidget {
         final double cell =
             ((available - _gap * (length - 1)) / length).clamp(34.0, _maxCell);
 
-        return Pinput(
-          length: length,
-          autofocus: autofocus,
-          closeKeyboardWhenCompleted: true,
-          keyboardType: TextInputType.number,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          autofillHints: const [AutofillHints.oneTimeCode],
-          hapticFeedbackType: HapticFeedbackType.lightImpact,
-          mainAxisAlignment: MainAxisAlignment.center,
-          defaultPinTheme: _cell(
-            cell,
-            border: hasError ? AppColors.danger : AppColors.stroke,
-          ),
-          focusedPinTheme: _cell(
-            cell,
-            border: hasError ? AppColors.danger : AppColors.primary,
-            width: 1.4,
-          ),
-          submittedPinTheme: _cell(
-            cell,
-            fill: AppColors.primaryWash,
-            border: hasError ? AppColors.danger : AppColors.strokeStrong,
-            width: 1.4,
-          ),
-          errorPinTheme: _cell(
-            cell,
-            fill: AppColors.dangerWash,
-            border: AppColors.danger,
-            width: 1.4,
-          ),
-          forceErrorState: hasError,
-          separatorBuilder: (_) => const SizedBox(width: _gap),
-          onChanged: onChanged,
-          onCompleted: onCompleted,
-          cursor: Container(
-            width: 2,
-            height: cell * 0.46,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(1),
+        return Material(
+          type: MaterialType.transparency,
+          child: Pinput(
+            length: length,
+            autofocus: autofocus,
+            closeKeyboardWhenCompleted: true,
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            autofillHints: const [AutofillHints.oneTimeCode],
+            hapticFeedbackType: HapticFeedbackType.lightImpact,
+            mainAxisAlignment: MainAxisAlignment.center,
+            defaultPinTheme: _cell(
+              cell,
+              border: hasError ? AppColors.danger : AppColors.stroke,
+            ),
+            focusedPinTheme: _cell(
+              cell,
+              border: hasError ? AppColors.danger : AppColors.primary,
+              width: 1.4,
+            ),
+            submittedPinTheme: _cell(
+              cell,
+              fill: AppColors.primaryWash,
+              border: hasError ? AppColors.danger : AppColors.strokeStrong,
+              width: 1.4,
+            ),
+            errorPinTheme: _cell(
+              cell,
+              fill: AppColors.dangerWash,
+              border: AppColors.danger,
+              width: 1.4,
+            ),
+            forceErrorState: hasError,
+            separatorBuilder: (_) => const SizedBox(width: _gap),
+            onChanged: onChanged,
+            onCompleted: onCompleted,
+            cursor: Container(
+              width: 2,
+              height: cell * 0.46,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                borderRadius: BorderRadius.circular(1),
+              ),
             ),
           ),
         );
