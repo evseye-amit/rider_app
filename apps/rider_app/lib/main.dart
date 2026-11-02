@@ -40,10 +40,12 @@ Future<void> main() async {
     ],
     retry: noProviderRetry,
   );
-  try {
-    await container.read(riderSessionProvider.notifier).bootstrap();
-  } catch (_) {
-    // A failed session restore falls through to the signed-out first-run flow.
+  if (container.read(companyProvider) != null) {
+    try {
+      await container.read(riderSessionProvider.notifier).bootstrap();
+    } catch (_) {
+      // A failed session restore falls through to the signed-out first-run flow.
+    }
   }
 
   runApp(UncontrolledProviderScope(container: container, child: const RiderApp()));

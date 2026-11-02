@@ -102,7 +102,7 @@ flutter_native_splash:
   branding_mode: bottom
   android_12:
     color: "#FFF5FA"
-    image: assets/images/app_icon_foreground.png
+    image: assets/images/app_icon_foreground_splash.png
     branding: assets/images/splash_branding.png
   android: true
   ios: true
