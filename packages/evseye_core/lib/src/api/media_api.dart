@@ -171,6 +171,7 @@ class MediaApi {
 
     return _client.post<RemotePhoto>(
       '/rider-app/onboarding/documents/$photoId/complete',
+      body: {'fieldCode': fieldCode},
       parse: (data) {
         final Map<String, dynamic> map = Map<String, dynamic>.from(data as Map);
         final Object? photo = map['photo'];
