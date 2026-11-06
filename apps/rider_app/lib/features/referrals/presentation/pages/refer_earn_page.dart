@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/referral/referral_qr_card.dart';
 import '../../domain/entities/referral_invite.dart';

@@ -1,6 +1,6 @@
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../domain/entities/rental.dart';
 import '../providers/rentals_overview_provider.dart';

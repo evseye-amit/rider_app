@@ -1,6 +1,6 @@
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/check_in/check_in_card.dart';
 import '../../domain/entities/ride_return.dart';

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/session/fleet_session_provider.dart';

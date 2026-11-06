@@ -1,6 +1,6 @@
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
   testWidgets('language sheet labels follow the selected language before saving', (tester) async {

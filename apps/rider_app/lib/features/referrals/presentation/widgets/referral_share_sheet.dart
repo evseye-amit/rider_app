@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/referral/referral_qr_card.dart';

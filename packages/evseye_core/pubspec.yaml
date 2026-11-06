@@ -4,29 +4,31 @@ version: 1.0.0
 publish_to: none
 
 environment:
-  sdk: ^3.10.0
-  flutter: ">=3.27.0"
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_riverpod: ^3.3.2
+  material_ui: ^1.10.0
+  cupertino_ui: ^1.1.6
+  flutter_riverpod: ^3.5.0
   equatable: ^3.0.0
-  intl: ^0.20.2
-  flutter_svg: ^2.0.17
+  intl: ^0.20.3
+  flutter_svg: ^2.3.2
 
   # networking
-  dio: ^5.7.0
+  dio: ^5.11.1
 
   # API logging
   pretty_dio_logger: ^1.4.0
 
   # Camera capture and gallery selection for document upload
-  image_picker: ^1.1.2
-  shared_preferences: ^2.5.3
-  pinput: ^6.0.2
+  image_picker: ^1.2.4
+  shared_preferences: ^2.5.6
+  pinput: ^7.0.0
   webview_flutter: ^4.14.1
   xml: ^7.0.1
 

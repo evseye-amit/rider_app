@@ -1,5 +1,5 @@
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ReferralQrCode extends StatelessWidget {

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'router/app_router.dart';
 import 'router/app_routes.dart';
@@ -65,7 +65,7 @@ class _FleetManagerAppState extends ConsumerState<FleetManagerApp> {
       routerConfig: ref.watch(routerProvider),
       locale: locale.locale,
       supportedLocales: AppL10n.supportedLocales,
-      localizationsDelegates: AppL10n.localizationsDelegates,
+      localizationsDelegates: const [AppL10n.delegate, ...GlobalMaterialLocalizations.delegates],
       builder: (context, child) => MediaQuery.withNoTextScaling(child: child ?? const SizedBox()),
     );
   }

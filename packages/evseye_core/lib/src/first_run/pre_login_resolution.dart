@@ -1,5 +1,5 @@
-import '../utils/result.dart';
 import '../api/pre_login_error_codes.g.dart';
+import '../utils/result.dart';
 
 enum PreLoginResolutionStatus { idle, resolving, resolved, offline, failed }
 

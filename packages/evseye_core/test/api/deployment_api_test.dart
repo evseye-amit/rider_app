@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:evseye_core/evseye_core.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('maps the active Work Partner API contract to WorkPartnerOption', () {

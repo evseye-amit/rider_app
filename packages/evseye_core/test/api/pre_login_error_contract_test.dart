@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:evseye_core/src/api/pre_login_error_codes.g.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('generated pre-login catalog contains every API error code', () {

@@ -1,6 +1,6 @@
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../../deployment_dependencies.dart';
 import '../../domain/usecases/accept_plan.dart';

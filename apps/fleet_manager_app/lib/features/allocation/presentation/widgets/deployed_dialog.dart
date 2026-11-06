@@ -2,8 +2,8 @@ import 'dart:math' as math;
 import 'dart:ui' show PathMetric;
 
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DeployedDialog extends StatefulWidget {
   const DeployedDialog({required this.riderName, required this.vehicleNumber, super.key});

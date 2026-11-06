@@ -1,5 +1,5 @@
 import 'package:evseye_core/evseye_core.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class PlanSummary extends StatelessWidget {
   const PlanSummary({required this.breakdown, this.paid = false, super.key});

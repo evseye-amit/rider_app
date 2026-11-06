@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../location/geo_point.dart';
 import 'directions.dart';

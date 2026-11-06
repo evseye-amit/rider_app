@@ -1,5 +1,5 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:evseye_core/src/api/ride_returns_api.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('retains spare catalogue provenance and finding constraints', () {
