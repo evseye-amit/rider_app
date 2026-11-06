@@ -131,7 +131,13 @@ class MediaApi {
     final String uploadUrl = payload['uploadUrl'] as String;
     final String photoId = photoJson['id'] as String;
 
-    final Result<bool> sent = await _putObject(uploadUrl, bytes, mimeType, onProgress);
+    final Result<bool> sent = await _putObject(
+      uploadUrl,
+      bytes,
+      mimeType,
+      onProgress,
+      alwaysSendContentType: true,
+    );
     if (sent case Err<bool>(:final failure)) return Result.err(failure);
 
     return _client.post<RemotePhoto>(
@@ -166,7 +172,13 @@ class MediaApi {
     final String uploadUrl = payload['uploadUrl'] as String;
     final String photoId = photoJson['id'] as String;
 
-    final Result<bool> sent = await _putObject(uploadUrl, bytes, mimeType, onProgress);
+    final Result<bool> sent = await _putObject(
+      uploadUrl,
+      bytes,
+      mimeType,
+      onProgress,
+      alwaysSendContentType: true,
+    );
     if (sent case Err<bool>(:final failure)) return Result.err(failure);
 
     return _client.post<RemotePhoto>(
