@@ -11,7 +11,7 @@ List<(SubmissionPhotoDto, String)> labelledSubmissionPhotos(AppL10n l10n, Vehicl
     for (final SubmissionPhotoDto photo in submission.photos)
       (
         photo,
-        photo.photoType.startsWith(damagePhotoPrefix)
+        photo.photoType == damagePhotoType
             ? '${l10n.submissionPhotoDamage} ${++damage}'
             : submissionPhotoLabel(l10n, photo.photoType, submission.assets),
       ),

@@ -5,7 +5,7 @@ const List<String> vehicleSidePhotoTypes = ['VEHICLE_FRONT', 'VEHICLE_REAR', 'VE
 
 const String returnChecklistPhotoType = 'RETURN_CHECKLIST';
 
-const String damagePhotoPrefix = 'DAMAGE_';
+const String damagePhotoType = 'DAMAGE';
 
 String submissionPhotoLabel(AppL10n l10n, String photoType, [SubmissionAssets assets = const SubmissionAssets()]) {
   switch (photoType) {
@@ -36,7 +36,7 @@ String submissionPhotoLabel(AppL10n l10n, String photoType, [SubmissionAssets as
     return number == null ? l10n.submissionPhotoControllerGeneric : l10n.submissionPhotoController(number);
   }
   if (photoType.startsWith('IOT_')) return l10n.submissionPhotoIot;
-  if (photoType.startsWith(damagePhotoPrefix)) return l10n.submissionPhotoDamage;
+  if (photoType == damagePhotoType) return l10n.submissionPhotoDamage;
   final String spaced = photoType.replaceAll('_', ' ').toLowerCase().trim();
   return spaced.isEmpty ? photoType : '${spaced[0].toUpperCase()}${spaced.substring(1)}';
 }
