@@ -19,6 +19,7 @@ abstract final class OnboardingFlowBuilder {
 
   static const Map<String, String> bankFieldCodes = {
     'BANK_ACCOUNT_NUMBER': bankAccountKey,
+    'REPEAT_BANK_ACCOUNT_NUMBER': '${bankAccountKey}__confirm',
     'IFSC_CODE': bankIfscKey,
     'BANK_NAME': bankNameKey,
     'BANK_BRANCH': bankBranchKey,
