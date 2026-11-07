@@ -288,7 +288,7 @@ class _DamagedItemSheetState extends ConsumerState<DamagedItemSheet> {
     final Result<RemotePhoto> result = await ref.read(uploadSubmissionPhotoProvider)(
       UploadSubmissionPhotoParams(
         inspectionId: widget.inspectionId,
-        photoType: '$damagePhotoPrefix${DateTime.now().millisecondsSinceEpoch}',
+        photoType: damagePhotoType,
         file: file,
       ),
     );

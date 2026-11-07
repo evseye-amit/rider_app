@@ -62,7 +62,7 @@ class _CheckInBody extends ConsumerWidget {
       children: [
         for (final SubmissionPhotoDto photo in submission.photos) ...[
           AppNavTile(
-            title: submissionPhotoLabel(context.l10n, photo.photoType, submission.assets),
+            title: submissionPhotoLabel(context.l10n, photo.photoType),
             subtitle: photo.uploadedAt == null ? null : Fmt.dateTime(photo.uploadedAt!),
             icon: Icons.photo_rounded,
             onTap: () async {

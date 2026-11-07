@@ -132,7 +132,7 @@ class AllocationRepositoryImpl implements AllocationRepository {
     required String photoType,
     required File file,
   }) => _media.upload(
-    entity: PhotoEntity.inspection,
+    workflow: PhotoWorkflow.allotment,
     entityId: inspectionId,
     photoType: photoType,
     file: file,

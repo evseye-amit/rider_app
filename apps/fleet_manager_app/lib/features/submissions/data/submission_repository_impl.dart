@@ -33,7 +33,7 @@ class SubmissionRepositoryImpl implements SubmissionRepository {
     required String photoType,
     required File file,
   }) => _media.upload(
-    entity: PhotoEntity.inspection,
+    workflow: PhotoWorkflow.submission,
     entityId: inspectionId,
     photoType: photoType,
     file: file,

@@ -72,7 +72,7 @@ class _SubmissionPageState extends ConsumerState<SubmissionPage> {
     if (!canRetake) return _view(submission, photoType);
     final bool? retake = await AppSheet.show<bool>(
       context,
-      title: submissionPhotoLabel(context.l10n, photoType, submission.assets),
+      title: submissionPhotoLabel(context.l10n, photoType),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -307,7 +307,7 @@ class _SubmissionPageState extends ConsumerState<SubmissionPage> {
             children: [
               for (final String type in submission.requiredPhotoTypes)
                 SubmissionPhotoTile(
-                  label: submissionPhotoLabel(context.l10n, type, submission.assets),
+                  label: submissionPhotoLabel(context.l10n, type),
                   captured: !missing.contains(type) || _local.containsKey(type),
                   file: _local[type],
                   uploading: _uploading.contains(type),

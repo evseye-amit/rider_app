@@ -6,14 +6,11 @@ import 'package:dio/dio.dart';
 import '../utils/result.dart';
 import 'api_client.dart';
 
-enum PhotoEntity {
-  rider('RIDER'),
-  fleet('FLEET'),
-  battery('BATTERY'),
-  controller('CONTROLLER'),
-  inspection('INSPECTION');
+enum PhotoWorkflow {
+  allotment('FLEET_ALLOTMENT'),
+  submission('FLEET_SUBMISSION');
 
-  const PhotoEntity(this.wire);
+  const PhotoWorkflow(this.wire);
 
   final String wire;
 }
@@ -21,7 +18,7 @@ enum PhotoEntity {
 class RemotePhoto {
   const RemotePhoto({
     required this.id,
-    required this.entityType,
+    required this.workFlowType,
     required this.entityId,
     required this.photoType,
     required this.status,
@@ -30,7 +27,7 @@ class RemotePhoto {
 
   factory RemotePhoto.fromJson(Map<String, dynamic> json) => RemotePhoto(
         id: json['id'] as String,
-        entityType: json['entityType']?.toString() ?? '',
+        workFlowType: json['workFlowType']?.toString() ?? '',
         entityId: json['entityId']?.toString() ?? '',
         photoType: json['photoType']?.toString() ?? '',
         status: json['status']?.toString() ?? 'PENDING_UPLOAD',
@@ -38,7 +35,7 @@ class RemotePhoto {
       );
 
   final String id;
-  final String entityType;
+  final String workFlowType;
   final String entityId;
   final String photoType;
 
@@ -80,6 +77,8 @@ class MediaApi {
 
   static const int maxReceiptBytes = 5 * 1024 * 1024;
 
+  static const String _fleetSubject = 'FLEET';
+
   static String imageMimeType(String path) {
     final String lower = path.toLowerCase();
     if (lower.endsWith('.png')) return 'image/png';
@@ -88,12 +87,12 @@ class MediaApi {
   }
 
   Future<Result<List<RemotePhoto>>> photos({
-    required PhotoEntity entity,
+    required PhotoWorkflow workflow,
     required String entityId,
   }) {
     return _client.get<List<RemotePhoto>>(
       '/media/photos',
-      query: {'entityType': entity.wire, 'entityId': entityId},
+      query: {'workFlowType': workflow.wire, 'subjectType': _fleetSubject, 'entityId': entityId},
       parse: (data) => (data as List<dynamic>)
           .map((e) => RemotePhoto.fromJson(Map<String, dynamic>.from(e as Map)))
           .toList(growable: false),
@@ -101,7 +100,7 @@ class MediaApi {
   }
 
   Future<Result<RemotePhoto>> upload({
-    required PhotoEntity entity,
+    required PhotoWorkflow workflow,
     required String entityId,
     required String photoType,
     required File file,
@@ -114,7 +113,8 @@ class MediaApi {
     final Result<Map<String, dynamic>> intent = await _client.post<Map<String, dynamic>>(
       '/media/upload-intents',
       body: {
-        'entityType': entity.wire,
+        'workFlowType': workflow.wire,
+        'subjectType': _fleetSubject,
         'entityId': entityId,
         'photoType': photoType,
         'mimeType': mimeType,
