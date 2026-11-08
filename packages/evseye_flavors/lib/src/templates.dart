@@ -89,6 +89,17 @@ String androidFlavorSource(AppFlavor app, {required String apkName}) =>
     'versionCode=${app.buildNumber}\n'
     'apkName=$apkName\n';
 
+String signingPropertiesSource({
+  required String storeFile,
+  required String storePassword,
+  required String keyAlias,
+  required String keyPassword,
+}) =>
+    'storeFile=$storeFile\n'
+    'storePassword=$storePassword\n'
+    'keyAlias=$keyAlias\n'
+    'keyPassword=$keyPassword\n';
+
 String iosFlavorSource(AppFlavor app) =>
     'FLAVOR_BUNDLE_ID=${app.iosBundleId}\n'
     'FLAVOR_APP_NAME=${app.appName}\n'

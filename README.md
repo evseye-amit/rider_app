@@ -91,7 +91,8 @@ flavors/<client>/
 ├── intro_1.png     first intro slide (the client logo)
 ├── intro_2.png     second intro slide
 ├── rider/          app_icon.png, app_icon_foreground.png (1024×1024)
-└── fleet/          the same two icons
+├── fleet/          the same two icons
+└── signing/        Android upload keystore and key.properties (not committed)
 ```
 
 The illustrations are recoloured to the client's `primary` colour automatically.
@@ -106,3 +107,25 @@ cp -R flavors/whizz flavors/acme
 ```
 
 Swap in the client's images, edit `flavor.yaml`, then run `dart run evseye_flavors --flavor acme`.
+Never copy another client's `signing/` folder. Each client signs with its own key.
+
+### Android release signing
+
+Each client has its own upload keystore in `flavors/<client>/signing/`, shared by
+its rider and fleet apps. Create one:
+
+```bash
+dart run evseye_flavors --flavor acme --create-keystore --org EvsEye
+```
+
+This writes `upload-keystore.jks` and `key.properties` (random passwords, alias
+`upload`). The name (CN) is the org unless you pass `--common-name`. Pass
+`--alias` and `--password` to choose the alias and password yourself. It never overwrites an existing keystore. To use a keystore you
+already have, put it in `signing/` with a `key.properties` that has
+`storeFile`, `storePassword`, `keyAlias` and `keyPassword`.
+
+Applying the flavor copies the keystore into both apps. Release builds are
+signed with it. A client without `signing/` falls back to the debug key.
+
+`signing/` is git-ignored. Back it up somewhere safe: Play only accepts updates
+signed with the same key.

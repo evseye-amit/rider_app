@@ -53,6 +53,22 @@ class IosFirebase {
   final String storageBucket;
 }
 
+const List<String> signingKeys = ['storeFile', 'storePassword', 'keyAlias', 'keyPassword'];
+
+class Signing {
+  const Signing({
+    required this.keystore,
+    required this.storePassword,
+    required this.keyAlias,
+    required this.keyPassword,
+  });
+
+  final String keystore;
+  final String storePassword;
+  final String keyAlias;
+  final String keyPassword;
+}
+
 class AppFlavor {
   const AppFlavor({
     required this.appName,
@@ -87,6 +103,7 @@ class Flavor {
     required this.razorpayName,
     required this.apps,
     required this.palette,
+    this.signing,
   });
 
   final String name;
@@ -97,6 +114,7 @@ class Flavor {
   final String razorpayName;
   final Map<String, AppFlavor> apps;
   final Map<String, int> palette;
+  final Signing? signing;
 
   AppFlavor app(AppTarget target) => apps[target.key]!;
 
@@ -220,6 +238,9 @@ class Flavor {
     }
     if (workspace.sharedArt.isEmpty) problems.add('No illustrations found in packages/evseye_flavors/art.');
 
+    final String signingDir = workspace.signingDir(name);
+    final Signing? signing = Directory(signingDir).existsSync() ? _signing(signingDir, name, problems) : null;
+
     if (problems.isNotEmpty) throw FlavorException(problems);
     return Flavor(
       name: name,
@@ -230,8 +251,47 @@ class Flavor {
       razorpayName: razorpayName,
       apps: apps,
       palette: palette,
+      signing: signing,
     );
   }
+}
+
+Map<String, String> readProperties(String source) => {
+  for (final String line in const LineSplitter().convert(source))
+    if (line.trim() case final String text when text.contains('=') && !text.startsWith('#') && !text.startsWith('!'))
+      text.substring(0, text.indexOf('=')).trim(): text.substring(text.indexOf('=') + 1).trim(),
+};
+
+Signing? _signing(String dir, String name, List<String> problems) {
+  final String where = 'flavors/$name/$signingDirName/$signingPropertiesName';
+  final File file = File(p.join(dir, signingPropertiesName));
+  if (!file.existsSync()) {
+    problems.add(
+      'Missing file: $where. Create a keystore with: '
+      'dart run evseye_flavors --flavor $name --create-keystore --org <organisation>',
+    );
+    return null;
+  }
+  final Map<String, String> values = readProperties(file.readAsStringSync());
+  final List<String> missing = [
+    for (final String key in signingKeys)
+      if ((values[key] ?? '').isEmpty) key,
+  ];
+  if (missing.isNotEmpty) {
+    problems.add('$where: ${missing.join(', ')} ${missing.length == 1 ? 'is' : 'are'} required.');
+    return null;
+  }
+  final String keystore = p.normalize(p.join(dir, values['storeFile']));
+  if (!File(keystore).existsSync()) {
+    problems.add('$where: storeFile "${values['storeFile']}" was not found in flavors/$name/$signingDirName.');
+    return null;
+  }
+  return Signing(
+    keystore: keystore,
+    storePassword: values['storePassword']!,
+    keyAlias: values['keyAlias']!,
+    keyPassword: values['keyPassword']!,
+  );
 }
 
 int? parseColour(String? value) {

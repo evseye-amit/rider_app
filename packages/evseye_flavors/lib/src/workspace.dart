@@ -23,6 +23,12 @@ const String androidFirebaseName = 'google-services.json';
 
 const String iosFirebaseName = 'GoogleService-Info.plist';
 
+const String signingDirName = 'signing';
+
+const String signingPropertiesName = 'key.properties';
+
+const String keystoreName = 'upload-keystore.jks';
+
 class Workspace {
   const Workspace(this.root);
 
@@ -51,7 +57,13 @@ class Workspace {
 
   String androidFlavorFile(AppTarget app) => p.join(appDir(app), 'android', 'flavor.properties');
 
+  String androidSigningFile(AppTarget app) => p.join(appDir(app), 'android', signingPropertiesName);
+
+  String androidKeystoreFile(AppTarget app) => p.join(appDir(app), 'android', 'app', keystoreName);
+
   String iosFlavorFile(AppTarget app) => p.join(appDir(app), 'ios', 'Flutter', 'Flavor.xcconfig');
+
+  String signingDir(String flavor) => p.join(flavorsDir, flavor, signingDirName);
 
   List<String> get flavorNames {
     final Directory dir = Directory(flavorsDir);

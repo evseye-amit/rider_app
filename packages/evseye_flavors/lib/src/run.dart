@@ -6,6 +6,7 @@ import 'package:image/image.dart' as img;
 import 'package:path/path.dart' as p;
 
 import 'flavor.dart';
+import 'keystore.dart';
 import 'recolour.dart';
 import 'templates.dart';
 import 'workspace.dart';
@@ -15,6 +16,16 @@ Future<int> run(List<String> args) async {
     ..addOption('flavor', abbr: 'f', help: 'Client folder under flavors/ to apply, e.g. whizz.')
     ..addOption('root', help: 'EVSEYE repository root. Found from the current folder when omitted.')
     ..addFlag('skip-icons', negatable: false, help: 'Copy files only; do not regenerate launcher icons and splash.')
+    ..addFlag(
+      'create-keystore',
+      negatable: false,
+      help: 'Create a new Android upload keystore in flavors/<name>/signing, then stop.',
+    )
+    ..addOption('org', help: 'Organisation name stored in the new keystore, e.g. EvsEye.')
+    ..addOption('common-name', help: 'Name (CN) stored in the new keystore. Defaults to --org.')
+    ..addOption('alias', defaultsTo: 'upload', help: 'Key alias for the new keystore.')
+    ..addOption('password', help: 'Store and key password for the new keystore. Random when omitted.')
+    ..addOption('country', defaultsTo: 'IN', help: 'Two-letter country code stored in the new keystore.')
     ..addFlag('help', abbr: 'h', negatable: false, help: 'Show this help.');
 
   final ArgResults options;
@@ -44,6 +55,18 @@ Future<int> run(List<String> args) async {
       ..writeln('Flavors: ${workspace.flavorNames.join(', ')}')
       ..writeln('Applied: ${workspace.appliedFlavor ?? 'none'}');
     return help ? 0 : 64;
+  }
+
+  if (options['create-keystore'] as bool) {
+    return createKeystore(
+      workspace,
+      name,
+      organisation: options['org'] as String? ?? '',
+      country: options['country'] as String,
+      commonName: options['common-name'] as String? ?? '',
+      alias: options['alias'] as String,
+      password: options['password'] as String? ?? '',
+    );
   }
 
   final Flavor flavor;
@@ -148,11 +171,35 @@ void _applyApp(Workspace workspace, Flavor flavor, AppTarget app) {
   } else if (File(androidFirebase).existsSync()) {
     File(androidFirebase).deleteSync();
   }
+  final Signing? signing = flavor.signing;
+  _applySigning(workspace, app, signing);
   stdout.writeln(
     '${app.folder}: "${config.appName}", Android ${config.androidApplicationId}, '
     'iOS ${config.iosBundleId}, version ${config.version}, '
     'push notifications: Android ${config.androidFirebase ? 'on' : 'off'}, '
-    'iOS ${config.iosFirebase == null ? 'off' : 'on'}',
+    'iOS ${config.iosFirebase == null ? 'off' : 'on'}, '
+    'Android release signing: ${signing == null ? 'debug key' : '${flavor.name} keystore'}',
+  );
+}
+
+void _applySigning(Workspace workspace, AppTarget app, Signing? signing) {
+  final String keystore = workspace.androidKeystoreFile(app);
+  final String properties = workspace.androidSigningFile(app);
+  if (signing == null) {
+    for (final String path in [keystore, properties]) {
+      if (File(path).existsSync()) File(path).deleteSync();
+    }
+    return;
+  }
+  _copy(signing.keystore, keystore);
+  _write(
+    properties,
+    signingPropertiesSource(
+      storeFile: keystoreName,
+      storePassword: signing.storePassword,
+      keyAlias: signing.keyAlias,
+      keyPassword: signing.keyPassword,
+    ),
   );
 }
 

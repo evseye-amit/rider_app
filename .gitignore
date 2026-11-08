@@ -58,3 +58,8 @@ apps/*/android/app/src/main/res/drawable*/splash.png
 apps/*/ios/Flutter/Flavor.xcconfig
 apps/*/ios/Runner/Assets.xcassets/AppIcon.appiconset/*.png
 apps/*/ios/Runner/Assets.xcassets/LaunchImage.imageset/*.png
+apps/*/android/key.properties
+apps/*/android/app/upload-keystore.jks
+flavors/*/signing/
+*.jks
+*.keystore
