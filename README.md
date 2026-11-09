@@ -25,6 +25,8 @@ They are not in git, so apply a client once after cloning.
 The rider app needs a Google Maps key in `apps/rider_app/.env` (see `.env.example`).
 
 Scripts: `melos run get`, `analyze`, `format`, `l10n`, `flavor <client>`.
+They live under `melos:` in the root `pubspec.yaml`, which is also the Dart
+workspace for all four packages (one shared `pubspec.lock` at the root).
 
 ## Run and build
 
@@ -82,7 +84,8 @@ dart run evseye_flavors --flavor whizz
 ```
 
 Then stop and re-run the apps. Hot reload won't change the name, icon or splash.
-From the repo root, `melos run flavor whizz` does the same.
+From the repo root, `melos run flavor whizz` does the same. Put flags for the
+flavor tool after `--`, e.g. `melos run flavor whizz -- --skip-icons`.
 
 ```
 flavors/<client>/

@@ -5,5 +5,22 @@ publish_to: none
 environment:
   sdk: ^3.13.0
 
+workspace:
+  - apps/rider_app
+  - apps/fleet_manager_app
+  - packages/evseye_core
+  - packages/evseye_flavors
+
 dev_dependencies:
   melos: ^8.10.1
+
+dependency_overrides:
+  cli_util: ^0.6.0
+
+melos:
+  scripts:
+    get: flutter pub get
+    analyze: melos exec -- dart analyze .
+    format: melos exec -- dart format .
+    l10n: melos exec --scope=evseye_core -- flutter gen-l10n
+    flavor: dart run packages/evseye_flavors/bin/evseye_flavors.dart
