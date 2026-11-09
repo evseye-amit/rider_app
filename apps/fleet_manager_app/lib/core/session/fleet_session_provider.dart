@@ -14,6 +14,8 @@ export 'fleet_session.dart';
 class FleetSessionNotifier extends Notifier<FleetSession> {
   UiConfigService get _config => ref.read(uiConfigServiceProvider);
 
+  Set<int>? _fallbackHubIndexes;
+
   @override
   FleetSession build() {
     ref.read(apiClientProvider).onSessionExpired = handleSessionExpired;
@@ -61,7 +63,14 @@ class FleetSessionNotifier extends Notifier<FleetSession> {
         : {if (index >= 0 && index < count) index};
     if (next.isEmpty) return;
     if (next.length == state.selectedHubIndexes.length && next.every(state.selectedHubIndexes.contains)) return;
+    _fallbackHubIndexes ??= state.selectedHubIndexes;
     state = state.copyWith(selectedHubIndexes: next);
+  }
+
+  void settleHubSelection({required bool loaded}) {
+    final Set<int>? fallback = _fallbackHubIndexes;
+    _fallbackHubIndexes = null;
+    if (!loaded && fallback != null) state = state.copyWith(selectedHubIndexes: fallback);
   }
 
   Future<Result<bool>> setAttendance(bool present) async {
@@ -88,6 +97,7 @@ class FleetSessionNotifier extends Notifier<FleetSession> {
     unawaited(ref.read(pushRegistrationProvider).start());
     final FeatureFlags flags = await _config.loadFeatureFlags();
     final List<HubProfile> hubs = (await ref.read(listHubsProvider)(const NoParams())).valueOrNull ?? state.hubs;
+    _fallbackHubIndexes = null;
     state = state.copyWith(
       user: user,
       flags: flags,

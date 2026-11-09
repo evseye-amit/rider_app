@@ -17,7 +17,19 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<HubOverview> hub = ref.watch(hubOverviewProvider);
 
-    if (hub.hasError) {
+    ref.listen<AsyncValue<HubOverview>>(hubOverviewProvider, (previous, next) {
+      if (next.isLoading) return;
+      final FleetSessionNotifier session = ref.read(fleetSessionProvider.notifier);
+      if (!next.hasError) {
+        session.settleHubSelection(loaded: true);
+        return;
+      }
+      if (!next.hasValue) return;
+      AppSnack.error(context, next.failureMessage ?? context.l10n.hubCouldNotLoadHub);
+      session.settleHubSelection(loaded: false);
+    });
+
+    if (hub.hasError && !hub.hasValue) {
       return Scaffold(
         backgroundColor: AppColors.canvas,
         drawer: const FleetDrawer(),
