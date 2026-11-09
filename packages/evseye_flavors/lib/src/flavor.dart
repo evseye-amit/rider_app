@@ -99,7 +99,6 @@ class Flavor {
     required this.dir,
     required this.companyCode,
     required this.supportEmail,
-    required this.razorpayKeyId,
     required this.razorpayName,
     required this.apps,
     required this.palette,
@@ -110,7 +109,6 @@ class Flavor {
   final String dir;
   final String companyCode;
   final String supportEmail;
-  final String razorpayKeyId;
   final String razorpayName;
   final Map<String, AppFlavor> apps;
   final Map<String, int> palette;
@@ -161,17 +159,7 @@ class Flavor {
       hint: 'a lowercase code such as yogmaya',
     );
     final String supportEmail = text(yaml, 'supportEmail', required: false);
-    final String razorpayKeyId = text(
-      yaml,
-      'razorpayKeyId',
-      required: false,
-      format: RegExp(r'^rzp_(test|live)_[A-Za-z0-9]+$'),
-      hint: 'a Razorpay key ID such as rzp_test_xxxxxxxxxxxxxx',
-    );
     final String razorpayName = text(yaml, 'razorpayName', required: false);
-    if (razorpayKeyId.isNotEmpty && razorpayName.isEmpty) {
-      problems.add('flavors/$name/flavor.yaml: "razorpayName" is required when "razorpayKeyId" is set.');
-    }
 
     final Map<String, AppFlavor> apps = {};
     for (final AppTarget target in appTargets) {
@@ -247,7 +235,6 @@ class Flavor {
       dir: dir,
       companyCode: companyCode,
       supportEmail: supportEmail,
-      razorpayKeyId: razorpayKeyId,
       razorpayName: razorpayName,
       apps: apps,
       palette: palette,

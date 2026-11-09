@@ -17,7 +17,6 @@ String flavorConfigSource(Flavor flavor) {
     ..writeln('  static const String name = ${_dartString(flavor.name)};')
     ..writeln('  static const String companyCode = ${_dartString(flavor.companyCode)};')
     ..writeln('  static const String supportEmail = ${_dartString(flavor.supportEmail)};')
-    ..writeln('  static const String razorpayKeyId = ${_dartString(flavor.razorpayKeyId)};')
     ..writeln('  static const String razorpayName = ${_dartString(flavor.razorpayName)};')
     ..writeln()
     ..writeln('  static const String riderAppName = ${_dartString(rider.appName)};')

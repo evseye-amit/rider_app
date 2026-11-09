@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/payments/online_payments.dart';
-import '../../../../core/payments/razorpay_checkout.dart';
 import '../../../../core/session/rider_session_provider.dart';
 import '../../domain/usecases/payment_receipt_usecases.dart';
 import '../providers/deployment_payment_provider.dart';
@@ -26,7 +25,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
   final TextEditingController _reference = TextEditingController();
   final List<File> _screenshots = [];
   final Map<String, String> _uploaded = {};
-  bool _online = RazorpayCheckout.available;
+  bool _online = true;
   bool _submitting = false;
   bool _adding = false;
   bool _paying = false;
@@ -188,7 +187,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     final DeploymentPayment? payment = ref.watch(deploymentPaymentProvider(allocationId)).value;
     final DeploymentFleet? fleet = current?.allocation?.fleet;
     final bool submitted = payment?.isSubmitted == true;
-    final bool online = _online && RazorpayCheckout.available;
     final bool canPay = payment != null && !submitted && !payment.isPaid && !payment.needsSupport;
 
     return AppScaffold(
@@ -199,7 +197,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
       showBack: false,
       centerTitle: submitted,
       footer: switch (payment) {
-        final DeploymentPayment due when canPay && online => PrimaryButton(
+        final DeploymentPayment due when canPay && _online => PrimaryButton(
           label: context.l10n.deploymentPayOnline(Fmt.money(due.amount)),
           icon: Icons.lock_rounded,
           loading: _paying,
@@ -263,25 +261,23 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      if (RazorpayCheckout.available) ...[
-                        AppRadioTile(
-                          selected: online,
-                          onTap: () => setState(() => _online = true),
-                          title: context.l10n.deploymentPayMethodOnline,
-                          subtitle: context.l10n.deploymentPayMethodOnlineHint,
-                          leading: const Icon(Icons.lock_rounded, color: AppColors.primary),
-                        ),
-                        const Gap.sm(),
-                        AppRadioTile(
-                          selected: !online,
-                          onTap: () => setState(() => _online = false),
-                          title: context.l10n.deploymentPayMethodCash,
-                          subtitle: context.l10n.deploymentPayMethodCashHint,
-                          leading: const Icon(Icons.payments_rounded, color: AppColors.primary),
-                        ),
-                      ],
-                      if (!online) ...[
-                        if (RazorpayCheckout.available) const Gap.lg(),
+                      AppRadioTile(
+                        selected: _online,
+                        onTap: () => setState(() => _online = true),
+                        title: context.l10n.deploymentPayMethodOnline,
+                        subtitle: context.l10n.deploymentPayMethodOnlineHint,
+                        leading: const Icon(Icons.lock_rounded, color: AppColors.primary),
+                      ),
+                      const Gap.sm(),
+                      AppRadioTile(
+                        selected: !_online,
+                        onTap: () => setState(() => _online = false),
+                        title: context.l10n.deploymentPayMethodCash,
+                        subtitle: context.l10n.deploymentPayMethodCashHint,
+                        leading: const Icon(Icons.payments_rounded, color: AppColors.primary),
+                      ),
+                      if (!_online) ...[
+                        const Gap.lg(),
                         AppTextField(
                           label: context.l10n.deploymentTransactionReference,
                           hint: context.l10n.deploymentReferenceReceiptNumber,

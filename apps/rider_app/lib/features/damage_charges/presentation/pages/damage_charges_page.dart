@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/router/app_routes.dart';
-import '../../../../core/payments/razorpay_checkout.dart';
 import '../../domain/entities/damage_charge.dart';
 import '../providers/damage_charges_providers.dart';
 import '../providers/damage_payment_provider.dart';
@@ -30,13 +29,12 @@ class DamageChargesPage extends ConsumerWidget {
     return AppScaffold(
       title: context.l10n.damageChargesTitle,
       footer: switch (totals) {
-        final DamageChargesSummary value when RazorpayCheckout.available && value.canPay && notice == null =>
-          PrimaryButton(
-            label: context.l10n.damageChargePay(Fmt.money(value.payAmount, paise: true)),
-            icon: Icons.lock_rounded,
-            loading: payment.paying,
-            onPressed: payment.paying ? null : () => payDamageCharges(context, ref),
-          ),
+        final DamageChargesSummary value when value.canPay && notice == null => PrimaryButton(
+          label: context.l10n.damageChargePay(Fmt.money(value.payAmount, paise: true)),
+          icon: Icons.lock_rounded,
+          loading: payment.paying,
+          onPressed: payment.paying ? null : () => payDamageCharges(context, ref),
+        ),
         _ => null,
       },
       body: RefreshIndicator(

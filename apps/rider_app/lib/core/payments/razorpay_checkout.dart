@@ -25,8 +25,6 @@ final class CheckoutFailed extends CheckoutResult {
 }
 
 abstract final class RazorpayCheckout {
-  static bool get available => FlavorConfig.razorpayKeyId.isNotEmpty;
-
   static Future<CheckoutResult> open(
     PaymentCheckoutDto checkout, {
     required String currency,
@@ -61,7 +59,7 @@ abstract final class RazorpayCheckout {
         'order_id': checkout.orderId,
         'amount': checkout.amountPaise,
         'currency': currency,
-        'name': FlavorConfig.razorpayName,
+        'name': FlavorConfig.razorpayName.isEmpty ? FlavorConfig.riderAppName : FlavorConfig.razorpayName,
         'description': description,
         'prefill': {'contact': ?contact},
         'theme': {'color': _hex(FlavorConfig.primary)},

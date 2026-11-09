@@ -1,6 +1,5 @@
-companyCode:
+companyCode: "pinkrides"
 supportEmail: support@pinkrides.in
-razorpayKeyId: "rzp_test_TrasfgOFEQNV7J"
 razorpayName: "Pinkrides"
 rider:
   appName: Pink Rider App

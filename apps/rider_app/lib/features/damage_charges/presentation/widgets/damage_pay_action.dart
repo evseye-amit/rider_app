@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/payments/online_payments.dart';
-import '../../../../core/payments/razorpay_checkout.dart';
 import '../../domain/entities/damage_charge.dart';
 import '../providers/damage_charges_providers.dart';
 import '../providers/damage_payment_provider.dart';
@@ -38,7 +37,6 @@ String? damagePaymentNote(AppL10n l10n, DamageChargesSummary summary, DamagePaym
       Fmt.money(summary.activityAmount ?? summary.due, paise: true),
     ),
     DamagePaymentActivity.underReview => l10n.onlinePaymentReview,
-    _ when summary.due > 0 && !RazorpayCheckout.available => l10n.damageChargesOnlineUnavailable,
     _ => null,
   },
 };
