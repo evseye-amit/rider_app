@@ -16,6 +16,7 @@ class OnboardingFieldConfig {
     required this.editable,
     required this.isUpload,
     required this.sequence,
+    this.billingUnit = '',
     this.description,
     this.placeholder,
     this.dataType,
@@ -29,6 +30,7 @@ class OnboardingFieldConfig {
     Object? pick(String key) => configuration[key] ?? json[key];
 
     final String fieldType = (pick('fieldType')?.toString() ?? 'TEXT').toUpperCase();
+    final String billingUnit = json['billingUnit']?.toString().toUpperCase() ?? '';
     final String name = json['name']?.toString() ?? json['fieldName']?.toString() ?? '';
 
     return OnboardingFieldConfig(
@@ -45,11 +47,9 @@ class OnboardingFieldConfig {
       readOnly: pick('readOnly') == true,
       disabled: pick('disabled') == true,
       editable: pick('editable') != false,
-      isUpload:
-          fieldType == 'UPLOAD' ||
-          json['isUpload'] == true ||
-          json['billingUnit']?.toString().toUpperCase() == 'UPLOAD',
+      isUpload: fieldType == 'UPLOAD' || json['isUpload'] == true || billingUnit == 'UPLOAD',
       sequence: (json['sequence'] as num?)?.toInt() ?? 0,
+      billingUnit: billingUnit,
       validation: Map<String, dynamic>.from((configuration['validation'] ?? json['validation']) as Map? ?? const {}),
       configuration: configuration,
     );
@@ -73,12 +73,18 @@ class OnboardingFieldConfig {
   final bool editable;
   final bool isUpload;
   final int sequence;
+  final String billingUnit;
 
   final Map<String, dynamic> validation;
 
   final Map<String, dynamic> configuration;
 
-  bool get isInput => fieldCode.isNotEmpty;
+  bool get isVerification => billingUnit == 'VERIFICATION';
+  bool get isAgreement => featureCode.contains('AGREEMENT') || featureCode.contains('E_SIGN');
+  bool get isTraining => featureCode.contains('TRAINING');
+  bool get isCheckbox => fieldType == 'CHECKBOX' || dataType?.toUpperCase() == 'BOOLEAN';
+
+  bool get isInput => fieldCode.isNotEmpty && !isVerification && !isAgreement && !isTraining;
   bool get isCapability => !isInput && !isUpload;
 
   bool get isEnabled => editable && !readOnly && !disabled;
@@ -93,8 +99,23 @@ class OnboardingFieldConfig {
 
   List<String> get options {
     final Object? raw = validation['allowedValues'] ?? configuration['options'];
-    return raw is List ? raw.map((e) => e.toString()).toList(growable: false) : const [];
+    return raw is List
+        ? raw.map((e) => e is Map ? '${e['value'] ?? e['label']}' : e.toString()).toList(growable: false)
+        : const [];
   }
+
+  List<({String value, String label})> get choices {
+    final Object? raw = configuration['options'];
+    if (raw is List && raw.isNotEmpty && raw.every((e) => e is Map && (e['value'] ?? e['label']) != null)) {
+      return [
+        for (final Map<dynamic, dynamic> e in raw.cast<Map<dynamic, dynamic>>())
+          (value: '${e['value'] ?? e['label']}', label: '${e['label'] ?? e['value']}'),
+      ];
+    }
+    return [for (final String o in options) (value: o, label: o)];
+  }
+
+  String choiceLabel(String value) => choices.where((choice) => choice.value == value).firstOrNull?.label ?? value;
 
   List<String> get allowedFileTypes {
     final Object? raw = configuration['allowedFileTypes'];

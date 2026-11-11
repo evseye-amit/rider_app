@@ -5428,4 +5428,10 @@ class AppL10nKn extends AppL10n {
   @override
   String get exchangeHandoverNotReady =>
       'ಹಬ್ ಇನ್ನೂ ತಪಾಸಣಾ ಪಟ್ಟಿಯನ್ನು ಕಳುಹಿಸಿಲ್ಲ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ನೋಡಿ.';
+
+  @override
+  String get commonYes => 'ಹೌದು';
+
+  @override
+  String get commonNo => 'ಇಲ್ಲ';
 }

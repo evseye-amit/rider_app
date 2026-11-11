@@ -10310,6 +10310,18 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'The hub hasn\'t sent the inspection list yet. Please check again in a moment.'**
   String get exchangeHandoverNotReady;
+
+  /// Answer shown for a ticked checkbox
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get commonYes;
+
+  /// Answer shown for an unticked checkbox
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get commonNo;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

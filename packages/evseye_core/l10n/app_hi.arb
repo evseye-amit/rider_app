@@ -1698,5 +1698,7 @@
   "exchangeHandoverTitle": "आपका नया स्कूटर",
   "exchangeHandoverBody": "हब आपका नया स्कूटर सौंप रहा है। जब वे जाँच सूची भेजें, तो उसे देखने और स्वीकार करने के लिए नीचे टैप करें।",
   "exchangeHandoverCheck": "मेरा नया स्कूटर देखें",
-  "exchangeHandoverNotReady": "हब ने अभी तक जाँच सूची नहीं भेजी है। कृपया थोड़ी देर बाद फिर देखें।"
+  "exchangeHandoverNotReady": "हब ने अभी तक जाँच सूची नहीं भेजी है। कृपया थोड़ी देर बाद फिर देखें।",
+  "commonYes": "हाँ",
+  "commonNo": "नहीं"
 }

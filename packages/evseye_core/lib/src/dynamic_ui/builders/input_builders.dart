@@ -36,9 +36,11 @@ Map<String, NodeBuilder> inputBuilders(WidgetRegistry r) => {
                   ? null
                   : NodeTokens.icon(node.props['icon'] as String?),
               keyboardType: _keyboard(node.props['keyboard'] as String?),
-              textCapitalization: node.props['caps'] == true
-                  ? TextCapitalization.characters
-                  : TextCapitalization.words,
+              textCapitalization: switch (node.props['caps']) {
+                true => TextCapitalization.characters,
+                false => TextCapitalization.none,
+                _ => TextCapitalization.words,
+              },
               inputFormatters: _formatters(node),
               onChanged: (v) => scope.form.setValue(key, v),
             ),
@@ -106,7 +108,9 @@ Map<String, NodeBuilder> inputBuilders(WidgetRegistry r) => {
               title: node.text(scope, 'label'),
               subtitle: node.props['subtitle'] == null ? null : node.text(scope, 'subtitle'),
               errorText: error,
-              onChanged: (v) => scope.form.setValue(key, v),
+              onChanged: (v) {
+                if (enabled) scope.form.setValue(key, v);
+              },
             ),
           ),
       'esign': (context, node, scope) => ListenableBuilder(

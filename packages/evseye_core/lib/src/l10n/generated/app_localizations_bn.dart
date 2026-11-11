@@ -5425,4 +5425,10 @@ class AppL10nBn extends AppL10n {
   @override
   String get exchangeHandoverNotReady =>
       'The hub hasn\'t sent the inspection list yet. Please check again in a moment.';
+
+  @override
+  String get commonYes => 'হ্যাঁ';
+
+  @override
+  String get commonNo => 'না';
 }

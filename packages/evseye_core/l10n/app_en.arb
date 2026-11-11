@@ -7375,5 +7375,13 @@
   "exchangeHandoverNotReady": "The hub hasn't sent the inspection list yet. Please check again in a moment.",
   "@exchangeHandoverNotReady": {
     "description": "Shown when the rider taps check but the handover inspection isn't ready"
+  },
+  "commonYes": "Yes",
+  "@commonYes": {
+    "description": "Answer shown for a ticked checkbox"
+  },
+  "commonNo": "No",
+  "@commonNo": {
+    "description": "Answer shown for an unticked checkbox"
   }
 }

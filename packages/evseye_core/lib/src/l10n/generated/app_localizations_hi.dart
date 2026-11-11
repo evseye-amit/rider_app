@@ -5413,4 +5413,10 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get exchangeHandoverNotReady => 'हब ने अभी तक जाँच सूची नहीं भेजी है। कृपया थोड़ी देर बाद फिर देखें।';
+
+  @override
+  String get commonYes => 'हाँ';
+
+  @override
+  String get commonNo => 'नहीं';
 }

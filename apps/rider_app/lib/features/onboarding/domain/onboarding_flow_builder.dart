@@ -16,11 +16,14 @@ abstract final class OnboardingFlowBuilder {
   static const String bankStateKey = 'RIDER_BANK_STATE';
   static const String bankAccountKey = 'RIDER_BANK_ACCOUNT';
   static const String bankProofCode = 'BANK_PROOF_DOCUMENT';
+  static const String sameAddressKey = 'SAME_AS_CURRENT_ADDRESS';
+  static const String permanentAddressPrefix = 'PERMANENT_ADDRESS';
 
   static const Map<String, String> bankFieldCodes = {
     'BANK_ACCOUNT_NUMBER': bankAccountKey,
     'REPEAT_BANK_ACCOUNT_NUMBER': '${bankAccountKey}__confirm',
     'IFSC_CODE': bankIfscKey,
+    'IFSC': bankIfscKey,
     'BANK_NAME': bankNameKey,
     'BANK_BRANCH': bankBranchKey,
     'BANK_CITY': bankCityKey,
@@ -31,6 +34,14 @@ abstract final class OnboardingFlowBuilder {
 
   static bool isBankStep(OnboardingStepConfig step) =>
       step.fields.any((field) => _bankFeatures.contains(field.featureCode));
+
+  static bool isReferenceList(OnboardingFieldConfig f) =>
+      f.fieldType == 'REFERENCE' || f.featureCode.contains('CAPTURE_REFERENCE');
+
+  static bool isNomineeList(OnboardingFieldConfig f) => f.fieldType == 'NOMINEE' || f.featureCode.contains('NOMINEE');
+
+  static bool isAgeGate(OnboardingFieldConfig f) =>
+      f.fieldType == 'AGE' || f.featureCode.contains('AGE_VERIFICATION') || f.featureCode.contains('VERIFY_AGE');
 
   static UiFlowConfig build(RiderOnboardingConfig config, AppL10n l10n) {
     final List<OnboardingStepConfig> steps = config.steps;
@@ -62,25 +73,51 @@ abstract final class OnboardingFlowBuilder {
     ];
     if (rejected.isNotEmpty) body.add(_rejectedBanner(rejected, l10n));
 
-    if (isBankStep(step)) {
-      body.addAll(_bankBody(config, step, l10n));
-      return _flowStep(step, body, const [], isLast: isLast, l10n: l10n);
-    }
+    final bool bank = isBankStep(step);
+    final Set<String> seen = <String>{if (bank) ...bankFieldCodes.keys};
+    final List<OnboardingFieldConfig> fields = [
+      for (final f in step.inputs)
+        if (seen.add(f.fieldCode)) f,
+    ];
 
-    final List<UiNode> inputs = [for (final f in step.inputs) _input(f, l10n)];
-    if (inputs.isNotEmpty) {
-      body.add(UiNode(type: 'group', props: {'gap': 18}, children: inputs));
-    }
-
-    final List<UiNode> uploads = [for (final f in step.uploads) _upload(f, config.document(f), l10n)];
-    if (uploads.isNotEmpty) {
-      body.add(
-        UiNode(
-          type: 'group',
-          props: {'title': l10n.onboardingDocuments, 'icon': 'upload', 'gap': 14},
-          children: uploads,
+    if (bank) {
+      final int bankEnd = step.fields
+          .where((f) => bankFieldCodes.containsKey(f.fieldCode))
+          .fold(0, (end, f) => f.sequence > end ? f.sequence : end);
+      body.addAll(
+        _bankBody(
+          config,
+          step,
+          l10n,
+          extra: [
+            for (final f in fields)
+              if (f.sequence <= bankEnd) _input(f, l10n),
+          ],
         ),
       );
+      final List<UiNode> rest = _inputs([
+        for (final f in fields)
+          if (f.sequence > bankEnd) f,
+      ], l10n);
+      if (rest.isNotEmpty) {
+        body.add(UiNode(type: 'group', props: {'gap': 18}, children: rest));
+      }
+    } else {
+      final List<UiNode> inputs = _inputs(fields, l10n);
+      if (inputs.isNotEmpty) {
+        body.add(UiNode(type: 'group', props: {'gap': 18}, children: inputs));
+      }
+
+      final List<UiNode> uploads = [for (final f in step.uploads) _upload(f, config.document(f), l10n)];
+      if (uploads.isNotEmpty) {
+        body.add(
+          UiNode(
+            type: 'group',
+            props: {'title': l10n.onboardingDocuments, 'icon': 'upload', 'gap': 14},
+            children: uploads,
+          ),
+        );
+      }
     }
 
     final List<UiNode> capabilities = [for (final f in step.capabilities) ..._capability(f, l10n)];
@@ -139,7 +176,12 @@ abstract final class OnboardingFlowBuilder {
     );
   }
 
-  static List<UiNode> _bankBody(RiderOnboardingConfig config, OnboardingStepConfig step, AppL10n l10n) {
+  static List<UiNode> _bankBody(
+    RiderOnboardingConfig config,
+    OnboardingStepConfig step,
+    AppL10n l10n, {
+    List<UiNode> extra = const [],
+  }) {
     final List<OnboardingFieldConfig> proofs = step.uploads.toList(growable: false);
     return [
       UiNode(
@@ -185,6 +227,7 @@ abstract final class OnboardingFlowBuilder {
               ValidationRule(type: 'minLength', value: 9, message: l10n.onboardingBankAccountTooShort),
             ],
           ),
+          ...extra,
         ],
       ),
       UiNode(
@@ -208,6 +251,27 @@ abstract final class OnboardingFlowBuilder {
             for (final OnboardingFieldConfig f in proofs) _upload(f, config.document(f), l10n),
         ],
       ),
+    ];
+  }
+
+  static List<UiNode> _inputs(List<OnboardingFieldConfig> fields, AppL10n l10n) {
+    bool permanent(OnboardingFieldConfig f) => f.fieldCode.startsWith(permanentAddressPrefix);
+    final bool sameAddress = fields.any((f) => f.fieldCode == sameAddressKey && f.isCheckbox);
+    final int at = fields.indexWhere(permanent);
+    if (!sameAddress || at < 0) return [for (final f in fields) _input(f, l10n)];
+    return [
+      for (final f in fields.take(at)) _input(f, l10n),
+      UiNode(
+        type: 'group',
+        props: {'gap': 18},
+        visibleWhen: const UiCondition(field: sameAddressKey, isNotEmpty: false),
+        children: [
+          for (final f in fields)
+            if (permanent(f)) _input(f, l10n),
+        ],
+      ),
+      for (final f in fields.skip(at))
+        if (!permanent(f)) _input(f, l10n),
     ];
   }
 
@@ -259,24 +323,59 @@ abstract final class OnboardingFlowBuilder {
       );
     }
 
+    if (f.isCheckbox) {
+      return UiNode(
+        type: 'checkbox',
+        id: f.fieldCode,
+        props: {'key': f.fieldCode, 'label': f.label},
+        enabledWhen: f.isEnabled ? null : const UiCondition(flag: '__NEVER__'),
+        validations: rules,
+      );
+    }
+
+    if (isReferenceList(f)) {
+      final int minReferences = (f.configuration['minReferences'] as num?)?.toInt() ?? 1;
+      final int maxReferences = (f.configuration['maxReferences'] as num?)?.toInt() ?? 2;
+      return UiNode(
+        type: 'referenceField',
+        id: f.fieldCode,
+        props: {
+          ...props,
+          'minCount': minReferences,
+          'maxCount': maxReferences < minReferences ? minReferences : maxReferences,
+        },
+        validations: rules,
+      );
+    }
+
+    if (isNomineeList(f)) {
+      final int maxNominees =
+          ((f.configuration['maxNominees'] ?? f.configuration['maxReferences']) as num?)?.toInt() ?? 4;
+      return UiNode(
+        type: 'nomineeField',
+        id: f.fieldCode,
+        props: {...props, 'maxCount': maxNominees < 1 ? 1 : maxNominees},
+        validations: rules,
+      );
+    }
+
     switch (f.fieldType) {
       case 'BANK_ACCOUNT':
         return UiNode(type: 'bankAccountField', id: f.fieldCode, props: {...props}, validations: rules);
-      case 'REFERENCE':
-        final int minReferences = (f.configuration['minReferences'] as num?)?.toInt() ?? 1;
-        final int maxReferences = (f.configuration['maxReferences'] as num?)?.toInt() ?? 2;
+      case 'EMAIL':
         return UiNode(
-          type: 'referenceField',
+          type: 'textField',
           id: f.fieldCode,
           props: {
             ...props,
-            'minCount': minReferences,
-            'maxCount': maxReferences < minReferences ? minReferences : maxReferences,
+            'keyboard': 'email',
+            'caps': false,
+            'icon': 'mail',
+            if (f.maxLength != null) 'maxLength': f.maxLength,
           },
+          enabledWhen: f.isEnabled ? null : const UiCondition(flag: '__NEVER__'),
           validations: rules,
         );
-      case 'NOMINEE':
-        return UiNode(type: 'nomineeField', id: f.fieldCode, props: {...props, 'maxCount': 4}, validations: rules);
       case 'MOBILE':
         return UiNode(
           type: 'textField',
@@ -303,7 +402,12 @@ abstract final class OnboardingFlowBuilder {
         return UiNode(
           type: 'textField',
           id: f.fieldCode,
-          props: {...props, 'maxLines': 3, if (f.maxLength != null) 'maxLength': f.maxLength, 'icon': 'home'},
+          props: {
+            ...props,
+            'maxLines': 3,
+            if (f.maxLength != null) 'maxLength': f.maxLength,
+            'icon': _inputIcon(f.fieldCode),
+          },
           enabledWhen: f.isEnabled ? null : const UiCondition(flag: '__NEVER__'),
           validations: rules,
         );
@@ -323,7 +427,7 @@ abstract final class OnboardingFlowBuilder {
           props: {
             ...props,
             'options': [
-              for (final o in f.options) {'value': o, 'label': o},
+              for (final choice in f.choices) {'value': choice.value, 'label': choice.label},
             ],
           },
           enabledWhen: f.isEnabled ? null : const UiCondition(flag: '__NEVER__'),
@@ -339,6 +443,7 @@ abstract final class OnboardingFlowBuilder {
             'icon': _inputIcon(f.fieldCode),
 
             if (_upperCase(f.fieldCode)) 'caps': true,
+            if (_isHandle(f.fieldCode)) ...{'caps': false, 'keyboard': 'email'},
           },
           enabledWhen: f.isEnabled ? null : const UiCondition(flag: '__NEVER__'),
           validations: rules,
@@ -416,7 +521,7 @@ abstract final class OnboardingFlowBuilder {
       ];
     }
 
-    if (_isAgreement(f)) {
+    if (f.isAgreement) {
       return [
         UiNode(type: 'termsBlock', props: {'body': l10n.onboardingAgreementBody, 'maxHeight': 200}),
       ];
@@ -425,7 +530,7 @@ abstract final class OnboardingFlowBuilder {
   }
 
   static UiNode? _signature(OnboardingFieldConfig f, AppL10n l10n) {
-    if (!_isAgreement(f)) return null;
+    if (!f.isAgreement) return null;
     return UiNode(
       type: 'esign',
       id: f.formKey,
@@ -433,9 +538,6 @@ abstract final class OnboardingFlowBuilder {
       validations: [ValidationRule(type: 'required', message: l10n.onboardingSignAgreementContinue)],
     );
   }
-
-  static bool _isAgreement(OnboardingFieldConfig f) =>
-      f.featureCode.contains('AGREEMENT') || f.featureCode.contains('E_SIGN');
 
   static String _shortLabel(String stepCode, String name, AppL10n l10n) => switch (stepCode) {
     'RIDER_PERSONAL_PROFILE' => l10n.commonProfile,
@@ -461,6 +563,8 @@ abstract final class OnboardingFlowBuilder {
   static String _inputIcon(String code) {
     final String c = code.toUpperCase();
     if (c.contains('NAME')) return 'person';
+    if (c.contains('UPI')) return 'wallet';
+    if (c.contains('EMAIL')) return 'mail';
     if (c.contains('AADHAAR') || c.contains('AADHAR')) return 'badge';
     if (c.contains('PAN')) return 'badge';
     if (c.contains('ADDRESS')) return 'home';
@@ -472,6 +576,8 @@ abstract final class OnboardingFlowBuilder {
   }
 
   static bool _upperCase(String fieldCode) => fieldCode.contains('PAN') || fieldCode.contains('LICEN');
+
+  static bool _isHandle(String fieldCode) => fieldCode.contains('UPI') || fieldCode.contains('EMAIL');
 
   static const int _aadhaarDigits = 12;
 

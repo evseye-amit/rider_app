@@ -164,7 +164,8 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
   Object? _wireValue(OnboardingFieldConfig field) {
     final Object? raw = _form.valueOf(field.fieldCode);
     if (raw == null) return null;
-    if (field.fieldType == 'REFERENCE') {
+    if (field.isCheckbox) return raw == true || raw.toString().toLowerCase() == 'true';
+    if (OnboardingFlowBuilder.isReferenceList(field)) {
       if (raw is List) return raw.isEmpty ? null : raw;
       final String text = raw.toString().trim();
       if (text.isEmpty) return null;
@@ -176,9 +177,7 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
   }
 
   String? _ageCheck(OnboardingStepConfig step) {
-    final OnboardingFieldConfig? gate = step.fields
-        .where((field) => field.featureCode.toUpperCase().contains('AGE_VERIFICATION'))
-        .firstOrNull;
+    final OnboardingFieldConfig? gate = step.fields.where(OnboardingFlowBuilder.isAgeGate).firstOrNull;
     if (gate == null) return null;
 
     final int minAge = _minAgeOf(gate);

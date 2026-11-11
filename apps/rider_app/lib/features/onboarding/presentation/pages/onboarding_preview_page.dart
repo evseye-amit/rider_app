@@ -30,7 +30,9 @@ class _OnboardingPreviewPageState extends ConsumerState<OnboardingPreviewPage> {
     final Map<String, Object?> values = {
       for (final OnboardingFieldConfig field in last.inputs)
         if (draft[field.fieldCode] != null && draft[field.fieldCode].toString().trim().isNotEmpty)
-          field.fieldCode: draft[field.fieldCode].toString().trim(),
+          field.fieldCode: field.isCheckbox
+              ? draft[field.fieldCode] == true || draft[field.fieldCode].toString().toLowerCase() == 'true'
+              : draft[field.fieldCode].toString().trim(),
     };
 
     setState(() => _submitting = true);
@@ -189,7 +191,11 @@ class _StepCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<OnboardingFieldConfig> shown = step.fields.where((field) => field.isInput || field.isUpload).toList();
+    final Set<String> seen = {};
+    final List<OnboardingFieldConfig> shown = [
+      for (final OnboardingFieldConfig field in step.fields)
+        if ((field.isInput || field.isUpload) && seen.add(field.formKey)) field,
+    ];
     final List<Widget> items = [for (final OnboardingFieldConfig field in shown) ..._rows(context, field)];
 
     return ModuleCard(
@@ -289,6 +295,8 @@ class _StepCard extends StatelessWidget {
     }
     final String text = value.toString();
     if (field.isUpload) return l10n.onboardingAttached;
+    if (field.isCheckbox) return value == true || text.toLowerCase() == 'true' ? l10n.commonYes : l10n.commonNo;
+    if (field.choices.isNotEmpty) return field.choiceLabel(text);
     if (field.fieldCode.contains('AADHAAR')) return Fmt.maskAadhaar(text);
     if (field.fieldType == 'MOBILE') return Fmt.phone(text);
     if (field.fieldType == 'DATE') {

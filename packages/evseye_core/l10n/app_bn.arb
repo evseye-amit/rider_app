@@ -1698,5 +1698,7 @@
   "exchangeHandoverTitle": "Your new scooter",
   "exchangeHandoverBody": "The hub is handing over your new scooter. When they send the inspection list, tap below to check and accept it.",
   "exchangeHandoverCheck": "Check my new scooter",
-  "exchangeHandoverNotReady": "The hub hasn't sent the inspection list yet. Please check again in a moment."
+  "exchangeHandoverNotReady": "The hub hasn't sent the inspection list yet. Please check again in a moment.",
+  "commonYes": "হ্যাঁ",
+  "commonNo": "না"
 }

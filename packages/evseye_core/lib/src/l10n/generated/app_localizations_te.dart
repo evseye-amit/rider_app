@@ -5433,4 +5433,10 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get exchangeHandoverNotReady => 'హబ్ ఇంకా తనిఖీ జాబితా పంపలేదు. దయచేసి కొద్దిసేపటి తర్వాత మళ్లీ చూడండి.';
+
+  @override
+  String get commonYes => 'అవును';
+
+  @override
+  String get commonNo => 'కాదు';
 }
