@@ -5439,4 +5439,15 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get commonNo => 'కాదు';
+
+  @override
+  String get commonPdfFile => 'PDF ఫైల్';
+
+  @override
+  String get onboardingPhotoOrPdf => 'పత్రం ఫోటో తీయండి, గ్యాలరీ నుండి ఎంచుకోండి, లేదా PDF అప్‌లోడ్ చేయండి';
+
+  @override
+  String commonFileTooLarge(String size) {
+    return 'ఈ ఫైల్ $size MB కంటే పెద్దది. చిన్నది ఎంచుకోండి.';
+  }
 }

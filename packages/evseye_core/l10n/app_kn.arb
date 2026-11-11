@@ -1700,5 +1700,8 @@
   "exchangeHandoverCheck": "ನನ್ನ ಹೊಸ ಸ್ಕೂಟರ್ ಪರಿಶೀಲಿಸಿ",
   "exchangeHandoverNotReady": "ಹಬ್ ಇನ್ನೂ ತಪಾಸಣಾ ಪಟ್ಟಿಯನ್ನು ಕಳುಹಿಸಿಲ್ಲ. ದಯವಿಟ್ಟು ಸ್ವಲ್ಪ ಸಮಯದ ನಂತರ ಮತ್ತೆ ನೋಡಿ.",
   "commonYes": "ಹೌದು",
-  "commonNo": "ಇಲ್ಲ"
+  "commonNo": "ಇಲ್ಲ",
+  "commonPdfFile": "PDF ಫೈಲ್",
+  "onboardingPhotoOrPdf": "ದಾಖಲೆಯ ಫೋಟೋ ತೆಗೆಯಿರಿ, ಗ್ಯಾಲರಿಯಿಂದ ಆರಿಸಿ, ಅಥವಾ PDF ಅಪ್‌ಲೋಡ್ ಮಾಡಿ",
+  "commonFileTooLarge": "ಈ ಫೈಲ್ {size} MB ಗಿಂತ ದೊಡ್ಡದಿದೆ. ಚಿಕ್ಕದನ್ನು ಆಯ್ಕೆಮಾಡಿ."
 }

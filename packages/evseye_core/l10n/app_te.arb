@@ -1700,5 +1700,8 @@
   "exchangeHandoverCheck": "నా కొత్త స్కూటర్‌ను చూడండి",
   "exchangeHandoverNotReady": "హబ్ ఇంకా తనిఖీ జాబితా పంపలేదు. దయచేసి కొద్దిసేపటి తర్వాత మళ్లీ చూడండి.",
   "commonYes": "అవును",
-  "commonNo": "కాదు"
+  "commonNo": "కాదు",
+  "commonPdfFile": "PDF ఫైల్",
+  "onboardingPhotoOrPdf": "పత్రం ఫోటో తీయండి, గ్యాలరీ నుండి ఎంచుకోండి, లేదా PDF అప్‌లోడ్ చేయండి",
+  "commonFileTooLarge": "ఈ ఫైల్ {size} MB కంటే పెద్దది. చిన్నది ఎంచుకోండి."
 }

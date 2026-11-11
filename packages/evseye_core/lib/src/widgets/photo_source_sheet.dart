@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:material_ui/material_ui.dart';
@@ -11,27 +12,40 @@ import '../theme/app_typography.dart';
 import 'buttons.dart';
 import 'pressable.dart';
 
-enum PhotoSource { camera, gallery }
+enum PhotoSource { camera, gallery, pdf }
 
 abstract final class PhotoSourceSheet {
   static Future<File?> pick(
     BuildContext context, {
     String? title,
     String? subtitle,
+    bool photos = true,
+    bool pdf = false,
   }) async {
+    if (pdf && !photos) return pickPdf();
     final String sheetTitle = title ?? context.l10n.commonAddPhoto;
     final String sheetSubtitle = subtitle ?? context.l10n.commonTakeOneNowChooseFrom;
     final PhotoSource? source = await showModalBottomSheet<PhotoSource>(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
-      builder: (context) => _Sheet(title: sheetTitle, subtitle: sheetSubtitle),
+      builder: (context) => _Sheet(title: sheetTitle, subtitle: sheetSubtitle, pdf: pdf),
     );
     if (source == null || !context.mounted) return null;
     return capture(source);
   }
 
+  static Future<File?> pickPdf() async {
+    final PlatformFile? picked = await FilePicker.pickFile(type: FileType.custom, allowedExtensions: const ['pdf']);
+    if (picked == null) return null;
+    final String? path = picked.path;
+    if (path != null) return File(path);
+    final File copy = File('${Directory.systemTemp.path}/${DateTime.now().microsecondsSinceEpoch}_${picked.name}');
+    return copy.writeAsBytes(await picked.readAsBytes());
+  }
+
   static Future<File?> capture(PhotoSource source) async {
+    if (source == PhotoSource.pdf) return pickPdf();
     final bool camera = source == PhotoSource.camera && !_onIosSimulator;
     final ImagePicker picker = ImagePicker();
     try {
@@ -59,10 +73,11 @@ abstract final class PhotoSourceSheet {
 }
 
 class _Sheet extends StatelessWidget {
-  const _Sheet({required this.title, required this.subtitle});
+  const _Sheet({required this.title, required this.subtitle, required this.pdf});
 
   final String title;
   final String subtitle;
+  final bool pdf;
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +116,16 @@ class _Sheet extends StatelessWidget {
                     onTap: () => Navigator.of(context).pop(PhotoSource.gallery),
                   ),
                 ),
+                if (pdf) ...[
+                  const SizedBox(width: Insets.md),
+                  Expanded(
+                    child: _SourceButton(
+                      icon: Icons.picture_as_pdf_rounded,
+                      label: context.l10n.commonPdfFile,
+                      onTap: () => Navigator.of(context).pop(PhotoSource.pdf),
+                    ),
+                  ),
+                ],
               ],
             ),
             const SizedBox(height: Insets.md),
@@ -135,7 +160,11 @@ class _SourceButton extends StatelessWidget {
           children: [
             Icon(icon, size: 28, color: AppColors.primary),
             const SizedBox(height: Insets.sm),
-            Text(label, style: AppText.titleSmall.copyWith(fontSize: 13.5, color: AppColors.primary)),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: AppText.titleSmall.copyWith(fontSize: 13.5, color: AppColors.primary),
+            ),
           ],
         ),
       ),

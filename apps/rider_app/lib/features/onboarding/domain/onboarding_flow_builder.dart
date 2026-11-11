@@ -487,6 +487,8 @@ abstract final class OnboardingFlowBuilder {
         'key': f.formKey,
         'label': f.label,
         if (hint.isNotEmpty) 'hint': hint,
+        if (types.isNotEmpty) 'fileTypes': types,
+        'maxFileSizeMb': ?maxMb,
         'featureCode': f.featureCode,
         'fieldCode': f.uploadCode,
         'required': f.required,

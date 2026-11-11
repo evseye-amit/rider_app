@@ -7383,5 +7383,22 @@
   "commonNo": "No",
   "@commonNo": {
     "description": "Answer shown for an unticked checkbox"
+  },
+  "commonPdfFile": "PDF file",
+  "@commonPdfFile": {
+    "description": "Upload sheet option that opens the PDF picker"
+  },
+  "onboardingPhotoOrPdf": "Take a photo of the document, choose one from your gallery, or upload a PDF",
+  "@onboardingPhotoOrPdf": {
+    "description": "Upload sheet subtitle when the document can be a photo or a PDF"
+  },
+  "commonFileTooLarge": "This file is over {size} MB. Pick a smaller one.",
+  "@commonFileTooLarge": {
+    "description": "Error when the picked file is bigger than the allowed size",
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
   }
 }

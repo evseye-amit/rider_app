@@ -1700,5 +1700,8 @@
   "exchangeHandoverCheck": "मेरा नया स्कूटर देखें",
   "exchangeHandoverNotReady": "हब ने अभी तक जाँच सूची नहीं भेजी है। कृपया थोड़ी देर बाद फिर देखें।",
   "commonYes": "हाँ",
-  "commonNo": "नहीं"
+  "commonNo": "नहीं",
+  "commonPdfFile": "PDF फ़ाइल",
+  "onboardingPhotoOrPdf": "दस्तावेज़ की फ़ोटो लें, गैलरी से चुनें, या PDF अपलोड करें",
+  "commonFileTooLarge": "यह फ़ाइल {size} MB से बड़ी है। छोटी फ़ाइल चुनें।"
 }

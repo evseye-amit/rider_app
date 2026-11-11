@@ -1700,5 +1700,8 @@
   "exchangeHandoverCheck": "Check my new scooter",
   "exchangeHandoverNotReady": "The hub hasn't sent the inspection list yet. Please check again in a moment.",
   "commonYes": "ਹਾਂ",
-  "commonNo": "ਨਹੀਂ"
+  "commonNo": "ਨਹੀਂ",
+  "commonPdfFile": "PDF file",
+  "onboardingPhotoOrPdf": "Take a photo of the document, choose one from your gallery, or upload a PDF",
+  "commonFileTooLarge": "This file is over {size} MB. Pick a smaller one."
 }

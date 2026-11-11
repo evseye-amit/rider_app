@@ -5419,4 +5419,15 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get commonNo => 'नहीं';
+
+  @override
+  String get commonPdfFile => 'PDF फ़ाइल';
+
+  @override
+  String get onboardingPhotoOrPdf => 'दस्तावेज़ की फ़ोटो लें, गैलरी से चुनें, या PDF अपलोड करें';
+
+  @override
+  String commonFileTooLarge(String size) {
+    return 'यह फ़ाइल $size MB से बड़ी है। छोटी फ़ाइल चुनें।';
+  }
 }

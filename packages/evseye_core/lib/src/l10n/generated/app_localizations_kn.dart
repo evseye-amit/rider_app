@@ -5434,4 +5434,15 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get commonNo => 'ಇಲ್ಲ';
+
+  @override
+  String get commonPdfFile => 'PDF ಫೈಲ್';
+
+  @override
+  String get onboardingPhotoOrPdf => 'ದಾಖಲೆಯ ಫೋಟೋ ತೆಗೆಯಿರಿ, ಗ್ಯಾಲರಿಯಿಂದ ಆರಿಸಿ, ಅಥವಾ PDF ಅಪ್‌ಲೋಡ್ ಮಾಡಿ';
+
+  @override
+  String commonFileTooLarge(String size) {
+    return 'ಈ ಫೈಲ್ $size MB ಗಿಂತ ದೊಡ್ಡದಿದೆ. ಚಿಕ್ಕದನ್ನು ಆಯ್ಕೆಮಾಡಿ.';
+  }
 }

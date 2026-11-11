@@ -28,6 +28,7 @@ class OnboardingFlowPage extends ConsumerStatefulWidget {
 class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
   static const int _defaultMinAge = 18;
   static final RegExp _ifscPattern = RegExp(r'^[A-Z]{4}0[A-Z0-9]{6}$');
+  static const Set<String> _imageTypes = {'JPG', 'JPEG', 'PNG', 'WEBP'};
 
   late final DynamicFormController _form = DynamicFormController(
     initial: Map<String, Object?>.from(ref.read(onboardingDraftProvider)),
@@ -258,11 +259,26 @@ class _OnboardingFlowPageState extends ConsumerState<OnboardingFlowPage> {
     final String fieldCode = (node.props['fieldCode'] ?? node.props['featureCode'] ?? '').toString();
     if (fieldCode.isEmpty) return;
 
+    final List<String> types = [
+      for (final Object? type in node.props['fileTypes'] as List? ?? const []) type.toString().toUpperCase(),
+    ];
+    final bool pdf = types.isEmpty || types.contains('PDF');
+    final bool photos = types.isEmpty || types.any(_imageTypes.contains);
     final File? file = await PhotoSourceSheet.pick(
       context,
-      subtitle: context.l10n.onboardingTakePhotoDocumentChooseOne,
+      title: node.label,
+      subtitle: pdf && photos ? context.l10n.onboardingPhotoOrPdf : context.l10n.onboardingTakePhotoDocumentChooseOne,
+      photos: photos,
+      pdf: pdf,
     );
     if (file == null || !mounted) return;
+
+    final num? maxMb = node.props['maxFileSizeMb'] as num?;
+    if (maxMb != null && await file.length() > maxMb * 1024 * 1024) {
+      if (mounted) AppSnack.error(context, context.l10n.commonFileTooLarge('$maxMb'));
+      return;
+    }
+    if (!mounted) return;
 
     setState(() => _busy.add(key));
     final Result<RemotePhoto> result = await ref.read(uploadOnboardingDocumentProvider)(

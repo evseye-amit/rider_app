@@ -10322,6 +10322,24 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'No'**
   String get commonNo;
+
+  /// Upload sheet option that opens the PDF picker
+  ///
+  /// In en, this message translates to:
+  /// **'PDF file'**
+  String get commonPdfFile;
+
+  /// Upload sheet subtitle when the document can be a photo or a PDF
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo of the document, choose one from your gallery, or upload a PDF'**
+  String get onboardingPhotoOrPdf;
+
+  /// Error when the picked file is bigger than the allowed size
+  ///
+  /// In en, this message translates to:
+  /// **'This file is over {size} MB. Pick a smaller one.'**
+  String commonFileTooLarge(String size);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {
