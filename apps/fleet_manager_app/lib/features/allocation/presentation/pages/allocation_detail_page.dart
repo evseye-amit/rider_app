@@ -264,7 +264,10 @@ Future<void> _chooseTeamLead(BuildContext context, WidgetRef ref, String allocat
 }
 
 Future<void> _choosePlan(BuildContext context, WidgetRef ref, String allocationId) async {
-  final RentalPlanOption? plan = await RentalPlanPicker.show(context, allocationId: allocationId);
+  final workflow = ref.read(deploymentDetailProvider(allocationId)).value?.request.workflow;
+  final RentalPlanOption? plan = await RentalPlanPicker.show(
+    context, allocationId: allocationId, workPartnerId: workflow?.workPartnerId,
+  );
   if (plan == null || !context.mounted) return;
   final Result<void> result = await ref.read(deploymentDetailProvider(allocationId).notifier).selectPlan(plan);
   if (!context.mounted) return;
@@ -756,7 +759,10 @@ class _Footer extends ConsumerWidget {
   }
 
   Future<void> _submitPdi(BuildContext context, WidgetRef ref) async {
-    final ({WorkPartnerOption partner, List<PdiChecklistItem> items})? result = await _PdiSheet.show(context);
+    final workflow = detail.request.workflow;
+    final partnerId = workflow?.workPartnerId;
+    final lockedPartner = partnerId == null ? null : WorkPartnerOption(id: partnerId, name: workflow?.workPartnerName ?? partnerId);
+    final result = await _PdiSheet.show(context, lockedPartner: lockedPartner);
     if (result == null || !context.mounted) return;
     final Result<void> submitted = await _notifier(ref).submitPdi(workPartner: result.partner, checklist: result.items);
     if (context.mounted) _announce(context, submitted, context.l10n.allocationInspectionSentRider2);
@@ -825,16 +831,18 @@ class _Footer extends ConsumerWidget {
 }
 
 class _PdiSheet extends StatefulWidget {
-  const _PdiSheet({required this.defaults});
+  const _PdiSheet({required this.defaults, this.lockedPartner});
 
   final List<String> defaults;
+  final WorkPartnerOption? lockedPartner;
 
-  static Future<({WorkPartnerOption partner, List<PdiChecklistItem> items})?> show(BuildContext context) =>
+  static Future<({WorkPartnerOption partner, List<PdiChecklistItem> items})?> show(BuildContext context, {WorkPartnerOption? lockedPartner}) =>
       AppSheet.show<({WorkPartnerOption partner, List<PdiChecklistItem> items})>(
         context,
         title: context.l10n.commonPreDeliveryInspection,
         subtitle: context.l10n.allocationChecklistRiderWillAcceptItem,
         child: _PdiSheet(
+          lockedPartner: lockedPartner,
           defaults: [
             context.l10n.commonBrakes,
             context.l10n.allocationTyresPressure,
@@ -852,7 +860,7 @@ class _PdiSheet extends StatefulWidget {
 }
 
 class _PdiSheetState extends State<_PdiSheet> {
-  WorkPartnerOption? _partner;
+  late WorkPartnerOption? _partner = widget.lockedPartner;
   final TextEditingController _custom = TextEditingController();
   late final Map<String, bool> _items = {for (final String label in widget.defaults) label: true};
   String? _error;
@@ -913,6 +921,7 @@ class _PdiSheetState extends State<_PdiSheet> {
           helper: context.l10n.allocationWorkPartnerHelper,
           prefixIcon: Icons.storefront_rounded,
           required: true,
+          enabled: widget.lockedPartner == null,
           onTap: _pickPartner,
         ),
         const Gap.lg(),

@@ -107,6 +107,7 @@ class DeploymentWorkflow {
     required this.pdiChecklist,
     required this.trainingViewedContentCodes,
     this.workPartnerName,
+    this.workPartnerId,
     this.paymentTotal,
     this.paymentPaidAt,
     this.riderPdiAcceptedAt,
@@ -128,6 +129,7 @@ class DeploymentWorkflow {
             .map((e) => e.toString())
             .toList(growable: false),
         workPartnerName: json['workPartnerName']?.toString(),
+        workPartnerId: json['clientWorkPartnerId']?.toString(),
         paymentPaidAt: _date(json['paymentPaidAt']),
         riderPdiAcceptedAt: _date(json['riderPdiAcceptedAt']),
         trainingCompletedAt: _date(json['trainingCompletedAt']),
@@ -142,6 +144,7 @@ class DeploymentWorkflow {
   final List<PdiChecklistItem> pdiChecklist;
   final List<String> trainingViewedContentCodes;
   final String? workPartnerName;
+  final String? workPartnerId;
   final num? paymentTotal;
   final DateTime? paymentPaidAt;
   final DateTime? riderPdiAcceptedAt;

@@ -88,8 +88,8 @@ class AllocationRepositoryImpl implements AllocationRepository {
   Future<Result<DeploymentPayment>> askPayment(String allocationId) => _deployments.askPayment(allocationId);
 
   @override
-  Future<Result<RentalPlanList>> getPlans(String allocationId, {String? batteryPlanId}) =>
-      _commercial.plans(allocationId, batteryPlanId: batteryPlanId);
+  Future<Result<RentalPlanList>> getPlans(String allocationId, {String? batteryPlanId, String? workPartnerId}) =>
+      _commercial.plans(allocationId, batteryPlanId: batteryPlanId, workPartnerId: workPartnerId);
 
   @override
   Future<Result<AllocationCommercial>> selectPlan(String allocationId, RentalPlanOption plan) =>

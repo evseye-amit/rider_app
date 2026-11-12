@@ -1,5 +1,6 @@
 import '../utils/result.dart';
 import 'api_client.dart';
+import 'deployment_api.dart' show WorkPartnerOption, workPartnerOptionsFromJson;
 
 class CommercialLine {
   const CommercialLine({required this.type, required this.amount, this.refundable = false});
@@ -249,19 +250,22 @@ class RentalPlanOption {
     selection['durationValue'],
     selection['durationUnit'],
     selection['batteryPlanId'],
+    selection['workPartnerId'],
   ].join(':');
 }
 
 class RentalPlanList {
-  const RentalPlanList({required this.items, required this.batteryPlans});
+  const RentalPlanList({required this.items, required this.batteryPlans, this.workPartners});
 
   factory RentalPlanList.fromJson(Map<String, dynamic> json) => RentalPlanList(
     items: [for (final Map<String, dynamic> row in _maps(json['items'])) RentalPlanOption.fromJson(row)],
     batteryPlans: [for (final Map<String, dynamic> row in _maps(json['batteryPlans'])) BatteryPlanOption.fromJson(row)],
+    workPartners: json.containsKey('workPartners') ? workPartnerOptionsFromJson(json['workPartners']) : null,
   );
 
   final List<RentalPlanOption> items;
   final List<BatteryPlanOption> batteryPlans;
+  final List<WorkPartnerOption>? workPartners;
 }
 
 class CommercialApi {
@@ -271,9 +275,9 @@ class CommercialApi {
 
   static const String _deployments = '/mobile-deployments';
 
-  Future<Result<RentalPlanList>> plans(String allocationId, {String? batteryPlanId}) => _client.get<RentalPlanList>(
+  Future<Result<RentalPlanList>> plans(String allocationId, {String? batteryPlanId, String? workPartnerId}) => _client.get<RentalPlanList>(
     '$_deployments/$allocationId/plans',
-    query: {'batteryPlanId': ?batteryPlanId},
+    query: {'batteryPlanId': ?batteryPlanId, 'workPartnerId': ?workPartnerId},
     parse: (data) => RentalPlanList.fromJson(_map(data)),
   );
 
