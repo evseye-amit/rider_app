@@ -84,17 +84,18 @@ class PlanBreakdownView extends StatelessWidget {
 }
 
 class RentalPlanPicker extends ConsumerStatefulWidget {
-  const RentalPlanPicker({required this.allocationId, super.key});
+  const RentalPlanPicker({required this.allocationId, this.workPartnerId, super.key});
 
   final String allocationId;
+  final String? workPartnerId;
 
-  static Future<RentalPlanOption?> show(BuildContext context, {required String allocationId}) =>
+  static Future<RentalPlanOption?> show(BuildContext context, {required String allocationId, String? workPartnerId}) =>
       AppSheet.show<RentalPlanOption>(
         context,
         title: context.l10n.allocationPlanPickTitle,
         subtitle: context.l10n.allocationPlanPickSubtitle,
         maxHeightFactor: 0.92,
-        child: RentalPlanPicker(allocationId: allocationId),
+        child: RentalPlanPicker(allocationId: allocationId, workPartnerId: workPartnerId),
       );
 
   @override
@@ -103,20 +104,49 @@ class RentalPlanPicker extends ConsumerStatefulWidget {
 
 class _RentalPlanPickerState extends ConsumerState<RentalPlanPicker> {
   String? _batteryPlanId;
+  late String? _workPartnerId = widget.workPartnerId;
+  List<WorkPartnerOption>? _workPartners;
   List<BatteryPlanOption> _batteryPlans = const [];
 
-  RentalPlansQuery get _query => RentalPlansQuery(allocationId: widget.allocationId, batteryPlanId: _batteryPlanId);
+  RentalPlansQuery get _query => RentalPlansQuery(
+    allocationId: widget.allocationId,
+    batteryPlanId: _batteryPlanId,
+    workPartnerId: _workPartnerId,
+  );
 
   @override
   Widget build(BuildContext context) {
     final AsyncValue<RentalPlanList> plans = ref.watch(rentalPlansProvider(_query));
     final RentalPlanList? list = plans.value;
-    if (list != null && list.batteryPlans.isNotEmpty) _batteryPlans = list.batteryPlans;
+    if (list != null) {
+      _batteryPlans = list.batteryPlans;
+      _workPartners = list.workPartners;
+    }
+    final workPartners = _workPartners;
+    final bool hasPartner = workPartners?.any((option) => option.id == _workPartnerId) ?? false;
     final int selected = _batteryPlans.indexWhere((plan) => plan.id == _batteryPlanId) + 1;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (workPartners != null && workPartners.isNotEmpty) ...[
+          InputDecorator(
+            decoration: InputDecoration(labelText: context.l10n.allocationWorkPartner),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                isExpanded: true,
+                value: hasPartner ? _workPartnerId : null,
+                hint: Text(context.l10n.allocationChooseWorkPartner),
+                items: [
+                  for (final partner in workPartners)
+                    DropdownMenuItem(value: partner.id, child: Text(partner.name)),
+                ],
+                onChanged: (value) => setState(() => _workPartnerId = value),
+              ),
+            ),
+          ),
+          const Gap.lg(),
+        ],
         if (_batteryPlans.isNotEmpty) ...[
           FilterChipBar(
             items: [
@@ -141,6 +171,15 @@ class _RentalPlanPickerState extends ConsumerState<RentalPlanPicker> {
           )
         else if (list == null)
           for (int i = 0; i < 2; i++) ...[const ShimmerBox(height: 220, borderRadius: Corners.brLg), const Gap.md()]
+        else if (workPartners?.isEmpty == true)
+          EmptyState(
+            title: context.l10n.allocationNoWorkPartners,
+            message: context.l10n.allocationNoWorkPartnersMessage,
+            icon: Icons.storefront_rounded,
+            compact: true,
+          )
+        else if (workPartners != null && !hasPartner)
+          Text(context.l10n.allocationWorkPartnerNeeded)
         else if (list.items.isEmpty)
           EmptyState(
             title: context.l10n.allocationPlanNoneTitle,

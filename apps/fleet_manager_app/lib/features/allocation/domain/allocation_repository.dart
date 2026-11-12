@@ -26,7 +26,7 @@ abstract interface class AllocationRepository {
 
   Future<Result<DeploymentPayment>> askPayment(String allocationId);
 
-  Future<Result<RentalPlanList>> getPlans(String allocationId, {String? batteryPlanId});
+  Future<Result<RentalPlanList>> getPlans(String allocationId, {String? batteryPlanId, String? workPartnerId});
 
   Future<Result<AllocationCommercial>> selectPlan(String allocationId, RentalPlanOption plan);
 
