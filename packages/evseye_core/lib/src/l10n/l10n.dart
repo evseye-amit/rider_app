@@ -1,5 +1,6 @@
 export 'active_locale.dart';
 export 'app_locale.dart';
+export 'company_languages.dart';
 export 'config_messages.dart';
 export 'generated/app_localizations.dart';
 export 'language_chip.dart';

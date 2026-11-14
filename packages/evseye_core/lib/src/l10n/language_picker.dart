@@ -1,14 +1,18 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../api/company_api.dart';
+import '../first_run/company.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_dimens.dart';
 import '../theme/app_typography.dart';
+import '../utils/result.dart';
 import '../widgets/buttons.dart';
 import '../widgets/feedback.dart';
 import '../widgets/pressable.dart';
 import 'l10n.dart';
 
-class LanguagePicker extends StatefulWidget {
+class LanguagePicker extends ConsumerStatefulWidget {
   const LanguagePicker({required this.selected, super.key});
 
   final AppLocale selected;
@@ -24,24 +28,61 @@ class LanguagePicker extends StatefulWidget {
   }
 
   @override
-  State<LanguagePicker> createState() => _LanguagePickerState();
+  ConsumerState<LanguagePicker> createState() => _LanguagePickerState();
 }
 
-class _LanguagePickerState extends State<LanguagePicker> {
+class _LanguagePickerState extends ConsumerState<LanguagePicker> {
   late AppLocale _selected = widget.selected;
 
   @override
   Widget build(BuildContext context) {
-    final AppL10n labels = lookupAppL10n(_selected.locale);
+    final String? code = ref.watch(companyProvider)?.code;
+    final AsyncValue<BootstrapLanguages>? bootstrap = code == null ? null : ref.watch(companyLanguagesProvider(code));
+    final BootstrapLanguages? data = bootstrap?.value;
+    final List<AppLocale> options = bootstrap == null ? AppLocale.values : data?.locales ?? const <AppLocale>[];
+    final AppLocale selected = options.contains(_selected) || options.isEmpty ? _selected : options.first;
+    final AppL10n labels = lookupAppL10n(selected.locale);
     return AppSheet(
       title: labels.commonChooseLanguage,
       subtitle: labels.commonAppWillChangeRightAway,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          LanguageOptions(selected: _selected, onChanged: (option) => setState(() => _selected = option)),
+          switch (bootstrap) {
+            null || AsyncData() => LanguageOptions(
+              selected: selected,
+              options: options,
+              nativeNames: data?.nativeNames ?? const <String, String>{},
+              englishNames: data?.englishNames ?? const <String, String>{},
+              onChanged: (option) => setState(() => _selected = option),
+            ),
+            AsyncError(:final error) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: Insets.lg),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    error is Failure ? error.message : labels.commonSomethingWentWrongPleaseTry,
+                    textAlign: TextAlign.center,
+                    style: AppText.bodyMedium.copyWith(color: AppColors.textSecondary),
+                  ),
+                  TextButton(
+                    onPressed: () => ref.invalidate(companyLanguagesProvider(code!)),
+                    child: Text(labels.commonTryAgain),
+                  ),
+                ],
+              ),
+            ),
+            _ => const Padding(
+              padding: EdgeInsets.symmetric(vertical: Insets.x3l),
+              child: Center(child: CircularProgressIndicator()),
+            ),
+          },
           const SizedBox(height: Insets.md),
-          PrimaryButton(label: labels.commonSave, onPressed: () => Navigator.of(context).pop(_selected)),
+          PrimaryButton(
+            label: labels.commonSave,
+            onPressed: options.isNotEmpty ? () => Navigator.of(context).pop(selected) : null,
+          ),
           const SizedBox(height: Insets.sm),
         ],
       ),
