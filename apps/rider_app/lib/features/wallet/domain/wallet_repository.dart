@@ -1,8 +1,13 @@
 import 'package:evseye_core/evseye_core.dart';
 
+import 'entities/wallet_auto_pay.dart';
 import 'entities/wallet_overview.dart';
 
 abstract interface class WalletRepository {
+  Future<Result<WalletAutoPay>> getAutoPay();
+
+  Future<Result<WalletAutoPay>> setAutoPay({required bool enabled, String? mandateId, int? revision});
+
   Future<Result<WalletOverview>> getOverview();
 
   Future<Result<List<WalletEntry>>> getTransactions({int page, int pageSize});

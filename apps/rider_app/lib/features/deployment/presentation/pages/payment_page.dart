@@ -6,7 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/payments/online_payments.dart';
-import '../../../../core/session/rider_session_provider.dart';
+import '../../../../core/payments/payment_feedback.dart';
+import '../../../../core/payments/payment_flow_provider.dart';
 import '../../domain/usecases/payment_receipt_usecases.dart';
 import '../providers/deployment_payment_provider.dart';
 import '../providers/deployment_provider.dart';
@@ -28,8 +29,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
   bool _online = true;
   bool _submitting = false;
   bool _adding = false;
-  bool _paying = false;
-  String? _notice;
   String? _error;
 
   @override
@@ -59,40 +58,13 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
   });
 
   Future<void> _payOnline(String allocationId, String? vehicle) async {
-    final String mobile = ref.read(riderSessionProvider).mobile;
-    setState(() => _paying = true);
-    final OnlinePaymentOutcome outcome = await ref
-        .read(onlinePaymentsProvider)
-        .pay(
-          PaymentOrderRequest.deployment(allocationId),
-          description: ['Scooter payment', ?vehicle].join(' '),
-          contact: mobile.isEmpty ? null : mobile,
-        );
-    if (!mounted) return;
     final AppL10n l10n = context.l10n;
-    setState(() {
-      _paying = false;
-      _notice = switch (outcome) {
-        OnlinePaymentPending() => l10n.onlinePaymentPending,
-        OnlinePaymentNeedsSupport() => l10n.onlinePaymentReview,
-        _ => _notice,
-      };
-    });
-    switch (outcome) {
-      case OnlinePaymentPaid():
-        AppSnack.success(context, l10n.onlinePaymentDone);
-        unawaited(ref.read(deploymentProvider.notifier).refresh(silent: true));
-      case OnlinePaymentCancelled():
-        AppSnack.info(context, l10n.onlinePaymentCancelled);
-      case OnlinePaymentDeclined():
-        AppSnack.error(context, l10n.onlinePaymentFailed);
-      case OnlinePaymentUnavailable():
-        AppSnack.error(context, l10n.deploymentOnlineUnavailable);
-      case OnlinePaymentError(:final message):
-        AppSnack.error(context, message);
-      case OnlinePaymentPending() || OnlinePaymentNeedsSupport():
-        break;
-    }
+    final OnlinePaymentOutcome? outcome = await ref
+        .read(paymentFlowProvider(PaymentSlots.deployment(allocationId)).notifier)
+        .pay(PaymentOrderRequest.deployment(allocationId), description: ['Scooter payment', ?vehicle].join(' '));
+    if (outcome == null || !mounted) return;
+    showPaymentOutcome(context, outcome, unavailable: l10n.deploymentOnlineUnavailable);
+    if (outcome is OnlinePaymentPaid) unawaited(ref.read(deploymentProvider.notifier).refresh(silent: true));
     unawaited(ref.read(deploymentPaymentProvider(allocationId).notifier).reload());
   }
 
@@ -185,6 +157,8 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     }
 
     final DeploymentPayment? payment = ref.watch(deploymentPaymentProvider(allocationId)).value;
+    final String slot = PaymentSlots.deployment(allocationId);
+    final PaymentFlowState flow = ref.watch(paymentFlowProvider(slot));
     final DeploymentFleet? fleet = current?.allocation?.fleet;
     final bool submitted = payment?.isSubmitted == true;
     final bool canPay = payment != null && !submitted && !payment.isPaid && !payment.needsSupport;
@@ -200,14 +174,14 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
         final DeploymentPayment due when canPay && _online => PrimaryButton(
           label: context.l10n.deploymentPayOnline(Fmt.money(due.amount)),
           icon: Icons.lock_rounded,
-          loading: _paying,
-          onPressed: _paying || _notice != null ? null : () => _payOnline(allocationId, fleet?.vehicleNumber),
+          loading: flow.busy,
+          onPressed: flow.busy || flow.blocksPayment ? null : () => _payOnline(allocationId, fleet?.vehicleNumber),
         ),
         final DeploymentPayment due when canPay => PrimaryButton(
           label: context.l10n.deploymentIHavePaid(Fmt.money(due.amount)),
           icon: Icons.check_circle_rounded,
           loading: _submitting,
-          onPressed: _submitting || _notice != null ? null : () => _submit(allocationId),
+          onPressed: _submitting || flow.blocksPayment ? null : () => _submit(allocationId),
         ),
         _ => null,
       },
@@ -248,13 +222,7 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
                 )
               else ...[
                 if (payment.isRejected) ...[_Rejected(payment: payment), const Gap.lg()],
-                if (_notice case final String notice) ...[
-                  AccentCard(
-                    accent: AppColors.info,
-                    child: Text(notice, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45)),
-                  ),
-                  const Gap.lg(),
-                ],
+                PaymentNoticeCard(slot: slot, spacing: Insets.lg),
                 ModuleCard(
                   title: context.l10n.deploymentHowToPay,
                   leading: const IconTile(icon: Icons.payments_rounded, solid: true, size: 28),

@@ -7400,5 +7400,314 @@
         "type": "String"
       }
     }
+  },
+  "walletAddMoney": "Add money",
+  "@walletAddMoney": {
+    "description": "Button and sheet title for adding money to the wallet"
+  },
+  "walletAddMoneyLimits": "Add between {min} and {max}",
+  "@walletAddMoneyLimits": {
+    "description": "Allowed top-up range shown under the add money title",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "walletAddMoneyAmount": "Amount",
+  "@walletAddMoneyAmount": {
+    "description": "Label for the top-up amount field"
+  },
+  "walletAddMoneyInvalidAmount": "Enter an amount between {min} and {max}.",
+  "@walletAddMoneyInvalidAmount": {
+    "description": "Error when the top-up amount is outside the allowed range",
+    "placeholders": {
+      "min": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "walletAddMoneyNonRefundable": "Money you add can be used only for payments in the app. It can't be refunded or withdrawn.",
+  "@walletAddMoneyNonRefundable": {
+    "description": "Note that wallet top-ups are non-refundable and non-withdrawable"
+  },
+  "walletAddMoneyPay": "Add {amount}",
+  "@walletAddMoneyPay": {
+    "description": "Button that starts the top-up payment",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "walletAddMoneyDone": "{amount} added to your wallet.",
+  "@walletAddMoneyDone": {
+    "description": "Shown after the wallet top-up succeeds",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "walletAddMoneyUnavailable": "Adding money isn't available right now. Please try again later.",
+  "@walletAddMoneyUnavailable": {
+    "description": "Shown when no payment provider is available for top-ups"
+  },
+  "paymentCheckStatus": "Check payment status",
+  "@paymentCheckStatus": {
+    "description": "Button that rechecks an unresolved online payment"
+  },
+  "paymentInProgress": "You already have a payment in progress. Check its status before paying again.",
+  "@paymentInProgress": {
+    "description": "Another unresolved payment blocks a new one"
+  },
+  "paymentStillConfirming": "Still confirming with your bank. It will update automatically.",
+  "@paymentStillConfirming": {
+    "description": "Status check found the payment still pending"
+  },
+  "paymentRefundPending": "A refund for this payment is being processed. Please don't pay again.",
+  "@paymentRefundPending": {
+    "description": "Payment has an active refund"
+  },
+  "paymentRefunded": "This payment was refunded to you.",
+  "@paymentRefunded": {
+    "description": "Payment was fully refunded"
+  },
+  "paymentUnavailable": "Online payment isn't available right now. Please try again later.",
+  "@paymentUnavailable": {
+    "description": "Online payment cannot be started"
+  },
+  "paymentDiscard": "Discard old payment",
+  "@paymentDiscard": {
+    "description": "Button that abandons an unpaid checkout"
+  },
+  "paymentDiscardTitle": "Discard this payment?",
+  "@paymentDiscardTitle": {
+    "description": "Confirmation title for abandoning an unpaid checkout"
+  },
+  "paymentDiscardMessage": "Do this only if you didn't finish paying. If money was already taken, it will still be confirmed and won't be lost.",
+  "@paymentDiscardMessage": {
+    "description": "Confirmation message for abandoning an unpaid checkout"
+  },
+  "paymentDiscarded": "Old payment discarded. You can pay again.",
+  "@paymentDiscarded": {
+    "description": "Unpaid checkout was abandoned"
+  },
+  "paymentDiscardFailed": "We couldn't discard it yet. Check its status first.",
+  "@paymentDiscardFailed": {
+    "description": "Unpaid checkout could not be abandoned"
+  },
+  "paymentWalletInactive": "Your wallet isn't active right now, so you can't add money. Please contact support.",
+  "@paymentWalletInactive": {
+    "description": "Top-up rejected because the wallet is inactive"
+  },
+  "paymentsPayNow": "Pay {amount} now",
+  "@paymentsPayNow": {
+    "description": "Button that pays all outstanding dues",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsPayDepositFirst": "Pay your security deposit bill first, then pay the rest.",
+  "@paymentsPayDepositFirst": {
+    "description": "Outstanding payment needs the deposit invoice paid separately"
+  },
+  "paymentsAmountTooSmall": "This amount is too small to pay online.",
+  "@paymentsAmountTooSmall": {
+    "description": "Outstanding amount is below the gateway minimum"
+  },
+  "paymentsCurrencyUnsupported": "Online payment isn't available for these charges.",
+  "@paymentsCurrencyUnsupported": {
+    "description": "Outstanding charges use an unsupported or mixed currency"
+  },
+  "paymentsOpenBills": "View bills",
+  "@paymentsOpenBills": {
+    "description": "Button that opens the bills list"
+  },
+  "paymentsUpcomingDebits": "Upcoming auto-debits",
+  "@paymentsUpcomingDebits": {
+    "description": "Heading for scheduled auto-debits"
+  },
+  "paymentsRecentDebits": "Recent auto-debits",
+  "@paymentsRecentDebits": {
+    "description": "Heading for past auto-debits"
+  },
+  "paymentsAmountMayChange": "The amount may change if you pay before this date.",
+  "@paymentsAmountMayChange": {
+    "description": "Scheduled auto-debit amount can change"
+  },
+  "rentalsPayBill": "Pay {amount}",
+  "@rentalsPayBill": {
+    "description": "Button that pays a bill online",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "rentalsPayBillWalletHint": "Your wallet balance is used first. You pay only the rest.",
+  "@rentalsPayBillWalletHint": {
+    "description": "Bill payment uses the wallet before checkout"
+  },
+  "walletAutoPayTitle": "Auto recharge",
+  "@walletAutoPayTitle": {
+    "description": "Wallet auto recharge card title"
+  },
+  "walletAutoPaySummary": "Adds {amount} when your cash balance falls below {threshold}.",
+  "@walletAutoPaySummary": {
+    "description": "Wallet auto recharge rule",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "threshold": {
+        "type": "String"
+      }
+    }
+  },
+  "walletAutoPayOn": "On",
+  "@walletAutoPayOn": {
+    "description": "Auto recharge is on"
+  },
+  "walletAutoPayOff": "Off",
+  "@walletAutoPayOff": {
+    "description": "Auto recharge is off"
+  },
+  "walletAutoPayTurnOn": "Turn on auto recharge",
+  "@walletAutoPayTurnOn": {
+    "description": "Button that turns on wallet auto recharge"
+  },
+  "walletAutoPayReviewTerms": "Review new terms",
+  "@walletAutoPayReviewTerms": {
+    "description": "Button to accept changed auto recharge terms"
+  },
+  "walletAutoPayTurnOff": "Turn off auto recharge",
+  "@walletAutoPayTurnOff": {
+    "description": "Button that turns off wallet auto recharge"
+  },
+  "walletAutoPayTurnOffTitle": "Turn off auto recharge?",
+  "@walletAutoPayTurnOffTitle": {
+    "description": "Confirmation title for turning off auto recharge"
+  },
+  "walletAutoPayTurnOffMessage": "No new auto recharges will start. A recharge already sent to your bank may still complete, and your auto-debit stays active.",
+  "@walletAutoPayTurnOffMessage": {
+    "description": "Confirmation message for turning off auto recharge"
+  },
+  "walletAutoPayTurnedOn": "Auto recharge is on",
+  "@walletAutoPayTurnedOn": {
+    "description": "Auto recharge was turned on"
+  },
+  "walletAutoPayTurnedOff": "Auto recharge is off",
+  "@walletAutoPayTurnedOff": {
+    "description": "Auto recharge was turned off"
+  },
+  "walletAutoPayPolicyOff": "Auto recharge is paused for now. No new recharges will start.",
+  "@walletAutoPayPolicyOff": {
+    "description": "Operator has paused auto recharge"
+  },
+  "walletAutoPayTermsChanged": "The auto recharge terms have changed. Review and accept them to keep it on.",
+  "@walletAutoPayTermsChanged": {
+    "description": "Auto recharge needs fresh consent"
+  },
+  "walletAutoPayActionRequired": "Your last auto recharge didn't go through. Check your auto-debit, then turn auto recharge on again.",
+  "@walletAutoPayActionRequired": {
+    "description": "Last auto recharge failed"
+  },
+  "walletAutoPayRecent": "Recent auto recharges",
+  "@walletAutoPayRecent": {
+    "description": "Heading for auto recharge requests"
+  },
+  "walletAutoPayEarliestDebit": "Earliest debit {date}",
+  "@walletAutoPayEarliestDebit": {
+    "description": "Earliest time a pending auto recharge can be debited",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "walletAutoPayStatusPreparing": "Preparing",
+  "@walletAutoPayStatusPreparing": {
+    "description": "Auto recharge is being prepared"
+  },
+  "walletAutoPayStatusPending": "Waiting for bank",
+  "@walletAutoPayStatusPending": {
+    "description": "Auto recharge is waiting for the bank"
+  },
+  "walletAutoPayStatusConfirming": "Confirming",
+  "@walletAutoPayStatusConfirming": {
+    "description": "Auto recharge outcome is being confirmed"
+  },
+  "walletAutoPayStatusReview": "Under review",
+  "@walletAutoPayStatusReview": {
+    "description": "Auto recharge needs a manual check"
+  },
+  "walletAutoPayStatusAdded": "Added",
+  "@walletAutoPayStatusAdded": {
+    "description": "Auto recharge money was added"
+  },
+  "walletAutoPayStatusStopped": "Stopped",
+  "@walletAutoPayStatusStopped": {
+    "description": "Auto recharge was stopped before debit"
+  },
+  "walletAutoPayConsentTitle": "Turn on auto recharge",
+  "@walletAutoPayConsentTitle": {
+    "description": "Auto recharge consent sheet title"
+  },
+  "walletAutoPayConsent": "While I have an active scooter, automatically add {amount} when my available cash balance falls below {threshold}. Each recharge needs my auto-debit and bank confirmation, with at least {hours} hours' notice. Only one auto recharge can be pending at a time, and a new one won't start within {cooldown} hours of a successful recharge. A recharge already sent to my bank may still complete if I turn this off or add money myself.",
+  "@walletAutoPayConsent": {
+    "description": "Auto recharge consent terms",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "threshold": {
+        "type": "String"
+      },
+      "hours": {
+        "type": "String"
+      },
+      "cooldown": {
+        "type": "String"
+      }
+    }
+  },
+  "walletAutoPayCashOnly": "Only your cash balance counts. Incentives and security deposit are not included.",
+  "@walletAutoPayCashOnly": {
+    "description": "Auto recharge threshold uses cash balance only"
+  },
+  "walletAutoPayNeedsMandate": "Set up auto-debit first. Its limit must be at least {amount}.",
+  "@walletAutoPayNeedsMandate": {
+    "description": "Auto recharge needs an active auto-debit mandate",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "walletAutoPaySetUpMandate": "Set up auto-debit",
+  "@walletAutoPaySetUpMandate": {
+    "description": "Button that opens auto-debit setup"
+  },
+  "walletAutoPayAgree": "I agree to these auto recharge terms",
+  "@walletAutoPayAgree": {
+    "description": "Auto recharge consent checkbox"
+  },
+  "walletAutoPayManualNote": "An auto recharge of {amount} is already in progress. If you add money now, that recharge may still complete.",
+  "@walletAutoPayManualNote": {
+    "description": "Manual top-up while an auto recharge is pending",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

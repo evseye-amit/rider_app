@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:evseye_core/evseye_core.dart';
 
 class HomeSummary extends Equatable {
   const HomeSummary({
@@ -7,8 +6,6 @@ class HomeSummary extends Equatable {
     this.rentDue,
     this.rentDueDate,
     this.paidToDate,
-    this.autoPay,
-    this.nextDebitDate,
     this.lastPaymentAmount,
     this.lastPaymentAt,
     this.workPartner,
@@ -22,8 +19,6 @@ class HomeSummary extends Equatable {
   final num rentOverdue;
   final DateTime? rentDueDate;
   final num? paidToDate;
-  final AutoPayStatus? autoPay;
-  final DateTime? nextDebitDate;
   final num? lastPaymentAmount;
   final DateTime? lastPaymentAt;
   final String? workPartner;
@@ -40,8 +35,6 @@ class HomeSummary extends Equatable {
     rentOverdue,
     rentDueDate,
     paidToDate,
-    autoPay,
-    nextDebitDate,
     lastPaymentAmount,
     lastPaymentAt,
     workPartner,

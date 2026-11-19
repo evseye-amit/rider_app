@@ -40,30 +40,34 @@ abstract final class RazorpayCheckout {
       scheduleMicrotask(razorpay.clear);
     }
 
-    razorpay
-      ..on(
-        Razorpay.EVENT_PAYMENT_SUCCESS,
-        (PaymentSuccessResponse response) => finish(switch (response) {
-          PaymentSuccessResponse(:final String orderId, :final String paymentId, :final String signature) =>
-            CheckoutSucceeded(orderId: orderId, paymentId: paymentId, signature: signature),
-          _ => const CheckoutFailed(),
-        }),
-      )
-      ..on(
-        Razorpay.EVENT_PAYMENT_ERROR,
-        (PaymentFailureResponse response) =>
-            finish(response.code == Razorpay.PAYMENT_CANCELLED ? const CheckoutCancelled() : const CheckoutFailed()),
-      )
-      ..open({
-        'key': checkout.keyId,
-        'order_id': checkout.orderId,
-        'amount': checkout.amountPaise,
-        'currency': currency,
-        'name': FlavorConfig.razorpayName.isEmpty ? FlavorConfig.riderAppName : FlavorConfig.razorpayName,
-        'description': description,
-        'prefill': {'contact': ?contact},
-        'theme': {'color': _hex(FlavorConfig.primary)},
-      });
+    try {
+      razorpay
+        ..on(
+          Razorpay.EVENT_PAYMENT_SUCCESS,
+          (PaymentSuccessResponse response) => finish(switch (response) {
+            PaymentSuccessResponse(:final String orderId, :final String paymentId, :final String signature) =>
+              CheckoutSucceeded(orderId: orderId, paymentId: paymentId, signature: signature),
+            _ => const CheckoutFailed(),
+          }),
+        )
+        ..on(
+          Razorpay.EVENT_PAYMENT_ERROR,
+          (PaymentFailureResponse response) =>
+              finish(response.code == Razorpay.PAYMENT_CANCELLED ? const CheckoutCancelled() : const CheckoutFailed()),
+        )
+        ..open({
+          'key': checkout.keyId,
+          'order_id': checkout.orderId,
+          'amount': checkout.amountPaise,
+          'currency': currency,
+          'name': FlavorConfig.razorpayName.isEmpty ? FlavorConfig.riderAppName : FlavorConfig.razorpayName,
+          'description': description,
+          'prefill': {'contact': ?contact},
+          'theme': {'color': _hex(FlavorConfig.primary)},
+        });
+    } on Object {
+      finish(const CheckoutFailed());
+    }
     return done.future;
   }
 

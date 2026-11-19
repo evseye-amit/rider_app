@@ -13,6 +13,7 @@ class AutoPayMandate extends Equatable {
     required this.canTurnOff,
     required this.cancellationPending,
     required this.managedInUpiApp,
+    this.maxAmount = 0,
     this.approvalUrl,
   });
 
@@ -25,6 +26,7 @@ class AutoPayMandate extends Equatable {
   final bool canTurnOff;
   final bool cancellationPending;
   final bool managedInUpiApp;
+  final num maxAmount;
   final String? approvalUrl;
 
   @override
@@ -38,6 +40,7 @@ class AutoPayMandate extends Equatable {
     canTurnOff,
     cancellationPending,
     managedInUpiApp,
+    maxAmount,
     approvalUrl,
   ];
 }
@@ -51,4 +54,29 @@ class AutoPaySetup extends Equatable {
 
   @override
   List<Object?> get props => [canSetUp, maxAmount, mandate];
+}
+
+enum AutoPayDebitState { pending, settled, failed }
+
+class AutoPayDebit extends Equatable {
+  const AutoPayDebit({
+    required this.id,
+    required this.number,
+    required this.amount,
+    required this.state,
+    this.invoiceNumber,
+    this.amountMayChange = false,
+    this.scheduledFor,
+  });
+
+  final String id;
+  final String number;
+  final num amount;
+  final AutoPayDebitState state;
+  final String? invoiceNumber;
+  final bool amountMayChange;
+  final DateTime? scheduledFor;
+
+  @override
+  List<Object?> get props => [id, number, amount, state, invoiceNumber, amountMayChange, scheduledFor];
 }

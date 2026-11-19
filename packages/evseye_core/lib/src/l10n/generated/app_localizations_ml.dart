@@ -5442,4 +5442,209 @@ class AppL10nMl extends AppL10n {
   String commonFileTooLarge(String size) {
     return 'This file is over $size MB. Pick a smaller one.';
   }
+
+  @override
+  String get walletAddMoney => 'Add money';
+
+  @override
+  String walletAddMoneyLimits(String min, String max) {
+    return 'Add between $min and $max';
+  }
+
+  @override
+  String get walletAddMoneyAmount => 'Amount';
+
+  @override
+  String walletAddMoneyInvalidAmount(String min, String max) {
+    return 'Enter an amount between $min and $max.';
+  }
+
+  @override
+  String get walletAddMoneyNonRefundable =>
+      'Money you add can be used only for payments in the app. It can\'t be refunded or withdrawn.';
+
+  @override
+  String walletAddMoneyPay(String amount) {
+    return 'Add $amount';
+  }
+
+  @override
+  String walletAddMoneyDone(String amount) {
+    return '$amount added to your wallet.';
+  }
+
+  @override
+  String get walletAddMoneyUnavailable => 'Adding money isn\'t available right now. Please try again later.';
+
+  @override
+  String get paymentCheckStatus => 'Check payment status';
+
+  @override
+  String get paymentInProgress => 'You already have a payment in progress. Check its status before paying again.';
+
+  @override
+  String get paymentStillConfirming => 'Still confirming with your bank. It will update automatically.';
+
+  @override
+  String get paymentRefundPending => 'A refund for this payment is being processed. Please don\'t pay again.';
+
+  @override
+  String get paymentRefunded => 'This payment was refunded to you.';
+
+  @override
+  String get paymentUnavailable => 'Online payment isn\'t available right now. Please try again later.';
+
+  @override
+  String get paymentDiscard => 'Discard old payment';
+
+  @override
+  String get paymentDiscardTitle => 'Discard this payment?';
+
+  @override
+  String get paymentDiscardMessage =>
+      'Do this only if you didn\'t finish paying. If money was already taken, it will still be confirmed and won\'t be lost.';
+
+  @override
+  String get paymentDiscarded => 'Old payment discarded. You can pay again.';
+
+  @override
+  String get paymentDiscardFailed => 'We couldn\'t discard it yet. Check its status first.';
+
+  @override
+  String get paymentWalletInactive =>
+      'Your wallet isn\'t active right now, so you can\'t add money. Please contact support.';
+
+  @override
+  String paymentsPayNow(String amount) {
+    return 'Pay $amount now';
+  }
+
+  @override
+  String get paymentsPayDepositFirst => 'Pay your security deposit bill first, then pay the rest.';
+
+  @override
+  String get paymentsAmountTooSmall => 'This amount is too small to pay online.';
+
+  @override
+  String get paymentsCurrencyUnsupported => 'Online payment isn\'t available for these charges.';
+
+  @override
+  String get paymentsOpenBills => 'View bills';
+
+  @override
+  String get paymentsUpcomingDebits => 'Upcoming auto-debits';
+
+  @override
+  String get paymentsRecentDebits => 'Recent auto-debits';
+
+  @override
+  String get paymentsAmountMayChange => 'The amount may change if you pay before this date.';
+
+  @override
+  String rentalsPayBill(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String get rentalsPayBillWalletHint => 'Your wallet balance is used first. You pay only the rest.';
+
+  @override
+  String get walletAutoPayTitle => 'Auto recharge';
+
+  @override
+  String walletAutoPaySummary(String amount, String threshold) {
+    return 'Adds $amount when your cash balance falls below $threshold.';
+  }
+
+  @override
+  String get walletAutoPayOn => 'On';
+
+  @override
+  String get walletAutoPayOff => 'Off';
+
+  @override
+  String get walletAutoPayTurnOn => 'Turn on auto recharge';
+
+  @override
+  String get walletAutoPayReviewTerms => 'Review new terms';
+
+  @override
+  String get walletAutoPayTurnOff => 'Turn off auto recharge';
+
+  @override
+  String get walletAutoPayTurnOffTitle => 'Turn off auto recharge?';
+
+  @override
+  String get walletAutoPayTurnOffMessage =>
+      'No new auto recharges will start. A recharge already sent to your bank may still complete, and your auto-debit stays active.';
+
+  @override
+  String get walletAutoPayTurnedOn => 'Auto recharge is on';
+
+  @override
+  String get walletAutoPayTurnedOff => 'Auto recharge is off';
+
+  @override
+  String get walletAutoPayPolicyOff => 'Auto recharge is paused for now. No new recharges will start.';
+
+  @override
+  String get walletAutoPayTermsChanged => 'The auto recharge terms have changed. Review and accept them to keep it on.';
+
+  @override
+  String get walletAutoPayActionRequired =>
+      'Your last auto recharge didn\'t go through. Check your auto-debit, then turn auto recharge on again.';
+
+  @override
+  String get walletAutoPayRecent => 'Recent auto recharges';
+
+  @override
+  String walletAutoPayEarliestDebit(String date) {
+    return 'Earliest debit $date';
+  }
+
+  @override
+  String get walletAutoPayStatusPreparing => 'Preparing';
+
+  @override
+  String get walletAutoPayStatusPending => 'Waiting for bank';
+
+  @override
+  String get walletAutoPayStatusConfirming => 'Confirming';
+
+  @override
+  String get walletAutoPayStatusReview => 'Under review';
+
+  @override
+  String get walletAutoPayStatusAdded => 'Added';
+
+  @override
+  String get walletAutoPayStatusStopped => 'Stopped';
+
+  @override
+  String get walletAutoPayConsentTitle => 'Turn on auto recharge';
+
+  @override
+  String walletAutoPayConsent(String amount, String threshold, String hours, String cooldown) {
+    return 'While I have an active scooter, automatically add $amount when my available cash balance falls below $threshold. Each recharge needs my auto-debit and bank confirmation, with at least $hours hours\' notice. Only one auto recharge can be pending at a time, and a new one won\'t start within $cooldown hours of a successful recharge. A recharge already sent to my bank may still complete if I turn this off or add money myself.';
+  }
+
+  @override
+  String get walletAutoPayCashOnly =>
+      'Only your cash balance counts. Incentives and security deposit are not included.';
+
+  @override
+  String walletAutoPayNeedsMandate(String amount) {
+    return 'Set up auto-debit first. Its limit must be at least $amount.';
+  }
+
+  @override
+  String get walletAutoPaySetUpMandate => 'Set up auto-debit';
+
+  @override
+  String get walletAutoPayAgree => 'I agree to these auto recharge terms';
+
+  @override
+  String walletAutoPayManualNote(String amount) {
+    return 'An auto recharge of $amount is already in progress. If you add money now, that recharge may still complete.';
+  }
 }

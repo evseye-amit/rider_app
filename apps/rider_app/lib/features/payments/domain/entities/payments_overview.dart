@@ -23,14 +23,27 @@ class PaymentRecord extends Equatable {
   List<Object?> get props => [id, amount, method, status, receivedAt, invoiceCount];
 }
 
+class DueBalance extends Equatable {
+  const DueBalance({required this.currency, required this.amountDue, required this.overdueAmount});
+
+  final String currency;
+  final num amountDue;
+  final num overdueAmount;
+
+  @override
+  List<Object?> get props => [currency, amountDue, overdueAmount];
+}
+
 class PaymentsOverview extends Equatable {
   const PaymentsOverview({
-    required this.amountDue,
-    required this.overdueAmount,
-    required this.currency,
     required this.autoPay,
     required this.payNowAvailable,
     required this.recentPayments,
+    this.amountDue,
+    this.overdueAmount,
+    this.currency,
+    this.balances = const [],
+    this.payNowUnavailableReason,
     this.dueDate,
     this.paymentMethod,
     this.mandateMaxAmount,
@@ -40,9 +53,11 @@ class PaymentsOverview extends Equatable {
     this.damageCount = 0,
   });
 
-  final num amountDue;
-  final num overdueAmount;
-  final String currency;
+  final num? amountDue;
+  final num? overdueAmount;
+  final String? currency;
+  final List<DueBalance> balances;
+  final String? payNowUnavailableReason;
   final AutoPayState autoPay;
   final bool payNowAvailable;
   final List<PaymentRecord> recentPayments;
@@ -54,13 +69,17 @@ class PaymentsOverview extends Equatable {
   final num damageDue;
   final int damageCount;
 
-  num get rentDue => amountDue - damageDue < 0 ? 0 : amountDue - damageDue;
+  bool get hasMixedCurrencies => amountDue == null && balances.isNotEmpty;
 
-  num get rentOverdue => overdueAmount - damageDue < 0 ? 0 : overdueAmount - damageDue;
+  num get totalDue => amountDue ?? 0;
 
-  bool get isOverdue => rentOverdue > 0;
+  num get rentDue => totalDue - damageDue < 0 ? 0 : totalDue - damageDue;
 
-  bool get isSettled => amountDue <= 0;
+  num get rentOverdue => (overdueAmount ?? 0) - damageDue < 0 ? 0 : (overdueAmount ?? 0) - damageDue;
+
+  bool get isOverdue => hasMixedCurrencies ? balances.any((balance) => balance.overdueAmount > 0) : rentOverdue > 0;
+
+  bool get isSettled => hasMixedCurrencies ? balances.every((balance) => balance.amountDue <= 0) : totalDue <= 0;
 
   bool get autoPayNeedsAttention => switch (autoPay) {
     AutoPayState.setupRequired ||
@@ -76,6 +95,8 @@ class PaymentsOverview extends Equatable {
     amountDue,
     overdueAmount,
     currency,
+    balances,
+    payNowUnavailableReason,
     autoPay,
     payNowAvailable,
     recentPayments,

@@ -4,9 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../../app/router/app_routes.dart';
+import '../../../../core/payments/payment_feedback.dart';
+import '../../../../core/payments/payment_flow_provider.dart';
 import '../../domain/entities/damage_charge.dart';
 import '../providers/damage_charges_providers.dart';
-import '../providers/damage_payment_provider.dart';
 import '../widgets/damage_charge_widgets.dart';
 import '../widgets/damage_pay_action.dart';
 
@@ -17,23 +18,20 @@ class DamageChargesPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<DamageChargesSummary> summary = ref.watch(damageChargesSummaryProvider);
     final AsyncValue<List<DamageCharge>> charges = ref.watch(damageChargesProvider);
-    final DamagePaymentState payment = ref.watch(damagePaymentProvider);
+    final PaymentFlowState payment = ref.watch(paymentFlowProvider(PaymentSlots.submissionPenalty));
     final DamageChargesSummary? totals = summary.value;
     final List<DamageCharge>? items = charges.value;
     final List<DamageCharge> toPay = [...?items?.where((charge) => charge.isOpen)];
     final List<DamageCharge> paid = [...?items?.where((charge) => !charge.isOpen)];
-    final String? notice = payment.notice == null || totals == null
-        ? null
-        : damagePaymentNote(context.l10n, totals, payment.notice);
 
     return AppScaffold(
       title: context.l10n.damageChargesTitle,
       footer: switch (totals) {
-        final DamageChargesSummary value when value.canPay && notice == null => PrimaryButton(
+        final DamageChargesSummary value when value.canPay && !payment.blocksPayment => PrimaryButton(
           label: context.l10n.damageChargePay(Fmt.money(value.payAmount, paise: true)),
           icon: Icons.lock_rounded,
-          loading: payment.paying,
-          onPressed: payment.paying ? null : () => payDamageCharges(context, ref),
+          loading: payment.busy,
+          onPressed: payment.busy ? null : () => payDamageCharges(context, ref),
         ),
         _ => null,
       },
@@ -46,13 +44,7 @@ class DamageChargesPage extends ConsumerWidget {
         child: PageBody(
           physics: const AlwaysScrollableScrollPhysics(),
           children: [
-            if (notice != null) ...[
-              AccentCard(
-                accent: AppColors.info,
-                child: Text(notice, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45)),
-              ),
-              const Gap.lg(),
-            ],
+            const PaymentNoticeCard(slot: PaymentSlots.submissionPenalty, spacing: Insets.lg),
             if (totals != null && totals.total > 0) ...[
               _Total(summary: totals),
               const Gap.lg(),
@@ -134,7 +126,7 @@ class _Total extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppL10n l10n = context.l10n;
-    final String? note = damagePaymentNote(l10n, summary, null);
+    final String? note = damagePaymentNote(l10n, summary);
     return ModuleCard(
       title: l10n.damageChargeAmountToPay,
       leading: const IconTile(icon: Icons.receipt_long_rounded, solid: true, size: 28),

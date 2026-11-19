@@ -79,14 +79,31 @@ class PaymentAllocation {
   final num amount;
 }
 
+class CurrencyBalance {
+  const CurrencyBalance({required this.currency, required this.amountDue, required this.overdueAmount});
+
+  factory CurrencyBalance.fromJson(Map<String, dynamic> json) => CurrencyBalance(
+    currency: _text(json['currency']).toUpperCase(),
+    amountDue: _money(json['amountDue']),
+    overdueAmount: _money(json['overdueAmount']),
+  );
+
+  final String currency;
+  final num amountDue;
+  final num overdueAmount;
+}
+
 class PaymentsHome {
   const PaymentsHome({
-    required this.amountDue,
-    required this.overdueAmount,
-    required this.currency,
     required this.autoPayStatus,
     required this.payNowAvailable,
     required this.recentPayments,
+    this.amountDue,
+    this.overdueAmount,
+    this.currency,
+    this.balancesByCurrency = const [],
+    this.payNowUnavailableReason,
+    this.autoPayEnabled,
     this.dueDate,
     this.paymentMethod,
     this.mandateStatus,
@@ -96,9 +113,15 @@ class PaymentsHome {
   });
 
   factory PaymentsHome.fromJson(Map<String, dynamic> json) => PaymentsHome(
-    amountDue: _money(json['amountDue']),
-    overdueAmount: _money(json['overdueAmount']),
-    currency: json['currency']?.toString() ?? 'INR',
+    amountDue: json['amountDue'] == null ? null : _money(json['amountDue']),
+    overdueAmount: json['overdueAmount'] == null ? null : _money(json['overdueAmount']),
+    currency: json['currency']?.toString(),
+    balancesByCurrency: (json['balancesByCurrency'] as List<dynamic>? ?? const [])
+        .whereType<Map>()
+        .map((e) => CurrencyBalance.fromJson(Map<String, dynamic>.from(e)))
+        .toList(growable: false),
+    payNowUnavailableReason: json['payNowUnavailableReason']?.toString(),
+    autoPayEnabled: json['autoPayEnabled'] is bool ? json['autoPayEnabled'] as bool : null,
     autoPayStatus: AutoPayStatus.parse(json['autoPayStatus']),
     payNowAvailable: json['payNowAvailable'] == true,
     recentPayments: (json['recentPayments'] as List<dynamic>? ?? const [])
@@ -113,9 +136,12 @@ class PaymentsHome {
     nextAutoPayDate: _date(json['nextAutoPayDate']),
   );
 
-  final num amountDue;
-  final num overdueAmount;
-  final String currency;
+  final num? amountDue;
+  final num? overdueAmount;
+  final String? currency;
+  final List<CurrencyBalance> balancesByCurrency;
+  final String? payNowUnavailableReason;
+  final bool? autoPayEnabled;
   final AutoPayStatus autoPayStatus;
   final bool payNowAvailable;
   final List<RiderPaymentRecord> recentPayments;
@@ -125,8 +151,45 @@ class PaymentsHome {
   final num? mandateMaxAmount;
   final DateTime? mandateExpiresAt;
   final DateTime? nextAutoPayDate;
+}
 
-  bool get isOverdue => overdueAmount > 0;
+class AutoPayDebitDto {
+  const AutoPayDebitDto({
+    required this.id,
+    required this.number,
+    required this.amount,
+    required this.status,
+    this.currency = 'INR',
+    this.invoiceNumber,
+    this.currentOutstanding,
+    this.amountMayChange = false,
+    this.scheduledFor,
+    this.failureCode,
+  });
+
+  factory AutoPayDebitDto.fromJson(Map<String, dynamic> json) => AutoPayDebitDto(
+    id: _text(json['debitId']),
+    number: _text(json['debitNumber']),
+    amount: _money(json['scheduledAmount'] ?? json['amount']),
+    status: _text(json['status']).toUpperCase(),
+    currency: json['currency']?.toString() ?? 'INR',
+    invoiceNumber: json['invoiceNumber']?.toString(),
+    currentOutstanding: json['currentOutstanding'] == null ? null : _money(json['currentOutstanding']),
+    amountMayChange: json['amountMayChange'] == true,
+    scheduledFor: _date(json['scheduledFor']),
+    failureCode: json['failureCode']?.toString(),
+  );
+
+  final String id;
+  final String number;
+  final num amount;
+  final String status;
+  final String currency;
+  final String? invoiceNumber;
+  final num? currentOutstanding;
+  final bool amountMayChange;
+  final DateTime? scheduledFor;
+  final String? failureCode;
 }
 
 class AutoPayMandateDto {
@@ -252,5 +315,16 @@ class RiderPaymentsApi {
   Future<Result<AutoPayMandateDto>> setAutoDebit({required bool enabled}) =>
       _client.post<AutoPayMandateDto>('$_base/autopay/${enabled ? 'enable' : 'disable'}', parse: _mandate);
 
+  Future<Result<List<AutoPayDebitDto>>> upcomingDebits() =>
+      _client.get<List<AutoPayDebitDto>>('$_base/autopay/upcoming', parse: _debits);
+
+  Future<Result<List<AutoPayDebitDto>>> debits() =>
+      _client.get<List<AutoPayDebitDto>>('$_base/autopay/debits', parse: _debits);
+
   static AutoPayMandateDto _mandate(dynamic data) => AutoPayMandateDto.fromJson(Map<String, dynamic>.from(data as Map));
+
+  static List<AutoPayDebitDto> _debits(dynamic data) => (data as List<dynamic>? ?? const [])
+      .whereType<Map>()
+      .map((e) => AutoPayDebitDto.fromJson(Map<String, dynamic>.from(e)))
+      .toList(growable: false);
 }

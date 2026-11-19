@@ -4,6 +4,9 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../core/payments/online_payments.dart';
+import '../core/payments/payment_flow_provider.dart';
+import '../core/payments/payment_refresh.dart';
 import '../core/referral/pending_referral.dart';
 import '../core/session/rider_session_provider.dart';
 import 'router/app_router.dart';
@@ -29,10 +32,21 @@ class _RiderAppState extends ConsumerState<RiderApp> {
         final RiderSessionNotifier session = ref.read(riderSessionProvider.notifier);
         unawaited(session.verifyConsent());
         unawaited(session.refreshOnResume());
+        unawaited(_recoverPayments());
       },
     );
     _pushMessages = PushNotifications.messages.listen(_showPush);
     _pushTaps = PushNotifications.taps.listen(_openPush);
+  }
+
+  Future<void> _recoverPayments() async {
+    final List<OnlinePaymentOutcome> outcomes = await ref.read(onlinePaymentsProvider).recoverAll();
+    if (outcomes.isEmpty || !mounted) return;
+    refreshPaymentData(ref.invalidate);
+    ref.invalidate(paymentFlowProvider);
+    if (!outcomes.any((outcome) => outcome is OnlinePaymentPaid)) return;
+    final BuildContext? navigator = ref.read(routerProvider).routerDelegate.navigatorKey.currentContext;
+    if (navigator != null && navigator.mounted) AppSnack.success(navigator, navigator.l10n.onlinePaymentDone);
   }
 
   @override
@@ -66,6 +80,9 @@ class _RiderAppState extends ConsumerState<RiderApp> {
   @override
   Widget build(BuildContext context) {
     ref.listen(pendingReferralProvider, (_, _) {});
+    ref.listen(riderSessionProvider.select((session) => session.user?.id), (previous, next) {
+      if (next != null && next != previous) unawaited(_recoverPayments());
+    });
     final AppLocale locale = ref.watch(localeProvider.select((p) => p.locale));
 
     return MaterialApp.router(

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'data/payments_repository_impl.dart';
 import 'domain/payments_repository.dart';
+import 'domain/usecases/auto_pay_debit_usecases.dart';
 import 'domain/usecases/auto_pay_usecases.dart';
 import 'domain/usecases/get_payment_history.dart';
 import 'domain/usecases/get_payments_overview.dart';
@@ -30,3 +31,11 @@ final cancelAutoPayProvider = Provider<CancelAutoPay>((ref) => CancelAutoPay(ref
 final pauseAutoPayProvider = Provider<PauseAutoPay>((ref) => PauseAutoPay(ref.watch(paymentsRepositoryProvider)));
 
 final setAutoDebitProvider = Provider<SetAutoDebit>((ref) => SetAutoDebit(ref.watch(paymentsRepositoryProvider)));
+
+final getUpcomingDebitsProvider = Provider<GetUpcomingDebits>(
+  (ref) => GetUpcomingDebits(ref.watch(paymentsRepositoryProvider)),
+);
+
+final getAutoPayDebitsProvider = Provider<GetAutoPayDebits>(
+  (ref) => GetAutoPayDebits(ref.watch(paymentsRepositoryProvider)),
+);

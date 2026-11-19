@@ -66,7 +66,6 @@ class HomePage extends ConsumerWidget {
   }
 
   List<Widget> _content(BuildContext context, HomeSummary summary) {
-    final AutoPayStatus? autoPay = summary.autoPay;
     return [
       BalanceStrip(
         label: context.l10n.commonPaidDate,
@@ -96,50 +95,24 @@ class HomePage extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            GridView(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: Insets.md,
-                mainAxisSpacing: Insets.sm,
-                mainAxisExtent: 114,
+            SizedBox(
+              height: 114,
+              child: StatCard(
+                label: context.l10n.homeLastPayment,
+                value: switch (summary.lastPaymentAmount) {
+                  final num amount => Fmt.money(amount),
+                  null => '—',
+                },
+                caption: switch (summary) {
+                  HomeSummary(:final DateTime lastPaymentAt) => Fmt.relative(lastPaymentAt),
+                  HomeSummary(lastPaymentAmount: null, rentDue: != null) => context.l10n.paymentsNoPayments,
+                  _ => null,
+                },
+                icon: Icons.receipt_long_rounded,
+                accent: AppColors.primary,
+                compact: true,
+                onTap: () => context.push(Routes.payments),
               ),
-              shrinkWrap: true,
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                StatCard(
-                  label: context.l10n.paymentsAutoPay,
-                  value: autoPay == null ? '—' : _autoPayLabel(context.l10n, autoPay),
-                  caption: switch (summary.nextDebitDate) {
-                    final DateTime date => context.l10n.homeNextDebitOn(Fmt.date(date)),
-                    null => null,
-                  },
-                  icon: Icons.autorenew_rounded,
-                  accent: switch (autoPay) {
-                    AutoPayStatus.active => AppColors.success,
-                    final AutoPayStatus status when status.needsAttention => AppColors.warning,
-                    _ => AppColors.primary,
-                  },
-                  compact: true,
-                  onTap: () => context.push(Routes.payments),
-                ),
-                StatCard(
-                  label: context.l10n.homeLastPayment,
-                  value: switch (summary.lastPaymentAmount) {
-                    final num amount => Fmt.money(amount),
-                    null => '—',
-                  },
-                  caption: switch (summary) {
-                    HomeSummary(:final DateTime lastPaymentAt) => Fmt.relative(lastPaymentAt),
-                    HomeSummary(lastPaymentAmount: null, rentDue: != null) => context.l10n.paymentsNoPayments,
-                    _ => null,
-                  },
-                  icon: Icons.receipt_long_rounded,
-                  accent: AppColors.primary,
-                  compact: true,
-                  onTap: () => context.push(Routes.payments),
-                ),
-              ],
             ),
             if (summary.damageCount > 0) ...[
               const Gap.sm(),
@@ -154,17 +127,6 @@ class HomePage extends ConsumerWidget {
       ),
     ];
   }
-
-  static String _autoPayLabel(AppL10n l10n, AutoPayStatus status) => switch (status) {
-    AutoPayStatus.active => l10n.paymentsAutoPayActive,
-    AutoPayStatus.paused => l10n.paymentsAutoPayPaused,
-    AutoPayStatus.setupRequired => l10n.paymentsAutoPaySetupRequired,
-    AutoPayStatus.authenticationPending => l10n.paymentsAutoPayAuthPending,
-    AutoPayStatus.failed => l10n.paymentsAutoPayFailed,
-    AutoPayStatus.revoked => l10n.paymentsAutoPayRevoked,
-    AutoPayStatus.expired => l10n.paymentsAutoPayExpired,
-    AutoPayStatus.notEnabled => l10n.paymentsAutoPayNotEnabled,
-  };
 }
 
 class _Band extends ConsumerWidget {
@@ -368,18 +330,7 @@ class _HomeSkeleton extends StatelessWidget {
         const Gap.xxl(),
         const ShimmerBox(width: 130, height: 20),
         const Gap.lg(),
-        GridView(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: Insets.md,
-            mainAxisSpacing: Insets.sm,
-            mainAxisExtent: 114,
-          ),
-          shrinkWrap: true,
-          padding: EdgeInsets.zero,
-          physics: const NeverScrollableScrollPhysics(),
-          children: List.generate(2, (_) => const ShimmerBox(height: 114, borderRadius: Corners.brLg)),
-        ),
+        const ShimmerBox(height: 114, borderRadius: Corners.brLg),
       ],
     );
   }

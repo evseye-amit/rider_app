@@ -2,6 +2,10 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../../core/payments/online_payments.dart';
+import '../../../../core/payments/payment_capabilities_provider.dart';
+import '../../../../core/payments/payment_feedback.dart';
+import '../../../../core/payments/payment_flow_provider.dart';
 import '../../domain/entities/rental.dart';
 import '../providers/rentals_overview_provider.dart';
 
@@ -343,7 +347,57 @@ class BillSheetBody extends ConsumerWidget {
         KeyValueRow(label: context.l10n.rentalsBillingPeriod, value: billPeriod(bill), dense: true),
         if (dueDate != null) KeyValueRow(label: context.l10n.rentalsDue, value: Fmt.date(dueDate), dense: true),
         if (paidAt != null) KeyValueRow(label: context.l10n.rentalsPaid2, value: Fmt.date(paidAt), dense: true),
+        if (bill.outstanding > 0 &&
+            (bill.status == BillStatus.due ||
+                bill.status == BillStatus.partlyPaid ||
+                bill.status == BillStatus.overdue)) ...[
+          const Gap.lg(),
+          _BillPayAction(bill: bill),
+        ],
         const Gap.lg(),
+      ],
+    );
+  }
+}
+
+class _BillPayAction extends ConsumerWidget {
+  const _BillPayAction({required this.bill});
+
+  final Bill bill;
+
+  Future<void> _pay(BuildContext context, WidgetRef ref) async {
+    final AppL10n l10n = context.l10n;
+    final OnlinePaymentOutcome? outcome = await ref
+        .read(paymentFlowProvider(PaymentSlots.invoice(bill.id)).notifier)
+        .pay(PaymentOrderRequest.invoice(bill.id), description: bill.number);
+    if (outcome == null || !context.mounted) return;
+    showPaymentOutcome(context, outcome, unavailable: l10n.paymentUnavailable);
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final AppL10n l10n = context.l10n;
+    final String slot = PaymentSlots.invoice(bill.id);
+    final PaymentFlowState flow = ref.watch(paymentFlowProvider(slot));
+    final bool online = ref.watch(canPayOnlineProvider(PaymentPurposes.invoice));
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        PaymentNoticeCard(slot: slot, spacing: Insets.md),
+        if (online && !flow.blocksPayment) ...[
+          PrimaryButton(
+            label: l10n.rentalsPayBill(Fmt.money(bill.outstanding, paise: true)),
+            icon: Icons.lock_rounded,
+            loading: flow.busy,
+            onPressed: flow.busy ? null : () => _pay(context, ref),
+          ),
+          const Gap.xs(),
+          Text(
+            l10n.rentalsPayBillWalletHint,
+            textAlign: TextAlign.center,
+            style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.4),
+          ),
+        ],
       ],
     );
   }

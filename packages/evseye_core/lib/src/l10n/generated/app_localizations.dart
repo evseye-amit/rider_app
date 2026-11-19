@@ -10340,6 +10340,360 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'This file is over {size} MB. Pick a smaller one.'**
   String commonFileTooLarge(String size);
+
+  /// Button and sheet title for adding money to the wallet
+  ///
+  /// In en, this message translates to:
+  /// **'Add money'**
+  String get walletAddMoney;
+
+  /// Allowed top-up range shown under the add money title
+  ///
+  /// In en, this message translates to:
+  /// **'Add between {min} and {max}'**
+  String walletAddMoneyLimits(String min, String max);
+
+  /// Label for the top-up amount field
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get walletAddMoneyAmount;
+
+  /// Error when the top-up amount is outside the allowed range
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount between {min} and {max}.'**
+  String walletAddMoneyInvalidAmount(String min, String max);
+
+  /// Note that wallet top-ups are non-refundable and non-withdrawable
+  ///
+  /// In en, this message translates to:
+  /// **'Money you add can be used only for payments in the app. It can\'t be refunded or withdrawn.'**
+  String get walletAddMoneyNonRefundable;
+
+  /// Button that starts the top-up payment
+  ///
+  /// In en, this message translates to:
+  /// **'Add {amount}'**
+  String walletAddMoneyPay(String amount);
+
+  /// Shown after the wallet top-up succeeds
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} added to your wallet.'**
+  String walletAddMoneyDone(String amount);
+
+  /// Shown when no payment provider is available for top-ups
+  ///
+  /// In en, this message translates to:
+  /// **'Adding money isn\'t available right now. Please try again later.'**
+  String get walletAddMoneyUnavailable;
+
+  /// Button that rechecks an unresolved online payment
+  ///
+  /// In en, this message translates to:
+  /// **'Check payment status'**
+  String get paymentCheckStatus;
+
+  /// Another unresolved payment blocks a new one
+  ///
+  /// In en, this message translates to:
+  /// **'You already have a payment in progress. Check its status before paying again.'**
+  String get paymentInProgress;
+
+  /// Status check found the payment still pending
+  ///
+  /// In en, this message translates to:
+  /// **'Still confirming with your bank. It will update automatically.'**
+  String get paymentStillConfirming;
+
+  /// Payment has an active refund
+  ///
+  /// In en, this message translates to:
+  /// **'A refund for this payment is being processed. Please don\'t pay again.'**
+  String get paymentRefundPending;
+
+  /// Payment was fully refunded
+  ///
+  /// In en, this message translates to:
+  /// **'This payment was refunded to you.'**
+  String get paymentRefunded;
+
+  /// Online payment cannot be started
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment isn\'t available right now. Please try again later.'**
+  String get paymentUnavailable;
+
+  /// Button that abandons an unpaid checkout
+  ///
+  /// In en, this message translates to:
+  /// **'Discard old payment'**
+  String get paymentDiscard;
+
+  /// Confirmation title for abandoning an unpaid checkout
+  ///
+  /// In en, this message translates to:
+  /// **'Discard this payment?'**
+  String get paymentDiscardTitle;
+
+  /// Confirmation message for abandoning an unpaid checkout
+  ///
+  /// In en, this message translates to:
+  /// **'Do this only if you didn\'t finish paying. If money was already taken, it will still be confirmed and won\'t be lost.'**
+  String get paymentDiscardMessage;
+
+  /// Unpaid checkout was abandoned
+  ///
+  /// In en, this message translates to:
+  /// **'Old payment discarded. You can pay again.'**
+  String get paymentDiscarded;
+
+  /// Unpaid checkout could not be abandoned
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t discard it yet. Check its status first.'**
+  String get paymentDiscardFailed;
+
+  /// Top-up rejected because the wallet is inactive
+  ///
+  /// In en, this message translates to:
+  /// **'Your wallet isn\'t active right now, so you can\'t add money. Please contact support.'**
+  String get paymentWalletInactive;
+
+  /// Button that pays all outstanding dues
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount} now'**
+  String paymentsPayNow(String amount);
+
+  /// Outstanding payment needs the deposit invoice paid separately
+  ///
+  /// In en, this message translates to:
+  /// **'Pay your security deposit bill first, then pay the rest.'**
+  String get paymentsPayDepositFirst;
+
+  /// Outstanding amount is below the gateway minimum
+  ///
+  /// In en, this message translates to:
+  /// **'This amount is too small to pay online.'**
+  String get paymentsAmountTooSmall;
+
+  /// Outstanding charges use an unsupported or mixed currency
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment isn\'t available for these charges.'**
+  String get paymentsCurrencyUnsupported;
+
+  /// Button that opens the bills list
+  ///
+  /// In en, this message translates to:
+  /// **'View bills'**
+  String get paymentsOpenBills;
+
+  /// Heading for scheduled auto-debits
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming auto-debits'**
+  String get paymentsUpcomingDebits;
+
+  /// Heading for past auto-debits
+  ///
+  /// In en, this message translates to:
+  /// **'Recent auto-debits'**
+  String get paymentsRecentDebits;
+
+  /// Scheduled auto-debit amount can change
+  ///
+  /// In en, this message translates to:
+  /// **'The amount may change if you pay before this date.'**
+  String get paymentsAmountMayChange;
+
+  /// Button that pays a bill online
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount}'**
+  String rentalsPayBill(String amount);
+
+  /// Bill payment uses the wallet before checkout
+  ///
+  /// In en, this message translates to:
+  /// **'Your wallet balance is used first. You pay only the rest.'**
+  String get rentalsPayBillWalletHint;
+
+  /// Wallet auto recharge card title
+  ///
+  /// In en, this message translates to:
+  /// **'Auto recharge'**
+  String get walletAutoPayTitle;
+
+  /// Wallet auto recharge rule
+  ///
+  /// In en, this message translates to:
+  /// **'Adds {amount} when your cash balance falls below {threshold}.'**
+  String walletAutoPaySummary(String amount, String threshold);
+
+  /// Auto recharge is on
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get walletAutoPayOn;
+
+  /// Auto recharge is off
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get walletAutoPayOff;
+
+  /// Button that turns on wallet auto recharge
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on auto recharge'**
+  String get walletAutoPayTurnOn;
+
+  /// Button to accept changed auto recharge terms
+  ///
+  /// In en, this message translates to:
+  /// **'Review new terms'**
+  String get walletAutoPayReviewTerms;
+
+  /// Button that turns off wallet auto recharge
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off auto recharge'**
+  String get walletAutoPayTurnOff;
+
+  /// Confirmation title for turning off auto recharge
+  ///
+  /// In en, this message translates to:
+  /// **'Turn off auto recharge?'**
+  String get walletAutoPayTurnOffTitle;
+
+  /// Confirmation message for turning off auto recharge
+  ///
+  /// In en, this message translates to:
+  /// **'No new auto recharges will start. A recharge already sent to your bank may still complete, and your auto-debit stays active.'**
+  String get walletAutoPayTurnOffMessage;
+
+  /// Auto recharge was turned on
+  ///
+  /// In en, this message translates to:
+  /// **'Auto recharge is on'**
+  String get walletAutoPayTurnedOn;
+
+  /// Auto recharge was turned off
+  ///
+  /// In en, this message translates to:
+  /// **'Auto recharge is off'**
+  String get walletAutoPayTurnedOff;
+
+  /// Operator has paused auto recharge
+  ///
+  /// In en, this message translates to:
+  /// **'Auto recharge is paused for now. No new recharges will start.'**
+  String get walletAutoPayPolicyOff;
+
+  /// Auto recharge needs fresh consent
+  ///
+  /// In en, this message translates to:
+  /// **'The auto recharge terms have changed. Review and accept them to keep it on.'**
+  String get walletAutoPayTermsChanged;
+
+  /// Last auto recharge failed
+  ///
+  /// In en, this message translates to:
+  /// **'Your last auto recharge didn\'t go through. Check your auto-debit, then turn auto recharge on again.'**
+  String get walletAutoPayActionRequired;
+
+  /// Heading for auto recharge requests
+  ///
+  /// In en, this message translates to:
+  /// **'Recent auto recharges'**
+  String get walletAutoPayRecent;
+
+  /// Earliest time a pending auto recharge can be debited
+  ///
+  /// In en, this message translates to:
+  /// **'Earliest debit {date}'**
+  String walletAutoPayEarliestDebit(String date);
+
+  /// Auto recharge is being prepared
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing'**
+  String get walletAutoPayStatusPreparing;
+
+  /// Auto recharge is waiting for the bank
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for bank'**
+  String get walletAutoPayStatusPending;
+
+  /// Auto recharge outcome is being confirmed
+  ///
+  /// In en, this message translates to:
+  /// **'Confirming'**
+  String get walletAutoPayStatusConfirming;
+
+  /// Auto recharge needs a manual check
+  ///
+  /// In en, this message translates to:
+  /// **'Under review'**
+  String get walletAutoPayStatusReview;
+
+  /// Auto recharge money was added
+  ///
+  /// In en, this message translates to:
+  /// **'Added'**
+  String get walletAutoPayStatusAdded;
+
+  /// Auto recharge was stopped before debit
+  ///
+  /// In en, this message translates to:
+  /// **'Stopped'**
+  String get walletAutoPayStatusStopped;
+
+  /// Auto recharge consent sheet title
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on auto recharge'**
+  String get walletAutoPayConsentTitle;
+
+  /// Auto recharge consent terms
+  ///
+  /// In en, this message translates to:
+  /// **'While I have an active scooter, automatically add {amount} when my available cash balance falls below {threshold}. Each recharge needs my auto-debit and bank confirmation, with at least {hours} hours\' notice. Only one auto recharge can be pending at a time, and a new one won\'t start within {cooldown} hours of a successful recharge. A recharge already sent to my bank may still complete if I turn this off or add money myself.'**
+  String walletAutoPayConsent(String amount, String threshold, String hours, String cooldown);
+
+  /// Auto recharge threshold uses cash balance only
+  ///
+  /// In en, this message translates to:
+  /// **'Only your cash balance counts. Incentives and security deposit are not included.'**
+  String get walletAutoPayCashOnly;
+
+  /// Auto recharge needs an active auto-debit mandate
+  ///
+  /// In en, this message translates to:
+  /// **'Set up auto-debit first. Its limit must be at least {amount}.'**
+  String walletAutoPayNeedsMandate(String amount);
+
+  /// Button that opens auto-debit setup
+  ///
+  /// In en, this message translates to:
+  /// **'Set up auto-debit'**
+  String get walletAutoPaySetUpMandate;
+
+  /// Auto recharge consent checkbox
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to these auto recharge terms'**
+  String get walletAutoPayAgree;
+
+  /// Manual top-up while an auto recharge is pending
+  ///
+  /// In en, this message translates to:
+  /// **'An auto recharge of {amount} is already in progress. If you add money now, that recharge may still complete.'**
+  String walletAutoPayManualNote(String amount);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

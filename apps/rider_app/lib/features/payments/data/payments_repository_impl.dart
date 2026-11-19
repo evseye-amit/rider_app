@@ -53,6 +53,28 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
   Future<Result<AutoPayMandate>> setAutoDebit({required bool enabled}) async =>
       (await _api.setAutoDebit(enabled: enabled)).map(_mandate);
 
+  @override
+  Future<Result<List<AutoPayDebit>>> getUpcomingDebits() async =>
+      (await _api.upcomingDebits()).map((debits) => [for (final AutoPayDebitDto debit in debits) _debit(debit)]);
+
+  @override
+  Future<Result<List<AutoPayDebit>>> getDebits() async =>
+      (await _api.debits()).map((debits) => [for (final AutoPayDebitDto debit in debits) _debit(debit)]);
+
+  static AutoPayDebit _debit(AutoPayDebitDto dto) => AutoPayDebit(
+    id: dto.id,
+    number: dto.number,
+    amount: dto.amount,
+    state: switch (dto.status) {
+      'SUCCESS' => AutoPayDebitState.settled,
+      'FAILED' || 'CANCELLED' => AutoPayDebitState.failed,
+      _ => AutoPayDebitState.pending,
+    },
+    invoiceNumber: dto.invoiceNumber,
+    amountMayChange: dto.amountMayChange,
+    scheduledFor: dto.scheduledFor,
+  );
+
   static AutoPaySetup _setup(AutoPaySetupDto dto) {
     final AutoPayMandate? mandate = switch (dto.mandate) {
       final AutoPayMandateDto value => _mandate(value),
@@ -80,6 +102,7 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
     canTurnOff: dto.canTurnOff,
     cancellationPending: dto.cancellationPending,
     managedInUpiApp: dto.provider == 'RAZORPAY',
+    maxAmount: dto.maxAmount,
     approvalUrl: dto.authorizationUrl,
   );
 
@@ -87,6 +110,11 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
     amountDue: home.amountDue,
     overdueAmount: home.overdueAmount,
     currency: home.currency,
+    balances: [
+      for (final CurrencyBalance balance in home.balancesByCurrency)
+        DueBalance(currency: balance.currency, amountDue: balance.amountDue, overdueAmount: balance.overdueAmount),
+    ],
+    payNowUnavailableReason: home.payNowUnavailableReason,
     autoPay: _autoPay(home.autoPayStatus),
     payNowAvailable: home.payNowAvailable,
     recentPayments: [for (final RiderPaymentRecord record in home.recentPayments) _record(record)],

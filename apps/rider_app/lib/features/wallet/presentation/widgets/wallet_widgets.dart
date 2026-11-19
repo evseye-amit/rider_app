@@ -74,9 +74,11 @@ String walletStateLabel(AppL10n l10n, WalletEntryState state) => switch (state) 
 };
 
 class WalletBand extends StatelessWidget {
-  const WalletBand({required this.overview, super.key});
+  const WalletBand({required this.overview, this.onAddMoney, this.addingMoney = false, super.key});
 
   final WalletOverview? overview;
+  final VoidCallback? onAddMoney;
+  final bool addingMoney;
 
   @override
   Widget build(BuildContext context) {
@@ -163,6 +165,15 @@ class WalletBand extends StatelessWidget {
             ],
           ),
         ),
+        if (wallet != null && onAddMoney != null) ...[
+          const Gap.lg(),
+          PrimaryButton(
+            label: context.l10n.walletAddMoney,
+            icon: Icons.add_rounded,
+            loading: addingMoney,
+            onPressed: addingMoney ? null : onAddMoney,
+          ),
+        ],
       ],
     );
   }

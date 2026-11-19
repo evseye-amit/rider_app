@@ -6,6 +6,7 @@ import 'domain/usecases/get_wallet_overview.dart';
 import 'domain/usecases/get_wallet_receipt.dart';
 import 'domain/usecases/get_wallet_statement.dart';
 import 'domain/usecases/get_wallet_transactions.dart';
+import 'domain/usecases/wallet_auto_pay_usecases.dart';
 import 'domain/wallet_repository.dart';
 
 final walletRepositoryProvider = Provider<WalletRepository>(
@@ -30,4 +31,12 @@ final getWalletStatementProvider = Provider<GetWalletStatement>(
 
 final getSecurityDepositProvider = Provider<GetSecurityDeposit>(
   (ref) => GetSecurityDeposit(ref.watch(walletRepositoryProvider)),
+);
+
+final getWalletAutoPayProvider = Provider<GetWalletAutoPay>(
+  (ref) => GetWalletAutoPay(ref.watch(walletRepositoryProvider)),
+);
+
+final setWalletAutoPayProvider = Provider<SetWalletAutoPay>(
+  (ref) => SetWalletAutoPay(ref.watch(walletRepositoryProvider)),
 );

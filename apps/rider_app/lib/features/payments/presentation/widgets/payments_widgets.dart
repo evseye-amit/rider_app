@@ -53,7 +53,14 @@ class PaymentsBand extends StatelessWidget {
           children: [
             Flexible(
               child: Text(
-                payments == null ? '—' : Fmt.money(payments.amountDue),
+                switch (payments) {
+                  null => '—',
+                  final PaymentsOverview value when value.hasMixedCurrencies => [
+                    for (final DueBalance balance in value.balances)
+                      '${balance.currency} ${Fmt.number(balance.amountDue)}',
+                  ].join(' · '),
+                  final PaymentsOverview value => Fmt.money(value.totalDue),
+                },
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.numericLarge.copyWith(fontSize: 38, color: AppColors.onInk),

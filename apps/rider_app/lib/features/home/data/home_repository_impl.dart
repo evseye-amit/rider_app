@@ -34,12 +34,13 @@ class HomeRepositoryImpl implements HomeRepository {
 
     return Result.ok(
       HomeSummary(
-        rentDue: dues == null ? null : _atLeastZero(dues.amountDue - damageDue),
+        rentDue: switch (dues?.amountDue) {
+          final num due => _atLeastZero(due - damageDue),
+          null => null,
+        },
         rentOverdue: _atLeastZero((dues?.overdueAmount ?? 0) - damageDue),
         rentDueDate: dues?.dueDate,
         paidToDate: wallet.valueOrNull?.totalPaid,
-        autoPay: dues?.autoPayStatus,
-        nextDebitDate: dues?.nextAutoPayDate,
         lastPaymentAmount: lastPayment?.amount,
         lastPaymentAt: lastPayment?.receivedAt,
         workPartner: stats?.partnerName,

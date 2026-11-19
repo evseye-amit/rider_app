@@ -5445,4 +5445,211 @@ class AppL10nKn extends AppL10n {
   String commonFileTooLarge(String size) {
     return 'ಈ ಫೈಲ್ $size MB ಗಿಂತ ದೊಡ್ಡದಿದೆ. ಚಿಕ್ಕದನ್ನು ಆಯ್ಕೆಮಾಡಿ.';
   }
+
+  @override
+  String get walletAddMoney => 'ಹಣ ಸೇರಿಸಿ';
+
+  @override
+  String walletAddMoneyLimits(String min, String max) {
+    return '$min ರಿಂದ $max ವರೆಗೆ ಸೇರಿಸಿ';
+  }
+
+  @override
+  String get walletAddMoneyAmount => 'ಮೊತ್ತ';
+
+  @override
+  String walletAddMoneyInvalidAmount(String min, String max) {
+    return '$min ಮತ್ತು $max ನಡುವಿನ ಮೊತ್ತವನ್ನು ನಮೂದಿಸಿ.';
+  }
+
+  @override
+  String get walletAddMoneyNonRefundable =>
+      'ಸೇರಿಸಿದ ಹಣವನ್ನು ಆ್ಯಪ್‌ನಲ್ಲಿನ ಪಾವತಿಗಳಿಗೆ ಮಾತ್ರ ಬಳಸಬಹುದು. ಇದನ್ನು ಮರುಪಾವತಿಸಲು ಅಥವಾ ಹಿಂಪಡೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ.';
+
+  @override
+  String walletAddMoneyPay(String amount) {
+    return '$amount ಸೇರಿಸಿ';
+  }
+
+  @override
+  String walletAddMoneyDone(String amount) {
+    return 'ನಿಮ್ಮ ವ್ಯಾಲೆಟ್‌ಗೆ $amount ಸೇರಿಸಲಾಗಿದೆ.';
+  }
+
+  @override
+  String get walletAddMoneyUnavailable => 'ಈಗ ಹಣ ಸೇರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get paymentCheckStatus => 'ಪಾವತಿ ಸ್ಥಿತಿ ನೋಡಿ';
+
+  @override
+  String get paymentInProgress => 'ನಿಮ್ಮ ಒಂದು ಪಾವತಿ ಈಗಾಗಲೇ ನಡೆಯುತ್ತಿದೆ. ಮತ್ತೆ ಪಾವತಿಸುವ ಮೊದಲು ಅದರ ಸ್ಥಿತಿ ನೋಡಿ.';
+
+  @override
+  String get paymentStillConfirming => 'ಬ್ಯಾಂಕ್ ದೃಢೀಕರಣ ಇನ್ನೂ ಬಾಕಿ ಇದೆ. ಇದು ತಾನಾಗಿಯೇ ಅಪ್‌ಡೇಟ್ ಆಗುತ್ತದೆ.';
+
+  @override
+  String get paymentRefundPending => 'ಈ ಪಾವತಿಯ ಮರುಪಾವತಿ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪಾವತಿಸಬೇಡಿ.';
+
+  @override
+  String get paymentRefunded => 'ಈ ಪಾವತಿಯನ್ನು ನಿಮಗೆ ಮರುಪಾವತಿಸಲಾಗಿದೆ.';
+
+  @override
+  String get paymentUnavailable => 'ಈಗ ಆನ್‌ಲೈನ್ ಪಾವತಿ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ನಂತರ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get paymentDiscard => 'ಹಳೆಯ ಪಾವತಿ ತೆಗೆದುಹಾಕಿ';
+
+  @override
+  String get paymentDiscardTitle => 'ಈ ಪಾವತಿಯನ್ನು ತೆಗೆದುಹಾಕಬೇಕೆ?';
+
+  @override
+  String get paymentDiscardMessage =>
+      'ನೀವು ಪಾವತಿ ಪೂರ್ಣಗೊಳಿಸದಿದ್ದರೆ ಮಾತ್ರ ಇದನ್ನು ಮಾಡಿ. ಹಣ ಈಗಾಗಲೇ ಕಡಿತವಾಗಿದ್ದರೆ, ಅದು ದೃಢೀಕರಿಸಲ್ಪಡುತ್ತದೆ ಮತ್ತು ಕಳೆದುಹೋಗುವುದಿಲ್ಲ.';
+
+  @override
+  String get paymentDiscarded => 'ಹಳೆಯ ಪಾವತಿಯನ್ನು ತೆಗೆದುಹಾಕಲಾಗಿದೆ. ನೀವು ಮತ್ತೆ ಪಾವತಿಸಬಹುದು.';
+
+  @override
+  String get paymentDiscardFailed => 'ಈಗ ಅದನ್ನು ತೆಗೆದುಹಾಕಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ಮೊದಲು ಅದರ ಸ್ಥಿತಿ ನೋಡಿ.';
+
+  @override
+  String get paymentWalletInactive =>
+      'ನಿಮ್ಮ ವ್ಯಾಲೆಟ್ ಈಗ ಸಕ್ರಿಯವಾಗಿಲ್ಲ, ಆದ್ದರಿಂದ ಹಣ ಸೇರಿಸಲು ಸಾಧ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಸಹಾಯವಾಣಿಯನ್ನು ಸಂಪರ್ಕಿಸಿ.';
+
+  @override
+  String paymentsPayNow(String amount) {
+    return 'ಈಗ $amount ಪಾವತಿಸಿ';
+  }
+
+  @override
+  String get paymentsPayDepositFirst => 'ಮೊದಲು ನಿಮ್ಮ ಭದ್ರತಾ ಠೇವಣಿ ಬಿಲ್ ಪಾವತಿಸಿ, ನಂತರ ಉಳಿದದ್ದನ್ನು ಪಾವತಿಸಿ.';
+
+  @override
+  String get paymentsAmountTooSmall => 'ಈ ಮೊತ್ತ ಆನ್‌ಲೈನ್ ಪಾವತಿಗೆ ತುಂಬಾ ಕಡಿಮೆ.';
+
+  @override
+  String get paymentsCurrencyUnsupported => 'ಈ ಶುಲ್ಕಗಳಿಗೆ ಆನ್‌ಲೈನ್ ಪಾವತಿ ಲಭ್ಯವಿಲ್ಲ.';
+
+  @override
+  String get paymentsOpenBills => 'ಬಿಲ್‌ಗಳನ್ನು ನೋಡಿ';
+
+  @override
+  String get paymentsUpcomingDebits => 'ಮುಂಬರುವ ಸ್ವಯಂ-ಡೆಬಿಟ್‌ಗಳು';
+
+  @override
+  String get paymentsRecentDebits => 'ಇತ್ತೀಚಿನ ಸ್ವಯಂ-ಡೆಬಿಟ್‌ಗಳು';
+
+  @override
+  String get paymentsAmountMayChange => 'ಈ ದಿನಾಂಕದ ಮೊದಲು ನೀವು ಪಾವತಿಸಿದರೆ ಮೊತ್ತ ಬದಲಾಗಬಹುದು.';
+
+  @override
+  String rentalsPayBill(String amount) {
+    return '$amount ಪಾವತಿಸಿ';
+  }
+
+  @override
+  String get rentalsPayBillWalletHint =>
+      'ಮೊದಲು ನಿಮ್ಮ ವ್ಯಾಲೆಟ್ ಬ್ಯಾಲೆನ್ಸ್ ಬಳಸಲಾಗುತ್ತದೆ. ನೀವು ಉಳಿದದ್ದನ್ನು ಮಾತ್ರ ಪಾವತಿಸುತ್ತೀರಿ.';
+
+  @override
+  String get walletAutoPayTitle => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್';
+
+  @override
+  String walletAutoPaySummary(String amount, String threshold) {
+    return 'ನಿಮ್ಮ ನಗದು ಬ್ಯಾಲೆನ್ಸ್ $threshold ಗಿಂತ ಕಡಿಮೆಯಾದಾಗ $amount ತಾನಾಗಿಯೇ ಸೇರುತ್ತದೆ.';
+  }
+
+  @override
+  String get walletAutoPayOn => 'ಆನ್';
+
+  @override
+  String get walletAutoPayOff => 'ಆಫ್';
+
+  @override
+  String get walletAutoPayTurnOn => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆನ್ ಮಾಡಿ';
+
+  @override
+  String get walletAutoPayReviewTerms => 'ಹೊಸ ನಿಯಮಗಳನ್ನು ನೋಡಿ';
+
+  @override
+  String get walletAutoPayTurnOff => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆಫ್ ಮಾಡಿ';
+
+  @override
+  String get walletAutoPayTurnOffTitle => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆಫ್ ಮಾಡಬೇಕೆ?';
+
+  @override
+  String get walletAutoPayTurnOffMessage =>
+      'ಹೊಸ ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಪ್ರಾರಂಭವಾಗುವುದಿಲ್ಲ. ಈಗಾಗಲೇ ಬ್ಯಾಂಕ್‌ಗೆ ಕಳುಹಿಸಿದ ರೀಚಾರ್ಜ್ ಇನ್ನೂ ಪೂರ್ಣಗೊಳ್ಳಬಹುದು, ಮತ್ತು ನಿಮ್ಮ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಸಕ್ರಿಯವಾಗಿರುತ್ತದೆ.';
+
+  @override
+  String get walletAutoPayTurnedOn => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆನ್ ಆಗಿದೆ';
+
+  @override
+  String get walletAutoPayTurnedOff => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆಫ್ ಆಗಿದೆ';
+
+  @override
+  String get walletAutoPayPolicyOff => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಸದ್ಯಕ್ಕೆ ನಿಲ್ಲಿಸಲಾಗಿದೆ. ಹೊಸ ರೀಚಾರ್ಜ್ ಪ್ರಾರಂಭವಾಗುವುದಿಲ್ಲ.';
+
+  @override
+  String get walletAutoPayTermsChanged =>
+      'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ನಿಯಮಗಳು ಬದಲಾಗಿವೆ. ಇದನ್ನು ಆನ್‌ನಲ್ಲಿ ಇಡಲು ಹೊಸ ನಿಯಮಗಳನ್ನು ನೋಡಿ ಒಪ್ಪಿಕೊಳ್ಳಿ.';
+
+  @override
+  String get walletAutoPayActionRequired =>
+      'ನಿಮ್ಮ ಕೊನೆಯ ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಯಶಸ್ವಿಯಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಪರಿಶೀಲಿಸಿ, ನಂತರ ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಮತ್ತೆ ಆನ್ ಮಾಡಿ.';
+
+  @override
+  String get walletAutoPayRecent => 'ಇತ್ತೀಚಿನ ಸ್ವಯಂ ರೀಚಾರ್ಜ್‌ಗಳು';
+
+  @override
+  String walletAutoPayEarliestDebit(String date) {
+    return 'ಮೊದಲ ಡೆಬಿಟ್ $date';
+  }
+
+  @override
+  String get walletAutoPayStatusPreparing => 'ಸಿದ್ಧವಾಗುತ್ತಿದೆ';
+
+  @override
+  String get walletAutoPayStatusPending => 'ಬ್ಯಾಂಕ್‌ಗಾಗಿ ಕಾಯುತ್ತಿದೆ';
+
+  @override
+  String get walletAutoPayStatusConfirming => 'ದೃಢೀಕರಿಸಲಾಗುತ್ತಿದೆ';
+
+  @override
+  String get walletAutoPayStatusReview => 'ಪರಿಶೀಲನೆಯಲ್ಲಿದೆ';
+
+  @override
+  String get walletAutoPayStatusAdded => 'ಸೇರಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletAutoPayStatusStopped => 'ನಿಲ್ಲಿಸಲಾಗಿದೆ';
+
+  @override
+  String get walletAutoPayConsentTitle => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆನ್ ಮಾಡಿ';
+
+  @override
+  String walletAutoPayConsent(String amount, String threshold, String hours, String cooldown) {
+    return 'ನನ್ನ ಬಳಿ ಸಕ್ರಿಯ ಸ್ಕೂಟರ್ ಇರುವವರೆಗೆ, ನನ್ನ ಲಭ್ಯ ನಗದು ಬ್ಯಾಲೆನ್ಸ್ $threshold ಗಿಂತ ಕಡಿಮೆಯಾದಾಗ $amount ತಾನಾಗಿಯೇ ಸೇರಿಸಿ. ಪ್ರತಿ ರೀಚಾರ್ಜ್‌ಗೆ ನನ್ನ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಮತ್ತು ಬ್ಯಾಂಕ್ ದೃಢೀಕರಣ ಬೇಕು, ಮತ್ತು ಕನಿಷ್ಠ $hours ಗಂಟೆಗಳ ಮುಂಚಿತ ಸೂಚನೆ ಇರುತ್ತದೆ. ಒಂದು ಸಮಯದಲ್ಲಿ ಒಂದೇ ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಬಾಕಿ ಇರಬಹುದು, ಮತ್ತು ಯಶಸ್ವಿ ರೀಚಾರ್ಜ್‌ನ $cooldown ಗಂಟೆಗಳೊಳಗೆ ಹೊಸದು ಪ್ರಾರಂಭವಾಗುವುದಿಲ್ಲ. ನಾನು ಇದನ್ನು ಆಫ್ ಮಾಡಿದರೂ ಅಥವಾ ನಾನೇ ಹಣ ಸೇರಿಸಿದರೂ, ಬ್ಯಾಂಕ್‌ಗೆ ಕಳುಹಿಸಿದ ರೀಚಾರ್ಜ್ ಪೂರ್ಣಗೊಳ್ಳಬಹುದು.';
+  }
+
+  @override
+  String get walletAutoPayCashOnly =>
+      'ನಿಮ್ಮ ನಗದು ಬ್ಯಾಲೆನ್ಸ್ ಮಾತ್ರ ಲೆಕ್ಕಕ್ಕೆ ಬರುತ್ತದೆ. ಪ್ರೋತ್ಸಾಹ ಮತ್ತು ಭದ್ರತಾ ಠೇವಣಿ ಸೇರಿಲ್ಲ.';
+
+  @override
+  String walletAutoPayNeedsMandate(String amount) {
+    return 'ಮೊದಲು ಸ್ವಯಂ-ಡೆಬಿಟ್ ಹೊಂದಿಸಿ. ಅದರ ಮಿತಿ ಕನಿಷ್ಠ $amount ಇರಬೇಕು.';
+  }
+
+  @override
+  String get walletAutoPaySetUpMandate => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ಹೊಂದಿಸಿ';
+
+  @override
+  String get walletAutoPayAgree => 'ಈ ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ನಿಯಮಗಳಿಗೆ ನಾನು ಒಪ್ಪುತ್ತೇನೆ';
+
+  @override
+  String walletAutoPayManualNote(String amount) {
+    return '$amount ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಈಗಾಗಲೇ ನಡೆಯುತ್ತಿದೆ. ನೀವು ಈಗ ಹಣ ಸೇರಿಸಿದರೂ, ಆ ರೀಚಾರ್ಜ್ ಪೂರ್ಣಗೊಳ್ಳಬಹುದು.';
+  }
 }

@@ -5430,4 +5430,210 @@ class AppL10nHi extends AppL10n {
   String commonFileTooLarge(String size) {
     return 'यह फ़ाइल $size MB से बड़ी है। छोटी फ़ाइल चुनें।';
   }
+
+  @override
+  String get walletAddMoney => 'पैसे जोड़ें';
+
+  @override
+  String walletAddMoneyLimits(String min, String max) {
+    return '$min से $max तक जोड़ें';
+  }
+
+  @override
+  String get walletAddMoneyAmount => 'राशि';
+
+  @override
+  String walletAddMoneyInvalidAmount(String min, String max) {
+    return '$min से $max के बीच की राशि डालें।';
+  }
+
+  @override
+  String get walletAddMoneyNonRefundable =>
+      'जोड़े गए पैसे सिर्फ़ ऐप में भुगतान के लिए इस्तेमाल हो सकते हैं। इन्हें न तो वापस किया जा सकता है, न ही निकाला जा सकता है।';
+
+  @override
+  String walletAddMoneyPay(String amount) {
+    return '$amount जोड़ें';
+  }
+
+  @override
+  String walletAddMoneyDone(String amount) {
+    return 'आपके वॉलेट में $amount जोड़ दिए गए।';
+  }
+
+  @override
+  String get walletAddMoneyUnavailable => 'अभी पैसे नहीं जोड़े जा सकते। कृपया बाद में फिर कोशिश करें।';
+
+  @override
+  String get paymentCheckStatus => 'भुगतान की स्थिति देखें';
+
+  @override
+  String get paymentInProgress => 'आपका एक भुगतान पहले से चल रहा है। दोबारा भुगतान करने से पहले उसकी स्थिति देखें।';
+
+  @override
+  String get paymentStillConfirming => 'बैंक से पुष्टि अभी बाकी है। यह अपने आप अपडेट हो जाएगा।';
+
+  @override
+  String get paymentRefundPending => 'इस भुगतान का रिफंड प्रोसेस हो रहा है। कृपया दोबारा भुगतान न करें।';
+
+  @override
+  String get paymentRefunded => 'यह भुगतान आपको वापस कर दिया गया है।';
+
+  @override
+  String get paymentUnavailable => 'अभी ऑनलाइन भुगतान उपलब्ध नहीं है। कृपया बाद में कोशिश करें।';
+
+  @override
+  String get paymentDiscard => 'पुराना भुगतान हटाएं';
+
+  @override
+  String get paymentDiscardTitle => 'यह भुगतान हटाएं?';
+
+  @override
+  String get paymentDiscardMessage =>
+      'ऐसा तभी करें जब आपने भुगतान पूरा नहीं किया हो। अगर पैसे कट चुके हैं, तो उनकी पुष्टि फिर भी होगी और वे खोएंगे नहीं।';
+
+  @override
+  String get paymentDiscarded => 'पुराना भुगतान हटा दिया गया। अब आप फिर से भुगतान कर सकते हैं।';
+
+  @override
+  String get paymentDiscardFailed => 'अभी इसे हटाया नहीं जा सका। पहले इसकी स्थिति देखें।';
+
+  @override
+  String get paymentWalletInactive =>
+      'आपका वॉलेट अभी सक्रिय नहीं है, इसलिए पैसे नहीं जोड़े जा सकते। कृपया सपोर्ट से संपर्क करें।';
+
+  @override
+  String paymentsPayNow(String amount) {
+    return 'अभी $amount भरें';
+  }
+
+  @override
+  String get paymentsPayDepositFirst => 'पहले अपने सिक्योरिटी डिपॉज़िट का बिल भरें, फिर बाकी का भुगतान करें।';
+
+  @override
+  String get paymentsAmountTooSmall => 'यह राशि ऑनलाइन भुगतान के लिए बहुत कम है।';
+
+  @override
+  String get paymentsCurrencyUnsupported => 'इन शुल्कों के लिए ऑनलाइन भुगतान उपलब्ध नहीं है।';
+
+  @override
+  String get paymentsOpenBills => 'बिल देखें';
+
+  @override
+  String get paymentsUpcomingDebits => 'आने वाले ऑटो-डेबिट';
+
+  @override
+  String get paymentsRecentDebits => 'हाल के ऑटो-डेबिट';
+
+  @override
+  String get paymentsAmountMayChange => 'अगर आप इस तारीख से पहले भुगतान करते हैं, तो राशि बदल सकती है।';
+
+  @override
+  String rentalsPayBill(String amount) {
+    return '$amount भरें';
+  }
+
+  @override
+  String get rentalsPayBillWalletHint => 'पहले आपके वॉलेट बैलेंस का उपयोग होगा। आपको सिर्फ़ बाकी राशि भरनी होगी।';
+
+  @override
+  String get walletAutoPayTitle => 'ऑटो रिचार्ज';
+
+  @override
+  String walletAutoPaySummary(String amount, String threshold) {
+    return 'नकद बैलेंस $threshold से कम होने पर $amount अपने आप जुड़ जाते हैं।';
+  }
+
+  @override
+  String get walletAutoPayOn => 'चालू';
+
+  @override
+  String get walletAutoPayOff => 'बंद';
+
+  @override
+  String get walletAutoPayTurnOn => 'ऑटो रिचार्ज चालू करें';
+
+  @override
+  String get walletAutoPayReviewTerms => 'नई शर्तें देखें';
+
+  @override
+  String get walletAutoPayTurnOff => 'ऑटो रिचार्ज बंद करें';
+
+  @override
+  String get walletAutoPayTurnOffTitle => 'ऑटो रिचार्ज बंद करें?';
+
+  @override
+  String get walletAutoPayTurnOffMessage =>
+      'कोई नया ऑटो रिचार्ज शुरू नहीं होगा। जो रिचार्ज बैंक को भेजा जा चुका है, वह फिर भी पूरा हो सकता है, और आपका ऑटो-डेबिट चालू रहेगा।';
+
+  @override
+  String get walletAutoPayTurnedOn => 'ऑटो रिचार्ज चालू है';
+
+  @override
+  String get walletAutoPayTurnedOff => 'ऑटो रिचार्ज बंद है';
+
+  @override
+  String get walletAutoPayPolicyOff => 'ऑटो रिचार्ज अभी रुका हुआ है। कोई नया रिचार्ज शुरू नहीं होगा।';
+
+  @override
+  String get walletAutoPayTermsChanged =>
+      'ऑटो रिचार्ज की शर्तें बदल गई हैं। इसे चालू रखने के लिए नई शर्तें देखकर स्वीकार करें।';
+
+  @override
+  String get walletAutoPayActionRequired =>
+      'आपका पिछला ऑटो रिचार्ज पूरा नहीं हुआ। अपना ऑटो-डेबिट जांचें, फिर ऑटो रिचार्ज दोबारा चालू करें।';
+
+  @override
+  String get walletAutoPayRecent => 'हाल के ऑटो रिचार्ज';
+
+  @override
+  String walletAutoPayEarliestDebit(String date) {
+    return 'सबसे जल्दी डेबिट $date';
+  }
+
+  @override
+  String get walletAutoPayStatusPreparing => 'तैयार हो रहा है';
+
+  @override
+  String get walletAutoPayStatusPending => 'बैंक का इंतज़ार';
+
+  @override
+  String get walletAutoPayStatusConfirming => 'पुष्टि हो रही है';
+
+  @override
+  String get walletAutoPayStatusReview => 'जांच में';
+
+  @override
+  String get walletAutoPayStatusAdded => 'जुड़ गया';
+
+  @override
+  String get walletAutoPayStatusStopped => 'रोका गया';
+
+  @override
+  String get walletAutoPayConsentTitle => 'ऑटो रिचार्ज चालू करें';
+
+  @override
+  String walletAutoPayConsent(String amount, String threshold, String hours, String cooldown) {
+    return 'जब तक मेरे पास सक्रिय स्कूटर है, मेरा उपलब्ध नकद बैलेंस $threshold से कम होने पर $amount अपने आप जोड़ें। हर रिचार्ज के लिए मेरा ऑटो-डेबिट और बैंक की पुष्टि ज़रूरी है, और कम से कम $hours घंटे पहले सूचना दी जाएगी। एक समय में सिर्फ़ एक ऑटो रिचार्ज बाकी रह सकता है, और सफल रिचार्ज के $cooldown घंटे के अंदर नया शुरू नहीं होगा। अगर मैं इसे बंद करूं या खुद पैसे जोड़ूं, तब भी बैंक को भेजा गया रिचार्ज पूरा हो सकता है।';
+  }
+
+  @override
+  String get walletAutoPayCashOnly =>
+      'सिर्फ़ आपका नकद बैलेंस गिना जाता है। इनाम और सिक्योरिटी डिपॉज़िट शामिल नहीं हैं।';
+
+  @override
+  String walletAutoPayNeedsMandate(String amount) {
+    return 'पहले ऑटो-डेबिट सेट करें। इसकी सीमा कम से कम $amount होनी चाहिए।';
+  }
+
+  @override
+  String get walletAutoPaySetUpMandate => 'ऑटो-डेबिट सेट करें';
+
+  @override
+  String get walletAutoPayAgree => 'मैं ऑटो रिचार्ज की इन शर्तों से सहमत हूं';
+
+  @override
+  String walletAutoPayManualNote(String amount) {
+    return '$amount का एक ऑटो रिचार्ज पहले से चल रहा है। अगर आप अभी पैसे जोड़ते हैं, तब भी वह रिचार्ज पूरा हो सकता है।';
+  }
 }

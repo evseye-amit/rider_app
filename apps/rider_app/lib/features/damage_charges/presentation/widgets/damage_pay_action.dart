@@ -3,42 +3,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../../../../core/payments/online_payments.dart';
+import '../../../../core/payments/payment_feedback.dart';
+import '../../../../core/payments/payment_flow_provider.dart';
 import '../../domain/entities/damage_charge.dart';
 import '../providers/damage_charges_providers.dart';
-import '../providers/damage_payment_provider.dart';
 
 Future<void> payDamageCharges(BuildContext context, WidgetRef ref) async {
   final AppL10n l10n = context.l10n;
   final OnlinePaymentOutcome? outcome = await ref
-      .read(damagePaymentProvider.notifier)
-      .pay(description: l10n.damageChargesTitle);
+      .read(paymentFlowProvider(PaymentSlots.submissionPenalty).notifier)
+      .pay(PaymentOrderRequest.submissionPenalty(), description: l10n.damageChargesTitle);
   if (outcome == null || !context.mounted) return;
-  switch (outcome) {
-    case OnlinePaymentPaid():
-      AppSnack.success(context, l10n.onlinePaymentDone);
-    case OnlinePaymentCancelled():
-      AppSnack.info(context, l10n.onlinePaymentCancelled);
-    case OnlinePaymentDeclined():
-      AppSnack.error(context, l10n.onlinePaymentFailed);
-    case OnlinePaymentUnavailable():
-      AppSnack.error(context, l10n.damageChargesOnlineUnavailable);
-    case OnlinePaymentError(:final message):
-      AppSnack.error(context, message);
-    case OnlinePaymentPending() || OnlinePaymentNeedsSupport():
-      break;
-  }
+  showPaymentOutcome(context, outcome, unavailable: l10n.damageChargesOnlineUnavailable);
 }
 
-String? damagePaymentNote(AppL10n l10n, DamageChargesSummary summary, DamagePaymentNotice? notice) => switch (notice) {
-  DamagePaymentNotice.pending => l10n.onlinePaymentPending,
-  DamagePaymentNotice.review => l10n.onlinePaymentReview,
-  null => switch (summary.activity) {
-    DamagePaymentActivity.processing => l10n.damageChargesPaymentProcessing(
-      Fmt.money(summary.activityAmount ?? summary.due, paise: true),
-    ),
-    DamagePaymentActivity.underReview => l10n.onlinePaymentReview,
-    _ => null,
-  },
+String? damagePaymentNote(AppL10n l10n, DamageChargesSummary summary) => switch (summary.activity) {
+  DamagePaymentActivity.processing => l10n.damageChargesPaymentProcessing(
+    Fmt.money(summary.activityAmount ?? summary.due, paise: true),
+  ),
+  DamagePaymentActivity.underReview => l10n.onlinePaymentReview,
+  _ => null,
 };
 
 class DamagePaymentNoteRow extends StatelessWidget {
@@ -69,7 +53,7 @@ class DamagePayAction extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final AppL10n l10n = context.l10n;
     final DamageChargesSummary? summary = ref.watch(damageChargesSummaryProvider).value;
-    final DamagePaymentState payment = ref.watch(damagePaymentProvider);
+    final PaymentFlowState payment = ref.watch(paymentFlowProvider(PaymentSlots.submissionPenalty));
     if (summary == null) {
       return PrimaryButton(
         label: l10n.damageChargePay(Fmt.money(charge.due, paise: true)),
@@ -79,7 +63,8 @@ class DamagePayAction extends ConsumerWidget {
         onPressed: null,
       );
     }
-    final String? note = damagePaymentNote(l10n, summary, payment.notice);
+    if (payment.blocksPayment) return const PaymentNoticeCard(slot: PaymentSlots.submissionPenalty);
+    final String? note = damagePaymentNote(l10n, summary);
     if (note != null) return DamagePaymentNoteRow(text: note);
     if (!summary.canPay) return const SizedBox.shrink();
     final num amount = summary.payAmount;
@@ -88,14 +73,15 @@ class DamagePayAction extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
+        const PaymentNoticeCard(slot: PaymentSlots.submissionPenalty, spacing: Insets.md),
         PrimaryButton(
           label: includesOthers
               ? l10n.damageChargePayAll(Fmt.money(amount, paise: true))
               : l10n.damageChargePay(Fmt.money(amount, paise: true)),
           icon: Icons.lock_rounded,
           size: size,
-          loading: payment.paying,
-          onPressed: payment.paying ? null : () => payDamageCharges(context, ref),
+          loading: payment.busy,
+          onPressed: payment.busy ? null : () => payDamageCharges(context, ref),
         ),
         if (includesOthers) ...[
           const Gap.sm(),

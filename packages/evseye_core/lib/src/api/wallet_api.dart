@@ -63,6 +63,101 @@ class WalletBalance {
   final WalletBucket securityDepositBucket;
 }
 
+class WalletAutoPayPolicyDto {
+  const WalletAutoPayPolicyDto({
+    required this.enabled,
+    required this.threshold,
+    required this.rechargeAmount,
+    required this.revision,
+  });
+
+  factory WalletAutoPayPolicyDto.fromJson(Map<String, dynamic> json) => WalletAutoPayPolicyDto(
+    enabled: json['enabled'] == true,
+    threshold: _money(json['threshold']),
+    rechargeAmount: _money(json['rechargeAmount']),
+    revision: json['revision'] is int ? json['revision'] as int : int.tryParse(_text(json['revision'])) ?? 0,
+  );
+
+  final bool enabled;
+  final num threshold;
+  final num rechargeAmount;
+  final int revision;
+}
+
+class WalletAutoRechargeDto {
+  const WalletAutoRechargeDto({
+    required this.id,
+    required this.status,
+    required this.amount,
+    this.currency = 'INR',
+    this.balanceAtTrigger,
+    this.scheduledAt,
+    this.completedAt,
+    this.createdAt,
+    this.failureCode,
+  });
+
+  factory WalletAutoRechargeDto.fromJson(Map<String, dynamic> json) => WalletAutoRechargeDto(
+    id: _text(json['id']),
+    status: _text(json['status']).toUpperCase(),
+    amount: _money(json['amount']),
+    currency: json['currency']?.toString() ?? 'INR',
+    balanceAtTrigger: json['balanceAtTrigger'] == null ? null : _money(json['balanceAtTrigger']),
+    scheduledAt: _date(json['scheduledAt']),
+    completedAt: _date(json['completedAt']),
+    createdAt: _date(json['createdAt']),
+    failureCode: json['failureCode']?.toString(),
+  );
+
+  final String id;
+  final String status;
+  final num amount;
+  final String currency;
+  final num? balanceAtTrigger;
+  final DateTime? scheduledAt;
+  final DateTime? completedAt;
+  final DateTime? createdAt;
+  final String? failureCode;
+}
+
+class WalletAutoPayDto {
+  const WalletAutoPayDto({
+    required this.policy,
+    required this.enabled,
+    required this.actionRequired,
+    required this.consentRequired,
+    required this.minimumLeadHours,
+    required this.cooldownHours,
+    required this.requests,
+    this.mandateId,
+  });
+
+  factory WalletAutoPayDto.fromJson(Map<String, dynamic> json) => WalletAutoPayDto(
+    policy: WalletAutoPayPolicyDto.fromJson(
+      json['policy'] is Map ? Map<String, dynamic>.from(json['policy'] as Map) : const <String, dynamic>{},
+    ),
+    enabled: json['enabled'] == true,
+    actionRequired: json['actionRequired'] == true,
+    consentRequired: json['consentRequired'] == true,
+    minimumLeadHours: _money(json['minimumLeadHours']),
+    cooldownHours: _money(json['cooldownHours']),
+    mandateId: json['mandateId']?.toString(),
+    requests: (json['requests'] as List<dynamic>? ?? const [])
+        .whereType<Map>()
+        .map((e) => WalletAutoRechargeDto.fromJson(Map<String, dynamic>.from(e)))
+        .toList(growable: false),
+  );
+
+  final WalletAutoPayPolicyDto policy;
+  final bool enabled;
+  final bool actionRequired;
+  final bool consentRequired;
+  final num minimumLeadHours;
+  final num cooldownHours;
+  final String? mandateId;
+  final List<WalletAutoRechargeDto> requests;
+}
+
 class WalletLedgerEntry {
   const WalletLedgerEntry({
     required this.id,
@@ -443,6 +538,17 @@ class WalletApi {
     '$_base/receipts/${kind.path}/$id',
     parse: (data) => WalletReceipt.fromJson(Map<String, dynamic>.from(data as Map)),
   );
+
+  Future<Result<WalletAutoPayDto>> autoPay() => _client.get<WalletAutoPayDto>('$_base/autopay', parse: _autoPay);
+
+  Future<Result<WalletAutoPayDto>> setAutoPay({required bool enabled, String? mandateId, int? consentRevision}) =>
+      _client.put<WalletAutoPayDto>(
+        '$_base/autopay',
+        body: {'enabled': enabled, 'mandateId': ?mandateId, 'consentRevision': ?consentRevision},
+        parse: _autoPay,
+      );
+
+  static WalletAutoPayDto _autoPay(dynamic data) => WalletAutoPayDto.fromJson(Map<String, dynamic>.from(data as Map));
 
   static List<WalletLedgerEntry> _entries(dynamic data) => (data as List<dynamic>? ?? const [])
       .whereType<Map>()

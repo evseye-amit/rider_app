@@ -19,4 +19,8 @@ abstract interface class PaymentsRepository {
   Future<Result<AutoPayMandate>> pauseAutoPay(String mandateId, {required bool pause, required String idempotencyKey});
 
   Future<Result<AutoPayMandate>> setAutoDebit({required bool enabled});
+
+  Future<Result<List<AutoPayDebit>>> getUpcomingDebits();
+
+  Future<Result<List<AutoPayDebit>>> getDebits();
 }
