@@ -46,14 +46,15 @@ class AutoPayMandate extends Equatable {
 }
 
 class AutoPaySetup extends Equatable {
-  const AutoPaySetup({required this.canSetUp, required this.maxAmount, this.mandate});
+  const AutoPaySetup({required this.canSetUp, required this.maxAmount, this.validityDays = 0, this.mandate});
 
   final bool canSetUp;
   final num maxAmount;
+  final int validityDays;
   final AutoPayMandate? mandate;
 
   @override
-  List<Object?> get props => [canSetUp, maxAmount, mandate];
+  List<Object?> get props => [canSetUp, maxAmount, validityDays, mandate];
 }
 
 enum AutoPayDebitState { pending, settled, failed }

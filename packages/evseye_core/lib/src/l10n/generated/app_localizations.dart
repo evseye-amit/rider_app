@@ -10694,6 +10694,66 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'An auto recharge of {amount} is already in progress. If you add money now, that recharge may still complete.'**
   String walletAutoPayManualNote(String amount);
+
+  /// Snack after a payment that also turned on auto-debit
+  ///
+  /// In en, this message translates to:
+  /// **'Payment done. Auto-debit is on.'**
+  String get paymentAutoPayOn;
+
+  /// Snack after a payment whose auto-debit is still activating
+  ///
+  /// In en, this message translates to:
+  /// **'Payment done. Auto-debit is being activated and will update shortly.'**
+  String get paymentAutoPayActivating;
+
+  /// Snack after a payment whose auto-debit setup failed
+  ///
+  /// In en, this message translates to:
+  /// **'Payment done, but auto-debit couldn\'t be turned on. You can set it up from Home.'**
+  String get paymentAutoPayNotOn;
+
+  /// Snack when the server refuses auto-debit with this payment
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-debit can\'t be turned on right now. You can pay without it.'**
+  String get paymentAutoPayRefused;
+
+  /// Snack when the server says the auto-debit terms changed and need fresh consent
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-debit terms have changed. Please review and accept them again.'**
+  String get paymentAutoPayTermsChanged;
+
+  /// Onboarding payment auto-debit card title
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-debit for future bills'**
+  String get deploymentAutoPayTitle;
+
+  /// Onboarding payment auto-debit switch label
+  ///
+  /// In en, this message translates to:
+  /// **'I agree, turn on auto-debit with this payment'**
+  String get deploymentAutoPayToggle;
+
+  /// Onboarding payment auto-debit consent terms
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount} now. With the same UPI approval, your future rent and bills can be auto-debited up to {limit} per debit for {days} days. You\'ll be notified at least 24 hours before each debit and can pause or cancel anytime. Wallet auto-recharge is separate and needs its own consent.'**
+  String deploymentAutoPayTerms(String amount, String limit, int days);
+
+  /// Onboarding payment auto-debit UPI-only note
+  ///
+  /// In en, this message translates to:
+  /// **'Complete this payment with a UPI app that supports AutoPay.'**
+  String get deploymentAutoPayUpiOnly;
+
+  /// Onboarding payment button with auto-debit
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount} & turn on auto-debit'**
+  String deploymentPayWithAutoPay(String amount);
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

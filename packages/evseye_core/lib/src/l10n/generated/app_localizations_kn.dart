@@ -5652,4 +5652,38 @@ class AppL10nKn extends AppL10n {
   String walletAutoPayManualNote(String amount) {
     return '$amount ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಈಗಾಗಲೇ ನಡೆಯುತ್ತಿದೆ. ನೀವು ಈಗ ಹಣ ಸೇರಿಸಿದರೂ, ಆ ರೀಚಾರ್ಜ್ ಪೂರ್ಣಗೊಳ್ಳಬಹುದು.';
   }
+
+  @override
+  String get paymentAutoPayOn => 'ಪಾವತಿ ಆಗಿದೆ. ಸ್ವಯಂ-ಡೆಬಿಟ್ ಆನ್ ಆಗಿದೆ.';
+
+  @override
+  String get paymentAutoPayActivating => 'ಪಾವತಿ ಆಗಿದೆ. ಸ್ವಯಂ-ಡೆಬಿಟ್ ಸಕ್ರಿಯಗೊಳ್ಳುತ್ತಿದೆ, ಶೀಘ್ರದಲ್ಲೇ ಅಪ್‌ಡೇಟ್ ಆಗುತ್ತದೆ.';
+
+  @override
+  String get paymentAutoPayNotOn => 'ಪಾವತಿ ಆಗಿದೆ, ಆದರೆ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಆನ್ ಆಗಲಿಲ್ಲ. ನೀವು ಇದನ್ನು ಹೋಮ್‌ನಿಂದ ಹೊಂದಿಸಬಹುದು.';
+
+  @override
+  String get paymentAutoPayRefused => 'ಈಗ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಆನ್ ಮಾಡಲು ಸಾಧ್ಯವಿಲ್ಲ. ಅದಿಲ್ಲದೆ ಪಾವತಿಸಬಹುದು.';
+
+  @override
+  String get paymentAutoPayTermsChanged => 'ಸ್ವಯಂ-ಡೆಬಿಟ್ ನಿಯಮಗಳು ಬದಲಾಗಿವೆ. ದಯವಿಟ್ಟು ಅವುಗಳನ್ನು ನೋಡಿ ಮತ್ತೆ ಒಪ್ಪಿಕೊಳ್ಳಿ.';
+
+  @override
+  String get deploymentAutoPayTitle => 'ಮುಂದಿನ ಬಿಲ್‌ಗಳಿಗೆ ಸ್ವಯಂ-ಡೆಬಿಟ್';
+
+  @override
+  String get deploymentAutoPayToggle => 'ನಾನು ಒಪ್ಪುತ್ತೇನೆ, ಈ ಪಾವತಿಯೊಂದಿಗೆ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಆನ್ ಮಾಡಿ';
+
+  @override
+  String deploymentAutoPayTerms(String amount, String limit, int days) {
+    return 'ಈಗ $amount ಪಾವತಿಸಿ. ಇದೇ UPI ಅನುಮೋದನೆಯಿಂದ ನಿಮ್ಮ ಮುಂದಿನ ಬಾಡಿಗೆ ಮತ್ತು ಬಿಲ್‌ಗಳು $days ದಿನಗಳವರೆಗೆ, ಪ್ರತಿ ಡೆಬಿಟ್‌ಗೆ $limit ವರೆಗೆ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಆಗಬಹುದು. ಪ್ರತಿ ಡೆಬಿಟ್‌ಗೆ ಕನಿಷ್ಠ 24 ಗಂಟೆ ಮೊದಲು ನಿಮಗೆ ಸೂಚನೆ ಬರುತ್ತದೆ, ಮತ್ತು ನೀವು ಇದನ್ನು ಯಾವಾಗ ಬೇಕಾದರೂ ವಿರಾಮಗೊಳಿಸಬಹುದು ಅಥವಾ ರದ್ದುಗೊಳಿಸಬಹುದು. ವಾಲೆಟ್ ಸ್ವಯಂ-ರೀಚಾರ್ಜ್ ಬೇರೆ, ಅದಕ್ಕೆ ಪ್ರತ್ಯೇಕ ಒಪ್ಪಿಗೆ ಬೇಕು.';
+  }
+
+  @override
+  String get deploymentAutoPayUpiOnly => 'AutoPay ಬೆಂಬಲಿಸುವ UPI ಆ್ಯಪ್‌ನಿಂದ ಈ ಪಾವತಿಯನ್ನು ಪೂರ್ಣಗೊಳಿಸಿ.';
+
+  @override
+  String deploymentPayWithAutoPay(String amount) {
+    return '$amount ಪಾವತಿಸಿ ಮತ್ತು ಸ್ವಯಂ-ಡೆಬಿಟ್ ಆನ್ ಮಾಡಿ';
+  }
 }

@@ -9,6 +9,7 @@ import '../../../../core/payments/online_payments.dart';
 import '../../../../core/payments/payment_feedback.dart';
 import '../../../../core/payments/payment_flow_provider.dart';
 import '../../domain/usecases/payment_receipt_usecases.dart';
+import '../providers/deployment_auto_pay_provider.dart';
 import '../providers/deployment_payment_provider.dart';
 import '../providers/deployment_provider.dart';
 
@@ -23,17 +24,17 @@ class PaymentPage extends ConsumerStatefulWidget {
 }
 
 class _PaymentPageState extends ConsumerState<PaymentPage> {
-  final TextEditingController _reference = TextEditingController();
-  final List<File> _screenshots = [];
-  final Map<String, String> _uploaded = {};
-  bool _online = true;
-  bool _submitting = false;
+  static final RegExp _emailPattern = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]{2,}$');
+
+  final TextEditingController _email = TextEditingController();
+  bool _autoPay = false;
+  bool _autoPayRefused = false;
   bool _adding = false;
-  String? _error;
+  String? _emailError;
 
   @override
   void dispose() {
-    _reference.dispose();
+    _email.dispose();
     super.dispose();
   }
 
@@ -47,73 +48,42 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     return file;
   }
 
-  Future<void> _addScreenshot() async {
-    final File? file = await _pickScreenshot();
-    if (file != null && mounted) setState(() => _screenshots.add(file));
-  }
-
-  void _removeScreenshot(File file) => setState(() {
-    _screenshots.remove(file);
-    _uploaded.remove(file.path);
-  });
-
-  Future<void> _payOnline(String allocationId, String? vehicle) async {
+  Future<void> _payOnline(String allocationId, String? vehicle, {DeploymentAutoPayTerms? autoPay}) async {
     final AppL10n l10n = context.l10n;
+    final String email = _email.text.trim();
+    if (autoPay != null && !_emailPattern.hasMatch(email)) {
+      setState(() => _emailError = l10n.paymentsAutoPayEmailInvalid);
+      return;
+    }
     final OnlinePaymentOutcome? outcome = await ref
         .read(paymentFlowProvider(PaymentSlots.deployment(allocationId)).notifier)
-        .pay(PaymentOrderRequest.deployment(allocationId), description: ['Scooter payment', ?vehicle].join(' '));
+        .pay(
+          PaymentOrderRequest.deployment(
+            allocationId,
+            autoPay: switch (autoPay) {
+              (:final num limit, :final int validityDays) => DeploymentAutoPayConsent(
+                email: email,
+                maxAmount: limit,
+                validityDays: validityDays,
+              ),
+              null => null,
+            },
+          ),
+          description: ['Scooter payment', ?vehicle].join(' '),
+        );
     if (outcome == null || !mounted) return;
+    if (outcome case OnlinePaymentAutoPayRefused(:final String code)) {
+      setState(() {
+        if (code == 'AUTOPAY_TERMS_CHANGED') {
+          _autoPay = false;
+        } else {
+          _autoPayRefused = true;
+        }
+      });
+    }
     showPaymentOutcome(context, outcome, unavailable: l10n.deploymentOnlineUnavailable);
     if (outcome is OnlinePaymentPaid) unawaited(ref.read(deploymentProvider.notifier).refresh(silent: true));
     unawaited(ref.read(deploymentPaymentProvider(allocationId).notifier).reload());
-  }
-
-  Future<void> _submit(String allocationId) async {
-    final String provider = context.l10n.deploymentCashHub;
-    final String reference = _reference.text.trim();
-    if (reference.length < 4) {
-      setState(() => _error = context.l10n.deploymentEnterTransactionReferencePaidWith);
-      return;
-    }
-    setState(() {
-      _submitting = true;
-      _error = null;
-    });
-
-    final DeploymentPaymentNotifier notifier = ref.read(deploymentPaymentProvider(allocationId).notifier);
-    for (final File file in [..._screenshots]) {
-      if (_uploaded.containsKey(file.path)) continue;
-      final Result<String> uploaded = await notifier.uploadReceipt(file);
-      if (!mounted) return;
-      if (uploaded case Err<String>(:final failure)) {
-        setState(() {
-          _submitting = false;
-          _error = failure.message;
-        });
-        return;
-      }
-      _uploaded[file.path] = uploaded.getOrThrow();
-    }
-
-    final Result<DeploymentPayment> result = await notifier.submit(
-      provider: provider,
-      reference: reference,
-      receiptPhotoIds: [for (final File file in _screenshots) ?_uploaded[file.path]],
-    );
-    if (!mounted) return;
-    setState(() => _submitting = false);
-
-    switch (result) {
-      case Ok<DeploymentPayment>():
-        setState(() {
-          _screenshots.clear();
-          _uploaded.clear();
-          _reference.clear();
-        });
-        unawaited(ref.read(deploymentProvider.notifier).refresh(silent: true));
-      case Err<DeploymentPayment>(:final failure):
-        setState(() => _error = failure.message);
-    }
   }
 
   Future<void> _addAfterSubmit(String allocationId) async {
@@ -162,6 +132,13 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     final DeploymentFleet? fleet = current?.allocation?.fleet;
     final bool submitted = payment?.isSubmitted == true;
     final bool canPay = payment != null && !submitted && !payment.isPaid && !payment.needsSupport;
+    final DeploymentAutoPayTerms? autoPayTerms = switch ((payment, ref.watch(deploymentAutoPayTermsProvider))) {
+      (final DeploymentPayment due, final DeploymentAutoPayTerms terms)
+          when canPay && !_autoPayRefused && due.amount >= 1 && due.amount <= terms.limit =>
+        terms,
+      _ => null,
+    };
+    final DeploymentAutoPayTerms? withAutoPay = _autoPay ? autoPayTerms : null;
 
     return AppScaffold(
       title: submitted ? context.l10n.deploymentPaymentSubmitted : context.l10n.deploymentPayScooter,
@@ -171,17 +148,15 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
       showBack: false,
       centerTitle: submitted,
       footer: switch (payment) {
-        final DeploymentPayment due when canPay && _online => PrimaryButton(
-          label: context.l10n.deploymentPayOnline(Fmt.money(due.amount)),
-          icon: Icons.lock_rounded,
-          loading: flow.busy,
-          onPressed: flow.busy || flow.blocksPayment ? null : () => _payOnline(allocationId, fleet?.vehicleNumber),
-        ),
         final DeploymentPayment due when canPay => PrimaryButton(
-          label: context.l10n.deploymentIHavePaid(Fmt.money(due.amount)),
-          icon: Icons.check_circle_rounded,
-          loading: _submitting,
-          onPressed: _submitting || flow.blocksPayment ? null : () => _submit(allocationId),
+          label: withAutoPay != null
+              ? context.l10n.deploymentPayWithAutoPay(Fmt.money(due.amount))
+              : context.l10n.deploymentPayOnline(Fmt.money(due.amount)),
+          icon: withAutoPay != null ? Icons.autorenew_rounded : Icons.lock_rounded,
+          loading: flow.busy,
+          onPressed: flow.busy || flow.blocksPayment
+              ? null
+              : () => _payOnline(allocationId, fleet?.vehicleNumber, autoPay: withAutoPay),
         ),
         _ => null,
       },
@@ -223,56 +198,23 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
               else ...[
                 if (payment.isRejected) ...[_Rejected(payment: payment), const Gap.lg()],
                 PaymentNoticeCard(slot: slot, spacing: Insets.lg),
-                ModuleCard(
-                  title: context.l10n.deploymentHowToPay,
-                  leading: const IconTile(icon: Icons.payments_rounded, solid: true, size: 28),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      AppRadioTile(
-                        selected: _online,
-                        onTap: () => setState(() => _online = true),
-                        title: context.l10n.deploymentPayMethodOnline,
-                        subtitle: context.l10n.deploymentPayMethodOnlineHint,
-                        leading: const Icon(Icons.lock_rounded, color: AppColors.primary),
-                      ),
-                      const Gap.sm(),
-                      AppRadioTile(
-                        selected: !_online,
-                        onTap: () => setState(() => _online = false),
-                        title: context.l10n.deploymentPayMethodCash,
-                        subtitle: context.l10n.deploymentPayMethodCashHint,
-                        leading: const Icon(Icons.payments_rounded, color: AppColors.primary),
-                      ),
-                      if (!_online) ...[
-                        const Gap.lg(),
-                        AppTextField(
-                          label: context.l10n.deploymentTransactionReference,
-                          hint: context.l10n.deploymentReferenceReceiptNumber,
-                          controller: _reference,
-                          errorText: _error,
-                          prefixIcon: Icons.tag_rounded,
-                          onChanged: (_) => setState(() => _error = null),
-                        ),
-                        const Gap.lg(),
-                        GroupLabel(context.l10n.deploymentReceiptTitle),
-                        const Gap.sm(),
-                        Wrap(
-                          spacing: Insets.sm,
-                          runSpacing: Insets.sm,
-                          children: [
-                            for (final DeploymentPaymentReceipt receipt in payment.receipts)
-                              _ReceiptThumb(paymentId: payment.id, photoId: receipt.id),
-                            for (final File file in _screenshots)
-                              _LocalThumb(file: file, onRemove: _submitting ? null : () => _removeScreenshot(file)),
-                            if (payment.receipts.length + _screenshots.length < _maxScreenshots)
-                              _AddThumb(onTap: _submitting ? null : _addScreenshot),
-                          ],
-                        ),
-                      ],
-                    ],
+                if (autoPayTerms != null)
+                  _AutoPayOffer(
+                    amount: payment.amount,
+                    terms: autoPayTerms,
+                    enabled: _autoPay,
+                    email: _email,
+                    emailError: _emailError,
+                    locked: flow.busy,
+                    onToggle: (value) {
+                      if (flow.busy) return;
+                      setState(() {
+                        _autoPay = value;
+                        _emailError = null;
+                      });
+                    },
+                    onEmailChanged: () => setState(() => _emailError = null),
                   ),
-                ),
               ],
             ],
             const Gap.xl(),
@@ -304,6 +246,76 @@ class _Bill extends StatelessWidget {
             const Gap.sm(),
             for (final PaymentLineItem item in payment.items)
               KeyValueRow(label: item.label, value: Fmt.money(item.amount), dense: true),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _AutoPayOffer extends StatelessWidget {
+  const _AutoPayOffer({
+    required this.amount,
+    required this.terms,
+    required this.enabled,
+    required this.email,
+    required this.emailError,
+    required this.locked,
+    required this.onToggle,
+    required this.onEmailChanged,
+  });
+
+  final num amount;
+  final DeploymentAutoPayTerms terms;
+  final bool enabled;
+  final TextEditingController email;
+  final String? emailError;
+  final bool locked;
+  final ValueChanged<bool> onToggle;
+  final VoidCallback onEmailChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
+    return ModuleCard(
+      title: l10n.deploymentAutoPayTitle,
+      leading: const IconTile(icon: Icons.autorenew_rounded, solid: true, size: 28),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            l10n.deploymentAutoPayTerms(Fmt.money(amount), Fmt.money(terms.limit), terms.validityDays),
+            style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5),
+          ),
+          const Gap.sm(),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(Icons.info_outline_rounded, size: 16, color: AppColors.textMuted),
+              const SizedBox(width: Insets.sm),
+              Expanded(
+                child: Text(
+                  l10n.deploymentAutoPayUpiOnly,
+                  style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45, color: AppColors.textMuted),
+                ),
+              ),
+            ],
+          ),
+          const Gap.md(),
+          AppCheckTile(value: enabled, onChanged: onToggle, title: l10n.deploymentAutoPayToggle),
+          if (enabled) ...[
+            const Gap.lg(),
+            AppTextField(
+              label: l10n.paymentsAutoPayEmail,
+              hint: 'name@example.com',
+              helper: l10n.paymentsAutoPayEmailHelp,
+              controller: email,
+              errorText: emailError,
+              enabled: !locked,
+              keyboardType: TextInputType.emailAddress,
+              prefixIcon: Icons.mail_outline_rounded,
+              onChanged: (_) => onEmailChanged(),
+            ),
           ],
         ],
       ),
@@ -428,49 +440,6 @@ class _ReceiptThumb extends ConsumerWidget {
       child: ClipRRect(
         borderRadius: Corners.brMd,
         child: SizedBox.square(dimension: _thumbSize, child: content),
-      ),
-    );
-  }
-}
-
-class _LocalThumb extends StatelessWidget {
-  const _LocalThumb({required this.file, required this.onRemove});
-
-  final File file;
-  final VoidCallback? onRemove;
-
-  @override
-  Widget build(BuildContext context) {
-    final VoidCallback? onRemove = this.onRemove;
-    return SizedBox.square(
-      dimension: _thumbSize,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Pressable(
-              onTap: () => PhotoViewer.showImage(context, FileImage(file)),
-              scale: 0.97,
-              child: ClipRRect(
-                borderRadius: Corners.brMd,
-                child: Image.file(file, fit: BoxFit.cover, cacheWidth: 228),
-              ),
-            ),
-          ),
-          if (onRemove != null)
-            Positioned(
-              top: 4,
-              right: 4,
-              child: Pressable(
-                onTap: onRemove,
-                child: Container(
-                  width: 22,
-                  height: 22,
-                  decoration: const BoxDecoration(color: Colors.black54, shape: BoxShape.circle),
-                  child: const Icon(Icons.close_rounded, size: 14, color: Colors.white),
-                ),
-              ),
-            ),
-        ],
       ),
     );
   }

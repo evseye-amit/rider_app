@@ -78,7 +78,7 @@ class LegalApi {
 
   Future<Result<void>> accept({required String documentId, required String contentHash}) => _client.post<void>(
     '/legal/acceptances',
-    body: {'documentId': documentId, 'contentHash': contentHash},
+    body: {'documentId': documentId, 'contentHash': contentHash, 'accepted': true},
     parse: (_) {},
   );
 

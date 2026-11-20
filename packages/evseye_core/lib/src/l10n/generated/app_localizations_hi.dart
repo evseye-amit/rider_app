@@ -5636,4 +5636,38 @@ class AppL10nHi extends AppL10n {
   String walletAutoPayManualNote(String amount) {
     return '$amount का एक ऑटो रिचार्ज पहले से चल रहा है। अगर आप अभी पैसे जोड़ते हैं, तब भी वह रिचार्ज पूरा हो सकता है।';
   }
+
+  @override
+  String get paymentAutoPayOn => 'भुगतान हो गया। ऑटो-डेबिट चालू है।';
+
+  @override
+  String get paymentAutoPayActivating => 'भुगतान हो गया। ऑटो-डेबिट चालू किया जा रहा है, जल्द ही अपडेट होगा।';
+
+  @override
+  String get paymentAutoPayNotOn => 'भुगतान हो गया, लेकिन ऑटो-डेबिट चालू नहीं हो सका। आप इसे होम से सेट कर सकते हैं।';
+
+  @override
+  String get paymentAutoPayRefused => 'अभी ऑटो-डेबिट चालू नहीं हो सकता। आप इसके बिना भुगतान कर सकते हैं।';
+
+  @override
+  String get paymentAutoPayTermsChanged => 'ऑटो-डेबिट की शर्तें बदल गई हैं। कृपया इन्हें देखकर फिर से स्वीकार करें।';
+
+  @override
+  String get deploymentAutoPayTitle => 'आगे के बिलों के लिए ऑटो-डेबिट';
+
+  @override
+  String get deploymentAutoPayToggle => 'मैं सहमत हूँ, इस भुगतान के साथ ऑटो-डेबिट चालू करें';
+
+  @override
+  String deploymentAutoPayTerms(String amount, String limit, int days) {
+    return 'अभी $amount चुकाएँ। इसी UPI मंज़ूरी से आपके आगे के किराए और बिल $days दिनों तक, हर डेबिट में $limit तक ऑटो-डेबिट हो सकेंगे। हर डेबिट से कम से कम 24 घंटे पहले आपको सूचना मिलेगी, और आप इसे कभी भी रोक या रद्द कर सकते हैं। वॉलेट ऑटो-रीचार्ज अलग है और उसके लिए अलग से सहमति चाहिए।';
+  }
+
+  @override
+  String get deploymentAutoPayUpiOnly => 'यह भुगतान ऐसे UPI ऐप से करें जो AutoPay सपोर्ट करता हो।';
+
+  @override
+  String deploymentPayWithAutoPay(String amount) {
+    return '$amount चुकाएँ और ऑटो-डेबिट चालू करें';
+  }
 }

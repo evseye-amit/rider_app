@@ -8,15 +8,22 @@ final paymentCapabilitiesProvider = FutureProvider.autoDispose<PaymentCapabiliti
   (ref) async => (await ref.watch(paymentOrdersApiProvider).capabilities()).valueOrNull,
 );
 
+String get _platform => defaultTargetPlatform == TargetPlatform.iOS ? 'IOS' : 'ANDROID';
+
 final canPayOnlineProvider = Provider.autoDispose.family<bool, String>(
   (ref, purpose) =>
       ref
           .watch(paymentCapabilitiesProvider)
           .value
-          ?.allows(
-            purpose,
-            platform: defaultTargetPlatform == TargetPlatform.iOS ? 'IOS' : 'ANDROID',
-            providers: OnlinePayments.supportedProviders,
-          ) ??
+          ?.allows(purpose, platform: _platform, providers: OnlinePayments.supportedProviders) ??
+      false,
+);
+
+final canSetUpAutoPayWithPaymentProvider = Provider.autoDispose.family<bool, String>(
+  (ref, purpose) =>
+      ref
+          .watch(paymentCapabilitiesProvider)
+          .value
+          ?.allowsAutoPaySetup(purpose, platform: _platform, providers: OnlinePayments.supportedProviders) ??
       false,
 );

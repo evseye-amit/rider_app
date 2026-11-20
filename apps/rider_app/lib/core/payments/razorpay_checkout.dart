@@ -30,6 +30,7 @@ abstract final class RazorpayCheckout {
     required String currency,
     required String description,
     String? contact,
+    String? email,
   }) {
     final Razorpay razorpay = Razorpay();
     final Completer<CheckoutResult> done = Completer<CheckoutResult>();
@@ -62,8 +63,9 @@ abstract final class RazorpayCheckout {
           'currency': currency,
           'name': FlavorConfig.razorpayName.isEmpty ? FlavorConfig.riderAppName : FlavorConfig.razorpayName,
           'description': description,
-          'prefill': {'contact': ?contact},
+          'prefill': {'contact': ?contact, 'email': ?email},
           'theme': {'color': _hex(FlavorConfig.primary)},
+          if (checkout.recurring) ...{'customer_id': ?checkout.customerId, 'recurring': '1'},
         });
     } on Object {
       finish(const CheckoutFailed());

@@ -8,6 +8,8 @@ import 'package:material_ui/material_ui.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/session/rider_session_provider.dart';
 import '../../../damage_charges/presentation/widgets/damage_charge_widgets.dart';
+import '../../../payments/presentation/providers/payments_provider.dart';
+import '../../../payments/presentation/widgets/auto_pay_card.dart';
 import '../../../profile/presentation/providers/profile_provider.dart';
 import '../../domain/entities/home_summary.dart';
 import '../providers/home_summary_provider.dart';
@@ -45,8 +47,13 @@ class HomePage extends ConsumerWidget {
       drawer: const RiderDrawer(),
       bottomPadding: 190,
       onRefresh: () {
-        ref.invalidate(unreadNotificationsProvider);
-        ref.invalidate(riderProfileProvider);
+        ref
+          ..invalidate(unreadNotificationsProvider)
+          ..invalidate(riderProfileProvider)
+          ..invalidate(paymentsOverviewProvider)
+          ..invalidate(autoPaySetupProvider)
+          ..invalidate(upcomingDebitsProvider)
+          ..invalidate(autoPayDebitsProvider);
         unawaited(ref.read(riderSessionProvider.notifier).refreshState());
         return ref.refreshQuietly(homeSummaryProvider);
       },
@@ -125,6 +132,7 @@ class HomePage extends ConsumerWidget {
           ],
         ),
       ),
+      const AutoPayCard(spacing: Insets.lg),
     ];
   }
 }

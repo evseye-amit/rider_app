@@ -241,7 +241,7 @@ class AutoPayMandateDto {
 }
 
 class AutoPaySetupDto {
-  const AutoPaySetupDto({required this.provider, required this.maxAmount, this.mandate});
+  const AutoPaySetupDto({required this.provider, required this.maxAmount, this.validityDays = 0, this.mandate});
 
   factory AutoPaySetupDto.fromJson(Map<String, dynamic> json) {
     final Object? rawConfiguration = json['configuration'];
@@ -250,12 +250,14 @@ class AutoPaySetupDto {
     return AutoPaySetupDto(
       provider: _text(configuration['provider']).toUpperCase(),
       maxAmount: _money(configuration['maxAmount']),
+      validityDays: _money(configuration['validityDays']).toInt(),
       mandate: mandate is Map ? AutoPayMandateDto.fromJson(Map<String, dynamic>.from(mandate)) : null,
     );
   }
 
   final String provider;
   final num maxAmount;
+  final int validityDays;
   final AutoPayMandateDto? mandate;
 }
 

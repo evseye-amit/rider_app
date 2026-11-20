@@ -219,7 +219,7 @@ class _WalletAutoPaySheetState extends ConsumerState<WalletAutoPaySheet> {
   void _openMandateSetup() {
     final GoRouter router = GoRouter.of(context);
     Navigator.of(context).pop();
-    router.push(Routes.payments);
+    router.go(Routes.home);
   }
 
   @override

@@ -5647,4 +5647,38 @@ class AppL10nUr extends AppL10n {
   String walletAutoPayManualNote(String amount) {
     return 'An auto recharge of $amount is already in progress. If you add money now, that recharge may still complete.';
   }
+
+  @override
+  String get paymentAutoPayOn => 'Payment done. Auto-debit is on.';
+
+  @override
+  String get paymentAutoPayActivating => 'Payment done. Auto-debit is being activated and will update shortly.';
+
+  @override
+  String get paymentAutoPayNotOn => 'Payment done, but auto-debit couldn\'t be turned on. You can set it up from Home.';
+
+  @override
+  String get paymentAutoPayRefused => 'Auto-debit can\'t be turned on right now. You can pay without it.';
+
+  @override
+  String get paymentAutoPayTermsChanged => 'Auto-debit terms have changed. Please review and accept them again.';
+
+  @override
+  String get deploymentAutoPayTitle => 'Auto-debit for future bills';
+
+  @override
+  String get deploymentAutoPayToggle => 'I agree, turn on auto-debit with this payment';
+
+  @override
+  String deploymentAutoPayTerms(String amount, String limit, int days) {
+    return 'Pay $amount now. With the same UPI approval, your future rent and bills can be auto-debited up to $limit per debit for $days days. You\'ll be notified at least 24 hours before each debit and can pause or cancel anytime. Wallet auto-recharge is separate and needs its own consent.';
+  }
+
+  @override
+  String get deploymentAutoPayUpiOnly => 'Complete this payment with a UPI app that supports AutoPay.';
+
+  @override
+  String deploymentPayWithAutoPay(String amount) {
+    return 'Pay $amount & turn on auto-debit';
+  }
 }

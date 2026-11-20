@@ -16,6 +16,7 @@ void refreshPaymentData(void Function(ProviderOrFamily provider) invalidate) {
     homeSummaryProvider,
     paymentsOverviewProvider,
     paymentHistoryProvider,
+    autoPaySetupProvider,
     upcomingDebitsProvider,
     autoPayDebitsProvider,
     rentalsOverviewProvider,

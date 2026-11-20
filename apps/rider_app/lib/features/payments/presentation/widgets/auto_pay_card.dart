@@ -13,9 +13,9 @@ import '../providers/payments_provider.dart';
 import 'payments_widgets.dart';
 
 class AutoPayCard extends ConsumerStatefulWidget {
-  const AutoPayCard({required this.payments, super.key});
+  const AutoPayCard({this.spacing = 0, super.key});
 
-  final PaymentsOverview payments;
+  final double spacing;
 
   @override
   ConsumerState<AutoPayCard> createState() => _AutoPayCardState();
@@ -248,9 +248,10 @@ class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingOb
   @override
   Widget build(BuildContext context) {
     final AppL10n l10n = context.l10n;
-    final PaymentsOverview payments = widget.payments;
+    final PaymentsOverview? payments = ref.watch(paymentsOverviewProvider).value;
     final AutoPaySetup? setup = ref.watch(autoPaySetupProvider).value;
-    final AutoPayMandate? mandate = setup?.mandate;
+    if (payments == null || setup == null) return const SizedBox.shrink();
+    final AutoPayMandate? mandate = setup.mandate;
     final List<Widget> actions = mandate == null || mandate.state == AutoPayMandateState.closed
         ? const []
         : _actions(l10n, mandate);
@@ -265,7 +266,7 @@ class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingOb
         ? [...?ref.watch(autoPayDebitsProvider).value?.where((debit) => debit.state != AutoPayDebitState.pending)]
         : const [];
 
-    return ModuleCard(
+    final Widget card = ModuleCard(
       title: l10n.paymentsAutoPay,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -296,13 +297,13 @@ class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingOb
           if (actions.isNotEmpty) ...[
             const Gap.md(),
             ...actions,
-          ] else if (setup case final AutoPaySetup available when available.canSetUp) ...[
+          ] else if (setup.canSetUp) ...[
             const Gap.md(),
             PrimaryButton(
               label: l10n.paymentsAutoPaySetUp,
               icon: Icons.autorenew_rounded,
               loading: _busy,
-              onPressed: _busy ? null : () => _setUp(available),
+              onPressed: _busy ? null : () => _setUp(setup),
             ),
           ] else if (payments.autoPayNeedsAttention) ...[
             const Gap.sm(),
@@ -311,6 +312,12 @@ class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingOb
         ],
       ),
     );
+    return widget.spacing == 0
+        ? card
+        : Padding(
+            padding: EdgeInsets.only(top: widget.spacing),
+            child: card,
+          );
   }
 }
 

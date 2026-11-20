@@ -83,6 +83,7 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
     return AutoPaySetup(
       canSetUp: dto.provider == 'RAZORPAY' && (mandate == null || mandate.state == AutoPayMandateState.closed),
       maxAmount: dto.maxAmount,
+      validityDays: dto.validityDays,
       mandate: mandate,
     );
   }

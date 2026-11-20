@@ -98,7 +98,7 @@ class PaymentFlowController extends Notifier<PaymentFlowState> {
     OnlinePaymentCancelled(:final paymentRequestId) ||
     OnlinePaymentDeclined(:final paymentRequestId) ||
     OnlinePaymentUnavailable(:final paymentRequestId) => PaymentFlowState(requestId: paymentRequestId),
-    OnlinePaymentPaid() => const PaymentFlowState(),
+    OnlinePaymentPaid() || OnlinePaymentAutoPayRefused() => const PaymentFlowState(),
     OnlinePaymentError() => PaymentFlowState(notice: before.notice, requestId: before.requestId),
   };
 }
