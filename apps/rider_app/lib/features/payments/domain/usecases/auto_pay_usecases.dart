@@ -1,6 +1,6 @@
 import 'package:evseye_core/evseye_core.dart';
 
-import '../entities/auto_pay_setup.dart';
+import '../entities/auto_pay.dart';
 import '../payments_repository.dart';
 
 class SetUpAutoPayParams {
@@ -11,31 +11,23 @@ class SetUpAutoPayParams {
   final String idempotencyKey;
 }
 
-class AutoPayActionParams {
-  const AutoPayActionParams({required this.mandateId, required this.idempotencyKey});
+class TurnOnAutoPayParams {
+  const TurnOnAutoPayParams({required this.mandateId, required this.revision, required this.consentRevision});
 
   final String mandateId;
 
-  final String idempotencyKey;
+  final int revision;
+
+  final int consentRevision;
 }
 
-class PauseAutoPayParams {
-  const PauseAutoPayParams({required this.mandateId, required this.pause, required this.idempotencyKey});
-
-  final String mandateId;
-
-  final bool pause;
-
-  final String idempotencyKey;
-}
-
-class GetAutoPay extends UseCase<AutoPaySetup?, NoParams> {
+class GetAutoPay extends UseCase<AutoPay?, NoParams> {
   const GetAutoPay(this._repository);
 
   final PaymentsRepository _repository;
 
   @override
-  Future<Result<AutoPaySetup?>> call(NoParams params) => _repository.getAutoPay();
+  Future<Result<AutoPay?>> call(NoParams params) => _repository.getAutoPay();
 }
 
 class SetUpAutoPay extends UseCase<AutoPayMandate, SetUpAutoPayParams> {
@@ -57,31 +49,15 @@ class VerifyAutoPay extends UseCase<AutoPayMandate, String> {
   Future<Result<AutoPayMandate>> call(String params) => _repository.verifyAutoPay(params);
 }
 
-class CancelAutoPay extends UseCase<AutoPayMandate, AutoPayActionParams> {
-  const CancelAutoPay(this._repository);
+class TurnOnAutoPay extends UseCase<AutoPay, TurnOnAutoPayParams> {
+  const TurnOnAutoPay(this._repository);
 
   final PaymentsRepository _repository;
 
   @override
-  Future<Result<AutoPayMandate>> call(AutoPayActionParams params) =>
-      _repository.cancelAutoPay(params.mandateId, idempotencyKey: params.idempotencyKey);
-}
-
-class PauseAutoPay extends UseCase<AutoPayMandate, PauseAutoPayParams> {
-  const PauseAutoPay(this._repository);
-
-  final PaymentsRepository _repository;
-
-  @override
-  Future<Result<AutoPayMandate>> call(PauseAutoPayParams params) =>
-      _repository.pauseAutoPay(params.mandateId, pause: params.pause, idempotencyKey: params.idempotencyKey);
-}
-
-class SetAutoDebit extends UseCase<AutoPayMandate, bool> {
-  const SetAutoDebit(this._repository);
-
-  final PaymentsRepository _repository;
-
-  @override
-  Future<Result<AutoPayMandate>> call(bool params) => _repository.setAutoDebit(enabled: params);
+  Future<Result<AutoPay>> call(TurnOnAutoPayParams params) => _repository.turnOnAutoPay(
+    mandateId: params.mandateId,
+    revision: params.revision,
+    consentRevision: params.consentRevision,
+  );
 }

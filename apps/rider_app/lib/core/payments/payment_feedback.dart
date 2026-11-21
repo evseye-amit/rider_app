@@ -22,18 +22,8 @@ void showPaymentOutcome(
 }) {
   final AppL10n l10n = context.l10n;
   switch (outcome) {
-    case OnlinePaymentPaid(autoPay: null):
-      AppSnack.success(context, success ?? l10n.onlinePaymentDone);
-    case OnlinePaymentPaid(autoPay: PaymentAutoPayDto(isActive: true)):
-      AppSnack.success(context, l10n.paymentAutoPayOn);
-    case OnlinePaymentPaid(autoPay: PaymentAutoPayDto(isActivating: true)):
-      AppSnack.success(context, l10n.paymentAutoPayActivating);
     case OnlinePaymentPaid():
-      AppSnack.info(context, l10n.paymentAutoPayNotOn);
-    case OnlinePaymentAutoPayRefused(code: 'AUTOPAY_TERMS_CHANGED'):
-      AppSnack.info(context, l10n.paymentAutoPayTermsChanged);
-    case OnlinePaymentAutoPayRefused():
-      AppSnack.info(context, l10n.paymentAutoPayRefused);
+      AppSnack.success(context, success ?? l10n.onlinePaymentDone);
     case OnlinePaymentCancelled():
       AppSnack.info(context, l10n.onlinePaymentCancelled);
     case OnlinePaymentDeclined():

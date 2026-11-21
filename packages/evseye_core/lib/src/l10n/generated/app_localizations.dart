@@ -5397,12 +5397,6 @@ abstract class AppL10n {
   /// **'Amount due'**
   String get paymentsAmountDue;
 
-  /// Auto-debit
-  ///
-  /// In en, this message translates to:
-  /// **'Auto-debit'**
-  String get paymentsAutoPay;
-
   /// On
   ///
   /// In en, this message translates to:
@@ -5421,12 +5415,6 @@ abstract class AppL10n {
   /// **'Waiting for approval'**
   String get paymentsAutoPayAuthPending;
 
-  /// Expired
-  ///
-  /// In en, this message translates to:
-  /// **'Expired'**
-  String get paymentsAutoPayExpired;
-
   /// Failed
   ///
   /// In en, this message translates to:
@@ -5444,12 +5432,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Paused'**
   String get paymentsAutoPayPaused;
-
-  /// Cancelled
-  ///
-  /// In en, this message translates to:
-  /// **'Cancelled'**
-  String get paymentsAutoPayRevoked;
 
   /// Set-up needed
   ///
@@ -5492,18 +5474,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Per-debit limit'**
   String get paymentsMandateLimit;
-
-  /// Method
-  ///
-  /// In en, this message translates to:
-  /// **'Method'**
-  String get paymentsMethod;
-
-  /// Next debit
-  ///
-  /// In en, this message translates to:
-  /// **'Next debit'**
-  String get paymentsNextDebit;
 
   /// No payments yet
   ///
@@ -9747,12 +9717,6 @@ abstract class AppL10n {
   /// **'Set up auto-debit'**
   String get paymentsAutoPaySetUp;
 
-  /// Explanation in the auto-debit setup sheet
-  ///
-  /// In en, this message translates to:
-  /// **'Your rent is paid automatically from your UPI account on each due date, up to {amount} each time. You approve it once in your UPI app and get a notice before every debit.'**
-  String paymentsAutoPaySetupMessage(String amount);
-
   /// Email field label in the auto-debit setup sheet
   ///
   /// In en, this message translates to:
@@ -9789,12 +9753,6 @@ abstract class AppL10n {
   /// **'Check status'**
   String get paymentsAutoPayCheckStatus;
 
-  /// Shown when auto-debit approval is confirmed
-  ///
-  /// In en, this message translates to:
-  /// **'Auto-debit is on'**
-  String get paymentsAutoPayTurnedOn;
-
   /// Shown when auto-debit approval is still pending
   ///
   /// In en, this message translates to:
@@ -9819,83 +9777,11 @@ abstract class AppL10n {
   /// **'Couldn\'t open the approval page. Please try again.'**
   String get paymentsAutoPayOpenFailed;
 
-  /// Button to stop automatic debits for now
-  ///
-  /// In en, this message translates to:
-  /// **'Turn off auto-debit'**
-  String get paymentsAutoPayTurnOff;
-
-  /// Button to restart automatic debits
-  ///
-  /// In en, this message translates to:
-  /// **'Turn on auto-debit'**
-  String get paymentsAutoPayTurnOn;
-
-  /// Note when the rider turned auto-debit off
-  ///
-  /// In en, this message translates to:
-  /// **'Auto-debit is turned off. Rent won\'t be taken automatically.'**
-  String get paymentsAutoPayOffNote;
-
-  /// Button to pause the mandate
-  ///
-  /// In en, this message translates to:
-  /// **'Pause auto-debit'**
-  String get paymentsAutoPayPause;
-
-  /// Button to resume the mandate
-  ///
-  /// In en, this message translates to:
-  /// **'Resume auto-debit'**
-  String get paymentsAutoPayResume;
-
-  /// Hint for Razorpay mandates, which are paused in the UPI app
-  ///
-  /// In en, this message translates to:
-  /// **'To pause or resume, use your UPI app.'**
-  String get paymentsAutoPayManageInUpiApp;
-
-  /// Button and confirm label to cancel the mandate
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel auto-debit'**
-  String get paymentsAutoPayCancel;
-
-  /// Title of the cancel auto-debit dialog
-  ///
-  /// In en, this message translates to:
-  /// **'Cancel auto-debit?'**
-  String get paymentsAutoPayCancelTitle;
-
-  /// Message of the cancel auto-debit dialog
-  ///
-  /// In en, this message translates to:
-  /// **'Your rent won\'t be paid automatically any more. You can set it up again later.'**
-  String get paymentsAutoPayCancelMessage;
-
-  /// Dismiss button of the cancel auto-debit dialog
-  ///
-  /// In en, this message translates to:
-  /// **'Keep it'**
-  String get paymentsAutoPayKeep;
-
-  /// Shown after auto-debit is cancelled
-  ///
-  /// In en, this message translates to:
-  /// **'Auto-debit cancelled'**
-  String get paymentsAutoPayCancelled;
-
   /// Note while a Razorpay mandate cancellation is pending
   ///
   /// In en, this message translates to:
   /// **'Cancellation requested. Waiting for your bank to confirm.'**
   String get paymentsAutoPayCancelPending;
-
-  /// Shown after turning auto-debit on or off, or pausing or resuming it
-  ///
-  /// In en, this message translates to:
-  /// **'Auto-debit updated'**
-  String get paymentsAutoPayUpdated;
 
   /// Continue
   ///
@@ -10491,24 +10377,6 @@ abstract class AppL10n {
   /// **'View bills'**
   String get paymentsOpenBills;
 
-  /// Heading for scheduled auto-debits
-  ///
-  /// In en, this message translates to:
-  /// **'Upcoming auto-debits'**
-  String get paymentsUpcomingDebits;
-
-  /// Heading for past auto-debits
-  ///
-  /// In en, this message translates to:
-  /// **'Recent auto-debits'**
-  String get paymentsRecentDebits;
-
-  /// Scheduled auto-debit amount can change
-  ///
-  /// In en, this message translates to:
-  /// **'The amount may change if you pay before this date.'**
-  String get paymentsAmountMayChange;
-
   /// Button that pays a bill online
   ///
   /// In en, this message translates to:
@@ -10532,12 +10400,6 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Adds {amount} when your cash balance falls below {threshold}.'**
   String walletAutoPaySummary(String amount, String threshold);
-
-  /// Auto recharge is on
-  ///
-  /// In en, this message translates to:
-  /// **'On'**
-  String get walletAutoPayOn;
 
   /// Auto recharge is off
   ///
@@ -10671,89 +10533,35 @@ abstract class AppL10n {
   /// **'Only your cash balance counts. Incentives and security deposit are not included.'**
   String get walletAutoPayCashOnly;
 
-  /// Auto recharge needs an active auto-debit mandate
-  ///
-  /// In en, this message translates to:
-  /// **'Set up auto-debit first. Its limit must be at least {amount}.'**
-  String walletAutoPayNeedsMandate(String amount);
-
-  /// Button that opens auto-debit setup
-  ///
-  /// In en, this message translates to:
-  /// **'Set up auto-debit'**
-  String get walletAutoPaySetUpMandate;
-
-  /// Auto recharge consent checkbox
-  ///
-  /// In en, this message translates to:
-  /// **'I agree to these auto recharge terms'**
-  String get walletAutoPayAgree;
-
   /// Manual top-up while an auto recharge is pending
   ///
   /// In en, this message translates to:
   /// **'An auto recharge of {amount} is already in progress. If you add money now, that recharge may still complete.'**
   String walletAutoPayManualNote(String amount);
 
-  /// Snack after a payment that also turned on auto-debit
+  /// Onboarding auto-debit step UPI app note
   ///
   /// In en, this message translates to:
-  /// **'Payment done. Auto-debit is on.'**
-  String get paymentAutoPayOn;
+  /// **'Approve it in a UPI app that supports AutoPay.'**
+  String get deploymentAutoPayUpiApp;
 
-  /// Snack after a payment whose auto-debit is still activating
+  /// Onboarding auto recharge step intro
   ///
   /// In en, this message translates to:
-  /// **'Payment done. Auto-debit is being activated and will update shortly.'**
-  String get paymentAutoPayActivating;
+  /// **'Auto recharge is required to continue. Your rent is taken from your wallet, and auto recharge keeps it topped up.'**
+  String get deploymentAutoPayIntro;
 
-  /// Snack after a payment whose auto-debit setup failed
+  /// Auto recharge is saved and starts once a scooter is allocated
   ///
   /// In en, this message translates to:
-  /// **'Payment done, but auto-debit couldn\'t be turned on. You can set it up from Home.'**
-  String get paymentAutoPayNotOn;
+  /// **'Starts with your scooter'**
+  String get paymentsAutoPayWaitingVehicle;
 
-  /// Snack when the server refuses auto-debit with this payment
+  /// Auto recharge is blocked until an earlier payment settles
   ///
   /// In en, this message translates to:
-  /// **'Auto-debit can\'t be turned on right now. You can pay without it.'**
-  String get paymentAutoPayRefused;
-
-  /// Snack when the server says the auto-debit terms changed and need fresh consent
-  ///
-  /// In en, this message translates to:
-  /// **'Auto-debit terms have changed. Please review and accept them again.'**
-  String get paymentAutoPayTermsChanged;
-
-  /// Onboarding payment auto-debit card title
-  ///
-  /// In en, this message translates to:
-  /// **'Auto-debit for future bills'**
-  String get deploymentAutoPayTitle;
-
-  /// Onboarding payment auto-debit switch label
-  ///
-  /// In en, this message translates to:
-  /// **'I agree, turn on auto-debit with this payment'**
-  String get deploymentAutoPayToggle;
-
-  /// Onboarding payment auto-debit consent terms
-  ///
-  /// In en, this message translates to:
-  /// **'Pay {amount} now. With the same UPI approval, your future rent and bills can be auto-debited up to {limit} per debit for {days} days. You\'ll be notified at least 24 hours before each debit and can pause or cancel anytime. Wallet auto-recharge is separate and needs its own consent.'**
-  String deploymentAutoPayTerms(String amount, String limit, int days);
-
-  /// Onboarding payment auto-debit UPI-only note
-  ///
-  /// In en, this message translates to:
-  /// **'Complete this payment with a UPI app that supports AutoPay.'**
-  String get deploymentAutoPayUpiOnly;
-
-  /// Onboarding payment button with auto-debit
-  ///
-  /// In en, this message translates to:
-  /// **'Pay {amount} & turn on auto-debit'**
-  String deploymentPayWithAutoPay(String amount);
+  /// **'A payment is still being processed. You can set up auto recharge once it\'s done.'**
+  String get paymentsAutoPayMigrationBlocked;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

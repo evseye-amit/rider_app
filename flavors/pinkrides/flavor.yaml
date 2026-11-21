@@ -3,14 +3,14 @@ supportEmail: support@pinkrides.in
 razorpayName: "Pinkrides"
 rider:
   appName: Pink Rider App
-  androidApplicationId: com.evsi.evseye.pinkrides.rider.androifd
+  androidApplicationId: com.evsi.evseye.pinkrides.rider.android
   iosBundleId: com.evsi.evseye.pinkrides.rider.ios
-  version: "1.0.0+1"
+  version: "1.0.1+2"
 fleet:
   appName: Pink FM app
   androidApplicationId: com.evsi.evseye.pinkrides.fm.android
   iosBundleId: com.evsi.evseye.pinkrides.fm.ios
-  version: "1.0.0+1"
+  version: "1.0.1+2"
 colors:
   primary: "#F475D0"
   primaryBright: "#F475D0"

@@ -8,6 +8,7 @@ import 'package:material_ui/material_ui.dart';
 import '../../../../app/router/app_routes.dart';
 import '../../../../core/session/rider_session_provider.dart';
 import '../../../damage_charges/presentation/widgets/damage_charge_widgets.dart';
+import '../../../payments/presentation/providers/auto_pay_provider.dart';
 import '../../../payments/presentation/providers/payments_provider.dart';
 import '../../../payments/presentation/widgets/auto_pay_card.dart';
 import '../../../profile/presentation/providers/profile_provider.dart';
@@ -51,9 +52,7 @@ class HomePage extends ConsumerWidget {
           ..invalidate(unreadNotificationsProvider)
           ..invalidate(riderProfileProvider)
           ..invalidate(paymentsOverviewProvider)
-          ..invalidate(autoPaySetupProvider)
-          ..invalidate(upcomingDebitsProvider)
-          ..invalidate(autoPayDebitsProvider);
+          ..invalidate(autoPayProvider);
         unawaited(ref.read(riderSessionProvider.notifier).refreshState());
         return ref.refreshQuietly(homeSummaryProvider);
       },

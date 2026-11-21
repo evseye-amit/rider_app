@@ -7,21 +7,28 @@ import '../../features/auth/auth_dependencies.dart';
 import '../../features/auth/domain/usecases/verify_otp.dart';
 import '../../features/deployment/deployment_dependencies.dart';
 import '../../features/onboarding/onboarding_dependencies.dart';
+import '../../features/payments/domain/entities/auto_pay.dart';
+import '../../features/payments/payments_dependencies.dart';
 import 'rider_session.dart';
 import 'rider_stage.dart';
 
 export 'rider_session.dart';
 export 'rider_stage.dart';
 
+typedef _AutoPayCheck = ({String allocationId, bool due, DateTime at});
+
 class RiderSessionNotifier extends Notifier<RiderSession> {
   static const Duration _documentCheckInterval = Duration(seconds: 30);
   static const Duration _consentCheckInterval = Duration(minutes: 5);
   static const Duration _resumeRefreshInterval = Duration(seconds: 30);
+  static const Duration _autoPayCheckInterval = Duration(seconds: 30);
   static const String _hygieneKey = 'deployment.hygiene_done';
+  static const String _autoPayKey = 'deployment.autopay_done';
 
   DateTime? _documentsCheckedAt;
   DateTime? _consentCheckedAt;
   DateTime? _resumedAt;
+  _AutoPayCheck? _autoPayCheck;
 
   UiConfigService get _config => ref.read(uiConfigServiceProvider);
 
@@ -89,7 +96,9 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     );
     if (result case Ok<AuthUser>(:final value)) {
       if (!value.isRider) {
-        return const Result.err(ForbiddenFailure('This application is not available for your role.', 'UNSUPPORTED_APP_ROLE'));
+        return const Result.err(
+          ForbiddenFailure('This application is not available for your role.', 'UNSUPPORTED_APP_ROLE'),
+        );
       }
       state = state.copyWith(user: value);
       unawaited(ref.read(consentProvider.notifier).recordAcceptance(value.id));
@@ -109,11 +118,12 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
         if (value.screen == RiderScreen.onboarding || onboarding == null || _documentsDue(value)) {
           onboarding = await _fetchOnboarding() ?? onboarding;
         }
+        final RiderStage stage = await _withAutoPay(_resolveStage(value, onboarding), value);
         state = state.copyWith(
           deployment: value,
           onboarding: onboarding,
           mobile: _resolveMobile(deployment: value, onboarding: onboarding),
-          stage: _resolveStage(value, onboarding),
+          stage: stage,
         );
       case Err<RiderDeployment>(:final failure):
         if (failure is UnauthorizedFailure || failure is AuthFailure) {
@@ -146,6 +156,12 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     if (!done.contains(allocationId)) {
       await ref.read(sharedPreferencesProvider).setStringList(_hygieneKey, [...done, allocationId]);
     }
+    final RiderDeployment? deployment = state.deployment;
+    if (deployment != null) state = state.copyWith(stage: _resolveStage(deployment, state.onboarding));
+  }
+
+  Future<void> finishAutoPay(String allocationId) async {
+    await _markAutoPayDone(allocationId);
     final RiderDeployment? deployment = state.deployment;
     if (deployment != null) state = state.copyWith(stage: _resolveStage(deployment, state.onboarding));
   }
@@ -213,6 +229,49 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
     return done.contains(allocationId) ? RiderStage.active : RiderStage.training;
   }
 
+  Future<RiderStage> _withAutoPay(RiderStage stage, RiderDeployment deployment) async {
+    final String? allocationId = deployment.allocation?.id;
+    final bool paid = switch (stage) {
+      RiderStage.pdi || RiderStage.training => true,
+      RiderStage.waiting => deployment.status == DeploymentStatus.paymentPaid,
+      _ => false,
+    };
+    if (allocationId == null || !paid || _autoPayDone(allocationId)) return stage;
+    final DateTime now = DateTime.now();
+    final _AutoPayCheck? last = _autoPayCheck?.allocationId == allocationId ? _autoPayCheck : null;
+    bool due = last?.due ?? false;
+    if (last == null || now.difference(last.at) >= _autoPayCheckInterval) {
+      if (await _autoPayDue(allocationId) case final bool fresh) {
+        due = fresh;
+        _autoPayCheck = (allocationId: allocationId, due: fresh, at: now);
+      }
+    }
+    return due && !_autoPayDone(allocationId) ? RiderStage.autoPay : stage;
+  }
+
+  Future<bool?> _autoPayDue(String allocationId) async {
+    switch (await ref.read(getAutoPayProvider)(const NoParams())) {
+      case Ok<AutoPay?>(value: AutoPay(isOn: true)):
+        await _markAutoPayDone(allocationId);
+        return false;
+      case Ok<AutoPay?>(:final value):
+        return value?.needsSetup ?? false;
+      case Err<AutoPay?>():
+        return null;
+    }
+  }
+
+  bool _autoPayDone(String allocationId) =>
+      (ref.read(sharedPreferencesProvider).getStringList(_autoPayKey) ?? const []).contains(allocationId);
+
+  Future<void> _markAutoPayDone(String allocationId) async {
+    _autoPayCheck = null;
+    final List<String> done = ref.read(sharedPreferencesProvider).getStringList(_autoPayKey) ?? const [];
+    if (!done.contains(allocationId)) {
+      await ref.read(sharedPreferencesProvider).setStringList(_autoPayKey, [...done, allocationId]);
+    }
+  }
+
   String _resolveMobile({required RiderDeployment? deployment, required RiderOnboardingConfig? onboarding}) {
     final List<String?> candidates = [
       state.mobile,
@@ -235,6 +294,7 @@ class RiderSessionNotifier extends Notifier<RiderSession> {
   }
 
   void _clearSession() {
+    _autoPayCheck = null;
     state = RiderSession(flags: state.flags);
   }
 }

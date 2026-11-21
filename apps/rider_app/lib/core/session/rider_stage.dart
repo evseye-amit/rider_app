@@ -8,6 +8,7 @@ enum RiderStage {
   waiting,
   planAcceptance,
   payment,
+  autoPay,
   pdi,
   training,
   active;
@@ -18,6 +19,7 @@ enum RiderStage {
     waiting => Routes.deploymentWaiting,
     planAcceptance => Routes.deploymentPlan,
     payment => Routes.deploymentPayment,
+    autoPay => Routes.deploymentAutoPay,
     pdi => Routes.deploymentPdi,
     training => Routes.deploymentTraining,
     active => Routes.home,

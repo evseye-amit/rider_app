@@ -18,6 +18,7 @@ import '../api/referral_api.dart';
 import '../api/rental_agreements_api.dart';
 import '../api/ride_returns_api.dart';
 import '../api/rider_app_api.dart';
+import '../api/rider_autopay_api.dart';
 import '../api/rider_billing_api.dart';
 import '../api/rider_hubs_api.dart';
 import '../api/rider_payments_api.dart';
@@ -56,6 +57,8 @@ final mediaApiProvider = Provider<MediaApi>((ref) => MediaApi(ref.watch(apiClien
 final walletApiProvider = Provider<WalletApi>((ref) => WalletApi(ref.watch(apiClientProvider)));
 
 final riderPaymentsApiProvider = Provider<RiderPaymentsApi>((ref) => RiderPaymentsApi(ref.watch(apiClientProvider)));
+
+final riderAutoPayApiProvider = Provider<RiderAutoPayApi>((ref) => RiderAutoPayApi(ref.watch(apiClientProvider)));
 
 final vehicleExchangeApiProvider = Provider<VehicleExchangeApi>(
   (ref) => VehicleExchangeApi(ref.watch(apiClientProvider)),

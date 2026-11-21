@@ -8,14 +8,13 @@ import '../../../../core/payments/online_payments.dart';
 import '../../../../core/payments/payment_capabilities_provider.dart';
 import '../../../../core/payments/payment_feedback.dart';
 import '../../../../core/payments/payment_flow_provider.dart';
-import '../../domain/entities/wallet_auto_pay.dart';
+import '../../../payments/domain/entities/auto_pay.dart';
+import '../../../payments/presentation/providers/auto_pay_provider.dart';
 import '../../domain/entities/wallet_overview.dart';
 import '../../domain/entities/wallet_top_up.dart';
-import '../providers/wallet_auto_pay_provider.dart';
 import '../providers/wallet_provider.dart';
 import '../widgets/add_money_sheet.dart';
 import '../widgets/deposit_sheets.dart';
-import '../widgets/wallet_auto_pay_card.dart';
 import '../widgets/wallet_widgets.dart';
 
 enum _Filter { all, credits, debits }
@@ -56,12 +55,8 @@ class _WalletPageState extends ConsumerState<WalletPage> {
         .toList(growable: false);
   }
 
-  Future<void> _addMoney() async {
+  Future<void> _addMoney(num? autoRecharge) async {
     final AppL10n l10n = context.l10n;
-    final num? autoRecharge = switch (ref.read(walletAutoPayProvider).value?.openRequest) {
-      final AutoRecharge request when request.state.isAwaitingBank => request.amount,
-      _ => null,
-    };
     final int? paise = await AddMoneySheet.show(context, pendingAutoRecharge: autoRecharge);
     if (paise == null || !mounted) return;
     final OnlinePaymentOutcome? outcome = await ref
@@ -81,6 +76,10 @@ class _WalletPageState extends ConsumerState<WalletPage> {
     final AsyncValue<WalletOverview> overview = ref.watch(walletOverviewProvider);
     final PaymentFlowState topUp = ref.watch(paymentFlowProvider(PaymentSlots.topUp));
     final bool canTopUp = ref.watch(canPayOnlineProvider(PaymentPurposes.topUp));
+    final num? autoRecharge = switch (ref.watch(autoPayProvider).value?.openRequest) {
+      final AutoRecharge request when request.state.isAwaitingBank => request.amount,
+      _ => null,
+    };
 
     if (overview.hasError) {
       return Scaffold(
@@ -105,13 +104,17 @@ class _WalletPageState extends ConsumerState<WalletPage> {
       onRefresh: () async {
         ref
           ..invalidate(walletTransactionsProvider)
-          ..invalidate(walletAutoPayProvider);
+          ..invalidate(autoPayProvider);
         await Future.wait([
           ref.refreshQuietly(walletOverviewProvider),
           if (topUp.notice != null) ref.read(paymentFlowProvider(PaymentSlots.topUp).notifier).check(),
         ]);
       },
-      band: WalletBand(overview: wallet, onAddMoney: canTopUp ? _addMoney : null, addingMoney: topUp.busy),
+      band: WalletBand(
+        overview: wallet,
+        onAddMoney: canTopUp ? () => _addMoney(autoRecharge) : null,
+        addingMoney: topUp.busy,
+      ),
       children: wallet == null ? const [_WalletSkeleton()] : _content(context, wallet, hasNotice: topUp.notice != null),
     );
   }
@@ -119,7 +122,6 @@ class _WalletPageState extends ConsumerState<WalletPage> {
   List<Widget> _content(BuildContext context, WalletOverview wallet, {required bool hasNotice}) {
     return [
       if (hasNotice) ...[const PaymentNoticeCard(slot: PaymentSlots.topUp), const Gap.lg()],
-      const WalletAutoPayCard(),
       if (wallet.hasRewards) ...[
         ModuleCard(
           title: context.l10n.commonIncentives,

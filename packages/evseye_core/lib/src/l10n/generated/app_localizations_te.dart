@@ -2798,9 +2798,6 @@ class AppL10nTe extends AppL10n {
   String get paymentsAmountDue => 'చెల్లించాల్సిన మొత్తం';
 
   @override
-  String get paymentsAutoPay => 'ఆటో-డెబిట్';
-
-  @override
   String get paymentsAutoPayActive => 'ఆన్';
 
   @override
@@ -2810,9 +2807,6 @@ class AppL10nTe extends AppL10n {
   String get paymentsAutoPayAuthPending => 'ఆమోదం కోసం వేచి ఉంది';
 
   @override
-  String get paymentsAutoPayExpired => 'గడువు ముగిసింది';
-
-  @override
   String get paymentsAutoPayFailed => 'విఫలమైంది';
 
   @override
@@ -2820,9 +2814,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get paymentsAutoPayPaused => 'నిలిపివేశారు';
-
-  @override
-  String get paymentsAutoPayRevoked => 'రద్దు';
 
   @override
   String get paymentsAutoPaySetupRequired => 'సెటప్ కావాలి';
@@ -2846,12 +2837,6 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get paymentsMandateLimit => 'ప్రతి కోత పరిమితి';
-
-  @override
-  String get paymentsMethod => 'విధానం';
-
-  @override
-  String get paymentsNextDebit => 'తదుపరి కోత';
 
   @override
   String get paymentsNoPayments => 'ఇంకా చెల్లింపులు లేవు';
@@ -5121,11 +5106,6 @@ class AppL10nTe extends AppL10n {
   String get paymentsAutoPaySetUp => 'ఆటో-డెబిట్ సెట్ చేయండి';
 
   @override
-  String paymentsAutoPaySetupMessage(String amount) {
-    return 'ప్రతి గడువు తేదీన మీ అద్దె మీ UPI ఖాతా నుండి ఆటోమేటిక్‌గా చెల్లించబడుతుంది, ప్రతిసారి $amount వరకు. మీరు దీన్ని ఒకసారి మీ UPI యాప్‌లో ఆమోదిస్తారు, ప్రతి కోతకు ముందు మీకు సమాచారం వస్తుంది.';
-  }
-
-  @override
   String get paymentsAutoPayEmail => 'ఇమెయిల్';
 
   @override
@@ -5144,9 +5124,6 @@ class AppL10nTe extends AppL10n {
   String get paymentsAutoPayCheckStatus => 'స్థితి చూడండి';
 
   @override
-  String get paymentsAutoPayTurnedOn => 'ఆటో-డెబిట్ ఆన్ అయింది';
-
-  @override
   String get paymentsAutoPayStillWaiting =>
       'మీ బ్యాంక్ నిర్ధారణ కోసం ఎదురుచూస్తున్నాం. కొన్ని నిమిషాల తర్వాత మళ్లీ చూడండి.';
 
@@ -5160,43 +5137,7 @@ class AppL10nTe extends AppL10n {
   String get paymentsAutoPayOpenFailed => 'ఆమోద పేజీ తెరవలేకపోయాం. దయచేసి మళ్లీ ప్రయత్నించండి.';
 
   @override
-  String get paymentsAutoPayTurnOff => 'ఆటో-డెబిట్ ఆఫ్ చేయండి';
-
-  @override
-  String get paymentsAutoPayTurnOn => 'ఆటో-డెబిట్ ఆన్ చేయండి';
-
-  @override
-  String get paymentsAutoPayOffNote => 'ఆటో-డెబిట్ ఆఫ్‌లో ఉంది. అద్దె ఆటోమేటిక్‌గా తీసుకోబడదు.';
-
-  @override
-  String get paymentsAutoPayPause => 'ఆటో-డెబిట్ నిలిపివేయండి';
-
-  @override
-  String get paymentsAutoPayResume => 'ఆటో-డెబిట్ మళ్లీ ప్రారంభించండి';
-
-  @override
-  String get paymentsAutoPayManageInUpiApp => 'నిలిపివేయడానికి లేదా మళ్లీ ప్రారంభించడానికి మీ UPI యాప్ ఉపయోగించండి.';
-
-  @override
-  String get paymentsAutoPayCancel => 'ఆటో-డెబిట్ రద్దు చేయండి';
-
-  @override
-  String get paymentsAutoPayCancelTitle => 'ఆటో-డెబిట్ రద్దు చేయాలా?';
-
-  @override
-  String get paymentsAutoPayCancelMessage => 'మీ అద్దె ఇకపై ఆటోమేటిక్‌గా చెల్లించబడదు. తర్వాత మళ్లీ సెట్ చేయవచ్చు.';
-
-  @override
-  String get paymentsAutoPayKeep => 'అలాగే ఉంచండి';
-
-  @override
-  String get paymentsAutoPayCancelled => 'ఆటో-డెబిట్ రద్దయింది';
-
-  @override
   String get paymentsAutoPayCancelPending => 'రద్దు అభ్యర్థన పంపాం. మీ బ్యాంక్ నిర్ధారణ కోసం ఎదురుచూస్తున్నాం.';
-
-  @override
-  String get paymentsAutoPayUpdated => 'ఆటో-డెబిట్ అప్‌డేట్ అయింది';
 
   @override
   String get commonContinue => 'కొనసాగించండి';
@@ -5541,15 +5482,6 @@ class AppL10nTe extends AppL10n {
   String get paymentsOpenBills => 'బిల్లులు చూడండి';
 
   @override
-  String get paymentsUpcomingDebits => 'రాబోయే ఆటో-డెబిట్‌లు';
-
-  @override
-  String get paymentsRecentDebits => 'ఇటీవలి ఆటో-డెబిట్‌లు';
-
-  @override
-  String get paymentsAmountMayChange => 'ఈ తేదీకి ముందు మీరు చెల్లిస్తే మొత్తం మారవచ్చు.';
-
-  @override
   String rentalsPayBill(String amount) {
     return '$amount చెల్లించండి';
   }
@@ -5565,9 +5497,6 @@ class AppL10nTe extends AppL10n {
   String walletAutoPaySummary(String amount, String threshold) {
     return 'మీ నగదు బ్యాలెన్స్ $threshold కంటే తగ్గినప్పుడు $amount ఆటోమేటిక్‌గా జోడించబడుతుంది.';
   }
-
-  @override
-  String get walletAutoPayOn => 'ఆన్';
 
   @override
   String get walletAutoPayOff => 'ఆఫ్';
@@ -5644,54 +5573,21 @@ class AppL10nTe extends AppL10n {
       'మీ నగదు బ్యాలెన్స్ మాత్రమే లెక్కించబడుతుంది. ప్రోత్సాహకాలు మరియు సెక్యూరిటీ డిపాజిట్ చేర్చబడవు.';
 
   @override
-  String walletAutoPayNeedsMandate(String amount) {
-    return 'ముందుగా ఆటో-డెబిట్ సెట్ చేయండి. దాని పరిమితి కనీసం $amount ఉండాలి.';
-  }
-
-  @override
-  String get walletAutoPaySetUpMandate => 'ఆటో-డెబిట్ సెట్ చేయండి';
-
-  @override
-  String get walletAutoPayAgree => 'ఈ ఆటో రీఛార్జ్ నిబంధనలకు నేను అంగీకరిస్తున్నాను';
-
-  @override
   String walletAutoPayManualNote(String amount) {
     return '$amount ఆటో రీఛార్జ్ ఇప్పటికే జరుగుతోంది. మీరు ఇప్పుడు డబ్బు జోడించినా, ఆ రీఛార్జ్ పూర్తి కావచ్చు.';
   }
 
   @override
-  String get paymentAutoPayOn => 'చెల్లింపు పూర్తయింది. ఆటో-డెబిట్ ఆన్ అయింది.';
+  String get deploymentAutoPayUpiApp => 'AutoPay సపోర్ట్ చేసే UPI యాప్‌లో దీన్ని ఆమోదించండి.';
 
   @override
-  String get paymentAutoPayActivating =>
-      'చెల్లింపు పూర్తయింది. ఆటో-డెబిట్ యాక్టివేట్ అవుతోంది, త్వరలో అప్‌డేట్ అవుతుంది.';
+  String get deploymentAutoPayIntro =>
+      'కొనసాగడానికి ఆటో రీఛార్జ్ తప్పనిసరి. మీ అద్దె మీ వాలెట్ నుండి కట్ అవుతుంది, ఆటో రీఛార్జ్ వాలెట్‌లో డబ్బు ఉండేలా చూస్తుంది.';
 
   @override
-  String get paymentAutoPayNotOn =>
-      'చెల్లింపు పూర్తయింది, కానీ ఆటో-డెబిట్ ఆన్ కాలేదు. మీరు దీన్ని హోమ్ నుండి సెట్ చేయవచ్చు.';
+  String get paymentsAutoPayWaitingVehicle => 'స్కూటర్ వచ్చాక ప్రారంభమవుతుంది';
 
   @override
-  String get paymentAutoPayRefused => 'ప్రస్తుతం ఆటో-డెబిట్ ఆన్ చేయడం సాధ్యం కాదు. అది లేకుండా చెల్లించవచ్చు.';
-
-  @override
-  String get paymentAutoPayTermsChanged => 'ఆటో-డెబిట్ నిబంధనలు మారాయి. దయచేసి వాటిని చూసి మళ్లీ అంగీకరించండి.';
-
-  @override
-  String get deploymentAutoPayTitle => 'రాబోయే బిల్లులకు ఆటో-డెబిట్';
-
-  @override
-  String get deploymentAutoPayToggle => 'నేను అంగీకరిస్తున్నాను, ఈ చెల్లింపుతో ఆటో-డెబిట్ ఆన్ చేయండి';
-
-  @override
-  String deploymentAutoPayTerms(String amount, String limit, int days) {
-    return 'ఇప్పుడు $amount చెల్లించండి. ఇదే UPI ఆమోదంతో మీ రాబోయే అద్దె మరియు బిల్లులు $days రోజుల వరకు, ప్రతి డెబిట్‌కు $limit వరకు ఆటో-డెబిట్ కావచ్చు. ప్రతి డెబిట్‌కు కనీసం 24 గంటల ముందు మీకు సమాచారం వస్తుంది, మరియు మీరు దీన్ని ఎప్పుడైనా ఆపవచ్చు లేదా రద్దు చేయవచ్చు. వాలెట్ ఆటో-రీఛార్జ్ వేరు, దానికి ప్రత్యేక అనుమతి అవసరం.';
-  }
-
-  @override
-  String get deploymentAutoPayUpiOnly => 'AutoPay సపోర్ట్ చేసే UPI యాప్‌తో ఈ చెల్లింపును పూర్తి చేయండి.';
-
-  @override
-  String deploymentPayWithAutoPay(String amount) {
-    return '$amount చెల్లించి ఆటో-డెబిట్ ఆన్ చేయండి';
-  }
+  String get paymentsAutoPayMigrationBlocked =>
+      'ఒక చెల్లింపు ఇంకా ప్రాసెస్ అవుతోంది. అది పూర్తయ్యాక మీరు ఆటో రీఛార్జ్ సెట్ చేయవచ్చు.';
 }

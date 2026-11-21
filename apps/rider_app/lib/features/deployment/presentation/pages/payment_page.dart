@@ -9,7 +9,6 @@ import '../../../../core/payments/online_payments.dart';
 import '../../../../core/payments/payment_feedback.dart';
 import '../../../../core/payments/payment_flow_provider.dart';
 import '../../domain/usecases/payment_receipt_usecases.dart';
-import '../providers/deployment_auto_pay_provider.dart';
 import '../providers/deployment_payment_provider.dart';
 import '../providers/deployment_provider.dart';
 
@@ -24,19 +23,7 @@ class PaymentPage extends ConsumerStatefulWidget {
 }
 
 class _PaymentPageState extends ConsumerState<PaymentPage> {
-  static final RegExp _emailPattern = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]{2,}$');
-
-  final TextEditingController _email = TextEditingController();
-  bool _autoPay = false;
-  bool _autoPayRefused = false;
   bool _adding = false;
-  String? _emailError;
-
-  @override
-  void dispose() {
-    _email.dispose();
-    super.dispose();
-  }
 
   Future<File?> _pickScreenshot() async {
     final File? file = await PhotoSourceSheet.pick(context);
@@ -48,39 +35,12 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     return file;
   }
 
-  Future<void> _payOnline(String allocationId, String? vehicle, {DeploymentAutoPayTerms? autoPay}) async {
+  Future<void> _payOnline(String allocationId, String? vehicle) async {
     final AppL10n l10n = context.l10n;
-    final String email = _email.text.trim();
-    if (autoPay != null && !_emailPattern.hasMatch(email)) {
-      setState(() => _emailError = l10n.paymentsAutoPayEmailInvalid);
-      return;
-    }
     final OnlinePaymentOutcome? outcome = await ref
         .read(paymentFlowProvider(PaymentSlots.deployment(allocationId)).notifier)
-        .pay(
-          PaymentOrderRequest.deployment(
-            allocationId,
-            autoPay: switch (autoPay) {
-              (:final num limit, :final int validityDays) => DeploymentAutoPayConsent(
-                email: email,
-                maxAmount: limit,
-                validityDays: validityDays,
-              ),
-              null => null,
-            },
-          ),
-          description: ['Scooter payment', ?vehicle].join(' '),
-        );
+        .pay(PaymentOrderRequest.deployment(allocationId), description: ['Scooter payment', ?vehicle].join(' '));
     if (outcome == null || !mounted) return;
-    if (outcome case OnlinePaymentAutoPayRefused(:final String code)) {
-      setState(() {
-        if (code == 'AUTOPAY_TERMS_CHANGED') {
-          _autoPay = false;
-        } else {
-          _autoPayRefused = true;
-        }
-      });
-    }
     showPaymentOutcome(context, outcome, unavailable: l10n.deploymentOnlineUnavailable);
     if (outcome is OnlinePaymentPaid) unawaited(ref.read(deploymentProvider.notifier).refresh(silent: true));
     unawaited(ref.read(deploymentPaymentProvider(allocationId).notifier).reload());
@@ -132,13 +92,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
     final DeploymentFleet? fleet = current?.allocation?.fleet;
     final bool submitted = payment?.isSubmitted == true;
     final bool canPay = payment != null && !submitted && !payment.isPaid && !payment.needsSupport;
-    final DeploymentAutoPayTerms? autoPayTerms = switch ((payment, ref.watch(deploymentAutoPayTermsProvider))) {
-      (final DeploymentPayment due, final DeploymentAutoPayTerms terms)
-          when canPay && !_autoPayRefused && due.amount >= 1 && due.amount <= terms.limit =>
-        terms,
-      _ => null,
-    };
-    final DeploymentAutoPayTerms? withAutoPay = _autoPay ? autoPayTerms : null;
 
     return AppScaffold(
       title: submitted ? context.l10n.deploymentPaymentSubmitted : context.l10n.deploymentPayScooter,
@@ -149,14 +102,10 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
       centerTitle: submitted,
       footer: switch (payment) {
         final DeploymentPayment due when canPay => PrimaryButton(
-          label: withAutoPay != null
-              ? context.l10n.deploymentPayWithAutoPay(Fmt.money(due.amount))
-              : context.l10n.deploymentPayOnline(Fmt.money(due.amount)),
-          icon: withAutoPay != null ? Icons.autorenew_rounded : Icons.lock_rounded,
+          label: context.l10n.deploymentPayOnline(Fmt.money(due.amount)),
+          icon: Icons.lock_rounded,
           loading: flow.busy,
-          onPressed: flow.busy || flow.blocksPayment
-              ? null
-              : () => _payOnline(allocationId, fleet?.vehicleNumber, autoPay: withAutoPay),
+          onPressed: flow.busy || flow.blocksPayment ? null : () => _payOnline(allocationId, fleet?.vehicleNumber),
         ),
         _ => null,
       },
@@ -198,23 +147,6 @@ class _PaymentPageState extends ConsumerState<PaymentPage> {
               else ...[
                 if (payment.isRejected) ...[_Rejected(payment: payment), const Gap.lg()],
                 PaymentNoticeCard(slot: slot, spacing: Insets.lg),
-                if (autoPayTerms != null)
-                  _AutoPayOffer(
-                    amount: payment.amount,
-                    terms: autoPayTerms,
-                    enabled: _autoPay,
-                    email: _email,
-                    emailError: _emailError,
-                    locked: flow.busy,
-                    onToggle: (value) {
-                      if (flow.busy) return;
-                      setState(() {
-                        _autoPay = value;
-                        _emailError = null;
-                      });
-                    },
-                    onEmailChanged: () => setState(() => _emailError = null),
-                  ),
               ],
             ],
             const Gap.xl(),
@@ -246,76 +178,6 @@ class _Bill extends StatelessWidget {
             const Gap.sm(),
             for (final PaymentLineItem item in payment.items)
               KeyValueRow(label: item.label, value: Fmt.money(item.amount), dense: true),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _AutoPayOffer extends StatelessWidget {
-  const _AutoPayOffer({
-    required this.amount,
-    required this.terms,
-    required this.enabled,
-    required this.email,
-    required this.emailError,
-    required this.locked,
-    required this.onToggle,
-    required this.onEmailChanged,
-  });
-
-  final num amount;
-  final DeploymentAutoPayTerms terms;
-  final bool enabled;
-  final TextEditingController email;
-  final String? emailError;
-  final bool locked;
-  final ValueChanged<bool> onToggle;
-  final VoidCallback onEmailChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final AppL10n l10n = context.l10n;
-    return ModuleCard(
-      title: l10n.deploymentAutoPayTitle,
-      leading: const IconTile(icon: Icons.autorenew_rounded, solid: true, size: 28),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            l10n.deploymentAutoPayTerms(Fmt.money(amount), Fmt.money(terms.limit), terms.validityDays),
-            style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5),
-          ),
-          const Gap.sm(),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(Icons.info_outline_rounded, size: 16, color: AppColors.textMuted),
-              const SizedBox(width: Insets.sm),
-              Expanded(
-                child: Text(
-                  l10n.deploymentAutoPayUpiOnly,
-                  style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45, color: AppColors.textMuted),
-                ),
-              ),
-            ],
-          ),
-          const Gap.md(),
-          AppCheckTile(value: enabled, onChanged: onToggle, title: l10n.deploymentAutoPayToggle),
-          if (enabled) ...[
-            const Gap.lg(),
-            AppTextField(
-              label: l10n.paymentsAutoPayEmail,
-              hint: 'name@example.com',
-              helper: l10n.paymentsAutoPayEmailHelp,
-              controller: email,
-              errorText: emailError,
-              enabled: !locked,
-              keyboardType: TextInputType.emailAddress,
-              prefixIcon: Icons.mail_outline_rounded,
-              onChanged: (_) => onEmailChanged(),
-            ),
           ],
         ],
       ),

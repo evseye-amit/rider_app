@@ -19,6 +19,7 @@ export 'src/api/referral_api.dart';
 export 'src/api/rental_agreements_api.dart';
 export 'src/api/ride_returns_api.dart';
 export 'src/api/rider_app_api.dart';
+export 'src/api/rider_autopay_api.dart';
 export 'src/api/rider_billing_api.dart';
 export 'src/api/rider_hubs_api.dart';
 export 'src/api/rider_payments_api.dart';

@@ -7,35 +7,6 @@ DateTime? _date(Object? value) => value == null ? null : DateTime.tryParse(value
 
 String _text(Object? value) => value?.toString() ?? '';
 
-enum AutoPayStatus {
-  notEnabled('NOT_ENABLED'),
-  setupRequired('SETUP_REQUIRED'),
-  authenticationPending('AUTHENTICATION_PENDING'),
-  active('ACTIVE'),
-  paused('PAUSED'),
-  failed('FAILED'),
-  revoked('REVOKED'),
-  expired('EXPIRED');
-
-  const AutoPayStatus(this.wire);
-
-  final String wire;
-
-  static AutoPayStatus parse(Object? value) => AutoPayStatus.values.firstWhere(
-    (status) => status.wire == value?.toString(),
-    orElse: () => AutoPayStatus.notEnabled,
-  );
-
-  bool get isActive => this == AutoPayStatus.active;
-
-  bool get needsAttention =>
-      this == AutoPayStatus.setupRequired ||
-      this == AutoPayStatus.authenticationPending ||
-      this == AutoPayStatus.failed ||
-      this == AutoPayStatus.expired ||
-      this == AutoPayStatus.revoked;
-}
-
 class RiderPaymentRecord {
   const RiderPaymentRecord({
     required this.id,
@@ -95,7 +66,6 @@ class CurrencyBalance {
 
 class PaymentsHome {
   const PaymentsHome({
-    required this.autoPayStatus,
     required this.payNowAvailable,
     required this.recentPayments,
     this.amountDue,
@@ -103,13 +73,7 @@ class PaymentsHome {
     this.currency,
     this.balancesByCurrency = const [],
     this.payNowUnavailableReason,
-    this.autoPayEnabled,
     this.dueDate,
-    this.paymentMethod,
-    this.mandateStatus,
-    this.mandateMaxAmount,
-    this.mandateExpiresAt,
-    this.nextAutoPayDate,
   });
 
   factory PaymentsHome.fromJson(Map<String, dynamic> json) => PaymentsHome(
@@ -121,19 +85,12 @@ class PaymentsHome {
         .map((e) => CurrencyBalance.fromJson(Map<String, dynamic>.from(e)))
         .toList(growable: false),
     payNowUnavailableReason: json['payNowUnavailableReason']?.toString(),
-    autoPayEnabled: json['autoPayEnabled'] is bool ? json['autoPayEnabled'] as bool : null,
-    autoPayStatus: AutoPayStatus.parse(json['autoPayStatus']),
     payNowAvailable: json['payNowAvailable'] == true,
     recentPayments: (json['recentPayments'] as List<dynamic>? ?? const [])
         .whereType<Map>()
         .map((e) => RiderPaymentRecord.fromJson(Map<String, dynamic>.from(e)))
         .toList(growable: false),
     dueDate: _date(json['dueDate']),
-    paymentMethod: json['paymentMethod']?.toString(),
-    mandateStatus: json['mandateStatus']?.toString(),
-    mandateMaxAmount: json['mandateMaxAmount'] == null ? null : _money(json['mandateMaxAmount']),
-    mandateExpiresAt: _date(json['mandateExpiresAt']),
-    nextAutoPayDate: _date(json['nextAutoPayDate']),
   );
 
   final num? amountDue;
@@ -141,124 +98,9 @@ class PaymentsHome {
   final String? currency;
   final List<CurrencyBalance> balancesByCurrency;
   final String? payNowUnavailableReason;
-  final bool? autoPayEnabled;
-  final AutoPayStatus autoPayStatus;
   final bool payNowAvailable;
   final List<RiderPaymentRecord> recentPayments;
   final DateTime? dueDate;
-  final String? paymentMethod;
-  final String? mandateStatus;
-  final num? mandateMaxAmount;
-  final DateTime? mandateExpiresAt;
-  final DateTime? nextAutoPayDate;
-}
-
-class AutoPayDebitDto {
-  const AutoPayDebitDto({
-    required this.id,
-    required this.number,
-    required this.amount,
-    required this.status,
-    this.currency = 'INR',
-    this.invoiceNumber,
-    this.currentOutstanding,
-    this.amountMayChange = false,
-    this.scheduledFor,
-    this.failureCode,
-  });
-
-  factory AutoPayDebitDto.fromJson(Map<String, dynamic> json) => AutoPayDebitDto(
-    id: _text(json['debitId']),
-    number: _text(json['debitNumber']),
-    amount: _money(json['scheduledAmount'] ?? json['amount']),
-    status: _text(json['status']).toUpperCase(),
-    currency: json['currency']?.toString() ?? 'INR',
-    invoiceNumber: json['invoiceNumber']?.toString(),
-    currentOutstanding: json['currentOutstanding'] == null ? null : _money(json['currentOutstanding']),
-    amountMayChange: json['amountMayChange'] == true,
-    scheduledFor: _date(json['scheduledFor']),
-    failureCode: json['failureCode']?.toString(),
-  );
-
-  final String id;
-  final String number;
-  final num amount;
-  final String status;
-  final String currency;
-  final String? invoiceNumber;
-  final num? currentOutstanding;
-  final bool amountMayChange;
-  final DateTime? scheduledFor;
-  final String? failureCode;
-}
-
-class AutoPayMandateDto {
-  const AutoPayMandateDto({
-    required this.id,
-    required this.status,
-    required this.provider,
-    required this.maxAmount,
-    required this.autoDebitEnabled,
-    required this.canPause,
-    required this.canResume,
-    required this.canCancel,
-    required this.canTurnOff,
-    required this.cancellationPending,
-    this.authorizationUrl,
-  });
-
-  factory AutoPayMandateDto.fromJson(Map<String, dynamic> json) {
-    final Object? rawCapabilities = json['capabilities'];
-    final Map<Object?, Object?> capabilities = rawCapabilities is Map ? rawCapabilities : const {};
-    final Object? rawAuthorization = json['authorization'];
-    final Object? url = rawAuthorization is Map ? rawAuthorization['url'] : null;
-    return AutoPayMandateDto(
-      id: _text(json['mandateId']),
-      status: _text(json['status']).toUpperCase(),
-      provider: _text(json['provider']).toUpperCase(),
-      maxAmount: _money(json['maxAmount']),
-      autoDebitEnabled: json['autoDebitEnabled'] != false,
-      canPause: capabilities['pause'] == true,
-      canResume: capabilities['resume'] == true,
-      canCancel: capabilities['cancel'] == true,
-      canTurnOff: capabilities['localDisable'] == true,
-      cancellationPending: json['cancellationPending'] == true,
-      authorizationUrl: url == null || url.toString().isEmpty ? null : url.toString(),
-    );
-  }
-
-  final String id;
-  final String status;
-  final String provider;
-  final num maxAmount;
-  final bool autoDebitEnabled;
-  final bool canPause;
-  final bool canResume;
-  final bool canCancel;
-  final bool canTurnOff;
-  final bool cancellationPending;
-  final String? authorizationUrl;
-}
-
-class AutoPaySetupDto {
-  const AutoPaySetupDto({required this.provider, required this.maxAmount, this.validityDays = 0, this.mandate});
-
-  factory AutoPaySetupDto.fromJson(Map<String, dynamic> json) {
-    final Object? rawConfiguration = json['configuration'];
-    final Map<Object?, Object?> configuration = rawConfiguration is Map ? rawConfiguration : const {};
-    final Object? mandate = json['mandate'];
-    return AutoPaySetupDto(
-      provider: _text(configuration['provider']).toUpperCase(),
-      maxAmount: _money(configuration['maxAmount']),
-      validityDays: _money(configuration['validityDays']).toInt(),
-      mandate: mandate is Map ? AutoPayMandateDto.fromJson(Map<String, dynamic>.from(mandate)) : null,
-    );
-  }
-
-  final String provider;
-  final num maxAmount;
-  final int validityDays;
-  final AutoPayMandateDto? mandate;
 }
 
 class RiderPaymentsApi {
@@ -280,53 +122,4 @@ class RiderPaymentsApi {
         .map((e) => RiderPaymentRecord.fromJson(Map<String, dynamic>.from(e)))
         .toList(growable: false),
   );
-
-  Future<Result<AutoPaySetupDto>> autoPay() => _client.get<AutoPaySetupDto>(
-    '$_base/autopay',
-    parse: (data) => AutoPaySetupDto.fromJson(Map<String, dynamic>.from(data as Map)),
-  );
-
-  Future<Result<AutoPayMandateDto>> setUpAutoPay({required String email, required String idempotencyKey}) =>
-      _client.post<AutoPayMandateDto>(
-        '$_base/autopay',
-        headers: {'Idempotency-Key': idempotencyKey},
-        body: {'method': 'UPI_AUTOPAY', 'email': email},
-        parse: _mandate,
-      );
-
-  Future<Result<AutoPayMandateDto>> verifyAutoPay(String mandateId) =>
-      _client.post<AutoPayMandateDto>('$_base/autopay/$mandateId/verify', parse: _mandate);
-
-  Future<Result<AutoPayMandateDto>> cancelAutoPay(String mandateId, {required String idempotencyKey}) =>
-      _client.post<AutoPayMandateDto>(
-        '$_base/autopay/$mandateId/cancel',
-        headers: {'Idempotency-Key': idempotencyKey},
-        parse: _mandate,
-      );
-
-  Future<Result<AutoPayMandateDto>> pauseAutoPay(
-    String mandateId, {
-    required bool pause,
-    required String idempotencyKey,
-  }) => _client.post<AutoPayMandateDto>(
-    '$_base/autopay/$mandateId/${pause ? 'pause' : 'resume'}',
-    headers: {'Idempotency-Key': idempotencyKey},
-    parse: _mandate,
-  );
-
-  Future<Result<AutoPayMandateDto>> setAutoDebit({required bool enabled}) =>
-      _client.post<AutoPayMandateDto>('$_base/autopay/${enabled ? 'enable' : 'disable'}', parse: _mandate);
-
-  Future<Result<List<AutoPayDebitDto>>> upcomingDebits() =>
-      _client.get<List<AutoPayDebitDto>>('$_base/autopay/upcoming', parse: _debits);
-
-  Future<Result<List<AutoPayDebitDto>>> debits() =>
-      _client.get<List<AutoPayDebitDto>>('$_base/autopay/debits', parse: _debits);
-
-  static AutoPayMandateDto _mandate(dynamic data) => AutoPayMandateDto.fromJson(Map<String, dynamic>.from(data as Map));
-
-  static List<AutoPayDebitDto> _debits(dynamic data) => (data as List<dynamic>? ?? const [])
-      .whereType<Map>()
-      .map((e) => AutoPayDebitDto.fromJson(Map<String, dynamic>.from(e)))
-      .toList(growable: false);
 }

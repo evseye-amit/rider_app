@@ -1,16 +1,68 @@
-import 'dart:async';
-
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-import '../../domain/entities/auto_pay_setup.dart';
-import '../../domain/entities/payments_overview.dart';
-import '../../domain/usecases/auto_pay_usecases.dart';
-import '../../payments_dependencies.dart';
-import '../providers/payments_provider.dart';
-import 'payments_widgets.dart';
+import '../../domain/entities/auto_pay.dart';
+import '../providers/auto_pay_provider.dart';
+import 'auto_pay_enrollment.dart';
+
+String autoPayConsent(AppL10n l10n, AutoPay autoPay) => l10n.walletAutoPayConsent(
+  Fmt.money(autoPay.rechargeAmount),
+  Fmt.money(autoPay.threshold),
+  Fmt.number(autoPay.leadHours),
+  Fmt.number(autoPay.cooldownHours),
+);
+
+String _stateLabel(AppL10n l10n, AutoPayState state) => switch (state) {
+  AutoPayState.active => l10n.paymentsAutoPayActive,
+  AutoPayState.waitingForAllocation => l10n.paymentsAutoPayWaitingVehicle,
+  AutoPayState.off => l10n.walletAutoPayOff,
+  AutoPayState.setupRequired => l10n.paymentsAutoPayNotEnabled,
+  AutoPayState.authorizationPending => l10n.paymentsAutoPayAuthPending,
+  AutoPayState.consentRequired || AutoPayState.mandateActionRequired => l10n.paymentsAutoPaySetupRequired,
+  AutoPayState.actionRequired => l10n.paymentsAutoPayFailed,
+  AutoPayState.pausedByClient => l10n.paymentsAutoPayPaused,
+  AutoPayState.migrationBlocked || AutoPayState.unknown => l10n.walletAutoPayStatusReview,
+};
+
+StatusTone _stateTone(AutoPayState state) => switch (state) {
+  AutoPayState.active => StatusTone.success,
+  AutoPayState.waitingForAllocation => StatusTone.info,
+  AutoPayState.off || AutoPayState.setupRequired || AutoPayState.pausedByClient => StatusTone.neutral,
+  AutoPayState.actionRequired => StatusTone.danger,
+  AutoPayState.authorizationPending ||
+  AutoPayState.consentRequired ||
+  AutoPayState.mandateActionRequired ||
+  AutoPayState.migrationBlocked ||
+  AutoPayState.unknown => StatusTone.warning,
+};
+
+String? _stateNote(AppL10n l10n, AutoPay autoPay) => switch (autoPay.state) {
+  _ when autoPay.mandate?.cancellationPending ?? false => l10n.paymentsAutoPayCancelPending,
+  AutoPayState.pausedByClient => l10n.walletAutoPayPolicyOff,
+  AutoPayState.consentRequired => l10n.walletAutoPayTermsChanged,
+  AutoPayState.actionRequired => l10n.walletAutoPayActionRequired,
+  AutoPayState.migrationBlocked => l10n.paymentsAutoPayMigrationBlocked,
+  AutoPayState.mandateActionRequired when !autoPay.canSetUp => l10n.paymentsAutoPayAttention,
+  _ => null,
+};
+
+String _rechargeLabel(AppL10n l10n, AutoRechargeState state) => switch (state) {
+  AutoRechargeState.creating => l10n.walletAutoPayStatusPreparing,
+  AutoRechargeState.pending => l10n.walletAutoPayStatusPending,
+  AutoRechargeState.unknown => l10n.walletAutoPayStatusConfirming,
+  AutoRechargeState.review => l10n.walletAutoPayStatusReview,
+  AutoRechargeState.success => l10n.walletAutoPayStatusAdded,
+  AutoRechargeState.failed => l10n.walletStateFailed,
+  AutoRechargeState.cancelled => l10n.walletAutoPayStatusStopped,
+};
+
+StatusTone _rechargeTone(AutoRechargeState state) => switch (state) {
+  AutoRechargeState.success => StatusTone.success,
+  AutoRechargeState.failed => StatusTone.danger,
+  AutoRechargeState.cancelled => StatusTone.neutral,
+  _ => StatusTone.warning,
+};
 
 class AutoPayCard extends ConsumerStatefulWidget {
   const AutoPayCard({this.spacing = 0, super.key});
@@ -21,294 +73,102 @@ class AutoPayCard extends ConsumerStatefulWidget {
   ConsumerState<AutoPayCard> createState() => _AutoPayCardState();
 }
 
-class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingObserver {
-  bool _busy = false;
-  String? _returningFrom;
-  bool _leftApp = false;
-  final Map<String, String> _keys = {};
-
-  String _key(String action) => _keys[action] ??= newIdempotencyKey();
-
-  void _release(String action, Result<AutoPayMandate> result) {
-    if (result case Err<AutoPayMandate>(:final failure)
-        when failure is NetworkFailure || (failure is ServerFailure && (failure.status ?? 500) >= 500)) {
-      return;
-    }
-    _keys.remove(action);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    final String? mandateId = _returningFrom;
-    if (mandateId == null) return;
-    if (state == AppLifecycleState.paused || state == AppLifecycleState.hidden) _leftApp = true;
-    if (state == AppLifecycleState.resumed && _leftApp) {
-      _returningFrom = null;
-      _leftApp = false;
-      unawaited(_verify(mandateId));
-    }
-  }
-
-  void _refresh() => ref
-    ..invalidate(autoPaySetupProvider)
-    ..invalidate(paymentsOverviewProvider)
-    ..invalidate(upcomingDebitsProvider)
-    ..invalidate(autoPayDebitsProvider);
-
-  Future<void> _setUp(AutoPaySetup setup) async {
-    final String? email = await _AutoPaySetupSheet.show(context, maxAmount: setup.maxAmount);
+class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingObserver, AutoPayEnrollment<AutoPayCard> {
+  Future<void> _setUp(AutoPay autoPay) async {
+    final String? email = await _AutoPaySetupSheet.show(context, autoPay: autoPay);
     if (email == null || !mounted) return;
-    setState(() => _busy = true);
-    final Result<AutoPayMandate> result = await ref.read(setUpAutoPayProvider)(
-      SetUpAutoPayParams(email: email, idempotencyKey: _key('setup')),
-    );
-    _release('setup', result);
-    if (!mounted) return;
-    setState(() => _busy = false);
-    _refresh();
-    switch (result) {
-      case Ok<AutoPayMandate>(value: AutoPayMandate(state: AutoPayMandateState.active)):
-        AppSnack.success(context, context.l10n.paymentsAutoPayTurnedOn);
-      case Ok<AutoPayMandate>(:final value):
-        await _openApproval(value);
-      case Err<AutoPayMandate>(failure: ServerFailure(status: 503)):
-        AppSnack.error(context, context.l10n.paymentsAutoPayUnavailable);
-      case Err<AutoPayMandate>(:final failure):
-        AppSnack.error(context, failure.message);
-    }
+    await setUpAutoPay(autoPay, email);
   }
 
-  Future<void> _openApproval(AutoPayMandate mandate) async {
-    final Uri? uri = Uri.tryParse(mandate.approvalUrl ?? '');
-    _returningFrom = mandate.id;
-    _leftApp = false;
-    final bool opened =
-        uri != null &&
-        uri.hasScheme &&
-        await launchUrl(uri, mode: LaunchMode.externalApplication).catchError((Object _) => false);
-    if (opened || !mounted) return;
-    _returningFrom = null;
-    AppSnack.error(context, context.l10n.paymentsAutoPayOpenFailed);
-  }
-
-  Future<void> _verify(String mandateId) async {
-    setState(() => _busy = true);
-    final Result<AutoPayMandate> result = await ref.read(verifyAutoPayProvider)(mandateId);
-    if (!mounted) return;
-    setState(() => _busy = false);
-    _refresh();
+  Future<void> _turnOn(AutoPay autoPay) async {
     final AppL10n l10n = context.l10n;
-    switch (result) {
-      case Ok<AutoPayMandate>(value: AutoPayMandate(state: AutoPayMandateState.closed)):
-        AppSnack.error(context, l10n.paymentsAutoPaySetupFailed);
-      case Ok<AutoPayMandate>(value: AutoPayMandate(state: AutoPayMandateState.awaitingApproval)):
-        AppSnack.info(context, l10n.paymentsAutoPayStillWaiting);
-      case Ok<AutoPayMandate>():
-        AppSnack.success(context, l10n.paymentsAutoPayTurnedOn);
-      case Err<AutoPayMandate>(:final failure):
-        AppSnack.error(context, failure.message);
-    }
-  }
-
-  Future<void> _change(
-    Future<Result<AutoPayMandate>> Function() action, {
-    required String Function(AutoPayMandate mandate) success,
-    String? keyName,
-  }) async {
-    setState(() => _busy = true);
-    final Result<AutoPayMandate> result = await action();
-    if (keyName != null) _release(keyName, result);
-    if (!mounted) return;
-    setState(() => _busy = false);
-    _refresh();
-    switch (result) {
-      case Ok<AutoPayMandate>(:final value):
-        AppSnack.success(context, success(value));
-      case Err<AutoPayMandate>(:final failure):
-        AppSnack.error(context, failure.message);
-    }
-  }
-
-  Future<void> _cancel(AutoPayMandate mandate) async {
-    final AppL10n l10n = context.l10n;
-    final bool confirmed = await AppDialog.confirm(
+    final bool agreed = await AppDialog.confirm(
       context,
-      title: l10n.paymentsAutoPayCancelTitle,
-      message: l10n.paymentsAutoPayCancelMessage,
-      confirmLabel: l10n.paymentsAutoPayCancel,
-      cancelLabel: l10n.paymentsAutoPayKeep,
-      icon: Icons.event_busy_rounded,
-      tone: AppColors.danger,
-      destructive: true,
+      title: l10n.walletAutoPayConsentTitle,
+      message: autoPayConsent(l10n, autoPay),
+      confirmLabel: l10n.walletAutoPayTurnOn,
+      icon: Icons.autorenew_rounded,
     );
-    if (!confirmed || !mounted) return;
-    final String keyName = 'cancel:${mandate.id}';
-    await _change(
-      () => ref.read(cancelAutoPayProvider)(AutoPayActionParams(mandateId: mandate.id, idempotencyKey: _key(keyName))),
-      success: (updated) =>
-          updated.cancellationPending ? l10n.paymentsAutoPayCancelPending : l10n.paymentsAutoPayCancelled,
-      keyName: keyName,
-    );
+    if (!agreed || !mounted) return;
+    await turnOnAutoPay(autoPay);
   }
 
-  Future<void> _pause(AutoPayMandate mandate, {required bool pause}) {
-    final String keyName = '${pause ? 'pause' : 'resume'}:${mandate.id}';
-    return _change(
-      () => ref.read(pauseAutoPayProvider)(
-        PauseAutoPayParams(mandateId: mandate.id, pause: pause, idempotencyKey: _key(keyName)),
-      ),
-      success: (_) => context.l10n.paymentsAutoPayUpdated,
-      keyName: keyName,
-    );
-  }
-
-  Future<void> _toggle(AutoPayMandate mandate) => _change(
-    () => ref.read(setAutoDebitProvider)(!mandate.autoDebitOn),
-    success: (_) => context.l10n.paymentsAutoPayUpdated,
-  );
-
-  List<Widget> _actions(AppL10n l10n, AutoPayMandate mandate) {
-    VoidCallback? guard(VoidCallback action) => _busy ? null : action;
-    final List<Widget> items = switch (mandate.state) {
-      AutoPayMandateState.awaitingApproval => [
+  List<Widget> _actions(AppL10n l10n, AutoPay autoPay) {
+    final AutoPayMandate? mandate = autoPay.mandate;
+    VoidCallback? guard(VoidCallback action) => autoPayBusy ? null : action;
+    final List<Widget> items = [
+      if (autoPay.awaitingApproval && mandate != null) ...[
         if (mandate.approvalUrl != null)
           PrimaryButton(
             label: l10n.paymentsAutoPayFinishSetup,
             icon: Icons.open_in_new_rounded,
-            loading: _busy,
-            onPressed: guard(() => _openApproval(mandate)),
+            loading: autoPayBusy,
+            onPressed: guard(() => openAutoPayApproval(mandate)),
           ),
         GhostButton(
           label: l10n.paymentsAutoPayCheckStatus,
           icon: Icons.refresh_rounded,
-          onPressed: guard(() => _verify(mandate.id)),
+          onPressed: guard(() => verifyAutoPay(mandate.id)),
         ),
-      ],
-      AutoPayMandateState.active || AutoPayMandateState.paused when mandate.cancellationPending => [
-        _AutoPayNote(text: l10n.paymentsAutoPayCancelPending, icon: Icons.hourglass_top_rounded),
-      ],
-      AutoPayMandateState.active => [
-        if (!mandate.autoDebitOn) _AutoPayNote(text: l10n.paymentsAutoPayOffNote, icon: Icons.info_outline_rounded),
-        if (mandate.canTurnOff)
-          SecondaryButton(
-            label: mandate.autoDebitOn ? l10n.paymentsAutoPayTurnOff : l10n.paymentsAutoPayTurnOn,
-            icon: mandate.autoDebitOn ? Icons.pause_circle_outline_rounded : Icons.play_circle_outline_rounded,
-            onPressed: guard(() => _toggle(mandate)),
-          ),
-        if (mandate.canPause)
-          GhostButton(
-            label: l10n.paymentsAutoPayPause,
-            icon: Icons.pause_rounded,
-            onPressed: guard(() => _pause(mandate, pause: true)),
-          ),
-        if (mandate.canCancel)
-          GhostButton(
-            label: l10n.paymentsAutoPayCancel,
-            icon: Icons.close_rounded,
-            color: AppColors.danger,
-            onPressed: guard(() => _cancel(mandate)),
-          ),
-        if (mandate.managedInUpiApp)
-          _AutoPayNote(text: l10n.paymentsAutoPayManageInUpiApp, icon: Icons.smartphone_rounded),
-      ],
-      AutoPayMandateState.paused => [
-        if (mandate.canResume)
-          SecondaryButton(
-            label: l10n.paymentsAutoPayResume,
-            icon: Icons.play_arrow_rounded,
-            onPressed: guard(() => _pause(mandate, pause: false)),
-          ),
-        if (mandate.canCancel)
-          GhostButton(
-            label: l10n.paymentsAutoPayCancel,
-            icon: Icons.close_rounded,
-            color: AppColors.danger,
-            onPressed: guard(() => _cancel(mandate)),
-          ),
-      ],
-      AutoPayMandateState.closed => const [],
-    };
+      ] else if (autoPay.canTurnOn)
+        PrimaryButton(
+          label: autoPay.state == AutoPayState.consentRequired
+              ? l10n.walletAutoPayReviewTerms
+              : l10n.walletAutoPayTurnOn,
+          icon: Icons.autorenew_rounded,
+          loading: autoPayBusy,
+          onPressed: guard(() => _turnOn(autoPay)),
+        )
+      else if (autoPay.canSetUp)
+        PrimaryButton(
+          label: l10n.paymentsAutoPaySetUp,
+          icon: Icons.autorenew_rounded,
+          loading: autoPayBusy,
+          onPressed: guard(() => _setUp(autoPay)),
+        ),
+    ];
     return [
-      for (final (int i, Widget item) in items.indexed) ...[if (i > 0) const Gap.sm(), item],
+      for (final (int i, Widget item) in items.indexed) ...[if (i == 0) const Gap.md() else const Gap.sm(), item],
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     final AppL10n l10n = context.l10n;
-    final PaymentsOverview? payments = ref.watch(paymentsOverviewProvider).value;
-    final AutoPaySetup? setup = ref.watch(autoPaySetupProvider).value;
-    if (payments == null || setup == null) return const SizedBox.shrink();
-    final AutoPayMandate? mandate = setup.mandate;
-    final List<Widget> actions = mandate == null || mandate.state == AutoPayMandateState.closed
-        ? const []
-        : _actions(l10n, mandate);
-    final String? method = payments.paymentMethod;
-    final num? limit = payments.mandateMaxAmount;
-    final DateTime? next = payments.nextAutoPayDate;
-    final DateTime? expires = payments.mandateExpiresAt;
-    final bool hasDetails = method != null || limit != null || next != null || expires != null;
-    final bool hasMandate = mandate != null;
-    final List<AutoPayDebit> upcoming = hasMandate ? ref.watch(upcomingDebitsProvider).value ?? const [] : const [];
-    final List<AutoPayDebit> recent = hasMandate
-        ? [...?ref.watch(autoPayDebitsProvider).value?.where((debit) => debit.state != AutoPayDebitState.pending)]
-        : const [];
+    final AutoPay? autoPay = ref.watch(autoPayProvider).value;
+    if (autoPay == null || !autoPay.isVisible) return const SizedBox.shrink();
+    final AutoPayMandate? mandate = switch (autoPay.mandate) {
+      final AutoPayMandate value when value.state != AutoPayMandateState.closed => value,
+      _ => null,
+    };
+    final DateTime? expires = mandate?.expiresAt;
+    final String? note = _stateNote(l10n, autoPay);
 
     final Widget card = ModuleCard(
-      title: l10n.paymentsAutoPay,
+      title: l10n.walletAutoPayTitle,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Align(
             alignment: Alignment.centerLeft,
-            child: StatusChip(
-              label: autoPayLabel(l10n, payments.autoPay),
-              tone: autoPayTone(payments.autoPay),
-              dense: true,
-            ),
+            child: StatusChip(label: _stateLabel(l10n, autoPay.state), tone: _stateTone(autoPay.state), dense: true),
           ),
-          if (hasDetails) const Gap.sm(),
-          if (method != null) KeyValueRow(label: l10n.paymentsMethod, value: method, dense: true),
-          if (limit != null) KeyValueRow(label: l10n.paymentsMandateLimit, value: Fmt.money(limit), dense: true),
-          if (next != null) KeyValueRow(label: l10n.paymentsNextDebit, value: Fmt.dateTime(next), dense: true),
+          const Gap.sm(),
+          Text(
+            l10n.walletAutoPaySummary(Fmt.money(autoPay.rechargeAmount), Fmt.money(autoPay.threshold)),
+            style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
+          ),
+          if (mandate != null) const Gap.sm(),
+          if (mandate != null && mandate.maxAmount > 0)
+            KeyValueRow(label: l10n.paymentsMandateLimit, value: Fmt.money(mandate.maxAmount), dense: true),
           if (expires != null) KeyValueRow(label: l10n.paymentsMandateExpires, value: Fmt.date(expires), dense: true),
-          if (upcoming.isNotEmpty) ...[
+          if (note != null) ...[const Gap.md(), _AutoPayNote(text: note)],
+          if (autoPay.requests.isNotEmpty) ...[
             const Gap.md(),
-            GroupLabel(l10n.paymentsUpcomingDebits),
-            for (final AutoPayDebit debit in upcoming.take(3)) _DebitRow(debit: debit),
+            GroupLabel(l10n.walletAutoPayRecent),
+            for (final AutoRecharge request in autoPay.requests.take(3)) _RechargeRow(request: request),
           ],
-          if (recent.isNotEmpty) ...[
-            const Gap.md(),
-            GroupLabel(l10n.paymentsRecentDebits),
-            for (final AutoPayDebit debit in recent.take(5)) _DebitRow(debit: debit),
-          ],
-          if (actions.isNotEmpty) ...[
-            const Gap.md(),
-            ...actions,
-          ] else if (setup.canSetUp) ...[
-            const Gap.md(),
-            PrimaryButton(
-              label: l10n.paymentsAutoPaySetUp,
-              icon: Icons.autorenew_rounded,
-              loading: _busy,
-              onPressed: _busy ? null : () => _setUp(setup),
-            ),
-          ] else if (payments.autoPayNeedsAttention) ...[
-            const Gap.sm(),
-            _AutoPayNote(text: l10n.paymentsAutoPayAttention, icon: Icons.info_outline_rounded),
-          ],
+          ..._actions(l10n, autoPay),
         ],
       ),
     );
@@ -321,50 +181,63 @@ class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingOb
   }
 }
 
-class _DebitRow extends StatelessWidget {
-  const _DebitRow({required this.debit});
+class AutoPayTerms extends StatelessWidget {
+  const AutoPayTerms({required this.autoPay, super.key});
 
-  final AutoPayDebit debit;
+  final AutoPay autoPay;
 
   @override
   Widget build(BuildContext context) {
     final AppL10n l10n = context.l10n;
-    final DateTime? scheduled = debit.scheduledFor;
-    final String detail = [?debit.invoiceNumber, if (scheduled != null) Fmt.dateTime(scheduled)].join(' · ');
+    final num? limit = autoPay.setupLimit;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(autoPayConsent(l10n, autoPay), style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5)),
+        const Gap.sm(),
+        Text(
+          l10n.walletAutoPayCashOnly,
+          style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45, color: AppColors.textMuted),
+        ),
+        if (limit != null && limit > 0) ...[
+          const Gap.md(),
+          KeyValueRow(label: l10n.paymentsMandateLimit, value: Fmt.money(limit), dense: true),
+        ],
+      ],
+    );
+  }
+}
+
+class _RechargeRow extends StatelessWidget {
+  const _RechargeRow({required this.request});
+
+  final AutoRecharge request;
+
+  @override
+  Widget build(BuildContext context) {
+    final AppL10n l10n = context.l10n;
+    final DateTime? scheduled = request.scheduledAt;
+    final DateTime? stamp = request.completedAt ?? request.createdAt;
+    final String? when = request.state.isAwaitingBank && scheduled != null
+        ? l10n.walletAutoPayEarliestDebit(Fmt.dateTime(scheduled))
+        : stamp == null
+        ? null
+        : Fmt.dateTime(stamp);
     return Padding(
       padding: const EdgeInsets.only(top: Insets.sm),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Row(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(Fmt.money(debit.amount, paise: true), style: AppText.titleSmall.copyWith(fontSize: 13.5)),
-                    if (detail.isNotEmpty)
-                      Text(detail, style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted)),
-                  ],
-                ),
-              ),
-              StatusChip(
-                label: switch (debit.state) {
-                  AutoPayDebitState.pending => l10n.walletStatePending,
-                  AutoPayDebitState.settled => l10n.walletStateSettled,
-                  AutoPayDebitState.failed => l10n.walletStateFailed,
-                },
-                tone: switch (debit.state) {
-                  AutoPayDebitState.pending => StatusTone.warning,
-                  AutoPayDebitState.settled => StatusTone.success,
-                  AutoPayDebitState.failed => StatusTone.danger,
-                },
-                dense: true,
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(Fmt.money(request.amount), style: AppText.titleSmall.copyWith(fontSize: 13.5)),
+                if (when != null)
+                  Text(when, style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted)),
+              ],
+            ),
           ),
-          if (debit.amountMayChange)
-            Text(l10n.paymentsAmountMayChange, style: AppText.bodySmall.copyWith(fontSize: 11.5, height: 1.4)),
+          StatusChip(label: _rechargeLabel(l10n, request.state), tone: _rechargeTone(request.state), dense: true),
         ],
       ),
     );
@@ -372,17 +245,16 @@ class _DebitRow extends StatelessWidget {
 }
 
 class _AutoPayNote extends StatelessWidget {
-  const _AutoPayNote({required this.text, required this.icon});
+  const _AutoPayNote({required this.text});
 
   final String text;
-  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 16, color: AppColors.warning),
+        const Icon(Icons.info_outline_rounded, size: 16, color: AppColors.warning),
         const SizedBox(width: Insets.sm),
         Expanded(child: Text(text, style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45))),
       ],
@@ -391,14 +263,14 @@ class _AutoPayNote extends StatelessWidget {
 }
 
 class _AutoPaySetupSheet extends StatefulWidget {
-  const _AutoPaySetupSheet({required this.maxAmount});
+  const _AutoPaySetupSheet({required this.autoPay});
 
-  final num maxAmount;
+  final AutoPay autoPay;
 
-  static Future<String?> show(BuildContext context, {required num maxAmount}) => AppSheet.show<String>(
+  static Future<String?> show(BuildContext context, {required AutoPay autoPay}) => AppSheet.show<String>(
     context,
     title: context.l10n.paymentsAutoPaySetUp,
-    child: _AutoPaySetupSheet(maxAmount: maxAmount),
+    child: _AutoPaySetupSheet(autoPay: autoPay),
   );
 
   @override
@@ -434,10 +306,7 @@ class _AutoPaySetupSheetState extends State<_AutoPaySetupSheet> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            l10n.paymentsAutoPaySetupMessage(Fmt.money(widget.maxAmount)),
-            style: AppText.bodyMedium.copyWith(height: 1.55),
-          ),
+          AutoPayTerms(autoPay: widget.autoPay),
           const Gap.lg(),
           AppTextField(
             label: l10n.paymentsAutoPayEmail,

@@ -1,6 +1,5 @@
 import 'package:evseye_core/evseye_core.dart';
 
-import '../domain/entities/wallet_auto_pay.dart';
 import '../domain/entities/wallet_overview.dart';
 import '../domain/wallet_repository.dart';
 
@@ -38,37 +37,6 @@ class WalletRepositoryImpl implements WalletRepository {
 
   @override
   Future<Result<WalletDeposit>> getDeposit(String id) async => (await _api.securityDeposit(id)).map(_deposit);
-
-  @override
-  Future<Result<WalletAutoPay>> getAutoPay() async => (await _api.autoPay()).map(_autoPay);
-
-  @override
-  Future<Result<WalletAutoPay>> setAutoPay({required bool enabled, String? mandateId, int? revision}) async =>
-      (await _api.setAutoPay(enabled: enabled, mandateId: mandateId, consentRevision: revision)).map(_autoPay);
-
-  static WalletAutoPay _autoPay(WalletAutoPayDto dto) => WalletAutoPay(
-    policyEnabled: dto.policy.enabled,
-    threshold: dto.policy.threshold,
-    rechargeAmount: dto.policy.rechargeAmount,
-    revision: dto.policy.revision,
-    enabled: dto.enabled,
-    actionRequired: dto.actionRequired,
-    consentRequired: dto.consentRequired,
-    leadHours: dto.minimumLeadHours,
-    cooldownHours: dto.cooldownHours,
-    mandateId: dto.mandateId,
-    requests: [
-      for (final WalletAutoRechargeDto request in dto.requests)
-        AutoRecharge(
-          id: request.id,
-          state: AutoRechargeState.parse(request.status),
-          amount: request.amount,
-          scheduledAt: request.scheduledAt,
-          completedAt: request.completedAt,
-          createdAt: request.createdAt,
-        ),
-    ],
-  );
 
   static WalletOverview _overview(RiderWalletSummary summary) {
     final WalletBalance balance = summary.balance;

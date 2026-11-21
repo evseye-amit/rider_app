@@ -3,24 +3,6 @@ import 'package:material_ui/material_ui.dart';
 
 import '../../domain/entities/payments_overview.dart';
 
-String autoPayLabel(AppL10n l10n, AutoPayState state) => switch (state) {
-  AutoPayState.active => l10n.paymentsAutoPayActive,
-  AutoPayState.paused => l10n.paymentsAutoPayPaused,
-  AutoPayState.setupRequired => l10n.paymentsAutoPaySetupRequired,
-  AutoPayState.authenticationPending => l10n.paymentsAutoPayAuthPending,
-  AutoPayState.failed => l10n.paymentsAutoPayFailed,
-  AutoPayState.revoked => l10n.paymentsAutoPayRevoked,
-  AutoPayState.expired => l10n.paymentsAutoPayExpired,
-  AutoPayState.notEnabled => l10n.paymentsAutoPayNotEnabled,
-};
-
-StatusTone autoPayTone(AutoPayState state) => switch (state) {
-  AutoPayState.active => StatusTone.success,
-  AutoPayState.paused || AutoPayState.setupRequired || AutoPayState.authenticationPending => StatusTone.warning,
-  AutoPayState.failed || AutoPayState.expired || AutoPayState.revoked => StatusTone.danger,
-  AutoPayState.notEnabled => StatusTone.neutral,
-};
-
 class PaymentsBand extends StatelessWidget {
   const PaymentsBand({required this.overview, super.key});
 

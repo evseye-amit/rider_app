@@ -5,21 +5,10 @@ import 'json_fields.dart';
 final class PaymentOrderRequest {
   const PaymentOrderRequest._(this.body, this.slot);
 
-  factory PaymentOrderRequest.deployment(String allocationId, {DeploymentAutoPayConsent? autoPay}) =>
-      PaymentOrderRequest._({
-        'purpose': PaymentPurposes.deployment,
-        'allocationId': allocationId,
-        if (autoPay != null) ...{
-          'setupAutoPay': true,
-          'email': autoPay.email,
-          'autoPayConsent': <String, Object>{
-            'accepted': true,
-            'version': DeploymentAutoPayConsent.version,
-            'maxAmount': autoPay.maxAmount.toStringAsFixed(2),
-            'validityDays': autoPay.validityDays,
-          },
-        },
-      }, PaymentSlots.deployment(allocationId));
+  factory PaymentOrderRequest.deployment(String allocationId) => PaymentOrderRequest._({
+    'purpose': PaymentPurposes.deployment,
+    'allocationId': allocationId,
+  }, PaymentSlots.deployment(allocationId));
 
   factory PaymentOrderRequest.submissionPenalty({String? amount}) => PaymentOrderRequest._({
     'purpose': PaymentPurposes.submissionPenalty,
@@ -48,18 +37,6 @@ final class PaymentOrderRequest {
   final String slot;
 
   String get purpose => body['purpose']?.toString() ?? '';
-
-  String? get autoPayEmail => body['setupAutoPay'] == true ? body['email']?.toString() : null;
-}
-
-final class DeploymentAutoPayConsent {
-  const DeploymentAutoPayConsent({required this.email, required this.maxAmount, required this.validityDays});
-
-  static const String version = 'deployment-autopay-v1';
-
-  final String email;
-  final num maxAmount;
-  final int validityDays;
 }
 
 abstract final class PaymentPurposes {
@@ -86,54 +63,11 @@ abstract final class PaymentProviders {
 }
 
 class PaymentCheckoutDto {
-  const PaymentCheckoutDto({
-    required this.orderId,
-    required this.keyId,
-    required this.amountPaise,
-    this.customerId,
-    this.recurring = false,
-  });
+  const PaymentCheckoutDto({required this.orderId, required this.keyId, required this.amountPaise});
 
   final String orderId;
   final String keyId;
   final int amountPaise;
-  final String? customerId;
-  final bool recurring;
-}
-
-class PaymentAutoPayDto {
-  const PaymentAutoPayDto({
-    required this.status,
-    this.mandateId,
-    this.mandateNumber,
-    this.maxAmount,
-    this.expiresAt,
-    this.failureCode,
-  });
-
-  static PaymentAutoPayDto? fromJson(Object? value) {
-    final Map<String, dynamic> json = jsonMap(value);
-    if (json.isEmpty || json['requested'] == false) return null;
-    return PaymentAutoPayDto(
-      status: jsonText(json['status']).toUpperCase(),
-      mandateId: jsonTextOrNull(json['mandateId']),
-      mandateNumber: jsonTextOrNull(json['mandateNumber']),
-      maxAmount: jsonNumOrNull(json['maxAmount']),
-      expiresAt: jsonDate(json['expiresAt']),
-      failureCode: jsonTextOrNull(json['failureCode']),
-    );
-  }
-
-  final String status;
-  final String? mandateId;
-  final String? mandateNumber;
-  final num? maxAmount;
-  final DateTime? expiresAt;
-  final String? failureCode;
-
-  bool get isActive => status == 'ACTIVE';
-
-  bool get isActivating => const {'NOT_STARTED', 'AUTHORIZATION_PENDING', 'UNKNOWN'}.contains(status);
 }
 
 class PaymentRequestDto {
@@ -150,7 +84,6 @@ class PaymentRequestDto {
     this.checkout,
     this.hasCheckout = false,
     this.nextAction,
-    this.autoPay,
   });
 
   factory PaymentRequestDto.fromJson(Map<String, dynamic> json) {
@@ -172,16 +105,9 @@ class PaymentRequestDto {
       currency: jsonTextOrNull(json['currency']) ?? 'INR',
       checkout: !razorpay || orderId == null || keyId == null || amountPaise == null
           ? null
-          : PaymentCheckoutDto(
-              orderId: orderId,
-              keyId: keyId,
-              amountPaise: amountPaise,
-              customerId: jsonTextOrNull(checkout['customerId']),
-              recurring: checkout['recurring'] == true,
-            ),
+          : PaymentCheckoutDto(orderId: orderId, keyId: keyId, amountPaise: amountPaise),
       hasCheckout: checkout.isNotEmpty,
       nextAction: jsonTextOrNull(json['nextAction']),
-      autoPay: PaymentAutoPayDto.fromJson(json['autoPay']),
     );
   }
 
@@ -197,7 +123,6 @@ class PaymentRequestDto {
   final PaymentCheckoutDto? checkout;
   final bool hasCheckout;
   final String? nextAction;
-  final PaymentAutoPayDto? autoPay;
 
   bool get isSucceeded => status == 'SUCCEEDED';
 
@@ -221,27 +146,19 @@ class PaymentRequestDto {
 }
 
 class PaymentCapabilityDto {
-  const PaymentCapabilityDto({
-    required this.enabled,
-    required this.platforms,
-    this.provider,
-    this.reason,
-    this.autoPaySetup = false,
-  });
+  const PaymentCapabilityDto({required this.enabled, required this.platforms, this.provider, this.reason});
 
   factory PaymentCapabilityDto.fromJson(Map<String, dynamic> json) => PaymentCapabilityDto(
     enabled: json['enabled'] == true,
     provider: jsonTextOrNull(json['provider'])?.toUpperCase(),
     platforms: [for (final String platform in jsonStrings(json['platforms'])) platform.toUpperCase()],
     reason: jsonTextOrNull(json['reason']),
-    autoPaySetup: json['autoPaySetup'] == true,
   );
 
   final bool enabled;
   final String? provider;
   final List<String> platforms;
   final String? reason;
-  final bool autoPaySetup;
 }
 
 class PaymentCapabilitiesDto {
@@ -263,9 +180,6 @@ class PaymentCapabilitiesDto {
         providers.contains(capability.provider) &&
         capability.platforms.contains(platform);
   }
-
-  bool allowsAutoPaySetup(String purpose, {required String platform, required Set<String> providers}) =>
-      allows(purpose, platform: platform, providers: providers) && (purposes[purpose]?.autoPaySetup ?? false);
 }
 
 class PaymentOrdersApi {

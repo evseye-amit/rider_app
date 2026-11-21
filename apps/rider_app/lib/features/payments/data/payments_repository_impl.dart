@@ -1,13 +1,14 @@
 import 'package:evseye_core/evseye_core.dart';
 
-import '../domain/entities/auto_pay_setup.dart';
+import '../domain/entities/auto_pay.dart';
 import '../domain/entities/payments_overview.dart';
 import '../domain/payments_repository.dart';
 
 class PaymentsRepositoryImpl implements PaymentsRepository {
-  const PaymentsRepositoryImpl(this._api, this._penalties);
+  const PaymentsRepositoryImpl(this._api, this._autoPay, this._penalties);
 
   final RiderPaymentsApi _api;
+  final RiderAutoPayApi _autoPay;
   final SubmissionPenaltyApi _penalties;
 
   @override
@@ -24,69 +25,79 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
       (await _api.history()).map((records) => [for (final RiderPaymentRecord record in records) _record(record)]);
 
   @override
-  Future<Result<AutoPaySetup?>> getAutoPay() async => switch (await _api.autoPay()) {
-    Ok<AutoPaySetupDto>(:final value) => Result.ok(_setup(value)),
-    Err<AutoPaySetupDto>(failure: ServerFailure(status: 400 || 404)) => const Result<AutoPaySetup?>.ok(null),
-    Err<AutoPaySetupDto>(:final failure) => Result.err(failure),
+  Future<Result<AutoPay?>> getAutoPay() async => switch (await _autoPay.current()) {
+    Ok<RiderAutoPayDto>(:final value) => Result.ok(_state(value)),
+    Err<RiderAutoPayDto>(failure: ServerFailure(status: 404)) => const Result<AutoPay?>.ok(null),
+    Err<RiderAutoPayDto>(:final failure) => Result.err(failure),
   };
 
   @override
   Future<Result<AutoPayMandate>> setUpAutoPay({required String email, required String idempotencyKey}) async =>
-      (await _api.setUpAutoPay(email: email, idempotencyKey: idempotencyKey)).map(_mandate);
+      (await _autoPay.setUpMandate(email: email, idempotencyKey: idempotencyKey)).map(_mandate);
 
   @override
   Future<Result<AutoPayMandate>> verifyAutoPay(String mandateId) async =>
-      (await _api.verifyAutoPay(mandateId)).map(_mandate);
+      (await _autoPay.verifyMandate(mandateId)).map(_mandate);
 
   @override
-  Future<Result<AutoPayMandate>> cancelAutoPay(String mandateId, {required String idempotencyKey}) async =>
-      (await _api.cancelAutoPay(mandateId, idempotencyKey: idempotencyKey)).map(_mandate);
+  Future<Result<AutoPay>> turnOnAutoPay({
+    required String mandateId,
+    required int revision,
+    required int consentRevision,
+  }) async => (await _autoPay.enable(
+    mandateId: mandateId,
+    expectedRevision: revision,
+    consentRevision: consentRevision,
+  )).map(_state);
 
-  @override
-  Future<Result<AutoPayMandate>> pauseAutoPay(
-    String mandateId, {
-    required bool pause,
-    required String idempotencyKey,
-  }) async => (await _api.pauseAutoPay(mandateId, pause: pause, idempotencyKey: idempotencyKey)).map(_mandate);
-
-  @override
-  Future<Result<AutoPayMandate>> setAutoDebit({required bool enabled}) async =>
-      (await _api.setAutoDebit(enabled: enabled)).map(_mandate);
-
-  @override
-  Future<Result<List<AutoPayDebit>>> getUpcomingDebits() async =>
-      (await _api.upcomingDebits()).map((debits) => [for (final AutoPayDebitDto debit in debits) _debit(debit)]);
-
-  @override
-  Future<Result<List<AutoPayDebit>>> getDebits() async =>
-      (await _api.debits()).map((debits) => [for (final AutoPayDebitDto debit in debits) _debit(debit)]);
-
-  static AutoPayDebit _debit(AutoPayDebitDto dto) => AutoPayDebit(
-    id: dto.id,
-    number: dto.number,
-    amount: dto.amount,
-    state: switch (dto.status) {
-      'SUCCESS' => AutoPayDebitState.settled,
-      'FAILED' || 'CANCELLED' => AutoPayDebitState.failed,
-      _ => AutoPayDebitState.pending,
+  static AutoPay _state(RiderAutoPayDto dto) => AutoPay(
+    state: switch (dto.effectiveStatus) {
+      'OFF' => AutoPayState.off,
+      'SETUP_REQUIRED' => AutoPayState.setupRequired,
+      'AUTHORIZATION_PENDING' => AutoPayState.authorizationPending,
+      'CONSENT_REQUIRED' => AutoPayState.consentRequired,
+      'MANDATE_ACTION_REQUIRED' => AutoPayState.mandateActionRequired,
+      'WAITING_FOR_ALLOCATION' => AutoPayState.waitingForAllocation,
+      'ACTIVE' => AutoPayState.active,
+      'ACTION_REQUIRED' => AutoPayState.actionRequired,
+      'PAUSED_BY_CLIENT' => AutoPayState.pausedByClient,
+      'MIGRATION_BLOCKED' => AutoPayState.migrationBlocked,
+      _ => AutoPayState.unknown,
     },
-    invoiceNumber: dto.invoiceNumber,
-    amountMayChange: dto.amountMayChange,
-    scheduledFor: dto.scheduledFor,
-  );
-
-  static AutoPaySetup _setup(AutoPaySetupDto dto) {
-    final AutoPayMandate? mandate = switch (dto.mandate) {
-      final AutoPayMandateDto value => _mandate(value),
+    revision: dto.revision,
+    enabled: dto.enabled,
+    threshold: dto.threshold,
+    rechargeAmount: dto.rechargeAmount,
+    policyRevision: dto.policyRevision,
+    leadHours: dto.minimumLeadHours,
+    cooldownHours: dto.cooldownHours,
+    canEnable: dto.canEnable,
+    canSetUp: dto.canSetup,
+    setupLimit: dto.setupMaxAmount,
+    mandate: switch (dto.mandate) {
+      final AutoPayMandateDto mandate => _mandate(mandate),
       null => null,
-    };
-    return AutoPaySetup(
-      canSetUp: dto.provider == 'RAZORPAY' && (mandate == null || mandate.state == AutoPayMandateState.closed),
-      maxAmount: dto.maxAmount,
-      validityDays: dto.validityDays,
-      mandate: mandate,
-    );
-  }
+    },
+    requests: [
+      for (final AutoPayRechargeDto request in dto.requests)
+        AutoRecharge(
+          id: request.id,
+          state: switch (request.status) {
+            'CREATING' => AutoRechargeState.creating,
+            'PENDING' => AutoRechargeState.pending,
+            'REVIEW_REQUIRED' => AutoRechargeState.review,
+            'SUCCESS' => AutoRechargeState.success,
+            'FAILED' => AutoRechargeState.failed,
+            'CANCELLED' => AutoRechargeState.cancelled,
+            _ => AutoRechargeState.unknown,
+          },
+          amount: request.amount,
+          scheduledAt: request.scheduledAt,
+          completedAt: request.completedAt,
+          createdAt: request.createdAt,
+        ),
+    ],
+  );
 
   static AutoPayMandate _mandate(AutoPayMandateDto dto) => AutoPayMandate(
     id: dto.id,
@@ -96,14 +107,9 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
       'CANCELLED' || 'FAILED' || 'EXPIRED' => AutoPayMandateState.closed,
       _ => AutoPayMandateState.awaitingApproval,
     },
-    autoDebitOn: dto.autoDebitEnabled,
-    canPause: dto.canPause,
-    canResume: dto.canResume,
-    canCancel: dto.canCancel,
-    canTurnOff: dto.canTurnOff,
-    cancellationPending: dto.cancellationPending,
-    managedInUpiApp: dto.provider == 'RAZORPAY',
     maxAmount: dto.maxAmount,
+    cancellationPending: dto.cancellationPending,
+    expiresAt: dto.expiresAt,
     approvalUrl: dto.authorizationUrl,
   );
 
@@ -116,28 +122,12 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
         DueBalance(currency: balance.currency, amountDue: balance.amountDue, overdueAmount: balance.overdueAmount),
     ],
     payNowUnavailableReason: home.payNowUnavailableReason,
-    autoPay: _autoPay(home.autoPayStatus),
     payNowAvailable: home.payNowAvailable,
     recentPayments: [for (final RiderPaymentRecord record in home.recentPayments) _record(record)],
     dueDate: home.dueDate,
-    paymentMethod: home.paymentMethod,
-    mandateMaxAmount: home.mandateMaxAmount,
-    mandateExpiresAt: home.mandateExpiresAt,
-    nextAutoPayDate: home.nextAutoPayDate,
     damageDue: damage?.outstandingAmount ?? 0,
     damageCount: damage?.pendingCount ?? 0,
   );
-
-  static AutoPayState _autoPay(AutoPayStatus status) => switch (status) {
-    AutoPayStatus.notEnabled => AutoPayState.notEnabled,
-    AutoPayStatus.setupRequired => AutoPayState.setupRequired,
-    AutoPayStatus.authenticationPending => AutoPayState.authenticationPending,
-    AutoPayStatus.active => AutoPayState.active,
-    AutoPayStatus.paused => AutoPayState.paused,
-    AutoPayStatus.failed => AutoPayState.failed,
-    AutoPayStatus.revoked => AutoPayState.revoked,
-    AutoPayStatus.expired => AutoPayState.expired,
-  };
 
   static PaymentRecord _record(RiderPaymentRecord record) => PaymentRecord(
     id: record.id,

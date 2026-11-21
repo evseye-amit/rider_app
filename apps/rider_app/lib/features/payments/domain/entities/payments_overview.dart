@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-enum AutoPayState { notEnabled, setupRequired, authenticationPending, active, paused, failed, revoked, expired }
-
 class PaymentRecord extends Equatable {
   const PaymentRecord({
     required this.id,
@@ -36,7 +34,6 @@ class DueBalance extends Equatable {
 
 class PaymentsOverview extends Equatable {
   const PaymentsOverview({
-    required this.autoPay,
     required this.payNowAvailable,
     required this.recentPayments,
     this.amountDue,
@@ -45,10 +42,6 @@ class PaymentsOverview extends Equatable {
     this.balances = const [],
     this.payNowUnavailableReason,
     this.dueDate,
-    this.paymentMethod,
-    this.mandateMaxAmount,
-    this.mandateExpiresAt,
-    this.nextAutoPayDate,
     this.damageDue = 0,
     this.damageCount = 0,
   });
@@ -58,14 +51,9 @@ class PaymentsOverview extends Equatable {
   final String? currency;
   final List<DueBalance> balances;
   final String? payNowUnavailableReason;
-  final AutoPayState autoPay;
   final bool payNowAvailable;
   final List<PaymentRecord> recentPayments;
   final DateTime? dueDate;
-  final String? paymentMethod;
-  final num? mandateMaxAmount;
-  final DateTime? mandateExpiresAt;
-  final DateTime? nextAutoPayDate;
   final num damageDue;
   final int damageCount;
 
@@ -81,15 +69,6 @@ class PaymentsOverview extends Equatable {
 
   bool get isSettled => hasMixedCurrencies ? balances.every((balance) => balance.amountDue <= 0) : totalDue <= 0;
 
-  bool get autoPayNeedsAttention => switch (autoPay) {
-    AutoPayState.setupRequired ||
-    AutoPayState.authenticationPending ||
-    AutoPayState.failed ||
-    AutoPayState.expired ||
-    AutoPayState.revoked => true,
-    _ => false,
-  };
-
   @override
   List<Object?> get props => [
     amountDue,
@@ -97,14 +76,9 @@ class PaymentsOverview extends Equatable {
     currency,
     balances,
     payNowUnavailableReason,
-    autoPay,
     payNowAvailable,
     recentPayments,
     dueDate,
-    paymentMethod,
-    mandateMaxAmount,
-    mandateExpiresAt,
-    nextAutoPayDate,
     damageDue,
     damageCount,
   ];

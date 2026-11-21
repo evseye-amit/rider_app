@@ -12,9 +12,7 @@ sealed class OnlinePaymentOutcome {
 }
 
 final class OnlinePaymentPaid extends OnlinePaymentOutcome {
-  const OnlinePaymentPaid([super.paymentRequestId, this.autoPay]);
-
-  final PaymentAutoPayDto? autoPay;
+  const OnlinePaymentPaid([super.paymentRequestId]);
 }
 
 final class OnlinePaymentPending extends OnlinePaymentOutcome {
@@ -47,12 +45,6 @@ final class OnlinePaymentInProgress extends OnlinePaymentOutcome {
 
 final class OnlinePaymentUnavailable extends OnlinePaymentOutcome {
   const OnlinePaymentUnavailable([super.paymentRequestId]);
-}
-
-final class OnlinePaymentAutoPayRefused extends OnlinePaymentOutcome {
-  const OnlinePaymentAutoPayRefused(this.code);
-
-  final String code;
 }
 
 final class OnlinePaymentError extends OnlinePaymentOutcome {
@@ -93,14 +85,6 @@ class OnlinePayments {
     'PAYMENT_PROVIDER_UNAVAILABLE',
     'PAYMENT_UNAVAILABLE',
     'RAZORPAY_UNAVAILABLE',
-  };
-
-  static const Set<String> _autoPayRefusedCodes = {
-    'AUTOPAY_NOT_IN_PACKAGE',
-    'AUTOPAY_UNAVAILABLE',
-    'AUTOPAY_MANDATE_EXISTS',
-    'AUTOPAY_LIMIT_EXCEEDED',
-    'AUTOPAY_TERMS_CHANGED',
   };
 
   final PaymentOrdersApi _api;
@@ -185,13 +169,6 @@ class OnlinePayments {
     if (saved case final PendingPayment previous && PendingPayment(paymentRequestId: final String savedId)) {
       final Result<PaymentRequestDto> current = await _refresh(savedId);
       switch (current) {
-        case Ok<PaymentRequestDto>(:final value)
-            when value.isPending &&
-                !previous.paidInCheckout &&
-                !previous.matches(request) &&
-                request.purpose == PaymentPurposes.deployment:
-          await _store.remove(scope, request.slot);
-          saved = null;
         case Ok<PaymentRequestDto>(:final value) when value.isPending:
           if (!previous.matches(request)) return OnlinePaymentInProgress(savedId);
           if (previous.paidInCheckout) return _settle(scope, savedId);
@@ -243,7 +220,6 @@ class OnlinePayments {
       currency: payment.currency,
       description: description,
       contact: contact,
-      email: pending.request.autoPayEmail,
     );
     if (_identity().scope != scope) return OnlinePaymentCancelled(id);
     switch (result) {
@@ -284,10 +260,6 @@ class OnlinePayments {
       await _store.remove(scope, request.slot);
       return OnlinePaymentError(ActiveLocale.strings.paymentWalletInactive);
     }
-    if (code != null && _autoPayRefusedCodes.contains(code)) {
-      await _store.remove(scope, request.slot);
-      return OnlinePaymentAutoPayRefused(code);
-    }
     if (failure is ServerFailure && failure.status == 503) return const OnlinePaymentUnavailable();
     if (_unavailableCodes.contains(code)) {
       await _store.remove(scope, request.slot);
@@ -322,7 +294,7 @@ class OnlinePayments {
 
   static OnlinePaymentOutcome _outcome(PaymentRequestDto payment) {
     final String? id = payment.paymentRequestId;
-    if (payment.isSucceeded) return OnlinePaymentPaid(id, payment.autoPay);
+    if (payment.isSucceeded) return OnlinePaymentPaid(id);
     if (payment.isRefunded) return OnlinePaymentRefunded(id);
     if (payment.isRefundPending) return OnlinePaymentRefundPending(id);
     if (payment.needsSupport) return OnlinePaymentNeedsSupport(id);

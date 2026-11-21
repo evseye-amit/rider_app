@@ -3754,10 +3754,6 @@
   "@paymentsAmountDue": {
     "description": "Amount due"
   },
-  "paymentsAutoPay": "Auto-debit",
-  "@paymentsAutoPay": {
-    "description": "Auto-debit"
-  },
   "paymentsAutoPayActive": "On",
   "@paymentsAutoPayActive": {
     "description": "On"
@@ -3770,10 +3766,6 @@
   "@paymentsAutoPayAuthPending": {
     "description": "Waiting for approval"
   },
-  "paymentsAutoPayExpired": "Expired",
-  "@paymentsAutoPayExpired": {
-    "description": "Expired"
-  },
   "paymentsAutoPayFailed": "Failed",
   "@paymentsAutoPayFailed": {
     "description": "Failed"
@@ -3785,10 +3777,6 @@
   "paymentsAutoPayPaused": "Paused",
   "@paymentsAutoPayPaused": {
     "description": "Paused"
-  },
-  "paymentsAutoPayRevoked": "Cancelled",
-  "@paymentsAutoPayRevoked": {
-    "description": "Cancelled"
   },
   "paymentsAutoPaySetupRequired": "Set-up needed",
   "@paymentsAutoPaySetupRequired": {
@@ -3822,14 +3810,6 @@
   "paymentsMandateLimit": "Per-debit limit",
   "@paymentsMandateLimit": {
     "description": "Per-debit limit"
-  },
-  "paymentsMethod": "Method",
-  "@paymentsMethod": {
-    "description": "Method"
-  },
-  "paymentsNextDebit": "Next debit",
-  "@paymentsNextDebit": {
-    "description": "Next debit"
   },
   "paymentsNoPayments": "No payments yet",
   "@paymentsNoPayments": {
@@ -6946,15 +6926,6 @@
   "@paymentsAutoPaySetUp": {
     "description": "Button and sheet title to start auto-debit setup"
   },
-  "paymentsAutoPaySetupMessage": "Your rent is paid automatically from your UPI account on each due date, up to {amount} each time. You approve it once in your UPI app and get a notice before every debit.",
-  "@paymentsAutoPaySetupMessage": {
-    "description": "Explanation in the auto-debit setup sheet",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "paymentsAutoPayEmail": "Email",
   "@paymentsAutoPayEmail": {
     "description": "Email field label in the auto-debit setup sheet"
@@ -6979,10 +6950,6 @@
   "@paymentsAutoPayCheckStatus": {
     "description": "Button to check auto-debit approval status"
   },
-  "paymentsAutoPayTurnedOn": "Auto-debit is on",
-  "@paymentsAutoPayTurnedOn": {
-    "description": "Shown when auto-debit approval is confirmed"
-  },
   "paymentsAutoPayStillWaiting": "Waiting for your bank to confirm. Check again in a few minutes.",
   "@paymentsAutoPayStillWaiting": {
     "description": "Shown when auto-debit approval is still pending"
@@ -6999,57 +6966,9 @@
   "@paymentsAutoPayOpenFailed": {
     "description": "Shown when the approval link cannot be opened"
   },
-  "paymentsAutoPayTurnOff": "Turn off auto-debit",
-  "@paymentsAutoPayTurnOff": {
-    "description": "Button to stop automatic debits for now"
-  },
-  "paymentsAutoPayTurnOn": "Turn on auto-debit",
-  "@paymentsAutoPayTurnOn": {
-    "description": "Button to restart automatic debits"
-  },
-  "paymentsAutoPayOffNote": "Auto-debit is turned off. Rent won't be taken automatically.",
-  "@paymentsAutoPayOffNote": {
-    "description": "Note when the rider turned auto-debit off"
-  },
-  "paymentsAutoPayPause": "Pause auto-debit",
-  "@paymentsAutoPayPause": {
-    "description": "Button to pause the mandate"
-  },
-  "paymentsAutoPayResume": "Resume auto-debit",
-  "@paymentsAutoPayResume": {
-    "description": "Button to resume the mandate"
-  },
-  "paymentsAutoPayManageInUpiApp": "To pause or resume, use your UPI app.",
-  "@paymentsAutoPayManageInUpiApp": {
-    "description": "Hint for Razorpay mandates, which are paused in the UPI app"
-  },
-  "paymentsAutoPayCancel": "Cancel auto-debit",
-  "@paymentsAutoPayCancel": {
-    "description": "Button and confirm label to cancel the mandate"
-  },
-  "paymentsAutoPayCancelTitle": "Cancel auto-debit?",
-  "@paymentsAutoPayCancelTitle": {
-    "description": "Title of the cancel auto-debit dialog"
-  },
-  "paymentsAutoPayCancelMessage": "Your rent won't be paid automatically any more. You can set it up again later.",
-  "@paymentsAutoPayCancelMessage": {
-    "description": "Message of the cancel auto-debit dialog"
-  },
-  "paymentsAutoPayKeep": "Keep it",
-  "@paymentsAutoPayKeep": {
-    "description": "Dismiss button of the cancel auto-debit dialog"
-  },
-  "paymentsAutoPayCancelled": "Auto-debit cancelled",
-  "@paymentsAutoPayCancelled": {
-    "description": "Shown after auto-debit is cancelled"
-  },
   "paymentsAutoPayCancelPending": "Cancellation requested. Waiting for your bank to confirm.",
   "@paymentsAutoPayCancelPending": {
     "description": "Note while a Razorpay mandate cancellation is pending"
-  },
-  "paymentsAutoPayUpdated": "Auto-debit updated",
-  "@paymentsAutoPayUpdated": {
-    "description": "Shown after turning auto-debit on or off, or pausing or resuming it"
   },
   "commonContinue": "Continue",
   "@commonContinue": {
@@ -7532,18 +7451,6 @@
   "@paymentsOpenBills": {
     "description": "Button that opens the bills list"
   },
-  "paymentsUpcomingDebits": "Upcoming auto-debits",
-  "@paymentsUpcomingDebits": {
-    "description": "Heading for scheduled auto-debits"
-  },
-  "paymentsRecentDebits": "Recent auto-debits",
-  "@paymentsRecentDebits": {
-    "description": "Heading for past auto-debits"
-  },
-  "paymentsAmountMayChange": "The amount may change if you pay before this date.",
-  "@paymentsAmountMayChange": {
-    "description": "Scheduled auto-debit amount can change"
-  },
   "rentalsPayBill": "Pay {amount}",
   "@rentalsPayBill": {
     "description": "Button that pays a bill online",
@@ -7572,10 +7479,6 @@
         "type": "String"
       }
     }
-  },
-  "walletAutoPayOn": "On",
-  "@walletAutoPayOn": {
-    "description": "Auto recharge is on"
   },
   "walletAutoPayOff": "Off",
   "@walletAutoPayOff": {
@@ -7684,23 +7587,6 @@
   "@walletAutoPayCashOnly": {
     "description": "Auto recharge threshold uses cash balance only"
   },
-  "walletAutoPayNeedsMandate": "Set up auto-debit first. Its limit must be at least {amount}.",
-  "@walletAutoPayNeedsMandate": {
-    "description": "Auto recharge needs an active auto-debit mandate",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
-  "walletAutoPaySetUpMandate": "Set up auto-debit",
-  "@walletAutoPaySetUpMandate": {
-    "description": "Button that opens auto-debit setup"
-  },
-  "walletAutoPayAgree": "I agree to these auto recharge terms",
-  "@walletAutoPayAgree": {
-    "description": "Auto recharge consent checkbox"
-  },
   "walletAutoPayManualNote": "An auto recharge of {amount} is already in progress. If you add money now, that recharge may still complete.",
   "@walletAutoPayManualNote": {
     "description": "Manual top-up while an auto recharge is pending",
@@ -7710,60 +7596,20 @@
       }
     }
   },
-  "paymentAutoPayOn": "Payment done. Auto-debit is on.",
-  "@paymentAutoPayOn": {
-    "description": "Snack after a payment that also turned on auto-debit"
+  "deploymentAutoPayUpiApp": "Approve it in a UPI app that supports AutoPay.",
+  "@deploymentAutoPayUpiApp": {
+    "description": "Onboarding auto-debit step UPI app note"
   },
-  "paymentAutoPayActivating": "Payment done. Auto-debit is being activated and will update shortly.",
-  "@paymentAutoPayActivating": {
-    "description": "Snack after a payment whose auto-debit is still activating"
+  "deploymentAutoPayIntro": "Auto recharge is required to continue. Your rent is taken from your wallet, and auto recharge keeps it topped up.",
+  "@deploymentAutoPayIntro": {
+    "description": "Onboarding auto recharge step intro"
   },
-  "paymentAutoPayNotOn": "Payment done, but auto-debit couldn't be turned on. You can set it up from Home.",
-  "@paymentAutoPayNotOn": {
-    "description": "Snack after a payment whose auto-debit setup failed"
+  "paymentsAutoPayWaitingVehicle": "Starts with your scooter",
+  "@paymentsAutoPayWaitingVehicle": {
+    "description": "Auto recharge is saved and starts once a scooter is allocated"
   },
-  "paymentAutoPayRefused": "Auto-debit can't be turned on right now. You can pay without it.",
-  "@paymentAutoPayRefused": {
-    "description": "Snack when the server refuses auto-debit with this payment"
-  },
-  "paymentAutoPayTermsChanged": "Auto-debit terms have changed. Please review and accept them again.",
-  "@paymentAutoPayTermsChanged": {
-    "description": "Snack when the server says the auto-debit terms changed and need fresh consent"
-  },
-  "deploymentAutoPayTitle": "Auto-debit for future bills",
-  "@deploymentAutoPayTitle": {
-    "description": "Onboarding payment auto-debit card title"
-  },
-  "deploymentAutoPayToggle": "I agree, turn on auto-debit with this payment",
-  "@deploymentAutoPayToggle": {
-    "description": "Onboarding payment auto-debit switch label"
-  },
-  "deploymentAutoPayTerms": "Pay {amount} now. With the same UPI approval, your future rent and bills can be auto-debited up to {limit} per debit for {days} days. You'll be notified at least 24 hours before each debit and can pause or cancel anytime. Wallet auto-recharge is separate and needs its own consent.",
-  "@deploymentAutoPayTerms": {
-    "description": "Onboarding payment auto-debit consent terms",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      },
-      "limit": {
-        "type": "String"
-      },
-      "days": {
-        "type": "int"
-      }
-    }
-  },
-  "deploymentAutoPayUpiOnly": "Complete this payment with a UPI app that supports AutoPay.",
-  "@deploymentAutoPayUpiOnly": {
-    "description": "Onboarding payment auto-debit UPI-only note"
-  },
-  "deploymentPayWithAutoPay": "Pay {amount} & turn on auto-debit",
-  "@deploymentPayWithAutoPay": {
-    "description": "Onboarding payment button with auto-debit",
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
+  "paymentsAutoPayMigrationBlocked": "A payment is still being processed. You can set up auto recharge once it's done.",
+  "@paymentsAutoPayMigrationBlocked": {
+    "description": "Auto recharge is blocked until an earlier payment settles"
   }
 }

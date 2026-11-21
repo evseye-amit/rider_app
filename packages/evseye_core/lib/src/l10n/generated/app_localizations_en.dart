@@ -2795,9 +2795,6 @@ class AppL10nEn extends AppL10n {
   String get paymentsAmountDue => 'Amount due';
 
   @override
-  String get paymentsAutoPay => 'Auto-debit';
-
-  @override
   String get paymentsAutoPayActive => 'On';
 
   @override
@@ -2807,9 +2804,6 @@ class AppL10nEn extends AppL10n {
   String get paymentsAutoPayAuthPending => 'Waiting for approval';
 
   @override
-  String get paymentsAutoPayExpired => 'Expired';
-
-  @override
   String get paymentsAutoPayFailed => 'Failed';
 
   @override
@@ -2817,9 +2811,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get paymentsAutoPayPaused => 'Paused';
-
-  @override
-  String get paymentsAutoPayRevoked => 'Cancelled';
 
   @override
   String get paymentsAutoPaySetupRequired => 'Set-up needed';
@@ -2843,12 +2834,6 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get paymentsMandateLimit => 'Per-debit limit';
-
-  @override
-  String get paymentsMethod => 'Method';
-
-  @override
-  String get paymentsNextDebit => 'Next debit';
 
   @override
   String get paymentsNoPayments => 'No payments yet';
@@ -5112,11 +5097,6 @@ class AppL10nEn extends AppL10n {
   String get paymentsAutoPaySetUp => 'Set up auto-debit';
 
   @override
-  String paymentsAutoPaySetupMessage(String amount) {
-    return 'Your rent is paid automatically from your UPI account on each due date, up to $amount each time. You approve it once in your UPI app and get a notice before every debit.';
-  }
-
-  @override
   String get paymentsAutoPayEmail => 'Email';
 
   @override
@@ -5135,9 +5115,6 @@ class AppL10nEn extends AppL10n {
   String get paymentsAutoPayCheckStatus => 'Check status';
 
   @override
-  String get paymentsAutoPayTurnedOn => 'Auto-debit is on';
-
-  @override
   String get paymentsAutoPayStillWaiting => 'Waiting for your bank to confirm. Check again in a few minutes.';
 
   @override
@@ -5150,44 +5127,7 @@ class AppL10nEn extends AppL10n {
   String get paymentsAutoPayOpenFailed => 'Couldn\'t open the approval page. Please try again.';
 
   @override
-  String get paymentsAutoPayTurnOff => 'Turn off auto-debit';
-
-  @override
-  String get paymentsAutoPayTurnOn => 'Turn on auto-debit';
-
-  @override
-  String get paymentsAutoPayOffNote => 'Auto-debit is turned off. Rent won\'t be taken automatically.';
-
-  @override
-  String get paymentsAutoPayPause => 'Pause auto-debit';
-
-  @override
-  String get paymentsAutoPayResume => 'Resume auto-debit';
-
-  @override
-  String get paymentsAutoPayManageInUpiApp => 'To pause or resume, use your UPI app.';
-
-  @override
-  String get paymentsAutoPayCancel => 'Cancel auto-debit';
-
-  @override
-  String get paymentsAutoPayCancelTitle => 'Cancel auto-debit?';
-
-  @override
-  String get paymentsAutoPayCancelMessage =>
-      'Your rent won\'t be paid automatically any more. You can set it up again later.';
-
-  @override
-  String get paymentsAutoPayKeep => 'Keep it';
-
-  @override
-  String get paymentsAutoPayCancelled => 'Auto-debit cancelled';
-
-  @override
   String get paymentsAutoPayCancelPending => 'Cancellation requested. Waiting for your bank to confirm.';
-
-  @override
-  String get paymentsAutoPayUpdated => 'Auto-debit updated';
 
   @override
   String get commonContinue => 'Continue';
@@ -5532,15 +5472,6 @@ class AppL10nEn extends AppL10n {
   String get paymentsOpenBills => 'View bills';
 
   @override
-  String get paymentsUpcomingDebits => 'Upcoming auto-debits';
-
-  @override
-  String get paymentsRecentDebits => 'Recent auto-debits';
-
-  @override
-  String get paymentsAmountMayChange => 'The amount may change if you pay before this date.';
-
-  @override
   String rentalsPayBill(String amount) {
     return 'Pay $amount';
   }
@@ -5555,9 +5486,6 @@ class AppL10nEn extends AppL10n {
   String walletAutoPaySummary(String amount, String threshold) {
     return 'Adds $amount when your cash balance falls below $threshold.';
   }
-
-  @override
-  String get walletAutoPayOn => 'On';
 
   @override
   String get walletAutoPayOff => 'Off';
@@ -5633,52 +5561,21 @@ class AppL10nEn extends AppL10n {
       'Only your cash balance counts. Incentives and security deposit are not included.';
 
   @override
-  String walletAutoPayNeedsMandate(String amount) {
-    return 'Set up auto-debit first. Its limit must be at least $amount.';
-  }
-
-  @override
-  String get walletAutoPaySetUpMandate => 'Set up auto-debit';
-
-  @override
-  String get walletAutoPayAgree => 'I agree to these auto recharge terms';
-
-  @override
   String walletAutoPayManualNote(String amount) {
     return 'An auto recharge of $amount is already in progress. If you add money now, that recharge may still complete.';
   }
 
   @override
-  String get paymentAutoPayOn => 'Payment done. Auto-debit is on.';
+  String get deploymentAutoPayUpiApp => 'Approve it in a UPI app that supports AutoPay.';
 
   @override
-  String get paymentAutoPayActivating => 'Payment done. Auto-debit is being activated and will update shortly.';
+  String get deploymentAutoPayIntro =>
+      'Auto recharge is required to continue. Your rent is taken from your wallet, and auto recharge keeps it topped up.';
 
   @override
-  String get paymentAutoPayNotOn => 'Payment done, but auto-debit couldn\'t be turned on. You can set it up from Home.';
+  String get paymentsAutoPayWaitingVehicle => 'Starts with your scooter';
 
   @override
-  String get paymentAutoPayRefused => 'Auto-debit can\'t be turned on right now. You can pay without it.';
-
-  @override
-  String get paymentAutoPayTermsChanged => 'Auto-debit terms have changed. Please review and accept them again.';
-
-  @override
-  String get deploymentAutoPayTitle => 'Auto-debit for future bills';
-
-  @override
-  String get deploymentAutoPayToggle => 'I agree, turn on auto-debit with this payment';
-
-  @override
-  String deploymentAutoPayTerms(String amount, String limit, int days) {
-    return 'Pay $amount now. With the same UPI approval, your future rent and bills can be auto-debited up to $limit per debit for $days days. You\'ll be notified at least 24 hours before each debit and can pause or cancel anytime. Wallet auto-recharge is separate and needs its own consent.';
-  }
-
-  @override
-  String get deploymentAutoPayUpiOnly => 'Complete this payment with a UPI app that supports AutoPay.';
-
-  @override
-  String deploymentPayWithAutoPay(String amount) {
-    return 'Pay $amount & turn on auto-debit';
-  }
+  String get paymentsAutoPayMigrationBlocked =>
+      'A payment is still being processed. You can set up auto recharge once it\'s done.';
 }
