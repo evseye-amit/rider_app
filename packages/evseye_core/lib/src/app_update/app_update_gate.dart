@@ -175,9 +175,11 @@ class _OptionalUpdatePromptState extends ConsumerState<_OptionalUpdatePrompt> {
                     const Gap.lg(),
                     PrimaryButton(label: l10n.appUpdateNow, icon: Icons.system_update_rounded, onPressed: _update),
                     const Gap.sm(),
-                    GhostButton(
-                      label: l10n.appUpdateLater,
-                      onPressed: () => ref.read(appUpdateProvider.notifier).dismissOptional(),
+                    Center(
+                      child: GhostButton(
+                        label: l10n.appUpdateLater,
+                        onPressed: () => ref.read(appUpdateProvider.notifier).dismissOptional(),
+                      ),
                     ),
                   ],
                 ),
