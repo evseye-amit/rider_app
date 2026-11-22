@@ -5406,7 +5406,7 @@ abstract class AppL10n {
   /// Auto-debit needs attention. Ask your fleet manager to set it up again.
   ///
   /// In en, this message translates to:
-  /// **'Auto-debit needs attention. Ask your fleet manager to set it up again.'**
+  /// **'Auto-debit needs attention.'**
   String get paymentsAutoPayAttention;
 
   /// Waiting for approval

@@ -2801,7 +2801,7 @@ class AppL10nTe extends AppL10n {
   String get paymentsAutoPayActive => 'ఆన్';
 
   @override
-  String get paymentsAutoPayAttention => 'ఆటో-డెబిట్‌కు శ్రద్ధ కావాలి. మళ్ళీ సెట్ చేయమని మీ ఫ్లీట్ మేనేజర్‌ను అడగండి.';
+  String get paymentsAutoPayAttention => 'ఆటో-డెబిట్‌కు శ్రద్ధ కావాలి.';
 
   @override
   String get paymentsAutoPayAuthPending => 'ఆమోదం కోసం వేచి ఉంది';

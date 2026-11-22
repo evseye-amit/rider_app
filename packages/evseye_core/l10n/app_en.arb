@@ -3758,7 +3758,7 @@
   "@paymentsAutoPayActive": {
     "description": "On"
   },
-  "paymentsAutoPayAttention": "Auto-debit needs attention. Ask your fleet manager to set it up again.",
+  "paymentsAutoPayAttention": "Auto-debit needs attention.",
   "@paymentsAutoPayAttention": {
     "description": "Auto-debit needs attention. Ask your fleet manager to set it up again."
   },

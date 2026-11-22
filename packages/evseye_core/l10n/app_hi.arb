@@ -881,7 +881,7 @@
   "paymentsAllClearMessage": "अभी कुछ बकाया नहीं है। अगली बार से पहले हम बता देंगे।",
   "paymentsAmountDue": "बकाया रकम",
   "paymentsAutoPayActive": "चालू",
-  "paymentsAutoPayAttention": "ऑटो-डेबिट पर ध्यान देना है। इसे दोबारा सेट करने के लिए अपने फ्लीट मैनेजर से कहें।",
+  "paymentsAutoPayAttention": "ऑटो-डेबिट पर ध्यान देना है।",
   "paymentsAutoPayAuthPending": "मंज़ूरी का इंतज़ार",
   "paymentsAutoPayFailed": "विफल",
   "paymentsAutoPayNotEnabled": "सेट नहीं है",

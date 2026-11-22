@@ -881,7 +881,7 @@
   "paymentsAllClearMessage": "ಈಗ ಏನೂ ಬಾಕಿ ಇಲ್ಲ. ಮುಂದಿನದಕ್ಕೆ ಮೊದಲು ನಾವು ತಿಳಿಸುತ್ತೇವೆ.",
   "paymentsAmountDue": "ಬಾಕಿ ಮೊತ್ತ",
   "paymentsAutoPayActive": "ಆನ್",
-  "paymentsAutoPayAttention": "ಸ್ವಯಂ-ಡೆಬಿಟ್‌ಗೆ ಗಮನ ಬೇಕು. ಮತ್ತೆ ಹೊಂದಿಸಲು ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್‌ಗೆ ಹೇಳಿ.",
+  "paymentsAutoPayAttention": "ಸ್ವಯಂ-ಡೆಬಿಟ್‌ಗೆ ಗಮನ ಬೇಕು.",
   "paymentsAutoPayAuthPending": "ಅನುಮೋದನೆಗಾಗಿ ಕಾಯುತ್ತಿದೆ",
   "paymentsAutoPayFailed": "ವಿಫಲ",
   "paymentsAutoPayNotEnabled": "ಹೊಂದಿಸಿಲ್ಲ",

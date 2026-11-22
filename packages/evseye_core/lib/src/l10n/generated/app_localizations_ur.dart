@@ -2798,7 +2798,7 @@ class AppL10nUr extends AppL10n {
   String get paymentsAutoPayActive => 'On';
 
   @override
-  String get paymentsAutoPayAttention => 'Auto-debit needs attention. Ask your fleet manager to set it up again.';
+  String get paymentsAutoPayAttention => 'Auto-debit needs attention.';
 
   @override
   String get paymentsAutoPayAuthPending => 'Waiting for approval';

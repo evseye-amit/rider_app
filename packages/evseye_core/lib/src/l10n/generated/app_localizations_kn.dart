@@ -2799,7 +2799,7 @@ class AppL10nKn extends AppL10n {
   String get paymentsAutoPayActive => 'ಆನ್';
 
   @override
-  String get paymentsAutoPayAttention => 'ಸ್ವಯಂ-ಡೆಬಿಟ್‌ಗೆ ಗಮನ ಬೇಕು. ಮತ್ತೆ ಹೊಂದಿಸಲು ನಿಮ್ಮ ಫ್ಲೀಟ್ ಮ್ಯಾನೇಜರ್‌ಗೆ ಹೇಳಿ.';
+  String get paymentsAutoPayAttention => 'ಸ್ವಯಂ-ಡೆಬಿಟ್‌ಗೆ ಗಮನ ಬೇಕು.';
 
   @override
   String get paymentsAutoPayAuthPending => 'ಅನುಮೋದನೆಗಾಗಿ ಕಾಯುತ್ತಿದೆ';

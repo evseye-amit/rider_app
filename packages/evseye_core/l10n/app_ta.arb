@@ -881,7 +881,7 @@
   "paymentsAllClearMessage": "Nothing is due right now. We will tell you before the next one.",
   "paymentsAmountDue": "Amount due",
   "paymentsAutoPayActive": "On",
-  "paymentsAutoPayAttention": "Auto-debit needs attention. Ask your fleet manager to set it up again.",
+  "paymentsAutoPayAttention": "Auto-debit needs attention.",
   "paymentsAutoPayAuthPending": "Waiting for approval",
   "paymentsAutoPayFailed": "Failed",
   "paymentsAutoPayNotEnabled": "Not set up",

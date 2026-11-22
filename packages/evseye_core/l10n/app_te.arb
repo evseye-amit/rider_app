@@ -881,7 +881,7 @@
   "paymentsAllClearMessage": "ఇప్పుడు ఏమీ బకాయి లేదు. తదుపరిదానికి ముందు మేము చెబుతాము.",
   "paymentsAmountDue": "చెల్లించాల్సిన మొత్తం",
   "paymentsAutoPayActive": "ఆన్",
-  "paymentsAutoPayAttention": "ఆటో-డెబిట్‌కు శ్రద్ధ కావాలి. మళ్ళీ సెట్ చేయమని మీ ఫ్లీట్ మేనేజర్‌ను అడగండి.",
+  "paymentsAutoPayAttention": "ఆటో-డెబిట్‌కు శ్రద్ధ కావాలి.",
   "paymentsAutoPayAuthPending": "ఆమోదం కోసం వేచి ఉంది",
   "paymentsAutoPayFailed": "విఫలమైంది",
   "paymentsAutoPayNotEnabled": "సెట్ చేయలేదు",

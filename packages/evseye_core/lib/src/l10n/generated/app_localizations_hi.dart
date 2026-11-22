@@ -2788,8 +2788,7 @@ class AppL10nHi extends AppL10n {
   String get paymentsAutoPayActive => 'चालू';
 
   @override
-  String get paymentsAutoPayAttention =>
-      'ऑटो-डेबिट पर ध्यान देना है। इसे दोबारा सेट करने के लिए अपने फ्लीट मैनेजर से कहें।';
+  String get paymentsAutoPayAttention => 'ऑटो-डेबिट पर ध्यान देना है।';
 
   @override
   String get paymentsAutoPayAuthPending => 'मंज़ूरी का इंतज़ार';
