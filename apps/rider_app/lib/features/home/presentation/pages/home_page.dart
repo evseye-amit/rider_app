@@ -97,31 +97,23 @@ class HomePage extends ConsumerWidget {
       const Gap.lg(),
       ModuleCard(
         title: context.l10n.paymentsTitle,
-        padding: const EdgeInsets.all(Insets.md),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height: 114,
-              child: StatCard(
-                label: context.l10n.homeLastPayment,
-                value: switch (summary.lastPaymentAmount) {
-                  final num amount => Fmt.money(amount),
-                  null => '—',
-                },
-                caption: switch (summary) {
-                  HomeSummary(:final DateTime lastPaymentAt) => Fmt.relative(lastPaymentAt),
-                  HomeSummary(lastPaymentAmount: null, rentDue: != null) => context.l10n.paymentsNoPayments,
-                  _ => null,
-                },
-                icon: Icons.receipt_long_rounded,
-                accent: AppColors.primary,
-                compact: true,
-                onTap: () => context.push(Routes.payments),
-              ),
+            _LastPayment(
+              amount: switch (summary.lastPaymentAmount) {
+                final num amount => Fmt.money(amount),
+                null => '—',
+              },
+              caption: switch (summary) {
+                HomeSummary(:final DateTime lastPaymentAt) => Fmt.relative(lastPaymentAt),
+                HomeSummary(lastPaymentAmount: null, rentDue: != null) => context.l10n.paymentsNoPayments,
+                _ => null,
+              },
+              onTap: () => context.push(Routes.payments),
             ),
             if (summary.damageCount > 0) ...[
-              const Gap.sm(),
+              const Gap.md(),
               DamageChargesNotice(
                 amount: summary.damageDue,
                 count: summary.damageCount,
@@ -133,6 +125,50 @@ class HomePage extends ConsumerWidget {
       ),
       const AutoPayCard(spacing: Insets.lg),
     ];
+  }
+}
+
+class _LastPayment extends StatelessWidget {
+  const _LastPayment({required this.amount, required this.caption, required this.onTap});
+
+  final String amount;
+  final String? caption;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Pressable(
+      onTap: onTap,
+      scale: 0.99,
+      child: Row(
+        children: [
+          const IconTile(icon: Icons.receipt_long_rounded, size: 42),
+          const SizedBox(width: Insets.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(context.l10n.homeLastPayment, style: AppText.titleSmall.copyWith(fontSize: 14)),
+                if (caption case final String text) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    text,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.textMuted),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(width: Insets.sm),
+          Text(amount, style: AppText.numeric.copyWith(fontSize: 19)),
+          const SizedBox(width: Insets.xs),
+          const Icon(Icons.chevron_right_rounded, color: AppColors.textMuted),
+        ],
+      ),
+    );
   }
 }
 
