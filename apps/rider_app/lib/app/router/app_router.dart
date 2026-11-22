@@ -26,6 +26,7 @@ import '../../features/nearby_hubs/presentation/pages/nearby_hubs_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_flow_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_preview_page.dart';
 import '../../features/onboarding_intro/presentation/pages/intro_page.dart';
+import '../../features/payments/presentation/pages/auto_recharges_page.dart';
 import '../../features/payments/presentation/pages/payments_page.dart';
 import '../../features/profile/presentation/pages/profile_page.dart';
 import '../../features/referrals/presentation/pages/refer_earn_page.dart';
@@ -198,6 +199,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         routes: [
           GoRoute(path: 'statement', name: 'ledgerStatement', builder: (context, state) => const LedgerStatementPage()),
         ],
+      ),
+      GoRoute(
+        path: Routes.autoRecharges,
+        name: 'autoRecharges',
+        builder: (context, state) => const AutoRechargesPage(),
       ),
       GoRoute(
         path: Routes.support,

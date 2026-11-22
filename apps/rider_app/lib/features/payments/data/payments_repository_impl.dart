@@ -39,6 +39,15 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
   Future<Result<AutoPayMandate>> verifyAutoPay(String mandateId) async =>
       (await _autoPay.verifyMandate(mandateId)).map(_mandate);
 
+  @override
+  Future<Result<AutoRechargePage>> getAutoRecharges(int page) async => (await _autoPay.recharges(page: page)).map(
+    (value) => AutoRechargePage(
+      items: [for (final AutoPayRechargeDto item in value.items) _recharge(item)],
+      page: value.page,
+      hasMore: value.hasMore,
+    ),
+  );
+
   static AutoPay _state(RiderAutoPayDto dto) => AutoPay(
     state: switch (dto.effectiveStatus) {
       'OFF' => AutoPayState.off,
@@ -64,25 +73,24 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
       final AutoPayMandateDto mandate => _mandate(mandate),
       null => null,
     },
-    requests: [
-      for (final AutoPayRechargeDto request in dto.requests)
-        AutoRecharge(
-          id: request.id,
-          state: switch (request.status) {
-            'CREATING' => AutoRechargeState.creating,
-            'PENDING' => AutoRechargeState.pending,
-            'REVIEW_REQUIRED' => AutoRechargeState.review,
-            'SUCCESS' => AutoRechargeState.success,
-            'FAILED' => AutoRechargeState.failed,
-            'CANCELLED' => AutoRechargeState.cancelled,
-            _ => AutoRechargeState.unknown,
-          },
-          amount: request.amount,
-          scheduledAt: request.scheduledAt,
-          completedAt: request.completedAt,
-          createdAt: request.createdAt,
-        ),
-    ],
+    requests: [for (final AutoPayRechargeDto request in dto.requests) _recharge(request)],
+  );
+
+  static AutoRecharge _recharge(AutoPayRechargeDto dto) => AutoRecharge(
+    id: dto.id,
+    state: switch (dto.status) {
+      'CREATING' => AutoRechargeState.creating,
+      'PENDING' => AutoRechargeState.pending,
+      'REVIEW_REQUIRED' => AutoRechargeState.review,
+      'SUCCESS' => AutoRechargeState.success,
+      'FAILED' => AutoRechargeState.failed,
+      'CANCELLED' => AutoRechargeState.cancelled,
+      _ => AutoRechargeState.unknown,
+    },
+    amount: dto.amount,
+    scheduledAt: dto.scheduledAt,
+    completedAt: dto.completedAt,
+    createdAt: dto.createdAt,
   );
 
   static AutoPayMandate _mandate(AutoPayMandateDto dto) => AutoPayMandate(

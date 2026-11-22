@@ -5581,4 +5581,16 @@ class AppL10nEn extends AppL10n {
 
   @override
   String get appUpdateLater => 'Later';
+
+  @override
+  String get ledgerAutoPayHistory => 'History';
+
+  @override
+  String get ledgerAutoPayNoRecharges => 'No auto recharges yet';
+
+  @override
+  String get ledgerAutoPayNoRechargesHint => 'Auto recharges show up here when your cash balance runs low.';
+
+  @override
+  String get ledgerAutoPayHistoryError => 'Couldn\'t load auto recharges';
 }

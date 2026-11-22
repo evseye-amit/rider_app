@@ -72,6 +72,17 @@ class AutoRecharge extends Equatable {
   List<Object?> get props => [id, state, amount, scheduledAt, completedAt, createdAt];
 }
 
+class AutoRechargePage extends Equatable {
+  const AutoRechargePage({required this.items, required this.page, required this.hasMore});
+
+  final List<AutoRecharge> items;
+  final int page;
+  final bool hasMore;
+
+  @override
+  List<Object?> get props => [items, page, hasMore];
+}
+
 class AutoPay extends Equatable {
   const AutoPay({
     required this.state,

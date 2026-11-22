@@ -13,4 +13,6 @@ abstract interface class PaymentsRepository {
   Future<Result<AutoPayMandate>> setUpAutoPay({required String email, required String idempotencyKey});
 
   Future<Result<AutoPayMandate>> verifyAutoPay(String mandateId);
+
+  Future<Result<AutoRechargePage>> getAutoRecharges(int page);
 }

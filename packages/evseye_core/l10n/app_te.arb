@@ -1741,5 +1741,9 @@
   "appUpdateStoreError": "స్టోర్ తెరవలేకపోయాం. దయచేసి మళ్లీ ప్రయత్నించండి.",
   "appUpdateAvailableTitle": "అప్‌డేట్ అందుబాటులో ఉంది",
   "appUpdateAvailableMessage": "కొత్త మెరుగుదలలతో యాప్ కొత్త వెర్షన్ అందుబాటులో ఉంది.",
-  "appUpdateLater": "తర్వాత"
+  "appUpdateLater": "తర్వాత",
+  "ledgerAutoPayHistory": "చరిత్ర",
+  "ledgerAutoPayNoRecharges": "ఇంకా ఆటో రీఛార్జ్‌లు ఏవీ లేవు",
+  "ledgerAutoPayNoRechargesHint": "నగదు బ్యాలెన్స్ తగ్గినప్పుడు జరిగిన ఆటో రీఛార్జ్‌లు ఇక్కడ కనిపిస్తాయి.",
+  "ledgerAutoPayHistoryError": "ఆటో రీఛార్జ్‌లను లోడ్ చేయలేకపోయాం"
 }

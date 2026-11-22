@@ -10568,6 +10568,30 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Later'**
   String get appUpdateLater;
+
+  /// Link on the auto recharge card that opens the auto recharge history
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get ledgerAutoPayHistory;
+
+  /// Empty state title on the auto recharge history screen
+  ///
+  /// In en, this message translates to:
+  /// **'No auto recharges yet'**
+  String get ledgerAutoPayNoRecharges;
+
+  /// Empty state message on the auto recharge history screen
+  ///
+  /// In en, this message translates to:
+  /// **'Auto recharges show up here when your cash balance runs low.'**
+  String get ledgerAutoPayNoRechargesHint;
+
+  /// Shown when the auto recharge history could not be loaded
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load auto recharges'**
+  String get ledgerAutoPayHistoryError;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

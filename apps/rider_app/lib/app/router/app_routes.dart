@@ -21,6 +21,7 @@ abstract final class Routes {
   static const String scooter = '/scooter';
   static const String ledger = '/ledger';
   static const String ledgerStatement = '/ledger/statement';
+  static const String autoRecharges = '/auto-recharges';
   static const String support = '/support';
   static const String batterySwap = '/battery-swap';
   static const String nearbyHubs = '/nearby-hubs';

@@ -5585,4 +5585,16 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get appUpdateLater => 'ನಂತರ';
+
+  @override
+  String get ledgerAutoPayHistory => 'ಇತಿಹಾಸ';
+
+  @override
+  String get ledgerAutoPayNoRecharges => 'ಇನ್ನೂ ಯಾವುದೇ ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಇಲ್ಲ';
+
+  @override
+  String get ledgerAutoPayNoRechargesHint => 'ನಗದು ಬ್ಯಾಲೆನ್ಸ್ ಕಡಿಮೆಯಾದಾಗ ಆದ ಸ್ವಯಂ ರೀಚಾರ್ಜ್‌ಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.';
+
+  @override
+  String get ledgerAutoPayHistoryError => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ';
 }

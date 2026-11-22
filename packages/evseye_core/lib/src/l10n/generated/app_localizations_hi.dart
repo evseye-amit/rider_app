@@ -5568,4 +5568,16 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get appUpdateLater => 'बाद में';
+
+  @override
+  String get ledgerAutoPayHistory => 'इतिहास';
+
+  @override
+  String get ledgerAutoPayNoRecharges => 'अभी तक कोई ऑटो रिचार्ज नहीं';
+
+  @override
+  String get ledgerAutoPayNoRechargesHint => 'नकद बैलेंस कम होने पर हुए ऑटो रिचार्ज यहाँ दिखेंगे।';
+
+  @override
+  String get ledgerAutoPayHistoryError => 'ऑटो रिचार्ज लोड नहीं हो पाए';
 }

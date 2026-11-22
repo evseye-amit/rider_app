@@ -38,3 +38,12 @@ class VerifyAutoPay extends UseCase<AutoPayMandate, String> {
   @override
   Future<Result<AutoPayMandate>> call(String params) => _repository.verifyAutoPay(params);
 }
+
+class GetAutoRecharges extends UseCase<AutoRechargePage, int> {
+  const GetAutoRecharges(this._repository);
+
+  final PaymentsRepository _repository;
+
+  @override
+  Future<Result<AutoRechargePage>> call(int params) => _repository.getAutoRecharges(params);
+}

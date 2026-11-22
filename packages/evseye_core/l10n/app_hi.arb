@@ -1741,5 +1741,9 @@
   "appUpdateStoreError": "स्टोर नहीं खुल पाया। कृपया फिर कोशिश करें।",
   "appUpdateAvailableTitle": "अपडेट उपलब्ध है",
   "appUpdateAvailableMessage": "ऐप का नया वर्शन उपलब्ध है, जिसमें नए सुधार हैं।",
-  "appUpdateLater": "बाद में"
+  "appUpdateLater": "बाद में",
+  "ledgerAutoPayHistory": "इतिहास",
+  "ledgerAutoPayNoRecharges": "अभी तक कोई ऑटो रिचार्ज नहीं",
+  "ledgerAutoPayNoRechargesHint": "नकद बैलेंस कम होने पर हुए ऑटो रिचार्ज यहाँ दिखेंगे।",
+  "ledgerAutoPayHistoryError": "ऑटो रिचार्ज लोड नहीं हो पाए"
 }

@@ -5592,4 +5592,16 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get appUpdateLater => 'తర్వాత';
+
+  @override
+  String get ledgerAutoPayHistory => 'చరిత్ర';
+
+  @override
+  String get ledgerAutoPayNoRecharges => 'ఇంకా ఆటో రీఛార్జ్‌లు ఏవీ లేవు';
+
+  @override
+  String get ledgerAutoPayNoRechargesHint => 'నగదు బ్యాలెన్స్ తగ్గినప్పుడు జరిగిన ఆటో రీఛార్జ్‌లు ఇక్కడ కనిపిస్తాయి.';
+
+  @override
+  String get ledgerAutoPayHistoryError => 'ఆటో రీఛార్జ్‌లను లోడ్ చేయలేకపోయాం';
 }

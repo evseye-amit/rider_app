@@ -1741,5 +1741,9 @@
   "appUpdateStoreError": "We couldn't open the store. Please try again.",
   "appUpdateAvailableTitle": "Update available",
   "appUpdateAvailableMessage": "A newer version of the app is available with the latest improvements.",
-  "appUpdateLater": "Later"
+  "appUpdateLater": "Later",
+  "ledgerAutoPayHistory": "History",
+  "ledgerAutoPayNoRecharges": "No auto recharges yet",
+  "ledgerAutoPayNoRechargesHint": "Auto recharges show up here when your cash balance runs low.",
+  "ledgerAutoPayHistoryError": "Couldn't load auto recharges"
 }

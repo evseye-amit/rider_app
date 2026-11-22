@@ -1,7 +1,9 @@
 import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../../../../app/router/app_routes.dart';
 import '../../domain/entities/auto_pay.dart';
 import '../providers/auto_pay_provider.dart';
 import 'auto_pay_enrollment.dart';
@@ -46,23 +48,6 @@ String? _stateNote(AppL10n l10n, AutoPay autoPay) => switch (autoPay.state) {
   AutoPayState.migrationBlocked => l10n.paymentsAutoPayMigrationBlocked,
   AutoPayState.mandateActionRequired when !autoPay.canSetUp => l10n.paymentsAutoPayAttention,
   _ => null,
-};
-
-String _rechargeLabel(AppL10n l10n, AutoRechargeState state) => switch (state) {
-  AutoRechargeState.creating => l10n.ledgerAutoPayStatusPreparing,
-  AutoRechargeState.pending => l10n.ledgerAutoPayStatusPending,
-  AutoRechargeState.unknown => l10n.ledgerAutoPayStatusConfirming,
-  AutoRechargeState.review => l10n.ledgerAutoPayStatusReview,
-  AutoRechargeState.success => l10n.ledgerAutoPayStatusAdded,
-  AutoRechargeState.failed => l10n.ledgerStateFailed,
-  AutoRechargeState.cancelled => l10n.ledgerAutoPayStatusStopped,
-};
-
-StatusTone _rechargeTone(AutoRechargeState state) => switch (state) {
-  AutoRechargeState.success => StatusTone.success,
-  AutoRechargeState.failed => StatusTone.danger,
-  AutoRechargeState.cancelled => StatusTone.neutral,
-  _ => StatusTone.warning,
 };
 
 class AutoPayCard extends ConsumerStatefulWidget {
@@ -129,32 +114,34 @@ class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingOb
     final DateTime? expires = mandate?.expiresAt;
     final String? note = _stateNote(l10n, autoPay);
 
-    final Widget card = ModuleCard(
-      title: l10n.ledgerAutoPayTitle,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: StatusChip(label: _stateLabel(l10n, autoPay.state), tone: _stateTone(autoPay.state), dense: true),
-          ),
-          const Gap.sm(),
-          Text(
-            l10n.ledgerAutoPaySummary(Fmt.money(autoPay.rechargeAmount), Fmt.money(autoPay.threshold)),
-            style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
-          ),
-          if (mandate != null) const Gap.sm(),
-          if (mandate != null && mandate.maxAmount > 0)
-            KeyValueRow(label: l10n.paymentsMandateLimit, value: Fmt.money(mandate.maxAmount), dense: true),
-          if (expires != null) KeyValueRow(label: l10n.paymentsMandateExpires, value: Fmt.date(expires), dense: true),
-          if (note != null) ...[const Gap.md(), _AutoPayNote(text: note)],
-          if (autoPay.requests.isNotEmpty) ...[
-            const Gap.md(),
-            GroupLabel(l10n.ledgerAutoPayRecent),
-            for (final AutoRecharge request in autoPay.requests.take(3)) _RechargeRow(request: request),
+    void openHistory() => context.push(Routes.autoRecharges);
+    final Widget card = Pressable(
+      onTap: openHistory,
+      scale: 0.99,
+      child: ModuleCard(
+        title: l10n.ledgerAutoPayTitle,
+        actionLabel: l10n.ledgerAutoPayHistory,
+        onAction: openHistory,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: StatusChip(label: _stateLabel(l10n, autoPay.state), tone: _stateTone(autoPay.state), dense: true),
+            ),
+            const Gap.sm(),
+            Text(
+              l10n.ledgerAutoPaySummary(Fmt.money(autoPay.rechargeAmount), Fmt.money(autoPay.threshold)),
+              style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
+            ),
+            if (mandate != null) const Gap.sm(),
+            if (mandate != null && mandate.maxAmount > 0)
+              KeyValueRow(label: l10n.paymentsMandateLimit, value: Fmt.money(mandate.maxAmount), dense: true),
+            if (expires != null) KeyValueRow(label: l10n.paymentsMandateExpires, value: Fmt.date(expires), dense: true),
+            if (note != null) ...[const Gap.md(), _AutoPayNote(text: note)],
+            ..._actions(l10n, autoPay),
           ],
-          ..._actions(l10n, autoPay),
-        ],
+        ),
       ),
     );
     return widget.spacing == 0
@@ -194,42 +181,6 @@ class AutoPayTerms extends StatelessWidget {
           KeyValueRow(label: l10n.paymentsMandateLimit, value: Fmt.money(limit), dense: true),
         ],
       ],
-    );
-  }
-}
-
-class _RechargeRow extends StatelessWidget {
-  const _RechargeRow({required this.request});
-
-  final AutoRecharge request;
-
-  @override
-  Widget build(BuildContext context) {
-    final AppL10n l10n = context.l10n;
-    final DateTime? scheduled = request.scheduledAt;
-    final DateTime? stamp = request.completedAt ?? request.createdAt;
-    final String? when = request.state.isAwaitingBank && scheduled != null
-        ? l10n.ledgerAutoPayEarliestDebit(Fmt.dateTime(scheduled))
-        : stamp == null
-        ? null
-        : Fmt.dateTime(stamp);
-    return Padding(
-      padding: const EdgeInsets.only(top: Insets.sm),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(Fmt.money(request.amount), style: AppText.titleSmall.copyWith(fontSize: 13.5)),
-                if (when != null)
-                  Text(when, style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted)),
-              ],
-            ),
-          ),
-          StatusChip(label: _rechargeLabel(l10n, request.state), tone: _rechargeTone(request.state), dense: true),
-        ],
-      ),
     );
   }
 }

@@ -125,4 +125,24 @@ class RiderAutoPayApi {
 
   Future<Result<AutoPayMandateDto>> verifyMandate(String mandateId) =>
       _client.post<AutoPayMandateDto>('${_mandatePath(mandateId)}/verify', parse: _mandate);
+
+  Future<Result<AutoPayRechargePageDto>> recharges({int page = 1}) => _client.get<AutoPayRechargePageDto>(
+    '$_base/recharges',
+    query: {'page': page},
+    parse: (data) => AutoPayRechargePageDto.fromJson(jsonMap(data)),
+  );
+}
+
+class AutoPayRechargePageDto {
+  const AutoPayRechargePageDto({required this.items, required this.page, required this.hasMore});
+
+  factory AutoPayRechargePageDto.fromJson(Map<String, dynamic> json) => AutoPayRechargePageDto(
+    items: [for (final Map<String, dynamic> item in jsonMaps(json['items'])) AutoPayRechargeDto.fromJson(item)],
+    page: jsonIntOrNull(json['page']) ?? 1,
+    hasMore: jsonBool(json['hasMore']),
+  );
+
+  final List<AutoPayRechargeDto> items;
+  final int page;
+  final bool hasMore;
 }

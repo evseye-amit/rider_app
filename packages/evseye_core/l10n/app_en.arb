@@ -7615,5 +7615,21 @@
   "appUpdateLater": "Later",
   "@appUpdateLater": {
     "description": "Button that dismisses the optional update prompt for a while"
+  },
+  "ledgerAutoPayHistory": "History",
+  "@ledgerAutoPayHistory": {
+    "description": "Link on the auto recharge card that opens the auto recharge history"
+  },
+  "ledgerAutoPayNoRecharges": "No auto recharges yet",
+  "@ledgerAutoPayNoRecharges": {
+    "description": "Empty state title on the auto recharge history screen"
+  },
+  "ledgerAutoPayNoRechargesHint": "Auto recharges show up here when your cash balance runs low.",
+  "@ledgerAutoPayNoRechargesHint": {
+    "description": "Empty state message on the auto recharge history screen"
+  },
+  "ledgerAutoPayHistoryError": "Couldn't load auto recharges",
+  "@ledgerAutoPayHistoryError": {
+    "description": "Shown when the auto recharge history could not be loaded"
   }
 }
