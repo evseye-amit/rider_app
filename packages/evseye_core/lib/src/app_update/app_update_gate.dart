@@ -125,7 +125,10 @@ class _OptionalUpdatePromptState extends ConsumerState<_OptionalUpdatePrompt> {
     return Stack(
       fit: StackFit.expand,
       children: [
-        const ModalBarrier(dismissible: false, color: Color(0x8A000000)),
+        ModalBarrier(
+          color: const Color(0x8A000000),
+          onDismiss: () => ref.read(appUpdateProvider.notifier).dismissOptional(),
+        ),
         Align(
           alignment: Alignment.bottomCenter,
           child: Material(
