@@ -2,6 +2,7 @@ library;
 
 export 'src/api/api_client.dart';
 export 'src/api/api_env.dart';
+export 'src/api/app_update_api.dart';
 export 'src/api/attendance_api.dart';
 export 'src/api/auth_api.dart';
 export 'src/api/banks_api.dart';
@@ -30,6 +31,9 @@ export 'src/api/token_store.dart';
 export 'src/api/vehicle_exchange_api.dart';
 export 'src/api/vehicle_submission_api.dart';
 export 'src/api/wallet_api.dart';
+export 'src/app_update/app_release.dart';
+export 'src/app_update/app_update_gate.dart';
+export 'src/app_update/app_update_provider.dart';
 export 'src/auth/otp_resend_controller.dart';
 export 'src/config/feature_flags.dart';
 export 'src/config/ui_config_service.dart';

@@ -72,6 +72,7 @@ class _RiderAppState extends ConsumerState<RiderApp> {
   Widget build(BuildContext context) {
     ref.listen(pendingReferralProvider, (_, _) {});
     ref.listen(riderSessionProvider.select((session) => session.user?.id), (previous, next) {
+      if (next != previous) ref.read(appUpdateProvider.notifier).contextChanged();
       if (next != null && next != previous) unawaited(_recoverPayments());
     });
     final AppLocale locale = ref.watch(localeProvider.select((p) => p.locale));
@@ -86,7 +87,7 @@ class _RiderAppState extends ConsumerState<RiderApp> {
       locale: locale.locale,
       supportedLocales: AppL10n.supportedLocales,
       localizationsDelegates: const [AppL10n.delegate, ...GlobalMaterialLocalizations.delegates],
-      builder: (context, child) => MediaQuery.withNoTextScaling(child: child ?? const SizedBox()),
+      builder: (context, child) => MediaQuery.withNoTextScaling(child: AppUpdateGate(child: child ?? const SizedBox())),
     );
   }
 }

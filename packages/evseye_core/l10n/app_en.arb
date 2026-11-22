@@ -7587,5 +7587,33 @@
   "ledgerAutoPayVariableTerms": "The company can change these amounts, but never above your per-debit limit. You'll get notice before each debit, and you can cancel the auto-debit in your UPI app.",
   "@ledgerAutoPayVariableTerms": {
     "description": "The company may change auto recharge amounts within the mandate limit"
+  },
+  "appUpdateTitle": "Update required",
+  "@appUpdateTitle": {
+    "description": "Title of the full-screen force update gate"
+  },
+  "appUpdateMessage": "A newer version of the app is available. Please update to keep using it.",
+  "@appUpdateMessage": {
+    "description": "Default message on the force update gate when the server sends none"
+  },
+  "appUpdateNow": "Update now",
+  "@appUpdateNow": {
+    "description": "Button that opens the app store listing to update the app"
+  },
+  "appUpdateStoreError": "We couldn't open the store. Please try again.",
+  "@appUpdateStoreError": {
+    "description": "Shown when the app store link could not be opened"
+  },
+  "appUpdateAvailableTitle": "Update available",
+  "@appUpdateAvailableTitle": {
+    "description": "Default title of the optional update prompt when the server sends none"
+  },
+  "appUpdateAvailableMessage": "A newer version of the app is available with the latest improvements.",
+  "@appUpdateAvailableMessage": {
+    "description": "Default message of the optional update prompt when the server sends none"
+  },
+  "appUpdateLater": "Later",
+  "@appUpdateLater": {
+    "description": "Button that dismisses the optional update prompt for a while"
   }
 }

@@ -12,7 +12,7 @@ import 'auth_error_codes.g.dart';
 import 'token_store.dart';
 
 class ApiClient {
-  ApiClient({required TokenStore tokens, Dio? dio, String? baseUrl, bool? logRequests})
+  ApiClient({required TokenStore tokens, Dio? dio, String? baseUrl, bool? logRequests, this.appHeaders = const {}})
     : _tokens = tokens,
       _dio =
           dio ??
@@ -50,6 +50,7 @@ class ApiClient {
           final String? token = _tokens.accessToken;
           if (token != null && token.isNotEmpty && options.extra['skipAuth'] != true) {
             options.headers['Authorization'] = 'Bearer $token';
+            options.headers.addAll(appHeaders);
           }
           options.headers['Accept-Language'] = ActiveLocale.languageTag;
           handler.next(options);
@@ -60,8 +61,11 @@ class ApiClient {
 
   final Dio _dio;
   final TokenStore _tokens;
+  final Map<String, String> appHeaders;
 
   void Function()? onSessionExpired;
+
+  void Function(Map<String, dynamic> decision)? onUpdateRequired;
 
   Future<bool>? _refreshing;
 
@@ -154,6 +158,7 @@ class ApiClient {
       }
 
       final int status = res.statusCode ?? 0;
+      if (status == 426) _reportUpdateRequired(res.data);
       if (status >= 200 && status < 300) {
         final dynamic payload = res.data is Map && (res.data as Map).containsKey('data')
             ? (res.data as Map)['data']
@@ -167,6 +172,13 @@ class ApiClient {
     } on Object catch (e) {
       return Result.err(ServerFailure('Unexpected error. ($e)'));
     }
+  }
+
+  void _reportUpdateRequired(dynamic body) {
+    final Object? error = body is Map ? body['error'] : null;
+    final Object? issues = error is Map ? error['issues'] : null;
+    final Object? first = issues is List && issues.isNotEmpty ? issues.first : null;
+    if (first is Map) onUpdateRequired?.call(Map<String, dynamic>.from(first));
   }
 
   Future<bool> _refreshOnce() {

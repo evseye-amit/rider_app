@@ -18,6 +18,7 @@ String flavorConfigSource(Flavor flavor) {
     ..writeln('  static const String companyCode = ${_dartString(flavor.companyCode)};')
     ..writeln('  static const String supportEmail = ${_dartString(flavor.supportEmail)};')
     ..writeln('  static const String razorpayName = ${_dartString(flavor.razorpayName)};')
+    ..writeln('  static const String releaseChannel = ${_dartString(flavor.channel)};')
     ..writeln()
     ..writeln('  static const String riderAppName = ${_dartString(rider.appName)};')
     ..writeln('  static const String riderVersion = ${_dartString(rider.versionName)};')

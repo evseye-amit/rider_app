@@ -29,6 +29,8 @@ final RegExp _version = RegExp(r'^\d+\.\d+\.\d+\+\d+$');
 
 final RegExp _appStoreId = RegExp(r'^\d{6,12}$');
 
+const List<String> releaseChannels = ['PRODUCTION', 'TEST'];
+
 class FlavorException implements Exception {
   const FlavorException(this.problems);
 
@@ -100,6 +102,7 @@ class Flavor {
     required this.companyCode,
     required this.supportEmail,
     required this.razorpayName,
+    required this.channel,
     required this.apps,
     required this.palette,
     this.signing,
@@ -110,6 +113,7 @@ class Flavor {
   final String companyCode;
   final String supportEmail;
   final String razorpayName;
+  final String channel;
   final Map<String, AppFlavor> apps;
   final Map<String, int> palette;
   final Signing? signing;
@@ -160,6 +164,15 @@ class Flavor {
     );
     final String supportEmail = text(yaml, 'supportEmail', required: false);
     final String razorpayName = text(yaml, 'razorpayName', required: false);
+    final String declaredChannel = text(yaml, 'channel', required: false).toUpperCase();
+    if (declaredChannel.isNotEmpty && !releaseChannels.contains(declaredChannel)) {
+      problems.add('flavors/$name/flavor.yaml: "channel" must be PRODUCTION or TEST.');
+    }
+    final String channel = declaredChannel.isNotEmpty
+        ? declaredChannel
+        : name.endsWith('staging')
+        ? 'TEST'
+        : 'PRODUCTION';
 
     final Map<String, AppFlavor> apps = {};
     for (final AppTarget target in appTargets) {
@@ -236,6 +249,7 @@ class Flavor {
       companyCode: companyCode,
       supportEmail: supportEmail,
       razorpayName: razorpayName,
+      channel: channel,
       apps: apps,
       palette: palette,
       signing: signing,

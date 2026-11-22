@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../api/api_client.dart';
+import '../api/app_update_api.dart';
 import '../api/attendance_api.dart';
 import '../api/auth_api.dart';
 import '../api/banks_api.dart';
@@ -29,6 +30,7 @@ import '../api/token_store.dart';
 import '../api/vehicle_exchange_api.dart';
 import '../api/vehicle_submission_api.dart';
 import '../api/wallet_api.dart';
+import '../app_update/app_release.dart';
 import '../config/ui_config_service.dart';
 
 final sharedPreferencesProvider = Provider<SharedPreferences>(
@@ -40,7 +42,12 @@ final sharedPreferencesProvider = Provider<SharedPreferences>(
 
 final tokenStoreProvider = Provider<TokenStore>((ref) => TokenStore(ref.watch(sharedPreferencesProvider)));
 
-final apiClientProvider = Provider<ApiClient>((ref) => ApiClient(tokens: ref.watch(tokenStoreProvider)));
+final apiClientProvider = Provider<ApiClient>(
+  (ref) =>
+      ApiClient(tokens: ref.watch(tokenStoreProvider), appHeaders: ref.watch(appReleaseProvider)?.headers ?? const {}),
+);
+
+final appUpdateApiProvider = Provider<AppUpdateApi>((ref) => AppUpdateApi(ref.watch(apiClientProvider)));
 
 final authApiProvider = Provider<AuthApi>(
   (ref) => AuthApi(ref.watch(apiClientProvider), ref.watch(tokenStoreProvider)),

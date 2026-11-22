@@ -5564,4 +5564,25 @@ class AppL10nKn extends AppL10n {
   @override
   String get ledgerAutoPayVariableTerms =>
       'ಕಂಪನಿ ಈ ಮೊತ್ತಗಳನ್ನು ಬದಲಾಯಿಸಬಹುದು, ಆದರೆ ಪ್ರತಿ ಕಡಿತದ ಮಿತಿಗಿಂತ ಹೆಚ್ಚು ಎಂದಿಗೂ ಇಲ್ಲ. ಪ್ರತಿ ಕಡಿತಕ್ಕೂ ಮೊದಲು ನಿಮಗೆ ಸೂಚನೆ ಸಿಗುತ್ತದೆ, ಮತ್ತು ನಿಮ್ಮ UPI ಆ್ಯಪ್‌ನಲ್ಲಿ ಸ್ವಯಂ-ಡೆಬಿಟ್ ರದ್ದುಗೊಳಿಸಬಹುದು.';
+
+  @override
+  String get appUpdateTitle => 'ಅಪ್‌ಡೇಟ್ ಅಗತ್ಯವಿದೆ';
+
+  @override
+  String get appUpdateMessage => 'ಆ್ಯಪ್‌ನ ಹೊಸ ಆವೃತ್ತಿ ಲಭ್ಯವಿದೆ. ಬಳಕೆ ಮುಂದುವರಿಸಲು ದಯವಿಟ್ಟು ಅಪ್‌ಡೇಟ್ ಮಾಡಿ.';
+
+  @override
+  String get appUpdateNow => 'ಈಗ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ';
+
+  @override
+  String get appUpdateStoreError => 'ಸ್ಟೋರ್ ತೆರೆಯಲು ಆಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.';
+
+  @override
+  String get appUpdateAvailableTitle => 'ಅಪ್‌ಡೇಟ್ ಲಭ್ಯವಿದೆ';
+
+  @override
+  String get appUpdateAvailableMessage => 'ಹೊಸ ಸುಧಾರಣೆಗಳೊಂದಿಗೆ ಆ್ಯಪ್‌ನ ಹೊಸ ಆವೃತ್ತಿ ಲಭ್ಯವಿದೆ.';
+
+  @override
+  String get appUpdateLater => 'ನಂತರ';
 }

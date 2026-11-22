@@ -10526,6 +10526,48 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'The company can change these amounts, but never above your per-debit limit. You\'ll get notice before each debit, and you can cancel the auto-debit in your UPI app.'**
   String get ledgerAutoPayVariableTerms;
+
+  /// Title of the full-screen force update gate
+  ///
+  /// In en, this message translates to:
+  /// **'Update required'**
+  String get appUpdateTitle;
+
+  /// Default message on the force update gate when the server sends none
+  ///
+  /// In en, this message translates to:
+  /// **'A newer version of the app is available. Please update to keep using it.'**
+  String get appUpdateMessage;
+
+  /// Button that opens the app store listing to update the app
+  ///
+  /// In en, this message translates to:
+  /// **'Update now'**
+  String get appUpdateNow;
+
+  /// Shown when the app store link could not be opened
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t open the store. Please try again.'**
+  String get appUpdateStoreError;
+
+  /// Default title of the optional update prompt when the server sends none
+  ///
+  /// In en, this message translates to:
+  /// **'Update available'**
+  String get appUpdateAvailableTitle;
+
+  /// Default message of the optional update prompt when the server sends none
+  ///
+  /// In en, this message translates to:
+  /// **'A newer version of the app is available with the latest improvements.'**
+  String get appUpdateAvailableMessage;
+
+  /// Button that dismisses the optional update prompt for a while
+  ///
+  /// In en, this message translates to:
+  /// **'Later'**
+  String get appUpdateLater;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

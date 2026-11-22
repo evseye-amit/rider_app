@@ -4,6 +4,7 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../core/session/fleet_session_provider.dart';
 import 'router/app_router.dart';
 import 'router/app_routes.dart';
 
@@ -45,6 +46,9 @@ class _FleetManagerAppState extends ConsumerState<FleetManagerApp> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(fleetSessionProvider.select((session) => session.user?.id), (previous, next) {
+      if (next != previous) ref.read(appUpdateProvider.notifier).contextChanged();
+    });
     final AppLocale locale = ref.watch(localeProvider.select((p) => p.locale));
 
     return MaterialApp.router(
@@ -57,7 +61,7 @@ class _FleetManagerAppState extends ConsumerState<FleetManagerApp> {
       locale: locale.locale,
       supportedLocales: AppL10n.supportedLocales,
       localizationsDelegates: const [AppL10n.delegate, ...GlobalMaterialLocalizations.delegates],
-      builder: (context, child) => MediaQuery.withNoTextScaling(child: child ?? const SizedBox()),
+      builder: (context, child) => MediaQuery.withNoTextScaling(child: AppUpdateGate(child: child ?? const SizedBox())),
     );
   }
 }

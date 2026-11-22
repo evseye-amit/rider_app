@@ -1734,5 +1734,12 @@
   "paymentsAutoPayMigrationBlocked": "A payment is still being processed. You can set up auto recharge once it's done.",
   "paymentsAutoPayActivating": "Finishing setup",
   "paymentsAutoPayActivatingNote": "Your bank approved the auto-debit. We're turning on auto recharge, which usually takes about a minute.",
-  "ledgerAutoPayVariableTerms": "The company can change these amounts, but never above your per-debit limit. You'll get notice before each debit, and you can cancel the auto-debit in your UPI app."
+  "ledgerAutoPayVariableTerms": "The company can change these amounts, but never above your per-debit limit. You'll get notice before each debit, and you can cancel the auto-debit in your UPI app.",
+  "appUpdateTitle": "Update required",
+  "appUpdateMessage": "A newer version of the app is available. Please update to keep using it.",
+  "appUpdateNow": "Update now",
+  "appUpdateStoreError": "We couldn't open the store. Please try again.",
+  "appUpdateAvailableTitle": "Update available",
+  "appUpdateAvailableMessage": "A newer version of the app is available with the latest improvements.",
+  "appUpdateLater": "Later"
 }

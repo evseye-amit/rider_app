@@ -5548,4 +5548,25 @@ class AppL10nHi extends AppL10n {
   @override
   String get ledgerAutoPayVariableTerms =>
       'कंपनी ये रकम बदल सकती है, लेकिन प्रति कटौती सीमा से ज़्यादा कभी नहीं। हर कटौती से पहले आपको सूचना मिलेगी, और आप अपने UPI ऐप में ऑटो-डेबिट रद्द कर सकते हैं।';
+
+  @override
+  String get appUpdateTitle => 'अपडेट ज़रूरी है';
+
+  @override
+  String get appUpdateMessage => 'ऐप का नया वर्शन उपलब्ध है। ऐप इस्तेमाल करते रहने के लिए कृपया अपडेट करें।';
+
+  @override
+  String get appUpdateNow => 'अभी अपडेट करें';
+
+  @override
+  String get appUpdateStoreError => 'स्टोर नहीं खुल पाया। कृपया फिर कोशिश करें।';
+
+  @override
+  String get appUpdateAvailableTitle => 'अपडेट उपलब्ध है';
+
+  @override
+  String get appUpdateAvailableMessage => 'ऐप का नया वर्शन उपलब्ध है, जिसमें नए सुधार हैं।';
+
+  @override
+  String get appUpdateLater => 'बाद में';
 }

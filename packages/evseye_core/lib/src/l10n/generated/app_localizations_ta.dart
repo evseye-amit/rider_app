@@ -5560,4 +5560,25 @@ class AppL10nTa extends AppL10n {
   @override
   String get ledgerAutoPayVariableTerms =>
       'The company can change these amounts, but never above your per-debit limit. You\'ll get notice before each debit, and you can cancel the auto-debit in your UPI app.';
+
+  @override
+  String get appUpdateTitle => 'Update required';
+
+  @override
+  String get appUpdateMessage => 'A newer version of the app is available. Please update to keep using it.';
+
+  @override
+  String get appUpdateNow => 'Update now';
+
+  @override
+  String get appUpdateStoreError => 'We couldn\'t open the store. Please try again.';
+
+  @override
+  String get appUpdateAvailableTitle => 'Update available';
+
+  @override
+  String get appUpdateAvailableMessage => 'A newer version of the app is available with the latest improvements.';
+
+  @override
+  String get appUpdateLater => 'Later';
 }

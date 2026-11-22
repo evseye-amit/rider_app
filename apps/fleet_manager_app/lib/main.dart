@@ -32,14 +32,17 @@ Future<void> main() async {
   final SharedPreferences preferences = await SharedPreferences.getInstance();
   await ActiveLocale.initializeFormatting();
   await PushNotifications.initialize(PushApp.fleetManager);
+  final AppRelease? release = await AppRelease.load(PushApp.fleetManager);
 
   final ProviderContainer container = ProviderContainer(
     overrides: [
       sharedPreferencesProvider.overrideWithValue(preferences),
       pushAppProvider.overrideWithValue(PushApp.fleetManager),
+      appReleaseProvider.overrideWithValue(release),
     ],
     retry: noProviderRetry,
   );
+  final Future<void> updateCheck = container.read(appUpdateProvider.notifier).check();
   if (container.read(companyProvider) != null) {
     try {
       await container.read(fleetSessionProvider.notifier).bootstrap();
@@ -48,6 +51,7 @@ Future<void> main() async {
     }
   }
 
+  await updateCheck.timeout(const Duration(seconds: 4), onTimeout: () {});
   runApp(UncontrolledProviderScope(container: container, child: const FleetManagerApp()));
   FlutterNativeSplash.remove();
   binding.addPostFrameCallback((_) => unawaited(_openInitialPush(container)));

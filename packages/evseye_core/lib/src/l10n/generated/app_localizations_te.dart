@@ -5571,4 +5571,25 @@ class AppL10nTe extends AppL10n {
   @override
   String get ledgerAutoPayVariableTerms =>
       'కంపెనీ ఈ మొత్తాలను మార్చవచ్చు, కానీ ప్రతి కోత పరిమితి కంటే ఎప్పుడూ ఎక్కువ కాదు. ప్రతి కోతకు ముందు మీకు సమాచారం వస్తుంది, మరియు మీ UPI యాప్‌లో ఆటో-డెబిట్‌ను రద్దు చేయవచ్చు.';
+
+  @override
+  String get appUpdateTitle => 'అప్‌డేట్ అవసరం';
+
+  @override
+  String get appUpdateMessage => 'యాప్ కొత్త వెర్షన్ అందుబాటులో ఉంది. వాడటం కొనసాగించడానికి దయచేసి అప్‌డేట్ చేయండి.';
+
+  @override
+  String get appUpdateNow => 'ఇప్పుడే అప్‌డేట్ చేయండి';
+
+  @override
+  String get appUpdateStoreError => 'స్టోర్ తెరవలేకపోయాం. దయచేసి మళ్లీ ప్రయత్నించండి.';
+
+  @override
+  String get appUpdateAvailableTitle => 'అప్‌డేట్ అందుబాటులో ఉంది';
+
+  @override
+  String get appUpdateAvailableMessage => 'కొత్త మెరుగుదలలతో యాప్ కొత్త వెర్షన్ అందుబాటులో ఉంది.';
+
+  @override
+  String get appUpdateLater => 'తర్వాత';
 }
