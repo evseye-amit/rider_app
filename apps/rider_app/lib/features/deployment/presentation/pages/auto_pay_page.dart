@@ -49,13 +49,13 @@ class _AutoPayPageState extends ConsumerState<AutoPayPage> with WidgetsBindingOb
     await ref.read(riderSessionProvider.notifier).finishAutoPay(allocationId);
   }
 
-  Future<void> _setUp(AutoPay autoPay) async {
+  Future<void> _setUp() async {
     final String email = _email.text.trim();
     if (!_emailPattern.hasMatch(email)) {
       setState(() => _emailError = context.l10n.paymentsAutoPayEmailInvalid);
       return;
     }
-    await setUpAutoPay(autoPay, email);
+    await setUpAutoPay(email);
   }
 
   @override
@@ -81,7 +81,8 @@ class _AutoPayPageState extends ConsumerState<AutoPayPage> with WidgetsBindingOb
 
     final AutoPay? shown = current != null && current.needsSetup && !_finishing ? current : null;
     final AutoPayMandate? pending = shown != null && shown.awaitingApproval ? shown.mandate : null;
-    final bool turnOn = shown != null && pending == null && shown.canTurnOn;
+    final AutoPayMandate? activating = shown != null && shown.activating ? shown.mandate : null;
+    final AutoPayMandate? checking = pending ?? activating;
 
     return AppScaffold(
       title: l10n.paymentsAutoPaySetUp,
@@ -94,23 +95,17 @@ class _AutoPayPageState extends ConsumerState<AutoPayPage> with WidgetsBindingOb
           loading: autoPayBusy,
           onPressed: autoPayBusy ? null : () => openAutoPayApproval(pending),
         ),
-        _ when pending != null => PrimaryButton(
+        _ when checking != null => PrimaryButton(
           label: l10n.paymentsAutoPayCheckStatus,
           icon: Icons.refresh_rounded,
           loading: autoPayBusy,
-          onPressed: autoPayBusy ? null : () => verifyAutoPay(pending.id),
+          onPressed: autoPayBusy ? null : () => verifyAutoPay(checking.id),
         ),
-        final AutoPay autoPay when turnOn => PrimaryButton(
-          label: l10n.walletAutoPayTurnOn,
-          icon: Icons.autorenew_rounded,
-          loading: autoPayBusy,
-          onPressed: autoPayBusy ? null : () => turnOnAutoPay(autoPay),
-        ),
-        final AutoPay autoPay => PrimaryButton(
+        _ => PrimaryButton(
           label: l10n.paymentsAutoPayContinue,
           icon: Icons.open_in_new_rounded,
           loading: autoPayBusy,
-          onPressed: autoPayBusy ? null : () => _setUp(autoPay),
+          onPressed: autoPayBusy ? null : _setUp,
         ),
       },
       body: RefreshIndicator(
@@ -148,16 +143,15 @@ class _AutoPayPageState extends ConsumerState<AutoPayPage> with WidgetsBindingOb
                     ],
                   ),
                 )
-              else if (turnOn) ...[
-                if (shown.state == AutoPayState.consentRequired)
-                  AccentCard(
-                    accent: AppColors.warning,
-                    child: Text(
-                      l10n.walletAutoPayTermsChanged,
-                      style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
-                    ),
+              else if (activating != null)
+                AccentCard(
+                  accent: AppColors.info,
+                  child: Text(
+                    l10n.paymentsAutoPayActivatingNote,
+                    style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
                   ),
-              ] else ...[
+                )
+              else ...[
                 if (shown.mandate?.state == AutoPayMandateState.closed) ...[
                   AccentCard(
                     accent: AppColors.danger,
@@ -179,7 +173,7 @@ class _AutoPayPageState extends ConsumerState<AutoPayPage> with WidgetsBindingOb
                   prefixIcon: Icons.mail_outline_rounded,
                   onChanged: (_) => setState(() => _emailError = null),
                   onSubmitted: (_) {
-                    if (!autoPayBusy) unawaited(_setUp(shown));
+                    if (!autoPayBusy) unawaited(_setUp());
                   },
                 ),
               ],

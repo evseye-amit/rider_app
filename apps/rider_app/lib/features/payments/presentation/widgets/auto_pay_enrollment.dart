@@ -14,7 +14,6 @@ mixin AutoPayEnrollment<T extends ConsumerStatefulWidget> on ConsumerState<T>, W
   final Map<String, String> _keys = {};
   String? _returningFrom;
   bool _leftApp = false;
-  int? _consented;
   bool autoPayBusy = false;
 
   @override
@@ -56,9 +55,8 @@ mixin AutoPayEnrollment<T extends ConsumerStatefulWidget> on ConsumerState<T>, W
     ref.invalidate(autoPayProvider);
   }
 
-  Future<void> setUpAutoPay(AutoPay autoPay, String email) async {
+  Future<void> setUpAutoPay(String email) async {
     final AppL10n l10n = context.l10n;
-    _consented = autoPay.policyRevision;
     _busy(true);
     final Result<AutoPayMandate> result = await ref.read(setUpAutoPayProvider)(
       SetUpAutoPayParams(email: email, idempotencyKey: _keys['setup'] ??= newIdempotencyKey()),
@@ -122,31 +120,12 @@ mixin AutoPayEnrollment<T extends ConsumerStatefulWidget> on ConsumerState<T>, W
     final AppL10n l10n = context.l10n;
     final AutoPay? fresh = await ref.refresh(autoPayProvider.future).catchError((Object _) => null);
     if (!mounted) return;
-    if (fresh != null && fresh.canTurnOn && fresh.policyRevision == _consented) {
-      await turnOnAutoPay(fresh);
-      return;
-    }
     _busy(false);
-    if (fresh != null && fresh.isOn) AppSnack.success(context, l10n.walletAutoPayTurnedOn);
-  }
-
-  Future<void> turnOnAutoPay(AutoPay autoPay) async {
-    final AutoPayMandate? mandate = autoPay.mandate;
-    if (mandate == null) return;
-    final AppL10n l10n = context.l10n;
-    _busy(true);
-    final Result<AutoPay> result = await ref
-        .read(autoPayProvider.notifier)
-        .turnOn(mandateId: mandate.id, revision: autoPay.revision, consentRevision: autoPay.policyRevision);
-    if (!mounted) return;
-    _busy(false);
-    switch (result) {
-      case Ok<AutoPay>():
-        _consented = null;
-        AppSnack.success(context, l10n.walletAutoPayTurnedOn);
-      case Err<AutoPay>(:final failure):
-        ref.invalidate(autoPayProvider);
-        AppSnack.error(context, failure.message);
+    if (fresh == null) return;
+    if (fresh.isOn) {
+      AppSnack.success(context, l10n.walletAutoPayTurnedOn);
+    } else if (fresh.activating) {
+      AppSnack.info(context, l10n.paymentsAutoPayActivatingNote);
     }
   }
 }

@@ -10407,65 +10407,17 @@ abstract class AppL10n {
   /// **'Off'**
   String get walletAutoPayOff;
 
-  /// Button that turns on wallet auto recharge
-  ///
-  /// In en, this message translates to:
-  /// **'Turn on auto recharge'**
-  String get walletAutoPayTurnOn;
-
-  /// Button to accept changed auto recharge terms
-  ///
-  /// In en, this message translates to:
-  /// **'Review new terms'**
-  String get walletAutoPayReviewTerms;
-
-  /// Button that turns off wallet auto recharge
-  ///
-  /// In en, this message translates to:
-  /// **'Turn off auto recharge'**
-  String get walletAutoPayTurnOff;
-
-  /// Confirmation title for turning off auto recharge
-  ///
-  /// In en, this message translates to:
-  /// **'Turn off auto recharge?'**
-  String get walletAutoPayTurnOffTitle;
-
-  /// Confirmation message for turning off auto recharge
-  ///
-  /// In en, this message translates to:
-  /// **'No new auto recharges will start. A recharge already sent to your bank may still complete, and your auto-debit stays active.'**
-  String get walletAutoPayTurnOffMessage;
-
   /// Auto recharge was turned on
   ///
   /// In en, this message translates to:
   /// **'Auto recharge is on'**
   String get walletAutoPayTurnedOn;
 
-  /// Auto recharge was turned off
-  ///
-  /// In en, this message translates to:
-  /// **'Auto recharge is off'**
-  String get walletAutoPayTurnedOff;
-
   /// Operator has paused auto recharge
   ///
   /// In en, this message translates to:
   /// **'Auto recharge is paused for now. No new recharges will start.'**
   String get walletAutoPayPolicyOff;
-
-  /// Auto recharge needs fresh consent
-  ///
-  /// In en, this message translates to:
-  /// **'The auto recharge terms have changed. Review and accept them to keep it on.'**
-  String get walletAutoPayTermsChanged;
-
-  /// Last auto recharge failed
-  ///
-  /// In en, this message translates to:
-  /// **'Your last auto recharge didn\'t go through. Check your auto-debit, then turn auto recharge on again.'**
-  String get walletAutoPayActionRequired;
 
   /// Heading for auto recharge requests
   ///
@@ -10515,12 +10467,6 @@ abstract class AppL10n {
   /// **'Stopped'**
   String get walletAutoPayStatusStopped;
 
-  /// Auto recharge consent sheet title
-  ///
-  /// In en, this message translates to:
-  /// **'Turn on auto recharge'**
-  String get walletAutoPayConsentTitle;
-
   /// Auto recharge consent terms
   ///
   /// In en, this message translates to:
@@ -10562,6 +10508,24 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'A payment is still being processed. You can set up auto recharge once it\'s done.'**
   String get paymentsAutoPayMigrationBlocked;
+
+  /// Wallet funding is being turned on after the bank approved the mandate
+  ///
+  /// In en, this message translates to:
+  /// **'Finishing setup'**
+  String get paymentsAutoPayActivating;
+
+  /// Explains that auto recharge is being turned on after bank approval
+  ///
+  /// In en, this message translates to:
+  /// **'Your bank approved the auto-debit. We\'re turning on auto recharge, which usually takes about a minute.'**
+  String get paymentsAutoPayActivatingNote;
+
+  /// The company may change auto recharge amounts within the mandate limit
+  ///
+  /// In en, this message translates to:
+  /// **'The company can change these amounts, but never above your per-debit limit. You\'ll get notice before each debit, and you can cancel the auto-debit in your UPI app.'**
+  String get walletAutoPayVariableTerms;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

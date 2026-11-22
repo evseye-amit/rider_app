@@ -5491,36 +5491,10 @@ class AppL10nAs extends AppL10n {
   String get walletAutoPayOff => 'Off';
 
   @override
-  String get walletAutoPayTurnOn => 'Turn on auto recharge';
-
-  @override
-  String get walletAutoPayReviewTerms => 'Review new terms';
-
-  @override
-  String get walletAutoPayTurnOff => 'Turn off auto recharge';
-
-  @override
-  String get walletAutoPayTurnOffTitle => 'Turn off auto recharge?';
-
-  @override
-  String get walletAutoPayTurnOffMessage =>
-      'No new auto recharges will start. A recharge already sent to your bank may still complete, and your auto-debit stays active.';
-
-  @override
   String get walletAutoPayTurnedOn => 'Auto recharge is on';
 
   @override
-  String get walletAutoPayTurnedOff => 'Auto recharge is off';
-
-  @override
   String get walletAutoPayPolicyOff => 'Auto recharge is paused for now. No new recharges will start.';
-
-  @override
-  String get walletAutoPayTermsChanged => 'The auto recharge terms have changed. Review and accept them to keep it on.';
-
-  @override
-  String get walletAutoPayActionRequired =>
-      'Your last auto recharge didn\'t go through. Check your auto-debit, then turn auto recharge on again.';
 
   @override
   String get walletAutoPayRecent => 'Recent auto recharges';
@@ -5549,9 +5523,6 @@ class AppL10nAs extends AppL10n {
   String get walletAutoPayStatusStopped => 'Stopped';
 
   @override
-  String get walletAutoPayConsentTitle => 'Turn on auto recharge';
-
-  @override
   String walletAutoPayConsent(String amount, String threshold, String hours, String cooldown) {
     return 'While I have an active scooter, automatically add $amount when my available cash balance falls below $threshold. Each recharge needs my auto-debit and bank confirmation, with at least $hours hours\' notice. Only one auto recharge can be pending at a time, and a new one won\'t start within $cooldown hours of a successful recharge. A recharge already sent to my bank may still complete if I turn this off or add money myself.';
   }
@@ -5578,4 +5549,15 @@ class AppL10nAs extends AppL10n {
   @override
   String get paymentsAutoPayMigrationBlocked =>
       'A payment is still being processed. You can set up auto recharge once it\'s done.';
+
+  @override
+  String get paymentsAutoPayActivating => 'Finishing setup';
+
+  @override
+  String get paymentsAutoPayActivatingNote =>
+      'Your bank approved the auto-debit. We\'re turning on auto recharge, which usually takes about a minute.';
+
+  @override
+  String get walletAutoPayVariableTerms =>
+      'The company can change these amounts, but never above your per-debit limit. You\'ll get notice before each debit, and you can cancel the auto-debit in your UPI app.';
 }

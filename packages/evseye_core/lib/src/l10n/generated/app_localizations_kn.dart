@@ -5495,37 +5495,10 @@ class AppL10nKn extends AppL10n {
   String get walletAutoPayOff => 'ಆಫ್';
 
   @override
-  String get walletAutoPayTurnOn => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆನ್ ಮಾಡಿ';
-
-  @override
-  String get walletAutoPayReviewTerms => 'ಹೊಸ ನಿಯಮಗಳನ್ನು ನೋಡಿ';
-
-  @override
-  String get walletAutoPayTurnOff => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆಫ್ ಮಾಡಿ';
-
-  @override
-  String get walletAutoPayTurnOffTitle => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆಫ್ ಮಾಡಬೇಕೆ?';
-
-  @override
-  String get walletAutoPayTurnOffMessage =>
-      'ಹೊಸ ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಪ್ರಾರಂಭವಾಗುವುದಿಲ್ಲ. ಈಗಾಗಲೇ ಬ್ಯಾಂಕ್‌ಗೆ ಕಳುಹಿಸಿದ ರೀಚಾರ್ಜ್ ಇನ್ನೂ ಪೂರ್ಣಗೊಳ್ಳಬಹುದು, ಮತ್ತು ನಿಮ್ಮ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಸಕ್ರಿಯವಾಗಿರುತ್ತದೆ.';
-
-  @override
   String get walletAutoPayTurnedOn => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆನ್ ಆಗಿದೆ';
 
   @override
-  String get walletAutoPayTurnedOff => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆಫ್ ಆಗಿದೆ';
-
-  @override
   String get walletAutoPayPolicyOff => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಸದ್ಯಕ್ಕೆ ನಿಲ್ಲಿಸಲಾಗಿದೆ. ಹೊಸ ರೀಚಾರ್ಜ್ ಪ್ರಾರಂಭವಾಗುವುದಿಲ್ಲ.';
-
-  @override
-  String get walletAutoPayTermsChanged =>
-      'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ನಿಯಮಗಳು ಬದಲಾಗಿವೆ. ಇದನ್ನು ಆನ್‌ನಲ್ಲಿ ಇಡಲು ಹೊಸ ನಿಯಮಗಳನ್ನು ನೋಡಿ ಒಪ್ಪಿಕೊಳ್ಳಿ.';
-
-  @override
-  String get walletAutoPayActionRequired =>
-      'ನಿಮ್ಮ ಕೊನೆಯ ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಯಶಸ್ವಿಯಾಗಲಿಲ್ಲ. ನಿಮ್ಮ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಪರಿಶೀಲಿಸಿ, ನಂತರ ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಮತ್ತೆ ಆನ್ ಮಾಡಿ.';
 
   @override
   String get walletAutoPayRecent => 'ಇತ್ತೀಚಿನ ಸ್ವಯಂ ರೀಚಾರ್ಜ್‌ಗಳು';
@@ -5554,9 +5527,6 @@ class AppL10nKn extends AppL10n {
   String get walletAutoPayStatusStopped => 'ನಿಲ್ಲಿಸಲಾಗಿದೆ';
 
   @override
-  String get walletAutoPayConsentTitle => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆನ್ ಮಾಡಿ';
-
-  @override
   String walletAutoPayConsent(String amount, String threshold, String hours, String cooldown) {
     return 'ನನ್ನ ಬಳಿ ಸಕ್ರಿಯ ಸ್ಕೂಟರ್ ಇರುವವರೆಗೆ, ನನ್ನ ಲಭ್ಯ ನಗದು ಬ್ಯಾಲೆನ್ಸ್ $threshold ಗಿಂತ ಕಡಿಮೆಯಾದಾಗ $amount ತಾನಾಗಿಯೇ ಸೇರಿಸಿ. ಪ್ರತಿ ರೀಚಾರ್ಜ್‌ಗೆ ನನ್ನ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಮತ್ತು ಬ್ಯಾಂಕ್ ದೃಢೀಕರಣ ಬೇಕು, ಮತ್ತು ಕನಿಷ್ಠ $hours ಗಂಟೆಗಳ ಮುಂಚಿತ ಸೂಚನೆ ಇರುತ್ತದೆ. ಒಂದು ಸಮಯದಲ್ಲಿ ಒಂದೇ ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಬಾಕಿ ಇರಬಹುದು, ಮತ್ತು ಯಶಸ್ವಿ ರೀಚಾರ್ಜ್‌ನ $cooldown ಗಂಟೆಗಳೊಳಗೆ ಹೊಸದು ಪ್ರಾರಂಭವಾಗುವುದಿಲ್ಲ. ನಾನು ಇದನ್ನು ಆಫ್ ಮಾಡಿದರೂ ಅಥವಾ ನಾನೇ ಹಣ ಸೇರಿಸಿದರೂ, ಬ್ಯಾಂಕ್‌ಗೆ ಕಳುಹಿಸಿದ ರೀಚಾರ್ಜ್ ಪೂರ್ಣಗೊಳ್ಳಬಹುದು.';
   }
@@ -5583,4 +5553,15 @@ class AppL10nKn extends AppL10n {
   @override
   String get paymentsAutoPayMigrationBlocked =>
       'ಒಂದು ಪಾವತಿ ಇನ್ನೂ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿದೆ. ಅದು ಮುಗಿದ ನಂತರ ನೀವು ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಹೊಂದಿಸಬಹುದು.';
+
+  @override
+  String get paymentsAutoPayActivating => 'ಸೆಟಪ್ ಪೂರ್ಣಗೊಳ್ಳುತ್ತಿದೆ';
+
+  @override
+  String get paymentsAutoPayActivatingNote =>
+      'ನಿಮ್ಮ ಬ್ಯಾಂಕ್ ಸ್ವಯಂ-ಡೆಬಿಟ್ ಅನುಮೋದಿಸಿದೆ. ನಾವು ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಆನ್ ಮಾಡುತ್ತಿದ್ದೇವೆ, ಇದಕ್ಕೆ ಸಾಮಾನ್ಯವಾಗಿ ಸುಮಾರು ಒಂದು ನಿಮಿಷ ಬೇಕಾಗುತ್ತದೆ.';
+
+  @override
+  String get walletAutoPayVariableTerms =>
+      'ಕಂಪನಿ ಈ ಮೊತ್ತಗಳನ್ನು ಬದಲಾಯಿಸಬಹುದು, ಆದರೆ ಪ್ರತಿ ಕಡಿತದ ಮಿತಿಗಿಂತ ಹೆಚ್ಚು ಎಂದಿಗೂ ಇಲ್ಲ. ಪ್ರತಿ ಕಡಿತಕ್ಕೂ ಮೊದಲು ನಿಮಗೆ ಸೂಚನೆ ಸಿಗುತ್ತದೆ, ಮತ್ತು ನಿಮ್ಮ UPI ಆ್ಯಪ್‌ನಲ್ಲಿ ಸ್ವಯಂ-ಡೆಬಿಟ್ ರದ್ದುಗೊಳಿಸಬಹುದು.';
 }

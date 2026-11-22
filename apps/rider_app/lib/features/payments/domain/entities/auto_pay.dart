@@ -4,7 +4,7 @@ enum AutoPayState {
   off,
   setupRequired,
   authorizationPending,
-  consentRequired,
+  activationPending,
   mandateActionRequired,
   waitingForAllocation,
   active,
@@ -75,14 +75,11 @@ class AutoRecharge extends Equatable {
 class AutoPay extends Equatable {
   const AutoPay({
     required this.state,
-    required this.revision,
     required this.enabled,
     required this.threshold,
     required this.rechargeAmount,
-    required this.policyRevision,
     required this.leadHours,
     required this.cooldownHours,
-    required this.canEnable,
     required this.canSetUp,
     this.setupLimit,
     this.mandate,
@@ -90,14 +87,11 @@ class AutoPay extends Equatable {
   });
 
   final AutoPayState state;
-  final int revision;
   final bool enabled;
   final num threshold;
   final num rechargeAmount;
-  final int policyRevision;
   final num leadHours;
   final num cooldownHours;
-  final bool canEnable;
   final bool canSetUp;
   final num? setupLimit;
   final AutoPayMandate? mandate;
@@ -107,12 +101,9 @@ class AutoPay extends Equatable {
 
   bool get awaitingApproval => state == AutoPayState.authorizationPending;
 
-  bool get canTurnOn =>
-      canEnable &&
-      mandate?.state == AutoPayMandateState.active &&
-      (state == AutoPayState.off || state == AutoPayState.consentRequired || state == AutoPayState.actionRequired);
+  bool get activating => state == AutoPayState.activationPending;
 
-  bool get needsSetup => awaitingApproval || canTurnOn || canSetUp;
+  bool get needsSetup => awaitingApproval || activating || canSetUp;
 
   bool get isVisible => state != AutoPayState.pausedByClient || enabled || mandate != null || requests.isNotEmpty;
 
@@ -126,14 +117,11 @@ class AutoPay extends Equatable {
   @override
   List<Object?> get props => [
     state,
-    revision,
     enabled,
     threshold,
     rechargeAmount,
-    policyRevision,
     leadHours,
     cooldownHours,
-    canEnable,
     canSetUp,
     setupLimit,
     mandate,

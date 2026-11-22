@@ -39,23 +39,12 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
   Future<Result<AutoPayMandate>> verifyAutoPay(String mandateId) async =>
       (await _autoPay.verifyMandate(mandateId)).map(_mandate);
 
-  @override
-  Future<Result<AutoPay>> turnOnAutoPay({
-    required String mandateId,
-    required int revision,
-    required int consentRevision,
-  }) async => (await _autoPay.enable(
-    mandateId: mandateId,
-    expectedRevision: revision,
-    consentRevision: consentRevision,
-  )).map(_state);
-
   static AutoPay _state(RiderAutoPayDto dto) => AutoPay(
     state: switch (dto.effectiveStatus) {
       'OFF' => AutoPayState.off,
       'SETUP_REQUIRED' => AutoPayState.setupRequired,
       'AUTHORIZATION_PENDING' => AutoPayState.authorizationPending,
-      'CONSENT_REQUIRED' => AutoPayState.consentRequired,
+      'ACTIVATION_PENDING' => AutoPayState.activationPending,
       'MANDATE_ACTION_REQUIRED' => AutoPayState.mandateActionRequired,
       'WAITING_FOR_ALLOCATION' => AutoPayState.waitingForAllocation,
       'ACTIVE' => AutoPayState.active,
@@ -64,14 +53,11 @@ class PaymentsRepositoryImpl implements PaymentsRepository {
       'MIGRATION_BLOCKED' => AutoPayState.migrationBlocked,
       _ => AutoPayState.unknown,
     },
-    revision: dto.revision,
     enabled: dto.enabled,
     threshold: dto.threshold,
     rechargeAmount: dto.rechargeAmount,
-    policyRevision: dto.policyRevision,
     leadHours: dto.minimumLeadHours,
     cooldownHours: dto.cooldownHours,
-    canEnable: dto.canEnable,
     canSetUp: dto.canSetup,
     setupLimit: dto.setupMaxAmount,
     mandate: switch (dto.mandate) {

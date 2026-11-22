@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../wallet/presentation/providers/wallet_provider.dart';
 import '../../domain/entities/auto_pay.dart';
-import '../../domain/usecases/auto_pay_usecases.dart';
 import '../../payments_dependencies.dart';
 
 class AutoPayNotifier extends AsyncNotifier<AutoPay?> {
@@ -29,26 +28,10 @@ class AutoPayNotifier extends AsyncNotifier<AutoPay?> {
     return value;
   }
 
-  Future<Result<AutoPay>> turnOn({
-    required String mandateId,
-    required int revision,
-    required int consentRevision,
-  }) async {
-    final Result<AutoPay> result = await ref.read(turnOnAutoPayProvider)(
-      TurnOnAutoPayParams(mandateId: mandateId, revision: revision, consentRevision: consentRevision),
-    );
-    if (!ref.mounted) return result;
-    if (result case Ok<AutoPay>(:final value)) {
-      _attempt = 0;
-      state = AsyncData(value);
-      _schedule(value);
-    }
-    return result;
-  }
-
   void _schedule(AutoPay? value) {
     _timer?.cancel();
-    if (value?.openRequest?.state.isAwaitingBank != true || _attempt >= _backoff.length) return;
+    final bool waiting = value != null && (value.activating || (value.openRequest?.state.isAwaitingBank ?? false));
+    if (!waiting || _attempt >= _backoff.length) return;
     _timer = Timer(_backoff[_attempt++], _poll);
   }
 

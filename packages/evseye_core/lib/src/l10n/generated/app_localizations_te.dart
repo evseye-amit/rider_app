@@ -5502,37 +5502,10 @@ class AppL10nTe extends AppL10n {
   String get walletAutoPayOff => 'ఆఫ్';
 
   @override
-  String get walletAutoPayTurnOn => 'ఆటో రీఛార్జ్ ఆన్ చేయండి';
-
-  @override
-  String get walletAutoPayReviewTerms => 'కొత్త నిబంధనలు చూడండి';
-
-  @override
-  String get walletAutoPayTurnOff => 'ఆటో రీఛార్జ్ ఆఫ్ చేయండి';
-
-  @override
-  String get walletAutoPayTurnOffTitle => 'ఆటో రీఛార్జ్ ఆఫ్ చేయాలా?';
-
-  @override
-  String get walletAutoPayTurnOffMessage =>
-      'కొత్త ఆటో రీఛార్జ్‌లు ప్రారంభం కావు. ఇప్పటికే బ్యాంక్‌కు పంపిన రీఛార్జ్ ఇంకా పూర్తి కావచ్చు, మరియు మీ ఆటో-డెబిట్ యాక్టివ్‌గానే ఉంటుంది.';
-
-  @override
   String get walletAutoPayTurnedOn => 'ఆటో రీఛార్జ్ ఆన్‌లో ఉంది';
 
   @override
-  String get walletAutoPayTurnedOff => 'ఆటో రీఛార్జ్ ఆఫ్‌లో ఉంది';
-
-  @override
   String get walletAutoPayPolicyOff => 'ఆటో రీఛార్జ్ ప్రస్తుతం నిలిపివేయబడింది. కొత్త రీఛార్జ్‌లు ప్రారంభం కావు.';
-
-  @override
-  String get walletAutoPayTermsChanged =>
-      'ఆటో రీఛార్జ్ నిబంధనలు మారాయి. దీన్ని ఆన్‌లో ఉంచడానికి కొత్త నిబంధనలు చూసి అంగీకరించండి.';
-
-  @override
-  String get walletAutoPayActionRequired =>
-      'మీ చివరి ఆటో రీఛార్జ్ పూర్తి కాలేదు. మీ ఆటో-డెబిట్‌ను తనిఖీ చేసి, ఆటో రీఛార్జ్‌ను మళ్లీ ఆన్ చేయండి.';
 
   @override
   String get walletAutoPayRecent => 'ఇటీవలి ఆటో రీఛార్జ్‌లు';
@@ -5561,9 +5534,6 @@ class AppL10nTe extends AppL10n {
   String get walletAutoPayStatusStopped => 'నిలిపివేయబడింది';
 
   @override
-  String get walletAutoPayConsentTitle => 'ఆటో రీఛార్జ్ ఆన్ చేయండి';
-
-  @override
   String walletAutoPayConsent(String amount, String threshold, String hours, String cooldown) {
     return 'నా దగ్గర యాక్టివ్ స్కూటర్ ఉన్నంత వరకు, నా అందుబాటులో ఉన్న నగదు బ్యాలెన్స్ $threshold కంటే తగ్గినప్పుడు $amount ఆటోమేటిక్‌గా జోడించండి. ప్రతి రీఛార్జ్‌కు నా ఆటో-డెబిట్ మరియు బ్యాంక్ నిర్ధారణ అవసరం, కనీసం $hours గంటల ముందస్తు సమాచారం ఉంటుంది. ఒకేసారి ఒక ఆటో రీఛార్జ్ మాత్రమే పెండింగ్‌లో ఉండవచ్చు, మరియు విజయవంతమైన రీఛార్జ్ తర్వాత $cooldown గంటల లోపు కొత్తది ప్రారంభం కాదు. నేను దీన్ని ఆఫ్ చేసినా లేదా నేనే డబ్బు జోడించినా, బ్యాంక్‌కు పంపిన రీఛార్జ్ పూర్తి కావచ్చు.';
   }
@@ -5590,4 +5560,15 @@ class AppL10nTe extends AppL10n {
   @override
   String get paymentsAutoPayMigrationBlocked =>
       'ఒక చెల్లింపు ఇంకా ప్రాసెస్ అవుతోంది. అది పూర్తయ్యాక మీరు ఆటో రీఛార్జ్ సెట్ చేయవచ్చు.';
+
+  @override
+  String get paymentsAutoPayActivating => 'సెటప్ పూర్తవుతోంది';
+
+  @override
+  String get paymentsAutoPayActivatingNote =>
+      'మీ బ్యాంక్ ఆటో-డెబిట్‌ను ఆమోదించింది. మేము ఆటో రీఛార్జ్‌ను ఆన్ చేస్తున్నాం, దీనికి సాధారణంగా సుమారు ఒక నిమిషం పడుతుంది.';
+
+  @override
+  String get walletAutoPayVariableTerms =>
+      'కంపెనీ ఈ మొత్తాలను మార్చవచ్చు, కానీ ప్రతి కోత పరిమితి కంటే ఎప్పుడూ ఎక్కువ కాదు. ప్రతి కోతకు ముందు మీకు సమాచారం వస్తుంది, మరియు మీ UPI యాప్‌లో ఆటో-డెబిట్‌ను రద్దు చేయవచ్చు.';
 }

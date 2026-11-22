@@ -28,5 +28,3 @@ final getAutoPayProvider = Provider<GetAutoPay>((ref) => GetAutoPay(ref.watch(pa
 final setUpAutoPayProvider = Provider<SetUpAutoPay>((ref) => SetUpAutoPay(ref.watch(paymentsRepositoryProvider)));
 
 final verifyAutoPayProvider = Provider<VerifyAutoPay>((ref) => VerifyAutoPay(ref.watch(paymentsRepositoryProvider)));
-
-final turnOnAutoPayProvider = Provider<TurnOnAutoPay>((ref) => TurnOnAutoPay(ref.watch(paymentsRepositoryProvider)));

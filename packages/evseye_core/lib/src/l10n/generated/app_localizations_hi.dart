@@ -5479,37 +5479,10 @@ class AppL10nHi extends AppL10n {
   String get walletAutoPayOff => 'बंद';
 
   @override
-  String get walletAutoPayTurnOn => 'ऑटो रिचार्ज चालू करें';
-
-  @override
-  String get walletAutoPayReviewTerms => 'नई शर्तें देखें';
-
-  @override
-  String get walletAutoPayTurnOff => 'ऑटो रिचार्ज बंद करें';
-
-  @override
-  String get walletAutoPayTurnOffTitle => 'ऑटो रिचार्ज बंद करें?';
-
-  @override
-  String get walletAutoPayTurnOffMessage =>
-      'कोई नया ऑटो रिचार्ज शुरू नहीं होगा। जो रिचार्ज बैंक को भेजा जा चुका है, वह फिर भी पूरा हो सकता है, और आपका ऑटो-डेबिट चालू रहेगा।';
-
-  @override
   String get walletAutoPayTurnedOn => 'ऑटो रिचार्ज चालू है';
 
   @override
-  String get walletAutoPayTurnedOff => 'ऑटो रिचार्ज बंद है';
-
-  @override
   String get walletAutoPayPolicyOff => 'ऑटो रिचार्ज अभी रुका हुआ है। कोई नया रिचार्ज शुरू नहीं होगा।';
-
-  @override
-  String get walletAutoPayTermsChanged =>
-      'ऑटो रिचार्ज की शर्तें बदल गई हैं। इसे चालू रखने के लिए नई शर्तें देखकर स्वीकार करें।';
-
-  @override
-  String get walletAutoPayActionRequired =>
-      'आपका पिछला ऑटो रिचार्ज पूरा नहीं हुआ। अपना ऑटो-डेबिट जांचें, फिर ऑटो रिचार्ज दोबारा चालू करें।';
 
   @override
   String get walletAutoPayRecent => 'हाल के ऑटो रिचार्ज';
@@ -5538,9 +5511,6 @@ class AppL10nHi extends AppL10n {
   String get walletAutoPayStatusStopped => 'रोका गया';
 
   @override
-  String get walletAutoPayConsentTitle => 'ऑटो रिचार्ज चालू करें';
-
-  @override
   String walletAutoPayConsent(String amount, String threshold, String hours, String cooldown) {
     return 'जब तक मेरे पास सक्रिय स्कूटर है, मेरा उपलब्ध नकद बैलेंस $threshold से कम होने पर $amount अपने आप जोड़ें। हर रिचार्ज के लिए मेरा ऑटो-डेबिट और बैंक की पुष्टि ज़रूरी है, और कम से कम $hours घंटे पहले सूचना दी जाएगी। एक समय में सिर्फ़ एक ऑटो रिचार्ज बाकी रह सकता है, और सफल रिचार्ज के $cooldown घंटे के अंदर नया शुरू नहीं होगा। अगर मैं इसे बंद करूं या खुद पैसे जोड़ूं, तब भी बैंक को भेजा गया रिचार्ज पूरा हो सकता है।';
   }
@@ -5567,4 +5537,15 @@ class AppL10nHi extends AppL10n {
   @override
   String get paymentsAutoPayMigrationBlocked =>
       'एक भुगतान अभी प्रोसेस हो रहा है। उसके पूरा होने के बाद आप ऑटो रिचार्ज सेट कर सकते हैं।';
+
+  @override
+  String get paymentsAutoPayActivating => 'सेटअप पूरा हो रहा है';
+
+  @override
+  String get paymentsAutoPayActivatingNote =>
+      'आपके बैंक ने ऑटो-डेबिट मंज़ूर कर दिया है। हम ऑटो रिचार्ज चालू कर रहे हैं, इसमें आमतौर पर लगभग एक मिनट लगता है।';
+
+  @override
+  String get walletAutoPayVariableTerms =>
+      'कंपनी ये रकम बदल सकती है, लेकिन प्रति कटौती सीमा से ज़्यादा कभी नहीं। हर कटौती से पहले आपको सूचना मिलेगी, और आप अपने UPI ऐप में ऑटो-डेबिट रद्द कर सकते हैं।';
 }

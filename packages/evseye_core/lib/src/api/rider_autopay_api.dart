@@ -59,14 +59,11 @@ class AutoPayRechargeDto {
 class RiderAutoPayDto {
   const RiderAutoPayDto({
     required this.effectiveStatus,
-    required this.revision,
     required this.enabled,
     required this.threshold,
     required this.rechargeAmount,
-    required this.policyRevision,
     required this.minimumLeadHours,
     required this.cooldownHours,
-    required this.canEnable,
     required this.canSetup,
     required this.requests,
     this.setupMaxAmount,
@@ -79,14 +76,11 @@ class RiderAutoPayDto {
     final Map<String, dynamic> mandate = jsonMap(json['mandate']);
     return RiderAutoPayDto(
       effectiveStatus: jsonText(json['effectiveStatus']).toUpperCase(),
-      revision: jsonIntOrNull(json['revision']) ?? 0,
       enabled: jsonBool(json['enabled']),
       threshold: jsonNum(policy['threshold']),
       rechargeAmount: jsonNum(policy['rechargeAmount']),
-      policyRevision: jsonIntOrNull(policy['revision']) ?? 0,
       minimumLeadHours: jsonNum(json['minimumLeadHours']),
       cooldownHours: jsonNum(json['cooldownHours']),
-      canEnable: jsonBool(actions['canEnable']),
       canSetup: jsonBool(actions['canSetup']),
       requests: [for (final Map<String, dynamic> row in jsonMaps(json['requests'])) AutoPayRechargeDto.fromJson(row)],
       setupMaxAmount: jsonNumOrNull(jsonMap(json['setupTerms'])['maxAmount']),
@@ -95,14 +89,11 @@ class RiderAutoPayDto {
   }
 
   final String effectiveStatus;
-  final int revision;
   final bool enabled;
   final num threshold;
   final num rechargeAmount;
-  final int policyRevision;
   final num minimumLeadHours;
   final num cooldownHours;
-  final bool canEnable;
   final bool canSetup;
   final List<AutoPayRechargeDto> requests;
   final num? setupMaxAmount;
@@ -116,8 +107,6 @@ class RiderAutoPayApi {
 
   static const String _base = '/rider-app/autopay';
 
-  static const String _consentVersion = 'unified-autopay-v1';
-
   static RiderAutoPayDto _state(dynamic data) => RiderAutoPayDto.fromJson(jsonMap(data));
 
   static AutoPayMandateDto _mandate(dynamic data) => AutoPayMandateDto.fromJson(jsonMap(data));
@@ -125,22 +114,6 @@ class RiderAutoPayApi {
   static String _mandatePath(String mandateId) => '$_base/mandates/${Uri.encodeComponent(mandateId)}';
 
   Future<Result<RiderAutoPayDto>> current() => _client.get<RiderAutoPayDto>(_base, parse: _state);
-
-  Future<Result<RiderAutoPayDto>> enable({
-    required String mandateId,
-    required int expectedRevision,
-    required int consentRevision,
-  }) => _client.put<RiderAutoPayDto>(
-    _base,
-    body: {
-      'enabled': true,
-      'expectedRevision': expectedRevision,
-      'mandateId': mandateId,
-      'consentRevision': consentRevision,
-      'consentVersion': _consentVersion,
-    },
-    parse: _state,
-  );
 
   Future<Result<AutoPayMandateDto>> setUpMandate({required String email, required String idempotencyKey}) =>
       _client.post<AutoPayMandateDto>(

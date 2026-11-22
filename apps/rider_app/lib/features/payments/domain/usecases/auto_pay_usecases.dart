@@ -11,16 +11,6 @@ class SetUpAutoPayParams {
   final String idempotencyKey;
 }
 
-class TurnOnAutoPayParams {
-  const TurnOnAutoPayParams({required this.mandateId, required this.revision, required this.consentRevision});
-
-  final String mandateId;
-
-  final int revision;
-
-  final int consentRevision;
-}
-
 class GetAutoPay extends UseCase<AutoPay?, NoParams> {
   const GetAutoPay(this._repository);
 
@@ -47,17 +37,4 @@ class VerifyAutoPay extends UseCase<AutoPayMandate, String> {
 
   @override
   Future<Result<AutoPayMandate>> call(String params) => _repository.verifyAutoPay(params);
-}
-
-class TurnOnAutoPay extends UseCase<AutoPay, TurnOnAutoPayParams> {
-  const TurnOnAutoPay(this._repository);
-
-  final PaymentsRepository _repository;
-
-  @override
-  Future<Result<AutoPay>> call(TurnOnAutoPayParams params) => _repository.turnOnAutoPay(
-    mandateId: params.mandateId,
-    revision: params.revision,
-    consentRevision: params.consentRevision,
-  );
 }

@@ -6,7 +6,7 @@ import '../../domain/entities/auto_pay.dart';
 import '../providers/auto_pay_provider.dart';
 import 'auto_pay_enrollment.dart';
 
-String autoPayConsent(AppL10n l10n, AutoPay autoPay) => l10n.walletAutoPayConsent(
+String _termsText(AppL10n l10n, AutoPay autoPay) => l10n.walletAutoPayConsent(
   Fmt.money(autoPay.rechargeAmount),
   Fmt.money(autoPay.threshold),
   Fmt.number(autoPay.leadHours),
@@ -19,7 +19,8 @@ String _stateLabel(AppL10n l10n, AutoPayState state) => switch (state) {
   AutoPayState.off => l10n.walletAutoPayOff,
   AutoPayState.setupRequired => l10n.paymentsAutoPayNotEnabled,
   AutoPayState.authorizationPending => l10n.paymentsAutoPayAuthPending,
-  AutoPayState.consentRequired || AutoPayState.mandateActionRequired => l10n.paymentsAutoPaySetupRequired,
+  AutoPayState.activationPending => l10n.paymentsAutoPayActivating,
+  AutoPayState.mandateActionRequired => l10n.paymentsAutoPaySetupRequired,
   AutoPayState.actionRequired => l10n.paymentsAutoPayFailed,
   AutoPayState.pausedByClient => l10n.paymentsAutoPayPaused,
   AutoPayState.migrationBlocked || AutoPayState.unknown => l10n.walletAutoPayStatusReview,
@@ -27,11 +28,10 @@ String _stateLabel(AppL10n l10n, AutoPayState state) => switch (state) {
 
 StatusTone _stateTone(AutoPayState state) => switch (state) {
   AutoPayState.active => StatusTone.success,
-  AutoPayState.waitingForAllocation => StatusTone.info,
+  AutoPayState.waitingForAllocation || AutoPayState.activationPending => StatusTone.info,
   AutoPayState.off || AutoPayState.setupRequired || AutoPayState.pausedByClient => StatusTone.neutral,
   AutoPayState.actionRequired => StatusTone.danger,
   AutoPayState.authorizationPending ||
-  AutoPayState.consentRequired ||
   AutoPayState.mandateActionRequired ||
   AutoPayState.migrationBlocked ||
   AutoPayState.unknown => StatusTone.warning,
@@ -40,8 +40,9 @@ StatusTone _stateTone(AutoPayState state) => switch (state) {
 String? _stateNote(AppL10n l10n, AutoPay autoPay) => switch (autoPay.state) {
   _ when autoPay.mandate?.cancellationPending ?? false => l10n.paymentsAutoPayCancelPending,
   AutoPayState.pausedByClient => l10n.walletAutoPayPolicyOff,
-  AutoPayState.consentRequired => l10n.walletAutoPayTermsChanged,
-  AutoPayState.actionRequired => l10n.walletAutoPayActionRequired,
+  AutoPayState.activationPending => l10n.paymentsAutoPayActivatingNote,
+  AutoPayState.actionRequired => l10n.paymentsAutoPayAttention,
+  AutoPayState.off when autoPay.mandate?.state == AutoPayMandateState.active => l10n.paymentsAutoPayAttention,
   AutoPayState.migrationBlocked => l10n.paymentsAutoPayMigrationBlocked,
   AutoPayState.mandateActionRequired when !autoPay.canSetUp => l10n.paymentsAutoPayAttention,
   _ => null,
@@ -77,20 +78,7 @@ class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingOb
   Future<void> _setUp(AutoPay autoPay) async {
     final String? email = await _AutoPaySetupSheet.show(context, autoPay: autoPay);
     if (email == null || !mounted) return;
-    await setUpAutoPay(autoPay, email);
-  }
-
-  Future<void> _turnOn(AutoPay autoPay) async {
-    final AppL10n l10n = context.l10n;
-    final bool agreed = await AppDialog.confirm(
-      context,
-      title: l10n.walletAutoPayConsentTitle,
-      message: autoPayConsent(l10n, autoPay),
-      confirmLabel: l10n.walletAutoPayTurnOn,
-      icon: Icons.autorenew_rounded,
-    );
-    if (!agreed || !mounted) return;
-    await turnOnAutoPay(autoPay);
+    await setUpAutoPay(email);
   }
 
   List<Widget> _actions(AppL10n l10n, AutoPay autoPay) {
@@ -110,14 +98,11 @@ class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingOb
           icon: Icons.refresh_rounded,
           onPressed: guard(() => verifyAutoPay(mandate.id)),
         ),
-      ] else if (autoPay.canTurnOn)
-        PrimaryButton(
-          label: autoPay.state == AutoPayState.consentRequired
-              ? l10n.walletAutoPayReviewTerms
-              : l10n.walletAutoPayTurnOn,
-          icon: Icons.autorenew_rounded,
-          loading: autoPayBusy,
-          onPressed: guard(() => _turnOn(autoPay)),
+      ] else if (autoPay.activating && mandate != null)
+        GhostButton(
+          label: l10n.paymentsAutoPayCheckStatus,
+          icon: Icons.refresh_rounded,
+          onPressed: guard(() => verifyAutoPay(mandate.id)),
         )
       else if (autoPay.canSetUp)
         PrimaryButton(
@@ -193,10 +178,15 @@ class AutoPayTerms extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(autoPayConsent(l10n, autoPay), style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5)),
+        Text(_termsText(l10n, autoPay), style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5)),
         const Gap.sm(),
         Text(
           l10n.walletAutoPayCashOnly,
+          style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45, color: AppColors.textMuted),
+        ),
+        const Gap.xs(),
+        Text(
+          l10n.walletAutoPayVariableTerms,
           style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45, color: AppColors.textMuted),
         ),
         if (limit != null && limit > 0) ...[
