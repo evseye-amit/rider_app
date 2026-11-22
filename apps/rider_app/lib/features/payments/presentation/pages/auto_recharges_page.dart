@@ -64,17 +64,10 @@ class _AutoRechargesPageState extends ConsumerState<AutoRechargesPage> {
                       icon: Icons.autorenew_rounded,
                     )
                   else
-                    ModuleCard(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          for (final (int index, AutoRecharge item) in page.items.indexed) ...[
-                            if (index > 0) Divider(color: AppColors.stroke.withValues(alpha: 0.7), height: 1),
-                            _RechargeRow(request: item),
-                          ],
-                        ],
-                      ),
-                    ),
+                    for (final (int index, AutoRecharge item) in page.items.indexed) ...[
+                      if (index > 0) const Gap.md(),
+                      ModuleCard(child: _RechargeRow(request: item)),
+                    ],
                   if (page.hasMore) ...[
                     const Gap.lg(),
                     Center(
@@ -109,23 +102,22 @@ class _RechargeRow extends StatelessWidget {
         : stamp == null
         ? null
         : Fmt.dateTime(stamp);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: Insets.md),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(Fmt.money(request.amount), style: AppText.titleSmall.copyWith(fontSize: 13.5)),
-                if (when != null)
-                  Text(when, style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted)),
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(Fmt.money(request.amount), style: AppText.titleSmall.copyWith(fontSize: 13.5)),
+              if (when != null) ...[
+                const Gap.xs(),
+                Text(when, style: AppText.bodySmall.copyWith(fontSize: 11.5, color: AppColors.textMuted)),
               ],
-            ),
+            ],
           ),
-          StatusChip(label: _label(l10n, request.state), tone: _tone(request.state), dense: true),
-        ],
-      ),
+        ),
+        StatusChip(label: _label(l10n, request.state), tone: _tone(request.state), dense: true),
+      ],
     );
   }
 
