@@ -5,12 +5,12 @@ rider:
   appName: Pink Rider App
   androidApplicationId: com.evsi.evseye.pinkrides.rider.android.stg
   iosBundleId: com.evsi.evseye.pinkrides.rider.ios.stg
-  version: "1.0.1+2"
+  version: "1.0.2+3"
 fleet:
   appName: Pink FM app
   androidApplicationId: com.evsi.evseye.pinkrides.fm.android.stg
   iosBundleId: com.evsi.evseye.pinkrides.fm.ios.stg
-  version: "1.0.1+2"
+  version: "1.0.2+3"
 colors:
   primary: "#F475D0"
   primaryBright: "#F475D0"
