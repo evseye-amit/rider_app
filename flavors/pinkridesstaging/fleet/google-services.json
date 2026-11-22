@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1028074335876",
+    "project_id": "pinkridesstage-dc79c",
+    "storage_bucket": "pinkridesstage-dc79c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028074335876:android:ffa1797020a325d0521cd1",
+        "android_client_info": {
+          "package_name": "com.evsi.evseye.pinkrides.fm.android.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZg7X6O9GcHtDBlqtQ9Iy_SGLqY9jZUhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028074335876:android:733f938d51cf1fa0521cd1",
+        "android_client_info": {
+          "package_name": "com.evsi.evseye.pinkrides.rider.android.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZg7X6O9GcHtDBlqtQ9Iy_SGLqY9jZUhg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

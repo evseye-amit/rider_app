@@ -1,0 +1,22 @@
+companyCode: pinkrides
+supportEmail: support@pinkrides.in
+razorpayName: "Pinkrides"
+rider:
+  appName: Pink Rider App
+  androidApplicationId: com.evsi.evseye.pinkrides.rider.android
+  iosBundleId: com.evsi.evseye.pinkrides.rider.ios
+  version: "1.0.1+2"
+fleet:
+  appName: Pink FM app
+  androidApplicationId: com.evsi.evseye.pinkrides.fm.android
+  iosBundleId: com.evsi.evseye.pinkrides.fm.ios
+  version: "1.0.1+2"
+colors:
+  primary: "#F475D0"
+  primaryBright: "#F475D0"
+  primaryDeep: "#F475D0"
+  primaryWash: "#FDECF8"
+  primaryInk: "#3D0A2C"
+  onInkSecondary: "#6B2453"
+  onInkMuted: "#854070"
+  textOnPrimary: "#3D0A2C"
