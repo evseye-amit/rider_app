@@ -101,7 +101,7 @@ class BillDetail extends Equatable {
     required this.subtotal,
     required this.credit,
     required this.tax,
-    required this.walletPaid,
+    required this.ledgerPaid,
     required this.settlementCredit,
   });
 
@@ -110,11 +110,11 @@ class BillDetail extends Equatable {
   final num subtotal;
   final num credit;
   final num tax;
-  final num walletPaid;
+  final num ledgerPaid;
   final num settlementCredit;
 
   @override
-  List<Object?> get props => [bill, lines, subtotal, credit, tax, walletPaid, settlementCredit];
+  List<Object?> get props => [bill, lines, subtotal, credit, tax, ledgerPaid, settlementCredit];
 }
 
 class LedgerLine extends Equatable {

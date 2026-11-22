@@ -258,7 +258,7 @@ class OnlinePayments {
     }
     if (code == 'WALLET_INACTIVE') {
       await _store.remove(scope, request.slot);
-      return OnlinePaymentError(ActiveLocale.strings.paymentWalletInactive);
+      return OnlinePaymentError(ActiveLocale.strings.paymentLedgerInactive);
     }
     if (failure is ServerFailure && failure.status == 503) return const OnlinePaymentUnavailable();
     if (_unavailableCodes.contains(code)) {

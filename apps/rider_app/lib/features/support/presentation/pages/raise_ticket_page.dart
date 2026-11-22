@@ -39,7 +39,7 @@ class _RaiseTicketPageState extends ConsumerState<RaiseTicketPage> {
   List<_Topic> _topics(BuildContext context) => [
     _Topic(Icons.battery_charging_full_rounded, context.l10n.supportBatteryCharging),
     _Topic(Icons.car_crash_rounded, context.l10n.supportBreakdownRoad),
-    _Topic(Icons.account_balance_wallet_rounded, context.l10n.supportPaymentWallet),
+    _Topic(Icons.menu_book_rounded, context.l10n.supportPaymentLedger),
     _Topic(Icons.badge_rounded, context.l10n.supportDocumentsKyc),
     _Topic(Icons.report_rounded, context.l10n.supportAccidentTheft),
     _Topic(Icons.help_outline_rounded, context.l10n.supportSomethingElse, fillsSubject: false),

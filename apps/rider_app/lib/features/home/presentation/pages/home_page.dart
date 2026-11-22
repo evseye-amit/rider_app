@@ -80,17 +80,17 @@ class HomePage extends ConsumerWidget {
           null => '—',
         },
         caption: context.l10n.homeDepositsHandoverFees,
-        onTapBalance: () => context.push(Routes.wallet),
+        onTapBalance: () => context.push(Routes.ledger),
         actions: [
           StripAction(
             label: context.l10n.homeWithdraw,
             icon: Icons.south_west_rounded,
-            onTap: () => context.push(Routes.wallet),
+            onTap: () => context.push(Routes.ledger),
           ),
           StripAction(
             label: context.l10n.homeHistory,
             icon: Icons.receipt_long_rounded,
-            onTap: () => context.push(Routes.wallet),
+            onTap: () => context.push(Routes.ledger),
           ),
         ],
       ),

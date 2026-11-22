@@ -2,18 +2,18 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../domain/entities/wallet_overview.dart';
-import '../providers/wallet_provider.dart';
-import '../widgets/wallet_widgets.dart';
+import '../../domain/entities/ledger_overview.dart';
+import '../providers/ledger_provider.dart';
+import '../widgets/ledger_widgets.dart';
 
-class WalletStatementPage extends ConsumerStatefulWidget {
-  const WalletStatementPage({super.key});
+class LedgerStatementPage extends ConsumerStatefulWidget {
+  const LedgerStatementPage({super.key});
 
   @override
-  ConsumerState<WalletStatementPage> createState() => _WalletStatementPageState();
+  ConsumerState<LedgerStatementPage> createState() => _LedgerStatementPageState();
 }
 
-class _WalletStatementPageState extends ConsumerState<WalletStatementPage> {
+class _LedgerStatementPageState extends ConsumerState<LedgerStatementPage> {
   static const int _monthsBack = 12;
 
   late final DateTime _latest = _currentMonth();
@@ -35,7 +35,7 @@ class _WalletStatementPageState extends ConsumerState<WalletStatementPage> {
 
   Future<void> _loadMore() async {
     setState(() => _loadingMore = true);
-    final bool loaded = await ref.read(walletStatementProvider(_month).notifier).loadMore();
+    final bool loaded = await ref.read(ledgerStatementProvider(_month).notifier).loadMore();
     if (!mounted) return;
     setState(() => _loadingMore = false);
     if (!loaded) AppSnack.error(context, context.l10n.commonSomethingWentWrongPleaseTry);
@@ -43,12 +43,12 @@ class _WalletStatementPageState extends ConsumerState<WalletStatementPage> {
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<WalletStatementView> statement = ref.watch(walletStatementProvider(_month));
-    final WalletStatementView? value = statement.value;
+    final AsyncValue<LedgerStatementView> statement = ref.watch(ledgerStatementProvider(_month));
+    final LedgerStatementView? value = statement.value;
 
     return AppScaffold(
-      title: context.l10n.walletStatement,
-      subtitle: context.l10n.walletStatementSubtitle,
+      title: context.l10n.ledgerStatement,
+      subtitle: context.l10n.ledgerStatementSubtitle,
       body: Column(
         children: [
           Padding(
@@ -78,12 +78,12 @@ class _WalletStatementPageState extends ConsumerState<WalletStatementPage> {
             child: value == null
                 ? statement.hasError
                       ? EmptyState(
-                          title: context.l10n.walletCouldNotLoadStatement,
+                          title: context.l10n.ledgerCouldNotLoadStatement,
                           message: statement.failureMessage,
                           icon: Icons.cloud_off_rounded,
                           tone: AppColors.danger,
                           actionLabel: context.l10n.commonTryAgain,
-                          onAction: () => ref.invalidate(walletStatementProvider(_month)),
+                          onAction: () => ref.invalidate(ledgerStatementProvider(_month)),
                         )
                       : const PageBody(
                           children: [
@@ -94,7 +94,7 @@ class _WalletStatementPageState extends ConsumerState<WalletStatementPage> {
                         )
                 : RefreshIndicator(
                     onRefresh: () =>
-                        ref.refresh(walletStatementProvider(_month).future).then<void>((_) {}, onError: (_) {}),
+                        ref.refresh(ledgerStatementProvider(_month).future).then<void>((_) {}, onError: (_) {}),
                     color: AppColors.primary,
                     child: PageBody(
                       physics: const AlwaysScrollableScrollPhysics(),
@@ -102,12 +102,12 @@ class _WalletStatementPageState extends ConsumerState<WalletStatementPage> {
                         _Summary(statement: value),
                         const Gap.lg(),
                         ModuleCard(
-                          title: context.l10n.walletTransactions,
+                          title: context.l10n.ledgerTransactions,
                           child: value.lines.isEmpty
                               ? EmptyState(
                                   compact: true,
-                                  title: context.l10n.walletStatementEmpty,
-                                  message: context.l10n.walletStatementEmptyBody,
+                                  title: context.l10n.ledgerStatementEmpty,
+                                  message: context.l10n.ledgerStatementEmptyBody,
                                   icon: Icons.receipt_long_outlined,
                                 )
                               : Column(
@@ -148,24 +148,24 @@ class _WalletStatementPageState extends ConsumerState<WalletStatementPage> {
 class _Summary extends StatelessWidget {
   const _Summary({required this.statement});
 
-  final WalletStatementView statement;
+  final LedgerStatementView statement;
 
   @override
   Widget build(BuildContext context) {
     return ModuleCard(
-      title: context.l10n.walletStatementSummary,
+      title: context.l10n.ledgerStatementSummary,
       leading: const IconTile(icon: Icons.summarize_rounded, solid: true, size: 28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          KeyValueRow(label: context.l10n.walletOpeningBalance, value: Fmt.money(statement.opening, paise: true)),
+          KeyValueRow(label: context.l10n.ledgerOpeningBalance, value: Fmt.money(statement.opening, paise: true)),
           KeyValueRow(
-            label: context.l10n.walletMoneyIn,
+            label: context.l10n.ledgerMoneyIn,
             value: '+${Fmt.money(statement.moneyIn, paise: true)}',
             valueColor: AppColors.mint,
           ),
           KeyValueRow(
-            label: context.l10n.walletMoneyOut,
+            label: context.l10n.ledgerMoneyOut,
             value: '−${Fmt.money(statement.moneyOut, paise: true)}',
             valueColor: AppColors.danger,
           ),
@@ -173,20 +173,20 @@ class _Summary extends StatelessWidget {
           Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
           const SizedBox(height: Insets.xs),
           KeyValueRow(
-            label: context.l10n.walletClosingBalance,
+            label: context.l10n.ledgerClosingBalance,
             value: Fmt.money(statement.closing, paise: true),
             valueStyle: AppText.numeric.copyWith(fontSize: 17),
           ),
           if (statement.depositClosing != 0)
             KeyValueRow(
-              label: context.l10n.walletSecurityDeposit,
+              label: context.l10n.ledgerSecurityDeposit,
               value: Fmt.money(statement.depositClosing, paise: true),
               icon: Icons.savings_rounded,
             ),
           if (statement.reference.isNotEmpty) ...[
             const Gap.sm(),
             Text(
-              context.l10n.walletStatementReference(statement.reference),
+              context.l10n.ledgerStatementReference(statement.reference),
               style: AppText.bodySmall.copyWith(fontSize: 11, color: AppColors.textMuted),
             ),
           ],
@@ -209,14 +209,14 @@ class _StatementRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: Insets.sm + 2),
       child: Row(
         children: [
-          IconTile(icon: walletEntryIcon(line.kind), tone: AppColors.primary, size: 38),
+          IconTile(icon: ledgerEntryIcon(line.kind), tone: AppColors.primary, size: 38),
           const SizedBox(width: Insets.md),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  line.description.isEmpty ? walletEntryLabel(context.l10n, line.kind) : line.description,
+                  line.description.isEmpty ? ledgerEntryLabel(context.l10n, line.kind) : line.description,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppText.titleSmall.copyWith(fontSize: 13.5),
@@ -226,7 +226,7 @@ class _StatementRow extends StatelessWidget {
                   [
                     Fmt.dateTime(line.at),
                     if (line.change != 0 && line.depositChange != 0)
-                      context.l10n.walletDepositMoved(Fmt.money(line.depositChange.abs(), paise: true)),
+                      context.l10n.ledgerDepositMoved(Fmt.money(line.depositChange.abs(), paise: true)),
                   ].join(' · '),
                   style: AppText.bodySmall.copyWith(fontSize: 11.5),
                 ),
@@ -244,7 +244,7 @@ class _StatementRow extends StatelessWidget {
               if (line.reversed) ...[
                 const SizedBox(height: 3),
                 StatusChip(
-                  label: context.l10n.walletStateReversed,
+                  label: context.l10n.ledgerStateReversed,
                   tone: StatusTone.neutral,
                   dense: true,
                   showDot: false,

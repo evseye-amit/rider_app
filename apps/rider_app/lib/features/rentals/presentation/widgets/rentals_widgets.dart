@@ -217,7 +217,7 @@ class BillTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: Insets.sm + 2),
         child: Row(
           children: [
-            const PhotoThumb(photo: BrandPhoto.money, size: 44, radius: 12),
+            const PhotoThumb(photo: BrandPhoto.ledger, size: 44, radius: 12),
             const SizedBox(width: Insets.md),
             Expanded(
               child: Column(
@@ -325,10 +325,10 @@ class BillSheetBody extends ConsumerWidget {
         Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
         const SizedBox(height: Insets.sm),
         KeyValueRow(label: context.l10n.rentalsPaidSoFar, value: Fmt.money(bill.paid, paise: true), dense: true),
-        if (value.walletPaid > 0)
+        if (value.ledgerPaid > 0)
           KeyValueRow(
-            label: context.l10n.rentalsFromWallet,
-            value: Fmt.money(value.walletPaid, paise: true),
+            label: context.l10n.rentalsFromLedger,
+            value: Fmt.money(value.ledgerPaid, paise: true),
             dense: true,
           ),
         if (value.settlementCredit > 0)
@@ -393,7 +393,7 @@ class _BillPayAction extends ConsumerWidget {
           ),
           const Gap.xs(),
           Text(
-            l10n.rentalsPayBillWalletHint,
+            l10n.rentalsPayBillLedgerHint,
             textAlign: TextAlign.center,
             style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.4),
           ),
@@ -505,7 +505,7 @@ class ReceiptTile extends StatelessWidget {
               if (!receipt.confirmed) ...[
                 const SizedBox(height: 3),
                 StatusChip(
-                  label: context.l10n.walletStatePending,
+                  label: context.l10n.ledgerStatePending,
                   tone: StatusTone.warning,
                   dense: true,
                   showDot: false,

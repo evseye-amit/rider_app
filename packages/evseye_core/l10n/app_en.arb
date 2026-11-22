@@ -1301,9 +1301,9 @@
   "@commonVersion": {
     "description": "Version"
   },
-  "commonWallet": "Wallet",
-  "@commonWallet": {
-    "description": "Wallet"
+  "commonLedger": "Ledger",
+  "@commonLedger": {
+    "description": "Ledger"
   },
   "commonWhatHappensNext": "What happens next",
   "@commonWhatHappensNext": {
@@ -4543,9 +4543,9 @@
   "@rentalsDueLater": {
     "description": "Due later"
   },
-  "rentalsFromWallet": "From your wallet",
-  "@rentalsFromWallet": {
-    "description": "From your wallet"
+  "rentalsFromLedger": "From your ledger",
+  "@rentalsFromLedger": {
+    "description": "From your ledger"
   },
   "rentalsInvoiceHistory": "Invoice history",
   "@rentalsInvoiceHistory": {
@@ -5860,9 +5860,9 @@
   "@supportOpenTickets": {
     "description": "Open tickets"
   },
-  "supportPaymentWallet": "Payment or wallet",
-  "@supportPaymentWallet": {
-    "description": "Payment or wallet"
+  "supportPaymentLedger": "Payment or ledger",
+  "@supportPaymentLedger": {
+    "description": "Payment or ledger"
   },
   "supportPdfAttachment": "PDF document",
   "@supportPdfAttachment": {
@@ -6365,20 +6365,20 @@
   "@verifyView": {
     "description": "View"
   },
-  "walletAvailable": "Available",
-  "@walletAvailable": {
+  "ledgerAvailable": "Available",
+  "@ledgerAvailable": {
     "description": "Available"
   },
-  "walletCash": "Cash",
-  "@walletCash": {
+  "ledgerCash": "Cash",
+  "@ledgerCash": {
     "description": "Cash"
   },
-  "walletClosingBalance": "Closing balance",
-  "@walletClosingBalance": {
+  "ledgerClosingBalance": "Closing balance",
+  "@ledgerClosingBalance": {
     "description": "Closing balance"
   },
-  "walletCompletedOn": "Completed {date}",
-  "@walletCompletedOn": {
+  "ledgerCompletedOn": "Completed {date}",
+  "@ledgerCompletedOn": {
     "description": "When a deposit return completed",
     "placeholders": {
       "date": {
@@ -6386,153 +6386,153 @@
       }
     }
   },
-  "walletCouldNotLoadDeposit": "Could not refresh the deposit details",
-  "@walletCouldNotLoadDeposit": {
+  "ledgerCouldNotLoadDeposit": "Could not refresh the deposit details",
+  "@ledgerCouldNotLoadDeposit": {
     "description": "Could not refresh the deposit details"
   },
-  "walletCouldNotLoadReceipt": "Could not load the receipt",
-  "@walletCouldNotLoadReceipt": {
+  "ledgerCouldNotLoadReceipt": "Could not load the receipt",
+  "@ledgerCouldNotLoadReceipt": {
     "description": "Could not load the receipt"
   },
-  "walletCouldNotLoadStatement": "Could not load your statement",
-  "@walletCouldNotLoadStatement": {
+  "ledgerCouldNotLoadStatement": "Could not load your statement",
+  "@ledgerCouldNotLoadStatement": {
     "description": "Could not load your statement"
   },
-  "walletCouldNotLoadWallet": "Could not load your wallet",
-  "@walletCouldNotLoadWallet": {
-    "description": "Could not load your wallet"
+  "ledgerCouldNotLoadLedger": "Could not load your ledger",
+  "@ledgerCouldNotLoadLedger": {
+    "description": "Could not load your ledger"
   },
-  "walletCredits": "Credits",
-  "@walletCredits": {
+  "ledgerCredits": "Credits",
+  "@ledgerCredits": {
     "description": "Credits"
   },
-  "walletDateTime": "Date & time",
-  "@walletDateTime": {
+  "ledgerDateTime": "Date & time",
+  "@ledgerDateTime": {
     "description": "Date & time"
   },
-  "walletDebits": "Debits",
-  "@walletDebits": {
+  "ledgerDebits": "Debits",
+  "@ledgerDebits": {
     "description": "Debits"
   },
-  "walletDeposit": "Deposit",
-  "@walletDeposit": {
+  "ledgerDeposit": "Deposit",
+  "@ledgerDeposit": {
     "description": "Deposit"
   },
-  "walletDepositDeducted": "Deducted",
-  "@walletDepositDeducted": {
+  "ledgerDepositDeducted": "Deducted",
+  "@ledgerDepositDeducted": {
     "description": "Deducted"
   },
-  "walletDepositHeld": "Held",
-  "@walletDepositHeld": {
+  "ledgerDepositHeld": "Held",
+  "@ledgerDepositHeld": {
     "description": "Held"
   },
-  "walletDepositLocked": "Locked for your rental",
-  "@walletDepositLocked": {
+  "ledgerDepositLocked": "Locked for your rental",
+  "@ledgerDepositLocked": {
     "description": "Locked for your rental"
   },
-  "walletDepositMoved": "Deposit {amount}",
-  "@walletDepositMoved": {
-    "description": "Deposit part of a wallet movement",
+  "ledgerDepositMoved": "Deposit {amount}",
+  "@ledgerDepositMoved": {
+    "description": "Deposit part of a ledger movement",
     "placeholders": {
       "amount": {
         "type": "String"
       }
     }
   },
-  "walletDepositPaidIn": "Paid in",
-  "@walletDepositPaidIn": {
+  "ledgerDepositPaidIn": "Paid in",
+  "@ledgerDepositPaidIn": {
     "description": "Paid in"
   },
-  "walletDepositRequired": "Required",
-  "@walletDepositRequired": {
+  "ledgerDepositRequired": "Required",
+  "@ledgerDepositRequired": {
     "description": "Required"
   },
-  "walletDepositReturnedAmount": "Returned",
-  "@walletDepositReturnedAmount": {
+  "ledgerDepositReturnedAmount": "Returned",
+  "@ledgerDepositReturnedAmount": {
     "description": "Returned"
   },
-  "walletDepositReturnedSeparately": "Your deposit comes back separately when you leave.",
-  "@walletDepositReturnedSeparately": {
+  "ledgerDepositReturnedSeparately": "Your deposit comes back separately when you leave.",
+  "@ledgerDepositReturnedSeparately": {
     "description": "Your deposit comes back separately when you leave."
   },
-  "walletDepositReturns": "Returns",
-  "@walletDepositReturns": {
+  "ledgerDepositReturns": "Returns",
+  "@ledgerDepositReturns": {
     "description": "Returns"
   },
-  "walletDepositStatusCancelled": "Cancelled",
-  "@walletDepositStatusCancelled": {
+  "ledgerDepositStatusCancelled": "Cancelled",
+  "@ledgerDepositStatusCancelled": {
     "description": "Cancelled"
   },
-  "walletDepositStatusForfeited": "Forfeited",
-  "@walletDepositStatusForfeited": {
+  "ledgerDepositStatusForfeited": "Forfeited",
+  "@ledgerDepositStatusForfeited": {
     "description": "Forfeited"
   },
-  "walletDepositStatusLocked": "Held for your rental",
-  "@walletDepositStatusLocked": {
+  "ledgerDepositStatusLocked": "Held for your rental",
+  "@ledgerDepositStatusLocked": {
     "description": "Held for your rental"
   },
-  "walletDepositStatusPaid": "Paid",
-  "@walletDepositStatusPaid": {
+  "ledgerDepositStatusPaid": "Paid",
+  "@ledgerDepositStatusPaid": {
     "description": "Paid"
   },
-  "walletDepositStatusPartlyDeducted": "Partly deducted",
-  "@walletDepositStatusPartlyDeducted": {
+  "ledgerDepositStatusPartlyDeducted": "Partly deducted",
+  "@ledgerDepositStatusPartlyDeducted": {
     "description": "Partly deducted"
   },
-  "walletDepositStatusPartlyPaid": "Part paid",
-  "@walletDepositStatusPartlyPaid": {
+  "ledgerDepositStatusPartlyPaid": "Part paid",
+  "@ledgerDepositStatusPartlyPaid": {
     "description": "Part paid"
   },
-  "walletDepositStatusPending": "Awaiting payment",
-  "@walletDepositStatusPending": {
+  "ledgerDepositStatusPending": "Awaiting payment",
+  "@ledgerDepositStatusPending": {
     "description": "Awaiting payment"
   },
-  "walletDepositStatusReturnable": "Ready to return",
-  "@walletDepositStatusReturnable": {
+  "ledgerDepositStatusReturnable": "Ready to return",
+  "@ledgerDepositStatusReturnable": {
     "description": "Ready to return"
   },
-  "walletDepositStatusReturned": "Returned",
-  "@walletDepositStatusReturned": {
+  "ledgerDepositStatusReturned": "Returned",
+  "@ledgerDepositStatusReturned": {
     "description": "Returned"
   },
-  "walletDepositStatusReturnRequested": "Return requested",
-  "@walletDepositStatusReturnRequested": {
+  "ledgerDepositStatusReturnRequested": "Return requested",
+  "@ledgerDepositStatusReturnRequested": {
     "description": "Return requested"
   },
-  "walletDepositToPay": "Still to pay",
-  "@walletDepositToPay": {
+  "ledgerDepositToPay": "Still to pay",
+  "@ledgerDepositToPay": {
     "description": "Still to pay"
   },
-  "walletDestination": "Paid to",
-  "@walletDestination": {
+  "ledgerDestination": "Paid to",
+  "@ledgerDestination": {
     "description": "Paid to"
   },
-  "walletErrorDepositNotFound": "This deposit isn't available.",
-  "@walletErrorDepositNotFound": {
+  "ledgerErrorDepositNotFound": "This deposit isn't available.",
+  "@ledgerErrorDepositNotFound": {
     "description": "This deposit isn't available."
   },
-  "walletErrorNotFound": "Your wallet isn't set up yet.",
-  "@walletErrorNotFound": {
-    "description": "Your wallet isn't set up yet."
+  "ledgerErrorNotFound": "Your ledger isn't set up yet.",
+  "@ledgerErrorNotFound": {
+    "description": "Your ledger isn't set up yet."
   },
-  "walletErrorReceiptNotFound": "This receipt isn't available.",
-  "@walletErrorReceiptNotFound": {
+  "ledgerErrorReceiptNotFound": "This receipt isn't available.",
+  "@ledgerErrorReceiptNotFound": {
     "description": "This receipt isn't available."
   },
-  "walletErrorStatementPeriod": "A statement isn't available for that period.",
-  "@walletErrorStatementPeriod": {
+  "ledgerErrorStatementPeriod": "A statement isn't available for that period.",
+  "@ledgerErrorStatementPeriod": {
     "description": "A statement isn't available for that period."
   },
-  "walletErrorTransactionNotFound": "This transaction isn't available.",
-  "@walletErrorTransactionNotFound": {
+  "ledgerErrorTransactionNotFound": "This transaction isn't available.",
+  "@ledgerErrorTransactionNotFound": {
     "description": "This transaction isn't available."
   },
-  "walletExpiringSoon": "Expiring in 7 days",
-  "@walletExpiringSoon": {
+  "ledgerExpiringSoon": "Expiring in 7 days",
+  "@ledgerExpiringSoon": {
     "description": "Expiring in 7 days"
   },
-  "walletFundedOf": "{funded} of {required}",
-  "@walletFundedOf": {
+  "ledgerFundedOf": "{funded} of {required}",
+  "@ledgerFundedOf": {
     "description": "Deposit paid out of the required amount",
     "placeholders": {
       "funded": {
@@ -6543,108 +6543,108 @@
       }
     }
   },
-  "walletInvoicesSettled": "Bills settled",
-  "@walletInvoicesSettled": {
+  "ledgerInvoicesSettled": "Bills settled",
+  "@ledgerInvoicesSettled": {
     "description": "Bills settled"
   },
-  "walletIssued": "Issued",
-  "@walletIssued": {
+  "ledgerIssued": "Issued",
+  "@ledgerIssued": {
     "description": "Issued"
   },
-  "walletKindAdjustment": "Adjustment",
-  "@walletKindAdjustment": {
+  "ledgerKindAdjustment": "Adjustment",
+  "@ledgerKindAdjustment": {
     "description": "Adjustment"
   },
-  "walletKindDeposit": "Security deposit",
-  "@walletKindDeposit": {
+  "ledgerKindDeposit": "Security deposit",
+  "@ledgerKindDeposit": {
     "description": "Security deposit"
   },
-  "walletKindPayment": "Payment",
-  "@walletKindPayment": {
+  "ledgerKindPayment": "Payment",
+  "@ledgerKindPayment": {
     "description": "Payment"
   },
-  "walletKindPenalty": "Penalty",
-  "@walletKindPenalty": {
+  "ledgerKindPenalty": "Penalty",
+  "@ledgerKindPenalty": {
     "description": "Penalty"
   },
-  "walletKindRefund": "Refund",
-  "@walletKindRefund": {
+  "ledgerKindRefund": "Refund",
+  "@ledgerKindRefund": {
     "description": "Refund"
   },
-  "walletKindRental": "Rent",
-  "@walletKindRental": {
+  "ledgerKindRental": "Rent",
+  "@ledgerKindRental": {
     "description": "Rent"
   },
-  "walletKindReward": "Reward",
-  "@walletKindReward": {
+  "ledgerKindReward": "Reward",
+  "@ledgerKindReward": {
     "description": "Reward"
   },
-  "walletKindService": "Service charge",
-  "@walletKindService": {
+  "ledgerKindService": "Service charge",
+  "@ledgerKindService": {
     "description": "Service charge"
   },
-  "walletKindTopUp": "Money added",
-  "@walletKindTopUp": {
+  "ledgerKindTopUp": "Money added",
+  "@ledgerKindTopUp": {
     "description": "Money added"
   },
-  "walletLedgerWillFillUpAs": "Your ledger will fill up as you ride and earn.",
-  "@walletLedgerWillFillUpAs": {
+  "ledgerWillFillUpAs": "Your ledger will fill up as you ride and earn.",
+  "@ledgerWillFillUpAs": {
     "description": "Your ledger will fill up as you ride and earn."
   },
-  "walletMethod": "Method",
-  "@walletMethod": {
+  "ledgerMethod": "Method",
+  "@ledgerMethod": {
     "description": "Method"
   },
-  "walletMoney": "Your money",
-  "@walletMoney": {
+  "ledgerMoney": "Your money",
+  "@ledgerMoney": {
     "description": "Your money"
   },
-  "walletMoneyIn": "Money in",
-  "@walletMoneyIn": {
+  "ledgerMoneyIn": "Money in",
+  "@ledgerMoneyIn": {
     "description": "Money in"
   },
-  "walletMoneyOut": "Money out",
-  "@walletMoneyOut": {
+  "ledgerMoneyOut": "Money out",
+  "@ledgerMoneyOut": {
     "description": "Money out"
   },
-  "walletNothingMatchesFilterYet": "Nothing matches this filter yet.",
-  "@walletNothingMatchesFilterYet": {
+  "ledgerNothingMatchesFilterYet": "Nothing matches this filter yet.",
+  "@ledgerNothingMatchesFilterYet": {
     "description": "Nothing matches this filter yet."
   },
-  "walletNoTransactionsHere": "No transactions here",
-  "@walletNoTransactionsHere": {
+  "ledgerNoTransactionsHere": "No transactions here",
+  "@ledgerNoTransactionsHere": {
     "description": "No transactions here"
   },
-  "walletOnHold": "on hold",
-  "@walletOnHold": {
+  "ledgerOnHold": "on hold",
+  "@ledgerOnHold": {
     "description": "on hold"
   },
-  "walletOpeningBalance": "Opening balance",
-  "@walletOpeningBalance": {
+  "ledgerOpeningBalance": "Opening balance",
+  "@ledgerOpeningBalance": {
     "description": "Opening balance"
   },
-  "walletPayments": "Payments",
-  "@walletPayments": {
+  "ledgerPayments": "Payments",
+  "@ledgerPayments": {
     "description": "Payments"
   },
-  "walletReceipt": "Receipt",
-  "@walletReceipt": {
+  "ledgerReceipt": "Receipt",
+  "@ledgerReceipt": {
     "description": "Receipt"
   },
-  "walletReceiptNumber": "Receipt number",
-  "@walletReceiptNumber": {
+  "ledgerReceiptNumber": "Receipt number",
+  "@ledgerReceiptNumber": {
     "description": "Receipt number"
   },
-  "walletReferenceId": "Reference ID",
-  "@walletReferenceId": {
+  "ledgerReferenceId": "Reference ID",
+  "@ledgerReferenceId": {
     "description": "Reference ID"
   },
-  "walletRefundable": "Refundable",
-  "@walletRefundable": {
+  "ledgerRefundable": "Refundable",
+  "@ledgerRefundable": {
     "description": "Refundable"
   },
-  "walletRequestedOn": "Requested {date}",
-  "@walletRequestedOn": {
+  "ledgerRequestedOn": "Requested {date}",
+  "@ledgerRequestedOn": {
     "description": "When a deposit return was requested",
     "placeholders": {
       "date": {
@@ -6652,117 +6652,117 @@
       }
     }
   },
-  "walletReturnApproved": "Approved",
-  "@walletReturnApproved": {
+  "ledgerReturnApproved": "Approved",
+  "@ledgerReturnApproved": {
     "description": "Approved"
   },
-  "walletReturnCancelled": "Cancelled",
-  "@walletReturnCancelled": {
+  "ledgerReturnCancelled": "Cancelled",
+  "@ledgerReturnCancelled": {
     "description": "Cancelled"
   },
-  "walletReturnDone": "Returned",
-  "@walletReturnDone": {
+  "ledgerReturnDone": "Returned",
+  "@ledgerReturnDone": {
     "description": "Returned"
   },
-  "walletReturnFailed": "Failed",
-  "@walletReturnFailed": {
+  "ledgerReturnFailed": "Failed",
+  "@ledgerReturnFailed": {
     "description": "Failed"
   },
-  "walletReturnProcessing": "Processing",
-  "@walletReturnProcessing": {
+  "ledgerReturnProcessing": "Processing",
+  "@ledgerReturnProcessing": {
     "description": "Processing"
   },
-  "walletReturnRejected": "Rejected",
-  "@walletReturnRejected": {
+  "ledgerReturnRejected": "Rejected",
+  "@ledgerReturnRejected": {
     "description": "Rejected"
   },
-  "walletReturnRequested": "Requested",
-  "@walletReturnRequested": {
+  "ledgerReturnRequested": "Requested",
+  "@ledgerReturnRequested": {
     "description": "Requested"
   },
-  "walletReturnReview": "Under review",
-  "@walletReturnReview": {
+  "ledgerReturnReview": "Under review",
+  "@ledgerReturnReview": {
     "description": "Under review"
   },
-  "walletRewardExpired": "Reward expired",
-  "@walletRewardExpired": {
+  "ledgerRewardExpired": "Reward expired",
+  "@ledgerRewardExpired": {
     "description": "Reward expired"
   },
-  "walletRewardReversed": "Reward taken back",
-  "@walletRewardReversed": {
+  "ledgerRewardReversed": "Reward taken back",
+  "@ledgerRewardReversed": {
     "description": "Reward taken back"
   },
-  "walletRewardsEarned": "Earned so far",
-  "@walletRewardsEarned": {
+  "ledgerRewardsEarned": "Earned so far",
+  "@ledgerRewardsEarned": {
     "description": "Earned so far"
   },
-  "walletSearchTransactions": "Search transactions",
-  "@walletSearchTransactions": {
+  "ledgerSearchTransactions": "Search transactions",
+  "@ledgerSearchTransactions": {
     "description": "Search transactions"
   },
-  "walletSecurityDeposit": "Security deposit",
-  "@walletSecurityDeposit": {
+  "ledgerSecurityDeposit": "Security deposit",
+  "@ledgerSecurityDeposit": {
     "description": "Security deposit"
   },
-  "walletStateFailed": "Failed",
-  "@walletStateFailed": {
+  "ledgerStateFailed": "Failed",
+  "@ledgerStateFailed": {
     "description": "Failed"
   },
-  "walletStatement": "Statement",
-  "@walletStatement": {
+  "ledgerStatement": "Statement",
+  "@ledgerStatement": {
     "description": "Statement"
   },
-  "walletStatementEmpty": "Nothing this month",
-  "@walletStatementEmpty": {
+  "ledgerStatementEmpty": "Nothing this month",
+  "@ledgerStatementEmpty": {
     "description": "Nothing this month"
   },
-  "walletStatementEmptyBody": "Money that moves in or out of your wallet this month will show up here.",
-  "@walletStatementEmptyBody": {
-    "description": "Money that moves in or out of your wallet this month will show up here."
+  "ledgerStatementEmptyBody": "Money that moves in or out of your ledger this month will show up here.",
+  "@ledgerStatementEmptyBody": {
+    "description": "Money that moves in or out of your ledger this month will show up here."
   },
-  "walletStatementReference": "Statement ref {reference}",
-  "@walletStatementReference": {
-    "description": "Reference code of a wallet statement",
+  "ledgerStatementReference": "Statement ref {reference}",
+  "@ledgerStatementReference": {
+    "description": "Reference code of a ledger statement",
     "placeholders": {
       "reference": {
         "type": "String"
       }
     }
   },
-  "walletStatementSubtitle": "Month by month, with exact money in and out",
-  "@walletStatementSubtitle": {
+  "ledgerStatementSubtitle": "Month by month, with exact money in and out",
+  "@ledgerStatementSubtitle": {
     "description": "Month by month, with exact money in and out"
   },
-  "walletStatementSummary": "This month",
-  "@walletStatementSummary": {
+  "ledgerStatementSummary": "This month",
+  "@ledgerStatementSummary": {
     "description": "This month"
   },
-  "walletStatePending": "Pending",
-  "@walletStatePending": {
+  "ledgerStatePending": "Pending",
+  "@ledgerStatePending": {
     "description": "Pending"
   },
-  "walletStateReversed": "Reversed",
-  "@walletStateReversed": {
+  "ledgerStateReversed": "Reversed",
+  "@ledgerStateReversed": {
     "description": "Reversed"
   },
-  "walletStateSettled": "Settled",
-  "@walletStateSettled": {
+  "ledgerStateSettled": "Settled",
+  "@ledgerStateSettled": {
     "description": "Settled"
   },
-  "walletToBank": "To your bank account",
-  "@walletToBank": {
+  "ledgerToBank": "To your bank account",
+  "@ledgerToBank": {
     "description": "To your bank account"
   },
-  "walletToWallet": "To your wallet",
-  "@walletToWallet": {
-    "description": "To your wallet"
+  "ledgerToLedger": "To your ledger",
+  "@ledgerToLedger": {
+    "description": "To your ledger"
   },
-  "walletTransactions": "Transactions",
-  "@walletTransactions": {
+  "ledgerTransactions": "Transactions",
+  "@ledgerTransactions": {
     "description": "Transactions"
   },
-  "walletViewReceipt": "Receipt",
-  "@walletViewReceipt": {
+  "ledgerViewReceipt": "Receipt",
+  "@ledgerViewReceipt": {
     "description": "Receipt"
   },
   "workPartnerEcommerce": "E-commerce",
@@ -7320,12 +7320,12 @@
       }
     }
   },
-  "walletAddMoney": "Add money",
-  "@walletAddMoney": {
-    "description": "Button and sheet title for adding money to the wallet"
+  "ledgerAddMoney": "Add money",
+  "@ledgerAddMoney": {
+    "description": "Button and sheet title for adding money to the ledger"
   },
-  "walletAddMoneyLimits": "Add between {min} and {max}",
-  "@walletAddMoneyLimits": {
+  "ledgerAddMoneyLimits": "Add between {min} and {max}",
+  "@ledgerAddMoneyLimits": {
     "description": "Allowed top-up range shown under the add money title",
     "placeholders": {
       "min": {
@@ -7336,12 +7336,12 @@
       }
     }
   },
-  "walletAddMoneyAmount": "Amount",
-  "@walletAddMoneyAmount": {
+  "ledgerAddMoneyAmount": "Amount",
+  "@ledgerAddMoneyAmount": {
     "description": "Label for the top-up amount field"
   },
-  "walletAddMoneyInvalidAmount": "Enter an amount between {min} and {max}.",
-  "@walletAddMoneyInvalidAmount": {
+  "ledgerAddMoneyInvalidAmount": "Enter an amount between {min} and {max}.",
+  "@ledgerAddMoneyInvalidAmount": {
     "description": "Error when the top-up amount is outside the allowed range",
     "placeholders": {
       "min": {
@@ -7352,12 +7352,12 @@
       }
     }
   },
-  "walletAddMoneyNonRefundable": "Money you add can be used only for payments in the app. It can't be refunded or withdrawn.",
-  "@walletAddMoneyNonRefundable": {
-    "description": "Note that wallet top-ups are non-refundable and non-withdrawable"
+  "ledgerAddMoneyNonRefundable": "Money you add can be used only for payments in the app. It can't be refunded or withdrawn.",
+  "@ledgerAddMoneyNonRefundable": {
+    "description": "Note that ledger top-ups are non-refundable and non-withdrawable"
   },
-  "walletAddMoneyPay": "Add {amount}",
-  "@walletAddMoneyPay": {
+  "ledgerAddMoneyPay": "Add {amount}",
+  "@ledgerAddMoneyPay": {
     "description": "Button that starts the top-up payment",
     "placeholders": {
       "amount": {
@@ -7365,17 +7365,17 @@
       }
     }
   },
-  "walletAddMoneyDone": "{amount} added to your wallet.",
-  "@walletAddMoneyDone": {
-    "description": "Shown after the wallet top-up succeeds",
+  "ledgerAddMoneyDone": "{amount} added to your ledger.",
+  "@ledgerAddMoneyDone": {
+    "description": "Shown after the ledger top-up succeeds",
     "placeholders": {
       "amount": {
         "type": "String"
       }
     }
   },
-  "walletAddMoneyUnavailable": "Adding money isn't available right now. Please try again later.",
-  "@walletAddMoneyUnavailable": {
+  "ledgerAddMoneyUnavailable": "Adding money isn't available right now. Please try again later.",
+  "@ledgerAddMoneyUnavailable": {
     "description": "Shown when no payment provider is available for top-ups"
   },
   "paymentCheckStatus": "Check payment status",
@@ -7422,9 +7422,9 @@
   "@paymentDiscardFailed": {
     "description": "Unpaid checkout could not be abandoned"
   },
-  "paymentWalletInactive": "Your wallet isn't active right now, so you can't add money. Please contact support.",
-  "@paymentWalletInactive": {
-    "description": "Top-up rejected because the wallet is inactive"
+  "paymentLedgerInactive": "Your ledger isn't active right now, so you can't add money. Please contact support.",
+  "@paymentLedgerInactive": {
+    "description": "Top-up rejected because the ledger is inactive"
   },
   "paymentsPayNow": "Pay {amount} now",
   "@paymentsPayNow": {
@@ -7460,17 +7460,17 @@
       }
     }
   },
-  "rentalsPayBillWalletHint": "Your wallet balance is used first. You pay only the rest.",
-  "@rentalsPayBillWalletHint": {
-    "description": "Bill payment uses the wallet before checkout"
+  "rentalsPayBillLedgerHint": "Your ledger balance is used first. You pay only the rest.",
+  "@rentalsPayBillLedgerHint": {
+    "description": "Bill payment uses the ledger before checkout"
   },
-  "walletAutoPayTitle": "Auto recharge",
-  "@walletAutoPayTitle": {
-    "description": "Wallet auto recharge card title"
+  "ledgerAutoPayTitle": "Auto recharge",
+  "@ledgerAutoPayTitle": {
+    "description": "Ledger auto recharge card title"
   },
-  "walletAutoPaySummary": "Adds {amount} when your cash balance falls below {threshold}.",
-  "@walletAutoPaySummary": {
-    "description": "Wallet auto recharge rule",
+  "ledgerAutoPaySummary": "Adds {amount} when your cash balance falls below {threshold}.",
+  "@ledgerAutoPaySummary": {
+    "description": "Ledger auto recharge rule",
     "placeholders": {
       "amount": {
         "type": "String"
@@ -7480,24 +7480,24 @@
       }
     }
   },
-  "walletAutoPayOff": "Off",
-  "@walletAutoPayOff": {
+  "ledgerAutoPayOff": "Off",
+  "@ledgerAutoPayOff": {
     "description": "Auto recharge is off"
   },
-  "walletAutoPayTurnedOn": "Auto recharge is on",
-  "@walletAutoPayTurnedOn": {
+  "ledgerAutoPayTurnedOn": "Auto recharge is on",
+  "@ledgerAutoPayTurnedOn": {
     "description": "Auto recharge was turned on"
   },
-  "walletAutoPayPolicyOff": "Auto recharge is paused for now. No new recharges will start.",
-  "@walletAutoPayPolicyOff": {
+  "ledgerAutoPayPolicyOff": "Auto recharge is paused for now. No new recharges will start.",
+  "@ledgerAutoPayPolicyOff": {
     "description": "Operator has paused auto recharge"
   },
-  "walletAutoPayRecent": "Recent auto recharges",
-  "@walletAutoPayRecent": {
+  "ledgerAutoPayRecent": "Recent auto recharges",
+  "@ledgerAutoPayRecent": {
     "description": "Heading for auto recharge requests"
   },
-  "walletAutoPayEarliestDebit": "Earliest debit {date}",
-  "@walletAutoPayEarliestDebit": {
+  "ledgerAutoPayEarliestDebit": "Earliest debit {date}",
+  "@ledgerAutoPayEarliestDebit": {
     "description": "Earliest time a pending auto recharge can be debited",
     "placeholders": {
       "date": {
@@ -7505,32 +7505,32 @@
       }
     }
   },
-  "walletAutoPayStatusPreparing": "Preparing",
-  "@walletAutoPayStatusPreparing": {
+  "ledgerAutoPayStatusPreparing": "Preparing",
+  "@ledgerAutoPayStatusPreparing": {
     "description": "Auto recharge is being prepared"
   },
-  "walletAutoPayStatusPending": "Waiting for bank",
-  "@walletAutoPayStatusPending": {
+  "ledgerAutoPayStatusPending": "Waiting for bank",
+  "@ledgerAutoPayStatusPending": {
     "description": "Auto recharge is waiting for the bank"
   },
-  "walletAutoPayStatusConfirming": "Confirming",
-  "@walletAutoPayStatusConfirming": {
+  "ledgerAutoPayStatusConfirming": "Confirming",
+  "@ledgerAutoPayStatusConfirming": {
     "description": "Auto recharge outcome is being confirmed"
   },
-  "walletAutoPayStatusReview": "Under review",
-  "@walletAutoPayStatusReview": {
+  "ledgerAutoPayStatusReview": "Under review",
+  "@ledgerAutoPayStatusReview": {
     "description": "Auto recharge needs a manual check"
   },
-  "walletAutoPayStatusAdded": "Added",
-  "@walletAutoPayStatusAdded": {
+  "ledgerAutoPayStatusAdded": "Added",
+  "@ledgerAutoPayStatusAdded": {
     "description": "Auto recharge money was added"
   },
-  "walletAutoPayStatusStopped": "Stopped",
-  "@walletAutoPayStatusStopped": {
+  "ledgerAutoPayStatusStopped": "Stopped",
+  "@ledgerAutoPayStatusStopped": {
     "description": "Auto recharge was stopped before debit"
   },
-  "walletAutoPayConsent": "While I have an active scooter, automatically add {amount} when my available cash balance falls below {threshold}. Each recharge needs my auto-debit and bank confirmation, with at least {hours} hours' notice. Only one auto recharge can be pending at a time, and a new one won't start within {cooldown} hours of a successful recharge. A recharge already sent to my bank may still complete if I turn this off or add money myself.",
-  "@walletAutoPayConsent": {
+  "ledgerAutoPayConsent": "While I have an active scooter, automatically add {amount} when my available cash balance falls below {threshold}. Each recharge needs my auto-debit and bank confirmation, with at least {hours} hours' notice. Only one auto recharge can be pending at a time, and a new one won't start within {cooldown} hours of a successful recharge. A recharge already sent to my bank may still complete if I turn this off or add money myself.",
+  "@ledgerAutoPayConsent": {
     "description": "Auto recharge consent terms",
     "placeholders": {
       "amount": {
@@ -7547,12 +7547,12 @@
       }
     }
   },
-  "walletAutoPayCashOnly": "Only your cash balance counts. Incentives and security deposit are not included.",
-  "@walletAutoPayCashOnly": {
+  "ledgerAutoPayCashOnly": "Only your cash balance counts. Incentives and security deposit are not included.",
+  "@ledgerAutoPayCashOnly": {
     "description": "Auto recharge threshold uses cash balance only"
   },
-  "walletAutoPayManualNote": "An auto recharge of {amount} is already in progress. If you add money now, that recharge may still complete.",
-  "@walletAutoPayManualNote": {
+  "ledgerAutoPayManualNote": "An auto recharge of {amount} is already in progress. If you add money now, that recharge may still complete.",
+  "@ledgerAutoPayManualNote": {
     "description": "Manual top-up while an auto recharge is pending",
     "placeholders": {
       "amount": {
@@ -7564,7 +7564,7 @@
   "@deploymentAutoPayUpiApp": {
     "description": "Onboarding auto-debit step UPI app note"
   },
-  "deploymentAutoPayIntro": "Auto recharge is required to continue. Your rent is taken from your wallet, and auto recharge keeps it topped up.",
+  "deploymentAutoPayIntro": "Auto recharge is required to continue. Your rent is taken from your ledger, and auto recharge keeps it topped up.",
   "@deploymentAutoPayIntro": {
     "description": "Onboarding auto recharge step intro"
   },
@@ -7578,14 +7578,14 @@
   },
   "paymentsAutoPayActivating": "Finishing setup",
   "@paymentsAutoPayActivating": {
-    "description": "Wallet funding is being turned on after the bank approved the mandate"
+    "description": "Ledger funding is being turned on after the bank approved the mandate"
   },
   "paymentsAutoPayActivatingNote": "Your bank approved the auto-debit. We're turning on auto recharge, which usually takes about a minute.",
   "@paymentsAutoPayActivatingNote": {
     "description": "Explains that auto recharge is being turned on after bank approval"
   },
-  "walletAutoPayVariableTerms": "The company can change these amounts, but never above your per-debit limit. You'll get notice before each debit, and you can cancel the auto-debit in your UPI app.",
-  "@walletAutoPayVariableTerms": {
+  "ledgerAutoPayVariableTerms": "The company can change these amounts, but never above your per-debit limit. You'll get notice before each debit, and you can cancel the auto-debit in your UPI app.",
+  "@ledgerAutoPayVariableTerms": {
     "description": "The company may change auto recharge amounts within the mandate limit"
   }
 }

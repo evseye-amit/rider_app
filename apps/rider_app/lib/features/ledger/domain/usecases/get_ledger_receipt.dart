@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:evseye_core/evseye_core.dart';
 
-import '../wallet_repository.dart';
+import '../ledger_repository.dart';
 
 class ReceiptParams extends Equatable {
   const ReceiptParams({required this.kind, required this.id});
@@ -13,10 +13,10 @@ class ReceiptParams extends Equatable {
   List<Object?> get props => [kind, id];
 }
 
-class GetWalletReceipt extends UseCase<WalletReceipt, ReceiptParams> {
-  const GetWalletReceipt(this._repository);
+class GetLedgerReceipt extends UseCase<WalletReceipt, ReceiptParams> {
+  const GetLedgerReceipt(this._repository);
 
-  final WalletRepository _repository;
+  final LedgerRepository _repository;
 
   @override
   Future<Result<WalletReceipt>> call(ReceiptParams params) => _repository.getReceipt(params.kind, params.id);

@@ -19,7 +19,7 @@ class DeploymentRepositoryImpl implements DeploymentRepository {
       _commercial.acceptOffer(offerId, termsVersion: termsVersion);
 
   @override
-  Future<Result<RiderWallet>> wallet() => _api.riderWallet();
+  Future<Result<RiderWallet>> ledger() => _api.riderWallet();
 
   @override
   Future<Result<DeploymentPayment>> payment(String allocationId) => _api.payment(allocationId);

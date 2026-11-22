@@ -6,7 +6,7 @@ import '../../domain/entities/auto_pay.dart';
 import '../providers/auto_pay_provider.dart';
 import 'auto_pay_enrollment.dart';
 
-String _termsText(AppL10n l10n, AutoPay autoPay) => l10n.walletAutoPayConsent(
+String _termsText(AppL10n l10n, AutoPay autoPay) => l10n.ledgerAutoPayConsent(
   Fmt.money(autoPay.rechargeAmount),
   Fmt.money(autoPay.threshold),
   Fmt.number(autoPay.leadHours),
@@ -16,14 +16,14 @@ String _termsText(AppL10n l10n, AutoPay autoPay) => l10n.walletAutoPayConsent(
 String _stateLabel(AppL10n l10n, AutoPayState state) => switch (state) {
   AutoPayState.active => l10n.paymentsAutoPayActive,
   AutoPayState.waitingForAllocation => l10n.paymentsAutoPayWaitingVehicle,
-  AutoPayState.off => l10n.walletAutoPayOff,
+  AutoPayState.off => l10n.ledgerAutoPayOff,
   AutoPayState.setupRequired => l10n.paymentsAutoPayNotEnabled,
   AutoPayState.authorizationPending => l10n.paymentsAutoPayAuthPending,
   AutoPayState.activationPending => l10n.paymentsAutoPayActivating,
   AutoPayState.mandateActionRequired => l10n.paymentsAutoPaySetupRequired,
   AutoPayState.actionRequired => l10n.paymentsAutoPayFailed,
   AutoPayState.pausedByClient => l10n.paymentsAutoPayPaused,
-  AutoPayState.migrationBlocked || AutoPayState.unknown => l10n.walletAutoPayStatusReview,
+  AutoPayState.migrationBlocked || AutoPayState.unknown => l10n.ledgerAutoPayStatusReview,
 };
 
 StatusTone _stateTone(AutoPayState state) => switch (state) {
@@ -39,7 +39,7 @@ StatusTone _stateTone(AutoPayState state) => switch (state) {
 
 String? _stateNote(AppL10n l10n, AutoPay autoPay) => switch (autoPay.state) {
   _ when autoPay.mandate?.cancellationPending ?? false => l10n.paymentsAutoPayCancelPending,
-  AutoPayState.pausedByClient => l10n.walletAutoPayPolicyOff,
+  AutoPayState.pausedByClient => l10n.ledgerAutoPayPolicyOff,
   AutoPayState.activationPending => l10n.paymentsAutoPayActivatingNote,
   AutoPayState.actionRequired => l10n.paymentsAutoPayAttention,
   AutoPayState.off when autoPay.mandate?.state == AutoPayMandateState.active => l10n.paymentsAutoPayAttention,
@@ -49,13 +49,13 @@ String? _stateNote(AppL10n l10n, AutoPay autoPay) => switch (autoPay.state) {
 };
 
 String _rechargeLabel(AppL10n l10n, AutoRechargeState state) => switch (state) {
-  AutoRechargeState.creating => l10n.walletAutoPayStatusPreparing,
-  AutoRechargeState.pending => l10n.walletAutoPayStatusPending,
-  AutoRechargeState.unknown => l10n.walletAutoPayStatusConfirming,
-  AutoRechargeState.review => l10n.walletAutoPayStatusReview,
-  AutoRechargeState.success => l10n.walletAutoPayStatusAdded,
-  AutoRechargeState.failed => l10n.walletStateFailed,
-  AutoRechargeState.cancelled => l10n.walletAutoPayStatusStopped,
+  AutoRechargeState.creating => l10n.ledgerAutoPayStatusPreparing,
+  AutoRechargeState.pending => l10n.ledgerAutoPayStatusPending,
+  AutoRechargeState.unknown => l10n.ledgerAutoPayStatusConfirming,
+  AutoRechargeState.review => l10n.ledgerAutoPayStatusReview,
+  AutoRechargeState.success => l10n.ledgerAutoPayStatusAdded,
+  AutoRechargeState.failed => l10n.ledgerStateFailed,
+  AutoRechargeState.cancelled => l10n.ledgerAutoPayStatusStopped,
 };
 
 StatusTone _rechargeTone(AutoRechargeState state) => switch (state) {
@@ -130,7 +130,7 @@ class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingOb
     final String? note = _stateNote(l10n, autoPay);
 
     final Widget card = ModuleCard(
-      title: l10n.walletAutoPayTitle,
+      title: l10n.ledgerAutoPayTitle,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -140,7 +140,7 @@ class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingOb
           ),
           const Gap.sm(),
           Text(
-            l10n.walletAutoPaySummary(Fmt.money(autoPay.rechargeAmount), Fmt.money(autoPay.threshold)),
+            l10n.ledgerAutoPaySummary(Fmt.money(autoPay.rechargeAmount), Fmt.money(autoPay.threshold)),
             style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
           ),
           if (mandate != null) const Gap.sm(),
@@ -150,7 +150,7 @@ class _AutoPayCardState extends ConsumerState<AutoPayCard> with WidgetsBindingOb
           if (note != null) ...[const Gap.md(), _AutoPayNote(text: note)],
           if (autoPay.requests.isNotEmpty) ...[
             const Gap.md(),
-            GroupLabel(l10n.walletAutoPayRecent),
+            GroupLabel(l10n.ledgerAutoPayRecent),
             for (final AutoRecharge request in autoPay.requests.take(3)) _RechargeRow(request: request),
           ],
           ..._actions(l10n, autoPay),
@@ -181,12 +181,12 @@ class AutoPayTerms extends StatelessWidget {
         Text(_termsText(l10n, autoPay), style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.5)),
         const Gap.sm(),
         Text(
-          l10n.walletAutoPayCashOnly,
+          l10n.ledgerAutoPayCashOnly,
           style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45, color: AppColors.textMuted),
         ),
         const Gap.xs(),
         Text(
-          l10n.walletAutoPayVariableTerms,
+          l10n.ledgerAutoPayVariableTerms,
           style: AppText.bodySmall.copyWith(fontSize: 12, height: 1.45, color: AppColors.textMuted),
         ),
         if (limit != null && limit > 0) ...[
@@ -209,7 +209,7 @@ class _RechargeRow extends StatelessWidget {
     final DateTime? scheduled = request.scheduledAt;
     final DateTime? stamp = request.completedAt ?? request.createdAt;
     final String? when = request.state.isAwaitingBank && scheduled != null
-        ? l10n.walletAutoPayEarliestDebit(Fmt.dateTime(scheduled))
+        ? l10n.ledgerAutoPayEarliestDebit(Fmt.dateTime(scheduled))
         : stamp == null
         ? null
         : Fmt.dateTime(stamp);

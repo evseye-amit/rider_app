@@ -1,4 +1,4 @@
-abstract final class WalletTopUpLimits {
+abstract final class LedgerTopUpLimits {
   static const int minPaise = 50000;
   static const int maxPaise = 500000;
   static const List<int> presetRupees = [500, 1000, 2000, 5000];

@@ -18,7 +18,7 @@ enum BrandPhoto {
 
   service(BrandArt.service),
 
-  money(BrandArt.wallet);
+  ledger(BrandArt.ledger);
 
   const BrandPhoto(this.art);
 

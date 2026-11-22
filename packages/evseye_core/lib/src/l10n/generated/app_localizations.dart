@@ -1965,11 +1965,11 @@ abstract class AppL10n {
   /// **'Version'**
   String get commonVersion;
 
-  /// Wallet
+  /// Ledger
   ///
   /// In en, this message translates to:
-  /// **'Wallet'**
-  String get commonWallet;
+  /// **'Ledger'**
+  String get commonLedger;
 
   /// What happens next
   ///
@@ -6429,11 +6429,11 @@ abstract class AppL10n {
   /// **'Due later'**
   String get rentalsDueLater;
 
-  /// From your wallet
+  /// From your ledger
   ///
   /// In en, this message translates to:
-  /// **'From your wallet'**
-  String get rentalsFromWallet;
+  /// **'From your ledger'**
+  String get rentalsFromLedger;
 
   /// Invoice history
   ///
@@ -8265,11 +8265,11 @@ abstract class AppL10n {
   /// **'Open tickets'**
   String get supportOpenTickets;
 
-  /// Payment or wallet
+  /// Payment or ledger
   ///
   /// In en, this message translates to:
-  /// **'Payment or wallet'**
-  String get supportPaymentWallet;
+  /// **'Payment or ledger'**
+  String get supportPaymentLedger;
 
   /// PDF document
   ///
@@ -8959,559 +8959,559 @@ abstract class AppL10n {
   ///
   /// In en, this message translates to:
   /// **'Available'**
-  String get walletAvailable;
+  String get ledgerAvailable;
 
   /// Cash
   ///
   /// In en, this message translates to:
   /// **'Cash'**
-  String get walletCash;
+  String get ledgerCash;
 
   /// Closing balance
   ///
   /// In en, this message translates to:
   /// **'Closing balance'**
-  String get walletClosingBalance;
+  String get ledgerClosingBalance;
 
   /// When a deposit return completed
   ///
   /// In en, this message translates to:
   /// **'Completed {date}'**
-  String walletCompletedOn(String date);
+  String ledgerCompletedOn(String date);
 
   /// Could not refresh the deposit details
   ///
   /// In en, this message translates to:
   /// **'Could not refresh the deposit details'**
-  String get walletCouldNotLoadDeposit;
+  String get ledgerCouldNotLoadDeposit;
 
   /// Could not load the receipt
   ///
   /// In en, this message translates to:
   /// **'Could not load the receipt'**
-  String get walletCouldNotLoadReceipt;
+  String get ledgerCouldNotLoadReceipt;
 
   /// Could not load your statement
   ///
   /// In en, this message translates to:
   /// **'Could not load your statement'**
-  String get walletCouldNotLoadStatement;
+  String get ledgerCouldNotLoadStatement;
 
-  /// Could not load your wallet
+  /// Could not load your ledger
   ///
   /// In en, this message translates to:
-  /// **'Could not load your wallet'**
-  String get walletCouldNotLoadWallet;
+  /// **'Could not load your ledger'**
+  String get ledgerCouldNotLoadLedger;
 
   /// Credits
   ///
   /// In en, this message translates to:
   /// **'Credits'**
-  String get walletCredits;
+  String get ledgerCredits;
 
   /// Date & time
   ///
   /// In en, this message translates to:
   /// **'Date & time'**
-  String get walletDateTime;
+  String get ledgerDateTime;
 
   /// Debits
   ///
   /// In en, this message translates to:
   /// **'Debits'**
-  String get walletDebits;
+  String get ledgerDebits;
 
   /// Deposit
   ///
   /// In en, this message translates to:
   /// **'Deposit'**
-  String get walletDeposit;
+  String get ledgerDeposit;
 
   /// Deducted
   ///
   /// In en, this message translates to:
   /// **'Deducted'**
-  String get walletDepositDeducted;
+  String get ledgerDepositDeducted;
 
   /// Held
   ///
   /// In en, this message translates to:
   /// **'Held'**
-  String get walletDepositHeld;
+  String get ledgerDepositHeld;
 
   /// Locked for your rental
   ///
   /// In en, this message translates to:
   /// **'Locked for your rental'**
-  String get walletDepositLocked;
+  String get ledgerDepositLocked;
 
-  /// Deposit part of a wallet movement
+  /// Deposit part of a ledger movement
   ///
   /// In en, this message translates to:
   /// **'Deposit {amount}'**
-  String walletDepositMoved(String amount);
+  String ledgerDepositMoved(String amount);
 
   /// Paid in
   ///
   /// In en, this message translates to:
   /// **'Paid in'**
-  String get walletDepositPaidIn;
+  String get ledgerDepositPaidIn;
 
   /// Required
   ///
   /// In en, this message translates to:
   /// **'Required'**
-  String get walletDepositRequired;
+  String get ledgerDepositRequired;
 
   /// Returned
   ///
   /// In en, this message translates to:
   /// **'Returned'**
-  String get walletDepositReturnedAmount;
+  String get ledgerDepositReturnedAmount;
 
   /// Your deposit comes back separately when you leave.
   ///
   /// In en, this message translates to:
   /// **'Your deposit comes back separately when you leave.'**
-  String get walletDepositReturnedSeparately;
+  String get ledgerDepositReturnedSeparately;
 
   /// Returns
   ///
   /// In en, this message translates to:
   /// **'Returns'**
-  String get walletDepositReturns;
+  String get ledgerDepositReturns;
 
   /// Cancelled
   ///
   /// In en, this message translates to:
   /// **'Cancelled'**
-  String get walletDepositStatusCancelled;
+  String get ledgerDepositStatusCancelled;
 
   /// Forfeited
   ///
   /// In en, this message translates to:
   /// **'Forfeited'**
-  String get walletDepositStatusForfeited;
+  String get ledgerDepositStatusForfeited;
 
   /// Held for your rental
   ///
   /// In en, this message translates to:
   /// **'Held for your rental'**
-  String get walletDepositStatusLocked;
+  String get ledgerDepositStatusLocked;
 
   /// Paid
   ///
   /// In en, this message translates to:
   /// **'Paid'**
-  String get walletDepositStatusPaid;
+  String get ledgerDepositStatusPaid;
 
   /// Partly deducted
   ///
   /// In en, this message translates to:
   /// **'Partly deducted'**
-  String get walletDepositStatusPartlyDeducted;
+  String get ledgerDepositStatusPartlyDeducted;
 
   /// Part paid
   ///
   /// In en, this message translates to:
   /// **'Part paid'**
-  String get walletDepositStatusPartlyPaid;
+  String get ledgerDepositStatusPartlyPaid;
 
   /// Awaiting payment
   ///
   /// In en, this message translates to:
   /// **'Awaiting payment'**
-  String get walletDepositStatusPending;
+  String get ledgerDepositStatusPending;
 
   /// Ready to return
   ///
   /// In en, this message translates to:
   /// **'Ready to return'**
-  String get walletDepositStatusReturnable;
+  String get ledgerDepositStatusReturnable;
 
   /// Returned
   ///
   /// In en, this message translates to:
   /// **'Returned'**
-  String get walletDepositStatusReturned;
+  String get ledgerDepositStatusReturned;
 
   /// Return requested
   ///
   /// In en, this message translates to:
   /// **'Return requested'**
-  String get walletDepositStatusReturnRequested;
+  String get ledgerDepositStatusReturnRequested;
 
   /// Still to pay
   ///
   /// In en, this message translates to:
   /// **'Still to pay'**
-  String get walletDepositToPay;
+  String get ledgerDepositToPay;
 
   /// Paid to
   ///
   /// In en, this message translates to:
   /// **'Paid to'**
-  String get walletDestination;
+  String get ledgerDestination;
 
   /// This deposit isn't available.
   ///
   /// In en, this message translates to:
   /// **'This deposit isn\'t available.'**
-  String get walletErrorDepositNotFound;
+  String get ledgerErrorDepositNotFound;
 
-  /// Your wallet isn't set up yet.
+  /// Your ledger isn't set up yet.
   ///
   /// In en, this message translates to:
-  /// **'Your wallet isn\'t set up yet.'**
-  String get walletErrorNotFound;
+  /// **'Your ledger isn\'t set up yet.'**
+  String get ledgerErrorNotFound;
 
   /// This receipt isn't available.
   ///
   /// In en, this message translates to:
   /// **'This receipt isn\'t available.'**
-  String get walletErrorReceiptNotFound;
+  String get ledgerErrorReceiptNotFound;
 
   /// A statement isn't available for that period.
   ///
   /// In en, this message translates to:
   /// **'A statement isn\'t available for that period.'**
-  String get walletErrorStatementPeriod;
+  String get ledgerErrorStatementPeriod;
 
   /// This transaction isn't available.
   ///
   /// In en, this message translates to:
   /// **'This transaction isn\'t available.'**
-  String get walletErrorTransactionNotFound;
+  String get ledgerErrorTransactionNotFound;
 
   /// Expiring in 7 days
   ///
   /// In en, this message translates to:
   /// **'Expiring in 7 days'**
-  String get walletExpiringSoon;
+  String get ledgerExpiringSoon;
 
   /// Deposit paid out of the required amount
   ///
   /// In en, this message translates to:
   /// **'{funded} of {required}'**
-  String walletFundedOf(String funded, String required);
+  String ledgerFundedOf(String funded, String required);
 
   /// Bills settled
   ///
   /// In en, this message translates to:
   /// **'Bills settled'**
-  String get walletInvoicesSettled;
+  String get ledgerInvoicesSettled;
 
   /// Issued
   ///
   /// In en, this message translates to:
   /// **'Issued'**
-  String get walletIssued;
+  String get ledgerIssued;
 
   /// Adjustment
   ///
   /// In en, this message translates to:
   /// **'Adjustment'**
-  String get walletKindAdjustment;
+  String get ledgerKindAdjustment;
 
   /// Security deposit
   ///
   /// In en, this message translates to:
   /// **'Security deposit'**
-  String get walletKindDeposit;
+  String get ledgerKindDeposit;
 
   /// Payment
   ///
   /// In en, this message translates to:
   /// **'Payment'**
-  String get walletKindPayment;
+  String get ledgerKindPayment;
 
   /// Penalty
   ///
   /// In en, this message translates to:
   /// **'Penalty'**
-  String get walletKindPenalty;
+  String get ledgerKindPenalty;
 
   /// Refund
   ///
   /// In en, this message translates to:
   /// **'Refund'**
-  String get walletKindRefund;
+  String get ledgerKindRefund;
 
   /// Rent
   ///
   /// In en, this message translates to:
   /// **'Rent'**
-  String get walletKindRental;
+  String get ledgerKindRental;
 
   /// Reward
   ///
   /// In en, this message translates to:
   /// **'Reward'**
-  String get walletKindReward;
+  String get ledgerKindReward;
 
   /// Service charge
   ///
   /// In en, this message translates to:
   /// **'Service charge'**
-  String get walletKindService;
+  String get ledgerKindService;
 
   /// Money added
   ///
   /// In en, this message translates to:
   /// **'Money added'**
-  String get walletKindTopUp;
+  String get ledgerKindTopUp;
 
   /// Your ledger will fill up as you ride and earn.
   ///
   /// In en, this message translates to:
   /// **'Your ledger will fill up as you ride and earn.'**
-  String get walletLedgerWillFillUpAs;
+  String get ledgerWillFillUpAs;
 
   /// Method
   ///
   /// In en, this message translates to:
   /// **'Method'**
-  String get walletMethod;
+  String get ledgerMethod;
 
   /// Your money
   ///
   /// In en, this message translates to:
   /// **'Your money'**
-  String get walletMoney;
+  String get ledgerMoney;
 
   /// Money in
   ///
   /// In en, this message translates to:
   /// **'Money in'**
-  String get walletMoneyIn;
+  String get ledgerMoneyIn;
 
   /// Money out
   ///
   /// In en, this message translates to:
   /// **'Money out'**
-  String get walletMoneyOut;
+  String get ledgerMoneyOut;
 
   /// Nothing matches this filter yet.
   ///
   /// In en, this message translates to:
   /// **'Nothing matches this filter yet.'**
-  String get walletNothingMatchesFilterYet;
+  String get ledgerNothingMatchesFilterYet;
 
   /// No transactions here
   ///
   /// In en, this message translates to:
   /// **'No transactions here'**
-  String get walletNoTransactionsHere;
+  String get ledgerNoTransactionsHere;
 
   /// on hold
   ///
   /// In en, this message translates to:
   /// **'on hold'**
-  String get walletOnHold;
+  String get ledgerOnHold;
 
   /// Opening balance
   ///
   /// In en, this message translates to:
   /// **'Opening balance'**
-  String get walletOpeningBalance;
+  String get ledgerOpeningBalance;
 
   /// Payments
   ///
   /// In en, this message translates to:
   /// **'Payments'**
-  String get walletPayments;
+  String get ledgerPayments;
 
   /// Receipt
   ///
   /// In en, this message translates to:
   /// **'Receipt'**
-  String get walletReceipt;
+  String get ledgerReceipt;
 
   /// Receipt number
   ///
   /// In en, this message translates to:
   /// **'Receipt number'**
-  String get walletReceiptNumber;
+  String get ledgerReceiptNumber;
 
   /// Reference ID
   ///
   /// In en, this message translates to:
   /// **'Reference ID'**
-  String get walletReferenceId;
+  String get ledgerReferenceId;
 
   /// Refundable
   ///
   /// In en, this message translates to:
   /// **'Refundable'**
-  String get walletRefundable;
+  String get ledgerRefundable;
 
   /// When a deposit return was requested
   ///
   /// In en, this message translates to:
   /// **'Requested {date}'**
-  String walletRequestedOn(String date);
+  String ledgerRequestedOn(String date);
 
   /// Approved
   ///
   /// In en, this message translates to:
   /// **'Approved'**
-  String get walletReturnApproved;
+  String get ledgerReturnApproved;
 
   /// Cancelled
   ///
   /// In en, this message translates to:
   /// **'Cancelled'**
-  String get walletReturnCancelled;
+  String get ledgerReturnCancelled;
 
   /// Returned
   ///
   /// In en, this message translates to:
   /// **'Returned'**
-  String get walletReturnDone;
+  String get ledgerReturnDone;
 
   /// Failed
   ///
   /// In en, this message translates to:
   /// **'Failed'**
-  String get walletReturnFailed;
+  String get ledgerReturnFailed;
 
   /// Processing
   ///
   /// In en, this message translates to:
   /// **'Processing'**
-  String get walletReturnProcessing;
+  String get ledgerReturnProcessing;
 
   /// Rejected
   ///
   /// In en, this message translates to:
   /// **'Rejected'**
-  String get walletReturnRejected;
+  String get ledgerReturnRejected;
 
   /// Requested
   ///
   /// In en, this message translates to:
   /// **'Requested'**
-  String get walletReturnRequested;
+  String get ledgerReturnRequested;
 
   /// Under review
   ///
   /// In en, this message translates to:
   /// **'Under review'**
-  String get walletReturnReview;
+  String get ledgerReturnReview;
 
   /// Reward expired
   ///
   /// In en, this message translates to:
   /// **'Reward expired'**
-  String get walletRewardExpired;
+  String get ledgerRewardExpired;
 
   /// Reward taken back
   ///
   /// In en, this message translates to:
   /// **'Reward taken back'**
-  String get walletRewardReversed;
+  String get ledgerRewardReversed;
 
   /// Earned so far
   ///
   /// In en, this message translates to:
   /// **'Earned so far'**
-  String get walletRewardsEarned;
+  String get ledgerRewardsEarned;
 
   /// Search transactions
   ///
   /// In en, this message translates to:
   /// **'Search transactions'**
-  String get walletSearchTransactions;
+  String get ledgerSearchTransactions;
 
   /// Security deposit
   ///
   /// In en, this message translates to:
   /// **'Security deposit'**
-  String get walletSecurityDeposit;
+  String get ledgerSecurityDeposit;
 
   /// Failed
   ///
   /// In en, this message translates to:
   /// **'Failed'**
-  String get walletStateFailed;
+  String get ledgerStateFailed;
 
   /// Statement
   ///
   /// In en, this message translates to:
   /// **'Statement'**
-  String get walletStatement;
+  String get ledgerStatement;
 
   /// Nothing this month
   ///
   /// In en, this message translates to:
   /// **'Nothing this month'**
-  String get walletStatementEmpty;
+  String get ledgerStatementEmpty;
 
-  /// Money that moves in or out of your wallet this month will show up here.
+  /// Money that moves in or out of your ledger this month will show up here.
   ///
   /// In en, this message translates to:
-  /// **'Money that moves in or out of your wallet this month will show up here.'**
-  String get walletStatementEmptyBody;
+  /// **'Money that moves in or out of your ledger this month will show up here.'**
+  String get ledgerStatementEmptyBody;
 
-  /// Reference code of a wallet statement
+  /// Reference code of a ledger statement
   ///
   /// In en, this message translates to:
   /// **'Statement ref {reference}'**
-  String walletStatementReference(String reference);
+  String ledgerStatementReference(String reference);
 
   /// Month by month, with exact money in and out
   ///
   /// In en, this message translates to:
   /// **'Month by month, with exact money in and out'**
-  String get walletStatementSubtitle;
+  String get ledgerStatementSubtitle;
 
   /// This month
   ///
   /// In en, this message translates to:
   /// **'This month'**
-  String get walletStatementSummary;
+  String get ledgerStatementSummary;
 
   /// Pending
   ///
   /// In en, this message translates to:
   /// **'Pending'**
-  String get walletStatePending;
+  String get ledgerStatePending;
 
   /// Reversed
   ///
   /// In en, this message translates to:
   /// **'Reversed'**
-  String get walletStateReversed;
+  String get ledgerStateReversed;
 
   /// Settled
   ///
   /// In en, this message translates to:
   /// **'Settled'**
-  String get walletStateSettled;
+  String get ledgerStateSettled;
 
   /// To your bank account
   ///
   /// In en, this message translates to:
   /// **'To your bank account'**
-  String get walletToBank;
+  String get ledgerToBank;
 
-  /// To your wallet
+  /// To your ledger
   ///
   /// In en, this message translates to:
-  /// **'To your wallet'**
-  String get walletToWallet;
+  /// **'To your ledger'**
+  String get ledgerToLedger;
 
   /// Transactions
   ///
   /// In en, this message translates to:
   /// **'Transactions'**
-  String get walletTransactions;
+  String get ledgerTransactions;
 
   /// Receipt
   ///
   /// In en, this message translates to:
   /// **'Receipt'**
-  String get walletViewReceipt;
+  String get ledgerViewReceipt;
 
   /// Work partner type
   ///
@@ -10227,53 +10227,53 @@ abstract class AppL10n {
   /// **'This file is over {size} MB. Pick a smaller one.'**
   String commonFileTooLarge(String size);
 
-  /// Button and sheet title for adding money to the wallet
+  /// Button and sheet title for adding money to the ledger
   ///
   /// In en, this message translates to:
   /// **'Add money'**
-  String get walletAddMoney;
+  String get ledgerAddMoney;
 
   /// Allowed top-up range shown under the add money title
   ///
   /// In en, this message translates to:
   /// **'Add between {min} and {max}'**
-  String walletAddMoneyLimits(String min, String max);
+  String ledgerAddMoneyLimits(String min, String max);
 
   /// Label for the top-up amount field
   ///
   /// In en, this message translates to:
   /// **'Amount'**
-  String get walletAddMoneyAmount;
+  String get ledgerAddMoneyAmount;
 
   /// Error when the top-up amount is outside the allowed range
   ///
   /// In en, this message translates to:
   /// **'Enter an amount between {min} and {max}.'**
-  String walletAddMoneyInvalidAmount(String min, String max);
+  String ledgerAddMoneyInvalidAmount(String min, String max);
 
-  /// Note that wallet top-ups are non-refundable and non-withdrawable
+  /// Note that ledger top-ups are non-refundable and non-withdrawable
   ///
   /// In en, this message translates to:
   /// **'Money you add can be used only for payments in the app. It can\'t be refunded or withdrawn.'**
-  String get walletAddMoneyNonRefundable;
+  String get ledgerAddMoneyNonRefundable;
 
   /// Button that starts the top-up payment
   ///
   /// In en, this message translates to:
   /// **'Add {amount}'**
-  String walletAddMoneyPay(String amount);
+  String ledgerAddMoneyPay(String amount);
 
-  /// Shown after the wallet top-up succeeds
+  /// Shown after the ledger top-up succeeds
   ///
   /// In en, this message translates to:
-  /// **'{amount} added to your wallet.'**
-  String walletAddMoneyDone(String amount);
+  /// **'{amount} added to your ledger.'**
+  String ledgerAddMoneyDone(String amount);
 
   /// Shown when no payment provider is available for top-ups
   ///
   /// In en, this message translates to:
   /// **'Adding money isn\'t available right now. Please try again later.'**
-  String get walletAddMoneyUnavailable;
+  String get ledgerAddMoneyUnavailable;
 
   /// Button that rechecks an unresolved online payment
   ///
@@ -10341,11 +10341,11 @@ abstract class AppL10n {
   /// **'We couldn\'t discard it yet. Check its status first.'**
   String get paymentDiscardFailed;
 
-  /// Top-up rejected because the wallet is inactive
+  /// Top-up rejected because the ledger is inactive
   ///
   /// In en, this message translates to:
-  /// **'Your wallet isn\'t active right now, so you can\'t add money. Please contact support.'**
-  String get paymentWalletInactive;
+  /// **'Your ledger isn\'t active right now, so you can\'t add money. Please contact support.'**
+  String get paymentLedgerInactive;
 
   /// Button that pays all outstanding dues
   ///
@@ -10383,107 +10383,107 @@ abstract class AppL10n {
   /// **'Pay {amount}'**
   String rentalsPayBill(String amount);
 
-  /// Bill payment uses the wallet before checkout
+  /// Bill payment uses the ledger before checkout
   ///
   /// In en, this message translates to:
-  /// **'Your wallet balance is used first. You pay only the rest.'**
-  String get rentalsPayBillWalletHint;
+  /// **'Your ledger balance is used first. You pay only the rest.'**
+  String get rentalsPayBillLedgerHint;
 
-  /// Wallet auto recharge card title
+  /// Ledger auto recharge card title
   ///
   /// In en, this message translates to:
   /// **'Auto recharge'**
-  String get walletAutoPayTitle;
+  String get ledgerAutoPayTitle;
 
-  /// Wallet auto recharge rule
+  /// Ledger auto recharge rule
   ///
   /// In en, this message translates to:
   /// **'Adds {amount} when your cash balance falls below {threshold}.'**
-  String walletAutoPaySummary(String amount, String threshold);
+  String ledgerAutoPaySummary(String amount, String threshold);
 
   /// Auto recharge is off
   ///
   /// In en, this message translates to:
   /// **'Off'**
-  String get walletAutoPayOff;
+  String get ledgerAutoPayOff;
 
   /// Auto recharge was turned on
   ///
   /// In en, this message translates to:
   /// **'Auto recharge is on'**
-  String get walletAutoPayTurnedOn;
+  String get ledgerAutoPayTurnedOn;
 
   /// Operator has paused auto recharge
   ///
   /// In en, this message translates to:
   /// **'Auto recharge is paused for now. No new recharges will start.'**
-  String get walletAutoPayPolicyOff;
+  String get ledgerAutoPayPolicyOff;
 
   /// Heading for auto recharge requests
   ///
   /// In en, this message translates to:
   /// **'Recent auto recharges'**
-  String get walletAutoPayRecent;
+  String get ledgerAutoPayRecent;
 
   /// Earliest time a pending auto recharge can be debited
   ///
   /// In en, this message translates to:
   /// **'Earliest debit {date}'**
-  String walletAutoPayEarliestDebit(String date);
+  String ledgerAutoPayEarliestDebit(String date);
 
   /// Auto recharge is being prepared
   ///
   /// In en, this message translates to:
   /// **'Preparing'**
-  String get walletAutoPayStatusPreparing;
+  String get ledgerAutoPayStatusPreparing;
 
   /// Auto recharge is waiting for the bank
   ///
   /// In en, this message translates to:
   /// **'Waiting for bank'**
-  String get walletAutoPayStatusPending;
+  String get ledgerAutoPayStatusPending;
 
   /// Auto recharge outcome is being confirmed
   ///
   /// In en, this message translates to:
   /// **'Confirming'**
-  String get walletAutoPayStatusConfirming;
+  String get ledgerAutoPayStatusConfirming;
 
   /// Auto recharge needs a manual check
   ///
   /// In en, this message translates to:
   /// **'Under review'**
-  String get walletAutoPayStatusReview;
+  String get ledgerAutoPayStatusReview;
 
   /// Auto recharge money was added
   ///
   /// In en, this message translates to:
   /// **'Added'**
-  String get walletAutoPayStatusAdded;
+  String get ledgerAutoPayStatusAdded;
 
   /// Auto recharge was stopped before debit
   ///
   /// In en, this message translates to:
   /// **'Stopped'**
-  String get walletAutoPayStatusStopped;
+  String get ledgerAutoPayStatusStopped;
 
   /// Auto recharge consent terms
   ///
   /// In en, this message translates to:
   /// **'While I have an active scooter, automatically add {amount} when my available cash balance falls below {threshold}. Each recharge needs my auto-debit and bank confirmation, with at least {hours} hours\' notice. Only one auto recharge can be pending at a time, and a new one won\'t start within {cooldown} hours of a successful recharge. A recharge already sent to my bank may still complete if I turn this off or add money myself.'**
-  String walletAutoPayConsent(String amount, String threshold, String hours, String cooldown);
+  String ledgerAutoPayConsent(String amount, String threshold, String hours, String cooldown);
 
   /// Auto recharge threshold uses cash balance only
   ///
   /// In en, this message translates to:
   /// **'Only your cash balance counts. Incentives and security deposit are not included.'**
-  String get walletAutoPayCashOnly;
+  String get ledgerAutoPayCashOnly;
 
   /// Manual top-up while an auto recharge is pending
   ///
   /// In en, this message translates to:
   /// **'An auto recharge of {amount} is already in progress. If you add money now, that recharge may still complete.'**
-  String walletAutoPayManualNote(String amount);
+  String ledgerAutoPayManualNote(String amount);
 
   /// Onboarding auto-debit step UPI app note
   ///
@@ -10494,7 +10494,7 @@ abstract class AppL10n {
   /// Onboarding auto recharge step intro
   ///
   /// In en, this message translates to:
-  /// **'Auto recharge is required to continue. Your rent is taken from your wallet, and auto recharge keeps it topped up.'**
+  /// **'Auto recharge is required to continue. Your rent is taken from your ledger, and auto recharge keeps it topped up.'**
   String get deploymentAutoPayIntro;
 
   /// Auto recharge is saved and starts once a scooter is allocated
@@ -10509,7 +10509,7 @@ abstract class AppL10n {
   /// **'A payment is still being processed. You can set up auto recharge once it\'s done.'**
   String get paymentsAutoPayMigrationBlocked;
 
-  /// Wallet funding is being turned on after the bank approved the mandate
+  /// Ledger funding is being turned on after the bank approved the mandate
   ///
   /// In en, this message translates to:
   /// **'Finishing setup'**
@@ -10525,7 +10525,7 @@ abstract class AppL10n {
   ///
   /// In en, this message translates to:
   /// **'The company can change these amounts, but never above your per-debit limit. You\'ll get notice before each debit, and you can cancel the auto-debit in your UPI app.'**
-  String get walletAutoPayVariableTerms;
+  String get ledgerAutoPayVariableTerms;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

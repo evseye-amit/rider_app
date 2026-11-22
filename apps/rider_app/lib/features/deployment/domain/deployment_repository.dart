@@ -5,7 +5,7 @@ import 'package:evseye_core/evseye_core.dart';
 abstract interface class DeploymentRepository {
   Future<Result<RiderDeployment>> current();
 
-  Future<Result<RiderWallet>> wallet();
+  Future<Result<RiderWallet>> ledger();
 
   Future<Result<DeploymentPayment>> payment(String allocationId);
 

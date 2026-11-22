@@ -20,6 +20,8 @@ import '../../features/deployment/presentation/pages/training_page.dart';
 import '../../features/deployment/presentation/pages/waiting_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
 import '../../features/home/presentation/widgets/rider_shell.dart';
+import '../../features/ledger/presentation/pages/ledger_page.dart';
+import '../../features/ledger/presentation/pages/ledger_statement_page.dart';
 import '../../features/nearby_hubs/presentation/pages/nearby_hubs_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_flow_page.dart';
 import '../../features/onboarding/presentation/pages/onboarding_preview_page.dart';
@@ -38,8 +40,6 @@ import '../../features/support/presentation/pages/ticket_thread_page.dart';
 import '../../features/vehicle_exchange/presentation/pages/exchange_detail_page.dart';
 import '../../features/vehicle_exchange/presentation/pages/exchanges_page.dart';
 import '../../features/vehicle_exchange/presentation/pages/request_exchange_page.dart';
-import '../../features/wallet/presentation/pages/wallet_page.dart';
-import '../../features/wallet/presentation/pages/wallet_statement_page.dart';
 import 'app_routes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -192,11 +192,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         ],
       ),
       GoRoute(
-        path: Routes.wallet,
-        name: 'wallet',
-        builder: (context, state) => const WalletPage(),
+        path: Routes.ledger,
+        name: 'ledger',
+        builder: (context, state) => const LedgerPage(),
         routes: [
-          GoRoute(path: 'statement', name: 'walletStatement', builder: (context, state) => const WalletStatementPage()),
+          GoRoute(path: 'statement', name: 'ledgerStatement', builder: (context, state) => const LedgerStatementPage()),
         ],
       ),
       GoRoute(

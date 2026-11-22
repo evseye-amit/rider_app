@@ -10,23 +10,23 @@ import '../../../../core/payments/payment_feedback.dart';
 import '../../../../core/payments/payment_flow_provider.dart';
 import '../../../payments/domain/entities/auto_pay.dart';
 import '../../../payments/presentation/providers/auto_pay_provider.dart';
-import '../../domain/entities/wallet_overview.dart';
-import '../../domain/entities/wallet_top_up.dart';
-import '../providers/wallet_provider.dart';
+import '../../domain/entities/ledger_overview.dart';
+import '../../domain/entities/ledger_top_up.dart';
+import '../providers/ledger_provider.dart';
 import '../widgets/add_money_sheet.dart';
 import '../widgets/deposit_sheets.dart';
-import '../widgets/wallet_widgets.dart';
+import '../widgets/ledger_widgets.dart';
 
 enum _Filter { all, credits, debits }
 
-class WalletPage extends ConsumerStatefulWidget {
-  const WalletPage({super.key});
+class LedgerPage extends ConsumerStatefulWidget {
+  const LedgerPage({super.key});
 
   @override
-  ConsumerState<WalletPage> createState() => _WalletPageState();
+  ConsumerState<LedgerPage> createState() => _LedgerPageState();
 }
 
-class _WalletPageState extends ConsumerState<WalletPage> {
+class _LedgerPageState extends ConsumerState<LedgerPage> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
   _Filter _filter = _Filter.all;
@@ -39,8 +39,8 @@ class _WalletPageState extends ConsumerState<WalletPage> {
     super.dispose();
   }
 
-  List<WalletEntry> _apply(List<WalletEntry> all) {
-    final Iterable<WalletEntry> byTab = switch (_filter) {
+  List<LedgerEntry> _apply(List<LedgerEntry> all) {
+    final Iterable<LedgerEntry> byTab = switch (_filter) {
       _Filter.credits => all.where((entry) => entry.isCredit),
       _Filter.debits => all.where((entry) => entry.isDebit),
       _Filter.all => all,
@@ -61,19 +61,19 @@ class _WalletPageState extends ConsumerState<WalletPage> {
     if (paise == null || !mounted) return;
     final OnlinePaymentOutcome? outcome = await ref
         .read(paymentFlowProvider(PaymentSlots.topUp).notifier)
-        .pay(PaymentOrderRequest.topUp(WalletTopUpLimits.wire(paise)), description: l10n.walletAddMoney);
+        .pay(PaymentOrderRequest.topUp(LedgerTopUpLimits.wire(paise)), description: l10n.ledgerAddMoney);
     if (outcome == null || !mounted) return;
     showPaymentOutcome(
       context,
       outcome,
-      unavailable: l10n.walletAddMoneyUnavailable,
-      success: l10n.walletAddMoneyDone(topUpMoney(paise)),
+      unavailable: l10n.ledgerAddMoneyUnavailable,
+      success: l10n.ledgerAddMoneyDone(topUpMoney(paise)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final AsyncValue<WalletOverview> overview = ref.watch(walletOverviewProvider);
+    final AsyncValue<LedgerOverview> overview = ref.watch(ledgerOverviewProvider);
     final PaymentFlowState topUp = ref.watch(paymentFlowProvider(PaymentSlots.topUp));
     final bool canTopUp = ref.watch(canPayOnlineProvider(PaymentPurposes.topUp));
     final num? autoRecharge = switch (ref.watch(autoPayProvider).value?.openRequest) {
@@ -86,54 +86,54 @@ class _WalletPageState extends ConsumerState<WalletPage> {
         backgroundColor: AppColors.canvas,
         body: SafeArea(
           child: EmptyState(
-            title: context.l10n.walletCouldNotLoadWallet,
+            title: context.l10n.ledgerCouldNotLoadLedger,
             message: overview.failureMessage,
             icon: Icons.cloud_off_rounded,
             tone: AppColors.danger,
             actionLabel: context.l10n.commonTryAgain,
-            onAction: () => ref.invalidate(walletOverviewProvider),
+            onAction: () => ref.invalidate(ledgerOverviewProvider),
           ),
         ),
       );
     }
 
-    final WalletOverview? wallet = overview.value;
+    final LedgerOverview? ledger = overview.value;
 
     return HeroScaffold(
       controller: _scrollController,
       onRefresh: () async {
         ref
-          ..invalidate(walletTransactionsProvider)
+          ..invalidate(ledgerTransactionsProvider)
           ..invalidate(autoPayProvider);
         await Future.wait([
-          ref.refreshQuietly(walletOverviewProvider),
+          ref.refreshQuietly(ledgerOverviewProvider),
           if (topUp.notice != null) ref.read(paymentFlowProvider(PaymentSlots.topUp).notifier).check(),
         ]);
       },
-      band: WalletBand(
-        overview: wallet,
+      band: LedgerBand(
+        overview: ledger,
         onAddMoney: canTopUp ? () => _addMoney(autoRecharge) : null,
         addingMoney: topUp.busy,
       ),
-      children: wallet == null ? const [_WalletSkeleton()] : _content(context, wallet, hasNotice: topUp.notice != null),
+      children: ledger == null ? const [_LedgerSkeleton()] : _content(context, ledger, hasNotice: topUp.notice != null),
     );
   }
 
-  List<Widget> _content(BuildContext context, WalletOverview wallet, {required bool hasNotice}) {
+  List<Widget> _content(BuildContext context, LedgerOverview ledger, {required bool hasNotice}) {
     return [
       if (hasNotice) ...[const PaymentNoticeCard(slot: PaymentSlots.topUp), const Gap.lg()],
-      if (wallet.hasRewards) ...[
+      if (ledger.hasRewards) ...[
         ModuleCard(
           title: context.l10n.commonIncentives,
           leading: const IconTile(icon: Icons.emoji_events_rounded, solid: true, size: 28),
           child: Column(
             children: [
-              KeyValueRow(label: context.l10n.walletRewardsEarned, value: Fmt.money(wallet.rewardsEarned)),
-              KeyValueRow(label: context.l10n.walletAvailable, value: Fmt.money(wallet.rewards.available)),
-              if (wallet.rewardsExpiringSoon > 0)
+              KeyValueRow(label: context.l10n.ledgerRewardsEarned, value: Fmt.money(ledger.rewardsEarned)),
+              KeyValueRow(label: context.l10n.ledgerAvailable, value: Fmt.money(ledger.rewards.available)),
+              if (ledger.rewardsExpiringSoon > 0)
                 KeyValueRow(
-                  label: context.l10n.walletExpiringSoon,
-                  value: Fmt.money(wallet.rewardsExpiringSoon),
+                  label: context.l10n.ledgerExpiringSoon,
+                  value: Fmt.money(ledger.rewardsExpiringSoon),
                   valueColor: AppColors.warning,
                   icon: Icons.schedule_rounded,
                 ),
@@ -142,25 +142,25 @@ class _WalletPageState extends ConsumerState<WalletPage> {
         ),
         const Gap.lg(),
       ],
-      if (wallet.hasDeposits) ...[
+      if (ledger.hasDeposits) ...[
         ModuleCard(
-          title: context.l10n.walletSecurityDeposit,
+          title: context.l10n.ledgerSecurityDeposit,
           leading: const IconTile(icon: Icons.savings_rounded, solid: true, size: 28),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              for (final WalletDeposit deposit in wallet.deposits)
-                WalletDepositCard(deposit: deposit, onTap: () => showDepositSheet(context, deposit)),
-              if (wallet.deposits.isEmpty)
-                KeyValueRow(label: context.l10n.commonTotal, value: Fmt.money(wallet.depositBucket.total)),
-              Text(context.l10n.walletDepositReturnedSeparately, style: AppText.bodySmall.copyWith(fontSize: 11.5)),
+              for (final LedgerDeposit deposit in ledger.deposits)
+                LedgerDepositCard(deposit: deposit, onTap: () => showDepositSheet(context, deposit)),
+              if (ledger.deposits.isEmpty)
+                KeyValueRow(label: context.l10n.commonTotal, value: Fmt.money(ledger.depositBucket.total)),
+              Text(context.l10n.ledgerDepositReturnedSeparately, style: AppText.bodySmall.copyWith(fontSize: 11.5)),
             ],
           ),
         ),
         const Gap.lg(),
       ],
       _Transactions(
-        recent: wallet.recentEntries,
+        recent: ledger.recentEntries,
         filter: _filter,
         onFilterChanged: (filter) => setState(() => _filter = filter),
         searchController: _searchController,
@@ -181,36 +181,36 @@ class _Transactions extends ConsumerWidget {
     required this.apply,
   });
 
-  final List<WalletEntry> recent;
+  final List<LedgerEntry> recent;
   final _Filter filter;
   final ValueChanged<_Filter> onFilterChanged;
   final TextEditingController searchController;
   final ValueChanged<String> onQueryChanged;
-  final List<WalletEntry> Function(List<WalletEntry> all) apply;
+  final List<LedgerEntry> Function(List<LedgerEntry> all) apply;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<WalletEntry>> page = ref.watch(walletTransactionsProvider);
-    final List<WalletEntry> all = page.value ?? recent;
-    final List<WalletEntry> shown = apply(all);
+    final AsyncValue<List<LedgerEntry>> page = ref.watch(ledgerTransactionsProvider);
+    final List<LedgerEntry> all = page.value ?? recent;
+    final List<LedgerEntry> shown = apply(all);
     final int credits = all.where((entry) => entry.isCredit).length;
     final int debits = all.where((entry) => entry.isDebit).length;
 
     return ModuleCard(
-      title: context.l10n.walletTransactions,
-      actionLabel: context.l10n.walletStatement,
-      onAction: () => context.push(Routes.walletStatement),
+      title: context.l10n.ledgerTransactions,
+      actionLabel: context.l10n.ledgerStatement,
+      onAction: () => context.push(Routes.ledgerStatement),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppSearchField(
-            hint: context.l10n.walletSearchTransactions,
+            hint: context.l10n.ledgerSearchTransactions,
             controller: searchController,
             onChanged: onQueryChanged,
           ),
           const Gap.md(),
           SegmentedTabs(
-            items: [context.l10n.supportAll, context.l10n.walletCredits, context.l10n.walletDebits],
+            items: [context.l10n.supportAll, context.l10n.ledgerCredits, context.l10n.ledgerDebits],
             selectedIndex: _Filter.values.indexOf(filter),
             counts: {1: credits, 2: debits},
             onChanged: (index) => onFilterChanged(_Filter.values[index]),
@@ -222,19 +222,17 @@ class _Transactions extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: Insets.lg),
               child: ArtBlock(
-                art: BrandArt.wallet,
+                art: BrandArt.ledger,
                 artSize: 130,
-                title: context.l10n.walletNoTransactionsHere,
-                message: all.isEmpty
-                    ? context.l10n.walletLedgerWillFillUpAs
-                    : context.l10n.walletNothingMatchesFilterYet,
+                title: context.l10n.ledgerNoTransactionsHere,
+                message: all.isEmpty ? context.l10n.ledgerWillFillUpAs : context.l10n.ledgerNothingMatchesFilterYet,
               ),
             )
           else
             Column(
               children: [
-                for (final WalletEntry entry in shown) ...[
-                  WalletEntryTile(entry: entry, onTap: () => _openDetail(context, entry)),
+                for (final LedgerEntry entry in shown) ...[
+                  LedgerEntryTile(entry: entry, onTap: () => _openDetail(context, entry)),
                   if (entry != shown.last) Divider(color: AppColors.stroke.withValues(alpha: 0.5), height: 1),
                 ],
               ],
@@ -244,16 +242,16 @@ class _Transactions extends ConsumerWidget {
     );
   }
 
-  Future<void> _openDetail(BuildContext context, WalletEntry entry) => AppSheet.show(
+  Future<void> _openDetail(BuildContext context, LedgerEntry entry) => AppSheet.show(
     context,
-    title: entry.description ?? walletEntryLabel(context.l10n, entry.kind),
+    title: entry.description ?? ledgerEntryLabel(context.l10n, entry.kind),
     subtitle: entry.reference,
-    child: WalletEntryDetailBody(entry: entry),
+    child: LedgerEntryDetailBody(entry: entry),
   );
 }
 
-class _WalletSkeleton extends StatelessWidget {
-  const _WalletSkeleton();
+class _LedgerSkeleton extends StatelessWidget {
+  const _LedgerSkeleton();
 
   @override
   Widget build(BuildContext context) {

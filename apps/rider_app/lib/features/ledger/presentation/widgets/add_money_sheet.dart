@@ -2,7 +2,7 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../domain/entities/wallet_top_up.dart';
+import '../../domain/entities/ledger_top_up.dart';
 
 String topUpMoney(int paise) => Fmt.money(paise / 100, paise: paise % 100 != 0);
 
@@ -13,10 +13,10 @@ class AddMoneySheet extends StatefulWidget {
 
   static Future<int?> show(BuildContext context, {num? pendingAutoRecharge}) => AppSheet.show<int>(
     context,
-    title: context.l10n.walletAddMoney,
-    subtitle: context.l10n.walletAddMoneyLimits(
-      topUpMoney(WalletTopUpLimits.minPaise),
-      topUpMoney(WalletTopUpLimits.maxPaise),
+    title: context.l10n.ledgerAddMoney,
+    subtitle: context.l10n.ledgerAddMoneyLimits(
+      topUpMoney(LedgerTopUpLimits.minPaise),
+      topUpMoney(LedgerTopUpLimits.maxPaise),
     ),
     child: AddMoneySheet(pendingAutoRecharge: pendingAutoRecharge),
   );
@@ -44,12 +44,12 @@ class _AddMoneySheetState extends State<AddMoneySheet> {
   }
 
   void _continue() {
-    final int? paise = WalletTopUpLimits.parsePaise(_amount.text);
-    if (paise == null || !WalletTopUpLimits.allows(paise)) {
+    final int? paise = LedgerTopUpLimits.parsePaise(_amount.text);
+    if (paise == null || !LedgerTopUpLimits.allows(paise)) {
       setState(
-        () => _error = context.l10n.walletAddMoneyInvalidAmount(
-          topUpMoney(WalletTopUpLimits.minPaise),
-          topUpMoney(WalletTopUpLimits.maxPaise),
+        () => _error = context.l10n.ledgerAddMoneyInvalidAmount(
+          topUpMoney(LedgerTopUpLimits.minPaise),
+          topUpMoney(LedgerTopUpLimits.maxPaise),
         ),
       );
       return;
@@ -60,15 +60,15 @@ class _AddMoneySheetState extends State<AddMoneySheet> {
   @override
   Widget build(BuildContext context) {
     final AppL10n l10n = context.l10n;
-    final int? paise = WalletTopUpLimits.parsePaise(_amount.text);
-    final bool valid = paise != null && WalletTopUpLimits.allows(paise);
+    final int? paise = LedgerTopUpLimits.parsePaise(_amount.text);
+    final bool valid = paise != null && LedgerTopUpLimits.allows(paise);
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           AppTextField(
-            label: l10n.walletAddMoneyAmount,
+            label: l10n.ledgerAddMoneyAmount,
             controller: _amount,
             errorText: _error,
             prefixText: '₹ ',
@@ -80,10 +80,10 @@ class _AddMoneySheetState extends State<AddMoneySheet> {
           ),
           const Gap.md(),
           FilterChipBar(
-            items: [for (final int rupees in WalletTopUpLimits.presetRupees) Fmt.money(rupees)],
-            selectedIndex: WalletTopUpLimits.presetRupees.indexWhere((rupees) => rupees * 100 == paise),
+            items: [for (final int rupees in LedgerTopUpLimits.presetRupees) Fmt.money(rupees)],
+            selectedIndex: LedgerTopUpLimits.presetRupees.indexWhere((rupees) => rupees * 100 == paise),
             padding: EdgeInsets.zero,
-            onChanged: (index) => _pick(WalletTopUpLimits.presetRupees[index]),
+            onChanged: (index) => _pick(LedgerTopUpLimits.presetRupees[index]),
           ),
           const Gap.lg(),
           Row(
@@ -93,7 +93,7 @@ class _AddMoneySheetState extends State<AddMoneySheet> {
               const SizedBox(width: Insets.sm),
               Expanded(
                 child: Text(
-                  l10n.walletAddMoneyNonRefundable,
+                  l10n.ledgerAddMoneyNonRefundable,
                   style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
                 ),
               ),
@@ -108,7 +108,7 @@ class _AddMoneySheetState extends State<AddMoneySheet> {
                 const SizedBox(width: Insets.sm),
                 Expanded(
                   child: Text(
-                    l10n.walletAutoPayManualNote(Fmt.money(pending)),
+                    l10n.ledgerAutoPayManualNote(Fmt.money(pending)),
                     style: AppText.bodySmall.copyWith(fontSize: 12.5, height: 1.45),
                   ),
                 ),
@@ -117,7 +117,7 @@ class _AddMoneySheetState extends State<AddMoneySheet> {
           ],
           const Gap.lg(),
           PrimaryButton(
-            label: valid ? l10n.walletAddMoneyPay(topUpMoney(paise)) : l10n.walletAddMoney,
+            label: valid ? l10n.ledgerAddMoneyPay(topUpMoney(paise)) : l10n.ledgerAddMoney,
             icon: Icons.lock_rounded,
             onPressed: _continue,
           ),

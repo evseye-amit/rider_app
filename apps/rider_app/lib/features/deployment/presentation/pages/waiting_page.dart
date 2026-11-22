@@ -55,7 +55,7 @@ class _WaitingPageState extends ConsumerState<WaitingPage> with SingleTickerProv
       DeploymentStatus.fleetRequested => (
         title: '$vehicle is reserved for you',
         message: context.l10n.deploymentFleetManagerPuttingTogetherPayment,
-        art: BrandArt.wallet,
+        art: BrandArt.ledger,
       ),
       DeploymentStatus.paymentPaid => (
         title: context.l10n.deploymentPaymentReceived,

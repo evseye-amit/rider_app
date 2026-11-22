@@ -123,7 +123,7 @@ mixin AutoPayEnrollment<T extends ConsumerStatefulWidget> on ConsumerState<T>, W
     _busy(false);
     if (fresh == null) return;
     if (fresh.isOn) {
-      AppSnack.success(context, l10n.walletAutoPayTurnedOn);
+      AppSnack.success(context, l10n.ledgerAutoPayTurnedOn);
     } else if (fresh.activating) {
       AppSnack.info(context, l10n.paymentsAutoPayActivatingNote);
     }

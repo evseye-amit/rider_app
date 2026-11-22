@@ -195,7 +195,7 @@ class _Terms extends StatelessWidget {
   Widget build(BuildContext context) {
     final AppL10n l10n = context.l10n;
     return ModuleCard(
-      title: l10n.walletAutoPayTitle,
+      title: l10n.ledgerAutoPayTitle,
       leading: const IconTile(icon: Icons.autorenew_rounded, solid: true, size: 28),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

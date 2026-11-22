@@ -1,48 +1,48 @@
 import 'package:equatable/equatable.dart';
 
-enum WalletEntryDirection { credit, debit, unknown }
+enum LedgerEntryDirection { credit, debit, unknown }
 
-enum WalletEntryKind {
-  topUp('TOP_UP', WalletEntryDirection.credit),
-  reward('REWARD', WalletEntryDirection.credit),
-  referralReward('REFERRAL_REWARD', WalletEntryDirection.credit),
-  selfSubmissionReward('SELF_SUBMISSION_REWARD', WalletEntryDirection.credit),
-  refund('REFUND', WalletEntryDirection.credit),
-  securityDepositRefund('SECURITY_DEPOSIT_REFUND', WalletEntryDirection.credit),
-  reversal('REVERSAL', WalletEntryDirection.credit),
-  payment('PAYMENT', WalletEntryDirection.debit),
-  rental('RENTAL', WalletEntryDirection.debit),
-  onboardingFee('ONBOARDING_FEE', WalletEntryDirection.debit),
-  securityDeposit('SECURITY_DEPOSIT', WalletEntryDirection.debit),
-  securityDepositDeduction('SECURITY_DEPOSIT_DEDUCTION', WalletEntryDirection.debit),
-  securityDepositForfeiture('SECURITY_DEPOSIT_FORFEITURE', WalletEntryDirection.debit),
-  penalty('PENALTY', WalletEntryDirection.debit),
-  repairCharge('REPAIR_CHARGE', WalletEntryDirection.debit),
-  serviceCharge('SERVICE_CHARGE', WalletEntryDirection.debit),
-  batteryCharge('BATTERY_CHARGE', WalletEntryDirection.debit),
-  swapCharge('SWAP_CHARGE', WalletEntryDirection.debit),
-  exchangeFee('EXCHANGE_FEE', WalletEntryDirection.debit),
-  trafficChallan('TRAFFIC_CHALLAN', WalletEntryDirection.debit),
-  accessoryCharge('ACCESSORY_CHARGE', WalletEntryDirection.debit),
-  lostEquipmentCharge('LOST_EQUIPMENT_CHARGE', WalletEntryDirection.debit),
-  adjustment('ADJUSTMENT', WalletEntryDirection.unknown),
-  unknown('', WalletEntryDirection.unknown);
+enum LedgerEntryKind {
+  topUp('TOP_UP', LedgerEntryDirection.credit),
+  reward('REWARD', LedgerEntryDirection.credit),
+  referralReward('REFERRAL_REWARD', LedgerEntryDirection.credit),
+  selfSubmissionReward('SELF_SUBMISSION_REWARD', LedgerEntryDirection.credit),
+  refund('REFUND', LedgerEntryDirection.credit),
+  securityDepositRefund('SECURITY_DEPOSIT_REFUND', LedgerEntryDirection.credit),
+  reversal('REVERSAL', LedgerEntryDirection.credit),
+  payment('PAYMENT', LedgerEntryDirection.debit),
+  rental('RENTAL', LedgerEntryDirection.debit),
+  onboardingFee('ONBOARDING_FEE', LedgerEntryDirection.debit),
+  securityDeposit('SECURITY_DEPOSIT', LedgerEntryDirection.debit),
+  securityDepositDeduction('SECURITY_DEPOSIT_DEDUCTION', LedgerEntryDirection.debit),
+  securityDepositForfeiture('SECURITY_DEPOSIT_FORFEITURE', LedgerEntryDirection.debit),
+  penalty('PENALTY', LedgerEntryDirection.debit),
+  repairCharge('REPAIR_CHARGE', LedgerEntryDirection.debit),
+  serviceCharge('SERVICE_CHARGE', LedgerEntryDirection.debit),
+  batteryCharge('BATTERY_CHARGE', LedgerEntryDirection.debit),
+  swapCharge('SWAP_CHARGE', LedgerEntryDirection.debit),
+  exchangeFee('EXCHANGE_FEE', LedgerEntryDirection.debit),
+  trafficChallan('TRAFFIC_CHALLAN', LedgerEntryDirection.debit),
+  accessoryCharge('ACCESSORY_CHARGE', LedgerEntryDirection.debit),
+  lostEquipmentCharge('LOST_EQUIPMENT_CHARGE', LedgerEntryDirection.debit),
+  adjustment('ADJUSTMENT', LedgerEntryDirection.unknown),
+  unknown('', LedgerEntryDirection.unknown);
 
-  const WalletEntryKind(this.wire, this.direction);
+  const LedgerEntryKind(this.wire, this.direction);
 
   final String wire;
-  final WalletEntryDirection direction;
+  final LedgerEntryDirection direction;
 
-  static WalletEntryKind parse(String? value) =>
-      WalletEntryKind.values.firstWhere((kind) => kind.wire == value, orElse: () => WalletEntryKind.unknown);
+  static LedgerEntryKind parse(String? value) =>
+      LedgerEntryKind.values.firstWhere((kind) => kind.wire == value, orElse: () => LedgerEntryKind.unknown);
 }
 
-enum WalletEntryState { settled, pending, failed, reversed }
+enum LedgerEntryState { settled, pending, failed, reversed }
 
-class WalletMoney extends Equatable {
-  const WalletMoney({required this.total, required this.held, required this.available});
+class LedgerMoney extends Equatable {
+  const LedgerMoney({required this.total, required this.held, required this.available});
 
-  static const WalletMoney zero = WalletMoney(total: 0, held: 0, available: 0);
+  static const LedgerMoney zero = LedgerMoney(total: 0, held: 0, available: 0);
 
   final num total;
   final num held;
@@ -52,10 +52,10 @@ class WalletMoney extends Equatable {
   List<Object?> get props => [total, held, available];
 }
 
-enum WalletEntryOrigin { rewardExpiry, rewardReversal, other }
+enum LedgerEntryOrigin { rewardExpiry, rewardReversal, other }
 
-class WalletEntry extends Equatable {
-  const WalletEntry({
+class LedgerEntry extends Equatable {
+  const LedgerEntry({
     required this.id,
     required this.reference,
     required this.kind,
@@ -69,25 +69,25 @@ class WalletEntry extends Equatable {
 
   final String id;
   final String reference;
-  final WalletEntryKind kind;
-  final WalletEntryState state;
+  final LedgerEntryKind kind;
+  final LedgerEntryState state;
   final num amount;
   final DateTime at;
   final String? description;
   final String? referenceType;
   final String? referenceId;
 
-  WalletEntryOrigin get origin => switch (referenceType) {
-    'REWARD_EXPIRY' => WalletEntryOrigin.rewardExpiry,
-    'REWARD_REVERSAL' => WalletEntryOrigin.rewardReversal,
-    _ => WalletEntryOrigin.other,
+  LedgerEntryOrigin get origin => switch (referenceType) {
+    'REWARD_EXPIRY' => LedgerEntryOrigin.rewardExpiry,
+    'REWARD_REVERSAL' => LedgerEntryOrigin.rewardReversal,
+    _ => LedgerEntryOrigin.other,
   };
 
-  WalletEntryDirection get direction => origin == WalletEntryOrigin.other ? kind.direction : WalletEntryDirection.debit;
+  LedgerEntryDirection get direction => origin == LedgerEntryOrigin.other ? kind.direction : LedgerEntryDirection.debit;
 
-  bool get isCredit => direction == WalletEntryDirection.credit;
+  bool get isCredit => direction == LedgerEntryDirection.credit;
 
-  bool get isDebit => direction == WalletEntryDirection.debit;
+  bool get isDebit => direction == LedgerEntryDirection.debit;
 
   @override
   List<Object?> get props => [id, reference, kind, state, amount, at, description, referenceType, referenceId];
@@ -98,7 +98,7 @@ class DepositReturn extends Equatable {
     required this.id,
     required this.amount,
     required this.status,
-    required this.toWallet,
+    required this.toLedger,
     required this.requestedAt,
     required this.returned,
     this.completedAt,
@@ -107,17 +107,17 @@ class DepositReturn extends Equatable {
   final String id;
   final num amount;
   final String status;
-  final bool toWallet;
+  final bool toLedger;
   final DateTime requestedAt;
   final bool returned;
   final DateTime? completedAt;
 
   @override
-  List<Object?> get props => [id, amount, status, toWallet, requestedAt, returned, completedAt];
+  List<Object?> get props => [id, amount, status, toLedger, requestedAt, returned, completedAt];
 }
 
-class WalletDeposit extends Equatable {
-  const WalletDeposit({
+class LedgerDeposit extends Equatable {
+  const LedgerDeposit({
     required this.id,
     required this.status,
     required this.required_,
@@ -175,7 +175,7 @@ class StatementLine extends Equatable {
 
   final String id;
   final String number;
-  final WalletEntryKind kind;
+  final LedgerEntryKind kind;
   final String description;
   final DateTime at;
   final num change;
@@ -186,8 +186,8 @@ class StatementLine extends Equatable {
   List<Object?> get props => [id, number, kind, description, at, change, depositChange, reversed];
 }
 
-class WalletStatementView extends Equatable {
-  const WalletStatementView({
+class LedgerStatementView extends Equatable {
+  const LedgerStatementView({
     required this.reference,
     required this.opening,
     required this.moneyIn,
@@ -213,8 +213,8 @@ class WalletStatementView extends Equatable {
   List<Object?> get props => [reference, opening, moneyIn, moneyOut, closing, depositClosing, lines, total];
 }
 
-class WalletOverview extends Equatable {
-  const WalletOverview({
+class LedgerOverview extends Equatable {
+  const LedgerOverview({
     required this.currency,
     required this.spendable,
     required this.cash,
@@ -227,14 +227,14 @@ class WalletOverview extends Equatable {
   });
 
   final String currency;
-  final WalletMoney spendable;
-  final WalletMoney cash;
-  final WalletMoney rewards;
-  final WalletMoney depositBucket;
+  final LedgerMoney spendable;
+  final LedgerMoney cash;
+  final LedgerMoney rewards;
+  final LedgerMoney depositBucket;
   final num rewardsEarned;
   final num rewardsExpiringSoon;
-  final List<WalletDeposit> deposits;
-  final List<WalletEntry> recentEntries;
+  final List<LedgerDeposit> deposits;
+  final List<LedgerEntry> recentEntries;
 
   bool get hasRewards => rewards.total > 0 || rewardsEarned > 0;
 

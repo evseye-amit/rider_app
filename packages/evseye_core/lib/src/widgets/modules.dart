@@ -295,7 +295,7 @@ class BalanceStrip extends StatelessWidget {
                               borderRadius: BorderRadius.circular(7),
                             ),
                             child: Icon(
-                              Icons.account_balance_wallet_rounded,
+                              Icons.menu_book_rounded,
                               size: 13,
                               color: tone,
                             ),

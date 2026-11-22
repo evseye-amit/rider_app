@@ -14,7 +14,7 @@ class HomeRepositoryImpl implements HomeRepository {
   @override
   Future<Result<HomeSummary>> getSummary() async {
     final (
-      Result<RiderWallet> wallet,
+      Result<RiderWallet> ledger,
       Result<RiderHomeDto> home,
       Result<PaymentsHome> payments,
       Result<SubmissionPenaltySummaryDto> penalties,
@@ -24,7 +24,7 @@ class HomeRepositoryImpl implements HomeRepository {
       _payments.home(),
       _penalties.summary(),
     ).wait;
-    if (home case Err<RiderHomeDto>(:final failure) when payments.isErr && wallet.isErr) return Result.err(failure);
+    if (home case Err<RiderHomeDto>(:final failure) when payments.isErr && ledger.isErr) return Result.err(failure);
 
     final RiderHomeDto? stats = home.valueOrNull;
     final PaymentsHome? dues = payments.valueOrNull;
@@ -40,7 +40,7 @@ class HomeRepositoryImpl implements HomeRepository {
         },
         rentOverdue: _atLeastZero((dues?.overdueAmount ?? 0) - damageDue),
         rentDueDate: dues?.dueDate,
-        paidToDate: wallet.valueOrNull?.totalPaid,
+        paidToDate: ledger.valueOrNull?.totalPaid,
         lastPaymentAmount: lastPayment?.amount,
         lastPaymentAt: lastPayment?.receivedAt,
         workPartner: stats?.partnerName,

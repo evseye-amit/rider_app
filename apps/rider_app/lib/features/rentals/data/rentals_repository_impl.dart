@@ -47,7 +47,7 @@ class RentalsRepositoryImpl implements RentalsRepository {
       subtotal: detail.invoice.subtotal,
       credit: detail.invoice.credit,
       tax: detail.invoice.tax,
-      walletPaid: detail.walletPaid,
+      ledgerPaid: detail.walletPaid,
       settlementCredit: detail.invoice.settlementCredit,
     ),
   );

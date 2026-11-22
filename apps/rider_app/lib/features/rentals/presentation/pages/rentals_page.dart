@@ -81,7 +81,7 @@ class _RentalsPageState extends ConsumerState<RentalsPage> {
       if (summary.autoPay) ...[
         const Gap.lg(),
         PhotoPanel(
-          photo: BrandPhoto.money,
+          photo: BrandPhoto.ledger,
           height: 130,
           title: context.l10n.rentalsRentHandledAutomatically,
           subtitle: context.l10n.rentalsAutoDebitKeepsEveryCycle,

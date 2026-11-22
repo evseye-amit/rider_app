@@ -978,7 +978,7 @@ class AppL10nTe extends AppL10n {
   String get commonVersion => 'వెర్షన్';
 
   @override
-  String get commonWallet => 'వాలెట్';
+  String get commonLedger => 'లెడ్జర్';
 
   @override
   String get commonWhatHappensNext => 'తర్వాత ఏమి జరుగుతుంది';
@@ -3359,7 +3359,7 @@ class AppL10nTe extends AppL10n {
   String get rentalsDueLater => 'తర్వాత చెల్లించాలి';
 
   @override
-  String get rentalsFromWallet => 'మీ వాలెట్ నుండి';
+  String get rentalsFromLedger => 'మీ లెడ్జర్ నుండి';
 
   @override
   String get rentalsInvoiceHistory => 'బిల్లు చరిత్ర';
@@ -4326,7 +4326,7 @@ class AppL10nTe extends AppL10n {
   String get supportOpenTickets => 'తెరిచిన ఫిర్యాదులు';
 
   @override
-  String get supportPaymentWallet => 'చెల్లింపు లేదా వాలెట్';
+  String get supportPaymentLedger => 'చెల్లింపు లేదా లెడ్జర్';
 
   @override
   String get supportPdfAttachment => 'PDF పత్రం';
@@ -4702,293 +4702,293 @@ class AppL10nTe extends AppL10n {
   String get verifyView => 'చూడండి';
 
   @override
-  String get walletAvailable => 'అందుబాటులో';
+  String get ledgerAvailable => 'అందుబాటులో';
 
   @override
-  String get walletCash => 'నగదు';
+  String get ledgerCash => 'నగదు';
 
   @override
-  String get walletClosingBalance => 'ముగింపు బ్యాలెన్స్';
+  String get ledgerClosingBalance => 'ముగింపు బ్యాలెన్స్';
 
   @override
-  String walletCompletedOn(String date) {
+  String ledgerCompletedOn(String date) {
     return '$date న పూర్తయింది';
   }
 
   @override
-  String get walletCouldNotLoadDeposit => 'డిపాజిట్ వివరాలను రిఫ్రెష్ చేయలేకపోయాం';
+  String get ledgerCouldNotLoadDeposit => 'డిపాజిట్ వివరాలను రిఫ్రెష్ చేయలేకపోయాం';
 
   @override
-  String get walletCouldNotLoadReceipt => 'రసీదును లోడ్ చేయలేకపోయాం';
+  String get ledgerCouldNotLoadReceipt => 'రసీదును లోడ్ చేయలేకపోయాం';
 
   @override
-  String get walletCouldNotLoadStatement => 'మీ స్టేట్‌మెంట్‌ను లోడ్ చేయలేకపోయాం';
+  String get ledgerCouldNotLoadStatement => 'మీ స్టేట్‌మెంట్‌ను లోడ్ చేయలేకపోయాం';
 
   @override
-  String get walletCouldNotLoadWallet => 'మీ వాలెట్ తెరవలేకపోయాం';
+  String get ledgerCouldNotLoadLedger => 'మీ లెడ్జర్ తెరవలేకపోయాం';
 
   @override
-  String get walletCredits => 'జమ';
+  String get ledgerCredits => 'జమ';
 
   @override
-  String get walletDateTime => 'తేదీ మరియు సమయం';
+  String get ledgerDateTime => 'తేదీ మరియు సమయం';
 
   @override
-  String get walletDebits => 'ఖర్చు';
+  String get ledgerDebits => 'ఖర్చు';
 
   @override
-  String get walletDeposit => 'డిపాజిట్';
+  String get ledgerDeposit => 'డిపాజిట్';
 
   @override
-  String get walletDepositDeducted => 'తగ్గించింది';
+  String get ledgerDepositDeducted => 'తగ్గించింది';
 
   @override
-  String get walletDepositHeld => 'ఉంచింది';
+  String get ledgerDepositHeld => 'ఉంచింది';
 
   @override
-  String get walletDepositLocked => 'మీ అద్దె కోసం లాక్';
+  String get ledgerDepositLocked => 'మీ అద్దె కోసం లాక్';
 
   @override
-  String walletDepositMoved(String amount) {
+  String ledgerDepositMoved(String amount) {
     return 'డిపాజిట్ $amount';
   }
 
   @override
-  String get walletDepositPaidIn => 'చెల్లించింది';
+  String get ledgerDepositPaidIn => 'చెల్లించింది';
 
   @override
-  String get walletDepositRequired => 'అవసరమైన మొత్తం';
+  String get ledgerDepositRequired => 'అవసరమైన మొత్తం';
 
   @override
-  String get walletDepositReturnedAmount => 'తిరిగి ఇచ్చింది';
+  String get ledgerDepositReturnedAmount => 'తిరిగి ఇచ్చింది';
 
   @override
-  String get walletDepositReturnedSeparately => 'మీరు వెళ్ళిపోయేటప్పుడు మీ డిపాజిట్ విడిగా తిరిగి వస్తుంది.';
+  String get ledgerDepositReturnedSeparately => 'మీరు వెళ్ళిపోయేటప్పుడు మీ డిపాజిట్ విడిగా తిరిగి వస్తుంది.';
 
   @override
-  String get walletDepositReturns => 'తిరిగి చెల్లింపులు';
+  String get ledgerDepositReturns => 'తిరిగి చెల్లింపులు';
 
   @override
-  String get walletDepositStatusCancelled => 'రద్దు';
+  String get ledgerDepositStatusCancelled => 'రద్దు';
 
   @override
-  String get walletDepositStatusForfeited => 'జప్తు చేశారు';
+  String get ledgerDepositStatusForfeited => 'జప్తు చేశారు';
 
   @override
-  String get walletDepositStatusLocked => 'మీ అద్దె కోసం ఉంచారు';
+  String get ledgerDepositStatusLocked => 'మీ అద్దె కోసం ఉంచారు';
 
   @override
-  String get walletDepositStatusPaid => 'చెల్లించారు';
+  String get ledgerDepositStatusPaid => 'చెల్లించారు';
 
   @override
-  String get walletDepositStatusPartlyDeducted => 'పాక్షికంగా తగ్గించారు';
+  String get ledgerDepositStatusPartlyDeducted => 'పాక్షికంగా తగ్గించారు';
 
   @override
-  String get walletDepositStatusPartlyPaid => 'పాక్షికంగా చెల్లించారు';
+  String get ledgerDepositStatusPartlyPaid => 'పాక్షికంగా చెల్లించారు';
 
   @override
-  String get walletDepositStatusPending => 'చెల్లింపు కోసం వేచి ఉంది';
+  String get ledgerDepositStatusPending => 'చెల్లింపు కోసం వేచి ఉంది';
 
   @override
-  String get walletDepositStatusReturnable => 'తిరిగి ఇవ్వడానికి సిద్ధం';
+  String get ledgerDepositStatusReturnable => 'తిరిగి ఇవ్వడానికి సిద్ధం';
 
   @override
-  String get walletDepositStatusReturned => 'తిరిగి ఇచ్చారు';
+  String get ledgerDepositStatusReturned => 'తిరిగి ఇచ్చారు';
 
   @override
-  String get walletDepositStatusReturnRequested => 'తిరిగి ఇవ్వమని అభ్యర్థించారు';
+  String get ledgerDepositStatusReturnRequested => 'తిరిగి ఇవ్వమని అభ్యర్థించారు';
 
   @override
-  String get walletDepositToPay => 'ఇంకా చెల్లించాలి';
+  String get ledgerDepositToPay => 'ఇంకా చెల్లించాలి';
 
   @override
-  String get walletDestination => 'ఎవరికి చెల్లించారు';
+  String get ledgerDestination => 'ఎవరికి చెల్లించారు';
 
   @override
-  String get walletErrorDepositNotFound => 'ఈ డిపాజిట్ అందుబాటులో లేదు.';
+  String get ledgerErrorDepositNotFound => 'ఈ డిపాజిట్ అందుబాటులో లేదు.';
 
   @override
-  String get walletErrorNotFound => 'మీ వాలెట్ ఇంకా సెటప్ కాలేదు.';
+  String get ledgerErrorNotFound => 'మీ లెడ్జర్ ఇంకా సెటప్ కాలేదు.';
 
   @override
-  String get walletErrorReceiptNotFound => 'ఈ రసీదు అందుబాటులో లేదు.';
+  String get ledgerErrorReceiptNotFound => 'ఈ రసీదు అందుబాటులో లేదు.';
 
   @override
-  String get walletErrorStatementPeriod => 'ఆ వ్యవధికి స్టేట్‌మెంట్ అందుబాటులో లేదు.';
+  String get ledgerErrorStatementPeriod => 'ఆ వ్యవధికి స్టేట్‌మెంట్ అందుబాటులో లేదు.';
 
   @override
-  String get walletErrorTransactionNotFound => 'ఈ లావాదేవీ అందుబాటులో లేదు.';
+  String get ledgerErrorTransactionNotFound => 'ఈ లావాదేవీ అందుబాటులో లేదు.';
 
   @override
-  String get walletExpiringSoon => '7 రోజుల్లో ముగుస్తుంది';
+  String get ledgerExpiringSoon => '7 రోజుల్లో ముగుస్తుంది';
 
   @override
-  String walletFundedOf(String funded, String required) {
+  String ledgerFundedOf(String funded, String required) {
     return '$required లో $funded';
   }
 
   @override
-  String get walletInvoicesSettled => 'చెల్లించిన బిల్లులు';
+  String get ledgerInvoicesSettled => 'చెల్లించిన బిల్లులు';
 
   @override
-  String get walletIssued => 'జారీ చేశారు';
+  String get ledgerIssued => 'జారీ చేశారు';
 
   @override
-  String get walletKindAdjustment => 'సర్దుబాటు';
+  String get ledgerKindAdjustment => 'సర్దుబాటు';
 
   @override
-  String get walletKindDeposit => 'సెక్యూరిటీ డిపాజిట్';
+  String get ledgerKindDeposit => 'సెక్యూరిటీ డిపాజిట్';
 
   @override
-  String get walletKindPayment => 'చెల్లింపు';
+  String get ledgerKindPayment => 'చెల్లింపు';
 
   @override
-  String get walletKindPenalty => 'జరిమానా';
+  String get ledgerKindPenalty => 'జరిమానా';
 
   @override
-  String get walletKindRefund => 'వాపసు';
+  String get ledgerKindRefund => 'వాపసు';
 
   @override
-  String get walletKindRental => 'అద్దె';
+  String get ledgerKindRental => 'అద్దె';
 
   @override
-  String get walletKindReward => 'బహుమతి';
+  String get ledgerKindReward => 'బహుమతి';
 
   @override
-  String get walletKindService => 'సర్వీస్ ఛార్జీ';
+  String get ledgerKindService => 'సర్వీస్ ఛార్జీ';
 
   @override
-  String get walletKindTopUp => 'డబ్బు జోడించారు';
+  String get ledgerKindTopUp => 'డబ్బు జోడించారు';
 
   @override
-  String get walletLedgerWillFillUpAs => 'మీరు నడిపి సంపాదించే కొద్దీ మీ లెక్క నిండుతుంది.';
+  String get ledgerWillFillUpAs => 'మీరు నడిపి సంపాదించే కొద్దీ మీ లెక్క నిండుతుంది.';
 
   @override
-  String get walletMethod => 'పద్ధతి';
+  String get ledgerMethod => 'పద్ధతి';
 
   @override
-  String get walletMoney => 'మీ డబ్బు';
+  String get ledgerMoney => 'మీ డబ్బు';
 
   @override
-  String get walletMoneyIn => 'వచ్చిన డబ్బు';
+  String get ledgerMoneyIn => 'వచ్చిన డబ్బు';
 
   @override
-  String get walletMoneyOut => 'వెళ్లిన డబ్బు';
+  String get ledgerMoneyOut => 'వెళ్లిన డబ్బు';
 
   @override
-  String get walletNothingMatchesFilterYet => 'ఈ వడపోతకు ఇంకా ఏమీ సరిపోలేదు.';
+  String get ledgerNothingMatchesFilterYet => 'ఈ వడపోతకు ఇంకా ఏమీ సరిపోలేదు.';
 
   @override
-  String get walletNoTransactionsHere => 'ఇక్కడ లావాదేవీలు లేవు';
+  String get ledgerNoTransactionsHere => 'ఇక్కడ లావాదేవీలు లేవు';
 
   @override
-  String get walletOnHold => 'నిలిపి ఉంచారు';
+  String get ledgerOnHold => 'నిలిపి ఉంచారు';
 
   @override
-  String get walletOpeningBalance => 'ప్రారంభ బ్యాలెన్స్';
+  String get ledgerOpeningBalance => 'ప్రారంభ బ్యాలెన్స్';
 
   @override
-  String get walletPayments => 'చెల్లింపులు';
+  String get ledgerPayments => 'చెల్లింపులు';
 
   @override
-  String get walletReceipt => 'రసీదు';
+  String get ledgerReceipt => 'రసీదు';
 
   @override
-  String get walletReceiptNumber => 'రసీదు సంఖ్య';
+  String get ledgerReceiptNumber => 'రసీదు సంఖ్య';
 
   @override
-  String get walletReferenceId => 'రిఫరెన్స్ ఐడీ';
+  String get ledgerReferenceId => 'రిఫరెన్స్ ఐడీ';
 
   @override
-  String get walletRefundable => 'తిరిగి ఇచ్చేది';
+  String get ledgerRefundable => 'తిరిగి ఇచ్చేది';
 
   @override
-  String walletRequestedOn(String date) {
+  String ledgerRequestedOn(String date) {
     return '$date న అభ్యర్థన';
   }
 
   @override
-  String get walletReturnApproved => 'ఆమోదించారు';
+  String get ledgerReturnApproved => 'ఆమోదించారు';
 
   @override
-  String get walletReturnCancelled => 'రద్దు';
+  String get ledgerReturnCancelled => 'రద్దు';
 
   @override
-  String get walletReturnDone => 'తిరిగి ఇచ్చారు';
+  String get ledgerReturnDone => 'తిరిగి ఇచ్చారు';
 
   @override
-  String get walletReturnFailed => 'విఫలమైంది';
+  String get ledgerReturnFailed => 'విఫలమైంది';
 
   @override
-  String get walletReturnProcessing => 'ప్రాసెస్ అవుతోంది';
+  String get ledgerReturnProcessing => 'ప్రాసెస్ అవుతోంది';
 
   @override
-  String get walletReturnRejected => 'తిరస్కరించారు';
+  String get ledgerReturnRejected => 'తిరస్కరించారు';
 
   @override
-  String get walletReturnRequested => 'అభ్యర్థించారు';
+  String get ledgerReturnRequested => 'అభ్యర్థించారు';
 
   @override
-  String get walletReturnReview => 'సమీక్షలో ఉంది';
+  String get ledgerReturnReview => 'సమీక్షలో ఉంది';
 
   @override
-  String get walletRewardExpired => 'రివార్డ్ గడువు ముగిసింది';
+  String get ledgerRewardExpired => 'రివార్డ్ గడువు ముగిసింది';
 
   @override
-  String get walletRewardReversed => 'రివార్డ్ వెనక్కి తీసుకున్నారు';
+  String get ledgerRewardReversed => 'రివార్డ్ వెనక్కి తీసుకున్నారు';
 
   @override
-  String get walletRewardsEarned => 'ఇప్పటివరకు సంపాదించింది';
+  String get ledgerRewardsEarned => 'ఇప్పటివరకు సంపాదించింది';
 
   @override
-  String get walletSearchTransactions => 'లావాదేవీలు వెతకండి';
+  String get ledgerSearchTransactions => 'లావాదేవీలు వెతకండి';
 
   @override
-  String get walletSecurityDeposit => 'సెక్యూరిటీ డిపాజిట్';
+  String get ledgerSecurityDeposit => 'సెక్యూరిటీ డిపాజిట్';
 
   @override
-  String get walletStateFailed => 'విఫలమైంది';
+  String get ledgerStateFailed => 'విఫలమైంది';
 
   @override
-  String get walletStatement => 'స్టేట్‌మెంట్';
+  String get ledgerStatement => 'స్టేట్‌మెంట్';
 
   @override
-  String get walletStatementEmpty => 'ఈ నెల ఏమీ లేదు';
+  String get ledgerStatementEmpty => 'ఈ నెల ఏమీ లేదు';
 
   @override
-  String get walletStatementEmptyBody => 'ఈ నెల మీ వాలెట్‌లోకి వచ్చే లేదా వెళ్లే డబ్బు ఇక్కడ కనిపిస్తుంది.';
+  String get ledgerStatementEmptyBody => 'ఈ నెల మీ లెడ్జర్‌లోకి వచ్చే లేదా వెళ్లే డబ్బు ఇక్కడ కనిపిస్తుంది.';
 
   @override
-  String walletStatementReference(String reference) {
+  String ledgerStatementReference(String reference) {
     return 'స్టేట్‌మెంట్ రిఫరెన్స్ $reference';
   }
 
   @override
-  String get walletStatementSubtitle => 'నెలవారీగా, ఖచ్చితమైన వచ్చిన, వెళ్లిన డబ్బు';
+  String get ledgerStatementSubtitle => 'నెలవారీగా, ఖచ్చితమైన వచ్చిన, వెళ్లిన డబ్బు';
 
   @override
-  String get walletStatementSummary => 'ఈ నెల';
+  String get ledgerStatementSummary => 'ఈ నెల';
 
   @override
-  String get walletStatePending => 'పెండింగ్';
+  String get ledgerStatePending => 'పెండింగ్';
 
   @override
-  String get walletStateReversed => 'వెనక్కి తీసుకున్నారు';
+  String get ledgerStateReversed => 'వెనక్కి తీసుకున్నారు';
 
   @override
-  String get walletStateSettled => 'పూర్తయింది';
+  String get ledgerStateSettled => 'పూర్తయింది';
 
   @override
-  String get walletToBank => 'మీ బ్యాంక్ ఖాతాకు';
+  String get ledgerToBank => 'మీ బ్యాంక్ ఖాతాకు';
 
   @override
-  String get walletToWallet => 'మీ వాలెట్‌కు';
+  String get ledgerToLedger => 'మీ లెడ్జర్‌కు';
 
   @override
-  String get walletTransactions => 'లావాదేవీలు';
+  String get ledgerTransactions => 'లావాదేవీలు';
 
   @override
-  String get walletViewReceipt => 'రసీదు';
+  String get ledgerViewReceipt => 'రసీదు';
 
   @override
   String get workPartnerEcommerce => 'ఈ-కామర్స్';
@@ -5393,37 +5393,37 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
-  String get walletAddMoney => 'డబ్బు జోడించండి';
+  String get ledgerAddMoney => 'డబ్బు జోడించండి';
 
   @override
-  String walletAddMoneyLimits(String min, String max) {
+  String ledgerAddMoneyLimits(String min, String max) {
     return '$min నుండి $max వరకు జోడించండి';
   }
 
   @override
-  String get walletAddMoneyAmount => 'మొత్తం';
+  String get ledgerAddMoneyAmount => 'మొత్తం';
 
   @override
-  String walletAddMoneyInvalidAmount(String min, String max) {
+  String ledgerAddMoneyInvalidAmount(String min, String max) {
     return '$min మరియు $max మధ్య మొత్తాన్ని నమోదు చేయండి.';
   }
 
   @override
-  String get walletAddMoneyNonRefundable =>
+  String get ledgerAddMoneyNonRefundable =>
       'జోడించిన డబ్బును యాప్‌లో చెల్లింపులకు మాత్రమే ఉపయోగించవచ్చు. దీన్ని రీఫండ్ చేయడం లేదా విత్‌డ్రా చేయడం కుదరదు.';
 
   @override
-  String walletAddMoneyPay(String amount) {
+  String ledgerAddMoneyPay(String amount) {
     return '$amount జోడించండి';
   }
 
   @override
-  String walletAddMoneyDone(String amount) {
-    return 'మీ వాలెట్‌కు $amount జోడించబడింది.';
+  String ledgerAddMoneyDone(String amount) {
+    return 'మీ లెడ్జర్‌కు $amount జోడించబడింది.';
   }
 
   @override
-  String get walletAddMoneyUnavailable => 'ప్రస్తుతం డబ్బు జోడించడం కుదరదు. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.';
+  String get ledgerAddMoneyUnavailable => 'ప్రస్తుతం డబ్బు జోడించడం కుదరదు. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.';
 
   @override
   String get paymentCheckStatus => 'చెల్లింపు స్థితి చూడండి';
@@ -5460,8 +5460,8 @@ class AppL10nTe extends AppL10n {
   String get paymentDiscardFailed => 'ప్రస్తుతం దాన్ని తీసివేయలేకపోయాం. ముందుగా దాని స్థితి చూడండి.';
 
   @override
-  String get paymentWalletInactive =>
-      'మీ వాలెట్ ప్రస్తుతం యాక్టివ్‌గా లేదు, కాబట్టి డబ్బు జోడించలేరు. దయచేసి సపోర్ట్‌ను సంప్రదించండి.';
+  String get paymentLedgerInactive =>
+      'మీ లెడ్జర్ ప్రస్తుతం యాక్టివ్‌గా లేదు, కాబట్టి డబ్బు జోడించలేరు. దయచేసి సపోర్ట్‌ను సంప్రదించండి.';
 
   @override
   String paymentsPayNow(String amount) {
@@ -5487,63 +5487,63 @@ class AppL10nTe extends AppL10n {
   }
 
   @override
-  String get rentalsPayBillWalletHint =>
-      'ముందుగా మీ వాలెట్ బ్యాలెన్స్ ఉపయోగించబడుతుంది. మీరు మిగతాది మాత్రమే చెల్లిస్తారు.';
+  String get rentalsPayBillLedgerHint =>
+      'ముందుగా మీ లెడ్జర్ బ్యాలెన్స్ ఉపయోగించబడుతుంది. మీరు మిగతాది మాత్రమే చెల్లిస్తారు.';
 
   @override
-  String get walletAutoPayTitle => 'ఆటో రీఛార్జ్';
+  String get ledgerAutoPayTitle => 'ఆటో రీఛార్జ్';
 
   @override
-  String walletAutoPaySummary(String amount, String threshold) {
+  String ledgerAutoPaySummary(String amount, String threshold) {
     return 'మీ నగదు బ్యాలెన్స్ $threshold కంటే తగ్గినప్పుడు $amount ఆటోమేటిక్‌గా జోడించబడుతుంది.';
   }
 
   @override
-  String get walletAutoPayOff => 'ఆఫ్';
+  String get ledgerAutoPayOff => 'ఆఫ్';
 
   @override
-  String get walletAutoPayTurnedOn => 'ఆటో రీఛార్జ్ ఆన్‌లో ఉంది';
+  String get ledgerAutoPayTurnedOn => 'ఆటో రీఛార్జ్ ఆన్‌లో ఉంది';
 
   @override
-  String get walletAutoPayPolicyOff => 'ఆటో రీఛార్జ్ ప్రస్తుతం నిలిపివేయబడింది. కొత్త రీఛార్జ్‌లు ప్రారంభం కావు.';
+  String get ledgerAutoPayPolicyOff => 'ఆటో రీఛార్జ్ ప్రస్తుతం నిలిపివేయబడింది. కొత్త రీఛార్జ్‌లు ప్రారంభం కావు.';
 
   @override
-  String get walletAutoPayRecent => 'ఇటీవలి ఆటో రీఛార్జ్‌లు';
+  String get ledgerAutoPayRecent => 'ఇటీవలి ఆటో రీఛార్జ్‌లు';
 
   @override
-  String walletAutoPayEarliestDebit(String date) {
+  String ledgerAutoPayEarliestDebit(String date) {
     return 'తొలి డెబిట్ $date';
   }
 
   @override
-  String get walletAutoPayStatusPreparing => 'సిద్ధమవుతోంది';
+  String get ledgerAutoPayStatusPreparing => 'సిద్ధమవుతోంది';
 
   @override
-  String get walletAutoPayStatusPending => 'బ్యాంక్ కోసం వేచి ఉంది';
+  String get ledgerAutoPayStatusPending => 'బ్యాంక్ కోసం వేచి ఉంది';
 
   @override
-  String get walletAutoPayStatusConfirming => 'నిర్ధారిస్తోంది';
+  String get ledgerAutoPayStatusConfirming => 'నిర్ధారిస్తోంది';
 
   @override
-  String get walletAutoPayStatusReview => 'సమీక్షలో ఉంది';
+  String get ledgerAutoPayStatusReview => 'సమీక్షలో ఉంది';
 
   @override
-  String get walletAutoPayStatusAdded => 'జోడించబడింది';
+  String get ledgerAutoPayStatusAdded => 'జోడించబడింది';
 
   @override
-  String get walletAutoPayStatusStopped => 'నిలిపివేయబడింది';
+  String get ledgerAutoPayStatusStopped => 'నిలిపివేయబడింది';
 
   @override
-  String walletAutoPayConsent(String amount, String threshold, String hours, String cooldown) {
+  String ledgerAutoPayConsent(String amount, String threshold, String hours, String cooldown) {
     return 'నా దగ్గర యాక్టివ్ స్కూటర్ ఉన్నంత వరకు, నా అందుబాటులో ఉన్న నగదు బ్యాలెన్స్ $threshold కంటే తగ్గినప్పుడు $amount ఆటోమేటిక్‌గా జోడించండి. ప్రతి రీఛార్జ్‌కు నా ఆటో-డెబిట్ మరియు బ్యాంక్ నిర్ధారణ అవసరం, కనీసం $hours గంటల ముందస్తు సమాచారం ఉంటుంది. ఒకేసారి ఒక ఆటో రీఛార్జ్ మాత్రమే పెండింగ్‌లో ఉండవచ్చు, మరియు విజయవంతమైన రీఛార్జ్ తర్వాత $cooldown గంటల లోపు కొత్తది ప్రారంభం కాదు. నేను దీన్ని ఆఫ్ చేసినా లేదా నేనే డబ్బు జోడించినా, బ్యాంక్‌కు పంపిన రీఛార్జ్ పూర్తి కావచ్చు.';
   }
 
   @override
-  String get walletAutoPayCashOnly =>
+  String get ledgerAutoPayCashOnly =>
       'మీ నగదు బ్యాలెన్స్ మాత్రమే లెక్కించబడుతుంది. ప్రోత్సాహకాలు మరియు సెక్యూరిటీ డిపాజిట్ చేర్చబడవు.';
 
   @override
-  String walletAutoPayManualNote(String amount) {
+  String ledgerAutoPayManualNote(String amount) {
     return '$amount ఆటో రీఛార్జ్ ఇప్పటికే జరుగుతోంది. మీరు ఇప్పుడు డబ్బు జోడించినా, ఆ రీఛార్జ్ పూర్తి కావచ్చు.';
   }
 
@@ -5552,7 +5552,7 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get deploymentAutoPayIntro =>
-      'కొనసాగడానికి ఆటో రీఛార్జ్ తప్పనిసరి. మీ అద్దె మీ వాలెట్ నుండి కట్ అవుతుంది, ఆటో రీఛార్జ్ వాలెట్‌లో డబ్బు ఉండేలా చూస్తుంది.';
+      'కొనసాగడానికి ఆటో రీఛార్జ్ తప్పనిసరి. మీ అద్దె మీ లెడ్జర్ నుండి కట్ అవుతుంది, ఆటో రీఛార్జ్ లెడ్జర్‌లో డబ్బు ఉండేలా చూస్తుంది.';
 
   @override
   String get paymentsAutoPayWaitingVehicle => 'స్కూటర్ వచ్చాక ప్రారంభమవుతుంది';
@@ -5569,6 +5569,6 @@ class AppL10nTe extends AppL10n {
       'మీ బ్యాంక్ ఆటో-డెబిట్‌ను ఆమోదించింది. మేము ఆటో రీఛార్జ్‌ను ఆన్ చేస్తున్నాం, దీనికి సాధారణంగా సుమారు ఒక నిమిషం పడుతుంది.';
 
   @override
-  String get walletAutoPayVariableTerms =>
+  String get ledgerAutoPayVariableTerms =>
       'కంపెనీ ఈ మొత్తాలను మార్చవచ్చు, కానీ ప్రతి కోత పరిమితి కంటే ఎప్పుడూ ఎక్కువ కాదు. ప్రతి కోతకు ముందు మీకు సమాచారం వస్తుంది, మరియు మీ UPI యాప్‌లో ఆటో-డెబిట్‌ను రద్దు చేయవచ్చు.';
 }

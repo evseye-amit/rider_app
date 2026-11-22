@@ -2,21 +2,21 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../../domain/entities/wallet_overview.dart';
-import '../../domain/usecases/get_wallet_receipt.dart';
-import '../providers/wallet_provider.dart';
+import '../../domain/entities/ledger_overview.dart';
+import '../../domain/usecases/get_ledger_receipt.dart';
+import '../providers/ledger_provider.dart';
 
 String depositStatusLabel(AppL10n l10n, String status) => switch (status) {
-  'PENDING' => l10n.walletDepositStatusPending,
-  'PARTIALLY_PAID' => l10n.walletDepositStatusPartlyPaid,
-  'PAID' => l10n.walletDepositStatusPaid,
-  'LOCKED' => l10n.walletDepositStatusLocked,
-  'PARTIALLY_DEDUCTED' => l10n.walletDepositStatusPartlyDeducted,
-  'REFUND_ELIGIBLE' => l10n.walletDepositStatusReturnable,
-  'REFUND_REQUESTED' => l10n.walletDepositStatusReturnRequested,
-  'REFUNDED' => l10n.walletDepositStatusReturned,
-  'FORFEITED' => l10n.walletDepositStatusForfeited,
-  _ => l10n.walletDepositStatusCancelled,
+  'PENDING' => l10n.ledgerDepositStatusPending,
+  'PARTIALLY_PAID' => l10n.ledgerDepositStatusPartlyPaid,
+  'PAID' => l10n.ledgerDepositStatusPaid,
+  'LOCKED' => l10n.ledgerDepositStatusLocked,
+  'PARTIALLY_DEDUCTED' => l10n.ledgerDepositStatusPartlyDeducted,
+  'REFUND_ELIGIBLE' => l10n.ledgerDepositStatusReturnable,
+  'REFUND_REQUESTED' => l10n.ledgerDepositStatusReturnRequested,
+  'REFUNDED' => l10n.ledgerDepositStatusReturned,
+  'FORFEITED' => l10n.ledgerDepositStatusForfeited,
+  _ => l10n.ledgerDepositStatusCancelled,
 };
 
 StatusTone depositStatusTone(String status) => switch (status) {
@@ -27,14 +27,14 @@ StatusTone depositStatusTone(String status) => switch (status) {
 };
 
 String depositReturnLabel(AppL10n l10n, String status) => switch (status) {
-  'REQUESTED' => l10n.walletReturnRequested,
-  'UNDER_REVIEW' => l10n.walletReturnReview,
-  'APPROVED' => l10n.walletReturnApproved,
-  'PROCESSING' => l10n.walletReturnProcessing,
-  'RETURNED' => l10n.walletReturnDone,
-  'FAILED' => l10n.walletReturnFailed,
-  'REJECTED' => l10n.walletReturnRejected,
-  _ => l10n.walletReturnCancelled,
+  'REQUESTED' => l10n.ledgerReturnRequested,
+  'UNDER_REVIEW' => l10n.ledgerReturnReview,
+  'APPROVED' => l10n.ledgerReturnApproved,
+  'PROCESSING' => l10n.ledgerReturnProcessing,
+  'RETURNED' => l10n.ledgerReturnDone,
+  'FAILED' => l10n.ledgerReturnFailed,
+  'REJECTED' => l10n.ledgerReturnRejected,
+  _ => l10n.ledgerReturnCancelled,
 };
 
 StatusTone depositReturnTone(String status) => switch (status) {
@@ -44,21 +44,21 @@ StatusTone depositReturnTone(String status) => switch (status) {
   _ => StatusTone.warning,
 };
 
-Future<void> showDepositSheet(BuildContext context, WalletDeposit deposit) => AppSheet.show<void>(
+Future<void> showDepositSheet(BuildContext context, LedgerDeposit deposit) => AppSheet.show<void>(
   context,
-  title: context.l10n.walletSecurityDeposit,
-  subtitle: context.l10n.walletDepositReturnedSeparately,
+  title: context.l10n.ledgerSecurityDeposit,
+  subtitle: context.l10n.ledgerDepositReturnedSeparately,
   child: DepositSheetBody(fallback: deposit),
 );
 
 class DepositSheetBody extends ConsumerWidget {
   const DepositSheetBody({required this.fallback, super.key});
 
-  final WalletDeposit fallback;
+  final LedgerDeposit fallback;
 
   Future<void> _openReceipt(BuildContext context, DepositReturn item) => AppSheet.show<void>(
     context,
-    title: context.l10n.walletReceipt,
+    title: context.l10n.ledgerReceipt,
     child: ReceiptSheetBody(
       params: ReceiptParams(kind: WalletReceiptKind.depositReturn, id: item.id),
     ),
@@ -66,8 +66,8 @@ class DepositSheetBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<WalletDeposit> detail = ref.watch(securityDepositProvider(fallback.id));
-    final WalletDeposit deposit = detail.value ?? fallback;
+    final AsyncValue<LedgerDeposit> detail = ref.watch(securityDepositProvider(fallback.id));
+    final LedgerDeposit deposit = detail.value ?? fallback;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -81,44 +81,44 @@ class DepositSheetBody extends ConsumerWidget {
         const Gap.md(),
         LabeledProgress(
           value: deposit.fundedProgress,
-          label: context.l10n.walletFundedOf(Fmt.money(deposit.funded), Fmt.money(deposit.required_)),
+          label: context.l10n.ledgerFundedOf(Fmt.money(deposit.funded), Fmt.money(deposit.required_)),
           trailingLabel: Fmt.percent(deposit.fundedProgress),
         ),
         const Gap.md(),
-        KeyValueRow(label: context.l10n.walletDepositRequired, value: Fmt.money(deposit.required_, paise: true)),
-        KeyValueRow(label: context.l10n.walletDepositPaidIn, value: Fmt.money(deposit.funded, paise: true)),
+        KeyValueRow(label: context.l10n.ledgerDepositRequired, value: Fmt.money(deposit.required_, paise: true)),
+        KeyValueRow(label: context.l10n.ledgerDepositPaidIn, value: Fmt.money(deposit.funded, paise: true)),
         if (deposit.outstanding > 0)
           KeyValueRow(
-            label: context.l10n.walletDepositToPay,
+            label: context.l10n.ledgerDepositToPay,
             value: Fmt.money(deposit.outstanding, paise: true),
             valueColor: AppColors.warning,
           ),
-        KeyValueRow(label: context.l10n.walletDepositHeld, value: Fmt.money(deposit.held, paise: true)),
+        KeyValueRow(label: context.l10n.ledgerDepositHeld, value: Fmt.money(deposit.held, paise: true)),
         if (deposit.locked > 0)
-          KeyValueRow(label: context.l10n.walletDepositLocked, value: Fmt.money(deposit.locked, paise: true)),
+          KeyValueRow(label: context.l10n.ledgerDepositLocked, value: Fmt.money(deposit.locked, paise: true)),
         if (deposit.deducted > 0)
           KeyValueRow(
-            label: context.l10n.walletDepositDeducted,
+            label: context.l10n.ledgerDepositDeducted,
             value: Fmt.money(deposit.deducted, paise: true),
             valueColor: AppColors.danger,
           ),
         if (deposit.refunded > 0)
-          KeyValueRow(label: context.l10n.walletDepositReturnedAmount, value: Fmt.money(deposit.refunded, paise: true)),
+          KeyValueRow(label: context.l10n.ledgerDepositReturnedAmount, value: Fmt.money(deposit.refunded, paise: true)),
         KeyValueRow(
-          label: context.l10n.walletRefundable,
+          label: context.l10n.ledgerRefundable,
           value: Fmt.money(deposit.refundable, paise: true),
           valueColor: AppColors.mint,
         ),
         if (detail.hasError && !detail.hasValue) ...[
           const Gap.sm(),
           Text(
-            detail.failureMessage ?? context.l10n.walletCouldNotLoadDeposit,
+            detail.failureMessage ?? context.l10n.ledgerCouldNotLoadDeposit,
             style: AppText.bodySmall.copyWith(fontSize: 12, color: AppColors.danger),
           ),
         ],
         if (deposit.returns.isNotEmpty) ...[
           const Gap.lg(),
-          GroupLabel(context.l10n.walletDepositReturns),
+          GroupLabel(context.l10n.ledgerDepositReturns),
           const Gap.sm(),
           for (final DepositReturn item in deposit.returns) ...[
             _ReturnRow(item: item, onReceipt: item.returned ? () => _openReceipt(context, item) : null),
@@ -149,7 +149,7 @@ class _ReturnRow extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  item.toWallet ? context.l10n.walletToWallet : context.l10n.walletToBank,
+                  item.toLedger ? context.l10n.ledgerToLedger : context.l10n.ledgerToBank,
                   style: AppText.titleSmall.copyWith(fontSize: 13.5),
                 ),
               ),
@@ -168,15 +168,15 @@ class _ReturnRow extends StatelessWidget {
               Expanded(
                 child: Text(
                   completedAt == null
-                      ? context.l10n.walletRequestedOn(Fmt.date(item.requestedAt))
-                      : context.l10n.walletCompletedOn(Fmt.date(completedAt)),
+                      ? context.l10n.ledgerRequestedOn(Fmt.date(item.requestedAt))
+                      : context.l10n.ledgerCompletedOn(Fmt.date(completedAt)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppText.bodySmall.copyWith(fontSize: 11.5),
                 ),
               ),
               if (onReceipt != null)
-                GhostButton(label: context.l10n.walletViewReceipt, dense: true, onPressed: onReceipt),
+                GhostButton(label: context.l10n.ledgerViewReceipt, dense: true, onPressed: onReceipt),
             ],
           ),
         ],
@@ -192,18 +192,18 @@ class ReceiptSheetBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<WalletReceipt> receipt = ref.watch(walletReceiptProvider(params));
+    final AsyncValue<WalletReceipt> receipt = ref.watch(ledgerReceiptProvider(params));
     final WalletReceipt? value = receipt.value;
     if (value == null) {
       return receipt.hasError
           ? EmptyState(
               compact: true,
-              title: context.l10n.walletCouldNotLoadReceipt,
+              title: context.l10n.ledgerCouldNotLoadReceipt,
               message: receipt.failureMessage,
               icon: Icons.cloud_off_rounded,
               tone: AppColors.danger,
               actionLabel: context.l10n.commonTryAgain,
-              onAction: () => ref.invalidate(walletReceiptProvider(params)),
+              onAction: () => ref.invalidate(ledgerReceiptProvider(params)),
             )
           : const Padding(
               padding: EdgeInsets.symmetric(vertical: Insets.x3l),
@@ -230,19 +230,19 @@ class ReceiptSheetBody extends ConsumerWidget {
         ),
         const Gap.xl(),
         Divider(color: AppColors.stroke.withValues(alpha: 0.6), height: 1),
-        KeyValueRow(label: context.l10n.walletReceiptNumber, value: value.receiptNumber),
-        if (issuedAt != null) KeyValueRow(label: context.l10n.walletIssued, value: Fmt.dateTime(issuedAt)),
-        if (method != null && method.isNotEmpty) KeyValueRow(label: context.l10n.walletMethod, value: method),
+        KeyValueRow(label: context.l10n.ledgerReceiptNumber, value: value.receiptNumber),
+        if (issuedAt != null) KeyValueRow(label: context.l10n.ledgerIssued, value: Fmt.dateTime(issuedAt)),
+        if (method != null && method.isNotEmpty) KeyValueRow(label: context.l10n.ledgerMethod, value: method),
         if (destination != null && destination.isNotEmpty)
           KeyValueRow(
-            label: context.l10n.walletDestination,
-            value: destination == 'WALLET_CASH' ? context.l10n.walletToWallet : context.l10n.walletToBank,
+            label: context.l10n.ledgerDestination,
+            value: destination == 'WALLET_CASH' ? context.l10n.ledgerToLedger : context.l10n.ledgerToBank,
           ),
         if (reference != null && reference.isNotEmpty)
-          KeyValueRow(label: context.l10n.walletReferenceId, value: reference),
+          KeyValueRow(label: context.l10n.ledgerReferenceId, value: reference),
         if (value.invoices.isNotEmpty) ...[
           const Gap.md(),
-          GroupLabel(context.l10n.walletInvoicesSettled),
+          GroupLabel(context.l10n.ledgerInvoicesSettled),
           const Gap.sm(),
           for (final ReceiptInvoice invoice in value.invoices)
             KeyValueRow(label: invoice.number, value: Fmt.money(invoice.amount, paise: true), dense: true),

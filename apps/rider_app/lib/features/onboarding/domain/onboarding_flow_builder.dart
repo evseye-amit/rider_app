@@ -186,7 +186,7 @@ abstract final class OnboardingFlowBuilder {
     return [
       UiNode(
         type: 'group',
-        props: {'title': l10n.onboardingBankAccount, 'icon': 'wallet', 'gap': 18},
+        props: {'title': l10n.onboardingBankAccount, 'icon': 'bank', 'gap': 18},
         children: [
           UiNode(
             type: 'bankIfscField',
@@ -545,7 +545,7 @@ abstract final class OnboardingFlowBuilder {
     'RIDER_PERSONAL_PROFILE' => l10n.commonProfile,
     'RIDER_KYC' => 'KYC',
     'RIDER_COMPLIANCE_ELIGIBILITY' => l10n.onboardingStepEligibility,
-    'RIDER_COMMERCIALS' => l10n.walletPayments,
+    'RIDER_COMMERCIALS' => l10n.ledgerPayments,
     'RIDER_TRAINING' => l10n.onboardingStepTraining,
     'RIDER_AGREEMENT_ESIGN' => l10n.onboardingStepAgreement,
     'RIDER_REVIEW_SUBMIT' => ActiveLocale.strings.onboardingReview,
@@ -556,7 +556,7 @@ abstract final class OnboardingFlowBuilder {
     'RIDER_PERSONAL_PROFILE' => 'person',
     'RIDER_KYC' => 'badge',
     'RIDER_COMPLIANCE_ELIGIBILITY' => 'verified',
-    'RIDER_COMMERCIALS' => 'wallet',
+    'RIDER_COMMERCIALS' => 'rupee',
     'RIDER_TRAINING' => 'school',
     'RIDER_AGREEMENT_ESIGN' => 'edit',
     _ => 'checklist',
@@ -565,12 +565,12 @@ abstract final class OnboardingFlowBuilder {
   static String _inputIcon(String code) {
     final String c = code.toUpperCase();
     if (c.contains('NAME')) return 'person';
-    if (c.contains('UPI')) return 'wallet';
+    if (c.contains('UPI')) return 'rupee';
     if (c.contains('EMAIL')) return 'mail';
     if (c.contains('AADHAAR') || c.contains('AADHAR')) return 'badge';
     if (c.contains('PAN')) return 'badge';
     if (c.contains('ADDRESS')) return 'home';
-    if (c.contains('BANK')) return 'wallet';
+    if (c.contains('BANK')) return 'bank';
     if (c.contains('LICENSE') || c.contains('LICENCE')) return 'badge';
     if (c.contains('REFERENCE') || c.contains('EMERGENCY')) return 'person';
     if (c.contains('MEDICAL')) return 'health';

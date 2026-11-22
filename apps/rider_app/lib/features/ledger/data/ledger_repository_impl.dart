@@ -1,18 +1,18 @@
 import 'package:evseye_core/evseye_core.dart';
 
-import '../domain/entities/wallet_overview.dart';
-import '../domain/wallet_repository.dart';
+import '../domain/entities/ledger_overview.dart';
+import '../domain/ledger_repository.dart';
 
-class WalletRepositoryImpl implements WalletRepository {
-  const WalletRepositoryImpl(this._api);
+class LedgerRepositoryImpl implements LedgerRepository {
+  const LedgerRepositoryImpl(this._api);
 
   final WalletApi _api;
 
   @override
-  Future<Result<WalletOverview>> getOverview() async => (await _api.summary()).map(_overview);
+  Future<Result<LedgerOverview>> getOverview() async => (await _api.summary()).map(_overview);
 
   @override
-  Future<Result<List<WalletEntry>>> getTransactions({int page = 1, int pageSize = 20}) async =>
+  Future<Result<List<LedgerEntry>>> getTransactions({int page = 1, int pageSize = 20}) async =>
       (await _api.transactions(
         page: page,
         pageSize: pageSize,
@@ -22,7 +22,7 @@ class WalletRepositoryImpl implements WalletRepository {
   Future<Result<WalletReceipt>> getReceipt(WalletReceiptKind kind, String id) => _api.receipt(kind, id);
 
   @override
-  Future<Result<WalletStatementView>> getStatement({required DateTime month, int page = 1, int pageSize = 50}) async {
+  Future<Result<LedgerStatementView>> getStatement({required DateTime month, int page = 1, int pageSize = 50}) async {
     final DateTime now = DateTime.now().toUtc();
     final DateTime today = DateTime.utc(now.year, now.month, now.day);
     final DateTime from = DateTime.utc(month.year, month.month);
@@ -36,13 +36,13 @@ class WalletRepositoryImpl implements WalletRepository {
   }
 
   @override
-  Future<Result<WalletDeposit>> getDeposit(String id) async => (await _api.securityDeposit(id)).map(_deposit);
+  Future<Result<LedgerDeposit>> getDeposit(String id) async => (await _api.securityDeposit(id)).map(_deposit);
 
-  static WalletOverview _overview(RiderWalletSummary summary) {
+  static LedgerOverview _overview(RiderWalletSummary summary) {
     final WalletBalance balance = summary.balance;
-    return WalletOverview(
+    return LedgerOverview(
       currency: balance.currency,
-      spendable: WalletMoney(
+      spendable: LedgerMoney(
         total: balance.totalBalance,
         held: balance.heldBalance,
         available: balance.availableBalance,
@@ -57,13 +57,13 @@ class WalletRepositoryImpl implements WalletRepository {
     );
   }
 
-  static WalletMoney _money(WalletBucket bucket) =>
-      WalletMoney(total: bucket.totalBalance, held: bucket.heldBalance, available: bucket.availableBalance);
+  static LedgerMoney _money(WalletBucket bucket) =>
+      LedgerMoney(total: bucket.totalBalance, held: bucket.heldBalance, available: bucket.availableBalance);
 
-  static WalletEntry _entry(WalletLedgerEntry entry) => WalletEntry(
+  static LedgerEntry _entry(WalletLedgerEntry entry) => LedgerEntry(
     id: entry.id,
     reference: entry.transactionNumber,
-    kind: WalletEntryKind.parse(entry.transactionType),
+    kind: LedgerEntryKind.parse(entry.transactionType),
     state: _state(entry.status),
     amount: entry.amount,
     at: entry.postedAt ?? entry.createdAt,
@@ -72,7 +72,7 @@ class WalletRepositoryImpl implements WalletRepository {
     referenceId: entry.referenceId,
   );
 
-  static WalletDeposit _deposit(WalletSecurityDeposit deposit) => WalletDeposit(
+  static LedgerDeposit _deposit(WalletSecurityDeposit deposit) => LedgerDeposit(
     id: deposit.id,
     status: deposit.status,
     required_: deposit.requiredAmount,
@@ -89,7 +89,7 @@ class WalletRepositoryImpl implements WalletRepository {
           id: item.id,
           amount: item.amount,
           status: item.status,
-          toWallet: item.toWallet,
+          toLedger: item.toWallet,
           requestedAt: item.requestedAt,
           returned: item.isReturned,
           completedAt: item.completedAt,
@@ -97,7 +97,7 @@ class WalletRepositoryImpl implements WalletRepository {
     ],
   );
 
-  static WalletStatementView _statement(WalletStatement statement) => WalletStatementView(
+  static LedgerStatementView _statement(WalletStatement statement) => LedgerStatementView(
     reference: statement.reference,
     opening: statement.spendable.opening,
     moneyIn: statement.spendable.credits,
@@ -109,7 +109,7 @@ class WalletRepositoryImpl implements WalletRepository {
         StatementLine(
           id: entry.id,
           number: entry.number,
-          kind: WalletEntryKind.parse(entry.type),
+          kind: LedgerEntryKind.parse(entry.type),
           description: entry.description,
           at: entry.postedAt,
           change: entry.spendableChange,
@@ -120,10 +120,10 @@ class WalletRepositoryImpl implements WalletRepository {
     total: statement.total,
   );
 
-  static WalletEntryState _state(String status) => switch (status) {
-    'POSTED' => WalletEntryState.settled,
-    'FAILED' || 'CANCELLED' || 'EXPIRED' => WalletEntryState.failed,
-    'REVERSED' || 'PARTIALLY_REVERSED' => WalletEntryState.reversed,
-    _ => WalletEntryState.pending,
+  static LedgerEntryState _state(String status) => switch (status) {
+    'POSTED' => LedgerEntryState.settled,
+    'FAILED' || 'CANCELLED' || 'EXPIRED' => LedgerEntryState.failed,
+    'REVERSED' || 'PARTIALLY_REVERSED' => LedgerEntryState.reversed,
+    _ => LedgerEntryState.pending,
   };
 }

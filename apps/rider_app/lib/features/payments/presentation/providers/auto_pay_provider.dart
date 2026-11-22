@@ -4,7 +4,7 @@ import 'package:evseye_core/evseye_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../wallet/presentation/providers/wallet_provider.dart';
+import '../../../ledger/presentation/providers/ledger_provider.dart';
 import '../../domain/entities/auto_pay.dart';
 import '../../payments_dependencies.dart';
 
@@ -43,8 +43,8 @@ class AutoPayNotifier extends AsyncNotifier<AutoPay?> {
     state = AsyncData(value);
     if (settled) {
       ref
-        ..invalidate(walletOverviewProvider)
-        ..invalidate(walletTransactionsProvider);
+        ..invalidate(ledgerOverviewProvider)
+        ..invalidate(ledgerTransactionsProvider);
     }
     _schedule(value);
   }

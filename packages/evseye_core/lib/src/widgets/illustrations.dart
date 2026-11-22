@@ -10,7 +10,7 @@ enum BrandArt {
   evScooter('ev_scooter'),
   hub('hub'),
   charging('charging'),
-  wallet('wallet'),
+  ledger('ledger'),
   shield('shield'),
   success('success'),
   waiting('waiting'),
