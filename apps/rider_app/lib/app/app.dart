@@ -35,7 +35,7 @@ class _RiderAppState extends ConsumerState<RiderApp> {
         unawaited(_recoverPayments());
       },
     );
-    _pushMessages = PushNotifications.messages.listen(_showPush);
+    _pushMessages = PushNotifications.messages.listen(_refreshInbox);
     _pushTaps = PushNotifications.taps.listen(_openPush);
   }
 
@@ -57,19 +57,10 @@ class _RiderAppState extends ConsumerState<RiderApp> {
     super.dispose();
   }
 
-  void _showPush(PushMessage message) {
+  void _refreshInbox(PushMessage message) {
     ref
       ..invalidate(unreadNotificationsProvider)
       ..invalidate(notificationsInboxProvider);
-    final BuildContext? context = ref.read(routerProvider).routerDelegate.navigatorKey.currentContext;
-    if (context == null || message.title.isEmpty) return;
-    AppSnack.show(
-      context,
-      message.title,
-      icon: Icons.notifications_rounded,
-      actionLabel: context.l10n.commonOpen,
-      onAction: () => _openPush(message.data),
-    );
   }
 
   void _openPush(Map<String, String> data) {

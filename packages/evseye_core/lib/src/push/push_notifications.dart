@@ -1,12 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../l10n/active_locale.dart';
 import '../providers/core_providers.dart';
 import 'firebase_config.dart';
 
@@ -44,7 +47,12 @@ class PushMessage {
 }
 
 abstract final class PushNotifications {
+  static const String _channelId = 'evseye_notifications';
+  static const String _icon = 'ic_notification';
+
   static bool _ready = false;
+  static final FlutterLocalNotificationsPlugin _local = FlutterLocalNotificationsPlugin();
+  static final StreamController<Map<String, String>> _taps = StreamController<Map<String, String>>.broadcast();
 
   static bool get isReady => _ready;
 
@@ -57,21 +65,96 @@ abstract final class PushNotifications {
       _ready = true;
     } on Object {
       _ready = false;
+      return;
+    }
+    FirebaseMessaging.onMessageOpenedApp.listen((message) => _taps.add(_data(message)));
+    try {
+      if (Platform.isAndroid) {
+        await _setUpAndroidForeground();
+      } else {
+        await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+      }
+    } on Object {
+      return;
+    }
+  }
+
+  static Future<void> _setUpAndroidForeground() async {
+    await _local.initialize(
+      settings: const InitializationSettings(android: AndroidInitializationSettings(_icon)),
+      onDidReceiveNotificationResponse: (response) {
+        final Map<String, String>? data = _decode(response.payload);
+        if (data != null) _taps.add(data);
+      },
+    );
+    await _local
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(_channel);
+    FirebaseMessaging.onMessage.listen((message) => unawaited(_present(message)));
+  }
+
+  static AndroidNotificationChannel get _channel => AndroidNotificationChannel(
+    _channelId,
+    ActiveLocale.strings.notificationsNotifications,
+    importance: Importance.high,
+  );
+
+  static Future<void> _present(RemoteMessage message) async {
+    final RemoteNotification? notification = message.notification;
+    if (notification == null || ((notification.title ?? '').isEmpty && (notification.body ?? '').isEmpty)) return;
+    final AndroidNotificationChannel channel = _channel;
+    try {
+      await _local.show(
+        id: (message.messageId ?? '${DateTime.now().microsecondsSinceEpoch}').hashCode & 0x7fffffff,
+        title: notification.title,
+        body: notification.body,
+        notificationDetails: NotificationDetails(
+          android: AndroidNotificationDetails(
+            channel.id,
+            channel.name,
+            importance: Importance.high,
+            priority: Priority.high,
+            icon: _icon,
+            styleInformation: BigTextStyleInformation(notification.body ?? ''),
+          ),
+        ),
+        payload: jsonEncode(_data(message)),
+      );
+    } on Object {
+      return;
     }
   }
 
   static Stream<PushMessage> get messages =>
       _ready ? FirebaseMessaging.onMessage.map(PushMessage.from) : const Stream.empty();
 
-  static Stream<Map<String, String>> get taps =>
-      _ready ? FirebaseMessaging.onMessageOpenedApp.map(_data) : const Stream.empty();
+  static Stream<Map<String, String>> get taps => _ready ? _taps.stream : const Stream.empty();
 
   static Future<Map<String, String>?> initialTap() async {
     if (!_ready) return null;
     try {
       final RemoteMessage? message = await FirebaseMessaging.instance.getInitialMessage();
-      return message == null ? null : _data(message);
+      if (message != null) return _data(message);
+      if (!Platform.isAndroid) return null;
+      final NotificationAppLaunchDetails? launch = await _local.getNotificationAppLaunchDetails();
+      if (launch == null || !launch.didNotificationLaunchApp) return null;
+      return _decode(launch.notificationResponse?.payload);
     } on Object {
+      return null;
+    }
+  }
+
+  static Map<String, String>? _decode(String? payload) {
+    if (payload == null || payload.isEmpty) return null;
+    try {
+      final Object? decoded = jsonDecode(payload);
+      if (decoded is! Map) return null;
+      return {for (final MapEntry<Object?, Object?> entry in decoded.entries) '${entry.key}': '${entry.value ?? ''}'};
+    } on FormatException {
       return null;
     }
   }
