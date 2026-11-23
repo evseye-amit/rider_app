@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../api/notifications_api.dart';
 import '../providers/core_providers.dart';
+import '../push/push_notifications.dart';
 import '../utils/result.dart';
 
 class NotificationsInbox {
@@ -18,16 +19,19 @@ class NotificationsInbox {
 class NotificationsInboxNotifier extends AsyncNotifier<NotificationsInbox> {
   NotificationsApi get _api => ref.read(notificationsApiProvider);
 
+  String get _application => ref.read(pushAppProvider).application;
+
   @override
   Future<NotificationsInbox> build() async {
-    final NotificationPage page = (await ref.watch(notificationsApiProvider).inbox()).getOrThrow();
+    final NotificationPage page = (await ref.watch(notificationsApiProvider).inbox(application: _application))
+        .getOrThrow();
     return NotificationsInbox(items: page.items, nextCursor: page.nextCursor);
   }
 
   Future<bool> loadMore() async {
     final NotificationsInbox? current = state.value;
     if (current == null || !current.hasMore) return false;
-    final Result<NotificationPage> next = await _api.inbox(cursor: current.nextCursor);
+    final Result<NotificationPage> next = await _api.inbox(application: _application, cursor: current.nextCursor);
     if (!ref.mounted) return false;
     switch (next) {
       case Ok<NotificationPage>(:final value):
@@ -41,12 +45,12 @@ class NotificationsInboxNotifier extends AsyncNotifier<NotificationsInbox> {
   Future<void> markRead(AppNotification notification) async {
     if (notification.isRead) return;
     _update((item) => item.id == notification.id ? item.markedRead() : item);
-    await _api.markRead(notification.id);
+    await _api.markRead(notification.id, application: _application);
     if (ref.mounted) ref.invalidate(unreadNotificationsProvider);
   }
 
   Future<Result<void>> markAllRead() async {
-    final Result<void> result = await _api.markAllRead();
+    final Result<void> result = await _api.markAllRead(application: _application);
     if (!ref.mounted) return result;
     if (result.isOk) _update((item) => item.markedRead());
     ref.invalidate(unreadNotificationsProvider);
@@ -67,5 +71,8 @@ final notificationsInboxProvider = AsyncNotifierProvider.autoDispose<Notificatio
 );
 
 final unreadNotificationsProvider = FutureProvider.autoDispose<int>(
-  (ref) async => (await ref.watch(notificationsApiProvider).unreadCount()).valueOrNull ?? 0,
+  (ref) async =>
+      (await ref.watch(notificationsApiProvider).unreadCount(application: ref.read(pushAppProvider).application))
+          .valueOrNull ??
+      0,
 );

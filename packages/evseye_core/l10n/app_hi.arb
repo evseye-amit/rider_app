@@ -1745,5 +1745,15 @@
   "ledgerAutoPayHistory": "इतिहास",
   "ledgerAutoPayNoRecharges": "अभी तक कोई ऑटो रिचार्ज नहीं",
   "ledgerAutoPayNoRechargesHint": "नकद बैलेंस कम होने पर हुए ऑटो रिचार्ज यहाँ दिखेंगे।",
-  "ledgerAutoPayHistoryError": "ऑटो रिचार्ज लोड नहीं हो पाए"
+  "ledgerAutoPayHistoryError": "ऑटो रिचार्ज लोड नहीं हो पाए",
+  "notificationSettingsTitle": "सूचना सेटिंग्स",
+  "notificationSettingsOffersTitle": "ऑफ़र और प्रमोशन",
+  "notificationSettingsOffersMessage": "ऑफ़र, रिवॉर्ड और प्रमोशन से जुड़ी जानकारी पाएं। आप इसे कभी भी बंद कर सकते हैं।",
+  "notificationSettingsOffersConfirmTitle": "प्रमोशन वाली सूचनाएं चालू करें?",
+  "notificationSettingsOffersConfirmMessage": "हम आपको ऑफ़र और प्रमोशन भेजेंगे। आप इन्हें कभी भी सूचना सेटिंग्स से बंद कर सकते हैं।",
+  "notificationSettingsOffersAllow": "अनुमति दें",
+  "notificationSettingsAlwaysOn": "हमेशा चालू",
+  "notificationSettingsOffersHint": "ये पाने के लिए ऑफ़र और प्रमोशन चालू करें।",
+  "notificationSettingsLoadError": "सूचना सेटिंग्स लोड नहीं हो पाईं",
+  "notificationSettingsEmpty": "अभी कोई सूचना सेटिंग नहीं है"
 }

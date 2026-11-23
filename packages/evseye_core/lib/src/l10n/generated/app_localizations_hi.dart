@@ -5580,4 +5580,36 @@ class AppL10nHi extends AppL10n {
 
   @override
   String get ledgerAutoPayHistoryError => 'ऑटो रिचार्ज लोड नहीं हो पाए';
+
+  @override
+  String get notificationSettingsTitle => 'सूचना सेटिंग्स';
+
+  @override
+  String get notificationSettingsOffersTitle => 'ऑफ़र और प्रमोशन';
+
+  @override
+  String get notificationSettingsOffersMessage =>
+      'ऑफ़र, रिवॉर्ड और प्रमोशन से जुड़ी जानकारी पाएं। आप इसे कभी भी बंद कर सकते हैं।';
+
+  @override
+  String get notificationSettingsOffersConfirmTitle => 'प्रमोशन वाली सूचनाएं चालू करें?';
+
+  @override
+  String get notificationSettingsOffersConfirmMessage =>
+      'हम आपको ऑफ़र और प्रमोशन भेजेंगे। आप इन्हें कभी भी सूचना सेटिंग्स से बंद कर सकते हैं।';
+
+  @override
+  String get notificationSettingsOffersAllow => 'अनुमति दें';
+
+  @override
+  String get notificationSettingsAlwaysOn => 'हमेशा चालू';
+
+  @override
+  String get notificationSettingsOffersHint => 'ये पाने के लिए ऑफ़र और प्रमोशन चालू करें।';
+
+  @override
+  String get notificationSettingsLoadError => 'सूचना सेटिंग्स लोड नहीं हो पाईं';
+
+  @override
+  String get notificationSettingsEmpty => 'अभी कोई सूचना सेटिंग नहीं है';
 }

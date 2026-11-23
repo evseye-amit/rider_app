@@ -5604,4 +5604,36 @@ class AppL10nTe extends AppL10n {
 
   @override
   String get ledgerAutoPayHistoryError => 'ఆటో రీఛార్జ్‌లను లోడ్ చేయలేకపోయాం';
+
+  @override
+  String get notificationSettingsTitle => 'నోటిఫికేషన్ సెట్టింగ్‌లు';
+
+  @override
+  String get notificationSettingsOffersTitle => 'ఆఫర్‌లు మరియు ప్రమోషన్‌లు';
+
+  @override
+  String get notificationSettingsOffersMessage =>
+      'ఆఫర్‌లు, రివార్డ్‌లు మరియు ప్రమోషన్ అప్‌డేట్‌లు పొందండి. దీన్ని ఎప్పుడైనా ఆఫ్ చేయవచ్చు.';
+
+  @override
+  String get notificationSettingsOffersConfirmTitle => 'ప్రమోషన్ నోటిఫికేషన్‌లను అనుమతించాలా?';
+
+  @override
+  String get notificationSettingsOffersConfirmMessage =>
+      'మేము మీకు ఆఫర్‌లు మరియు ప్రమోషన్‌లు పంపుతాము. నోటిఫికేషన్ సెట్టింగ్‌ల నుండి వీటిని ఎప్పుడైనా ఆఫ్ చేయవచ్చు.';
+
+  @override
+  String get notificationSettingsOffersAllow => 'అనుమతించండి';
+
+  @override
+  String get notificationSettingsAlwaysOn => 'ఎల్లప్పుడూ ఆన్';
+
+  @override
+  String get notificationSettingsOffersHint => 'వీటిని పొందడానికి ఆఫర్‌లు మరియు ప్రమోషన్‌లను ఆన్ చేయండి.';
+
+  @override
+  String get notificationSettingsLoadError => 'నోటిఫికేషన్ సెట్టింగ్‌లను లోడ్ చేయలేకపోయాం';
+
+  @override
+  String get notificationSettingsEmpty => 'ఇంకా నోటిఫికేషన్ సెట్టింగ్‌లు ఏవీ లేవు';
 }

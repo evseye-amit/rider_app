@@ -60,5 +60,5 @@ Future<void> main() async {
 Future<void> _openInitialPush(ProviderContainer container) async {
   if (!container.read(riderSessionProvider).isSignedIn) return;
   final Map<String, String>? tap = await PushNotifications.initialTap();
-  if (tap != null) unawaited(container.read(routerProvider).push(pushLocation(tap)));
+  if (tap != null) openPushLocation(container.read(routerProvider), pushLocation(tap));
 }

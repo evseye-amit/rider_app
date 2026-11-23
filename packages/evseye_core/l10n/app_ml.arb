@@ -1745,5 +1745,15 @@
   "ledgerAutoPayHistory": "History",
   "ledgerAutoPayNoRecharges": "No auto recharges yet",
   "ledgerAutoPayNoRechargesHint": "Auto recharges show up here when your cash balance runs low.",
-  "ledgerAutoPayHistoryError": "Couldn't load auto recharges"
+  "ledgerAutoPayHistoryError": "Couldn't load auto recharges",
+  "notificationSettingsTitle": "Notification settings",
+  "notificationSettingsOffersTitle": "Offers and promotions",
+  "notificationSettingsOffersMessage": "Get offers, rewards and promotional updates. You can turn this off anytime.",
+  "notificationSettingsOffersConfirmTitle": "Allow promotional notifications?",
+  "notificationSettingsOffersConfirmMessage": "We'll send you offers and promotions. You can turn them off anytime from notification settings.",
+  "notificationSettingsOffersAllow": "Allow",
+  "notificationSettingsAlwaysOn": "Always on",
+  "notificationSettingsOffersHint": "Turn on offers and promotions to get these.",
+  "notificationSettingsLoadError": "Couldn't load notification settings",
+  "notificationSettingsEmpty": "No notification settings yet"
 }

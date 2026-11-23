@@ -1745,5 +1745,15 @@
   "ledgerAutoPayHistory": "చరిత్ర",
   "ledgerAutoPayNoRecharges": "ఇంకా ఆటో రీఛార్జ్‌లు ఏవీ లేవు",
   "ledgerAutoPayNoRechargesHint": "నగదు బ్యాలెన్స్ తగ్గినప్పుడు జరిగిన ఆటో రీఛార్జ్‌లు ఇక్కడ కనిపిస్తాయి.",
-  "ledgerAutoPayHistoryError": "ఆటో రీఛార్జ్‌లను లోడ్ చేయలేకపోయాం"
+  "ledgerAutoPayHistoryError": "ఆటో రీఛార్జ్‌లను లోడ్ చేయలేకపోయాం",
+  "notificationSettingsTitle": "నోటిఫికేషన్ సెట్టింగ్‌లు",
+  "notificationSettingsOffersTitle": "ఆఫర్‌లు మరియు ప్రమోషన్‌లు",
+  "notificationSettingsOffersMessage": "ఆఫర్‌లు, రివార్డ్‌లు మరియు ప్రమోషన్ అప్‌డేట్‌లు పొందండి. దీన్ని ఎప్పుడైనా ఆఫ్ చేయవచ్చు.",
+  "notificationSettingsOffersConfirmTitle": "ప్రమోషన్ నోటిఫికేషన్‌లను అనుమతించాలా?",
+  "notificationSettingsOffersConfirmMessage": "మేము మీకు ఆఫర్‌లు మరియు ప్రమోషన్‌లు పంపుతాము. నోటిఫికేషన్ సెట్టింగ్‌ల నుండి వీటిని ఎప్పుడైనా ఆఫ్ చేయవచ్చు.",
+  "notificationSettingsOffersAllow": "అనుమతించండి",
+  "notificationSettingsAlwaysOn": "ఎల్లప్పుడూ ఆన్",
+  "notificationSettingsOffersHint": "వీటిని పొందడానికి ఆఫర్‌లు మరియు ప్రమోషన్‌లను ఆన్ చేయండి.",
+  "notificationSettingsLoadError": "నోటిఫికేషన్ సెట్టింగ్‌లను లోడ్ చేయలేకపోయాం",
+  "notificationSettingsEmpty": "ఇంకా నోటిఫికేషన్ సెట్టింగ్‌లు ఏవీ లేవు"
 }

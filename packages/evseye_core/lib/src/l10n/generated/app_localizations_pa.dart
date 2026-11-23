@@ -5593,4 +5593,36 @@ class AppL10nPa extends AppL10n {
 
   @override
   String get ledgerAutoPayHistoryError => 'Couldn\'t load auto recharges';
+
+  @override
+  String get notificationSettingsTitle => 'Notification settings';
+
+  @override
+  String get notificationSettingsOffersTitle => 'Offers and promotions';
+
+  @override
+  String get notificationSettingsOffersMessage =>
+      'Get offers, rewards and promotional updates. You can turn this off anytime.';
+
+  @override
+  String get notificationSettingsOffersConfirmTitle => 'Allow promotional notifications?';
+
+  @override
+  String get notificationSettingsOffersConfirmMessage =>
+      'We\'ll send you offers and promotions. You can turn them off anytime from notification settings.';
+
+  @override
+  String get notificationSettingsOffersAllow => 'Allow';
+
+  @override
+  String get notificationSettingsAlwaysOn => 'Always on';
+
+  @override
+  String get notificationSettingsOffersHint => 'Turn on offers and promotions to get these.';
+
+  @override
+  String get notificationSettingsLoadError => 'Couldn\'t load notification settings';
+
+  @override
+  String get notificationSettingsEmpty => 'No notification settings yet';
 }

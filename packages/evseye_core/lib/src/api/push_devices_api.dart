@@ -11,9 +11,18 @@ class PushDevicesApi {
     required String appCode,
     required String platform,
     required String token,
+    String? applicationId,
+    String? permission,
   }) => _client.put<void>(
     '/app/push-devices',
-    body: {'installationId': installationId, 'appCode': appCode, 'platform': platform, 'token': token},
+    body: {
+      'installationId': installationId,
+      'appCode': appCode,
+      'platform': platform,
+      'token': token,
+      'applicationId': ?applicationId,
+      'permission': ?permission,
+    },
     parse: (_) {},
   );
 

@@ -60,23 +60,28 @@ class NotificationsApi {
 
   final ApiClient _client;
 
-  Future<Result<NotificationPage>> inbox({String? cursor, int limit = 20}) => _client.get<NotificationPage>(
-    '/app/notifications',
-    query: {'limit': limit, 'cursor': ?cursor},
-    parse: (data) {
-      final Map<String, dynamic> page = jsonMap(data);
-      return NotificationPage(
-        items: jsonMaps(page['items']).map(AppNotification.fromJson).toList(growable: false),
-        nextCursor: jsonTextOrNull(page['nextCursor']),
+  Future<Result<NotificationPage>> inbox({String? application, String? cursor, int limit = 20}) =>
+      _client.get<NotificationPage>(
+        '/app/notifications',
+        query: {'limit': limit, 'cursor': ?cursor, 'application': ?application},
+        parse: (data) {
+          final Map<String, dynamic> page = jsonMap(data);
+          return NotificationPage(
+            items: jsonMaps(page['items']).map(AppNotification.fromJson).toList(growable: false),
+            nextCursor: jsonTextOrNull(page['nextCursor']),
+          );
+        },
       );
-    },
+
+  Future<Result<int>> unreadCount({String? application}) => _client.get<int>(
+    '/app/notifications/unread-count',
+    query: {'application': ?application},
+    parse: (data) => jsonIntOrNull(jsonMap(data)['count']) ?? 0,
   );
 
-  Future<Result<int>> unreadCount() =>
-      _client.get<int>('/app/notifications/unread-count', parse: (data) => jsonIntOrNull(jsonMap(data)['count']) ?? 0);
+  Future<Result<void>> markRead(String id, {String? application}) =>
+      _client.patch<void>('/app/notifications/$id/read', query: {'application': ?application}, parse: (_) {});
 
-  Future<Result<void>> markRead(String id) => _client.patch<void>('/app/notifications/$id/read', parse: (_) {});
-
-  Future<Result<void>> markAllRead() =>
-      _client.post<void>('/app/notifications/read-all', body: const <String, dynamic>{}, parse: (_) {});
+  Future<Result<void>> markAllRead({String? application}) =>
+      _client.post<void>('/app/notifications/read-all', body: {'application': ?application}, parse: (_) {});
 }

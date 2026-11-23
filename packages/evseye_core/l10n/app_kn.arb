@@ -1745,5 +1745,15 @@
   "ledgerAutoPayHistory": "ಇತಿಹಾಸ",
   "ledgerAutoPayNoRecharges": "ಇನ್ನೂ ಯಾವುದೇ ಸ್ವಯಂ ರೀಚಾರ್ಜ್ ಇಲ್ಲ",
   "ledgerAutoPayNoRechargesHint": "ನಗದು ಬ್ಯಾಲೆನ್ಸ್ ಕಡಿಮೆಯಾದಾಗ ಆದ ಸ್ವಯಂ ರೀಚಾರ್ಜ್‌ಗಳು ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ.",
-  "ledgerAutoPayHistoryError": "ಸ್ವಯಂ ರೀಚಾರ್ಜ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ"
+  "ledgerAutoPayHistoryError": "ಸ್ವಯಂ ರೀಚಾರ್ಜ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ",
+  "notificationSettingsTitle": "ಸೂಚನೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳು",
+  "notificationSettingsOffersTitle": "ಆಫರ್‌ಗಳು ಮತ್ತು ಪ್ರಚಾರಗಳು",
+  "notificationSettingsOffersMessage": "ಆಫರ್‌ಗಳು, ಬಹುಮಾನಗಳು ಮತ್ತು ಪ್ರಚಾರದ ಅಪ್‌ಡೇಟ್‌ಗಳನ್ನು ಪಡೆಯಿರಿ. ಇದನ್ನು ಯಾವಾಗ ಬೇಕಾದರೂ ಆಫ್ ಮಾಡಬಹುದು.",
+  "notificationSettingsOffersConfirmTitle": "ಪ್ರಚಾರದ ಸೂಚನೆಗಳನ್ನು ಅನುಮತಿಸಬೇಕೆ?",
+  "notificationSettingsOffersConfirmMessage": "ನಿಮಗೆ ಆಫರ್‌ಗಳು ಮತ್ತು ಪ್ರಚಾರಗಳನ್ನು ಕಳುಹಿಸುತ್ತೇವೆ. ಸೂಚನೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಂದ ಯಾವಾಗ ಬೇಕಾದರೂ ಆಫ್ ಮಾಡಬಹುದು.",
+  "notificationSettingsOffersAllow": "ಅನುಮತಿಸಿ",
+  "notificationSettingsAlwaysOn": "ಯಾವಾಗಲೂ ಆನ್",
+  "notificationSettingsOffersHint": "ಇವುಗಳನ್ನು ಪಡೆಯಲು ಆಫರ್‌ಗಳು ಮತ್ತು ಪ್ರಚಾರಗಳನ್ನು ಆನ್ ಮಾಡಿ.",
+  "notificationSettingsLoadError": "ಸೂಚನೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ",
+  "notificationSettingsEmpty": "ಇನ್ನೂ ಯಾವುದೇ ಸೂಚನೆ ಸೆಟ್ಟಿಂಗ್ ಇಲ್ಲ"
 }

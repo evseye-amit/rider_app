@@ -5597,4 +5597,36 @@ class AppL10nKn extends AppL10n {
 
   @override
   String get ledgerAutoPayHistoryError => 'ಸ್ವಯಂ ರೀಚಾರ್ಜ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ';
+
+  @override
+  String get notificationSettingsTitle => 'ಸೂಚನೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳು';
+
+  @override
+  String get notificationSettingsOffersTitle => 'ಆಫರ್‌ಗಳು ಮತ್ತು ಪ್ರಚಾರಗಳು';
+
+  @override
+  String get notificationSettingsOffersMessage =>
+      'ಆಫರ್‌ಗಳು, ಬಹುಮಾನಗಳು ಮತ್ತು ಪ್ರಚಾರದ ಅಪ್‌ಡೇಟ್‌ಗಳನ್ನು ಪಡೆಯಿರಿ. ಇದನ್ನು ಯಾವಾಗ ಬೇಕಾದರೂ ಆಫ್ ಮಾಡಬಹುದು.';
+
+  @override
+  String get notificationSettingsOffersConfirmTitle => 'ಪ್ರಚಾರದ ಸೂಚನೆಗಳನ್ನು ಅನುಮತಿಸಬೇಕೆ?';
+
+  @override
+  String get notificationSettingsOffersConfirmMessage =>
+      'ನಿಮಗೆ ಆಫರ್‌ಗಳು ಮತ್ತು ಪ್ರಚಾರಗಳನ್ನು ಕಳುಹಿಸುತ್ತೇವೆ. ಸೂಚನೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಂದ ಯಾವಾಗ ಬೇಕಾದರೂ ಆಫ್ ಮಾಡಬಹುದು.';
+
+  @override
+  String get notificationSettingsOffersAllow => 'ಅನುಮತಿಸಿ';
+
+  @override
+  String get notificationSettingsAlwaysOn => 'ಯಾವಾಗಲೂ ಆನ್';
+
+  @override
+  String get notificationSettingsOffersHint => 'ಇವುಗಳನ್ನು ಪಡೆಯಲು ಆಫರ್‌ಗಳು ಮತ್ತು ಪ್ರಚಾರಗಳನ್ನು ಆನ್ ಮಾಡಿ.';
+
+  @override
+  String get notificationSettingsLoadError => 'ಸೂಚನೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗಲಿಲ್ಲ';
+
+  @override
+  String get notificationSettingsEmpty => 'ಇನ್ನೂ ಯಾವುದೇ ಸೂಚನೆ ಸೆಟ್ಟಿಂಗ್ ಇಲ್ಲ';
 }

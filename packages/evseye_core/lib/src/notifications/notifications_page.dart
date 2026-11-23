@@ -22,6 +22,7 @@ import '../widgets/load_more_tile.dart';
 import '../widgets/pressable.dart';
 import '../widgets/section_header.dart';
 import '../widgets/segmented_tabs.dart';
+import 'notification_settings_page.dart';
 import 'notifications_inbox.dart';
 
 typedef NotificationAction = ({String label, IconData icon, VoidCallback onTap});
@@ -71,6 +72,10 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
         null => PrimaryButton(label: context.l10n.notificationsGotIt, onPressed: () => Navigator.of(context).pop()),
       },
     );
+  }
+
+  void _openSettings() {
+    unawaited(Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => const NotificationSettingsPage())));
   }
 
   Future<void> _markAllRead() async {
@@ -134,6 +139,7 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
         total: value.items.length,
         unread: value.unread,
         onMarkAllRead: value.unread == 0 ? null : _markAllRead,
+        onSettings: _openSettings,
       ),
       children: value.items.isEmpty
           ? const []
@@ -168,11 +174,12 @@ class _NotificationsPageState extends ConsumerState<NotificationsPage> {
 }
 
 class _Band extends StatelessWidget {
-  const _Band({required this.total, required this.unread, required this.onMarkAllRead});
+  const _Band({required this.total, required this.unread, required this.onMarkAllRead, required this.onSettings});
 
   final int total;
   final int unread;
   final VoidCallback? onMarkAllRead;
+  final VoidCallback onSettings;
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +201,11 @@ class _Band extends StatelessWidget {
                 style: AppText.titleLarge.copyWith(fontSize: 17, color: AppColors.onInk),
               ),
             ),
-            if (onMarkAllRead != null) InkCircleButton(icon: Icons.done_all_rounded, onTap: onMarkAllRead),
+            if (onMarkAllRead != null) ...[
+              InkCircleButton(icon: Icons.done_all_rounded, onTap: onMarkAllRead),
+              const SizedBox(width: Insets.sm),
+            ],
+            InkCircleButton(icon: Icons.tune_rounded, onTap: onSettings),
           ],
         ),
         const Gap.xl(),

@@ -7631,5 +7631,45 @@
   "ledgerAutoPayHistoryError": "Couldn't load auto recharges",
   "@ledgerAutoPayHistoryError": {
     "description": "Shown when the auto recharge history could not be loaded"
+  },
+  "notificationSettingsTitle": "Notification settings",
+  "@notificationSettingsTitle": {
+    "description": "Title of the notification settings screen"
+  },
+  "notificationSettingsOffersTitle": "Offers and promotions",
+  "@notificationSettingsOffersTitle": {
+    "description": "Marketing consent toggle title on notification settings"
+  },
+  "notificationSettingsOffersMessage": "Get offers, rewards and promotional updates. You can turn this off anytime.",
+  "@notificationSettingsOffersMessage": {
+    "description": "Explains the marketing consent toggle on notification settings"
+  },
+  "notificationSettingsOffersConfirmTitle": "Allow promotional notifications?",
+  "@notificationSettingsOffersConfirmTitle": {
+    "description": "Confirm dialog title before turning on promotional notifications"
+  },
+  "notificationSettingsOffersConfirmMessage": "We'll send you offers and promotions. You can turn them off anytime from notification settings.",
+  "@notificationSettingsOffersConfirmMessage": {
+    "description": "Confirm dialog message before turning on promotional notifications"
+  },
+  "notificationSettingsOffersAllow": "Allow",
+  "@notificationSettingsOffersAllow": {
+    "description": "Confirm button that turns on promotional notifications"
+  },
+  "notificationSettingsAlwaysOn": "Always on",
+  "@notificationSettingsAlwaysOn": {
+    "description": "Shown under notification categories that cannot be turned off"
+  },
+  "notificationSettingsOffersHint": "Turn on offers and promotions to get these.",
+  "@notificationSettingsOffersHint": {
+    "description": "Shown under promotional categories while offers and promotions are off"
+  },
+  "notificationSettingsLoadError": "Couldn't load notification settings",
+  "@notificationSettingsLoadError": {
+    "description": "Shown when notification settings could not be loaded"
+  },
+  "notificationSettingsEmpty": "No notification settings yet",
+  "@notificationSettingsEmpty": {
+    "description": "Empty state on notification settings when no categories are available"
   }
 }

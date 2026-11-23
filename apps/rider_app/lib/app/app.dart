@@ -36,7 +36,7 @@ class _RiderAppState extends ConsumerState<RiderApp> {
       },
     );
     _pushMessages = PushNotifications.messages.listen(_refreshInbox);
-    _pushTaps = PushNotifications.taps.listen(_openPush);
+    _pushTaps = PushNotifications.taps.listen((data) => unawaited(_openPush(data)));
   }
 
   Future<void> _recoverPayments() async {
@@ -61,11 +61,14 @@ class _RiderAppState extends ConsumerState<RiderApp> {
     ref
       ..invalidate(unreadNotificationsProvider)
       ..invalidate(notificationsInboxProvider);
+    if (isAllocationPush(message.data)) unawaited(ref.read(riderSessionProvider.notifier).refreshState());
   }
 
-  void _openPush(Map<String, String> data) {
+  Future<void> _openPush(Map<String, String> data) async {
     ref.invalidate(unreadNotificationsProvider);
-    unawaited(ref.read(routerProvider).push(pushLocation(data)));
+    if (isAllocationPush(data)) await ref.read(riderSessionProvider.notifier).refreshState();
+    if (!mounted) return;
+    openPushLocation(ref.read(routerProvider), pushLocation(data));
   }
 
   @override

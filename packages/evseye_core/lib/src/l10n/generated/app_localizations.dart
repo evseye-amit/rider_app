@@ -10592,6 +10592,66 @@ abstract class AppL10n {
   /// In en, this message translates to:
   /// **'Couldn\'t load auto recharges'**
   String get ledgerAutoPayHistoryError;
+
+  /// Title of the notification settings screen
+  ///
+  /// In en, this message translates to:
+  /// **'Notification settings'**
+  String get notificationSettingsTitle;
+
+  /// Marketing consent toggle title on notification settings
+  ///
+  /// In en, this message translates to:
+  /// **'Offers and promotions'**
+  String get notificationSettingsOffersTitle;
+
+  /// Explains the marketing consent toggle on notification settings
+  ///
+  /// In en, this message translates to:
+  /// **'Get offers, rewards and promotional updates. You can turn this off anytime.'**
+  String get notificationSettingsOffersMessage;
+
+  /// Confirm dialog title before turning on promotional notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Allow promotional notifications?'**
+  String get notificationSettingsOffersConfirmTitle;
+
+  /// Confirm dialog message before turning on promotional notifications
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll send you offers and promotions. You can turn them off anytime from notification settings.'**
+  String get notificationSettingsOffersConfirmMessage;
+
+  /// Confirm button that turns on promotional notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Allow'**
+  String get notificationSettingsOffersAllow;
+
+  /// Shown under notification categories that cannot be turned off
+  ///
+  /// In en, this message translates to:
+  /// **'Always on'**
+  String get notificationSettingsAlwaysOn;
+
+  /// Shown under promotional categories while offers and promotions are off
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on offers and promotions to get these.'**
+  String get notificationSettingsOffersHint;
+
+  /// Shown when notification settings could not be loaded
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load notification settings'**
+  String get notificationSettingsLoadError;
+
+  /// Empty state on notification settings when no categories are available
+  ///
+  /// In en, this message translates to:
+  /// **'No notification settings yet'**
+  String get notificationSettingsEmpty;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

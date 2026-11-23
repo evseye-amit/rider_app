@@ -42,6 +42,7 @@ import '../../features/vehicle_exchange/presentation/pages/exchange_detail_page.
 import '../../features/vehicle_exchange/presentation/pages/exchanges_page.dart';
 import '../../features/vehicle_exchange/presentation/pages/request_exchange_page.dart';
 import 'app_routes.dart';
+import 'push_routes.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final GlobalKey<NavigatorState> _homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
@@ -290,6 +291,11 @@ NotificationAction? _notificationAction(BuildContext context, AppNotification it
     label: context.l10n.damageChargesViewAndPay,
     icon: Icons.receipt_long_rounded,
     onTap: () => context.push('${Routes.damageChargeDetail}?id=$invoiceId'),
+  ),
+  {'schemaVersion': '1', 'action': 'ALLOCATION_DETAILS'} => (
+    label: context.l10n.commonOpen,
+    icon: Icons.arrow_forward_rounded,
+    onTap: () => openPushLocation(GoRouter.of(context), pushLocation(item.data)),
   ),
   _ => null,
 };

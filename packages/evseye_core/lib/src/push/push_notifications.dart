@@ -5,21 +5,25 @@ import 'dart:math';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../app_update/app_release.dart';
 import '../l10n/active_locale.dart';
 import '../providers/core_providers.dart';
 import 'firebase_config.dart';
 
 enum PushApp {
-  rider('RIDER_APP'),
-  fleetManager('FLEET_MANAGER_APP');
+  rider('RIDER_APP', 'RIDER'),
+  fleetManager('FLEET_MANAGER_APP', 'FLEET_MANAGER');
 
-  const PushApp(this.wire);
+  const PushApp(this.wire, this.application);
 
   final String wire;
+
+  final String application;
 
   bool get _android => switch (this) {
     PushApp.rider => FirebaseConfig.riderAndroid,
@@ -53,8 +57,18 @@ abstract final class PushNotifications {
   static bool _ready = false;
   static final FlutterLocalNotificationsPlugin _local = FlutterLocalNotificationsPlugin();
   static final StreamController<Map<String, String>> _taps = StreamController<Map<String, String>>.broadcast();
+  static final Set<String> _openedIds = {};
 
   static bool get isReady => _ready;
+
+  static bool _firstOpen(Map<String, String> data) {
+    final String? id = data['notificationId'];
+    return id == null || id.isEmpty || _openedIds.add(id);
+  }
+
+  static void _tap(Map<String, String> data) {
+    if (_firstOpen(data)) _taps.add(data);
+  }
 
   static Future<void> initialize(PushApp app) async {
     final FirebaseOptions? ios = app._ios;
@@ -67,7 +81,7 @@ abstract final class PushNotifications {
       _ready = false;
       return;
     }
-    FirebaseMessaging.onMessageOpenedApp.listen((message) => _taps.add(_data(message)));
+    FirebaseMessaging.onMessageOpenedApp.listen((message) => _tap(_data(message)));
     try {
       if (Platform.isAndroid) {
         await _setUpAndroidForeground();
@@ -88,7 +102,7 @@ abstract final class PushNotifications {
       settings: const InitializationSettings(android: AndroidInitializationSettings(_icon)),
       onDidReceiveNotificationResponse: (response) {
         final Map<String, String>? data = _decode(response.payload);
-        if (data != null) _taps.add(data);
+        if (data != null) _tap(data);
       },
     );
     await _local
@@ -107,9 +121,11 @@ abstract final class PushNotifications {
     final RemoteNotification? notification = message.notification;
     if (notification == null || ((notification.title ?? '').isEmpty && (notification.body ?? '').isEmpty)) return;
     final AndroidNotificationChannel channel = _channel;
+    final String key =
+        message.data['notificationId']?.toString() ?? message.messageId ?? '${DateTime.now().microsecondsSinceEpoch}';
     try {
       await _local.show(
-        id: (message.messageId ?? '${DateTime.now().microsecondsSinceEpoch}').hashCode & 0x7fffffff,
+        id: key.hashCode & 0x7fffffff,
         title: notification.title,
         body: notification.body,
         notificationDetails: NotificationDetails(
@@ -137,15 +153,20 @@ abstract final class PushNotifications {
   static Future<Map<String, String>?> initialTap() async {
     if (!_ready) return null;
     try {
-      final RemoteMessage? message = await FirebaseMessaging.instance.getInitialMessage();
-      if (message != null) return _data(message);
-      if (!Platform.isAndroid) return null;
-      final NotificationAppLaunchDetails? launch = await _local.getNotificationAppLaunchDetails();
-      if (launch == null || !launch.didNotificationLaunchApp) return null;
-      return _decode(launch.notificationResponse?.payload);
+      final Map<String, String>? data = await _launchData();
+      return data != null && _firstOpen(data) ? data : null;
     } on Object {
       return null;
     }
+  }
+
+  static Future<Map<String, String>?> _launchData() async {
+    final RemoteMessage? message = await FirebaseMessaging.instance.getInitialMessage();
+    if (message != null) return _data(message);
+    if (!Platform.isAndroid) return null;
+    final NotificationAppLaunchDetails? launch = await _local.getNotificationAppLaunchDetails();
+    if (launch == null || !launch.didNotificationLaunchApp) return null;
+    return _decode(launch.notificationResponse?.payload);
   }
 
   static Map<String, String>? _decode(String? payload) {
@@ -167,13 +188,17 @@ class PushRegistration {
 
   final Ref _ref;
   StreamSubscription<String>? _tokenRefresh;
+  AppLifecycleListener? _lifecycle;
+  String? _lastToken;
+  String _permission = 'NOT_DETERMINED';
 
   Future<void> start() async {
     if (!PushNotifications.isReady) return;
     try {
       final FirebaseMessaging messaging = FirebaseMessaging.instance;
-      await messaging.requestPermission();
+      _permission = _permissionOf(await messaging.requestPermission());
       _tokenRefresh ??= messaging.onTokenRefresh.listen((token) => unawaited(_send(token)));
+      _lifecycle ??= AppLifecycleListener(onResume: () => unawaited(_recheckPermission()));
       final String? token = await _token(messaging);
       if (token != null) await _send(token);
     } on Object {
@@ -184,9 +209,32 @@ class PushRegistration {
   Future<void> stop({bool unregister = true}) async {
     await _tokenRefresh?.cancel();
     _tokenRefresh = null;
+    _lifecycle?.dispose();
+    _lifecycle = null;
+    _lastToken = null;
     if (!unregister || !PushNotifications.isReady) return;
     await _ref.read(pushDevicesApiProvider).unregister(_installationId);
   }
+
+  Future<void> _recheckPermission() async {
+    final String? token = _lastToken;
+    if (token == null) return;
+    try {
+      final String permission = _permissionOf(await FirebaseMessaging.instance.getNotificationSettings());
+      if (permission == _permission) return;
+      _permission = permission;
+      await _send(token);
+    } on Object {
+      return;
+    }
+  }
+
+  static String _permissionOf(NotificationSettings settings) => switch (settings.authorizationStatus) {
+    AuthorizationStatus.authorized => 'AUTHORIZED',
+    AuthorizationStatus.provisional => 'PROVISIONAL',
+    AuthorizationStatus.denied || AuthorizationStatus.deniedPermanently => 'DENIED',
+    AuthorizationStatus.notDetermined => 'NOT_DETERMINED',
+  };
 
   Future<String?> _token(FirebaseMessaging messaging) async {
     if (Platform.isIOS) {
@@ -200,6 +248,7 @@ class PushRegistration {
   }
 
   Future<void> _send(String token) async {
+    _lastToken = token;
     await _ref
         .read(pushDevicesApiProvider)
         .register(
@@ -207,6 +256,8 @@ class PushRegistration {
           appCode: _ref.read(pushAppProvider).wire,
           platform: Platform.isIOS ? 'IOS' : 'ANDROID',
           token: token,
+          applicationId: _ref.read(appReleaseProvider)?.applicationId,
+          permission: _permission,
         );
   }
 
